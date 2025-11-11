@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <script src="../lib/rem750.js"></script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <title>红豆充值中心</title>
+    <script>
+        var ua = window.navigator.userAgent.toLowerCase();
+        var wxCode = '';
+        console.log(ua);
+        var isWx =true;
+        var zfbAct=true;
+        // if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        //     var codeMatch = location.href.match(/\bcode=([^&]+)/);
+        //     isWx =false;
+        //     if (codeMatch) {
+        //         wxCode = codeMatch[1];
+        //     } else {
+        //         location.href = './getOpenid.html';
+        //     }
+        // }
+    </script>
+    <style type="text/css">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            font-size: 0.26rem;
+            background: #fff;
+        }
+
+        .b_box {
+            display: flex;
+            display: -webkit-flex;
+        }
+
+        .inputArea {
+            padding: 0 0.60rem 0.9rem;
+            /* border-bottom: 0.1rem solid #FAFAFA; */
+            height: 0.7rem;
+            justify-content: space-between;
+            position: relative;
+            background: #FAFAFA;
+        }
+
+        .inputArea input {
+            display: inline-block;
+            height: 0.7rem;
+            line-height: 0.7rem;
+            flex: 1;
+            font-size: 0.36rem;
+            border-bottom: 0.02rem solid #E0E0E0;
+            background: none;
+        }
+
+        .inputArea input::placeholder {
+            color: #C2C2C2;
+        }
+
+        .inputArea input:hover {
+            border-bottom: 0.02rem solid #FD7C43;
+        }
+
+        .inputArea .infoMsg {
+            height: 100%;
+            line-height: 0.7rem;
+            position: absolute;
+            top: 0.6rem;
+            left: 0.6rem;
+            color: #F52E2E;
+            font-size: 0.24rem;
+            display: none;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .inputArea .empty {
+            position: absolute;
+            width: 0.31rem;
+            height: 1.13rem;
+            vertical-align: middle;
+            line-height: 1.13rem;
+            margin-left: 0.2rem;
+            display: none;
+            right: 0.8rem;
+            top: -0.2rem
+        }
+
+        .empty img {
+            width: 0.31rem;
+            height: 0.31rem;
+            vertical-align: middle;
+        }
+
+        .goldArea {
+            padding: 0.4rem 0.3rem;
+            /* border-bottom: 0.1rem solid #FAFAFA; */
+        }
+
+        .goldArea .title {
+            font-family: PingFang-SC-Medium;
+            font-weight: 400;
+            color: #212121;
+            font-size: 0.32rem;
+            margin-bottom: 0.39rem;
+        }
+
+        .goldArea .goldList {
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .goldArea .goldList>div {
+            background-color: rgba(100, 100, 100, 0.1);
+            margin-bottom: 0.62rem;
+            border-radius: 0.1rem;
+        }
+
+        .goldArea .goldList .goldItem {
+            width: 2.92rem;
+            height: 1.44rem;
+            text-align: center;
+            /* border: 1px solid #D6D6D6; */
+            box-sizing: border-box;
+            /* line-height: 0.98rem; */
+            border-radius: 0.1rem;
+            /* margin-right: 0.3rem; */
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: url('images/bg.png') no-repeat;
+            background-size: 100% 100%;
+            box-shadow: 0px 0.08rem 0.54rem 0px rgba(199, 199, 199, 0.48);
+        }
+
+        /* 
+        .goldArea .goldList>div:last-child {
+            margin-bottom: 0.62rem;
+        } */
+
+        .goldArea .goldList .goldItem:nth-child(3n) {
+            margin-right: 0;
+        }
+
+        .goldArea .goldList .goldItem.active {
+            border: none;
+            background: linear-gradient(-30deg, rgba(35, 207, 177, 1), rgba(90, 230, 147, 1));
+            /* color: #FEFEFE; */
+            background: url('images/bg_act.png') no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .goldItem img {
+            width: 0.6rem;
+            height: 0.6rem;
+            /* vertical-align: -0.07rem; */
+            /* vertical-align: top; */
+            /* margin-right: 0.07rem; */
+            /* margin-top: 0.19rem; */
+        }
+
+        .goldItem span {
+            display: inline-block;
+            /* margin-top: 0.23rem; */
+            line-height: 0.3rem;
+            text-align: left;
+            color: #3E3E3E;
+            font-size: 0.36rem;
+        }
+
+        .goldItem>span:nth-child(1) {
+            display: flex;
+            align-items: center;
+        }
+
+        .goldItem>span:nth-child(1) img {
+            margin-right: 0.16rem;
+        }
+
+        .goldItem>span:nth-child(2) {
+            margin-top: 0.28rem;
+            color: #FF3366;
+            font-size: 0.28rem;
+        }
+
+        .price {
+            margin-bottom: 0.25rem;
+        }
+
+        .price span:first-child {
+            color: #1A1A1A;
+            font-size: 0.32rem;
+            font-weight: 600;
+            font-family: PingFang-SC-Medium;
+            margin-right: 0.1rem;
+            line-height: 0.32rem;
+        }
+
+        .price span:last-child {
+            color: #FE5555;
+            font-size: 0.4rem;
+            font-weight: 600;
+            font-family: PingFang-SC-Medium;
+            line-height: 0.32rem;
+        }
+
+        .xieyi {
+            color: #B2B2B2;
+            font-size: 0.24rem;
+        }
+
+        .xieyi input {
+            vertical-align: -0.02rem;
+        }
+
+        .xieyi span:last-child {
+            color: #FE5555;
+        }
+
+        .chooseType ul {
+            display: flex;
+            justify-content: center;
+        }
+
+        .chooseType ul li {
+            /* border-bottom: 1px solid #FAFAFA; */
+            /* height: 1rem; */
+            /* line-height: 1rem; */
+            /* padding: 0 0.3rem; */
+            /* justify-content: space-between; */
+            margin: 0 0.1rem 0.5rem;
+        }
+
+        .chooseType ul li span {
+            font-size: 0.26rem;
+            color: #1A1A1A;
+            font-weight: 600;
+            font-family: PingFang-SC-Medium;
+        }
+
+        .chooseType ul li:last-child {
+            border-bottom: none;
+        }
+
+        li img.zfb {
+            /* margin-right: 0.17rem; */
+            width: 3rem;
+            height: 1rem;
+            vertical-align: -0.18rem;
+        }
+
+        li img.wx {
+            /* margin-right: 0.17rem; */
+            width: 3rem;
+            height: 1rem;
+            vertical-align: -0.16rem;
+        }
+
+        li .right img {
+            width: 0.11rem;
+            height: 0.21rem;
+            vertical-align: -0.02rem;
+        }
+
+        .tabel {
+            font-size: 0.30rem;
+            color: rgba(33, 33, 33, 1);
+            padding: 0.3rem 0.6rem;
+            line-height: 0.8rem;
+            background: #FAFAFA;
+        }
+    </style>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body class="bgc_gray">
+    <div class="wrap">
+        <div class="tabel">
+            红豆ID号
+        </div>
+        <div class="inputArea b_box">
+            <input id="userNo" maxlength="8" type="text" oninput="value=value.replace(/[^\d]/g,'')"
+                placeholder="请输入红豆ID号">
+            <div class="empty">
+                <img src="images/empty.png" alt="">
+            </div>
+            <div class="infoMsg"></div>
+        </div>
+        <div class="goldArea">
+            <div class="title">请选择充值金额</div>
+            <div class="goldList b_box"></div>
+            <!-- <div class="price">
+                <span>充值金额：</span>
+                <span>¥ 6</span>
+            </div> -->
+
+            <!-- <div class="xieyi">
+                <input class="checkBox" type="checkbox" checked="true">
+                <span>我已阅读并同意</span>
+                <span class="protocol">《音缘充值协议》</span>
+            </div> -->
+        </div>
+
+        <div class="chooseType">
+            <ul>
+                <li class="b_box wxBtn">
+                    <div class="left">
+                        <img class="wx" src="images/wx.png" alt="">
+                        <!-- <span>微信支付</span> -->
+                    </div>
+                    <!-- <div class="right">
+                                <img src="images/right.png" alt="">
+                            </div> -->
+                </li>
+                <li class="b_box zfbBtn">
+                    <div class="left">
+                        <img class="zfb" src="images/zfb.png" alt="">
+                        <!-- <span>支付宝</span> -->
+                    </div>
+                    <!-- <div class="right">
+                        <img src="images/right.png" alt="">
+                    </div> -->
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="pop-tips"></div>
+    <div class="pop-success">支付成功</div>
+    <div style="display:none">
+        <script src="https://s19.cnzz.com/z_stat.php?id=1272979589&web_id=1272979589" language="JavaScript"></script>
+    </div>
+    <!-- <script src="../lib/vconsole.min.js"></script> -->
+    <script src="../lib/pingpp.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="../lib/jquery-3.2.1.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="js/index.js?v=100"></script>
+</body>
+
+</html>

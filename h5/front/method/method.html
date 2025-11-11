@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <script type="text/javascript">
+        var FS = {};
+        (function(win, FS) {
+            var doc = win.document;
+            var docEl = doc.documentElement;
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+            var dpr = 1;
+            var scale = 1;
+            var fontBase = 16;
+
+            if (window.devicePixelRatio >= 2) {
+                scale *= 0.5;
+                dpr *= 2;
+            }
+
+            docEl.setAttribute('data-dpr', dpr);
+            metaEl.setAttribute('content', 'initial-scale=' + scale + ', width=device-width, maximum-scale=' +
+                scale +
+                ', user-scalable=no');
+
+            function refreshRem() {
+                var width = docEl.getBoundingClientRect().width;
+                var rem = width / 10;
+                docEl.style.fontSize = rem + 'px';
+                FS.rem = rem;
+            }
+
+            var tid = null;
+            win.addEventListener('resize', function() {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }, false);
+
+            if (doc.readyState === 'complete') {
+                doc.body.style.fontSize = fontBase * dpr + 'px';
+            } else {
+                doc.addEventListener('DOMContentLoaded', function(e) {
+                    doc.body.style.fontSize = fontBase * dpr + 'px';
+                }, false);
+            }
+
+            refreshRem();
+
+            FS.dpr = dpr;
+            FS.rem2px = function(d) {
+                var val = parseFloat(d) * FS.rem;
+                if (typeof d === 'string' && d.match(/rem$/)) {
+                    val += 'px';
+                }
+                return val;
+            }
+            FS.px2rem = function(d) {
+                var val = parseFloat(d) / FS.rem;
+                if (typeof d === 'string' && d.match(/px$/)) {
+                    val += 'rem';
+                }
+                return val;
+            }
+        })(window, FS);
+    </script>
+    <title>奖励秘籍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            padding: 0.5rem;
+        }
+        
+        p {
+            font-size: 0.4rem;
+            color: #1a1a1a;
+        }
+        
+        .title {
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="title">1. 分享大礼包</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每天您打开拉贝的时候，随手分享直播间到微信或者微博，您都会得到一份大礼包哦，记住是每天只有一次分享才有礼包哦。希望您能把拉贝的声音分享给更多宝宝呦。</p>
+    <p class="title">2. 邀请大礼包</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邀请注册有奖励哦，每当您在微信朋友圈，微信群，内涵段子，微博，贴吧，QQ群等分享拉贝星球APP，或者带上自己的好友来注册拉贝星球，越多的人通过你分享的链接下载并注册拉贝星球，你就会得到越多奖励哦。</p>
+    <p class="title">3. 分成大礼包</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每当您邀请的朋友或者陌生人在拉贝星球里有充值消费的，你都能拿到2%的分成大礼包哦，是不是很赞呢！邀请人群充值的金额越大，你得到的分成礼包就越大哦。</p>
+    <br>
+    <p class="title">4. 红包提现说明</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;红包提现到账时间为当周提现下周一到账。</p>
+    <br>
+    <p class="title">注：</p>
+    <p>1. 拉贝星球注重打造友好的社交圈，娱乐圈，目标是为每一个人创造快乐。希望每一个宝宝都能分享你的故事，分享你的快乐，让拉贝的声音传到每一个宝宝耳边。</p>
+    <p>2. 本次活动活动最终解释权归拉贝星球所有。</p>
+    <div style="display:none">
+        <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+    </div>
+</body>
+
+</html>

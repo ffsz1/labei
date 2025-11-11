@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>相亲厅招募会</title>
+  <link rel="icon" href="../../images/logo.png" type="image/png">
+  <link rel="stylesheet" href="../lib/reset.css">
+  <style>
+    .blind-date {
+      font-size: 0;
+    }
+
+    .blind-date img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="blind-date">
+    <img class="lazy" data-original="images/blindDate/blind_date_1.png" alt="blind_date_1" />
+    <img class="lazy" data-original="images/blindDate/blind_date_2.png" alt="blind_date_2" />
+    <img class="lazy" data-original="images/blindDate/blind_date_3.png" alt="blind_date_3" />
+  </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/jquery.lazyload.min.js"></script>
+<script>
+  $(function () {
+    $("img.lazy").lazyload();
+  });
+</script>
+
+</html>

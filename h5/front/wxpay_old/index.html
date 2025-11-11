@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="css/index.css">
+    <title>微信支付</title>
+</head>
+
+<body>
+    <form class="num">
+        <input type="text" placeholder="请输入手机号或者拉贝号" id="num" onfocus="showHistory()">
+        <div class="num_history">
+            <div></div>
+        </div>
+    </form>
+    <!-- <ul class="gold"> 
+    </ul> -->
+    <ul class="gold">
+        <li class="border-1px charge" _charge="11"><span class="amount">80金币</span><span id="price_1" class="price">￥8</span></li>
+        <li class="border-1px charge" _charge="19"><span class="amount">480金币</span><span id="price_1" class="price">￥48</span></li>
+        <li class="border-1px charge" _charge="20"><span class="amount">980金币</span><span id="price_1" class="price">￥98</span></li>
+        <li class="border-1px charge" _charge="21"><span class="amount">1980金币</span><span id="price_1" class="price">￥198</span></li>
+        <li class="border-1px charge" _charge="22"><span class="amount">4980金币</span><span id="price_1" class="price">￥498</span></li>
+        <li class="border-1px charge" _charge="23"><span class="amount">9980金币</span><span id="price_1" class="price">￥998</span></li>
+        <li class="border-1px charge" _charge="24"><span class="amount">49980金币</span><span id="price_1" class="price">￥4998</span></li>
+        <li class="border-1px charge" _charge="25"><span class="amount">99990金币</span><span id="price_1" class="price">￥9999</span></li>
+        <li class="border-1px charge" _charge="26"><span class="amount">300000金币</span><span id="price_1" class="price">￥30000</span></li>
+        <li class="border-1px charge" _charge="27"><span class="amount">600000金币</span><span id="price_1" class="price">￥60000</span></li>
+    </ul>
+    <div class="mask"></div>
+    <div class="layer">
+        <div class="desc_confirm" id="desc_confirm"></div>
+        <div class="btn_group">
+            <span class="cancel" id="cancel">取消</span>
+            <span class="confirm" id="confirm">确认</span>
+        </div>
+    </div>
+    <div class="loading-box">
+        <div>
+            <img src="image/loading.gif">
+        </div>
+    </div>
+</body>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="../lib/zepto.min.js"></script>
+<script src="js/index.js"></script>
+<!-- <script src="../lib/vconsole.min.js"></script> -->
+
+</html>

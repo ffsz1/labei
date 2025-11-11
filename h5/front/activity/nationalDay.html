@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+  <title>国庆节活动</title>
+  <link rel="icon" href="./images/logo.png" type="image/png">
+  <link rel="stylesheet" href="../lib/reset.css" />
+  <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+  <link href="https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.0/animate.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/css/swiper.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/nationalDays.css">
+  <script type="text/javascript">
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          clientWidth = clientWidth > 750 ? 750 : clientWidth;
+          clientWidth = clientWidth < 320 ? 320 : clientWidth;
+          docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+        };
+      recalc();
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+</head>
+
+<body>
+  <!-- <div class="swiper-container">
+    <p class="flush">下拉刷新...</p>
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"> -->
+  <div class="national-day">
+    <img src="./images/nationalDay/bg_1.png" alt="bg_1">
+    <img src="./images/nationalDay/bg_2.png" alt="bg_2">
+    <div class="rule-open"></div>
+    <div class="bg_3">
+      <img src="./images/nationalDay/bg_3.png" alt="bg_3">
+      <div class="content">
+        <img src="./images/nationalDay/limit.png" alt="limit">
+        <div class="missions">
+          <img src="./images/nationalDay/mission.png" alt="mission">
+          <div class="mission-content">
+            <div class="mission-item">
+              <div class="mission">
+                <span class="seq">1</span>
+                <div class="info">
+                  <p>分享本活动页（<span id="one">0</span>/3）</p>
+                  <p>(完成任务+30积分)</p>
+                </div>
+              </div>
+              <img src="./images/nationalDay/go.png" alt="go" class="doMission" id="one-img">
+            </div>
+            <div class="mission-item">
+              <div class="mission">
+                <span class="seq">2</span>
+                <div class="info">
+                  <p>关注1个用户（<span id="two">0</span>/3）</p>
+                  <p>(完成任务+10积分)</p>
+                </div>
+              </div>
+              <img src="./images/nationalDay/unfinish.png" alt="unfinish" id="two-img">
+            </div>
+            <div class="mission-item">
+              <div class="mission">
+                <span class="seq">3</span>
+                <div class="info">
+                  <p>充值1次（<span id="three">0</span>/3）</p>
+                  <p>(完成任务+30积分)</p>
+                </div>
+              </div>
+              <img src="./images/nationalDay/unfinish.png" alt="unfinish" id="three-img">
+            </div>
+            <div class="mission-item">
+              <div class="mission">
+                <span class="seq">4</span>
+                <div class="info">
+                  <p>送出1个付费礼物（<span id="four">0</span>/3）</p>
+                  <p>(完成任务+30积分)</p>
+                </div>
+              </div>
+              <img src="./images/nationalDay/unfinish.png" alt="unfinish" id="four-img">
+            </div>
+            <div class="mission-item">
+              <div class="mission">
+                <span class="seq">5</span>
+                <div class="info">
+                  <p>在单个房间停留达10分钟</p>
+                  <p>(完成任务+10积分)</p>
+                </div>
+              </div>
+              <img src="./images/nationalDay/unfinish.png" alt="unfinish" id="five-img">
+            </div>
+          </div>
+        </div>
+        <div class="gift">
+          <img src="./images/nationalDay/gift.png" alt="gift">
+          <div class="bonus-content">
+            <div class="bonus-details">
+              <span>我的积分：</span>
+              <span id="point">0</span>
+              <span class="details">积分明细</span>
+            </div>
+            <div class="bonus first" data-value="100" data-id="1">100积分</div>
+            <div class="bonus second" data-value="200" data-id="2">200积分</div>
+            <div class="bonus third" data-value="500" data-id="3">500积分</div>
+            <div class="bonus fourth" data-value="80" data-id="4">80积分</div>
+            <div class="bonus fifth" data-value="120" data-id="5">120积分</div>
+            <div class="bonus sixth" data-value="2000" data-id="6">2000积分</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div>
+    </div>
+  </div> -->
+  <div class="pop-up rule-popup" style="display: none;">
+    <div class="rule">
+      <img src="./images/nationalDay/close.png" alt="close" class="rule-close">
+      <ol type="1">
+        <li>1、活动时间：2020年10月1日-8日</li>
+        <li>2、礼物限时上线，将会在10月8日24时下线；</li>
+        <li>3、积分兑换商店，积分仅在活动期间内有效，请在活动期间内使用。积分兑换的头饰和座驾会进入到商城，请自行佩戴，金币自动进入到余额，靓号请联系官方领取；</li>
+        <li>4、通过官方活动和渠道获取的一切礼物道具等，禁止线下交易/收购等不正当行为，拉贝星球将对各类以盈利为目的交易行为进行严厉打击；</li>
+        <li>5、活动有任何问题请咨询官方客服（微信客服号xxx），本活动与苹果公司无关，最终解释权归拉贝星球官方所有。</li>
+      </ol>
+    </div>
+  </div>
+  <div class="pop-up point-popup" style="display: none;">
+    <div class="point">
+      <img src="./images/nationalDay/close.png" alt="close" class="point-close">
+      <div class="messages"></div>
+    </div>
+  </div>
+  <div class="pop-up dialog-popup">
+    <div class="dialog">
+      <p id="dialog-id" style="display: none;"></p>
+      <p id="text" style="margin-top: .5rem; text-align: center;">活动已结束！</p>
+      <!-- <div class="btn-group">
+        <img src="./images/nationalDay/cancel.png" alt="cancel" id="cancel">
+        <img src="./images/nationalDay/confirm.png" alt="confirm" id="confirm">
+      </div> -->
+    </div>
+  </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<script src="../lib/common.js"></script>
+<script src="./js/nationalDays.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script> -->
+
+</html>

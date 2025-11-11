@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <title>人气之星榜</title>
+    <link rel="icon" href="./images/logo.png" type="image/png">
+    <link href="../lib/normalize.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.0/animate.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/css/swiper.min.css" rel="stylesheet" />
+    <link href="../lib/toolKit/css/index.css" rel="stylesheet">
+    <link href="./css/popularActivity.css" rel="stylesheet">
+    <script type="text/javascript">
+      (function (doc, win) {
+        var docEl = doc.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+          recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            clientWidth = clientWidth > 750 ? 750 : clientWidth;
+            clientWidth = clientWidth < 320 ? 320 : clientWidth;
+            docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+          };
+        recalc();
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+      })(document, window);
+    </script>
+</head>
+<body>
+    <div class="popular-activity">
+        <div class="background-box">
+            <img class="lazy" src="./images/list_1.png" alt="list_1" />
+            <img class="lazy" src="./images/list_2.png" alt="list_2" />
+            <div class="activity-rule"></div>
+        </div>
+        <div class="background-box">
+            <img class="lazy" src="./images/list_3.png" alt="list_3" />
+            <img src="./images/last_week.png" alt="last_week" class="last-week-list">
+            <div class="list" id="list-btn">
+                <img src="./images/girl_list_selected.png" alt="girls" class="girls-list" />
+                <img src="./images/boy_list.png" alt="boys" class="boys-list" />
+            </div>
+            <div class="last-week-list"></div>
+            <div class="rank">
+                <h2>根据收到的人气票的数量进行排名</h2>
+                <div class="view">
+                    <div class="swiper-container swiper-container-h">
+                        <div class="swiper-wrapper">
+                            <div class="girl-rank swiper-slide"></div>
+                            <div class="boy-rank swiper-slide"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-tips" id="slide-tips">滑动查看更多</div>
+            </div>
+        </div>
+        <div class="background-box">
+            <img class="lazy" src="./images/list_4.png" alt="list_4" />
+            <img class="lazy" src="./images/list_5.png" alt="list_5" />
+        </div>
+        <div class="footer">
+            <div class="head">
+                <img src="./images/head.png" alt="head" width="50" id="avatar" />
+            </div>
+            <div class="my-rank">
+                <p id="nick"></p>
+                <p class="footer-black">我的排名: <span id="rank"></span></p>
+            </div>
+            <div class="send-receive">
+                <p>
+                    <span class="footer-black">收到</span>
+                    <img src="./images/popular_ticket.png" alt="ticket" width="50" />
+                    <span id="receipt"></span>
+                </p>
+                <p>
+                    <span class="footer-black">送出</span>
+                    <img src="./images/popular_ticket.png" alt="ticket" width="50" />
+                    <span id="send"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="pop-up" id="pop-up-rule">
+        <div class="rule">
+            <img class="lazy" src="./images/rule_1.png" alt="rule_1" />
+            <img class="lazy" src="./images/rule_2.png" alt="rule_2" />
+            <img class="lazy" src="./images/rule_3.png" alt="rule_3" />
+        </div>
+        <div class="close-rule"></div>
+    </div>
+    <div class="pop-up" id="last-week-rank">
+        <div class="last-week">
+            <img src="./images/dialog.png" alt="bg" class="background" />
+            <img src="./images/close.png" alt="close-week" class="close-week" id="close-week" />
+            <div class="rank-list">
+                <div class="rank-girl">
+                    <h2><img src="./images/girl_list_selected.png" alt="girls-list" width="150"></h2>
+                    <div class="lists"></div>
+                </div>
+                <div class="rank-boy">
+                    <h2><img src="./images/boy_list_selected.png" alt="boys-list" width="150"></h2>
+                    <div class="lists"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pop-up" id="pop-up-star">
+        <div class="star">
+            <img src="./images/rank.png" alt="rank">
+            <div class="first">
+                <img src="./images/champion.png" alt="champion" class="champion" />
+                <img src="./images/head.png" alt="head" class="head" width="65">
+                <p class="name" id="name"></p>
+                <p class="vote" id="vote"></p>
+            </div>
+            <div class="second">
+                <img src="./images/runner_up.png" alt="runner_up" class="runner_up" />
+                <img src="./images/head.png" alt="head" class="head" width="65">
+                <p class="name" id="name"></p>
+                <p class="vote" id="vote"></p>
+            </div>
+            <div class="third">
+                <img src="./images/second_runner_up.png" alt="second_runner_up" class="second_runner_up" />
+                <img src="./images/head.png" alt="head" class="head" width="65">
+                <p class="name" id="name"></p>
+                <p class="vote" id="vote"></p>
+            </div>
+            <img src="./images/close.png" alt="close-star" class="close-star" id="close-star" />
+        </div>
+    </div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-lazyload@1.9.7/jquery.lazyload.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<script src="../lib/common.js"></script>
+<script src="./js/popularActivity.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script> -->
+</html>

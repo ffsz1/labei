@@ -1,0 +1,61 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>往期回顾</title>
+    <script type="text/javascript">
+        ! function() {
+            var documentElement = document.documentElement;
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseInt(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (a != real) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <div id="reviewBox" class="review-big-box">
+            <!-- <div class="review-box flex-row">
+                <div class="review-left">第 1 期</div>
+                <div class="review-right flex1">
+                    <p class="review-title">dddddddd</p>
+                    <p class="review-des">大部分人选了 4444</p>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</body>
+<script src="../lib/common.js"></script>
+<script src="../lib/zepto.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<!-- <script src="../lib/vconsole.min.js"></script> -->
+<script src="js/review.js"></script>
+<!-- <script>
+    $toast.show({
+                text: '活动尚未开启，敬请期待！',
+                time: 13000
+            })
+</script> -->
+
+</html>

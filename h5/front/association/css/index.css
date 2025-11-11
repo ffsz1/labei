@@ -1,0 +1,115 @@
+html, body, .association {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #f4f4f4;
+  font-size: .32rem;
+  display: flex;
+  flex-direction: column;
+  color: #333333;
+}
+
+.association>.association-info .data {
+  margin: .1rem .25rem .35rem;
+  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  padding: .35rem;
+}
+
+.association>.association-info .data>.data-title {
+  font-size: .24rem;
+  margin-bottom: .35rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.association>.association-info .data>.data-title>span:first-child {
+  color: #6e6e6e;
+}
+
+.association>.association-info .data>.data-grid {
+  display: flex;
+}
+
+.association>.association-info .data>.data-grid>.grid-item {
+  text-align: center;
+  font-size: .24rem;
+  width: 33%;
+}
+
+.association>.association-info .data>.data-grid>.grid-item>p:first-child {
+  font-weight: 600;
+  margin-bottom: .15rem;
+  font-size: .32rem;
+}
+
+.association>.association-info>.no-association {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.association>.association-info>.no-association>img {
+  width: 2rem;
+}
+
+.association>.association-info>.no-association>p {
+  margin-top: .2rem;
+  color: #a4a4a4;
+  font-size: .28rem;
+}
+
+.association>.association-recommend {
+  height: 100%;
+  background: #FFFFFF;
+  border-radius: 18px 18px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.association>.association-recommend>.recommend-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem .35rem;
+}
+
+.association>.association-recommend>.recommend-title>span {
+  font-weight: 600;
+}
+
+.association>.association-recommend>.recommend-title>img {
+  width: .46rem;
+}
+
+.association-recommend>.recommend-list {
+  padding: 0 .35rem;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.association-recommend>.recommend-list::-webkit-scrollbar {
+  display: none;
+}
+
+.association>.footer {
+  text-align: center;
+  padding: .2rem 0;
+  width: 100%;
+  font-size: .28rem;
+  background-color: #ffffff;
+  color: #A4A4A4;
+}
+
+.notice>img {
+  position: fixed;
+  right: .15rem;
+  bottom: 1rem;
+  width: .35rem;
+  box-shadow: 0px 0px 6px 0px rgba(204, 204, 204, 0.5);
+  background: #FFFFFF;
+  padding: .2rem;
+  border-radius: 50%;
+  z-index: 2;
+}

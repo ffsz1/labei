@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>机甲之魂，聚破晓之势</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 0;
+        }
+        
+        html,
+        body {
+            background: #1a1937
+        }
+        
+        img {
+            margin-top: -1px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./img/1.jpg" width="100%">
+    <img src="./img/2.jpg" width="100%">
+    <img src="./img/3.jpg" width="100%">
+</body>
+<script src="../lib/common.js"></script>
+<script>
+    var share = {
+        title: '机甲之魂，聚破晓之势', // 分享标题
+        link: allUrl() + '/front/download/download.html', // 分享链接
+        imgUrl: allUrl() + '/home/images/logo.png',
+        desc: '您的守护机甲已升级完毕' // 分享描述
+    };
+
+    function shareInfo() {
+        var info = {
+            title: '机甲之魂，聚破晓之势', // 分享标题
+            showUrl: allUrl() + '/front/download/download.html',
+            imgUrl: allUrl() + '/home/images/logo.png',
+            desc: '您的守护机甲已升级完毕' // 分享描述
+        };
+        return JSON.stringify(info);
+    }
+    var browser = checkVersion();
+    if (browser.android) {
+        window.androidJsObj.showShareButton(true)
+    }
+</script>
+
+</html>

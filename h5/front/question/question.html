@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <script type="text/javascript">
+        var FS = {};
+        (function (win, FS) {
+            var doc = win.document;
+            var docEl = doc.documentElement;
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+            var dpr = 1;
+            var scale = 1;
+            var fontBase = 16;
+
+            if (window.devicePixelRatio >= 2) {
+                scale *= 0.5;
+                dpr *= 2;
+            }
+
+            docEl.setAttribute('data-dpr', dpr);
+            metaEl.setAttribute('content', 'initial-scale=' + scale + ', width=device-width, maximum-scale=' +
+                scale +
+                ', user-scalable=no');
+
+            function refreshRem() {
+                var width = docEl.getBoundingClientRect().width;
+                var rem = width / 10;
+                docEl.style.fontSize = rem + 'px';
+                FS.rem = rem;
+            }
+
+            var tid = null;
+            win.addEventListener('resize', function () {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }, false);
+
+            if (doc.readyState === 'complete') {
+                doc.body.style.fontSize = fontBase * dpr + 'px';
+            } else {
+                doc.addEventListener('DOMContentLoaded', function (e) {
+                    doc.body.style.fontSize = fontBase * dpr + 'px';
+                }, false);
+            }
+
+            refreshRem();
+
+            FS.dpr = dpr;
+            FS.rem2px = function (d) {
+                var val = parseFloat(d) * FS.rem;
+                if (typeof d === 'string' && d.match(/rem$/)) {
+                    val += 'px';
+                }
+                return val;
+            }
+            FS.px2rem = function (d) {
+                var val = parseFloat(d) / FS.rem;
+                if (typeof d === 'string' && d.match(/px$/)) {
+                    val += 'rem';
+                }
+                return val;
+            }
+        })(window, FS);
+    </script>
+    <title>常见问题</title>
+    <style> 
+        *{
+            margin: 0;
+            padding:0;
+        }
+        body{
+            padding: 0.5rem;
+        }
+        p {
+            font-size: 0.4rem;
+            color: #1a1a1a;
+        }
+
+        .title {
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="title">1. 常见问题</p>
+    <p>拉贝管理规定</p>
+    <p>拉贝是一个有趣又有爱的交友社区，为了营造更健康、温暖的交友氛围，拉贝在此明确违规条例，并将依据本规范对所有用户和发布的动态进行管理。</p>
+    <p>如果您发现他人发布违反该规范的信息，可以进行举报。</p>
+    <br>
+    <p>当发现以下情况，拉贝会对动态进行沉没或删除处理，严重的将进行封号处理。首次封禁一天，二次封禁7天，三次永久封禁。</p>
+    <p>违规情况:</p>
+    <p>1、具有广告性质的内容：包含频道号、微信号、QQ号等账号信息，以及推销商品、其他应用、网店等。</p>
+    <p>2、淫秽色情的内容：包含色情图片，请求加好友以传播色情视频等。</p>
+    <p>3、辱骂、骚扰他人、恶意刷屏等违反网络道德的内容。</p>
+    <p>4、暴力、血腥或涉及赌博等引起人不安的内容。</p>
+    <p>5、违法内容：传播违反国家安全、破坏国家团结等信息。</p>
+    <br>
+    <p>拉贝动态管理规定</p>
+    <p>一、广告宣传类:</p>
+    <p>宣传、鼓励使用或购买其他产品，以获利为目的的鼓吹、推荐行为；</p>
+    <p>1. 宣传其他应用、商品、店铺言论和图片的；</p>
+    <p>2. 留微信号、QQ号、手机号等引导到其他平台，涉嫌诈骗、非法获利广告行为的；</p>
+    <p>3. 宣传小房间号、宣传主播YY号、频道号、求土豪包养、求送花等，引导到产品内其他版块广告行为的；</p>
+    <p>4. 公然要求磕音、要求连麦陪睡、加好友发红包等低俗、或涉及资金宣传行为的。</p>
+    <p>二、淫秽色情类:</p>
+    <p>指以引起性兴奋为目的，而展示或描述男、女性行为的图片或文字，包含但不限于以下内容;</p>
+    <p>1. 散布淫秽、色情内容，包括但不限于招嫖、寻找一夜情、性伴侣等内容；</p>
+    <p>2. 色情擦边、性暗示类信息内容，以此来达到吸引用户的目的；</p>
+    <p>3. 以色情为目的的情色文字、情色视频、情色漫画等内容，但不限于上述形式。</p>
+    <p>三、网络道德类:</p>
+    <p>指不尊重拉贝用户，影响和损害其他用户正常使用拉贝星球的不友善行为；</p>
+    <p>1. 恶意骚扰用户的，尤其是女性用户；</p>
+    <p>2. 污言秽语、侮辱他人、诽谤他人、人身攻击的；</p>
+    <p>3. 恶意灌水、刷屏，恶意重复评论、发表与社区氛围明显不符的内容或言论的；</p>
+    <p>4. 涉及泄露他人隐私信息的；</p>
+    <p>5. 发布明显不符合所在版块主题、规范内容的；</p>
+    <p>6. 其他侵害他人合法权益行为的。</p>
+    <p>四、暴力赌博类:</p>
+    <p>宣扬或者呈现暴力行为、暴力场景、武器使用等言论或图片；</p>
+    <p>1. 散播人或动物被杀、致残以及枪击、刺伤、拷打等受伤情形的真实画面；</p>
+    <p>2. 出现描绘暴力、自残等内容；</p>
+    <p>3. 涉及令人不安的血腥场景的；</p>
+    <p>4. 出现以鼓励非法或鲁莽使用方式等为目的而描述真实武器的内容;</p>
+    <p>5. 发送组织聚众赌博、出售赌博器具、传授赌博（千术）技巧、方式、方法等内容。</p>
+    <p>五、法律法规类:</p>
+    <p>根据《互联网新闻信息服务管理规定》，用户的言论不得违反以下法律法规;</p>
+    <p>1. 发布违反宪法确定的基本原则的内容；</p>
+    <p>2. 危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的；</p>
+    <p>3. 损害国家荣誉和利益的</p>；
+    <p>4. 煽动民族仇恨、民族歧视，破坏民族团结的；</p>
+    <p>5. 破坏国家宗教政策，宣扬邪教和封建迷信的；</p>
+    <p>6. 散布谣言，扰乱社会秩序，破坏社会稳定的；</p>
+    <p>7. 煽动非法集会、结社、游行、示威、聚众扰乱社会秩序的；</p>
+    <p>8. 以非法民间组织名义活动的；</p>
+    <p>9. 侵害他人知识产权，剽窃他人作品的；</p>
+    <p>10. 含有法律、行政法规禁止的其他内容的。</p>
+    <p>声明</p>
+    <br>
+    <!-- <p class="title">2. 收益方案说明</p>
+    <p>拉贝官方出于维护拉贝社区氛围和秩序的目的，会不断完善本规定。最终解释权归拉贝星球所有。</p>
+    <br> -->
+    <!-- <p class="title">3. 如何提现说明</p>
+    <p>1. 下载-注册-绑定手机号，支付宝账号-我的-我的钱包-我的收益-提现</p> -->
+    <br>
+    <p class="title">2. 如何申诉</p>
+    <p>1. 如果您在使用拉贝的过程中，违反了相关规定，会遭到相应的封禁处罚。如对封禁存疑，请联系拉贝客服微信号，认准“ 拉贝官方客服 ”唯一申诉账号进行申诉。</p>
+    <p>2. 申诉方式：发送以下信息至拉贝微信客服：miaomiaoyuyin7，完整提交以下信息之后，我们将在一个工作日内帮您解决。</p>
+    <p>（1）您的拉贝账号</p>
+    <p>（2）您的联系方式：手机号码或者微信</p>
+    <p>（3）申诉原因</p>
+    <div style="display:none">
+        <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+    </div>
+</body>
+</html>

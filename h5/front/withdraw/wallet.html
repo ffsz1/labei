@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name=viewport content="initial-scale=1,width=device-width,maximum-scale=1,user-scalable=no">
+  <meta http-equiv=X-UA-Compatible content="ie=edge">
+  <title>我的钱包</title>
+  <link rel="icon" href="../../images/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/base.css">
+    <script type=text/javascript>! function() { var documentElement=document.documentElement; var
+        resizeEvt='orientationchange' in window ? 'orientationchange' : 'resize' ; function resize() { var
+        clientWidth=documentElement.clientWidth; clientWidth=clientWidth>
+        750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseInt(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (a != real) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+        var callbackUrl = '?url=/front/withdraw/exchange.html';
+    </script>
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css?v=0">
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+      .wallet {
+        width: 100%;
+        height: 100%;
+        /* background: #FAFAFA; */
+      }
+      .info {
+        text-align: center;
+        padding: .5rem 0;
+      }
+      .info>p {
+        margin: .2rem 0;
+      }
+      .info>.avatar>img {
+        border-radius: 50%;
+        width: 2rem;
+      }
+      .diamond-count {
+        display: flex;
+        align-items: center;
+        width: 335px;
+        height: 106px;
+        background: url(./img/background-image.png) no-repeat center;
+        background-size: contain;
+        margin: 0 auto;
+        font-size: 14px;
+        color: #ffffff;
+        padding: 0 .4rem;
+      }
+      .diamond-count>.diamonds {
+        flex: 2;
+        margin-left: .1rem;
+      }
+    </style>
+</head>
+<body>
+  <div class="wallet">
+    <div class="info">
+      <div class="avatar">
+        <img src="./img/head.png" alt="header">
+      </div>
+      <p class="nick"></p>
+      <p class="id"></p>
+    </div>
+    <div class="diamond-count">
+      <img src="./img/diamonds.png" alt="diamonds" width="93">
+      <div class="diamonds">
+        <p>钻石</p>
+        <p class="diamond"></p>
+      </div>
+      <img src="./img/withdraw-exchange.png" alt="withdraw-exchange" width="86" id="exchange-btn">
+    </div>
+  </div>
+</body>
+<script src=../lib/common.js> </script>
+<!-- <script src="../lib/zepto.min.js"></script> -->
+<script src="../lib/jquery.min.js"></script>
+<script src="../lib/toolKit/js/index.js?v=0"></script>
+<script src="../lib/native.js"></script>
+<script src="./js/wallet.js"></script>
+</html>

@@ -1,0 +1,310 @@
+<html lang=en>
+
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content="initial-scale=1,width=device-width,maximum-scale=1,user-scalable=no">
+    <meta http-equiv=X-UA-Compatible content="ie=edge">
+    <title>拉贝充值中心</title>
+    <link rel="icon" href="./img/logo.png" type="image/png" />
+    <link rel="shortcut icon" href="./img/logo.png" type="image/png"/>
+    <link rel=stylesheet href=./css/index.css>
+    <style type=text/css>
+        a,
+        abbr,
+        acronym,
+        address,
+        applet,
+        article,
+        aside,
+        audio,
+        b,
+        big,
+        blockquote,
+        body,
+        canvas,
+        caption,
+        center,
+        cite,
+        code,
+        dd,
+        del,
+        details,
+        dfn,
+        div,
+        dl,
+        dt,
+        em,
+        embed,
+        fieldset,
+        figcaption,
+        figure,
+        footer,
+        form,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        header,
+        html,
+        i,
+        iframe,
+        img,
+        input,
+        ins,
+        kbd,
+        label,
+        legend,
+        li,
+        mark,
+        menu,
+        nav,
+        object,
+        ol,
+        output,
+        p,
+        pre,
+        q,
+        ruby,
+        s,
+        samp,
+        section,
+        small,
+        span,
+        strike,
+        strong,
+        sub,
+        summary,
+        sup,
+        table,
+        tbody,
+        td,
+        tfoot,
+        th,
+        thead,
+        time,
+        tr,
+        tt,
+        u,
+        ul,
+        var,
+        video {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+            font-weight: 400;
+            font-size: 100%
+        }
+        
+        input,
+        select {
+            outline: 0
+        }
+        
+        li {
+            list-style: none;
+            font-size: 0
+        }
+        
+        a,
+        a:hover {
+            color: #2c2c2c;
+            text-decoration: none
+        }
+        
+        i {
+            font-style: inherit
+        }
+        
+        body {
+            min-height: 100%;
+            min-width: 320px;
+            margin: 0 auto;
+            max-width: 750px;
+            font-size: 16px;
+            -webkit-text-size-adjust: none
+        }
+        
+        html {
+            -webkit-text-size-adjust: none;
+            width: 100%;
+            height: 100%
+        }
+        
+        ol,
+        ul {
+            list-style: none
+        }
+        
+        a {
+            text-decoration: none
+        }
+        
+        a:hover {
+            text-decoration: underline
+        }
+        
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        .button-group {
+            display: flex;
+            padding: 0 .5rem;
+        }
+
+        .button-group>img {
+            width: 50%;
+        }
+    </style>
+    <script type=text/javascript>
+        !function() {
+            var documentElement = document.documentElement;
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseInt(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (a != real) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+    </script>
+</head>
+
+<body>
+    <div class="shade" style="display:none"></div>
+    <div class="container">
+        <div class="inputArea">
+            <input id="userNo" maxlength="11" type="text" id="userNo" oninput="value=value.replace(/[^\d]/g, '')" placeholder="请输入需要充值的ID">
+            <div class="userNo_history"></div>
+        </div>
+        <div class="goldArea">
+            <h2>请选择充值金额</h2>
+            <div class="goldList b_box"></div>
+            <div class="tips">
+                <div class="tip-checkbox">
+                    <input type="checkbox" name="agree" id="agree" checked ='checked' />
+                    <label for="agree">同意</label>
+                    <a href="javascript:;" id="open-agreement">《充值服务协议》</a>
+                </div>
+                <p style="font-weight: 600;">温馨提示：</p>
+                <p>1、金币充值成功后无法退款，不可提现，未成年人请在监护人的陪同或许可下操作。</p>
+                <p class="special">2、充值金币仅限于拉贝星球APP内消费，警惕任何以套现返现、折扣代充、兼职刷单返现、高额返利、假冒客服等为理由的交易诈骗，本平台暂无QQ客服，请认准官方客服微信微信客服号xxx，切勿随意相信他人。</p>
+            </div>
+        </div>
+    </div>
+    <div class="agreement">
+        <div class="charge-agreement">
+            <img src="./img/close.png" alt="close" id="close-agreement" class="close-agreement" />
+            <h2>充值服务协议</h2>
+            <div class="content">
+                <p class="margin-under">尊敬的用户：</p>
+                <p class="margin-under">您好！</p>
+                <p class="margin-under">感谢您选择拉贝星球产品与服务（以下简称“拉贝星球”或“拉贝星球服务”）。在您使用拉贝星球充值服务前，请审慎阅读并充分理解以下所述条款的内容，特别是限制、排除或者免除责任的条款，限制、排除或者免责条款可能以加粗形式提示贵方注意。本服务协议即为您与拉贝星球团队之间关于使用拉贝星球充值服务所达成的协议（以下简称“本协议”），本协议旨在规范双方之间有关充值和使用拉贝星球金币服务相关的法律关系及权利义务。<span class="border">用户在使用拉贝星球充值服务之前，请仔细阅读并确认本服务协议，免除或者限制责任的条款将以粗体标识，您应重点阅读，如用户不同意本充值服务协议的任何条款，请不要使用本服务。用户选择充值金额以及支付方式进行金币充值、金币赠送或消费等金币功能的，即视为您已经阅读并完全同意本协议，自愿接受本协议的所有条款，否则您无权使用任何涉及金币的相关服务。</span></p>
+                <p class="margin-under border">特别提示：未成年用户使用拉贝星球充值服务，必须在法定监护人父母或其他监护人的陪同下审阅阅读本协议，并在接受本协议前取得征得父母或其他监护人同意。未成年用户使用本服务的，拉贝星球将视该用户已征得父母或其他监护人的同意。在此情况下，您及您的监护⼈应依照法律规定承担因此⽽导致的⼀切后果，拉贝星球对于未成年用户使用本服务的行为，以及因其使用本服务而产生的一切后果不承担任何责任。</p>
+                <h5>【金币使用规则】</h5>
+                <p>1.金币服务简介</p>
+                <p>金币是拉贝星球为您提供的一种虚拟货币，可以用于购买拉贝星球提供的各项付费业务和增值服务等拉贝星球认可的服务或商品。<span class="border">⽤户了解及确认，⽤户购买及使⽤金币的平台范围以拉贝星球认可的范围为准。除“拉贝星球”移动客户端外，如⽤户通过拉贝星球认可的其他平台 （以下简称“第三⽅平台”）使⽤拉贝星球服务的，购买及使⽤金币以拉贝星球认可的范围为准。若涉及使⽤第三⽅平台虚拟币，⽤户须另⾏遵守第三⽅平台相应的虚拟币充值及使⽤规则。</span></p>
+                <p>2.金币注册规则</p>
+                <p>2.1 您不需要另外开通金币账户，只需在拉贝星球平台上注册拉贝星球账号，即可使用金币进行消费。</p>
+                <p>2.2 您承诺以个人真实、合法、有效的身份注册成为拉贝星球的主播，并依据法律规定和本协议条款约定对所提供的信息承担相应的法律责任。</p>
+                <p>3.金币使用规则</p>
+                <p>3.1 请您务必通过拉贝星球官方渠道充值金币，拉贝星球为您提供支付宝、微信等方式进行充值。</p>
+                <p>3.2 若您使用非拉贝星球官方网络所指定的充值方式或系统进行充值，或以非法的方式进行充值，是对拉贝星球金币服务正常秩序的严重干扰和破坏，严重侵害拉贝星球和相关方的合法权益，拉贝星球有权随时不经通知而终止您账户资格及使用各项充值服务的权利，并保留追究贵方法律责任的权利。</p>
+                <p class="border">3.3 在使用充值系统时，您必须仔细确认自己的账号，若因为您自身输入账号错误、操作不当、自身选择金额有误或不了解充值计费方式等因素造成充错账号、错选充值种类等情形而造成自身损失的，拉贝星球不作任何退款、补偿或赔偿。</p>
+                <p class="border">3.4 金币账户不支持退款和提现。您一旦充值金币成功，购买金币的相关费用和利用金币购买的相关产品将不得以任何理由予以退回，且金币不能兑换为人民币。</p>
+                <p>4.金币安全规则</p>
+                <p class="border">4.1 您必须妥善保管好自己的帐号和密码，加强密码安全性，谨防泄露或被盗。拉贝星球会采取严格措施保护您的账户安全，但对您的账户安全不做保证。因第三方或者不可抗力的原因导致账户信息泄露或被盗而造成的金币损失，拉贝星球不承担任何赔偿责任。</p>
+                <p class="border">4.2 若您的金币金额或使用情况存在异常，拉贝星球有权作出单方判断并立即冻结该帐号直至情况查清楚。</p>
+                <p class="border">4.3 若用户在金币的使用中存在违法违规情况，拉贝星球有权作出单方判断并拒绝该您使用金币进行支付、冻结帐号并追究用户相应的法律责任。</p>
+                <p class="border">4.4 拉贝星球对您帐户里的金币金额拥有解释权和决定权，若无相反证据，以拉贝星球后台记录数据为准。</p>
+                <p>4.5 因用户自身的原因导致拉贝星球无法提供充值服务或提供充值服务时发生任何错误而产生的任何损失，由用户自行负责，拉贝星球不提供退、换服务，亦不会作出任何补偿或赔偿，包括但不限于：</p>
+                <p>（1）用户未按照本协议或拉贝星球不时公布和更新的平台规则进行充值操作；</p>
+                <p>（2）因用户的账号失效、丢失、被封停；</p>
+                <p>（3）因用户自身输⼊账号错误、操作不当等因素造成充错账号、错选充值种类、错选充值金额；</p>
+                <p>（4）因⽤户绑定的第三方支付账户之原因导致的损失，包括但不限于第三方支付账户被冻结、查封等；</p>
+                <p>（5）因用户设置或管理密码不当导致的财产损失；</p>
+                <p class="margin-under">（6）因用户个人的故意或重大过失所造成的财产损失。</p>
+                <h5>【您的权利义务】</h5>
+                <p>1.您的权利</p>
+                <p>1.1 您有权根据本协议的规定，使用拉贝星球金币服务，登录充值平台，进行充值金币、在拉贝星球平台进行消费或购买拉贝星球认可的增值服务。</p>
+                <p>1.2 您有权要求拉贝星球及时公示金币用于各类活动的使用规则及消费细则，并对相关活动进行投诉、发表意见或者提出建议。</p>
+                <p>1.3 您有权根据拉贝星球网站规定，享受拉贝星球提供的其它服务。</p>
+                <p>1.4 您发现账号或密码被他人非法使用或有其他使用异常的情况的，应及时根据拉贝星球公布的处理方式进行通知，并有权通知拉贝星球采取紧急措施暂停该账号的登录和使用。</p>
+                <p>1.5 您在拉贝星球平台交易过程中如与其他用户因交易产生纠纷，可以请求拉贝星球从中予以协调。您如发现其他用户有违法或违反本协议的行为，可以向拉贝星球举报。如您因网上交易与其他用户产生诉讼的，您有权通过司法部门要求拉贝星球提供相关资料。</p>
+                <p>2.您的义务</p>
+                <p>2.1 您有义务确保您向本网站提供的任何资料、注册信息真实准确，包括但不限于真实姓名、身份证号、联系电话、地址、邮政编码等。保证本网站可以通过上述联系方式与您进行联系。同时，在上述信息发生变更时，您有义务及时更新有关注册资料。</p>
+                <p class="border">2.2 您不得通过直接或间接手段贩卖金币，不得进行任何有偿转让金币的行为，一经发现，拉贝星球有权直接采取包括但不限于直接封禁您的账号等一切必要措施，并保留通过法律手段追回因非法金币交易而给拉贝星球造成的直接或间接经济损失的权利。</p>
+                <p class="border">2.3 您不得通过任何手段恶意注册金币帐号，包括但不限于以牟利、炒作、套现、获奖等为目的注册多个账号，或盗用其他用户帐号。一经发现，拉贝星球有权直接采取包括但不限于直接禁封您的账号等一切必要的措施，并保留通过法律手段追回因非法金币交易而给拉贝星球造成的直接或间接经济损失的权利。</p>
+                <p class="border">2.4 金币仅为购买拉贝星球提供的各种付费业务使用的虚拟货币，严禁您利用金币进行赌博、洗钱等非法行为，一经发现，拉贝星球有权直接采取包括但不限于直接封禁您的账号等一切必要措施，并保留通过法律手段追回因非法金币交易而给拉贝星球造成的直接或间接经济损失的权利。</p>
+                <p>2.5 您承诺自己在使用本网站网上交易平台实施的所有行为遵守国家法律、法规和本网站的相关规定以及各种社会公共利益或公共道德。对于任何法律后果的发生，您将以自己的名义独立承担所有相应的法律责任。</p>
+                <p class="margin-under">2.6 您违反有关法律、法规或本协议项下的任何条款而给拉贝星球或任何其他第三人造成损失，您同意承担由此造成的所有损害赔偿责任。</p>
+                <h5>【反洗钱、反贪污、反贿赂】</h5>
+                <p>1. 用户保证使用拉贝星球充值服务的资金为合法收入所得，来源符合法律的规定，非毒品犯罪、黑社会性质的组织犯罪、恐怖活动犯罪、走私犯罪、贪污贿赂犯罪、破坏金融管理秩序犯罪、金融诈骗犯罪的所得及其产生的收益，并保证拉贝星球金币的用途合法，绝不用于任何非法目的。</p>
+                <p>2. 用户及其相关人员保证，不向拉贝星球团队及其关联企业员工、顾问提供或给付任何形式的贿赂或不正当利益，包括但不限于回扣、佣金、好处费、礼品、有价证券、馈赠及招待等。同时，用户及其相关人员亦保证不得为自己或他人利益直接或间接利诱或唆使拉贝星球团队员工收受贿赂、违背职务或离职等。</p>
+                <p>3. 拉贝星球团队负责人、经办人或其他员工违反法律和公司规则制度向用户索要或接受贿赂及其他不正当利益的，或用户发现他人涉嫌洗钱的，用户应及时向拉贝星球团队举报。</p>
+                <p class="margin-under">4. 如用户存在上述贿赂、洗钱行为的，拉贝星球团队有权立即解除本协议，终止向用户提供金币服务，冻结用户账号，并要求乙方承担违约责任，并以用户获取的不正当利益总金额作为违约金向拉贝星球团队赔偿。</p>
+                <h5>【服务变更、中止或终止】</h5>
+                <p class="border">1.拉贝星球可以根据业务需求随时变更服务或更新本协议的条款，但会通过相关途径及时向您告知修改内容。修改后的服务协议一旦公布即代替原服务协议。用户可随时在原有的在线充值付费界面查阅最新充值服务协议。</p>
+                <p class="border">2. 您在使用金币服务时实施违反法律禁止性规定的行为，拉贝星球有权立即终止对您提供服务。</p>
+                <p class="border">3. 您在接受拉贝星球服务时实施不正当行为的，拉贝星球有权终止对您提供服务。该不正当行为的具体情形会在本协议中关于您的义务里面有明确约定或属于拉贝星球事先明确告知的应被终止服务的禁止性行为。</p>
+                <p class="margin-under border">4. 您提供虚假注册身份信息，或实施违反本协议的行为，拉贝星球有权中止对您提供全部或部分服务；拉贝星球采取中止措施一般会通知您并告知中止期间，中止期间届满拉贝星球会及时恢复对您的服务。</p>
+                <h5>【隐私政策】</h5>
+                <p>拉贝星球团队非常重视贵方的隐私和个人信息，为此我们专门制定了《隐私政策》，希望向您说明我们在贵方使用拉贝星球服务时收集何种信息以及如何收集、使用和保护这些信息。</p>
+                <p class="margin-under">在使用拉贝星球服务前，请您务必仔细阅读我们的隐私政策。除非贵方已阅读并接受本协议的全部条款，否则请贵方立即停止使用拉贝星球服务。一旦贵方选择注册了拉贝星球账号或以第三方平台账号登录或实际使用拉贝星球服务，即视为贵方已充分理解并接受本隐私政策。</p>
+                <h5>【免责声明】</h5>
+                <p>1. 拉贝星球为您提供的是信息平台服务，而非与其他用户或者第三方共同提供具体、特定的产品或服务。<span class="border">您明确同意您使用拉贝星球充值服务所存在的一切风险将完全由您自己承担；因其使用拉贝星球充值服务而产生的一切后果也由您自己承担，拉贝星球对您个人行为不承担任何法律责任。</span></p>
+                <p class="border">2.如果您行使本协议规定的权利而购买/接受拉贝星球以外的第三方商户提供的商品或服务，如因此发生纠纷的，您应向销售/提供该商品或服务的第三方商户主张权利，与拉贝星球无关。</p>
+                <p class="border">3.您须对您自身及您所邀请的用户在参加拉贝星球的活动或使用由拉贝星球提供的各项优惠及增值服务时的实施的一切行为承担全部法律责任。</p>
+                <p class="border">4. 拉贝星球不对您因第三方的行为或不作为造成的损失、不可抗力原因造成的损失承担任何责任，包括但不限于支付服务、网络接入服务、电信部门的通讯线路故障、通讯技术问题、网络、电脑故障、系统不稳定性、任意第三方的侵权行为等。</p>
+                <p class="border">5. 若因您违反本协议条款，导致拉贝星球冻结或终止您账号使用资格的，拉贝星球不作任何补偿或赔偿。</p>
+                <p class="margin-under">6. 因不可抗力或者其他意外事件，使得本协议的履行不可能、不必要或者无意义的，双方均不承担责任。本协议所称之不可抗力意指不能预见、不能避免并不能克服的客观情况，包括但不限于战争、台风、水灾、火灾、雷击或地震、罢工、暴动、法定疾病、黑客攻击、网站受攻击、网络病毒、互联网正常的设备维护、互联网络连接故障、电脑、通讯或其他系统的故障、电力故障、计算机设施或操作系统软件本身固有的技术缺陷、电信部门技术管制、政府行为或任何其它自然或人为造成的灾难等客观情况。</p>
+                <h5>【其他】</h5>
+                <p>1. 本协议是《拉贝星球服务协议》不可分割的一部分，本协议未明确记载的内容，以《拉贝星球服务协议》相关条款为准。</p>
+                <p>2. 本协议各条款是可分的，所约定的任何条款如果部分或者全部无效，不影响该条款其他部分及本协议其他条款的法律效力。</p>
+                <p>3. 本协议项下所有的通知均可通过页面公告、电子邮件或常规信件等方式告知用户，该等通知于发送之日视为已送达收件人并生效。</p>
+                <p class="border">4. 本协议及相关服务条款如由于业务发展需要进行修订的，拉贝星球将在“拉贝星球”移动客户端进行公布。您可前往查阅最新版协议条款。在拉贝星球修改上述条款后，如果您不接受修改后的条款，您可以选择终止使用充值服务。您继续使用本服务的，将被视为已接受了修改后的协议。</p>
+                <p>5. 拉贝星球不⾏使、未能及时⾏使或者未充分⾏使本协议或者按照法律规定所享有的权利，不应被视为放弃该权利，也不影响拉贝星球在将来⾏使该权利。</p>
+                <p>6. 本协议最终解释权归属拉贝星球团队。</p>
+            </div>
+        </div>
+    </div>
+    <div class="pop-up">
+        <div class="pop-up-dialog">
+            <header>
+                <h3>安全提醒</h3>
+            </header>
+            <section>
+                <p>拉贝星球是一款语音直播社交类APP，充值仅用于本平台内消费；任何以<span class="special">套现返现、折扣代充、兼职刷单返现、高额返利、假冒客服</span>等为理由的交易行为均为<span class="special">诈骗</span>，请勿上当受骗。</p>
+            </section>
+            <footer>
+                <button>明白了</button>
+            </footer>
+        </div>
+    </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="../lib/pingpp.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<script src="../lib/common.js"></script>
+<script src="../lib/native.js"></script>
+<script src="./js/index.js"></script>
+<!-- <script src=../lib/vconsole.min.js></script> -->
+<!-- <script type="text/javascript">
+    // new VConsole();
+</script> -->
+</html>

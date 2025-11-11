@@ -1,0 +1,144 @@
+body,
+html {
+    height: 100%
+}
+
+.container {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #F0F0F0
+}
+
+.content {
+    width: 7.07rem;
+    border-radius: .2rem;
+    background-color: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: .2rem 0 .5rem 0
+}
+
+.list-title {
+    width: 100%;
+    height: 1.67rem;
+    border-bottom: .02rem dashed #E5E5E5;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box
+}
+
+.list-title-bottom {
+    width: .3rem;
+    height: .3rem;
+    position: absolute;
+    bottom: -.15rem;
+    background-color: #F0F0F0;
+    border-radius: 50%
+}
+
+.list-title-bottom1 {
+    left: -.15rem
+}
+
+.list-title-bottom2 {
+    right: -.15rem
+}
+
+.list-title>span {
+    height: 100%;
+    width: 33.33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center
+}
+
+.list-title>span>p:nth-child(1) {
+    font-size: .26rem;
+    color: #8E8E8E
+}
+
+.list-title>span>p:nth-child(2) {
+    font-size: .4rem;
+    color: #FF3B3B
+}
+
+.list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end
+}
+
+.list>li {
+    width: 6.65rem;
+    height: 1.22rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: .01rem solid #F0F0F0;
+    justify-content: space-between;
+    box-sizing: border-box
+}
+
+.list>li:nth-child(1) {
+    margin-top: .34rem
+}
+
+.list>li>span {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: .26rem;
+    color: #999
+}
+
+.list-time {
+    display: flex;
+    flex-direction: row;
+    margin-top: .15rem;
+    font-size: .22rem
+}
+
+.list-time>p:nth-child(1) {
+    margin-right: .1rem
+}
+
+.list>li>span:nth-child(2) {
+    align-items: center;
+    font-size: .3rem;
+    color: red;
+    margin-right: .6rem
+}
+
+.text-hidden {
+    max-width: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.list-member {
+    display: flex;
+    flex-direction: row
+}
+.list-member>p{
+    line-height: 1.5;
+}
+#btn-share {
+    width: 5.5rem;
+    height: 1.27rem;
+    position: fixed;
+    bottom: .2rem;
+    margin: auto;
+    left: 0;
+    right: 0
+}

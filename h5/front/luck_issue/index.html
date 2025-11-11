@@ -1,0 +1,55 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>幸运点点抽</title>
+    <script type="text/javascript">
+        ! function() {
+            var documentElement = document.documentElement;
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseFloat(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (Math.abs(a - real) > 1) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="popnone">
+        <div><img src="./images/none.png" class="none1"></div>
+        <p class="none2">小伙伴们正在努力建设中</p>
+    </div>
+</body>
+
+
+<script src="../lib/common.js"></script>
+<script src="../lib/zepto.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<!-- <script src="../lib/vconsole.min.js"></script> -->
+<!-- <script src="js/index.js"></script> -->
+<!-- <script>
+    $toast.show({
+                text: '活动尚未开启，敬请期待！',
+                time: 13000
+            })
+</script> -->
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实名认证</title>
+    <script src="../lib/rem1.js"></script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <p class="notice">根据相关规定，发布内容必须先完成实名认证</p>
+        <div class="list name">
+            <div class="left">
+                <label>真实姓名</label>
+            </div>
+            <div class="right">
+                <input type="text" placeholder="请输入您的真实姓名" maxlength="6" />
+            </div>
+        </div>
+        <div class="list sfz">
+            <div class="left">
+                <label>身份证号码</label>
+            </div>
+            <div class="right">
+                <input type="text" placeholder="请输入您的身份证号" maxlength="18" />
+            </div>
+        </div>
+        <!-- <div class="list phone">
+            <div class="left">
+                <label>手机号</label>
+            </div>
+            <div class="right">
+                <input type="number" placeholder="请输入您的手机号码" maxlength="11" />
+            </div>
+        </div>
+        <div class="list code">
+            <div class="left">
+                <label>验证码</label>
+                <span onclick="time_()" class="getCode">获取</span>
+            </div>
+            <div class="right">
+                <input type="number" placeholder="请输入您的手机验证码" maxlength="5" />
+            </div>
+        </div> -->
+        <div class="info_notice">
+            <label class="left">证件照上传</label><span>证件信息需真实清晰并与本人一致，否则无效</span>
+        </div>
+        <div class="imgFile">
+            <div class="aler3">上传身份证（国徽部分）</div>
+            <!-- <p><span>证件照上传</span><span>证件信息需真实清晰并与本人一致，否则无效</span></p> -->
+            <div class="file_">
+                <!-- <div class="top">上传身份证（国徽部分）</div> -->
+                <div class="bottom">
+                    <div class="bot-bot">
+                        <img src="images/renzheng_guohui.png" class="tu2">
+                        <!-- <img src="images/renzheng_tuli.png" alt=""> -->
+                    </div>
+                    <div class="bot-top">
+                        <div class="sfzImg"></div>
+                        <img src="images/jia.png" alt="" class="tu">
+                    </div>
+
+                </div>
+            </div>
+            <div class="aler3">上传身份证（个人信息部分）</div>
+            <div class="file_">
+                <!-- <div class="top">上传身份证（个人信息部分）</div> -->
+                <div class="bottom">
+                    <div class="bot-bot">
+                        <img src="images/renzheng_anli.png" class="tu2">
+                        <!-- <img src="images/renzheng_tuli.png" alt=""> -->
+                    </div>
+                    <div class="bot-top">
+                        <div class="sfzImg"></div>
+                        <img src="images/jia.png" alt="" class="tu">
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div class="aler3">上传本人手持身份证照</div>
+            <div class="file_">
+                <div class="top">上传本人手持身份证照</div>
+                <div class="bottom">
+                    <div class="bot-bot">
+                        <img src="images/renzheng_shouchi.png" class="tu2">
+                        <img src="images/renzheng_tuli.png" alt="">
+                    </div>
+                    <div class="bot-top">
+                        <div class="sfzImg"></div>
+                        <img src="images/jia.png" alt="" class="tu">
+                    </div>
+
+                </div>
+            </div> -->
+        </div>
+        <div class="tips">
+            <p>认证须知：</p>
+            <p>1.您所提供的身份信息仅用作身份验证，请放心填写；</p>
+            <p>2.官方不会收集未成年人信息，未成年人将不会通过信息认证；</p>
+            <p>3.实名认证仅支持中国（不含港澳台地区）的用户，其他用户请联系官方客服</p>
+        </div>
+        <div class="submit">
+            <button onclick="submit()">提交</button>
+        </div>
+    </div>
+    <div class="introduce">
+        <div class="mask"></div>
+        <div class="box">
+            <div class="tit">实名认证</div>
+            <div class="rule">
+                <span>根据相关规定，发布内容必须完成实名验证！</span><br>
+                <span>
+                    1.您的身份证信息用途仅为个人身份核实，绝无其 他用途；
+                </span><br>
+                <span>
+                    2.未成年人的验证信息不会通过审核；
+                </span><br>
+                <span>
+                    3.一个身份证/手机号最多为5个拉贝ID作实名认；
+                </span><br>
+                <span>
+                    4.当下仅支持中国内地公民身份证，港澳台用户请联系官方客服（yumengnb5）进行处理；
+                </span><br>
+                <span>
+                    5.首次验证且审核通过的身份证，可获得50金币；
+                </span>
+            </div>
+            <div class="intType">
+                <img src="" alt="">
+                <span></span>
+                <span></span>
+                <div>确定</div>
+            </div>
+            <img src="images/guanbi.png" alt="" class="close">
+        </div>
+    </div>
+    <!-- 实名信息已提交层 -->
+    <div class="submitted">
+        <div class="cover">
+            <img src="images/shenfenzheng.png" alt="id_submitted">
+            <p>实名信息已提交</p>
+            <span>审核中（1-7个工作日）</span>
+        </div>
+    </div>
+    <!-- 实名认证不通过层 -->
+    <div class="failed">
+        <div class="cover">
+            <img src="images/shenfen.png" alt="id_failed">
+            <p>实名认证不通过</p>
+            <span id="reason" style="color: red;">请重新填写真实信息，进行验证</span>
+            <button>重新验证</button>
+        </div>
+    </div>
+    <!-- 实名认证成功信息 -->
+    <div class="success">
+        <p>认证信息</p>
+        <div>
+            <!-- <p>您已通过实名认证申请，您提交认证信息如下：</p> -->
+            <div class="menber">
+                <img src="images/kapian.png" alt="">
+                <div>
+                    <p>个人信息</p>
+                    <span><span>真实姓名：</span><span>**</span></span>
+                    <!-- <span><span>手机号码：</span><span>**</span></span> -->
+                    <span><span>身份证号码：</span><span>**</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/jquery-3.2.1.min.js"></script>
+    <script src="../lib/toolKit/js/index.js"></script>
+    <script src="../lib/common.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+        eruda.init();
+    </script> -->
+
+    <script src="js/index.js"></script>
+    <!--script src="../lib/vconsole.min.js"></script-->
+</body>
+
+</html>

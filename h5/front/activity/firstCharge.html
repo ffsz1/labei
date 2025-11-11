@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <title>首充活动</title>
+    <link rel="icon" href="./images/logo.png" type="image/png">
+    <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.0/animate.min.css" rel="stylesheet">
+    <link href="../lib/toolKit/css/index.css" rel="stylesheet">
+    <link href="./css/firstCharge.css" rel="stylesheet">
+    <script type="text/javascript">
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                    clientWidth = clientWidth < 320 ? 320 : clientWidth;
+                    docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                };
+            recalc();
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</head>
+
+<body>
+    <div class="first-charge">
+        <div class="header">
+            <div class="display-board"></div>
+            <img src="./images/firstChargeImages/bg_header.png" alt="bg_header" class="img">
+            <div class="rule" id="rule"></div>
+            <div class="btn-group">
+                <div class="btn" id="btn_charge">
+                    <p>charge</p>
+                    <img src="./images/firstChargeImages/charge_button_selected.png" alt="charge_button">
+                </div>
+                <div class="btn" id="btn_lucky">
+                    <p>box</p>
+                    <img src="./images/firstChargeImages/lucky_box.png" alt="lucky_box">
+                </div>
+            </div>
+        </div>
+        <div class="content charge">
+            <img src="./images/firstChargeImages/bg_one.png" alt="headwear" class="img">
+            <img src="./images/firstChargeImages/bg_second.png" alt="car" class="img">
+            <div class="cumulative-charge">
+                <p>已累计充值</p>
+                <span><span id="cumulative-number">0</span>/1000</span>
+            </div>
+        </div>
+        <div class="content box" style="display: none;">
+            <img src="./images/firstChargeImages/bg_three.png" alt="lucky_gift" class="img">
+            <div class="lucky_button">
+                <p>我的幸运礼盒次数: <span>0</span></p>
+                <img src="./images/firstChargeImages/lucky_button.png" alt="lucky_button" class="img" id="lucky_btn">
+                <a href="javascript:;" id="gift-record">礼盒记录</a>
+            </div>
+        </div>
+        <div class="footer">
+            <p>点我充值</p>
+        </div>
+    </div>
+    <div class="fade-box fade-rule">
+        <div class="rule">
+            <img src="./images/firstChargeImages/bg_rule.png" alt="bg_rule" class="fade-bg">
+            <div class="rule-content">
+                <p>1、“首次充值”指的是在拉贝星球注册用户第1次进行金币充值；</p>
+                <p>2、充值开礼盒，每天任意首笔充值就可以获得1次开礼盒机会，仅限当天有效，过期不作补发；</p>
+                <p>3、安卓用户可在APP内【我的钱包】充值，IOS用户可在微信搜索【拉贝星球】公众号内进行充值；</p>
+                <p>4、首次充值完成后新贵头饰会自动发放，累计充值满1000元后专属头饰座驾会自动发放，开礼盒的奖励也会自动发放，届时请留意小秘书消息，若未发放请咨询官方客服（微信客服号xxx）；</p>
+                <p>5、奖励发放后，头饰和座驾将会进入【装扮商城】，请在有效期内使用，专属礼物将会进入【礼物盒-活动】；</p>
+                <p>6、活动期间严禁使用开小号等恶意违规手段获取奖励，平台将有权追回所有奖励并对账号进行相应的处罚；</p>
+                <p>7、通过官方活动和渠道获取的一切礼物道具等，禁止线下交易/收购等不正当行为，拉贝星球将对各类以盈利为目的交易行为进行严厉打击；</p>
+                <p>8、本活动与苹果公司无关，最终解释权归拉贝星球官方所有。</p>
+            </div>
+            <div class="close-btn">
+                <img src="./images/firstChargeImages/close.png" alt="close">
+            </div>
+        </div>
+    </div>
+    <div class="fade-box fade-notice">
+        <div class="notice">
+            <img src="./images/firstChargeImages/bg_tall.png" alt="bg_tall">
+            <div class="notice-content">
+                <p>正在努力完善中</p>
+                <p>请移步公众号内充值</p>
+                <p><span id="copy-text">公众号名字</span><a href="javascript:;" id="copy">复制</a></p>
+            </div>
+            <div class="btn">
+                <img src="./images/firstChargeImages/charge_finish.png" alt="charge_finish" id="charge_finish">
+            </div>
+            <div class="close-btn">
+                <img src="./images/firstChargeImages/close.png" alt="close">
+            </div>
+        </div>
+    </div>
+    <div class="fade-box fade-gift">
+        <div class="gift">
+            <img src="./images/firstChargeImages/bg_win.png" alt="bg_win">
+            <div class="gift-content">
+                <img src="" alt="gift">
+                <p></p>
+            </div>
+            <div class="close-btn">
+                <img src="./images/firstChargeImages/close.png" alt="close">
+            </div>
+        </div>
+    </div>
+    <div class="fade-box fade-record">
+        <div class="record">
+            <img src="./images/firstChargeImages/bg_grande.png" alt="bg_grande">
+            <div class="record-content"></div>
+            <div class="close-btn">
+                <img src="./images/firstChargeImages/close.png" alt="close">
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/1.0.0/clipboard.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/fastclick/0.1.0/fastclick.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/1.0.0/moment.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/1.0.0/lang/all.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<script src="../lib/common.js"></script>
+<script src="./js/firstCharge.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script> -->
+
+</html>

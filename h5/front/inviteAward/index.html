@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邀请好友赚红包</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <link rel="stylesheet" href="../tool/css/vant.css" />
+    <link rel="stylesheet" href="../tool/css/common.css" />
+    <script src="../lib/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.8/lib/vant.min.js"></script>
+    <script src="../lib/axios.js"></script>
+    <script src="../lib/api.js"></script>
+    <script src="../lib/rem.js"></script>
+    <script src="../lib/qs.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .content {
+            width: 100%;
+            height: 28.73rem;
+        }
+        
+        .part1 {
+            width: 8.32rem;
+            height: 5.53rem;
+            background: url('./imgs/bg_4@2x.png') no-repeat;
+            background-size: 100% 100%;
+            margin-top: 9.71rem;
+            padding-left: 0.72rem;
+        }
+        
+        .part1 .invitate {
+            width: 2.47rem;
+            height: 0.43rem;
+        }
+        
+        .part1 .input {
+            display: flex;
+            align-items: center;
+            width: 8.07rem;
+        }
+        
+        .part1 input {
+            width: 5.97rem;
+            height: 1.07rem;
+            background: rgba(255, 228, 231, 1);
+            border-radius: 0.27rem;
+            border: 0px;
+            font-size: 0.45rem;
+            padding-left: 0.2rem;
+        }
+        
+        .part1 .input div {
+            display: flex;
+            width: 1.52rem;
+            height: 1.07rem;
+            border-radius: 0.27rem;
+            margin-left: 0.35rem;
+            font-size: 0.4rem;
+            color: rgba(255, 255, 255, 1);
+            background: linear-gradient(90deg, rgba(148, 80, 241, 1), rgba(242, 86, 229, 1));
+        }
+        
+        .part1 .my_code {
+            display: flex;
+            margin-top: 0.2rem;
+        }
+        
+        .part1 .my_code div:nth-child(1) {
+            font-size: 0.45rem;
+            color: rgba(51, 51, 51, 1)
+        }
+        
+        .part1 .my_code div:nth-child(2) {
+            width: 1.09rem;
+            height: 0.57rem;
+            border: 1px solid rgba(160, 160, 160, 1);
+            border-radius: 0.13rem;
+            font-size: 0.32rem;
+            color: rgba(153, 153, 153, 1);
+            margin-left: 0.43rem;
+        }
+        
+        .part1 .button {
+            margin-top: 0.52rem;
+            display: flex;
+        }
+        
+        .part1 .button img {
+            width: 3.92rem;
+            height: 1.84rem;
+        }
+        
+        .part2 {
+            width: 8.57rem;
+            height: 8.03rem;
+            background: url('./imgs/bg_2@2x.png') no-repeat;
+            background-size: 100% 100%;
+            margin-top: 1.03rem;
+            position: relative;
+            padding-left: 0.47rem;
+        }
+        
+        .part2 .invate_title {
+            width: 2.48rem;
+            height: 0.91rem;
+            position: absolute;
+            top: -0.41rem;
+            left: 0.05rem;
+        }
+        
+        .part2 .invate_info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.4rem;
+            color: #333333;
+            width: 8.25rem;
+            margin-top: 0.59rem;
+        }
+        
+        .part2 .invate_info div:nth-child(1) {
+            width: 3rem;
+            display: flex;
+        }
+        
+        .part2 .invate_info div:nth-child(2) {
+            width: 3.5rem;
+            display: flex;
+        }
+        
+        .part2 .invate_info div:nth-child(3) {
+            width: 1.52rem;
+            height: 0.65rem;
+            background: linear-gradient(90deg, rgba(148, 80, 241, 1), rgba(242, 86, 229, 1));
+            border-radius: 0.2rem;
+            color: rgba(255, 255, 255, 1);
+        }
+        
+        .part2 .invate_info span {
+            font-size: 0.4rem;
+            color: rgba(255, 0, 0, 1);
+        }
+        
+        .part2 .invate_list {
+            margin-top: 0.3rem;
+            height: 6rem;
+            overflow-y: scroll;
+        }
+        
+        .part2 .invate_list .invate_cell {
+            display: flex;
+            width: 8.25rem;
+            font-size: 0.32rem;
+            align-items: center;
+            height: 1.24rem;
+            border-bottom: 1px solid rgba(203, 203, 203, 1);
+            ;
+        }
+        
+        .part2 .invate_list .invate_cell div:nth-child(1) {
+            width: 1.27rem;
+            font-size: 0.32rem;
+            color: rgba(51, 51, 51, 1);
+        }
+        
+        .part2 .invate_list img {
+            width: 0.85rem;
+            height: 0.85rem;
+            border-radius: 50%;
+            margin-left: 0.28rem;
+        }
+        
+        .part2 .invate_list .invate_cell .name {
+            width: 1.73rem;
+            font-size: 0.32rem;
+            color: #752EE6;
+            margin-left: 0.28rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .part2 .invate_list .invate_cell .money {
+            width: 1.93rem;
+            font-size: 0.32rem;
+            color: rgba(51, 51, 51, 1);
+            margin-left: 0.3rem;
+        }
+        
+        .part2 .invate_list span {
+            color: rgba(255, 0, 0, 1);
+        }
+        
+        .part2 .invate_list .time {
+            font-size: 0.27rem;
+            color: rgba(153, 153, 153, 1);
+            margin-left: 0.21rem;
+        }
+        
+        .part3 {
+            width: 9.05rem;
+            height: 3.41rem;
+            background: url('./imgs/bg_3@2x.png') no-repeat;
+            background-size: 100% 100%;
+            margin-top: 0.83rem;
+            position: relative;
+        }
+        
+        .part3 .invate_title {
+            width: 3.5rem;
+            height: 0.91rem;
+            position: absolute;
+            top: -0.41rem;
+            left: 0.05rem;
+        }
+        
+        .part3 .step {
+            width: 6.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.1rem;
+        }
+        
+        .part3 .step img:nth-child(1),
+        .part3 .step img:nth-child(3),
+        .part3 .step img:nth-child(5) {
+            width: 0.8rem;
+            height: 0.8rem;
+        }
+        
+        .part3 .step img:nth-child(2),
+        .part3 .step img:nth-child(4) {
+            width: 0.76rem;
+            height: 0.26rem;
+        }
+        
+        .part3 .step img:nth-child(3) {
+            margin-top: -0.3rem;
+        }
+        
+        .part3 .step_text {
+            width: 8rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.32rem;
+            color: #333333;
+            margin-top: 0.33rem;
+        }
+        
+        .part3 .step_text div:nth-child(1) {
+            width: 1.89rem;
+            height: 0.32rem;
+        }
+        
+        .part3 .step_text div:nth-child(2) {
+            width: 1.77rem;
+            height: 0.66rem;
+            text-align: center;
+        }
+        
+        .part3 .step_text div:nth-child(3) {
+            width: 1.9rem;
+            height: 0.32rem;
+        }
+        
+        .content>img {
+            position: absolute;
+            width: 100%;
+            height: 28.73rem;
+            left: 0;
+            top: 0;
+            z-index: -1;
+        }
+        
+        .mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        .mask div {
+            width: 8.61rem;
+            height: 7.72rem;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 0.26rem
+        }
+        
+        .mask img:nth-child(1) {
+            width: 6.81rem;
+            height: 0.52rem;
+            margin-top: 0.73rem;
+        }
+        
+        .mask img:nth-child(2) {
+            width: 4.29rem;
+            height: 4.29rem;
+            margin-top: 0.24rem;
+        }
+        
+        .mask .button {
+            width: 5.73rem;
+            height: 1.2rem;
+            background: rgba(251, 119, 233, 1);
+            border-radius: 0.6rem;
+            font-size: 0.45rem;
+            color: rgba(255, 255, 255, 1);
+            margin-top: 0.24rem;
+            letter-spacing: 0.2rem;
+        }
+        
+        [v-clack] {
+            display: none;
+        }
+        
+        .show_mask {
+            height: 100vh !important;
+            overflow: hidden;
+        }
+        
+        .show_disabled {
+            color: #333333;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="content rowCenter" :class="[isShowMask?'show_mask':'']" v-clack>
+            <input type="text" ref='input' style="opacity: 0;position: absolute;width: 5rem;" readonly>
+            <div class="part1">
+                <img class="invitate" src="./imgs/Invitation Code@2x.png" alt="">
+                <div class="input">
+                    <input type="number" :disabled='disabled' v-model='inviteCode' :class="[disabled?'show_disabled':'']">
+                    <div class="center" v-if='!disabled' @click="updateCode">
+                        确认
+                    </div>
+                    <div class="center" v-else>
+                        已绑定
+                    </div>
+                </div>
+                <div class="my_code">
+                    <div>我的邀请码：{{invateDetail.erbanNo}}</div>
+                    <div class="center" @click='copy'>复制</div>
+
+                </div>
+                <div class="button">
+                    <img src="./imgs/button_share@2x.png" alt="" @click='linkShare'>
+                    <img src="./imgs/button_picture@2x.png" alt="" @click='pictureShare'>
+                </div>
+            </div>
+
+            <div class="part2">
+                <img class="invate_title" src="./imgs/pink_1@2x.png" alt="">
+                <div class="invate_info">
+                    <div>已邀人数：<span>{{invateDetail.directlyNum}}人</span></div>
+                    <div>已获奖励：<span>{{invateDetail.packetNum}}元</span></div>
+                    <div class="center" @click='isShowMask = true'>提现</div>
+                </div>
+                <div class="invate_list">
+                    <div class="invate_cell" v-for="(item,index) in inviteList">
+                        <div>成功邀请</div>
+                        <img :src="item.avatar" alt="">
+                        <div class="name">{{item.nick}}</div>
+                        <div class="money">你获得<span>{{item.packetNum}}元</span></div>
+                        <div class="time">{{item.createTime}}</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="part3 rowCenter">
+                <img class="invate_title" src="./imgs/pink_2@2x.png" alt="">
+                <div class="step">
+                    <img src="./imgs/icon_share@2x.png" alt="">
+                    <img src="./imgs/Arrowheads@2x.png" alt="">
+                    <img src="./imgs/Registration@2x.png" alt="">
+                    <img src="./imgs/Arrowheads@2x.png" alt="">
+                    <img src="./imgs/icon_done@2x.png" alt="">
+                </div>
+                <div class="step_text">
+                    <div>分享邀请好友</div>
+                    <div>&nbsp;&nbsp;&nbsp;好友注册填写邀请码</div>
+                    <div>好友注册成功</div>
+                </div>
+            </div>
+
+            <img src="./imgs/bg_@2x.png" alt="" :class="[isShowMask?'show_mask':'']">
+            <div class="mask center" v-show='isShowMask'>
+                <div class="rowCenter">
+                    <img src="./imgs/Subject matter@2x.png" alt="">
+                    <img src="./imgs/@2x.png" alt="">
+                    <div class="button center" @click='isShowMask = false'>
+                        我知道了
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                info: {},
+                isShowMask: false,
+                inviteList: [],
+                invateDetail: {},
+                disabled: false,
+                inviteCode: ''
+
+            },
+            mounted() {
+                window.getMessage = this.getMessage;
+                window.shareInfo = this.shareInfo
+                    // this.info.ticket = '11d5d8a1dd40eaed31313d2e8f9c6649'
+                    // this.info.uid = '105'
+                    // this.getData();
+                this.checkPhone()
+            },
+            methods: {
+                //链接分享
+                linkShare() {
+                    if (window.checkVersion().ios) {
+                        window.webkit.messageHandlers.openSharePage.postMessage(null);
+                    } else {
+                        window.androidJsObj.openSharePage();
+                    }
+                },
+                //图片分享
+                pictureShare() {
+                    if (window.checkVersion().ios) {
+                        window.webkit.messageHandlers.openPictureShareDialog.postMessage(null);
+                    } else {
+                        window.androidJsObj.openPictureShareDialog()
+                    }
+
+                },
+                //链接分享
+                shareInfo() {
+                    var config = {
+                        share: {
+                            title: '亲，我在月月星球等你哦',
+                            desc: '想要遇见喜欢的声音，就来月月星球，让我们不见不散。'
+                        }
+                    }
+                    var _url = 'http://8.129.210.34/front/download/download.html';
+                    var info = {
+                        title: config.share.title, // 分享标题
+                        showUrl: _url,
+                        imgUrl: 'http://8.129.210.34/home/images/logo.png',
+                        desc: config.share.desc // 分享描述
+                    };
+                    return JSON.stringify(info);
+                },
+                getMessage(key, value) {
+                    this.info[key] = value;
+                    if (this.info.uid && this.info.ticket) {
+                        this.getData();
+                    }
+                },
+
+                //更新邀请码
+                updateCode() {
+                    window.updateCode({
+                        uid: this.info.uid,
+                        ticket: this.info.ticket,
+                        shareCode: this.inviteCode,
+                        appVersion: '1.0.9',
+                        os: 'wxapp'
+                    }).then(res => {
+                        if (res.data.code != 200) {
+                            vant.Toast(res.data.message)
+                            return
+                        }
+                        vant.Toast('填写成功')
+                        this.getData()
+                    })
+                },
+
+                //复制
+                copy(type) {
+
+                    let val = this.$refs.input
+                    val.value = this.invateDetail.erbanNo
+                    val.select()
+                    document.execCommand('copy')
+                    vant.Toast('复制成功')
+                },
+
+                //获取数据
+                getData() {
+                    window.invitedetail({
+                        uid: this.info.uid
+                    }).then(res => {
+                        if (res.data.code != 200) {
+                            vant.Toast(res.data.message)
+                            return
+                        }
+                        let data = res.data.data
+                        data.inviteList.forEach((v, i) => {
+                            let d = new Date(v.createTime)
+                            year = d.getFullYear()
+                            month = (d.getMonth() + 1) > 9 ? (d.getMonth() + 1) : '0' + (d.getMonth() + 1)
+                            day = d.getDate() > 9 ? d.getDate() : '0' + d.getDate();
+                            hour = d.getHours() > 9 ? d.getHours() : '0' + d.getHours();
+                            minutes = d.getMinutes() > 9 ? d.getMinutes() : '0' + d.getMinutes();
+                            second = d.getSeconds() > 9 ? d.getSeconds() : '0' + d.getSeconds();
+                            v.createTime = month + '/' + day + ' ' + hour + ':' + minutes
+                        })
+                        console.log(data.inviteDetail.inviteCode)
+                        if (data.inviteDetail.inviteCode) {
+                            this.inviteCode = data.inviteDetail.inviteCode
+                            this.disabled = true
+                        }
+                        this.inviteList = data.inviteList
+                        this.invateDetail = data.inviteDetail
+                    })
+                },
+
+                //检查手机信息
+                checkPhone() {
+                    if (window.checkVersion().ios) {
+                        window.webkit.messageHandlers.getUid.postMessage(null);
+                        window.webkit.messageHandlers.getTicket.postMessage(null)
+                    } else {
+                        this.info.uid = parseInt(window.androidJsObj.getUid());
+                        this.info.ticket = window.androidJsObj.getTicket();
+                        this.getData();
+                    }
+                },
+            }
+        })
+        Vue.use(vant.Overlay);
+    </script>
+</body>
+
+</html>

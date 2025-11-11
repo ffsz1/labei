@@ -1,0 +1,408 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+
+}
+.toast {
+    position: fixed;
+    width: 80%;
+    padding: .2rem 1rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: .3rem;
+    z-index: 1000;
+    top: 40%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) !important;
+            transform: translateX(-50%) !important;
+    border-radius: .2rem;
+    text-align: center;
+    display: none;
+    font-family: "PingFang-SC-Regular";
+  }
+
+.shade {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: url(../img/shade.png) 100% 100%/cover no-repeat;
+}
+
+.container {
+    background: #fff;
+    .inputArea {
+        display: flex;
+        width: 95%;
+        margin: 0 auto;
+        padding: 0 0.2rem;
+        // border-bottom: 0.3rem solid #FAFAFA;
+        height: 0.9rem;
+        justify-content: space-between;
+        position: relative;
+        flex-direction: row;
+        // border: 0.01rem solid rgba(0, 0, 0, 0.11);
+        border-radius: 0.1rem;
+        margin-top: 0.5rem;
+        position: relative;
+        align-items: center;
+
+        input {
+            display: inline-block;
+            padding: 0.1rem 0.2rem;
+            box-sizing: border-box;
+            border: none;
+            /* line-height: 0.9rem; */
+            flex: 1;
+            height: 99.9%;
+            font-size: 0.3rem;
+        }
+    }
+
+
+    .goldArea {
+        margin-top: 1.09rem;
+        width: 100%;
+        // padding: 0.4rem 0.3rem;
+        // border-bottom: 0.1rem solid #FAFAFA;
+
+        h2 {
+            text-align: center;
+            font-size: 0.34rem;
+            font-family: PingFang-SC-Regular;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .goldList {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            // display: flex;
+            display: -webkit-flex;
+            margin-top: 0.6rem;
+            // flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .goldItem {
+            width: 2.20rem;
+            height: 1.2rem;
+            text-align: center;
+            border:1px solid rgba(255,32,121,1);
+            box-sizing: border-box;
+            // line-height: 0.98rem;
+            border-radius: 0.1rem;
+            margin-bottom: 0.5rem;
+            // vertical-align: top;
+            padding-top: 0.15rem;
+
+            &.active {
+                background: #FF2079;
+
+                .gold-num {
+                    span {
+                        color: #fff;
+                    }
+                }
+
+                .money {
+                    color: #fff;
+                }
+            }
+
+            .img {
+                display: inline-block;
+                width: 0.36rem;
+                height: 0.36rem;
+                vertical-align: -0.07rem;
+                margin-right: 0.07rem;
+                vertical-align: middle;
+                background: url(../img/gold.png) 0/cover no-repeat;
+            }
+
+            .gold-num {
+                // display: inline-block;
+                height: 0.36rem;
+                width: 100%;
+
+                span {
+                    font-size: 0.24rem;
+                    font-family: PingFang-SC-Bold;
+                    font-weight: bold;
+                    color: rgba(51, 51, 51, 1);
+                    margin-left: -0.11rem;
+                }
+            }
+
+            .money {
+                width: 100%;
+                font-size: 0.20rem;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(153, 153, 153, 1);
+                margin-top: 0.1rem;
+
+            }
+        }
+
+    }
+
+
+
+
+
+
+}
+
+
+
+
+
+//=======================================================================
+#dialog {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+#dialog .dialog-mask {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.dialog-box {
+    position: absolute;
+    margin: 50% auto;
+    padding: 1rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    z-index: 20;
+    -webkit-animation: animationDialog 0.5s;
+    animation: animationDialog 0.5s;
+}
+
+.dialog-box .dialog-box_.success {
+    width: 100%;
+    border-radius: 0.2rem;
+    overflow: hidden;
+    background: url(../img/success.png) 0/contain no-repeat !important;
+
+
+    .dialog-container {
+
+        font-size: 0.32rem;
+        padding: 0.3rem;
+
+        .dialog-container-title {
+            color: #1A1A1A;
+            font-weight: bold;
+            font-size: 0.34rem;
+            height: 1rem;
+            line-height: 1rem;
+        }
+
+        .dialog-container-content {
+            font-size: .36rem;
+            font-family: PingFang-SC-Regular;
+            font-weight: 400;
+            color: rgba(255, 32, 121, 1);
+        }
+    }
+
+    .dialog-btn {
+        min-height: 0.8rem;
+        line-height: 0.8rem;
+        opacity: 0;
+        color: #fff;
+        font-size: 0.32rem;
+        font-weight: bold;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+        padding: 0.1rem 0.3rem 0.3rem;
+
+        &>button {
+            height: 0.7rem;
+            line-height: 0.7rem;
+            width: 2.3rem;
+            border: none;
+            color: #fff;
+            border-radius: 0.1rem;
+            margin-left: 0.2rem;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+
+.dialog-box .dialog-box_.confirm {
+    width: 100%;
+    border-radius: 0.2rem;
+    overflow: hidden;
+    background: #fff !important;
+
+
+    .dialog-container {
+
+        font-size: 0.32rem;
+        padding: 0.3rem;
+
+        .dialog-container-title {
+            color: #1A1A1A;
+            font-weight: bold;
+            font-size: 0.34rem;
+            height: 0.3rem;
+            line-height: 1rem;
+        }
+
+        .dialog-container-content {
+            font-size: .3rem;
+            font-family: PingFang-SC-Regular;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            line-height: .42rem;
+        }
+    }
+
+    .dialog-btn {
+        // min-height: 0.8rem;
+        // line-height: 0.8rem;
+        color: #fff;
+        width: 100%;
+        height: 100%;
+        font-size: 0.32rem;
+        font-weight: bold;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+
+        // padding: 0.1rem 0.3rem 0.3rem;
+        &>button {
+            // height: 0.7rem;
+            line-height: 0.7rem;
+            width: 2.3rem;
+            border: none;
+            color: #fff;
+            padding: 0;
+            // border-radius: 0.1rem;
+            // margin-left: 0.2rem;
+            width: 100%;
+            height: 100%;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+
+        .confirm-btn {
+            background: #ff2079;
+            font-size: 0.32rem;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//---------------------------------------------------------
+
+.toast {
+    position: fixed;
+    width: 80%;
+    padding: .2rem 1rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: .3rem;
+    z-index: 1000;
+    top: 40%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) !important;
+            transform: translateX(-50%) !important;
+    border-radius: .2rem;
+    text-align: center;
+    display: none;
+    font-family: "PingFang-SC-Regular";
+  }
+  
+  .loading {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1200;
+    display: none;
+    opacity: 1;
+  }
+  
+  .loading img {
+    height: 0.44rem;
+    width: 0.44rem;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+  
+  @-webkit-keyframes animationDialog {
+    0% {
+      opacity: 0;
+      margin-top: 40%;
+    }
+    100% {
+      opacity: 1;
+      margin-top: 50%;
+    }
+  }
+  
+  @keyframes animationDialog {
+    0% {
+      opacity: 0;
+      margin-top: 40%;
+    }
+    100% {
+      opacity: 1;
+      margin-top: 50%;
+    }
+  }
+
+
+  .cancel{
+      background: rgb(43, 42, 42);
+  }

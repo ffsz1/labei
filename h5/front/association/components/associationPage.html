@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title> </title>
+  <link rel="icon" href="../../../images/logo.png" type="image/png">
+  <link href="../../lib/reset.css" rel="stylesheet" />
+  <link href="../../lib/toolKit/css/index.css" rel="stylesheet" />
+  <link href="../css/common.css" rel="stylesheet" />
+  <link href="../css/associationPage.css" rel="stylesheet" />
+  <script type="text/javascript">
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          clientWidth = clientWidth > 750 ? 750 : clientWidth;
+          clientWidth = clientWidth < 320 ? 320 : clientWidth;
+          docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+        };
+      recalc();
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+</head>
+
+<body>
+  <div class="association-page">
+    <div class="association-page-info">
+      <div class="not-visitor">
+        <div class="info">
+          <img src="../img/head.png" alt="head">
+          <div class="describe" data-id="">
+            <p id="desc-name"></p>
+            <p id="desc-id"></p>
+            <p id="desc-members"></p>
+          </div>
+        </div>
+        <div class="my-room" style="display: none;">
+          <div class="my-room-title">
+            <span>我的厅</span>
+          </div>
+          <div class="my-room-info">
+            <div class="info">
+              <img src="../img/head.png" alt="head">
+              <div class="describe" data-id="">
+                <p id="desc-name"></p>
+                <p id="desc-id"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="association-page-room">
+      <div class="room-title">
+        <span></span>
+      </div>
+      <div class="room-list"></div>
+    </div>
+    <div class="more" style="display: none;">
+      <img src="../img/more.png" alt="more">
+    </div>
+    <div class="join-us" style="display: none;">
+      <span>申请加入</span>
+    </div>
+    <div class="pop-up" style="display: none;">
+      <div class="notice" style="display: none;">
+        <div class="title">申请加入</div>
+        <div class="content">
+          <div class="inline">
+            <label for="room">选择厅</label>
+            <select name="room" id="room">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="inline">
+            <label for="reason">申请理由</label>
+            <textarea name="reason" id="reason" placeholder="选填" maxlength="120"></textarea>
+          </div>
+        </div>
+        <div class="button-group">
+          <a href="javascript:;" class="cancel">取消</a>
+          <a href="javascript:;" class="submit">提交申请</a>
+        </div>
+      </div>
+      <div class="tips" style="display: none;">
+        <div class="title">提示</div>
+        <div class="content">已提交加入申请，审核结果请留意小秘书通知</div>
+        <div class="button-group">
+          <a href="javascript:;" class="confirm">确定</a>
+        </div>
+      </div>
+      <div class="dialog" style="display: none;">
+        <a href="javascript:;" class="out">退出公会</a>
+        <a href="javascript:;" class="confirm" style="display: none;">确认退出</a>
+        <a href="javascript:;" class="cancel">取消</a>
+      </div>
+    </div>
+    <!-- <div class="navbar">
+      <div class="back" id="back"></div>
+      <div class="forward" id="forward"></div>
+    </div> -->
+  </div>
+</body>
+<script src="../../lib/jquery-3.2.1.min.js"></script>
+<script src="../../lib/toolKit/js/index.js"></script>
+<script src="../../lib/common.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/associationPage.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+  eruda.init();
+</script> -->
+
+</html>

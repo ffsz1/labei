@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>520专属装扮</title>
+    <style>
+        img {
+            width: 100%
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <img src="./img/1.jpg?v=1" alt=""> <img src="./img/2.jpg?v=1" alt=""> <img src="./img/3.jpg?v=1" alt=""> -->
+    <img src="./img/bg.jpg" alt="">
+    <script src='../lib/common.js'></script>
+    <script src="../lib/zepto.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+        eruda.init();
+    </script>
+    <script src="../lib/vconsole.min.js"></script>
+    <script>
+        console.log(androidJsObj)
+        var share = {
+            title: '520活动来咯！你的礼物居然是ta？', // 分享标题
+            link: allUrl() + '/front/download/download.html', // 分享链接
+            imgUrl: allUrl() + '/home/images/logo.png',
+            desc: '520不单单靠说一句我爱你，更要懂得做出行动，来助wo解锁限定头饰座驾礼物吧！' // 分享描述
+        };
+
+        function shareInfo() {
+            var _url = allUrl() + '/front/download/download.html';
+            var info = {
+                title: '520活动来咯！你的礼物居然是ta？', // 分享标题
+                showUrl: _url,
+                imgUrl: allUrl() + '/home/images/logo.png',
+                desc: '520不单单靠说一句我爱你，更要懂得做出行动，来助wo解锁限定头饰座驾礼物吧！' // 分享描述
+            };
+            return JSON.stringify(info);
+        }
+        var browser = checkVersion();
+        console.log(browser.android)
+        if (browser.android) {
+            window.androidJsObj.showShareButton(true)
+        }
+    </script>
+
+</body>
+
+</html>

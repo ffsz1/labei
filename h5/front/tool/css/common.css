@@ -1,0 +1,30 @@
+/* 垂直水平居中 */
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* column排序 主轴居中 */
+
+.rowCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* column排序  垂直水平居中*/
+
+.columnCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.van-hairline--top-bottom::after {
+    border-width: 0;
+}

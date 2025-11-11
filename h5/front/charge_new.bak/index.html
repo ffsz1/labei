@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <script src="../lib/rem750.js"></script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <title>拉贝星球充值中心</title>
+    <script>
+        var ua = window.navigator.userAgent.toLowerCase();
+        var wxCode = '';
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            var codeMatch = location.href.match(/\bcode=([^&]+)/);
+            if (codeMatch) {
+                wxCode = codeMatch[1];
+            } else {
+                location.href = '/front/charge_new/getOpenid.html';
+            }
+        }
+    </script>
+    <style type="text/css">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            font-size: 0.26rem;
+            background: #fff;
+        }
+        
+        .b_box {
+            display: flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .inputArea {
+            display: flex;
+            width: 85%;
+            margin: 0 auto;
+            padding: 0 0.2rem;
+            border-bottom: 0.3rem solid #FAFAFA;
+            height: 0.9rem;
+            justify-content: space-between;
+            position: relative;
+            flex-direction: row;
+            border: 0.01rem solid rgba(0, 0, 0, 0.11);
+            border-radius: 0.1rem;
+            margin-top: 0.5rem;
+            position: relative;
+            align-items: center
+        }
+        
+        .inputArea input {
+            display: inline-block;
+            padding: 0.1rem 0.2rem;
+            box-sizing: border-box;
+            /* line-height: 0.9rem; */
+            flex: 1;
+            height: 99.9%;
+        }
+        
+        .inputArea .infoMsg {
+            height: 100%;
+            line-height: 0.9rem;
+            position: absolute;
+            top: 0;
+            left: 1.5rem;
+            color: #23CFB1;
+            font-size: 0.22rem;
+            display: none;
+        }
+        
+        input:focus {
+            outline: none;
+        }
+        
+        .inputArea .empty {
+            width: 0.31rem;
+            height: 0.9rem;
+            vertical-align: middle;
+            line-height: 0.9rem;
+            margin-left: 0.2rem;
+            display: none;
+        }
+        
+        .empty img {
+            width: 0.31rem;
+            height: 0.31rem;
+            vertical-align: middle;
+        }
+        
+        .goldArea {
+            padding: 0.2rem 0 0.6rem 0;
+            border-bottom: 0.1rem solid #FAFAFA;
+        }
+        
+        .goldArea .title {
+            font-family: PingFang-SC-Medium;
+            font-weight: 600;
+            color: #1A1A1A;
+            font-size: 0.32rem;
+            margin-bottom: 0.39rem;
+        }
+        
+        .goldArea .goldList {
+            flex-wrap: wrap;
+        }
+        
+        .goldArea .goldList .goldItem {
+            width: 100%;
+            height: 1.1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.3rem;
+        }
+        
+        .goldArea .goldList .goldItem:last-child {
+            margin-bottom: 0.62rem;
+        }
+        
+        .goldArea .goldList .goldItem:nth-child(3n) {
+            margin-right: 0;
+        }
+        
+        .active {
+            background-color: #009EF2;
+            color: #fff;
+        }
+        
+        .goldItem img {
+            width: 0.36rem;
+            height: 0.36rem;
+            vertical-align: -0.07rem;
+            margin-right: 0.07rem;
+        }
+        
+        .price {
+            margin-bottom: 0.25rem;
+        }
+        
+        .price span:first-child {
+            color: #1A1A1A;
+            font-size: 0.32rem;
+            font-weight: 600;
+            font-family: PingFang-SC-Medium;
+            margin-right: 0.1rem;
+            line-height: 0.32rem;
+        }
+        
+        .price span:last-child {
+            color: #FE5555;
+            font-size: 0.4rem;
+            font-weight: 600;
+            font-family: PingFang-SC-Medium;
+            line-height: 0.32rem;
+        }
+        
+        .goldItem_money {
+            width: 1.5rem;
+            height: 50%;
+            border-radius: 0.2rem;
+            border: 0.01rem solid #D6D6D6;
+            text-align: center;
+            line-height: 2;
+        }
+        
+        .channel_btn {
+            width: 100%;
+            height: 1.3rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background-color: #fff;
+            box-shadow: 0 -0.01rem 0.16rem 0 rgba(0, 0, 0, 0.11);
+        }
+        
+        .tips {
+            width: 100%;
+            height: 0.5rem;
+            background-color: #E5E5E5;
+            color: #868585;
+            font-size: 0.24rem;
+            text-align: center;
+            line-height: 0.5rem;
+        }
+        
+        .channel_btn>div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+        }
+        
+        .channel_btn img {
+            width: 3rem;
+            height: 0.88rem;
+        }
+        
+        .warning {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 9;
+            display: none;
+        }
+        
+        .warning>div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .warning>div>span {
+            padding: 0.1rem 0.2rem;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            font-size: 0.2rem;
+            border-radius: 0.2rem;
+        }
+        
+        .check_box {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: none;
+        }
+        
+        .check_box>div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .check_box_content {
+            width: 5rem;
+            height: 3rem;
+            background-color: #fff;
+            border-radius: 0.2rem;
+            overflow: hidden;
+        }
+        
+        .check_box_content>div {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+        }
+        
+        .check_box_content>div:nth-child(1) {
+            height: 70%;
+            border-bottom: 0.01rem solid #efefef;
+            padding: 0 0.15rem;
+            box-sizing: border-box;
+        }
+        
+        .check_box_content>div:nth-child(2) {
+            height: 30%;
+        }
+        
+        .check_box_content>div:nth-child(2)>span {
+            width: 50%;
+            height: 100%;
+            text-align: center;
+            line-height: 3.5;
+            font-size: 0.24rem;
+        }
+        
+        .check_box_check {
+            background-color: #009EF2;
+            color: #fff;
+        }
+        
+        .userNo_history {
+            width: 100%;
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            height: 1rem;
+            display: none;
+        }
+        
+        .userNo_history>div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .userNo_history_item {
+            width: 100%;
+            height: 0.8rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.2rem;
+            box-sizing: border-box;
+            color: #333;
+            font-size: 0.24rem;
+            background-color: #fff;
+            border-left: 0.01rem solid rgba(0, 0, 0, 0.11);
+            border-right: 0.01rem solid rgba(0, 0, 0, 0.11);
+        }
+        
+        .userNo_history_item:nth-child(1) {
+            border-top: 0.01rem solid rgba(0, 0, 0, 0.11);
+        }
+        
+        .userNo_history_item:nth-last-child(1) {
+            border-bottom: 0.01rem solid rgba(0, 0, 0, 0.11);
+        }
+        
+        .userNo_history_item>img {
+            width: 0.31rem;
+            height: 0.31rem;
+        }
+    </style>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body class="bgc_gray">
+    <div class="wrap">
+        <div class="tips">如需使用支付宝充值，请在“Safari”中打开页面</div>
+        <div class="inputArea">
+            <input id="userNo" maxlength="11" type="text" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入拉贝号">
+            <div class="empty">
+                <img src="images/empty.png" alt="">
+            </div>
+            <div class="userNo_history">
+            </div>
+        </div>
+        <div class="goldArea">
+            <div class="goldList b_box">
+            </div>
+        </div>
+        <div class="channel_btn">
+            <div>
+                <img src="./images/wx_on.png" class="wx_btn">
+                <img src="./images/ali_on.png" class="ali_btn">
+            </div>
+        </div>
+    </div>
+    <div class="pop-tips"></div>
+    <div class="pop-success">支付成功</div>
+    <div style="display:none">
+        <script src="https://s19.cnzz.com/z_stat.php?id=1272979589&web_id=1272979589" language="JavaScript"></script>
+    </div>
+    <div class="check_box">
+        <div>
+            <div class="check_box_content">
+                <div class="check_box_text"></div>
+                <div>
+                    <span onclick="hideCheckBox()">取消</span>
+                    <span class="check_box_check" onclick="charge()">确定</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/pingpp.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="../lib/jquery-3.2.1.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

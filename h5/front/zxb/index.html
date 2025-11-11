@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="../../images/logo.png" type="image/png" />
+    <link rel="shortcut icon" href="../../images/logo.png" type="image/png"/>
+    <title>周星榜</title>
+    <script>
+        ! function () {
+            var documentElement = document.documentElement;
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+            function resize() {
+                var clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseFloat(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (Math.abs(a - real) > 1) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="zxb">
+        <img src="./img/bg_1.png" alt="bg_1">
+        <img src="./img/rule_block.png" alt="rule" class="rule-block">
+        <div class="cover">
+            <img src="./img/bg_2.png" alt="bg_2">
+            <div class="block">
+                <div class="gift-list">
+                    <img src="./img/block_1.png" alt="block_1">
+                    <img src="./img/history_block.png" alt="history" class="history-block">
+                    <div class="gifts"></div>
+                </div>
+                <div class="rank-list">
+                    <div class="btn-group">
+                        <img src="./img/star_selected.png" alt="star">
+                        <img src="./img/rich.png" alt="rich" class="half">
+                    </div>
+                    <img src="./img/block_2.png" alt="block_2">
+                    <div class="rank-content">
+                        <div class="top"></div>
+                        <div class="list"></div>
+                        <p class="more">
+                            <img src="./img/more.png" alt="more">
+                        </p>
+                        <div class="mine"></div>
+                    </div>
+                    <p class="notice">暂无数据，快去参加活动吧~</p>
+                </div>
+                <img src="./img/block_3.png" alt="block_3">
+            </div>
+            <p>本活动最终解释权归拉贝星球官方所有</p>
+        </div>
+    </div>
+    <div class="pop-up">
+        <div class="rule">
+            <img src="./img/rule.png" alt="rule">
+            <img src="./img/close.png" alt="close" class="close">
+        </div>
+        <div class="history">
+            <img src="./img/history.png" alt="history">
+            <div class="history-content">
+                <div class="history-number number-1">
+                    <span>第二期</span>
+                </div>
+                <div class="history-list list-1">
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                </div>
+                <div class="history-list list-2">
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                </div>
+                <div class="history-number number-2">
+                    <span>一</span>
+                </div>
+                <div class="history-list list-3">
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                </div>
+                <div class="history-list list-4">
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                    <div class="history-item">
+                        <img src="./img/head.png" alt="head">
+                        <p>昵称昵称昵称</p>
+                    </div>
+                </div>
+                <div class="pager">
+                    <div class="btn-cover" id="prev">
+                        <a href="javascript:;">上一页</a>
+                    </div>
+                    <div class="btn-cover" id="next">
+                        <a href="javascript:;">下一页</a>
+                    </div>
+                </div>
+            </div>
+            <p>
+                <img src="./img/close.png" alt="close" class="close">
+            </p>
+        </div>
+        <div class="dialog">
+            <img src="./img/dialog.png" alt="dialog">
+            <p class="word">活动暂未开始~</p>
+            <p>
+                <img src="./img/close.png" alt="close" class="close">
+            </p>
+        </div>
+    </div>
+</body>
+<script src="../lib/zepto.min.js"></script>
+<script src="../lib/common.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<script src="./js/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script>
+
+</html>

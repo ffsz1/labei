@@ -1,0 +1,359 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+
+.shade {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: url(../img/shade.png) 100% 100%/cover no-repeat;
+}
+
+.container {
+  background: #fff;
+}
+
+.container .inputArea {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 95%;
+  margin: 0 auto;
+  padding: 0 0.2rem;
+  height: 0.9rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  position: relative;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  border-radius: 0.1rem;
+  margin-top: 0.5rem;
+  position: relative;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container .inputArea input {
+  display: inline-block;
+  padding: 0.1rem 0.2rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: none;
+  /* line-height: 0.9rem; */
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 99.9%;
+  font-size: 0.3rem;
+}
+
+.container .goldArea {
+  margin-top: 1.09rem;
+  width: 100%;
+}
+
+.container .goldArea h2 {
+  text-align: center;
+  font-size: 0.34rem;
+  font-family: PingFang-SC-Regular;
+  font-weight: 400;
+  color: #333333;
+}
+
+.container .goldArea .goldList {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  display: -webkit-flex;
+  margin-top: 0.6rem;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.container .goldArea .goldItem {
+  width: 2.20rem;
+  height: 1.2rem;
+  text-align: center;
+  border: 1px solid #ff2079;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 0.1rem;
+  margin-bottom: 0.5rem;
+  padding-top: 0.15rem;
+}
+
+.container .goldArea .goldItem.active {
+  background: #FF2079;
+}
+
+.container .goldArea .goldItem.active .gold-num span {
+  color: #fff;
+}
+
+.container .goldArea .goldItem.active .money {
+  color: #fff;
+}
+
+.container .goldArea .goldItem .img {
+  display: inline-block;
+  width: 0.36rem;
+  height: 0.36rem;
+  vertical-align: -0.07rem;
+  margin-right: 0.07rem;
+  vertical-align: middle;
+  background: url(../img/gold.png) 0/cover no-repeat;
+}
+
+.container .goldArea .goldItem .gold-num {
+  height: 0.36rem;
+  width: 100%;
+}
+
+.container .goldArea .goldItem .gold-num span {
+  font-size: 0.24rem;
+  font-family: PingFang-SC-Bold;
+  font-weight: bold;
+  color: #333333;
+  margin-left: -0.11rem;
+}
+
+.container .goldArea .goldItem .money {
+  width: 100%;
+  font-size: 0.20rem;
+  font-family: PingFang-SC-Regular;
+  font-weight: 400;
+  color: #999999;
+  margin-top: 0.1rem;
+}
+
+#dialog {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+#dialog .dialog-mask {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.dialog-box {
+  position: absolute;
+  margin: 50% auto;
+  padding: 1rem;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  z-index: 20;
+  -webkit-animation: animationDialog 0.5s;
+  animation: animationDialog 0.5s;
+}
+
+.dialog-box .dialog-box_.success {
+  width: 100%;
+  border-radius: 0.2rem;
+  overflow: hidden;
+  background: url(../img/success.png) 0/contain no-repeat !important;
+}
+
+.dialog-box .dialog-box_.success .dialog-container {
+  font-size: 0.32rem;
+  padding: 0.3rem;
+}
+
+.dialog-box .dialog-box_.success .dialog-container .dialog-container-title {
+  color: #1A1A1A;
+  font-weight: bold;
+  font-size: 0.34rem;
+  height: 1rem;
+  line-height: 1rem;
+}
+
+.dialog-box .dialog-box_.success .dialog-container .dialog-container-content {
+  font-size: .36rem;
+  font-family: PingFang-SC-Regular;
+  font-weight: 400;
+  color: #ff2079;
+}
+
+.dialog-box .dialog-box_.success .dialog-btn {
+  min-height: 0.8rem;
+  line-height: 0.8rem;
+  opacity: 0;
+  color: #fff;
+  font-size: 0.32rem;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  padding: 0.1rem 0.3rem 0.3rem;
+}
+
+.dialog-box .dialog-box_.success .dialog-btn > button {
+  height: 0.7rem;
+  line-height: 0.7rem;
+  width: 2.3rem;
+  border: none;
+  color: #fff;
+  border-radius: 0.1rem;
+  margin-left: 0.2rem;
+}
+
+.dialog-box .dialog-box_.success .dialog-btn > button:first-child {
+  margin-left: 0;
+}
+
+.dialog-box .dialog-box_.confirm {
+  width: 100%;
+  border-radius: 0.2rem;
+  overflow: hidden;
+  background: #fff !important;
+}
+
+.dialog-box .dialog-box_.confirm .dialog-container {
+  font-size: 0.32rem;
+  padding: 0.3rem;
+}
+
+.dialog-box .dialog-box_.confirm .dialog-container .dialog-container-title {
+  color: #1A1A1A;
+  font-weight: bold;
+  font-size: 0.34rem;
+  height: 0.3rem;
+  line-height: 1rem;
+}
+
+.dialog-box .dialog-box_.confirm .dialog-container .dialog-container-content {
+  font-size: .3rem;
+  font-family: PingFang-SC-Regular;
+  font-weight: 400;
+  color: #333333;
+  line-height: .42rem;
+}
+
+.dialog-box .dialog-box_.confirm .dialog-btn {
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  font-size: 0.32rem;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+
+.dialog-box .dialog-box_.confirm .dialog-btn > button {
+  line-height: 0.7rem;
+  width: 2.3rem;
+  border: none;
+  color: #fff;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dialog-box .dialog-box_.confirm .dialog-btn > button:first-child {
+  margin-left: 0;
+}
+
+.dialog-box .dialog-box_.confirm .dialog-btn .confirm-btn {
+  background: #ff2079;
+  font-size: 0.32rem;
+}
+
+.toast {
+  position: fixed;
+  width: 80%;
+  padding: .2rem 1rem;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: .3rem;
+  z-index: 1000;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) !important;
+  transform: translateX(-50%) !important;
+  border-radius: .2rem;
+  text-align: center;
+  display: none;
+  font-family: "PingFang-SC-Regular";
+}
+
+.loading {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1200;
+  display: none;
+  opacity: 1;
+}
+
+.loading img {
+  height: 0.44rem;
+  width: 0.44rem;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+@-webkit-keyframes animationDialog {
+  0% {
+    opacity: 0;
+    margin-top: 40%;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 50%;
+  }
+}
+
+@keyframes animationDialog {
+  0% {
+    opacity: 0;
+    margin-top: 40%;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 50%;
+  }
+}
+
+.cancel {
+  background: #2b2a2a;
+}
+/*# sourceMappingURL=index.css.map */

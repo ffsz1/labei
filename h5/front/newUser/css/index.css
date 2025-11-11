@@ -1,0 +1,114 @@
+html.body {
+    width: 100%;
+}
+
+.container {}
+
+.top img {
+    width: 100%;
+}
+
+.main {
+    position: relative;
+}
+
+.main>img {
+    width: 100%;
+}
+
+.main .item {
+    position: absolute;
+    top: 0.25rem;
+    width: 2.36rem;
+    height: 2.8rem;
+    /* border: 1px solid red; */
+}
+
+.main .item1 {
+    left: 1.1%;
+}
+
+.main .item2 {
+    left: 34.2%;
+}
+
+.main .item3 {
+    left: 67.30%;
+}
+
+.main .item .light {
+    position: absolute;
+    left: 6.3%;
+    top: 7.5%;
+    width: 2.1rem;
+    height: 1.26rem;
+}
+
+.main .item .light img {
+    width: 100%;
+}
+
+.main .item .btn {
+    position: absolute;
+    bottom: 13.5%;
+    left: 18.5%;
+    width: 1.5rem;
+    height: .5rem;
+    /* background:linear-gradient(0deg,rgba(73,188,255,1),rgba(233,77,254,1)); */
+    border-radius: .25rem;
+    font-size: .24rem;
+    text-align: center;
+    line-height: 0.50rem;
+    font-family: SourceHanSansSC-Bold;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 1);
+    /* border:1px solid red; */
+}
+
+.main .item .shade {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 87%;
+    top: 13%;
+    left: 0;
+    /* background:rgba(0,0,0,1); */
+    opacity: 0.3;
+    border-radius: .1rem;
+}
+
+.main .item .shade .shade-btn {
+    position: absolute;
+    bottom: 14.5%;
+    left: 18.2%;
+    width: 1.5rem;
+    height: .5rem;
+    /* border:1px solid white; */
+}
+
+.bottom {}
+
+.bottom>img {
+    width: 100%;
+}
+
+.toast {
+    position: fixed;
+    min-width: 40%;
+    padding: .2rem 1rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #fff;
+    background: rgba(51, 78, 85, 0.7);
+    font-size: .3rem;
+    z-index: 1000;
+    top: 40%;
+    left: 50%;
+    border: 0.04rem solid #9405ff;
+    -webkit-transform: translateX(-50%) !important;
+    transform: translateX(-50%) !important;
+    border-radius: .2rem;
+    text-align: center;
+    display: none;
+    font-family: "PingFang-SC-Regular";
+}

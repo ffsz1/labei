@@ -1,0 +1,663 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.clearfix:before {
+    content: "";
+    display: table;
+}
+
+/* 弹框样式 */
+.popup, .financial-popup {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.w1 {
+    font-size: 0.28rem;
+    color: #878787;
+}
+
+.w2 {
+    font-size: 0.56rem;
+    color: #FE266D;
+}
+
+.popup .con {
+    width: 5.88rem;
+    min-height: 6.58rem;
+    margin: 0 auto;
+    top: 50%;
+    margin-top: -3.29rem;
+    background-color: white;
+    background-image: url(../img/tixianxiangqing.png);
+    background-size: 100% auto;
+    background-position: top center;
+    background-repeat: no-repeat;
+    text-align: center;
+    position: relative;
+    border-radius: 0.22rem;
+}
+
+.popup .con h3 {
+    font-size: 0.36rem;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+    padding-top: 0.35rem;
+}
+
+.popup .con .user {
+    font-size: 0.26rem;
+    font-family: PingFangSC-Medium;
+    font-weight: bold;
+    margin-top: 0.27rem;
+    color: #B2B1B1;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 0.45rem;
+}
+
+.nick-name,
+.user-id {
+    color: #595858
+}
+
+.popup .con .name {
+    font-size: 0.26rem;
+    font-family: PingFangSC-Medium;
+    font-weight: bold;
+    margin-top: 0.76rem;
+    color: #B2B1B1;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 0.45rem;
+}
+
+.popup .con .withdraw {
+    /* height: 0.72rem;
+    line-height: 0.72rem; */
+    font-size: 0.32rem;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: black;
+    margin-top: 0.48rem;
+}
+
+.popup .con .withdraw>span {
+    display: inline-block;
+    height: 100%;
+    font-size: 0.32rem;
+}
+
+.popup .con .withdraw>span:nth-child(n+2) {
+    font-size: 0.5rem;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: #f75757;
+}
+
+.popup .con .consume {
+    font-size: 0.26rem;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: #B2B1B1;
+    margin-top: 0.12rem;
+}
+
+.txwrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-pop {
+    width: 0.31rem;
+    height: 0.31rem;
+    background: url(../img/geren_guanbi.png) no-repeat center center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    position: absolute;
+    right: 0.25rem;
+    top: 0.45rem;
+}
+
+.popup .con .wxtx {
+    width: 2.91rem;
+    height: 1.11rem;
+    background: url(../img/wxtx.png) 0/cover no-repeat;
+    margin: 0 auto;
+    margin-top: 0.42rem;
+}
+
+.popup .con .zfbtx {
+    width: 2.91rem;
+    height: 1.11rem;
+    background: url(../img/zfbtx.png) 0/cover no-repeat;
+    margin: 0 auto;
+    margin-top: 0.42rem;
+}
+
+.popup .con .bingZfb {
+    position: absolute;
+    bottom: 0.2rem;
+    left: 0.3rem;
+    color: red;
+    font-size: 0.3rem;
+    display: inline-block;
+}
+
+.popup .confirm-zfb {
+    width: 5.54rem;
+    height: 4.1rem;
+    background: white;
+    -webkit-box-shadow: 0 0 0.08rem 0 rgba(80, 38, 30, 0.39);
+    box-shadow: 0 0 0.08rem 0 rgba(80, 38, 30, 0.39);
+    border-radius: 0.08rem;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.popup .confirm-zfb .top {
+    width: 100%;
+    height: 1.2rem;
+    padding: 0.36rem 1.24rem 0.22rem 1.26rem;
+    text-align: center;
+    font-size: 0.3rem;
+    font-family: PingFangSC-Medium;
+    font-weight: bold;
+    color: #0F0F0F;
+    line-height: 0.42rem;
+    font-family: PingFangSC-Medium;
+    font-size: 0.36rem;
+    color: #242424;
+    border-bottom: 0.01rem solid #D5D5D6;
+}
+
+.popup .confirm-zfb .middle {
+    width: 100%;
+    height: 1rem;
+    font-size: 0.28rem;
+    margin-top: 0.4rem;
+    padding: 0 0.5rem;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+}
+
+.popup .confirm-zfb .middle>span {
+    display: inline-block;
+}
+
+.popup .confirm-zfb .middle .zfb {
+    font-size: 0.32rem;
+    font-family: PingFangSC-Regular;
+    font-weight: bold;
+    color: black;
+}
+
+.popup .confirm-zfb .middle .name {
+    font-size: 0.32rem;
+    font-family: PingFangSC-Light;
+    margin-top: 0.24rem;
+    font-weight: 300;
+    color: #999999;
+}
+
+.popup .confirm-zfb .bottom {
+    width: 100%;
+    height: 1.08rem;
+    line-height: 1.023rem;
+    text-align: center;
+    margin-top: 0.4rem;
+    border-top: 0.01rem solid #D5D5D6;
+}
+
+.popup .confirm-zfb .bottom span {
+    display: inline-block;
+    width: 49%;
+    height: 100%;
+    font-size: 0.36rem;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: #00b800;
+}
+
+.popup .confirm-zfb .bottom span:nth-of-type(1) {
+    color: #242424;
+    border-right: 1px solid #D5D5D6;
+}
+
+/* 提现账号弹框 */
+.financial-popup>.financial-account {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 20px;
+    background-color: #FFFFFF;
+    width: 90%;
+    padding: .3rem;
+}
+
+.financial-popup>.financial-account>h1 {
+    text-align: center;
+    font-size: .35rem;
+    margin-bottom: .4rem;
+    font-weight: 600;
+}
+
+.financial-popup>.financial-account>.form-inline {
+    font-size: .3rem;
+    margin-bottom: .4rem;
+}
+
+.financial-popup>.financial-account>.form-inline input {
+    vertical-align: middle;
+}
+
+.financial-popup>.financial-account>.form-inline>.type {
+    display: flex;
+    font-size: .3rem;
+    justify-content: space-around;
+    margin-bottom: .3rem;
+}
+
+.financial-popup>.financial-account>.form-inline>.type img {
+    width: .4rem;
+    vertical-align: middle;
+    margin: 0 .1rem;
+}
+
+.financial-popup>.financial-account>.form-inline>.account input {
+    border-radius: 20px;
+    margin-bottom: .2rem;
+    border: 1px solid #cccccc;
+    padding: .2rem .3rem;
+    width: 100%;
+}
+
+.financial-popup .financial-close {
+    position: absolute;
+    right: .2rem;
+    top: .2rem;
+    width: .3rem;
+}
+
+.financial-popup .danger {
+    font-size: .2rem;
+    color: #FF3838;
+    margin-left: .1rem;
+}
+
+.financial-popup>.financial-account>.financial-tips {
+    font-size: .2rem;
+}
+
+.financial-popup>.financial-account>.financial-tips>p {
+    line-height: .35rem;
+}
+
+.financial-popup>.financial-account>.financial-tips img, .popup>.financial-account>.financial-tips span {
+    width: .3rem;
+    vertical-align: middle;
+}
+
+.financial-popup>.financial-account>.submit-account {
+    padding: .2rem;
+    background: linear-gradient(90deg, #60A6FF 0%, #E27CFF 100%);
+    color: #FFFFFF;
+    width: 50%;
+    text-align: center;
+    font-size: .3rem;
+    border-radius: 20px;
+    margin: .4rem auto 0;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.container .prompt {
+    position: absolute;
+    top: 2.2rem;
+    left: 0.9rem;
+    width: 5.48rem;
+    height: 0.84rem;
+    background: rgba(14, 14, 14, 0.5);
+    border-radius: 0.42rem;
+    text-align: center;
+    line-height: 0.84rem;
+}
+
+.container .prompt span {
+    font-size: 0.26rem;
+    font-family: PingFangSC-Medium;
+    font-weight: 500;
+    color: white;
+}
+
+/* 统一标题信息 */
+.container .top-info {
+    margin: .5rem 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+    color: #333333;
+    font-size: .35rem;
+}
+
+.container .top-info>p {
+    margin: .2rem 0;
+}
+
+.container .top-info #balance {
+    font-size: .56rem;
+    font-weight: 600;
+}
+
+.container .box {
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+}
+
+.container .box .tab {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+    justify-content: center;
+    margin: 0.3rem 0;
+}
+
+.container .box .tab span {
+    font-size: 0.32rem;
+    color: #999999;
+    font-weight: 400;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.container .box .tab span:nth-child(n+2) {
+    margin-left: 1rem;
+}
+
+.container .box .tab .active {
+    font-weight: 600;
+    color: #333333;
+}
+
+.container .box .mobileAccount {
+    width: 100%;
+    display: inline-block;
+    height: 0.6rem;
+    line-height: 0.6rem;
+    text-align: center;
+    color: #FF296B;
+    font-weight: 500;
+    font-size: 0.3rem;
+    margin-top: 0.2rem;
+}
+
+/* 兑换金币样式 */
+.exchange-box {
+    padding: 0 .5rem;
+}
+
+.exchange-title {
+    margin: .2rem 0;
+}
+
+.diamond-count, .gold-count {
+    background: #FFFFFF;
+    border-radius: .5rem;
+    border: 1px solid #CCCCCC;
+    display: flex;
+    align-items: center;
+    color: #999999;
+    font-size: .3rem;
+    padding: .2rem .3rem;
+    margin-bottom: .2rem;
+}
+
+.diamond-count>img, .gold-count>img {
+    width: .5rem;
+    margin-right: .3rem;
+}
+
+.diamond-count>input {
+    border: 0;
+    outline: none;
+}
+
+/* 提现金额样式 */
+.withdraw-box {
+    padding: 0 .5rem;
+    display: none;
+}
+
+.choose-platform, .choose-title {
+    margin: .2rem 0;
+    position: relative;
+}
+
+.withdraw-box .choose-platform {
+    display: flex;
+    justify-content: space-between;
+    padding-right: .3rem;
+}
+
+.withdraw-box .choose-platform>img {
+    width: .4rem;
+    height: .4rem;
+}
+
+.choose-platform::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid #333333;
+    border-right: 2px solid #333333;
+    transform: rotate(45deg);
+    top: 50%;
+    margin-top: -3.5px;
+}
+
+.unit {
+    display: block;
+    width: .5rem;
+    text-align: center;
+}
+
+.choose-tips {
+    font-size: .24rem;
+    color: #999999;
+}
+
+.choose-item {
+    background: #FFFFFF;
+    border-radius: 18px;
+    border: 1px solid #CCCCCC;
+    display: flex;
+    align-items: center;
+    color: #333333;
+    font-size: .3rem;
+    padding: .1rem .2rem;
+    margin-bottom: .2rem;
+    justify-content: space-between;
+}
+
+.choose-item:last-child {
+    margin-bottom: 0;
+}
+
+.choose-item.active {
+    border: 1px solid #DB7EFF;
+}
+
+.choose-item>.obtain>span {
+    vertical-align: middle;
+}
+
+.choose-item>.obtain>img {
+    width: .5rem;
+    vertical-align: middle;
+    margin-left: .1rem;
+}
+
+/* 短信验证码 */
+.verify-code {
+    padding: .2rem .5rem;
+    font-size: .3rem;
+}
+
+.verify-code>.code {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #CCCCCC;
+    padding: .1rem .2rem;
+    margin-bottom: .1rem;
+}
+
+.verify-code>.code>span {
+    color: #69BFFF;
+}
+
+.verify-code>.code>input {
+    border: 0;
+    outline: none;
+}
+
+.verify-code>p {
+    font-size: 10px;
+    color: #FF5353;
+}
+
+.notice {
+    display: none;
+}
+
+.container .tips {
+    font-size: .24rem;
+    font-family: PingFangSC-Light;
+    font-weight: 300;
+    color: #666666;
+    display: none;
+}
+
+.container .exchange-tips {
+    padding: 0 .5rem .3rem .5rem;
+    display: block;
+}
+
+.container .withdraw-tips {
+    margin-top: 0.3rem;
+    padding: 0 .5rem;
+}
+
+/* 提交按钮 */
+.container .submit {
+    width: 5.40rem;
+    height: .84rem;
+    line-height: 0.84rem;
+    background: linear-gradient(90deg, #60A6FF 0%, #E27CFF 100%);
+    border-radius: 24px;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.container .submit span {
+    font-size: .32rem;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: white;
+}
+
+/* 提示框 */
+.toast {
+    position: fixed;
+    width: 80%;
+    padding: .2rem 1rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: .3rem;
+    z-index: 1000;
+    top: 40%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) !important;
+    transform: translateX(-50%) !important;
+    border-radius: .2rem;
+    text-align: center;
+    display: none;
+    font-family: "PingFang-SC-Regular";
+}
+
+#dialog .confirm .dialog-container {
+    color: #808080;
+    font-weight: 500;
+    padding: 0.8rem 0.3rem;
+}
+
+#dialog .confirm .dialog-container .dialog-container-content {
+    font-size: 0.32rem;
+}
+
+#dialog .confirm .dialog-container .dialog-container-content .colRed {
+    color: red;
+    font-size: 0.34rem;
+    margin-top: 0.2rem;
+}
+
+#dialog .confirm .dialog-container .dialog-container-content span {
+    display: block;
+    text-align: left;
+}
+
+#dialog .confirm .dialog-btn {
+    padding: 0;
+    border-top: 1px solid #D5D5D6;
+}
+
+#dialog .confirm .dialog-btn button {
+    color: #808080;
+    font-weight: 500;
+    font-size: 0.36rem;
+}
+
+#dialog .confirm .dialog-btn button:last-child {
+    border-left: 1px solid #D5D5D6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#dialog .confirm .dialog-btn .color-bold {
+    color: #08BB08;
+}
+
+
+/*# sourceMappingURL=exchange.css.map */

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>举报</title>
+  <link rel="icon" href="../../images/logo.png" type="image/png">
+  <link rel="stylesheet" href="../lib/reset.css" />
+  <link rel="stylesheet" href="../lib/toolKit/css/index.css" />
+  <style>
+    html, body, .report {
+      width: 100%;
+      height: 100%;
+    }
+    .report {
+      position: relative;
+    }
+    .report>.report-grid>.report-item {
+      font-size: 14px;
+      line-height: 20px;
+      padding: .5rem 1rem;
+    }
+    .report-item>input, .report-item>label {
+      vertical-align: middle;
+    }
+    .report-others {
+      padding: 1rem 2rem;
+      display: none;
+    }
+    .report-others>textarea {
+      resize: none;
+      width: 300px;
+      height: 50px;
+    }
+    .submit-btn {
+      background: #d8d8d8;
+      border-radius: 30px;
+      display: block;
+      color: #ffffff;
+      position: absolute;
+      bottom: 4rem;
+      width: 210px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .active {
+      background: linear-gradient(90deg, #60A6FF 0%, #E27CFF 100%);
+    }
+    .toast {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="report">
+    <div class="report-grid">
+      <div class="report-item">
+        <input type="radio" name="report" value="1">
+        <label>传播淫秽、色情、低俗擦边的内容</label>
+      </div>
+      <div class="report-item">
+        <input type="radio" name="report" value="2">
+        <label>涉及政治敏感</label>
+      </div>
+      <div class="report-item">
+        <input type="radio" name="report" value="3">
+        <label>传播垃圾广告或违法违规广告信息</label>
+      </div>
+      <div class="report-item">
+        <input type="radio" name="report" value="4">
+        <label>言语攻击或恶意诋毁</label>
+      </div>
+      <div class="report-item">
+        <input type="radio" name="report" value="5">
+        <label>发布线下或可能涉及诈骗的违规交易内容</label>
+      </div>
+      <div class="report-item">
+        <input type="radio" name="report" value="6">
+        <label>以任何形式泄露他人隐私</label>
+      </div>
+      <div class="report-item">
+        <input type="radio" name="report" value="7">
+        <label>传播暴力、血腥、威胁生命健康的内容或展示枪支、刀具</label>
+      </div>
+      <div class="report-item">
+        <input type="radio" name="report" value="8">
+        <label>盗版内容，侵犯合法版权</label>
+      </div>
+      <div class="report-item">
+        <input type="radio" name="report" value="9">
+        <label>其他</label>
+      </div>
+      <div class="report-others">
+        <textarea name="others" id="others" rows="3" placeholder="请输入举报内容"></textarea>
+      </div>
+    </div>
+    <a href="javascript:;" class="submit-btn">提交</a>
+  </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<script src="../lib/common.js"></script>
+<script src="./js/index.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script> -->
+</html>

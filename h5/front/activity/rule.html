@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+  <title>玩法介绍</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .activity {
+      padding: .4rem;
+      font-size: .3rem;
+      color: #333333;
+    }
+
+    .activity p {
+      line-height: .4rem;
+      margin-bottom: .4rem;
+    }
+
+    .activity p:last-child {
+      text-align: center;
+    }
+
+    .activity p:last-child>img {
+      vertical-align: top;
+      margin-left: .2rem;
+    }
+
+    .activity p:last-child>a {
+      text-decoration: none;
+      color: #1296db;
+    }
+  </style>
+  <script type="text/javascript">
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          clientWidth = clientWidth > 750 ? 750 : clientWidth;
+          clientWidth = clientWidth < 320 ? 320 : clientWidth;
+          docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+        };
+      recalc();
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+</head>
+
+<body>
+  <!-- 房间—活动礼物—玩法介绍 -->
+  <div class="activity">
+    <p>1、人气票：人气票是活动礼物，可以在送礼弹窗选择人气票为你喜欢的主播投票；送人气票可以提升主播在首页banner“拉贝星球人气之星”活动中的排名。</p>
+    <p>2、人气票获取方式：人气票可在“捡海螺”活动中获取，每捡一次海螺都会随机获得1-3张人气票；也可以也可在拉贝商城中购买，人气票20金币/张。</p>
+    <p>3、活动奖励：“拉贝星球人气之星”活动中，每周获得人气票最多的前三名男神/女神及各自首席星推官（给TA投票最多的用户）可获得特定礼物/座驾/头饰礼包。</p>
+    <p>排名详见<img src="./images/point.png" alt="point" width="20" /><a href="#">“拉贝星球人气之星”</a>活动页面</p>
+  </div>
+</body>
+
+</html>

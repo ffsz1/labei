@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title class="">幸运大转盘</title>
+    <script>
+        var layout_width = 750;
+        (function(doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function() {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= layout_width) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+                    }
+                };
+
+            recalc();
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <link rel="stylesheet" href="../lib/swiper/swiper-4.1.6.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<style>
+    .share-button .englist {
+        box-sizing: border-box;
+        padding: 0.1rem 0.4rem 0;
+        line-height: 0.4rem;
+    }
+    
+    html {
+        font-family: PingFangSC-Medium, sans-serif!important;
+    }
+    
+    span,
+    p,
+    a,
+    div {
+        font-family: PingFangSC-Medium, sans-serif!important;
+    }
+    
+    .toast {
+        width: 92%;
+        font-size: 0.26rem;
+        padding: .26rem 0.4rem;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <img src="images/tit.png" class="">
+        <div class="swiper-container">
+            <div class="swiper-wrapper" id="list-item">
+            </div>
+        </div>
+        <div class="turnable">
+            <img src="images/turnable-bg.png">
+            <img src="images/turnable1.png" class="turnable1">
+            <img src="images/turnable2.png" class="turnable2">
+            <img src="images/turnable.png" class="turnble-content">
+            <img src="images/arraw.png" onclick="arrow()" class="arrow">
+        </div>
+        <img src="./images/bottom.png" class="turnable_bottom">
+        <div class="leftDrawNum">
+            <p class="one">您还有</p>
+            <p id="leftDrawNum-text">0次</p>
+            <p class="two">抽奖机会</p>
+        </div>
+        <div class="share-button" onclick="toCharge()">
+            <!-- <img src="images/shareButton.png"> -->
+            <div>大转盘充值300金币以上可以获取一次抽奖</div>
+        </div>
+        <div class="rule ">
+            <div class="bg"></div>
+            <div class="tit">活动规则</div>
+            <span>1.每充值一次就能获得一次抽奖机会</span>
+            <span>2.单次充值金额越大，中大奖概率越大 </span>
+            <!-- <span>3.苹果用户需要通过优惠充值通道充值，获得抽奖机会</span> -->
+            <span>3.发现异常刷量行为，将不发放奖品及收回奖品并追究法律责任</span>
+            <span>4.本活动与Apple Inc无关</span>
+        </div>
+    </div>
+    <!-- <div class="mask" id="lose">
+        <div class="lose">
+            <img src="images/lose.png">
+            <img src="images/clo.png" class="clo">
+        </div>
+    </div> -->
+    <div class="mask" id="prize">
+        <div class="prize">
+            <img src="images/she.png" alt="">
+            <div>
+                <img src="images/bg_0.png" alt="" class="bg_0 bg_bg">
+                <img src="images/8.png" alt="" class="bg_8 bg_bg">
+                <img src="images/50.png" alt="" class="bg_50 bg_bg">
+                <img src="images/100.png" alt="" class="bg_100 bg_bg">
+                <img src="images/300.png" alt="" class="bg_300 bg_bg">
+                <img src="images/1000.png" alt="" class="bg_1000 bg_bg">
+                <img src="images/3000.png" alt="" class="bg_3000 bg_bg">
+                <img src="images/8888.png" alt="" class="bg_8888 bg_bg">
+                <img src="images/7ID.png" alt="" class="bg_7ID bg_bg">
+                <p class="prize-name"></p>
+                <div class="clo">确定</div>
+            </div>
+        </div>
+    </div>
+    <div class="loading">
+
+    </div>
+    <div class="no-chance">
+    </div>
+    <div style="display:none">
+        <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+    </div>
+    <!-- <script src="../lib/vconsole.min.js"></script> -->
+    <script src="../lib/zepto.min.js"></script>
+    <script src="../lib/toolKit/js/index.js"></script>
+    <script src="../lib/swiper/swiper-4.1.6.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

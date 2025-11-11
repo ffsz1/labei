@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <title>开服活动</title>
+    <link rel="icon" href="./images/logo.png" type="image/png">
+    <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <style>
+        .open-service {
+            font-size: 0;
+        }
+        .open-service img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="open-service">
+        <img class="lazy" data-original="images/open_service_1.png" alt="open_service_1" />
+        <img class="lazy" data-original="images/open_service_2.png" alt="open_service_2" />
+        <img class="lazy" data-original="images/open_service_3.png" alt="open_service_3" />
+        <img class="lazy" data-original="images/open_service_4.png" alt="open_service_4" />
+    </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/jquery.lazyload.min.js"></script>
+<script>
+    $(function() {
+        $("img.lazy").lazyload();
+    });
+</script>
+</html>

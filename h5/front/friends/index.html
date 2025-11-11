@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>广播交友说明</title>
+    <script>
+      var layout_width = 750;
+      (function (doc, win) {
+        var docEl = doc.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+          recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            if (clientWidth >= layout_width) {
+              docEl.style.fontSize = '100px';
+            } else {
+              docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+            }
+          };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+      })(document, window);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <style>
+        body{
+            padding: 0.2rem;
+            box-sizing: border-box;
+        }
+        p{
+            font-size: 0.3rem;
+            line-height: 1.5;
+        }
+        p:nth-child(1){
+            font-weight: bold;
+        }
+        p:nth-child(odd){
+            margin-top: 0.2rem;
+        }
+    </style>
+  </head>
+  <body>
+      <p>广播交友说明:</p>
+      <p>广播交友是给广大无聊想要交友的童鞋，提供一个发布交友需求的地方。</p>
+      <p>1、需要收费吗？</p>
+      <p>这个是一个免费发布交友广播需求的地方。</p>
+      <p>2、如何发送广播？</p>
+      <p>需要在房间麦序上才能发布广播。（不然看广播跳转的小伙伴找不到你呢~）</p>
+      <p>3、发送间隔多少？</p>
+      <p>所有用户发送间隔为60s。</p>
+      <p>4、不允许发送什么内容？</p>
+      <p>涉黄涉政、商业广告、骂架、一切影响广播交友，正常运营的广告等，一经发现将根据违规程度，给予封号、封IP、禁言处理。</p>
+  </body>
+</html>

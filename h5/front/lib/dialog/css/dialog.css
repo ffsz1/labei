@@ -1,0 +1,215 @@
+#prompt {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: none;
+}
+
+#prompt .prompt-mask {
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  left: 0;
+  top: -100vh;
+}
+
+.prompt-box {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+}
+
+.prompt-box .prompt-btn {
+  border-radius: 0.1rem;
+  padding: 0.3rem;
+  font-size: 0.32rem;
+  overflow: hidden;
+  display: none;
+}
+
+.prompt-box .prompt-btn > div {
+  border-radius: 0.1rem;
+  overflow: hidden;
+}
+
+.prompt-box .prompt-btn > div div {
+  height: 1rem;
+  line-height: 1rem;
+  border-bottom: 1px solid #B3B3B3;
+  background: #fff;
+  opacity: 0.9;
+  display: none;
+}
+
+.prompt-box .prompt-btn > div div:last-child {
+  border: none;
+}
+
+.prompt-box .prompt-btn .btn-exit {
+  border: none;
+  border-bottom-left-radius: 0.1rem;
+  border-bottom-right-radius: 0.1rem;
+}
+
+.prompt-box .prompt-btn .prompt-cancel {
+  height: 0.88rem;
+  line-height: 0.88rem;
+  background: #fff;
+  border-radius: 0.1rem;
+  color: #141722;
+  font-size: 0.32rem;
+  font-weight: bold;
+  margin-top: 0.2rem;
+  display: block;
+}
+
+.prompt-box .prompt-btn1 {
+  border-radius: 0.1rem;
+  font-size: 0.32rem;
+  overflow: hidden;
+  display: none;
+}
+
+.prompt-box .prompt-btn1 > div {
+  height: 1rem;
+  line-height: 1rem;
+  border-bottom: 1px solid #B3B3B3;
+  background: #fff;
+  opacity: 1;
+}
+
+.prompt-box .prompt-btn1 > div:last-child {
+  border: none;
+}
+
+.prompt-box .prompt-btn1 .prompt-cancel {
+  height: 0.88rem;
+  line-height: 0.88rem;
+  background: #f1f1f1;
+  border-radius: 0.1rem;
+  color: #141722;
+  font-size: 0.32rem;
+  font-weight: bold;
+  display: block;
+}
+
+#dialog {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+#dialog .dialog-mask {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+@-webkit-keyframes animationDialog {
+  0% {
+    opacity: 0;
+    margin-top: 40%;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 50%;
+  }
+}
+
+@keyframes animationDialog {
+  0% {
+    opacity: 0;
+    margin-top: 40%;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 50%;
+  }
+}
+
+.dialog-box {
+  position: absolute;
+  margin: 50% auto;
+  padding: 1rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  z-index: 20;
+  -webkit-animation: animationDialog 0.5s;
+          animation: animationDialog 0.5s;
+}
+
+.dialog-box .dialog-box_ {
+  width: 100%;
+  border-radius: 0.1rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.dialog-box .dialog-box_ .dialog-container {
+  background: #fff;
+  font-size: 0.32rem;
+  padding: 0.3rem;
+}
+
+.dialog-box .dialog-box_ .dialog-container .dialog-container-title {
+  color: #1A1A1A;
+  font-weight: bold;
+  font-size: 0.34rem;
+  height: 1rem;
+  line-height: 1rem;
+}
+
+.dialog-box .dialog-box_ .dialog-container .dialog-container-content {
+  line-height: 0.4rem;
+  font-size: 0.26rem;
+}
+
+.dialog-box .dialog-box_ .dialog-btn {
+  min-height: 0.8rem;
+  line-height: 0.8rem;
+  background: #fff;
+  color: #fff;
+  font-size: 0.32rem;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: 0.1rem 0.3rem 0.3rem;
+}
+
+.dialog-box .dialog-box_ .dialog-btn > button {
+  height: 0.7rem;
+  line-height: 0.7rem;
+  width: 2.3rem;
+  border: none;
+  color: #fff;
+  border-radius: 0.1rem;
+  background: #ffcfe6;
+  margin-left: 0.2rem;
+}
+
+.dialog-box .dialog-box_ .dialog-btn > button:first-child {
+  margin-left: 0;
+}
+
+.dialog-box .dialog-box_ .dialog-btn .color-bold {
+  background: #ff5fab;
+}
+/*# sourceMappingURL=dialog.css.map */

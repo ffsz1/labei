@@ -1,0 +1,199 @@
+<html lang=en>
+
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content="initial-scale=1,width=device-width,maximum-scale=1,user-scalable=no">
+    <meta http-equiv=X-UA-Compatible content="ie=edge">
+    <title>提取收益</title>
+    <link rel="icon" href="../../images/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/base.css">
+    <script type=text/javascript> ! function() { var documentElement=document.documentElement; var
+        resizeEvt='orientationchange' in window ? 'orientationchange' : 'resize' ; function resize() { var
+        clientWidth=documentElement.clientWidth; clientWidth=clientWidth>
+        750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseInt(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (a != real) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+        var callbackUrl = '?url=/front/withdraw/exchange.html';
+    </script>
+    <script src="js/href.js?v=12345"></script>
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css?v=0">
+    <link rel=stylesheet href="./css/exchange.css?v=3">
+</head>
+
+<body>
+    <div class="popup" style="display:none">
+        <div class="con" style="display:none">
+            <div class="close-pop"></div>
+            <h3>提现详情</h3>
+            <div class="withdraw">
+                <p class="w1">提现额度(元)</p>
+                <p class="w2">
+                    <span id="limit">0</span>
+                </p>
+            </div>
+            <p class="consume">
+                <span>消耗钻石：</span>
+                <span>0</span> 个
+            </p>
+            <p class="name">
+                <span>用户昵称</span>
+                <span class="nick-name">0</span>
+            </p>
+            <p class="user">
+                <span>用户ID</span>
+                <span class="user-id">0</span>
+            </p>
+            <div class="txwrap">
+                <p class="wxtx" onclick="wxtx()"></p>
+                <p class="zfbtx" onclick="zfbtx()"></p>
+            </div>
+            <!-- <span class="bingZfb">填写支付宝信息</span> -->
+        </div>
+        <div class="confirm-zfb" style="display:none">
+            <p class="top">确认信息</p>
+            <p class="middle">
+                <span class="zfb">
+                    <span>支付宝账户：</span>
+                    <span id="zfb-num"> 0</span>
+                </span>
+                <span class="name">
+                    <span>真实姓名：</span>
+                    <span id="real-name">0</span>
+                </span>
+            </p>
+            <p class="bottom">
+                <span onclick="hidePop()">取消</span>
+                <span onclick="confirmZfb()">确认</span>
+            </p>
+        </div>
+    </div>
+    <div class="container clearfix" style="display:block">
+        <div class="prompt" style="display:none">
+            <span>微信提现成功，会在24小时内处理</span>
+        </div>
+        <div class="top-info">
+            <p id="balance"></p>
+            <p>钻石余额</p>
+        </div>
+        <div class="box clearfix">
+            <div class="tab">
+                <span class="active" data-index='3'>兑换金币</span>
+                <span data-index='1'>提现</span>
+            </div>
+            <div class="exchange-box">
+                <div class="exchange-title">
+                    <p>当前金币余额：<span id="gold-balance"></span></p>
+                </div>
+                <div class="exchange">
+                    <div class="diamond-count">
+                        <img src="./img/diamond.png" alt="diamond" />
+                        <input type="number" placeholder="请输入兑换的钻石数量" id="withdraw-num" autocomplete="off" />
+                    </div>
+                    <div class="gold-count">
+                        <img src="./img/gold.png" alt="gold" />
+                        <span id="gold-num">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="withdraw-box">
+                <div class="choose-platform">
+                    <p>选择平台与对应账号</p>
+                    <img src="./img/alipay.png" alt="alipay" id="alipay-img" style="display: none;">
+                    <img src="./img/unionpay.png" alt="unionpay" id="unionpay-img" style="display: none;">
+                </div>
+                <div class="choose-title">
+                    <p>选择提现金额</p>
+                </div>
+                <div class="choose">
+                    <div class="diamond-count" style="justify-content: space-between;">
+                        <input type="number" placeholder="请输入提现钻石数量" id="diamond-num" autocomplete="off" />
+                        <img src="./img/diamond.png" alt="diamond" style="margin: 0;" />
+                    </div>
+                    <div class="gold-count" style="justify-content: space-between; color: #333333;">
+                        <span id="money-num">0</span>
+                        <span class="unit">元</span>
+                    </div>
+                </div>
+                <p class="choose-tips">提现比例：1000钻石=100元，钻石数量请输入1000整数倍</p>
+            </div>
+            <div class="verify-code">
+                <div class="code">
+                    <input type="number" name="code" placeholder="请输入手机验证码" autocomplete="off" />
+                    <span id="code-btn">获取验证码</span>
+                </div>
+                <p class="notice"></p>
+            </div>
+            <p class="exchange-tips tips">钻石可兑换金币，兑换比例为：10钻石=10金币，钻石数量必须为10的整数倍</p>
+        </div>
+        <p class="withdraw-tips tips">温馨提示：提现将于3个工作日内到账，逾期未到账请联系客服微信号：微信客服号xxx</p>
+        <div class="submit">
+            <span>立即兑换</span>
+        </div>
+    </div>
+    <div class="financial-popup" style="display: none;">
+        <div class="financial-account">
+            <img src="./img/icon-shanchu.png" alt="close" class="financial-close">
+            <h1>填写提现账户信息</h1>
+            <div class="form-inline">
+                <div class="type">
+                    <div>
+                        <input type="radio" value="2" name="type" id="alipay" checked>
+                        <label for="alipay">
+                            <img src="./img/alipay.png" alt="alipay">
+                            支付宝
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" value="3" name="type" id="unionpay">
+                        <label for="unionpay">
+                            <img src="./img/unionpay.png" alt="unionpay">
+                            银行卡
+                        </label>
+                    </div>
+                </div>
+                <div class="account">
+                    <div class="account">
+                        <input type="number" placeholder="请输入支付宝账号(手机/邮箱)" id="input-number">
+                    </div>
+                    <div class="account-name">
+                        <input type="text" placeholder="请输入支付宝账号的真实姓名" id="input-name">
+                    </div>
+                    <p class="danger">* 请确保所填写支付宝账号正确无误</p>
+                </div>
+            </div>
+            <div class="financial-tips">
+                <p>
+                    <img src="./img/notice.png" alt="notice">
+                    <span>温馨提示</span>
+                </p>
+                <p>请确保您所填写的账号信息准备无误再提交，如因个人失误，造成工资发放到错误的账号，一切后果由您自行承担</p>
+            </div>
+            <div class="submit-account" id="submit-account">
+                <span>提交</span>
+            </div>
+        </div>
+    </div>
+</body>
+<script src=../lib/common.js> </script>
+<!-- <script src="../lib/zepto.min.js"></script> -->
+<script src="../lib/jquery.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script> -->
+<script src="../lib/toolKit/js/index.js?v=0"></script>
+<script src="../lib/native.js"></script>
+<script src="js/exchange.js?v=1"></script>
+
+</html>

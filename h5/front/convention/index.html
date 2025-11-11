@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绿色公约</title>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <style>
+        .convention {
+            font-size: 0;
+        }
+        .convention img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="convention">
+        <img class="lazy" data-original="images/convention_1.png" alt="convention_1" />
+        <img class="lazy" data-original="images/convention_2.png" alt="convention_2" />
+        <img class="lazy" data-original="images/convention_3.png" alt="convention_3" />
+        <img class="lazy" data-original="images/convention_4.png" alt="convention_4" />
+        <img class="lazy" data-original="images/convention_5.png" alt="convention_5" />
+    </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-lazyload@1.9.7/jquery.lazyload.min.js"></script>
+<script>
+    $(function() {
+        $("img.lazy").lazyload();
+    });
+</script>
+</html>

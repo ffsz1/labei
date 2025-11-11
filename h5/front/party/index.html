@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <script type="text/javascript">
+       (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          clientWidth = clientWidth > 750 ? 750 : clientWidth;         
+          clientWidth = clientWidth < 320 ? 320 : clientWidth;
+          docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+        };
+      recalc();
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+    </script>
+    <title>七月大狂欢</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body>div{
+            margin:  0 auto;
+            max-width: 7.5rem;
+        }
+        img{
+            width: 100%;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <img src="images/banner.jpg" alt="" />
+        <img src="images/tu1.jpg" alt="" />
+        <img src="images/tu2.jpg" alt="" />
+    </div>
+</body>
+
+</html>

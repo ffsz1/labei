@@ -1,0 +1,349 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    background: url(../img/bg.jpg) no-repeat bottom center
+}
+
+body {
+    font-family: SourceHanSansCN-Medium;
+    min-width: 1280px;
+}
+
+.head {
+    /* width: 1280px; */
+    height: 118px;
+    margin: 0 auto;
+    background: #fff;
+}
+
+.headcon {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    background: url(../img/logo.png) no-repeat top center;
+    margin: 6px 18px 0 18px;
+    background-size: 100%;
+    display: inline-block;
+}
+
+.name {
+    color: #FF2C70;
+    font-size: 30px;
+    line-height: 111px;
+    height: 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.article {
+    min-height: 662px;
+    width: 1280px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.loginwrap {
+    width: 418px;
+    height: 576px;
+    background: rgba(255, 255, 255, 1);
+    position: absolute;
+    top: 26px;
+    right: 32px;
+    font-size: 17px;
+}
+
+.type1,
+.type2 {
+    display: inline-block;
+    font-size: 17px;
+    color: #999999;
+    padding: 29px 54px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.type1.active,
+.type2.active {
+    color: #333;
+}
+
+.type1.active::before,
+.type2.active::before {
+    content: '';
+    width: 84px;
+    height: 3px;
+    background: rgba(255, 44, 112, 1);
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.type2.active::before {
+    width: 48px;
+}
+
+.con2 {
+    display: none;
+    margin-bottom: 49px;
+}
+
+.con1 {}
+
+.logincon {
+    margin-top: 20px;
+}
+
+.user,
+.pwd,
+.phone,
+.code {
+    width: 334px;
+    height: 50px;
+    border: 1px solid rgba(204, 204, 204, 1);
+    margin: 0 auto 20px;
+}
+
+.code,
+.yzm {
+    width: 334px;
+    height: 52px;
+    margin: 0 auto 0px;
+    border: none;
+}
+
+.yzm1 {
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+.yzm2 {
+    height: 52px;
+    width: 130px;
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+.yzm2 img {
+    width: 100%;
+    height: 100%;
+}
+
+.code2 {
+    width: 161px;
+    height: 52px;
+    margin-right: 37px;
+    border: 1px solid rgba(204, 204, 204, 1);
+}
+
+.remember {
+    width: 334px;
+    margin: 0 auto 0;
+}
+
+.re1 {
+    width: 20px;
+    margin-right: 8px;
+}
+
+.i1,
+.i2,
+.i5 {
+    display: inline-block;
+    width: 18px;
+    height: 23px;
+    background: url(../img/register.png) no-repeat top center;
+    background-size: 100% auto;
+    margin: 14px 24px;
+    vertical-align: middle;
+}
+
+.i2 {
+    background: url(../img/forget.png) no-repeat top center;
+    background-size: 100% auto;
+}
+
+.i5 {
+    width: 22px;
+    height: 18px;
+    background: url(../img/msg.png) no-repeat top center;
+    background-size: 100% auto;
+}
+
+input {
+    font-size: 17px;
+    vertical-align: middle;
+    border: none;
+    height: 49px;
+    width: 262px;
+    padding-left: 4px;
+    box-sizing: border-box;
+}
+
+.loginbtn {
+    margin: 0 auto 0;
+    width: 334px;
+    height: 50px;
+    border: 1px solid rgba(204, 204, 204, 1);
+    background: #FF2C70;
+    text-align: center;
+    color: #fff;
+    line-height: 50px;
+    cursor: pointer;
+}
+
+.loginhard {
+    color: #FF2C70;
+    width: 334px;
+    margin: 20px auto 46px;
+    overflow: hidden;
+}
+
+.forget {
+    float: left;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.register {
+    float: right;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.w1 {
+    color: #999;
+    text-align: center;
+    position: relative;
+    margin: 20px 0;
+}
+
+.w1::before {
+    content: '';
+    width: 84px;
+    height: 2px;
+    background: rgba(238, 238, 238, 1);
+    position: absolute;
+    left: 44px;
+    top: 10px;
+}
+
+.w1::after {
+    content: '';
+    width: 84px;
+    height: 2px;
+    background: rgba(238, 238, 238, 1);
+    position: absolute;
+    right: 44px;
+    top: 10px;
+}
+
+.i3 {
+    display: inline-block;
+    width: 49px;
+    height: 40px;
+    background: url(../img/wx.png) no-repeat top center;
+    background-size: 100% auto;
+    vertical-align: middle;
+}
+
+.i4 {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: url(../img/dd.png) no-repeat top center;
+    background-size: 100% auto;
+    vertical-align: middle;
+}
+
+.thirdtype {
+    text-align: center;
+    margin-top: 34px;
+}
+
+.wechat,
+.ding {
+    width: 50px;
+    text-align: center;
+    display: inline-block;
+    margin: 0 42px;
+    cursor: pointer;
+}
+
+.code1 {
+    width: 201px;
+    height: 100%;
+    display: inline-block;
+    border: 1px solid rgba(204, 204, 204, 1);
+    vertical-align: text-bottom;
+    display: inline-block;
+}
+
+.send {
+    width: 115px;
+    height: 52px;
+    border: 1px solid rgba(204, 204, 204, 1);
+    text-align: center;
+    line-height: 50px;
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    color: #666;
+    background: transparent;
+    cursor: default
+}
+
+.send.active {
+    color: #fff;
+    cursor: pointer;
+    background: #FF2C70;
+}
+
+.inputcode {
+    width: 131px;
+}
+
+.loginwechat,
+.loginding {
+    display: none;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.i6 {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background: url(../img/close.png) no-repeat top center;
+    background-size: 100% auto;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+}
+
+.ewm {
+    width: 260px;
+    height: 260px;
+    background-image: url(../img/ewm.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}

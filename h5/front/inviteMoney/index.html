@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <title>邀请好友</title>
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                    clientWidth = clientWidth < 320 ? 320 : clientWidth;
+                    docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                };
+            recalc();
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window); //设置body的最小高度
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css" />
+    <style>
+        .container {
+            width: 100%;
+            max-width: 7.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            background-color: #fff;
+        }
+
+        .header {
+            width: 100%;
+            height: 2.81rem;
+            background: rgba(255, 255, 255, 1);
+            color: #fff;
+            font-size: 0.26rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            padding-top: 0.3rem;
+        }
+
+        .money {
+            font-size: .34rem;
+            font-weight: bold;
+            color: #FF4242;
+            padding: 0 3px;
+        }
+
+        .header>div {
+            width: 100%;
+            height: 100%;
+            box-shadow: 0.02rem 0.05rem 0.35rem 0 rgba(194, 194, 194, 0.22);
+            border-radius: 0.26rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: url(./images/bg.png) no-repeat center center;
+            background-size: 7.5rem 2.96rem;
+        }
+
+        .member_total {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            margin-bottom: 0.25rem;
+            font-size: 0.5rem;
+        }
+
+        .member_total p {
+            font-size: 0.28rem;
+        }
+
+        .total {
+            font-size: .22rem;
+        }
+
+        #total_num {
+            font-size: 0.72rem;
+        }
+
+        .list {
+            width: 92%;
+            display: flex;
+            flex-direction: column;
+            margin-top: 3.2rem;
+            padding-bottom: 1.3rem;
+            box-sizing: border-box;
+        }
+
+        .list>div {
+            width: 100%;
+            height: 1.31rem;
+            border-bottom: 0.01rem solid #eeeeee;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.15rem;
+            box-sizing: border-box;
+            margin-top: 0.2rem;
+        }
+
+        .list_user {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .list_user {
+            font-size: 0.32rem;
+            color: #1a1a1a;
+        }
+
+        .list_user>img {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+        }
+
+        .list_user>p {
+            max-width: 3rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-left: 0.24rem;
+            line-height: 2;
+            font-size: 0.28rem;
+        }
+
+        .list>div>span:nth-child(2) {
+            font-size: 0.2rem;
+            color: #9f9f9f;
+            line-height: 2;
+        }
+
+        .share {
+            width: 100%;
+            height: 1.2rem;
+            background-color: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
+
+        .share>div {
+            width: 6.9rem;
+            height: 0.8rem;
+            background: linear-gradient(-90deg, rgba(255, 81, 80, 1), rgba(255, 58, 57, 1));
+            border-radius: 0.4rem;
+            margin: 0 auto;
+            color: #ffffff;
+            font-size: 0.32rem;
+            text-align: center;
+            font-weight: bold;
+            line-height: 0.8rem;
+        }
+
+        .list_none {
+            width: 100%;
+            margin: auto;
+            color: #CDCBCB;
+            font-size: 0.3rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            border-bottom: 0 !important;
+            margin-top: 3rem !important;
+        }
+
+        .list_none>img {
+            width: 2.06rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <span class="member_total">
+                    <p id="total_num">0</p>
+                    <p>元</p>
+                </span>
+                <span class="total">累计奖励</span>
+            </div>
+        </div>
+        <div class="list">
+            <div class="list_none">
+                <img src="./images/list_none.jpg">
+                <p>你还未获得过奖励哦~</p>
+            </div>
+        </div>
+        <div class="share">
+            <div onclick="shareBtn()" class="share_btn">去邀请赚钱</div>
+        </div>
+    </div>
+</body>
+<script src="../lib/common.js"></script>
+<script src="../lib/zepto.min.js"></script>
+<script src="../lib/vconsole.min.js"></script>
+
+<script>
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+    } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+
+    var config = {
+        share: {
+            title: '亲，我在拉贝星球等你哦',
+            desc: '想要遇见喜欢的声音，就来拉贝星球，让我们不见不散。'
+        }
+    }
+    var share = {
+        title: config.share.title, // 分享标题
+        link: window.location.href, // 分享链接
+        imgUrl: allUrl() + '/home/images/logo.png',
+        desc: config.share.desc // 分享描述
+    };
+
+    function shareInfo() {
+        var _url = allUrl() + '/front/download/download.html';
+        var info = {
+            title: config.share.title, // 分享标题
+            showUrl: _url,
+            imgUrl: allUrl() + '/home/images/logo.png',
+            desc: config.share.desc // 分享描述
+        };
+        return JSON.stringify(info);
+    }
+    var browser = checkVersion();
+    var info = {};
+    var theAllWords;
+    var drawStatus = false;
+
+    if (browser.ios) {
+        window.webkit.messageHandlers.getUid.postMessage(null);
+    } else if (browser.android) {
+        if (
+            androidJsObj &&
+            (typeof androidJsObj === "undefined" ?
+                "undefined" :
+                _typeof(androidJsObj)) === "object"
+        ) {
+            info.uid = parseInt(window.androidJsObj.getUid());
+            init();
+        }
+    }
+
+    var getMessage = function getMessage(key, value) {
+        info[key] = value;
+        if (info.uid) {
+            init();
+        }
+    };
+
+    function shareBtn() {
+        if (browser.android) {
+            window.androidJsObj.openSharePage();
+        } else if (browser.ios) {
+            window.webkit.messageHandlers.openSharePage.postMessage(null);
+        }
+    }
+
+    function init() {
+        $.ajax({
+            url: allUrl() + "/statpacket/invitedetail",
+            data: {
+                uid: info.uid
+            },
+            success: function (res) {
+                if (res.code === 200) {
+                    $("#total_num").html(res.data.inviteDetail.packetNum);
+                    var html = "";
+                    if (res.data.inviteList.length) {
+                        $('.list_none').hide()
+                        $('.share_btn').html('继续邀请好友');
+                        res.data.inviteList.forEach(function (item) {
+                            html += '<div><span class="list_user"><img src="' + item.avatar + '"/><p>' + item.nick + "</p></span><span><span class='money'>+" + item.packetNum + "</span>元</span></div>";
+                        });
+                        $(".list").html(html);
+                    }
+                }
+            }
+        });
+    }
+    document.getElementsByTagName('body')[0].style.minHeight = window.innerHeight + 'px';
+</script>
+
+</html>

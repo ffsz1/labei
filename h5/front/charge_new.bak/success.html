@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <script src="../lib/rem750.js"></script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <title>支付成功</title>
+    <style>
+
+        .warp {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            font-size: 0.26rem;
+            color: #1A1A1A;
+            text-align: center;
+        }
+
+        .warp .title {
+            font-size: 0.32rem;
+            color: #333333;
+            font-weight: 600;
+            font-family: PingFang-SC-Medium;
+            margin: 0.5rem 0 0.4rem 0;
+        }
+        ul {
+            display: inline-block;
+        }
+        ul li {
+            height: 1rem;
+            padding: 0 0.35rem;
+            line-height: 1rem;
+            display: flex;
+        }
+
+        ul li:last-child{
+            border: none;
+        }
+
+        li .left {
+            font-family: PingFang-SC-Medium;
+            font-weight: 600;
+            font-size: 0.26rem;
+            margin-right: 0.12rem;
+        }
+
+        li .right {
+            color: #A3A3A3;
+            font-family: PingFang-SC-Medium;
+            font-weight: 600;
+            font-size: 0.26rem;
+        }
+
+        .submitBtn {
+            text-align: center;
+        }
+        .submitBtn .btn {
+            width: 3.0rem;
+            height: 0.79rem;
+            line-height: 0.79rem;
+            border-radius: 0.10rem;
+            text-align: center;
+            background: #0BD0CE;
+            font-size: 0.14rem;
+            color: #fff;
+            display: inline-block;
+            margin-top: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="warp">
+        <div class="title">
+            充值成功
+        </div>
+        <ul>
+            <li>
+                <div class="left">充值&nbsp;I&nbsp;D&nbsp;：</div>
+                <div class="right userNo">0</div>
+            </li>
+            <li>
+                <div class="left">昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</div>
+                <div class="right name"></div>
+            </li>
+            <li>
+                <div class="left">充值金额：</div>
+                <div class="right money"></div>
+            </li>
+            <li>
+                <div class="left">充值时间：</div>
+                <div class="right time"></div>
+            </li>
+
+            <li>
+                <div class="left">充值结果：</div>
+                <div class="right">充值成功</div>
+            </li>
+        </ul>
+        <div class="submitBtn">
+            <div class="btn">继续充值</div>
+        </div>
+    </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/common.js"></script>
+<script>
+    function dateFormat (fmt) {
+        var date = new Date();
+        console.log(date);
+        var o = {
+            'M+': date.getMonth() + 1,
+            'd+': date.getDate(),
+            'h+': date.getHours(),
+            'm+': date.getMinutes(),
+            's+': date.getSeconds()
+        };
+
+        // 补全0
+        function padLeftZero(str) {
+            return('00' + str).substr(str.length);
+        }
+
+        // 年份
+        if(/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+        }
+
+        // 月日时分秒
+        for(var k in o) {
+            if(new RegExp('(' + k + ')').test(fmt)) {
+                var str = o[k] + '';
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str));
+            }
+        }
+
+        date = o = padLeftZero = null;
+        return fmt;
+    }
+    if(sessionStorage.getItem('info')) {
+        var info = JSON.parse(sessionStorage.getItem('info'));
+        $('.userNo')[0].innerHTML = info.userNo;
+        $('.name')[0].innerHTML = info.name;
+        $('.money')[0].innerHTML = info.money + '元';
+        $('.time')[0].innerHTML = dateFormat('yyyy-MM-dd hh:mm:ss');
+        // setTimeout(()=>{
+        //     sessionStorage.removeItem('info');
+        // },100)
+    }else {
+        window.location.href = allUrl() + '/mm/charge_new/index.html';
+    }
+    $('.btn')[0].onclick = function () {
+        window.location.href = allUrl() +  '/mm/charge_new/index.html';
+    }
+</script>
+</html>

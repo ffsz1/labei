@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>获取授权</title>
+</head>
+
+<body>
+
+</body>
+<script src="../lib/common.js"></script>
+<script>
+    function getQueryString() {
+        var _url = location.search;
+        var theRequest = new Object();
+        if (_url.indexOf('?') != -1) {
+            var str = _url.substr(1);
+            strs = str.split('&');
+            for (var i in strs) {
+                theRequest[strs[i].split('=')[0]] = decodeURI(strs[i].split('=')[1]);
+            }
+        }
+        return theRequest;
+    }
+    var info = getQueryString() //chargeProdId userNo money name
+    var url = allUrl() + info.url;
+    console.log(1111111111, url)
+        // snsapi_base
+        // snsapi_userinfo
+    window.location.replace('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbe281714c57530fd&redirect_uri=' + encodeURIComponent(url) + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect')
+</script>
+
+</html>

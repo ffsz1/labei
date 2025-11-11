@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青少年模式</title>
+    <link rel="icon" href="../../images/logo.png" type="image/png" />
+    <link rel="shortcut icon" href="../../images/logo.png" type="image/png" />
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../tool/css/vant.css" />
+    <link rel="stylesheet" href="../tool/css/common.css" />
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+        }
+
+        #app,
+        .content,
+        .content>div {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .no_open_content>img {
+            margin-top: 1rem;
+            width: 2.85rem;
+            height: 2.39rem;
+        }
+
+        .no_open_title {
+            margin-top: 1rem;
+            font-size: 0.48rem;
+            font-weight: bold;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        .no_open_text {
+            width: 55%;
+            padding-left: .5rem;
+        }
+
+        .no_open_text_cell>div:nth-child(1) {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(219, 126, 255, 1);
+            display: block;
+            margin: 0.15rem 0.2rem 0 0;
+            padding: 0 2px;
+        }
+
+        .no_open_text_cell>div:nth-child(2) {
+            width: 8.2rem;
+            font-size: 0.32rem;
+            height: 20px;
+            color: rgba(102, 102, 102, 1);
+            line-height: 20px;
+        }
+
+        .no_open_text_cell {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .btn_group {
+            position: absolute;
+            bottom: 3rem;
+        }
+
+        .no_open_button {
+            width: 8.05rem;
+            height: 1.2rem;
+            background: linear-gradient(90deg, #60A6FF 0%, #E27CFF 100%);
+            border-radius: 0.6rem;
+            margin-top: 1.56rem;
+            font-size: 0.4rem;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .no_open_plan {
+            font-size: 0.32rem;
+            color: #7A9DFF;
+            margin-top: 0.4rem;
+            text-align: center;
+        }
+
+        .pwd-wrap {
+            width: 5rem;
+            padding-bottom: 1px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+
+        .pwd-wrap li {
+            width: 1rem;
+            height: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid #333333;
+        }
+
+        .pwd-wrap li:last-child {
+            border-right: 0;
+        }
+
+        .pwd-wrap li i {
+            width: 0.43rem;
+            height: 0.43rem;
+            border-radius: 50%;
+            background: #000;
+            display: inline-block;
+        }
+
+        .payPwd_title {
+            width: 8.05rem;
+            font-size: 0.59rem;
+            color: rgba(51, 51, 51, 1);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .pwd_button {
+            width: 3rem;
+            height: 1.2rem;
+            background: linear-gradient(90deg, #60A6FF 0%, #E27CFF 100%);
+            border-radius: 8px;
+            font-size: 0.4rem;
+            color: rgba(255, 255, 255, 1);
+            line-height: 1.2rem;
+            margin-bottom: .5rem;
+        }
+
+        .pwd_modify {
+            width: 8.05rem;
+            display: flex;
+            font-size: 0.32rem;
+            justify-content: center;
+            color: rgba(150, 80, 241, 1);
+            margin-top: 0.35rem;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        }
+
+        [v-clack] {
+            display: none;
+        }
+
+        .forget_title {
+            width: 6.8rem;
+            font-size: 0.43rem;
+            color: rgba(51, 51, 51, 1);
+            margin-top: 1.35rem;
+        }
+
+        .forget_qrcode {
+            width: 5.73rem;
+            height: 5.73rem;
+            margin-top: 1.33rem;
+        }
+
+        .plan_title {
+            width: 5.27rem;
+            font-size: 0.43rem;
+            color: rgba(51, 51, 51, 1);
+            margin-top: 0.68rem;
+        }
+
+        .plan_text {
+            width: 8.8rem;
+            font-size: 0.35rem;
+            color: rgba(102, 102, 102, 1);
+            margin-top: 0.59rem;
+            line-height: 0.51rem;
+        }
+
+        #open_logo {
+            width: 3.43rem;
+            height: 2.44rem;
+        }
+
+        .show-none {
+            position: absolute;
+            z-index: -1;
+            left: -100%;
+            opacity: 0;
+        }
+
+        .justify {
+            justify-content: space-around;
+        }
+
+        .custom-mask {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, .3);
+            display: none;
+        }
+
+        .custom-dialog {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            background: #ffffff;
+            border-radius: 20px;
+            font-size: .4rem;
+            text-align: center;
+            padding: 1rem .5rem;
+        }
+
+        .dialog-content {
+            width: 6rem;
+        }
+
+        .dialog-content>p {
+            margin: .5rem 0;
+        }
+
+        .dialog-button-group {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .dialog-button-group>a {
+            width: 90px;
+            height: 45px;
+            line-height: 45px;
+            background: #F2F2F2;
+            border-radius: 24px;
+            display: block;
+            text-decoration: none;
+            color: #999999;
+        }
+
+        .dialog-button-group>a:last-child {
+            width: 90px;
+            height: 45px;
+            line-height: 45px;
+            background: linear-gradient(90deg, #60A6FF 0%, #E27CFF 100%);
+            border-radius: 24px;
+            display: block;
+            text-decoration: none;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="content" v-clack>
+            <!-- 未开启页面 -->
+            <div class="no_open_content rowCenter" v-if="step == 1">
+                <img src="./img/unbrealla.png" alt="unbrealla">
+                <div class="no_open_title">青少年模式未开启</div>
+                <div class="no_open_text">
+                    <div class="no_open_text_cell">
+                        <div></div>
+                        <div>我们将提供更适合青少年的内容</div>
+                    </div>
+                    <div class="no_open_text_cell">
+                        <div></div>
+                        <div>我们将限制青少年充值额度</div>
+                    </div>
+                    <div class="no_open_text_cell">
+                        <div></div>
+                        <div>我们将限制青少年使用app的时长</div>
+                    </div>
+                </div>
+                <div class="btn_group">
+                    <div class="no_open_button center" @click="openTeenager">开启青少年模式</div>
+                    <div class="no_open_plan" @click="jump">查看《拉贝星球未成年人保护计划》</div>
+                </div>
+            </div>
+
+            <!-- 已开启页面 -->
+            <div class="no_open_content rowCenter" v-if="step == 2">
+                <img src="./img/unbrealla.png" alt="unbrealla">
+                <div class="no_open_title">青少年模式已开启</div>
+                <div class="no_open_text">
+                    <div class="no_open_text_cell">
+                        <div></div>
+                        <div>我们将提供更适合青少年的内容</div>
+                    </div>
+                    <div class="no_open_text_cell">
+                        <div></div>
+                        <div>我们将限制青少年充值额度</div>
+                    </div>
+                    <div class="no_open_text_cell">
+                        <div></div>
+                        <div>我们将限制青少年使用app的时长</div>
+                    </div>
+                </div>
+                <div class="btn_group">
+                    <div class="no_open_button center" @click="closeTeenager">关闭青少年模式</div>
+                    <div class="no_open_plan" @click="jump">查看《拉贝星球未成年人保护计划》</div>
+                </div>
+            </div>
+
+            <!-- 开启密码页面 -->
+            <div id="payPwd" class="rowCenter justify" v-if="step == 3">
+                <div class="rowCenter">
+                    <div class="payPwd_title">{{openPwdText}}</div>
+                    <input ref="openPwd" type="number" v-model="openPwd" pattern="\d*" class="show-none" v-on:input="inputFunc" />
+                    <ul class="pwd-wrap" @click="focus">
+                        <li><i v-if="openPwdLength > 0"></i></li>
+                        <li><i v-if="openPwdLength > 1"></i></li>
+                        <li><i v-if="openPwdLength > 2"></i></li>
+                        <li><i v-if="openPwdLength > 3"></i></li>
+                    </ul>
+                </div>
+                <div class="rowCenter">
+                    <div class="payPwd_title">{{confirmPwdText}}</div>
+                    <input ref="confirmPwd" type="number" v-model="confirmPwd" pattern="\d*" class="show-none" v-on:input="inputFunc" />
+                    <ul class="pwd-wrap" @click="confirmFocus">
+                        <li><i v-if="confirmPwdLength > 0"></i></li>
+                        <li><i v-if="confirmPwdLength > 1"></i></li>
+                        <li><i v-if="confirmPwdLength > 2"></i></li>
+                        <li><i v-if="confirmPwdLength > 3"></i></li>
+                    </ul>
+                </div>
+                <div class="pwd_button center" v-if='openPwdTime==1' @click='openSetPwd'>开启</div>
+                <div class="pwd_button center" v-if='openPwdTime==2' @click='openSurePwd'>确定</div>
+            </div>
+
+            <!-- 关闭密码页面 -->
+            <div id="payPwd" class="rowCenter justify" v-if="step == 4">
+                <div class="rowCenter">
+                    <div class="payPwd_title">{{closePwdText}}</div>
+                    <input ref="closePwd" type="number" v-model="closePwd" pattern="\d*" class="show-none" v-on:input="inputFunc" />
+                    <ul class="pwd-wrap" @click="closeFocus">
+                        <li><i v-if="closePwdLength > 0"></i></li>
+                        <li><i v-if="closePwdLength > 1"></i></li>
+                        <li><i v-if="closePwdLength > 2"></i></li>
+                        <li><i v-if="closePwdLength > 3"></i></li>
+                    </ul>
+                </div>
+                <div class="pwd_modify">
+                    <div class="pwd_button center" @click='closeSetPwd'>关闭</div>
+                    <div @click="showOrCloseDialog('show')">忘记密码</div>
+                </div>
+            </div>
+
+            <!-- 修改密码页面 -->
+            <div id="payPwd" class="rowCenter" v-if="step == 5">
+                <div class="payPwd_title">
+                    {{modifyPwdText}}
+                </div>
+                <input ref="modifyPwd" type="password" maxlength="4" v-model="modifyPwd"
+                    style="position: absolute;z-index: -1;left:-100%;opacity: 0" />
+                <ul class="pwd-wrap" @click="modifyFocus">
+                    <li><i v-if="modifyPwdLength > 0"></i></li>
+                    <li><i v-if="modifyPwdLength > 1"></i></li>
+                    <li><i v-if="modifyPwdLength > 2"></i></li>
+                    <li><i v-if="modifyPwdLength > 3"></i></li>
+                </ul>
+
+                <div class="pwd_button center" v-if='modifyPwdTime == 1' @click='checkPwd'>确定</div>
+                <div class="pwd_button center" v-if='modifyPwdTime == 2' @click='modifySetPwd'>确定</div>
+                <div class="pwd_button center" v-if='modifyPwdTime == 3' @click='modifySurePwd'>确定</div>
+            </div>
+
+            <!-- 忘记密码页面 -->
+            <div id="payPwd" class="rowCenter" v-if="step == 6">
+                <div class="forget_title">忘记密码，请添加客服微信******** 或扫描下方二维码进行添加</div>
+                <img class="forget_qrcode" src="./img/Two-dimensional code@2x.png" alt="">
+            </div>
+
+            <!-- 保护计划页面 -->
+            <div id="payPwd" class="rowCenter" v-if="step == 7">
+                <div class="plan_title">月月星球未成年人保护计划</div>
+                <div class="plan_text">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明书，是以应用文体的方式对某事或物来进行相对的详细描述，方便人们认识和了解某事或物。说明书要实
+                    事求是，有一说一、有二说二，不可为达到某种目的而夸 大产品作用和性能。说明书要全面的说明事物，不仅介绍 其优点，同时还要清楚地说明应注意的事项和可能产生的
+                    问题。产品说明书、使用说明书、安装说明书一般采用说 明性文字，而戏剧演出类说明书则可以以记叙、抒情为主。 说明书可根据情况需要，使用图片、图表等多样的形式， 以期达到最好的说明效果。
+                </div>
+            </div>
+        </div>
+        <div class="custom-mask" ref="dialog">
+            <div class="custom-dialog">
+                <div class="dialog-content">
+                    <p>忘记密码请联系微信客服：</p>
+                    <p id="copy-text">微信客服号xxx</p>
+                </div>
+                <div class="dialog-button-group">
+                    <a href="javascript:;" @click="showOrCloseDialog('cancel')">取消</a>
+                    <a href="javascript:;" @click="copy">复制</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+<script src="../lib/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@2.8/lib/vant.min.js"></script>
+<script src="../lib/axios.js"></script>
+<script src="../lib/api.js"></script>
+<script src="../lib/rem.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                step: 1, // 1.未开启页面; 2.已开启页面; 3.开启密码页面; 4.关闭密码页面; 5.修改密码页面; 6.忘记密码页面
+                info: {}, // 用户信息
+                openPwd: '', // 设置密码
+                confirmPwd: '', // 确认密码
+                openPwdLength: 0,
+                confirmPwdLength: 0,
+                openPwdText: '输入密码',
+                confirmPwdText: '再次输入密码',
+                openPwdTime: 1,
+                closePwd: '', // 确认密码
+                closePwd1: '', // 设置密码
+                closePwdLength: 0,
+                closePwdText: '输入密码',
+                modifyPwd: '', // 确认密码
+                modifyPwd1: '', // 设置密码
+                modifyPwdLength: 0,
+                modifyPwdText: '请输入当前密码',
+                modifyPwdTime: 1,
+                showDialog: false
+            }
+        },
+        components: {},
+        methods: {
+            // 获取用户信息
+            getInfo() {
+                if (window.checkVersion().ios) {
+                    window.webkit.messageHandlers.getUid.postMessage(null);
+                    window.webkit.messageHandlers.getTicket.postMessage(null)
+                } else {
+                    this.info.uid = parseInt(window.androidJsObj.getUid());
+                    this.info.ticket = window.androidJsObj.getTicket();
+                    this.getData();
+                }
+            },
+            // 跳转页面
+            jump() {
+                window.location.href = './plan.html';
+            },
+            // IOS获取uid和ticket
+            getMessage(key, value) {
+                this.info[key] = value;
+                if (this.info.uid && this.info.ticket) {
+                    this.getData();
+                }
+            },
+            // 密码输入框限制4位数
+            inputFunc() {
+                if (this.openPwd.length > 4 || this.confirmPwd.length > 4 || this.closePwd.length > 4) {
+                    this.openPwd = this.openPwd.slice(0, 4);
+                    this.confirmPwd = this.confirmPwd.slice(0, 4);
+                    this.closePwd = this.closePwd.slice(0, 4);
+                }
+            },
+            // 复制公众号 
+            copy() {
+                window.getSelection().removeAllRanges(); //这段代码必须放在前面否则无效
+                const Url2 = document.getElementById("copy-text"); //要复制文字的节点
+                const range = document.createRange();
+                // 选中需要复制的节点
+                range.selectNode(Url2);
+                // 执行选中元素
+                window.getSelection().addRange(range);
+                // 执行 copy 操作
+                const successful = document.execCommand('Copy');
+
+                // 移除选中的元素
+                window.getSelection().removeAllRanges();
+
+                vant.Toast.success('复制成功');
+            },
+            //获取数据
+            getData() {
+                window.getUsersTeensMode({
+                    uid: this.info.uid,
+                    ticket: this.info.ticket,
+                }).then(res => {
+                    if (res.data.code != 200) {
+                        vant.Toast(res.data.message)
+                        return
+                    }
+
+                    if (res.data.data.cipherCode) {
+                        this.step = 2
+                    } else {
+                        this.step = 1
+                    }
+                });
+            },
+            //修改密码——检查密码
+            checkPwd() {
+                window.getUsersTeensMode({
+                    uid: this.info.uid,
+                    ticket: this.info.ticket,
+                }).then(res => {
+                    if (res.data.code != 200) {
+                        vant.Toast(res.data.message)
+                        return
+                    }
+                    let pwd = res.data.data.cipherCode
+                    if (this.modifyPwd != pwd) {
+                        vant.Toast('当前密码错误')
+                        return
+                    }
+                    this.modifyPwdTime = 2
+                    this.modifyPwd = ''
+                    this.modifyPwdLength = 0
+                    this.modifyPwdText = '请设置新密码'
+                })
+            },
+            //修改密码——重置密码
+            modifySetPwd() {
+                if (this.modifyPwdLength != 4) {
+                    vant.Toast('请输入完整密码')
+                    return
+                }
+                this.modifyPwd1 = this.modifyPwd
+                this.modifyPwd = ''
+                this.modifyPwdTime = 3
+                this.modifyPwdText = '请重复输入密码'
+            },
+            //修改密码——确认密码
+            modifySurePwd() {
+                if (this.modifyPwd != this.modifyPwd1) {
+                    vant.Toast('两次密码不一致')
+                    return
+                }
+                window.teensModeSave({
+                    uid: this.info.uid,
+                    ticket: this.info.ticket,
+                    cipherCode: this.modifyPwd
+                }).then(res => {
+                    if (res.data.code != 200) {
+                        vant.Toast(res.data.message)
+                        return
+                    }
+                    vant.Toast.success('修改密码成功')
+                    this.modifyPwd1 = this.modifyPwd = ''
+                    this.modifyPwdTime = 1
+                    this.modifyPwdLength = 0
+                    this.modifyPwdText = '请输入密码'
+                    this.step = 2
+                })
+            },
+            // 开启青少年模式密码
+            openSetPwd() {
+                if (this.openPwdLength != 4) {
+                    vant.Toast('请输入完整密码')
+                    return
+                } else if (this.openPwd != this.confirmPwd) {
+                    vant.Toast('两次密码不一致')
+                    return
+                }
+
+                window.teensModeSave({
+                    uid: this.info.uid,
+                    ticket: this.info.ticket,
+                    cipherCode: this.openPwd
+                }).then(res => {
+                    if (res.data.code != 200) {
+                        vant.Toast(res.data.message)
+                        return
+                    }
+
+                    vant.Toast.success('开启成功')
+                    this.openPwd = this.confirmPwd = ''
+                    this.openPwdTime = 1
+                    this.openPwdLength = 0
+                    this.confirmPwdLength = 0
+                    this.step = 2
+                })
+            },
+            // 开启重复输入密码
+            openSurePwd() {
+                if (this.openPwd != this.openPwd1) {
+                    vant.Toast('两次密码不一致')
+                    return
+                }
+                window.teensModeSave({
+                    uid: this.info.uid,
+                    ticket: this.info.ticket,
+                    cipherCode: this.openPwd
+                }).then(res => {
+                    if (res.data.code != 200) {
+                        vant.Toast(res.data.message)
+                        return
+                    }
+                    vant.Toast.success('设置密码成功')
+                    this.openPwd1 = this.openPwd = ''
+                    this.openPwdTime = 1
+                    this.openPwdLength = 0
+                    this.openPwdText = '请输入密码'
+                    this.step = 2
+                })
+            },
+            // 关闭青少年模式密码
+            closeSetPwd() {
+                if (this.closePwdLength != 4) {
+                    vant.Toast('请输入完整密码')
+                    return
+                }
+                window.checkCipherCode({
+                    uid: this.info.uid,
+                    ticket: this.info.ticket,
+                    cipherCode: this.closePwd
+                }).then(res => {
+                    if (res.data.data) {
+                        window.closeTeensMode({
+                            uid: this.info.uid,
+                            ticket: this.info.ticket,
+                            cipherCode: this.closePwd
+                        }).then(res => {
+                            if (res.data.code != 200) {
+                                vant.Toast(res.data.message)
+                                return
+                            }
+                            vant.Toast.success('关闭成功')
+                            this.closePwd1 = this.closePwd = ''
+                            this.closePwdLength = 0
+                            this.closePwdText = '请输入密码'
+                            this.step = 1
+                        });
+                    } else {
+                        this.closePwd1 = this.closePwd = ''
+                        this.closePwdLength = 0
+                        vant.Toast("输入密码错误！")
+                        return
+                    }
+                });
+            },
+            // 打开或者关闭弹窗
+            showOrCloseDialog(val) {
+                if (val == 'show') {
+                    this.$refs.dialog.style.display = 'unset';
+                } else if (val == 'cancel') {
+                    this.$refs.dialog.style.display = 'none';
+                }
+            },
+            // 开启青少年模式
+            openTeenager() {
+                this.step = 3
+            },
+            // 关闭青少年模式
+            closeTeenager() {
+                this.step = 4
+            },
+            focus() {
+                this.$refs.openPwd.focus();
+            },
+            confirmFocus() {
+                this.$refs.confirmPwd.focus();
+            },
+            closeFocus() {
+                this.$refs.closePwd.focus();
+            },
+            modifyFocus() {
+                this.$refs.modifyPwd.focus();
+            }
+        },
+        created() {
+            this.getInfo();
+        },
+        mounted() {
+            // 绑定局部方法到window对象
+            window['getMessage'] = (key, value) => {
+                this.getMessage(key, value)
+            };
+        },
+        computed: {},
+        watch: {
+            openPwd(curVal) {
+                if (/[^\d]/g.test(curVal)) {
+                    this.openPwd = this.openPwd.replace(/[^\d]/g, '');
+                } else {
+                    this.openPwdLength = curVal.length;
+                }
+            },
+            confirmPwd(curVal) {
+                if (/[^\d]/g.test(curVal)) {
+                    this.confirmPwd = this.confirmPwd.replace(/[^\d]/g, '');
+                } else {
+                    this.confirmPwdLength = curVal.length;
+                }
+            },
+            closePwd(curVal) {
+                if (/[^\d]/g.test(curVal)) {
+                    this.closePwd = this.closePwd.replace(/[^\d]/g, '');
+                } else {
+                    this.closePwdLength = curVal.length;
+                }
+            },
+            modifyPwd(curVal) {
+                if (/[^\d]/g.test(curVal)) {
+                    this.modifyPwd = this.modifyPwd.replace(/[^\d]/g, '');
+                } else {
+                    this.modifyPwdLength = curVal.length;
+                }
+            },
+        },
+    })
+    Vue.use(vant.Overlay);
+</script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script> -->
+
+</html>

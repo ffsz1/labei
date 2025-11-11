@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+  <title>财富魅力榜争夺战</title>
+  <link rel="icon" href="./images/logo.png" type="image/png">
+  <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+  <style>
+    .compete {
+      font-size: 0;
+    }
+
+    .compete img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="compete">
+    <img class="lazy" data-original="images/competeActivity/charmCompete_1.png" alt="charmCompete_1" />
+    <img class="lazy" data-original="images/competeActivity/charmCompete_2.png" alt="charmCompete_2" />
+    <img class="lazy" data-original="images/competeActivity/charmCompete_3.png" alt="charmCompete_3" />
+  </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/jquery.lazyload.min.js"></script>
+<script>
+  $(function () {
+    $("img.lazy").lazyload();
+  });
+</script>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <script src="../lib/rem.js"></script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <title>拉贝</title>
+    <style>
+    html,body{
+        width: 100%;
+        height: 100%;
+    }
+    img{
+        width: 100%;
+    }
+    .content{
+        width: 100%;
+        height: 13.34rem;
+        background-color: #FFf;
+        position: relative;
+    }
+    .content>img{
+        width: 100%;
+       
+    }
+    .download{
+        width:2.5rem;
+        height:0.8rem;
+        background:rgba(255,255,255,1);
+        border-radius:0.44rem;
+        text-align: center;
+        line-height: 0.5rem;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0.5rem;
+        margin: 0 auto;
+        border:1px solid red;
+        opacity: 0;
+    }
+    .download>a{
+        color: #FF4069;
+        font-size: 0.3rem;
+        
+    }
+    </style>
+</head>
+<body>
+    <div class="content">
+       <img src="./images/bg.jpg">
+       <div class="download">
+           <a>立即下载</a>
+       </div>
+    </div>
+    <div style="display:none">
+        <script type="text/javascript" src="https://s23.cnzz.com/z_stat.php?id=1275884485&web_id=1275884485"></script>
+    </div>
+    <script type="text/javascript" src="../lib/zepto.min.js"></script>
+    <script src="../lib/linkedme.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="js/download.js"></script>
+</body>
+
+</html>

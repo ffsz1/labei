@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title> </title>
+  <link rel="icon" href="../../../images/logo.png" type="image/png">
+  <link href="../../lib/reset.css" rel="stylesheet" />
+  <link href="../../lib/toolKit/css/index.css" rel="stylesheet" />
+  <link href="../css/common.css" rel="stylesheet" />
+  <link href="../css/details.css" rel="stylesheet" />
+  <script type="text/javascript">
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          clientWidth = clientWidth > 750 ? 750 : clientWidth;
+          clientWidth = clientWidth < 320 ? 320 : clientWidth;
+          docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+        };
+      recalc();
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+</head>
+
+<body>
+  <div class="details">
+    <div class="details-info">
+      <div class="info">
+        <img src="../img/head.png" alt="head">
+        <div class="describe" data-id="" data-uid="">
+          <p id="desc-name"></p>
+          <p id="desc-id"></p>
+          <p id="desc-members" style="display: none;"></p>
+        </div>
+        <div class="in">
+          <span></span>
+        </div>
+      </div>
+      <div class="data" style="display: none;">
+        <div class="data-title">
+          <span></span>
+        </div>
+        <div class="data-grid">
+          <div class="grid-item">
+            <p id="today">0</p>
+            <p>今日流水</p>
+          </div>
+          <div class="grid-item">
+            <p id="week">0</p>
+            <p>本周流水</p>
+          </div>
+          <div class="grid-item">
+            <p id="total">0</p>
+            <p>总流水</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="details-flow" style="display: none;">
+      <div class="flow-title">
+        <span>每日流水（仅查看最近一个月数据）</span>
+      </div>
+      <div class="flow-list"></div>
+    </div>
+    <!-- <div class="navbar">
+      <div class="back" id="back"></div>
+      <div class="forward" id="forward"></div>
+    </div> -->
+  </div>
+</body>
+<script src="../../lib/jquery-3.2.1.min.js"></script>
+<script src="../../lib/toolKit/js/index.js"></script>
+<script src="../../lib/common.js"></script>
+<script src="../js/details.js"></script>
+<script src="../js/common.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+  eruda.init();
+</script> -->
+
+</html>

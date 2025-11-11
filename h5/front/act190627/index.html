@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>夏天好热~爱也要趁热呀~</title>
+    <script>
+        ! function() {
+            var documentElement = document.documentElement;
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseFloat(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (Math.abs(a - real) > 1) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 0;
+        }
+        
+        *,
+         :before,
+         :after {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+        }
+        
+        html,
+        body {
+            background: #1a1937;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        img {
+            margin-top: -1px;
+        }
+        
+        .a {
+            position: absolute;
+            width: 6.7rem;
+            height: 2.63rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 0.2rem;
+            text-align: center;
+            top: 23.1%;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        
+        .a1 {
+            font-size: 0.24rem;
+            color: #FCA419;
+            height: 1.3rem;
+            overflow: hidden;
+            margin: 0.25rem 0;
+        }
+        
+        .a2 {
+            width: 3.13rem;
+            height: 0.74rem;
+            margin: 0 auto;
+        }
+        
+        .a2 img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .b1 {
+            width: 2.84rem;
+            height: 3.35rem;
+            position: absolute;
+            top: 0rem;
+            right: 0rem;
+        }
+        
+        .bb2 .b1 {
+            right: 2rem;
+            top: 0rem;
+        }
+        
+        .bb2 .b2 {
+            top: 1.26rem;
+            right: 0.5rem;
+        }
+        
+        .bb3 .b1 {
+            right: 1.9rem;
+            top: -0.53rem;
+        }
+        
+        .bb3 .b2 {
+            top: 0;
+        }
+        
+        .bb4 .b1 {
+            top: -0rem;
+            right: 2.3rem;
+        }
+        
+        .bb4 .b2 {
+            top: 1.26rem;
+            right: 0.5rem;
+        }
+        
+        .b1 img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .b2 {
+            width: 5.29rem;
+            height: 5.19rem;
+            position: absolute;
+            right: -0.5rem;
+            top: 0.76rem;
+            animation: mymove infinite 1.3s ease-in-out;
+            animation-timing-function: cubic-bezier(0, 0, 1, 1);
+            animation-direction: alternate;
+        }
+        
+        @keyframes mymove {
+            from {
+                transform: translate(0, 0rem) scale(1)
+            }
+            to {
+                transform: translate(0, -0.11rem) scale(1)
+            }
+        }
+        
+        .b2 img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .c {
+            width: 1.72rem;
+            height: 1.46rem;
+            position: absolute;
+            left: 5%;
+            top: 41%;
+            z-index: 1;
+        }
+        
+        .c::before {
+            background-image: url(./img/btn.png);
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .c.active::before {
+            background-image: url(./img/btna.png);
+        }
+        
+        .c::after {
+            content: '';
+            width: 2.56rem;
+            height: 1.95rem;
+            background: url(./img/shadow.png);
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            position: absolute;
+            left: -0.1rem;
+            top: 0.2rem;
+            z-index: -1;
+        }
+        
+        .c2 {
+            left: 73%;
+            top: 57%;
+        }
+        
+        .c3 {
+            left: 5%;
+            top: 73.6%;
+        }
+        
+        .c4 {
+            left: 73%;
+            top: 91%;
+        }
+        
+        .c img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .b {
+            width: 5.7rem;
+            height: 6.2rem;
+            position: absolute;
+        }
+        
+        .bb1 {
+            right: 3%;
+            top: 32%;
+        }
+        
+        .bb2 {
+            left: 4%;
+            top: 47.5%;
+        }
+        
+        .bb3 {
+            right: 5%;
+            top: 67%;
+        }
+        
+        .bb4 {
+            left: 4%;
+            top: 81%;
+        }
+        
+        .pop {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 10;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+        
+        .pop-mask {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background: #000;
+            opacity: 0.3;
+            top: 0;
+            left: 0;
+        }
+        
+        .pop-con {
+            width: 6.67rem;
+            height: 8.23rem;
+            background-image: url(./img/pop.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        
+        .pop2 .pop-con {
+            width: 6.67rem;
+            height: 4.26rem;
+            background-image: url(./img/pop-n.png);
+            background-size: contain;
+        }
+        
+        .pop3 .pop-con {
+            background: none;
+            width: 6.67rem;
+            height: 12.32rem;
+        }
+        
+        .pop4 .pop-con {
+            background: none;
+            width: 7rem;
+            height: 12.35rem;
+        }
+        
+        .pop-close {
+            right: 0;
+            position: absolute;
+            top: 0;
+            width: 0.6rem;
+            height: 0.6rem;
+            background: url(./img/close.png) no-repeat top center;
+            background-size: 100% auto;
+        }
+        
+        #list1,
+        #list2 {
+            font-size: 0.24rem;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./img/1_01.png" width="100%">
+    <img src="./img/1_02.png" width="100%">
+    <img src="./img/2.jpg" width="100%">
+    <img src="./img/3.jpg" width="100%">
+    <img src="./img/4.jpg" width="100%">
+    <div class="a">
+        <div class="a1" id='box'>
+            <div id="list1">
+                7月，是时候跟夏天说“哈喽”了<br>热浪来袭，汗流浃背，难免觉得心烦意乱，
+                <br>伴随着这阵阵暑气，
+                <br>拉贝为大家献上降温秘诀，即使天气炎热
+                <br>只要有空调，WIFI，以及拉贝的陪伴
+                <br>就会让你无比的惬意
+                <br>让你在燥热的夏日里充满凉爽的气息
+                <br>在这蝉鸣的夏季我想遇见你
+                <br>让我们徜徉在夏季的美好里
+                <br>因为年轻，清爽没不爽
+            </div>
+            <div id="list2"></div>
+        </div>
+        <div class="a2" id="btn-share"><img src="./img/btns.png"></div>
+    </div>
+    <div class="b bb1">
+        <div class="b1"><img src="./img/m1.png"></div>
+        <div class="b2"><img src="./img/i1.png"></div>
+    </div>
+    <div class="c c1 "></div>
+    <div class="b bb2">
+        <div class="b1"><img src="./img/m2.png"></div>
+        <div class="b2"><img src="./img/i2.png"></div>
+    </div>
+    <div class="c c2"></div>
+    <div class="b bb3">
+        <div class="b1"><img src="./img/m3.png"></div>
+        <div class="b2"><img src="./img/i3.png"></div>
+    </div>
+    <div class="c c3"></div>
+    <div class="b bb4">
+        <div class="b1"><img src="./img/m4.png"></div>
+        <div class="b2"><img src="./img/i4.png"></div>
+    </div>
+    <div class="c c4"></div>
+    <div class="pop pop1">
+        <div class="pop-mask"></div>
+        <div class="pop-con">
+            <div class="pop-close"></div>
+        </div>
+    </div>
+    <div class="pop pop2">
+        <div class="pop-mask"></div>
+        <div class="pop-con">
+            <div class="pop-close"></div>
+        </div>
+    </div>
+    <div class="pop pop3">
+        <div class="pop-mask"></div>
+        <div class="pop-con">
+            <img src="./img/yc1.png" width="100%">
+            <img src="./img/yc2.png" width="100%">
+            <img src="./img/yc3.png" width="100%">
+            <div class="pop-close"></div>
+        </div>
+    </div>
+    <div class="pop pop4">
+        <div class="pop-mask"></div>
+        <div class="pop-con">
+            <img src="./img/st1.png" width="100%">
+            <img src="./img/st2.png" width="100%">
+            <img src="./img/st3.png" width="100%">
+            <img src="./img/st4.png" width="100%">
+            <div class="pop-close"></div>
+        </div>
+    </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/common.js"></script>
+<script>
+    $('.c1').on('click', function() {
+        var _this = $(this);
+        $(this).addClass('active');
+
+        setTimeout(function() {
+            _this.removeClass('active')
+            $('.pop1').show()
+
+        }, 300)
+    })
+    $('.c2').on('click', function() {
+        var _this = $(this);
+        $(this).addClass('active');
+
+        setTimeout(function() {
+            _this.removeClass('active')
+            $('.pop3').show()
+
+        }, 300)
+    })
+    $('.c3').on('click', function() {
+        var _this = $(this);
+        $(this).addClass('active');
+
+        setTimeout(function() {
+            _this.removeClass('active')
+            $('.pop4').show()
+
+        }, 300)
+    })
+    $('.c4').on('click', function() {
+        $(this).addClass('active');
+        var _this = $(this);
+        setTimeout(function() {
+            _this.removeClass('active')
+            $('.pop2').show()
+        }, 300)
+    })
+    $('.pop-close').on('click', function() {
+        $('.pop').hide();
+        $('.c').removeClass('active')
+    })
+
+    var box = document.getElementById("box");
+    var l1 = document.getElementById("list1");
+    var l2 = document.getElementById("list2");
+    l2.innerHTML = l1.innerHTML; //克隆list1的数据，使得list2和list1的数据一样
+    function scrollup() {
+        if (box.scrollTop >= l1.offsetHeight) { //滚动条距离顶部的值恰好等于list1的高度时，达到滚动临界点，此时将让scrollTop=0,让list1回到初始位置，实现无缝滚动
+            box.scrollTop = 0;
+        } else {
+            box.scrollTop++;
+        }
+    }
+
+    var scrollMove = setInterval(scrollup, 60); //数值越大，滚动速度越慢
+    //鼠标经过时，滚动停止
+    box.ontouchstart = function() {
+        clearInterval(scrollMove)
+    }
+
+    // //鼠标离开时，滚动继续
+    box.ontouchend = function() {
+        scrollMove = setInterval(scrollup, 60);
+    }
+
+    var share = {
+        title: '会上瘾的拉贝星球！', // 分享标题
+        link: allUrl() + '/mm/download/download.html', // 分享链接
+        imgUrl: allUrl() + '/home/images/logo.png',
+        desc: '拉贝星球交友速配处CP，你想要的我们都有。' // 分享描述
+    };
+
+    function shareInfo() {
+        var _url = allUrl() + '/mm/download/download.html';
+        var info = {
+            title: '会上瘾的拉贝星球！', // 分享标题
+            showUrl: _url,
+            imgUrl: allUrl() + '/home/images/logo.png',
+            desc: '拉贝星球交友速配处CP，你想要的我们都有。' // 分享描述
+        };
+        return JSON.stringify(info);
+    }
+    var browser = checkVersion();
+    var info = {};
+    if (browser.android) {
+        try {
+            window.androidJsObj.showShareButton(true)
+        } catch (err) {
+
+        }
+    }
+    $("#btn-share").click(function() {
+        browser.app && (browser.android ? window.androidJsObj.openSharePage() : browser.ios && window.webkit.messageHandlers.openSharePage.postMessage(null))
+    })
+</script>
+
+</html>

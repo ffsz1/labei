@@ -1,0 +1,189 @@
+<html lang=en>
+
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content="initial-scale=1,width=device-width,maximum-scale=1,user-scalable=no">
+    <meta http-equiv=X-UA-Compatible content="ie=edge">
+    <title>提取收益</title>
+    <link rel="stylesheet" href="css/base.css">
+    <script type=text/javascript>
+        ! function() {
+            var documentElement = document.documentElement;
+            var
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var
+                    clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth >
+                    750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseInt(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (a != real) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+        var callbackUrl = '?url=/front/withdraw/exchange.html';
+    </script>
+    <script src="js/href.js?v=12345"></script>
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css?v=0">
+    <link rel=stylesheet href="./css/exchange.css?v=3"> </head>
+
+<body>
+    <div class="popup" style="display:none">
+        <div class="con" style="display:none">
+            <div class="close-pop"></div>
+            <h3>提现详情</h3>
+            <div class="withdraw">
+                <p class="w1">提现额度(元)</p>
+                <p class="w2">
+                    <span id="limit">
+                                0
+                            </span>
+                </p>
+            </div>
+            <p class="consume">
+                <span>消耗钻石：</span>
+                <span>0</span> 个
+            </p>
+            <p class="name">
+                <span>用户昵称</span>
+                <span class="nick-name">0</span>
+            </p>
+            <p class="user">
+                <span>用户ID</span>
+                <span class="user-id">0</span>
+            </p>
+
+            <div class="txwrap">
+                <p class="wxtx" onclick="wxtx()"></p>
+                <!-- <p class="zfbtx" onclick="zfbtx()"></p> -->
+            </div>
+
+            <!-- <span class="bingZfb">填写支付宝信息</span> -->
+        </div>
+        <div class="confirm-zfb" style="display:none">
+            <p class="top">
+                确认信息
+            </p>
+            <p class="middle">
+                <span class="zfb">
+                            <span>支付宝账户：</span>
+                <span id="zfb-num"> 0</span>
+                </span>
+                <span class="name">
+                            <span>真实姓名：</span>
+                <span id="real-name">0</span>
+                </span>
+
+            </p>
+            <p class="bottom">
+                <span onclick="hidePop()">取消</span>
+                <span onclick="confirmZfb()">确认</span>
+            </p>
+        </div>
+    </div>
+    <div class="container clearfix" style="display:block">
+        <div class="prompt" style="display:none">
+            <span>微信提现成功，会在24小时内处理</span>
+        </div>
+        <div class="top-info">
+            <div class="line1">
+                <span class="icon"></span>
+                <div class="line1-right">
+                    <div class="user">
+                        <span class="nick-name">昵称</span> (ID:
+                        <span class="user-id">id</span>)
+                    </div>
+                    <div class="diamond">
+                        <span>
+            <span>钻石余额：</span>
+                        <span id="diamond-num">0</span>
+                        </span>
+                        <span>
+            <span>
+                金币余额：
+            </span>
+                        <span id="diamond-num1">
+                0
+            </span>
+                        </span>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- <span class="line2">
+                <span>拉贝昵称：</span>
+
+            </span> -->
+        </div>
+        <div class="box clearfix">
+            <div class="tab">
+                <span class="active" data-index='1'>钻石提取</span>
+                <span data-index='3'>金币兑换</span>
+            </div>
+            <div class="input-area">请选择提现额度</div>
+            <div class="input-area2">转换金币</div>
+            <div class="inputmoney">
+                <span class="yuan">￥</span>
+                <input type="number" placeholder="" id="withdraw-num">
+            </div>
+            <div class="choose">
+                <!-- <div class="choose-item" data-v="100">
+                    <div>
+                        <div class="c1">￥ <span class="c10">100</span></div>
+                        <div class="c2">(消耗<span class="c20">1000</span>钻石)</div>
+                    </div>
+                </div> -->
+            </div>
+            <p class="tips">Tips：当前提现比例为10拉贝：1元</p>
+            <div class="submit">
+                <span>提取</span>
+            </div>
+            <span class="mobileAccount">切换为手机账号＞</span>
+        </div>
+    </div>
+    <div class="verify-zfb" style="display:none">
+        <h1>填写支付宝信息</h1>
+        <div class="wrap">
+            <input type="number" placeholder="请输入支付宝账号（手机/邮箱）" id="input-number">
+        </div>
+        <div class="wrap">
+            <input type="text" placeholder="请输入实名认证的真实姓名" id="input-name">
+        </div>
+        <div class="submit" id="submit-zfb">
+            <span>提交</span>
+        </div>
+
+    </div>
+
+
+
+</body>
+<script src=../lib/common.js>
+</script>
+<!-- <script src="../lib/zepto.min.js"></script> -->
+<script src="../lib/jquery.min.js"></script>
+<!-- <script src="../lib/vconsole.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script> -->
+<!-- <script src="../lib/vconsole.min.js"></script> -->
+<script src="../lib/toolKit/js/index.js?v=0"></script>
+<script src="../lib/native.js"></script>
+<script src="js/exchange.js?v=1"></script>
+<!-- <script>
+    $('.popup').show();
+    $('.popup .con').show();
+    </script> -->
+
+</html>

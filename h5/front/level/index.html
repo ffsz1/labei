@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的等级</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <link rel="stylesheet" href="../tool/css/vant.css" />
+    <link rel="stylesheet" href="../tool/css/common.css" />
+    <script src="../tool/js/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.8/lib/vant.min.js"></script>
+    <script src="../tool/js/axios.js"></script>
+    <script src="../tool/js/api.js"></script>
+    <script src="../tool/js/rem.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .content {
+            width: 100%;
+        }
+        
+        .head {
+            width: 100%;
+            background-size: 100% 100%;
+        }
+        
+        .head_indexBar {
+            width: 60%;
+            margin-top: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            color: #fefefe;
+        }
+        
+        .barCell {
+            height: 34px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0.5;
+            font-size: 0.4rem;
+            color: #999999;
+        }
+        
+        .head_avator {
+            width: 100%;
+            height: 140px;
+            color: #ffffff;
+            font-size: 18px;
+            line-height: 40px;
+        }
+        
+        .head_avator>img:nth-child(1) {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.6);
+        }
+        
+        .head_avator>img:nth-child(2) {
+            width: 47px;
+            margin-top: -10px;
+        }
+        
+        .head_progress {
+            margin-top: 0.6rem;
+            width: 4rem;
+        }
+        
+        .head_progress .progress {
+            width: 1.84rem;
+            margin: 0 -2px;
+        }
+        
+        .head_progress img {
+            width: 1.08rem;
+            height: 0.45rem;
+            z-index: 1;
+        }
+        
+        .head_state {
+            margin-top: 5px;
+            width: 78%;
+            font-size: 11px;
+        }
+        
+        .state_up {
+            width: 100%;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .state_down {
+            margin-top: 10px;
+            width: 100%;
+            color: #000000;
+        }
+        
+        .level_list {
+            width: 8.48rem;
+            height: 10.52rem;
+            background-image: url("./imgs/level/bg_biaoge@2x.png");
+            background-size: 100% 100%;
+            border-radius: 10px;
+            margin-top: 0.41rem;
+        }
+        
+        .isActiveLine {
+            width: 0.93rem;
+            height: 0.13rem;
+            background-image: linear-gradient(90deg, #9450f1 0%, #f056e5 100%), linear-gradient(#3b4f6f, #3b4f6f);
+            background-blend-mode: normal, normal;
+            border-radius: 0.07rem;
+        }
+        
+        .isActiveBar {
+            font-size: 0.48rem;
+            color: #333333;
+            opacity: 1 !important;
+        }
+        
+        .isCharm {
+            background-image: url("./imgs/level/Wealth Class@2x.png") !important;
+        }
+        
+        .isCharmLevel {
+            height: 490px !important;
+            background-image: url("./imgs/level/bg_charm@2x.png") !important;
+        }
+        
+        .info_card {
+            width: 9.09rem;
+            height: 4.2rem;
+            background-image: url("./imgs/level/Glamour Rating@2x.png");
+            background-size: 100% 100%;
+            margin-top: 0.1rem;
+        }
+        
+        .info_box {
+            margin: 0.4rem 0 0 0.7rem;
+        }
+        
+        .info_box>div:nth-child(1) {
+            font-size: 0.48rem;
+            color: #531e00;
+        }
+        
+        .info_box>div:nth-child(2) {
+            font-size: 0.32rem;
+            color: #531e00;
+            margin-top: 0.35rem;
+        }
+        
+        .status {
+            width: 4.55rem;
+            height: 0.4rem;
+            margin-top: 0.7rem;
+        }
+        
+        .status>img {
+            width: 0.68rem;
+            height: 0.36rem;
+        }
+        
+        .status>div {
+            margin: 0 0.27rem;
+            font-size: 0.43rem;
+            color: #333333;
+        }
+        
+        .status_text {
+            margin-top: 0.47rem;
+            width: 8.28rem;
+            height: 0.76rem;
+            font-size: 0.35rem;
+            color: #999999;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="rowCenter content">
+            <div class="head rowCenter">
+                <!-- indexBar -->
+                <div class="head_indexBar">
+                    <div class="barCell" :class="[activeIndex==0?'isActiveBar':'']" @click="switchBar(0)">
+                        <span>财富等级</span>
+                        <div :class="[activeIndex==0?'isActiveLine':'']"></div>
+                    </div>
+                    <div class="barCell" :class="[activeIndex==1?'isActiveBar':'']" @click="switchBar(1)">
+                        <span>魅力等级</span>
+                        <div :class="[activeIndex==1?'isActiveLine':'']"></div>
+                    </div>
+                </div>
+
+                <!-- 信心卡片 -->
+                <div class="info_card" :class="[activeIndex==1?'isCharm':'']">
+                    <div class="info_box">
+                        <div>魅力等级</div>
+                        <div>距离升级还差120魅力经验</div>
+                        <!-- 进度条 -->
+                        <div class="head_progress center">
+                            <img :src="'./imgs/level/level ('+exeperienceLv+').png'" alt v-if="activeIndex==0" />
+                            <img :src="'./imgs/level/charm ('+charmLv+').png'" alt v-else />
+                            <div>
+                                <van-progress :percentage="activeIndex?exeperiencePercent:charmPercent" stroke-width="8" class="progress" color="#ffffff" track-color="#FEAD60" :show-pivot="false" pivot-text pivot-color="transparent" />
+
+                            </div>
+
+                            <img :src="'./imgs/level/level ('+(exeperienceLv+1)+').png'" alt v-if="activeIndex==0" />
+                            <img :src="'./imgs/level/charm ('+(charmLv+1)+').png'" alt v-else />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 说明 -->
+
+                <div class="status center">
+                    <img src="./imgs/level/Captions_light@2x.png" alt="">
+                    <div>等级说明</div>
+                    <img src="./imgs/level/Captions_Right@2x.png" alt="">
+                </div>
+                <div class="status_text">
+                    <span v-if="activeIndex==0">1红萝卜=1经验值，即每送出一个红萝卜，获得1点财富经验。财富等级是您在月月星球的土豪地位象征</span>
+                    <span v-else>1红萝卜=1经验值，即每收到一个红萝卜，获得1点魅力经验。魅力等级是您在月月星球的受欢迎度象征</span>
+                </div>
+            </div>
+            <div class="level_list" :class="[activeIndex==1?'isCharmLevel':'']"></div>
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                activeIndex: 0,
+                uid: null,
+                charmLv: 0, //魅力等级
+                charmPercent: null, //魅力百分比
+                exeperienceLv: 0, //财富等级
+                exeperiencePercent: null, //财富百分比
+                avatar: null,
+                nickName: null
+
+            },
+            mounted() {
+                window.getMessage = this.getMessage;
+                // this.info.uid = "110226";
+                // this.info.ticket = "e905b1816bf5ec98e977f45d7cb8113d";
+                // this.getData();
+                // this.checkPhone()
+                // this.goRecord(false);
+            },
+            methods: {
+                //切换bar
+                switchBar(val) {
+                    this.activeIndex = val;
+                },
+                getMessage(key, value) {
+                    this.info[key] = value;
+
+                    if (this.info.uid && this.info.ticket) {
+                        this.getData();
+                    }
+                },
+                //获取数据
+                getData() {
+
+                },
+                //检查手机信息
+                checkPhone() {
+                    if (window.checkVersion().ios) {
+                        window.webkit.messageHandlers.getUid.postMessage(null);
+                        window.webkit.messageHandlers.getTicket.postMessage(null)
+                    } else {
+                        this.info.uid = parseInt(window.androidJsObj.getUid());
+                        this.info.ticket = window.androidJsObj.getTicket();
+                        this.getData();
+                    }
+                },
+            }
+        })
+        Vue.use(vant.Overlay);
+    </script>
+</body>
+
+</html>

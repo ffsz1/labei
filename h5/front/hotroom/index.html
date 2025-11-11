@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>推荐位</title>
+    <script src="../lib/rem.js"></script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <link rel="stylesheet" href="css/LCalendar.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        .time_roll>div .time_mm {
+            transform: translate3d(0px, 8em, 0px) !important;
+        }
+        
+        .time_roll>div .time_mm .tooth:nth-child(n+2) {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contianer">
+        <label for="theID" class="label1">输入房间ID&#12288;<input type="text" id="theID"></label>
+        <label for="date" class="label2">选择推荐日期<input type="text"  id="date" readonly></label>
+        <label for="time" class="label3">选择推荐时间<input type="text"  id="time" readonly></label>
+        <div class="pay_btn" onclick="pay()">1000金币购买</div>
+        <div class="record list"></div>
+        <!-- <div class="tip1">
+            注：推荐位时间为1小时，购买后将在指定时间自动上推荐位。<br>人气王热门房，房间里边真实人数达到15人后将自动上推荐位。
+        </div> -->
+        <div class="tip2">
+            <div class="title">规则说明</div>
+            <div class="tip3">
+                <p>1.上推荐位后，不能出现辱骂、挑衅、色情等字眼及图 片，如被发现，将会被取消推荐位，情节严重者将会被 封禁处理。</p>
+                <p>2.推荐位不可转让买卖，如被发现，情节严重者将被封 禁处理。</p>
+                <p>3.若推荐位房间直播内容和房间属性不一致，如被发现， 将会取消推荐位安排。</p>
+                <p>4.本次活动与Apple Inc无关。</p>
+            </div>
+        </div>
+    </div>
+    <div class="tips">
+        <div>
+            <div class="tips-content">
+                <div>
+                    <span class="tip-text">
+                        <p>房间ID:</p>
+                        <p class="rommID">123456</p>
+                    </span>
+                    <span class="tip-text">
+                        <p>推荐时间:</p>
+                        <p class="pay-time">2018/3/22 14:30-15:30</p>
+                    </span>
+                    <span class="tip-text">
+                        <p>支付金币:</p>
+                        <p class="tip-text-money">1000</p>
+                    </span>
+                </div>
+                <img src="images/close.png" class="cancel" onclick="cancel()">
+                <div>
+                    <div class="payment" onclick="payment()">支付</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup">
+        <div>
+            <div class="popup-content">
+                <div class="popup-text">
+                    <p class="popup-date">2018-2-13</p>
+                    <p>以下时段已经被购买</p>
+                    <span class="popup-time">
+                    </span>
+                    <div class="popup-btn">确定</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../lib/jquery-3.2.1.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="../lib/toolKit/js/index.js"></script>
+    <!-- <script src="../lib/vconsole.min.js"></script> -->
+    <script src="js/LCalendar.min.js"></script>
+    <script src="js/index.js?v=11"></script>
+</body>
+
+</html>

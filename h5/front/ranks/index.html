@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排行榜</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <link rel="stylesheet" href="../tool/css/vant.css" />
+    <link rel="stylesheet" href="../tool/css/common.css" />
+    <script src="../lib/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.8/lib/vant.min.js"></script>
+    <script src="../lib/axios.js"></script>
+    <script src="../lib/api.js"></script>
+    <script src="../lib/rem.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            width: 100%;
+            background: url('./imgs/bg_1.png') no-repeat;
+            background-size: 100% 10.77rem;
+            position: relative;
+            margin-top: 3.55rem;
+            height: calc(100vh - 3.55rem);
+        }
+
+        .nav {
+            margin-top: 0.91rem;
+            width: 8.89rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .nav>img {
+            width: 0.25rem;
+            height: 0.47rem;
+            margin-right: 2.5rem;
+        }
+
+        .nav_cell {
+            font-size: 0.43rem;
+            color: #ffffff;
+        }
+
+        .slider {
+            margin-top: 0.55rem;
+            width: 3.97rem;
+            height: 0.61rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 0.31rem;
+            display: flex;
+            font-size: 0.35rem;
+            position: relative;
+        }
+
+        .slider_item {
+            width: 1.35rem;
+            height: 0.61rem;
+            border-radius: 0.31rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        #slider_animation {
+            width: 1.35rem;
+            height: 0.61rem;
+            border: 0.5px solid #ffffff;
+            background: white;
+            border-radius: 0.31rem;
+            transition: all 5 ease 0;
+            position: absolute;
+        }
+
+        #slider_animation:hover {
+            width: 300px
+        }
+
+        .status {
+            position: absolute;
+            right: 0;
+            top: 1.92rem;
+            width: 1.36rem;
+            height: 0.89rem;
+            background-color: #5266E4;
+            border-top-left-radius: 0.45rem;
+            border-bottom-left-radius: 0.45rem;
+            box-shadow: #ffffff 0px 0px 15px inset;
+            font-size: 0.35rem;
+            color: #ffffff;
+        }
+
+        .status1 {
+            background-color: #30D1FF;
+        }
+
+        .No123 {
+            width: 94%;
+            height: 6.77rem;
+            margin-top: 0.15rem;
+            display: flex;
+            background-image: url(./imgs/orange.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position-y: 4.86rem;
+            z-index: 4;
+        }
+
+        .no2 {
+            width: 2.77rem;
+            height: 4rem;
+            margin: 1.3rem 0.2rem 0 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .no1 {
+            width: 3.41rem;
+            height: 4rem;
+            margin: 0.4rem 0.2rem 0 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .no3 {
+            width: 2.75rem;
+            height: 5rem;
+            margin: 1.6rem 0 0 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .no1>.img1 {
+            position: absolute;
+            width: 100%;
+            height: 3rem;
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .no1>.img2 {
+            position: absolute;
+            width: 1.95rem;
+            height: 1.95rem;
+            top: 0.7rem;
+            left: 0.8rem;
+            border-radius: 50%;
+        }
+
+        .no1>.img3 {
+            position: absolute;
+            width: 100%;
+            height: 0.67rem;
+            top: 2.5rem;
+        }
+
+        .no2>.img1 {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .no2>.img2 {
+            position: absolute;
+            width: 1.95rem;
+            height: 1.95rem;
+            top: 0.4rem;
+            left: 0.45rem;
+            border-radius: 50%;
+        }
+
+        .no2>.img3 {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 0.67rem;
+            top: 2.2rem;
+        }
+
+        .no3>.img1 {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .no3>.img2 {
+            position: absolute;
+            width: 1.9rem;
+            height: 1.9rem;
+            top: 0.44rem;
+            left: 0.45rem;
+            border-radius: 50%;
+        }
+
+        .no3>.img3 {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 0.67rem;
+            top: 1.8rem;
+        }
+
+        .no1>.name1 {
+            font-size: 0.37rem;
+            color: #ffffff;
+            margin-top: 3.2rem;
+        }
+
+        .name1>.img1 {
+            width: 0.32rem;
+            height: 0.32rem;
+            margin-left: 0.1rem;
+        }
+
+        .id1 {
+            font-size: 0.37rem;
+            color: #ffffff;
+            margin-top: .1rem;
+        }
+
+        .id1>.img1 {
+            width: 0.43rem;
+            height: 0.43rem;
+            margin-left: 0.13rem;
+            vertical-align: sub;
+        }
+
+        .no2>.name2 {
+            margin-top: 0.1rem;
+            font-size: 0.37rem;
+            color: #ffffff;
+        }
+
+        .name2>.img1 {
+            width: 0.32rem;
+            height: 0.32rem;
+            margin-left: 0.1rem;
+        }
+
+        .id2 {
+            font-size: 0.37rem;
+            color: #ffffff;
+            margin-top: .1rem;
+        }
+
+        .id2>.img1 {
+            width: 0.43rem;
+            height: 0.43rem;
+            margin-left: 0.13rem;
+            vertical-align: sub;
+        }
+
+        .no2>.distance {
+            width: 5rem;
+            font-size: 0.27rem;
+            color: #ffffff;
+        }
+
+        .distance>span {
+            font-size: 0.37rem;
+            color: #ffffff;
+        }
+
+        .no3>.name3 {
+            font-size: 0.37rem;
+            color: #ffffff;
+        }
+
+        .name3>.img1 {
+            width: 0.32rem;
+            height: 0.32rem;
+            margin-left: 0.1rem;
+        }
+
+        .id3 {
+            font-size: 0.37rem;
+            color: #ffffff;
+            margin-top: .1rem;
+        }
+
+        .id3>.img1 {
+            width: 0.43rem;
+            height: 0.43rem;
+            margin-left: 0.13rem;
+            vertical-align: sub;
+        }
+
+        .no3>.distance {
+            width: 3rem;
+            font-size: 0.27rem;
+            color: #ffffff;
+        }
+
+        .distance>span {
+            font-size: 0.37rem;
+            color: #ffffff;
+        }
+
+        .other_No {
+            width: 9.17rem;
+            height: 6rem;
+            overflow-y: scroll;
+            height: 8.5rem;
+        }
+
+        .other_No::-webkit-scrollbar {
+            display: none;
+        }
+
+        .other_cell {
+            width: 9.17rem;
+            height: 1.62rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .other_cell>.No {
+            font-size: 0.48rem;
+            font-weight: 600;
+            color: #999999;
+            width: 10%;
+        }
+
+        .other_cell>.info {
+            width: 65%;
+            height: 1.52rem;
+            display: flex;
+            align-items: center;
+            margin-left: 0.45rem;
+        }
+
+        .info>.img1 {
+            width: 1.23rem;
+            height: 1.23rem;
+            border-radius: 50%;
+        }
+
+        .info_name {
+            width: 5rem;
+            height: 1.23rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 0.28rem;
+            color: #333333;
+            font-weight: 600;
+        }
+
+        .info_name>div:nth-child(1) {
+            font-size: 0.37rem;
+            color: #333333;
+        }
+
+        .info_name>div:nth-child(2) {
+            font-size: 0.32rem;
+            color: #999999;
+        }
+
+        .info_name .img1 {
+            width: 0.32rem;
+            height: 0.32rem;
+            margin-left: 0.13rem;
+        }
+
+        .info_name .img2 {
+            width: 0.95rem;
+            height: 0.45rem;
+            margin-left: 0.13rem;
+        }
+
+        .distance1 {
+            width: 25%;
+            height: 1.52rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .distance1>div:nth-child(1) {
+            font-size: 0.27rem;
+            color: #999999;
+            font-weight: 600;
+        }
+
+        .distance1>div>img {
+            width: .43rem;
+            height: .43rem;
+            vertical-align: bottom;
+        }
+
+        .distance1>div:nth-child(2) {
+            font-size: 0.37rem;
+            color: #333333;
+        }
+
+        .isActive {
+            font-size: 0.48rem;
+            color: #ffffff;
+        }
+
+        .bg1 {
+            background: url('./imgs/bg_1.png') no-repeat;
+            background-size: 100% 9.62rem;
+        }
+
+        .bg2 {
+            background: url('./imgs/bg_2.png') no-repeat;
+            background-size: 100% 9.62rem;
+        }
+
+        .bg3 {
+            background: url('./imgs/bg3.png') no-repeat;
+            background-size: 100% 9.62rem;
+        }
+
+        .stu1 {
+            background-color: #5266E4;
+        }
+
+        .stu2 {
+            background-color: #5266E4;
+        }
+
+        .stu3 {
+            background-color: #E74A6E;
+        }
+
+        .font1 {
+            color: #2c4fde;
+        }
+
+        .font2 {
+            color: #0fcdfd;
+        }
+
+        .font3 {
+            color: #e34c70;
+        }
+
+        .whiteBg {
+            background: #ffffff;
+        }
+
+        .mask {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .mask_content {
+            width: 8.61rem;
+            height: 9.36rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mask_content>.img1 {
+            width: 0.96rem;
+            height: 0.96rem;
+        }
+
+        .mask_content>.img2 {
+            margin-top: 0.17rem;
+            width: 8.61rem;
+            height: 5.03rem;
+        }
+
+        .isMask {
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        [v-clack] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="content rowCenter" :class="[active == 1 ? 'bg1' : active == 2 ? 'bg2' : 'bg3', maskShow ? 'isMask' : '']">
+            <!-- 财富榜、魅力榜 -->
+            <div class="nav">
+                <!-- <img src="./imgs/back.png" alt="" @click="goback"> -->
+                <div class="nav_cell" :class="[active == 1 ? 'isActive': '']" @click="switchRank(1)" style="margin-right: 1rem;">财富榜</div>
+                <div class="nav_cell" :class="[active == 2 ? 'isActive': '']" @click="switchRank(2)">魅力榜</div>
+                <!-- <div class="nav_cell" :class="[active==3 ? 'isActive': '']" @click="switchRank(3)">恩爱榜</div> -->
+            </div>
+            <!-- 日榜、周榜 -->
+            <div class="slider">
+                <div class="slider_item" :class="[detailActive == 1 ? 'whiteBg': '', color1]" @click="detailRank(1)">日榜</div>
+                <div class="slider_item" :class="[detailActive == 2 ? 'whiteBg': '', color2]" @click="detailRank(2)">周榜</div>
+                <div class="slider_item" :class="[detailActive == 3 ? 'whiteBg': '', color3]" @click="detailRank(3)">总榜</div>
+            </div>
+            <!-- 说明 -->
+            <!-- <div class="status center" :class="[active==2 ? 'status1':'']" @click='showMask(1)'>说明</div> -->
+            <!-- 第一、二、三名 -->
+            <div class="No123" ref="rank">
+                <div class="no2">
+                    <img class="img1" src="./imgs/two.png" alt="">
+                    <img class="img2" :src="rankDataThree[1].avatar" alt="" v-if='rankDataThree.length>=2'>
+                    <div class="name2" v-if='rankDataThree.length >= 2'>
+                        {{rankDataThree[1].nick}}
+                        <img class="img1" :src="rankDataThree[1].gender == 1?'./imgs/girl.png':'./imgs/boy.png'" alt="">
+                    </div>
+                    <div class="id2" v-if='rankDataThree.length >= 2'>
+                        <img class="img1" :src="active == 1 ? './imgs/coin.png' : './imgs/heart.png'" alt="">
+                        ID:{{rankDataThree[1].erbanNo}}
+                    </div>
+                    <!-- <div class="distance" v-if='rankDataThree.length>=2'>距离前一名&nbsp;<span>{{rankDataThree[1].distance}}</span></div> -->
+                </div>
+                <div class="no1">
+                    <img class="img1" :src="active == 1 ? './imgs/yellow.png' : './imgs/purple.png'" alt="">
+                    <img class="img2" :src="rankDataThree[0].avatar" alt="" v-if='rankDataThree.length>=1'>
+                    <div class="name1" v-if='rankDataThree.length >= 1'>
+                        {{rankDataThree[0].nick}}
+                        <img class="img1" :src="rankDataThree[0].gender == 1?'./imgs/girl.png':'./imgs/boy.png'" alt="">
+                    </div>
+                    <div class="id1" v-if='rankDataThree.length>=1'>
+                        <img class="img1" :src="active == 1 ? './imgs/coin.png' : './imgs/heart.png'" alt="">
+                        ID:{{rankDataThree[0].erbanNo}}
+                    </div>
+                </div>
+                <div class="no3">
+                    <img class="img1" src="./imgs/three.png" alt="">
+                    <img class="img2" :src="rankDataThree[2].avatar" alt="" v-if='rankDataThree.length>=3'>
+                    <div class="name3" v-if='rankDataThree.length >= 3'>
+                        {{rankDataThree[2].nick}}
+                        <img class="img1" :src="rankDataThree[2].gender == 1 ? './imgs/girl.png' : './imgs/boy.png'" alt="">
+                    </div>
+                    <div class="id3" v-if='rankDataThree.length >= 3'>
+                        <img class="img1" :src="active == 1 ? './imgs/coin.png' : './imgs/heart.png'" alt="">
+                        {{rankDataThree[0].erbanNo}}
+                    </div>
+                    <!-- <div class="distance" v-if='rankDataThree.length>=3'>距离前一名&nbsp;<span>{{rankDataThree[2].distance}}</span></div> -->
+                </div>
+            </div>
+
+            <!-- 其他名次 -->
+            <div class="other_No" v-clack>
+                <div class="other_cell" v-for="(item,index) in rankDataRest">
+                    <div class="No">{{index}}</div>
+                    <div class="info">
+                        <img class="img1" :src="item.avatar" alt="">
+                        <div class="info_name">
+                            <div>
+                                {{item.nick}}
+                                <img class="img1" :src="item.gender == 1?'./imgs/female.png':'./imgs/male.png'" alt="">
+                            </div>
+                            <!-- <div>ID:{{item.erbanNo}}<img class="img2" src="./imgs/girl.png" alt=""></div> -->
+                        </div>
+                    </div>
+                    <div class="distance1">
+                        <div>
+                            <img :src="active == 1 ? './imgs/coin.png' : './imgs/heart.png'" alt="">
+                            {{item.distance}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mask center" v-if="maskShow" v-clack>
+            <div class="mask_content">
+                <img class="img1" src="./imgs/delete.png" alt="" @click="showMask(0)">
+                <img class="img2" src="./imgs/status.png" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                info: {},
+                active: 1, // 1.财富榜; 2.魅力榜
+                detailActive: 1, // 1.日榜; 2.周榜; 3.总榜
+                color1: 'font1',
+                color2: '',
+                color3: '',
+                maskShow: false, // 显示隐藏弹窗
+                rankParams: {
+                    datetype: 1,
+                    type: 1,
+                    uid: '',
+                    ticket: ''
+                },
+                rankDataThree: [], // 前三数据
+                rankDataRest: [], // 剩余数据
+            },
+            mounted() {
+                window.getMessage = this.getMessage;
+                window.isFullScreen = this.isFullScreen
+                // this.info.uid = "110226";
+                // this.info.ticket = "e905b1816bf5ec98e977f45d7cb8113d";
+                this.getData();
+                // this.checkPhone()
+                // this.goRecord(false);
+            },
+            methods: {
+                //返回
+                goback() {
+                    window.androidJsObj.onBack()
+                },
+                //是否全屏
+                isFullScreen() {
+                    return true
+                },
+                //显示隐藏弹窗
+                showMask(val) {
+                    if (val) {
+                        this.maskShow = true
+                    } else {
+                        this.maskShow = false
+                    }
+                },
+                //切换日榜、月榜、总榜
+                detailRank(val) {
+                    if (val == this.detailActive) {
+                        return;
+                    }
+                    this.detailActive = this.rankParams.datetype = val
+                    if (this.active == 1) {
+                        switch (val) {
+                            case 1:
+                                this.color1 = 'font1'
+                                this.color2 = ''
+                                this.color3 = ''
+                                break;
+                            case 2:
+                                this.color2 = 'font1'
+                                this.color1 = ''
+                                this.color3 = ''
+                                break;
+                            case 3:
+                                this.color3 = 'font1'
+                                this.color2 = ''
+                                this.color1 = ''
+                                break;
+                        }
+                    } else {
+                        switch (val) {
+                            case 1:
+                                this.color1 = 'font2'
+                                this.color2 = ''
+                                this.color3 = ''
+                                break;
+                            case 2:
+                                this.color2 = 'font2'
+                                this.color1 = ''
+                                this.color3 = ''
+                                break;
+                            case 3:
+                                this.color3 = 'font2'
+                                this.color2 = ''
+                                this.color1 = ''
+                                break;
+                        }
+                    }
+                    this.getData()
+                },
+                //切换榜单
+                switchRank(val) {
+                    if (val == this.active) {
+                        return;
+                    }
+
+                    if (val == 2) {
+                        this.$refs.rank.style.backgroundImage = 'url(./imgs/pink.png)';
+                    } else {
+                        this.$refs.rank.style.backgroundImage = 'url(./imgs/orange.png)';
+                    }
+
+                    this.active = this.rankParams.type = val
+                    this.detailActive = this.rankParams.datetype = 1
+                    this.color1 = 'font1'
+                    this.color2 = ''
+                    this.color3 = ''
+                    if (val == 1) {
+                        this.color1 = 'font1'
+                    } else {
+                        this.color1 = 'font2'
+                    }
+                    this.getData();
+                },
+                getMessage(key, value) {
+                    this.rankParams[key] = value;
+                    if (this.rankParams.uid && this.rankParams.ticket) {
+                        this.getData();
+                    }
+                },
+                //获取数据
+                getData() {
+                    window.allRankRoom(this.rankParams).then(res => {
+                        if (res.data.code != 200) {
+                            vant.Toast(res.data.message)
+                            return
+                        }
+                        let rankData = res.data.data.rankVoList
+                        if (rankData.length > 3) {
+                            this.rankDataThree = rankData.slice(0, 3)
+                            this.rankDataRest = rankData.slice(3)
+                        } else {
+                            this.rankDataThree = rankData
+                        }
+                    })
+                },
+                //检查手机信息
+                checkPhone() {
+                    if (window.checkVersion().ios) {
+                        window.webkit.messageHandlers.getUid.postMessage(null);
+                        window.webkit.messageHandlers.getTicket.postMessage(null)
+                    } else {
+                        this.rankParams.uid = parseInt(window.androidJsObj.getUid());
+                        this.rankParams.ticket = window.androidJsObj.getTicket();
+                        this.getData();
+                    }
+                },
+            }
+        })
+        Vue.use(vant.Overlay);
+    </script>
+</body>
+
+</html>

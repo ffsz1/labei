@@ -1,0 +1,287 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #f4f4f4;
+}
+
+.flush {
+  text-align: center;
+  padding: .3rem;
+  font-size: .3rem;
+  color: #999999;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.national-day {
+  font-size: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+}
+
+.national-day>.rule-open {
+  position: absolute;
+  right: 0;
+  top: .4rem;
+  width: 1.65rem;
+  height: .6rem;
+}
+
+.national-day::-webkit-scrollbar {
+  display: none;
+}
+
+.national-day img {
+  width: 100%;
+}
+
+.bg_3 {
+  position: relative;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  text-align: center;
+}
+
+.content img {
+  width: 85%;
+  margin-top: .85rem;
+}
+
+.gift, .missions {
+  position: relative;
+}
+
+.bonus-content, .mission-content {
+  font-size: .2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #183263;
+  width: 100%;
+}
+
+.mission-content {
+  left: .75rem;
+  top: 2.3rem;
+  padding: 0 .2rem;
+  width: calc(80% - .4rem);
+}
+
+.mission-item {
+  display: flex;
+  font-size: .36rem;
+  color: #FFFECB;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+}
+
+.mission {
+  display: flex;
+}
+
+.seq {
+  margin-right: .2rem;
+  background: #F15044;
+  border: 1px solid #FCDFB0;
+  border-radius: 50%;
+  width: .4rem;
+  height: .4rem;
+  line-height: .4rem;
+  text-align: center;
+}
+
+.info {
+  font-size: .25rem;
+  line-height: .4rem;
+  text-align: left;
+}
+
+.finish {
+  width: 2rem !important;
+}
+
+.mission-item>img {
+  width: 1.728rem;
+  height: .65rem;
+  margin-top: 0.1rem;
+}
+
+.bonus {
+  background: url('../images/nationalDay/bonus.png') no-repeat center;
+  background-size: cover;
+  width: 1.35rem;
+  height: .5rem;
+  line-height: .4rem;
+  font-weight: 600;  
+  font-family: Source Han Sans SC;
+  position: absolute;
+}
+
+.bonus-details {
+  color: #FFFCAF;
+  position: absolute;
+  top: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+.details {
+  margin-left: .2rem;
+  color: #FFFDCB;  
+  border: 1px solid #FFDE98;
+  background: linear-gradient(0deg, #EF4536 0%, #FAA775 100%);
+  border-radius: 15px;
+  padding: 0 .15rem;
+  display: inline-block;
+  height: .3rem;
+  line-height: .3rem;
+}
+
+.first {
+  left: 1.1rem;
+  top: 4.6rem;
+}
+
+.second {
+  left: 3.1rem;
+  top: 4.6rem;
+}
+
+.third {
+  left: 5.1rem;
+  top: 4.6rem;
+}
+
+.fourth {
+  left: 1.1rem;
+  top: 7.7rem;
+}
+
+.fifth {
+  left: 3.1rem;
+  top: 7.7rem;
+}
+
+.sixth {
+  left: 5.1rem;
+  top: 7.7rem;
+}
+
+.pop-up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.pop-up>.rule {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 6rem;
+  height: 6rem;
+  font-size: .3rem;
+  color: #FFFCA3;
+  margin: 0 auto;
+  background: url(../images/nationalDay/rule_bg.png) no-repeat center;
+  background-size: contain;
+  padding: .6rem;
+}
+
+.pop-up>.rule>.rule-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: .75rem;
+}
+
+.pop-up>.rule>ol {
+  padding-top: .2rem;
+}
+
+.pop-up>.rule>ol>li {
+  margin-bottom: .25rem;
+  line-height: .35rem;
+}
+
+.pop-up>.rule>ol>li:last-child {
+  margin-bottom: 0;
+}
+
+.pop-up>.point {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 6rem;
+  height: 2.5rem;
+  font-size: .3rem;
+  color: #FFFCA3;
+  margin: 0 auto;
+  background: url(../images/nationalDay/details.png) no-repeat center;
+  background-size: contain;
+  padding: .6rem;
+}
+
+.pop-up>.point>.point-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: .75rem;
+}
+
+.pop-up>.point>.messages {
+  margin-top: .5rem;
+  height: 80%;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.pop-up>.point>.messages>p {
+  padding: .1rem 0;
+  font-size: .35rem;
+}
+
+.pop-up>.point>.messages::-webkit-scrollbar {
+  display: none;
+}
+
+.pop-up>.dialog {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 5rem;
+  height: 1.5rem;
+  font-size: .3rem;
+  color: #FFFCA3;
+  margin: 0 auto;
+  background: url(../images/nationalDay/dialog.png) no-repeat center;
+  background-size: contain;
+  padding: .6rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pop-up>.dialog>.btn-group>img {
+  width: 1.75rem;
+}
+
+.pop-up>.dialog>.btn-group>img:first-child {
+  margin-right: 1rem;
+}

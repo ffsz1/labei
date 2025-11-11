@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>人气魅力王</title>
+    <script>
+        ! function() {
+            var documentElement = document.documentElement;
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseFloat(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (Math.abs(a - real) > 1) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+    </script>
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 0;
+        }
+        
+        html,
+        body {
+            background: #1a1937;
+            position: relative;
+        }
+        
+        img {
+            margin-top: -1px;
+        }
+        
+        .r {
+            position: absolute;
+            width: 1.81rem;
+            height: 3rem;
+            font-size: 0.26rem;
+        }
+        
+        .r1 {
+            left: 2.8rem;
+            top: 9rem;
+        }
+        
+        .r2 {
+            left: 1rem;
+            top: 9.4rem;
+        }
+        
+        .r3 {
+            left: 4.6rem;
+            top: 9.4rem;
+        }
+        
+        .i1 {
+            width: 1.81rem;
+            height: 2.19rem;
+            background: url(./img/r1.png) no-repeat top center;
+            background-size: 100% auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index: 2;
+        }
+        
+        .i2 {
+            width: 1.5rem;
+            height: 1.5rem;
+            background-repeat: no-repeat;
+            background-position: top center;
+            /* background: url(./img/t.png) no-repeat top center; */
+            background-size: cover;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0.5rem;
+            margin: auto;
+            border-radius: 50%;
+        }
+        
+        .i3 {
+            width: 1.72rem;
+            height: 2.08rem;
+            background: url(./img/r2.png) no-repeat top center;
+            background-size: 100% auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index: 2;
+        }
+        
+        .i4 {
+            width: 1.3rem;
+            height: 1.3rem;
+            background-repeat: no-repeat;
+            background-position: top center;
+            /* background: url(./img/t.png) no-repeat top center; */
+            background-size: cover;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0.52rem;
+            margin: auto;
+            border-radius: 50%;
+        }
+        
+        .i5 {
+            width: 1.68rem;
+            height: 2.02rem;
+            background: url(./img/r3.png) no-repeat top center;
+            background-size: 100% auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index: 2;
+        }
+        
+        .i6 {
+            width: 1.3rem;
+            height: 1.3rem;
+            background-repeat: no-repeat;
+            background-position: top center;
+            /* background: url(./img/t.png) no-repeat top center; */
+            background-size: cover;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0.52rem;
+            margin: auto;
+            border-radius: 50%;
+        }
+        
+        .nick {
+            font-size: 0.26rem;
+            color: #58CCF6;
+            text-align: center;
+            margin-top: 2.2rem;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .r1 .nick {
+            margin-top: 2.3rem;
+        }
+        
+        .ml {
+            font-size: 0.2rem;
+            color: #fff;
+            text-align: center;
+        }
+        
+        .ii3 {
+            text-align: center;
+        }
+        
+        .r4 {
+            position: absolute;
+            top: 14rem;
+            width: 6.05rem;
+            left: 0;
+            right: 0;
+            margin: auto;
+            height: 8.9rem;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        
+        .item {
+            display: flex;
+            border-bottom: 1px solid #410D79;
+            align-items: center;
+            padding: 0.18rem 0;
+        }
+        
+        .a {
+            color: #A551FF;
+            font-size: 0.3rem;
+            width: 0.3rem;
+        }
+        
+        .b {
+            width: 0.88rem;
+            height: 0.88rem;
+            border-radius: 50%;
+            background-image: url(./img/t.png);
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-size: 100% auto;
+            margin: 0 0.26rem;
+        }
+        
+        .c {
+            width: 2.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .c1 {
+            font-size: 0.28rem;
+            color: #fff;
+        }
+        
+        .c2 {
+            font-size: 0.24rem;
+            color: #fff;
+            opacity: 0.5;
+            transform: scale(0.8);
+            transform-origin: left;
+            margin-top: 0.05rem;
+        }
+        
+        .d {
+            align-items: center;
+            width: 1.7rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .d1 {
+            width: 0.22rem;
+            height: 0.2rem;
+            background: url(./img/h.png) no-repeat top center;
+            background-size: 100% auto;
+            margin-right: 0.11rem;
+        }
+        
+        .d2 {
+            font-size: 0.24rem;
+            color: #fff;
+            margin-right: 0.1rem;
+        }
+        
+        .arrow {
+            width: 0.3rem;
+            height: 0.27rem;
+            background: url(./img/arrow.png) no-repeat top center;
+            background-size: 100% auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 23.5rem;
+        }
+        
+        .rule {
+            position: absolute;
+            width: 5.71rem;
+            top: 26.5rem;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        
+        .rule p {
+            font-size: 0.3rem;
+            color: #48E9BA;
+            margin-bottom: 0.4rem;
+            line-height: 150%;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./img/1.jpg" width="100%">
+    <img src="./img/2.jpg" width="100%">
+    <img src="./img/3.jpg" width="100%">
+    <img src="./img/4.jpg" width="100%">
+    <img src="./img/5.jpg" width="100%">
+    <img src="./img/6.jpg" width="100%">
+    <img src="./img/7.jpg" width="100%">
+    <img src="./img/8.jpg" width="100%">
+    <div class="r1 r">
+        <div class="i1"></div>
+        <div class="i2"></div>
+        <div class="nick"></div>
+        <div class="ii3"><span class="heart"></span><span class="ml"></span></div>
+    </div>
+    <div class="r2 r">
+        <div class="i3"></div>
+        <div class="i4"></div>
+        <div class="nick"></div>
+        <div class="ii3"><span class="heart"></span><span class="ml"></span></div>
+    </div>
+    <div class="r3 r">
+        <div class="i5"></div>
+        <div class="i6"></div>
+        <div class="nick"></div>
+        <div class="ii3"><span class="heart"></span><span class="ml"></span></div>
+    </div>
+    <div class="r4">
+        <div class="rr4"></div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="arrow"></div>
+    <div class="rule">
+        <p>1. 厅主需规定时间内提供参与活动人员名单交予商务小白，逾期则作无效处理</p>
+        <p>2. 活动时间（周一00:00~周日23:59）</p>
+        <p>3. 活动结束后官方根据排名进行核实，核实无误后于下周二前发放活动奖励</p>
+        <p>4. 本活动只针对排名前50名的用户进行金币奖励</p>
+
+
+
+    </div>
+    <script src="../lib/common.js"></script>
+    <script src="../lib/jquery-3.2.1.min.js"></script>
+    <script src="../lib/toolKit/js/index.js"></script>
+    <!-- <script src="../lib/vconsole.min.js"></script> -->
+    <script src="js/index.js"></script>
+</body>
+
+</html>

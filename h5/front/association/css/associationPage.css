@@ -1,0 +1,152 @@
+html, body, .association-page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #fafafa;
+  font-size: .32rem;
+  color: #333333;
+}
+
+.association-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.association-page .not-visitor>.info {
+  height: 1.44rem;
+}
+
+.association-page .not-visitor>.info::after {
+  display: none;
+}
+
+.association-page .not-visitor>.info>img {
+  width: 1.44rem;
+}
+
+.association-page .not-visitor>.info>.describe {
+  font-size: .28rem;
+}
+
+.association-page .not-visitor>.info>.describe>#desc-name {
+  font-size: .32rem;
+}
+
+.association-page .not-visitor>.info>.describe>#desc-members::after {
+  content: '';
+  display: inline-block;
+  width: .12rem;
+  height: .2rem;
+  background: url(../img/right.png) no-repeat center;
+  background-size: contain;
+  margin-left: .2rem;
+}
+
+.association-page>.association-page-info>.not-visitor>.my-room {
+  margin: .2rem 0;
+  background: #FFFFFF;
+  border-radius: 18px;
+}
+
+.association-page>.association-page-info>.not-visitor>.my-room>.my-room-title {
+  padding: .5rem .35rem 0;
+}
+
+.association-page>.association-page-info>.not-visitor>.my-room>.my-room-title>span {
+  font-weight: 600;
+}
+
+.association-page>.association-page-info>.not-visitor>.my-room>.my-room-info #desc-name {
+  font-size: .28rem;
+}
+
+.association-page>.association-page-info>.not-visitor>.my-room>.my-room-info #desc-id {
+  font-size: .24rem;
+}
+
+.association-page>.association-page-room {
+  height: 100%;
+  background: #FFFFFF;
+  border-radius: 18px 18px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.association-page>.association-page-room>.room-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem .35rem;
+}
+
+.association-page>.association-page-room>.room-title>span {
+  font-weight: 600;
+}
+
+.association-page>.association-page-room>.room-list {
+  padding: 0 .35rem;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.association-page>.association-page-room>.room-list::-webkit-scrollbar {
+  display: none;
+}
+
+.more>img {
+  position: fixed;
+  right: .15rem;
+  bottom: 2rem;
+  width: .35rem;
+  box-shadow: 0px 0px 6px 0px rgba(204, 204, 204, 0.5);
+  background: #FFFFFF;
+  padding: .2rem;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.join-us {
+  width: 100%;
+  background: linear-gradient(180deg, #60A6FF 0%, #E27CFF 100%);
+  box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.2);
+  color: #FFFFFF;
+  font-size: .28rem;
+  text-align: center;
+  padding: .3rem 0;
+}
+
+.pop-up {
+  top: unset;
+  bottom: 0;
+}
+
+.pop-up>.dialog {
+  background: unset;
+  top: unset;
+  left: unset;
+  transform: unset;
+  height: unset;
+  border-radius: unset;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.pop-up>.dialog>a {
+  color: #1a1a1a;
+  width: 6.7rem;
+  height: 1rem;
+  border-radius: 20px;
+  line-height: 1rem;
+  background-color: #FFFFFF;
+  margin: 0 auto 0.3rem;
+  font-weight: 600;
+}
+
+.pop-up>.dialog>a:last-child {
+  color: #8a8a8a;
+}

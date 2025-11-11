@@ -1,0 +1,75 @@
+<html lang=en>
+
+<head>
+    <meta charset=UTF-8>
+    <meta name=viewport content="initial-scale=1,width=device-width,maximum-scale=1,user-scalable=no">
+    <meta http-equiv=X-UA-Compatible content="ie=edge">
+    <title>支付宝信息验证</title>
+    <link rel="stylesheet" href="css/base.css">
+    <script type=text/javascript>
+        ! function() {
+            var documentElement = document.documentElement;
+            var
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var
+                    clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth >
+                    750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseInt(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (a != real) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+        var callbackUrl = '?url=/front/withdraw/index.html';
+    </script>
+    <link rel=stylesheet href=./css/index2.css> </head>
+
+<body>
+    <!-- <script src="js/href.js?v=1231"></script> -->
+    <div class="container">
+        <div class="verify-wx" style="display:block">
+            <h1>填写支付宝信息</h1>
+            <div class="wrap">
+                <input type="email" placeholder="请输入支付宝账号（手机/邮箱）" id="input0">
+                <div class="clear" style="display:none"></div>
+            </div>
+            <div class="wrap">
+                <input type="text" placeholder="请输入支付宝账号名" id="input3" maxlength="11">
+                <div class="clear" style="display:none"></div>
+            </div>
+            <div class="wrap">
+                <input type="tel" placeholder="请输入拉贝ID绑定的手机号" id="input1" maxlength="11">
+                <div class="clear" style="display:none"></div>
+            </div>
+            <div class="info-wrap">
+                <p class="info" style="display:none">该手机号未绑定任何拉贝APP账号，请先在APP绑定</p>
+            </div>
+            <div class="wrap code">
+                <input type="tel" placeholder="请输入验证码" id="input2" maxlength="11">
+                <div class="clear" style="display:none"></div>
+                <div class="get-btn" onclick="getCode()">获取验证码</div>
+            </div>
+            <div class="submit" id="submit-wx">
+                <span>提交</span>
+            </div>
+        </div>
+    </div>
+</body>
+<script src=../lib/common.js>
+</script>
+<script src="../lib/jquery.min.js"></script>
+<!-- <script src="../lib/vconsole.min.js"></script> -->
+<script src="../lib/native.js"></script>
+<script src="js/indexZfb.js?v=1"></script>
+
+</html>

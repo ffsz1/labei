@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载页</title>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <style>
+        html, body, div, img, h2 {
+            margin: 0;
+            padding: 0;
+        }
+        html, body, .download {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            /* background-color: #ffc027; */
+        }
+        .cover {
+            position: relative;
+        }
+        #download {
+            position: absolute;
+            bottom: 105px;
+            left: 50%;
+            width: 8rem;
+            transform: translateX(-50%);
+        }
+        @media (max-width: 1280px) {
+            .pattern {
+                width: 18%;
+            }
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            max-width: 312px;
+            width: 21.66%;
+            transition: all .5s;
+        }
+        .pattern.left {
+            left: 0;
+        }
+        .pattern.right {
+            right: 0;
+        }
+        .pattern img {
+            width: 100%;
+            transition: all 1s;
+            pointer-events: none;
+        }
+        .logo {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .logo>img {
+            max-width: 100%;
+            width: 120px;
+            height: 120px;
+            border-radius: 17.54%;
+            position: absolute;
+            top: 15rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .logo>h2 {
+            position: absolute;
+            top: 25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: d_icomoon!important;
+            speak: none;
+            font-style: normal;
+            font-weight: 400;
+            font-variant: normal;
+            text-transform: none;
+        }
+        .logo>.download-btn {
+            position: absolute;
+            top: 35rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-block;
+            padding: 12px 46px;
+            min-width: 200px;
+            border: 1px solid #32B2A7;
+            border-radius: 40px;
+            font-size: 14px;
+            background: #32B2A7;
+            color: #fff;
+            outline: none;
+        }
+        .logo::before {
+            position: absolute;
+            top: 40rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 2px;
+        }
+        .toast {
+            top: 20%;
+            border-radius: 5px;
+            padding: 1rem;
+            font-size: 16px;
+        }
+
+    .pop-up {
+      position: absolute;
+      width: 100%;
+      height: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 0, 0, .5);
+      overflow-y: auto;
+      z-index: 999;
+    }
+
+    .pop-up p {
+      margin: .3rem 0;
+    }
+
+    .pop-up img {
+      vertical-align: middle;
+    }
+
+    .pop-up .tips {
+      text-align: right;
+    }
+
+    .pop-up .step {
+      display: inline-block;
+      vertical-align: bottom;
+      text-align: left;
+    }
+
+    .pop-up .arrow {
+      -webkit-transform: rotateY(180deg);
+      -moz-transform: rotateY(180deg);
+      -o-transform: rotateY(180deg);
+      -ms-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+      transform-style: preserve-3d;
+    }
+    </style>
+</head>
+<body>
+    <!-- <div class="download" style="background-color: #ffc027;"> -->
+    <div class="download">
+        <div class="cover">
+            <!-- <img src="./imgs/download.png" alt="download" style="width: 100%;"> -->
+            <img src="域名地址/download.png" alt="download" style="width: 100%;">            
+            <div id="download">
+                <img src="./imgs/btn.png" style="width:100%;height:100%" />    
+            </div>
+        </div>
+    <div class="pop-up" id="pop-up">
+      <div class="tips">
+        <div class="step">
+          <p class="step1">
+            <img src="./imgs/step1.png" alt="step1" width="20">
+            点击右上角
+            <img src="./imgs/more.png" alt="more" width="20">
+            打开菜单
+          </p>
+          <p class="step2">
+            <img src="./imgs/step2.png" alt="step2" width="20">
+            选择
+            <img src="./imgs/safari.png" alt="safari" width="20">
+            用浏览器打开下载
+          </p>
+        </div>
+        <img src="./imgs/arrow.png" alt="arrow" width="100" class="arrow">
+      </div>
+    </div>
+    </div>
+</body>
+<script src="../lib/jquery-3.2.1.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<script src="../lib/common.js"></script>
+
+
+    <script src="../lib/eruda.js"></script>
+    <script>
+        //eruda.init();
+    </script>
+
+
+
+
+<script>
+    $(document).ready(function() {
+        var browser = checkVersion();
+
+        function isWeiXin() {
+            var ua = window.navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                return true; // 是微信端
+            } else {
+                return false;
+            }
+        }
+        
+        $('#download').click(function() {
+            var boolean = isWeiXin();
+            if (boolean) {
+
+        $("#pop-up").stop(true, true).animate({
+          height: "100%"
+        }, 500);
+
+
+
+                /**$('.toast').text('请点击右上角选择“浏览器中打开”').show();
+                setTimeout(function() {
+                    $('.toast').hide();
+                }, 1200);**/
+            } else {
+                if (browser.ios) {
+                    window.location.href = "https://yff.ink/a/62Foyg";
+                } else if (browser.android) {
+                    window.location.href = "域名地址/labei.apk";
+                } else {
+                    window.location.href = "域名地址/labei.apk";
+                }        
+            }
+        });
+    });
+</script>
+</html>

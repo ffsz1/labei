@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="主播,连麦,交友,直播">
+    <meta name="description" content="拉贝星球">
+    <link rel="icon" href="./logo.png" type="image/png" />
+    <link rel="shortcut icon" href="./logo.png" type="image/png"/>
+    <title>拉贝星球</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            position: relative;
+        }
+        .header {
+            width: 100%;
+            height: 5vw;
+            padding: 0 5rem;
+        }
+        .header .logo {
+            height: 100%;
+            padding: 1rem 3rem;
+            float: left;
+            cursor: pointer;
+        }
+        .header .logo>img {
+            height: 100%;
+            vertical-align: middle;
+            margin-right: 1.5rem;
+        }
+        .header .logo>span {
+            font: 1.5rem PingFangSC-Regular, PingFang SC;
+            font-weight: 540;
+            vertical-align: middle;
+        }
+        .header .tab {
+            float: right;
+            display: block;
+            overflow: hidden;
+            font: 2rem/5vw PingFangSC-Regular, PingFang SC;
+        }
+        .header ul li {
+            float: left;
+            list-style-type: none;
+            padding: 0 2rem;
+            cursor: pointer;
+        }
+        .active {
+            color: #bf87ff;
+        }
+        .main {
+            color: #ffffff;
+            position: relative;
+        }
+        .main .img {
+            display: block;
+            width: 100%;
+        }
+        .main>.btn_group {
+            position: absolute;
+            top: 17.8vw;
+            right: 17.4vw;
+            width: 25vw;
+            height: 15vw;
+        }
+        .main .btn {
+            display: inline-block;
+            width: 100%;
+            height: 50%;
+            cursor: pointer;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: top left;
+        }
+        .android {
+            background-image: url(./android_download.png);
+        }
+        .ios {
+            background-image: url(./iPhone_download.png);
+        }
+        .main .about {
+            position: absolute;
+            top: 17vw;
+            right: 10vw;
+            width: 40vw;
+            height: 20vw;
+        }
+        .about>h3 {
+            font: 500 2.92vw/3vw PingFangSC-Medium, PingFang SC;
+            margin-bottom: 2.14vw;
+        }
+        .about>p {
+            font: 500 1.25vw/1.72vw PingFangSC-Regular, PingFang SC;
+            margin-bottom: 2vw;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0, 0, 0, .5);
+            color: #ffffff;
+            text-align: center;
+            width: 100%;
+            font-size: 14px;
+            padding: .3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="logo.png" alt="logo" />
+                <span>拉贝星球</span>
+            </div>
+            <ul class="tab">
+                <li class="active">首页</li>
+                <li>关于我们</li>
+            </ul>
+        </div>
+        <div class="main">
+            <img src="./bg.png" alt="background" class="img">
+            <div class="btn_group">
+                <div class="android btn"></div>
+                <div class="ios btn"></div>
+            </div>
+            <div class="about" style="display: none;">
+                <h3>关于我们</h3>
+                <p>拉贝星球主打陌生人语音交友，备受年轻人喜欢，在这里你可以远离枯燥的交友方式，轻松结识到更多有趣的灵魂，体验全新的娱乐交友方式。</p>
+                <p>声音交友，心愿实现，交友大厅，语音房聊天等丰富的玩法等你来玩，在这里，你可以结识很多有趣的新朋友，你们可以谈感情，谈生活，谈理想，还可以一起唱歌，玩游戏，情景模拟等等。在每个感到孤独的时刻，在这里你都可以找到暖心的陪伴。
+                    一辈子很长，要和有趣的人一起过~快来拉贝星球找Ta吧。</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>@2020&nbsp;Haijiaoxingqiu&nbsp;&nbsp;粤ICP备2020073587号-2</p>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".tab li").each(function(index) {
+            $(this).click(function() { 
+                $(".tab li").removeClass("active");
+                $(".tab li").eq(index).addClass("active");
+                if (index === 1) {
+                    $(".about").css('display', 'block');
+                    $(".btn_group").css('display', 'none');
+                } else {
+                    $(".about").css('display', 'none');
+                    $(".btn_group").css('display', 'block');
+                }
+            });
+        });
+
+        $('.android').click(function() {
+            window.location.href = '域名地址/haijiao.apk';
+        });
+
+        $('.ios').click(function() {
+            window.location.href = 'https://yff.ink/a/oxRFyZ';
+        });
+    })
+</script>
+</html>

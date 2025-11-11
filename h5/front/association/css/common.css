@@ -1,0 +1,202 @@
+.info, .list-item {
+  width: calc(100% - 1rem);
+  height: 1.12rem;
+  display: flex;
+  padding: .4rem .5rem;
+  position: relative;
+}
+
+.list-item {
+  width: 100%;
+  padding: .15rem 0;
+}
+
+.list-item {
+  border-bottom: 1px solid #F6F6F6;
+}
+
+.list-item:last-child {
+  border-bottom: 0;
+}
+
+.info::after, .list-item::after {
+  content: '';
+  width: .12rem;
+  height: .2rem;
+  background: url(../img/right.png) no-repeat center;
+  background-size: contain;
+  position: absolute;
+  right: .5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.list-item::after {
+  right: .1rem;
+}
+
+.info>img, .list-item>img {
+  width: 1.12rem;
+  border-radius: 8px;
+}
+
+.info>.describe, .list-item>.describe {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: .35rem;
+  font-size: .36rem;
+}
+
+.list-item>.describe {
+  margin-left: .25rem;
+  font-size: .28rem;
+}
+
+#desc-name, #desc-name>span {
+  color: #333333;
+  font-weight: 600;
+}
+
+#desc-id {
+  color: #a4a4a4;
+}
+
+.navbar {
+  position: fixed;
+  bottom: 0;
+  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  padding: .2rem 0;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.navbar>.back, .navbar>.forward {
+  width: 20px;
+  height: 20px;
+}
+
+.navbar>.back {
+  margin-right: 1rem;
+  background: url(../img/left.png) no-repeat center;
+  background-size: contain;
+}
+
+.navbar>.forward {
+  background: url(../img/forward.png) no-repeat center;
+  background-size: contain;
+}
+
+.round {
+  border-radius: 50% !important;
+}
+
+.disppear {
+  display: none;
+}
+
+.white {
+  background-color: #ffffff;
+}
+
+.pop-up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+
+.pop-up>div {
+  width: 80%;
+  height: 5rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background: #FFFFFF;
+  border-radius: 20px;
+}
+
+.pop-up>.tips {
+  height: 3.5rem;
+}
+
+.pop-up>div>.title {
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+  text-align: center;
+  padding: .3rem 0;
+}
+
+.pop-up>div>.content {
+  padding: 0 .5rem;
+  height: 2.1rem;
+}
+
+.pop-up>.tips>.content {
+  line-height: .44rem;
+}
+
+.pop-up>div>.content>.inline {
+  display: flex;
+}
+
+.pop-up>div>.content>.inline:first-child {
+  margin-bottom: .4rem;
+}
+
+.pop-up>div>.content>.inline>label {
+  width: 30%;
+  text-align: right;
+  margin-right: .25rem;
+}
+
+.pop-up>div>.content>.inline>select {
+  border-radius: 8px;
+  border: 1px solid #BDBDBD;
+  width: 2.76rem;
+  height: .6rem;
+  padding: .1rem;
+  outline: none;
+}
+
+.pop-up>div>.content>.inline>textarea {
+  resize: none;
+  border-radius: 8px;
+  border: 1px solid #BDBDBD;
+  width: 2.56rem;
+  height: 1.32rem;
+  padding: .1rem;
+  outline: none;
+}
+
+.pop-up>div>.button-group {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: .4rem 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.pop-up>div>.button-group>a {
+  background: linear-gradient(90deg, #60A6FF 0%, #E27CFF 100%);
+  border-radius: 12px;
+  color: #ffffff;
+  display: inline-block;
+  width: 1.84rem;
+  height: .8rem;
+  text-align: center;
+  line-height: .8rem;
+}
+
+.pop-up>div>.button-group>.cancel {
+  background: #F2F2F2;
+  color: #999999;
+}

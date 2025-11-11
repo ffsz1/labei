@@ -1,0 +1,151 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PK排行榜</title>
+    <script type="text/javascript">
+        ! function() {
+            var documentElement = document.documentElement;
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseInt(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (a != real) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- <div class="head-box">
+        
+        <div class="head-right"> <img src="images/mbzx.png" class="i_mbzx js_mbzx"></div>
+    </div> -->
+        <div class="con3">
+            <div class="share rel">
+                <div class="bb1">
+                    <div class="share-pic">
+                        <img src="" class="img-responsive" id="pic">
+                    </div>
+                    <div class="head-title">累计赢得点点币 <span class="score" id="myScore"></span></div>
+                </div>
+
+                <ul class="con3_data">
+                    <li>
+                        <span id="myRate"></span>
+                        <span>胜率</span>
+                    </li>
+                    <li class="second">
+                        <span id="myTimes"></span>
+                        <span>总场次</span>
+                    </li>
+                    <li>
+                        <span id="myWinTimes"></span>
+                        <span>胜场</span>
+                    </li>
+                </ul>
+                <span class="btn_share">分享战绩</span>
+            </div>
+            <div class="friend">
+                <div class="fd_title"><span class="fd_word">PK&nbsp;榜单</span></div>
+            </div>
+
+            <div class="rank_list rank_list_cur" id="listRank">
+                <!-- <div class="rank_list_box">
+                    <div class="rank_list_left"></div>
+                    <div class="rank_list_right">
+                        <span class="rank_list_avatar">
+                        <img src="https://pic.hnyueqiang.com/FuElDVWpH131JgO2gZvyqPb0ezr8?imageslim" class="rank_list_img">
+                      </span>
+                        <span class="rank_list_nick">
+                        <span>
+                          <p class="rank_list_name">111</p>
+                        </span>
+                        <span>
+                          <p class="rank_list_name">场次 2场</p>
+                        </span>
+                        </span>
+                        <div class="rank_list_link">胜率 10%</div>
+                    </div>
+                </div>
+                <div class="rank_list_box">
+                    <div class="rank_list_left"></div>
+                    <div class="rank_list_right">
+                        <span class="rank_list_avatar">
+                        <img src="https://pic.hnyueqiang.com/FuElDVWpH131JgO2gZvyqPb0ezr8?imageslim" class="rank_list_img">
+                      </span>
+                        <span class="rank_list_nick">
+                        <span>
+                          <p class="rank_list_name">111</p>
+                        </span>
+                        <span>
+                          <p class="rank_list_name">场次 2场</p>
+                        </span>
+                        </span>
+                        <div class="rank_list_link">胜率 10%</div>
+                    </div>
+                </div>
+                <div class="rank_list_box">
+                    <div class="rank_list_left"></div>
+                    <div class="rank_list_right">
+                        <span class="rank_list_avatar">
+                        <img src="https://pic.hnyueqiang.com/FuElDVWpH131JgO2gZvyqPb0ezr8?imageslim" class="rank_list_img">
+                      </span>
+                        <span class="rank_list_nick">
+                        <span>
+                          <p class="rank_list_name">111</p>
+                        </span>
+                        <span>
+                          <p class="rank_list_name">场次 2场</p>
+                        </span>
+                        </span>
+                        <div class="rank_list_link">胜率 10%</div>
+                    </div>
+                </div>
+                <div class="rank_list_box">
+                    <div class="rank_list_left">4</div>
+                    <div class="rank_list_right">
+                        <span class="rank_list_avatar">
+                        <img src="https://pic.hnyueqiang.com/FuElDVWpH131JgO2gZvyqPb0ezr8?imageslim" class="rank_list_img">
+                      </span>
+                        <span class="rank_list_nick">
+                        <span>
+                          <p class="rank_list_name">111</p>
+                        </span>
+                        <span>
+                          <p class="rank_list_name">场次 2场</p>
+                        </span>
+                        </span>
+                        <div class="rank_list_link">胜率 10%</div>
+                    </div>
+                </div> -->
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script src="../lib/common.js"></script>
+<script src="../lib/zepto.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<!-- <script src="../lib/vconsole.min.js"></script> -->
+<script src="js/historyRank.js"></script>
+
+</html>

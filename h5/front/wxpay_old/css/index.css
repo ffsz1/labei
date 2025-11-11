@@ -1,0 +1,264 @@
+.num {
+  position: relative;
+}
+
+.num input {
+  display: block;
+  width: 320px;
+  height: 40px;
+  margin: 20px auto;
+  line-height: 40px;
+  font-size: 16px;
+  color: #333;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  outline: none;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.num_history {
+  width: 320px;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border: 1px solid #eee;
+  display: none;
+  z-index: 2;
+}
+
+.num_history>div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.num_history_item {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  box-sizing: border-box;
+  color: #333;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.num_history_item>img {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-input-placeholder {
+  color: #b2b2b2;
+  font-size: 15px;
+}
+
+.gold {
+  width: 100%;
+}
+
+.gold:before {
+  display: block;
+  width: 100%;
+  height: 15px;
+  background: #f5f5f5;
+  content: "";
+}
+
+.gold li {
+  position: relative;
+  height: 60px;
+  line-height: 60px;
+  margin-left: 15px;
+  font-size: 0;
+}
+
+.amount {
+  display: inline-block;
+  margin-left: 21px;
+  margin-right: 5px;
+  font-size: 15px;
+  color: #1a1a1a;
+}
+
+.desc {
+  display: inline-block;
+  font-size: 14px;
+  color: #fe9022;
+}
+
+.price {
+  position: absolute;
+  display: inline-block;
+  right: 15px;
+  top: 17px;
+  width: 70px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid #0eccaa;
+  border-radius: 25px;
+  text-align: center;
+  color: #1a1a1a;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.gold li:before {
+  position: absolute;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  top: 50%;
+  margin-top: -9px;
+  content: " ";
+  background: url("../image/icon_03.png") center no-repeat;
+  background-size: 100% 100%;
+}
+
+.gold li:after {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #ebebeb;
+  content: " ";
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5),
+(max-device-pixel-ratio: 1.5) {
+  .border-1px::after {
+    -webkit-transform: scaleY(0.7);
+    transform: scaleY(0.7);
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(max-device-pixel-ratio: 2) {
+  .border-1px::after {
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}
+
+.mask {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.layer {
+  display: none;
+  position: fixed;
+  width: 290px;
+  left: 50%;
+  top: 250px;
+  margin-left: -145px;
+  text-align: center;
+  font-size: 16px;
+  color: #3d3d3d;
+  border: 1px solid #efefef;
+  background: #fff;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.desc_confirm {
+  padding: 25px 35px;
+  line-height: 24px;
+  border-bottom: 1px solid #efefef;
+}
+
+.desc_confirm .nick,
+.desc_confirm .desc_price {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+}
+
+.desc_confirm .desc_price {
+  color: #f83030;
+}
+
+.btn_group {
+  height: 40px;
+  line-height: 40px;
+  font-size: 0;
+}
+
+.cancel,
+.confirm {
+  display: inline-block;
+  width: 145px;
+  font-size: 16px;
+  color: #666;
+  box-sizing: border-box;
+}
+
+.confirm {
+  color: #333;
+  background-color: #0eccaa;
+  border-bottom-right-radius: 5px;
+}
+
+.failed,
+.success {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+}
+
+.failed:before {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin-left: 28px;
+  margin-bottom: 20px;
+  content: " ";
+}
+
+.failed:before {
+  background: url("../image/failed.png") center no-repeat;
+  background-size: 100% 100%;
+}
+
+.loading-box {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: none;
+}
+
+.loading-box>div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-box>div>img {
+  width: 70px;
+  height: 70px;
+}

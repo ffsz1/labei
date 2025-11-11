@@ -1,0 +1,432 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.popular-activity {
+    width: 100%;
+    height: calc(100% - 1.5rem);
+    position: relative;
+    font-size: 0;
+    overflow-y: auto;
+}
+
+.popular-activity>.background-box {
+    position: relative;
+}
+
+.popular-activity>.background-box>.lazy {
+    width: 100%;
+}
+
+.popular-activity .activity-rule {
+    position: absolute;
+    right: 0.05rem;
+    top: .2rem;
+    width: 1.8rem;
+    height: .6rem;
+}
+
+.popular-activity .list {
+    position: absolute;
+    top: .2rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.popular-activity .list>img {
+    height: 1.2rem;
+}
+
+.popular-activity .background-box>.last-week-list {
+    position: fixed;
+    right: 0;
+    top: 5rem;
+    z-index: 2;
+    width: 38px;
+    height: 130px;
+}
+
+.popular-activity .list>.girls-list {
+    margin-right: .3rem;
+}
+
+.popular-activity .last-week-list {
+    position: absolute;
+    right: 0;
+    top: .45rem;
+    width: .5rem;
+    height: 2rem;
+}
+
+.popular-activity .rank {
+    position: absolute;
+    bottom: .9rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6.5rem;
+    height: 7.1rem;
+    overflow: hidden;
+}
+
+.popular-activity .rank>h2 {
+    font-size: 16px;
+    text-align: center;
+    font-family: Yuanti SC, YouYuan;
+    font-weight: bold;
+    color: rgba(255, 253, 243, 1);
+    margin: 0 0 .3rem 0;
+}
+
+.popular-activity .rank>.view {
+    height: 85%;
+    overflow-y: auto;
+}
+
+.popular-activity .rank .item {
+    display: flex;
+    align-items: center;
+    margin: .3rem 0;
+}
+
+.popular-activity .rank .item:first-child {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+}
+
+.popular-activity .rank .item .title {
+    width: 15%;
+    height: 40px;
+    text-align: center;
+    padding: 2.5px;
+    box-sizing: content-box;
+}
+
+.popular-activity .rank .item .title>div {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    line-height: 45px;
+    font-family: Adobe Heiti Std, SimHei;
+    font-weight: 500;
+    color: rgba(212, 161, 255, 1);
+    background: url('../images/rank_box.png') no-repeat center;
+    background-size: cover;
+}
+
+.popular-activity .rank .item .info {
+    display: flex;
+    width: 50%;
+}
+
+.popular-activity .rank .item .info>img {
+    border-radius: 50%;
+    margin: 0 .2rem;
+}
+
+.popular-activity .rank .item .info>.details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.popular-activity .rank .item .info>.details>p {
+    display: block;
+    font-size: 14px;
+    width: 100px;
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.popular-activity .rank .item .info>.details span {
+    vertical-align: middle;
+}
+
+.popular-activity .rank .item .info>.details>a {
+    font-family: Adobe Heiti Std, SimHei;
+    font-size: 14px;
+    font-weight: normal;
+    text-decoration: underline;
+    color: rgba(255, 225, 57, 1);
+}
+
+.popular-activity .rank .count {
+    width: 35%;
+    text-indent: 5px;
+}
+
+.popular-activity .rank .count>span {
+    font-size: 14px;
+    font-family: Adobe Heiti Std, SimHei;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 1);
+    vertical-align: middle;
+}
+
+.popular-activity .rank .slide-tips {
+    position: absolute;
+    font-size: 14px;
+    font-family: Adobe Heiti Std, SimHei;
+    font-weight: normal;
+    color: rgba(239, 218, 255, 1);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 底部固定栏 */
+.footer {
+    width: 100%;
+    height: 1.5rem;
+    position: fixed;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(242, 114, 248, 1), rgba(156, 53, 255, 1));
+    display: flex;
+    flex: 1;
+    align-items: center;
+    padding: 0 .4rem;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.footer-black {
+    font-size: 12px;
+    color: rgba(76, 0, 130, 1);
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer span {
+    vertical-align: middle;
+}
+
+.footer .head>img {
+    border-radius: 50%;
+}
+
+.footer .my-rank {
+    flex: 3;
+    padding-left: .3rem;
+}
+
+.footer .my-rank>p:first-child {
+    margin-bottom: .2rem;
+    width: 130px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* 活动规则弹框 */
+.pop-up {
+    position: absolute;
+    width: 100%;
+    height: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .5);
+    font-size: 0;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.pop-up .rule>.lazy {
+    width: 100%;
+}
+
+.pop-up .close-rule {
+    position: absolute;
+    top: .44rem;
+    right: .47rem;
+    width: .4rem;
+    height: .4rem;
+}
+
+/* 星推官榜单弹框 */
+.pop-up .star, .pop-up .last-week {
+    position: relative;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 16px;
+}
+
+.pop-up .star p {
+    margin: .13rem 0;
+}
+
+.pop-up .star>img {
+    width: 100%;
+}
+
+.pop-up .star>div {
+    position: absolute;
+}
+
+.pop-up .star>div>.name {
+    width: 70px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.pop-up .star>div>.vote {
+    font-size: 12px;
+    color: rgba(255, 240, 0, 1);
+}
+
+.pop-up .star>div {
+    left: 50%;
+    bottom: 1.8rem;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #ffffff;
+    font-weight: 500;
+    padding-top: .3rem;
+    padding-left: .2rem;
+}
+
+.pop-up .star>div>.head {
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+}
+
+.pop-up .star>.first>.head>.rank-head {
+    position: absolute;
+    left: 0;
+    width: 20px;
+}
+
+.pop-up .star>.second {
+    left: 20%;
+    bottom: 1.4rem;
+}
+
+.pop-up .star>.third {
+    left: 80%;
+    bottom: 1.2rem;
+}
+
+.pop-up .star>.close-star {
+    width: 15px;
+    position: absolute;
+    right: .3rem;
+    top: .3rem;
+}
+
+.pop-up .star>div .champion,
+.pop-up .star>div .runner_up,
+.pop-up .star>div .second_runner_up {
+    width: 35px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.pop-up .last-week>.rank-list {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 0 .3rem;
+    flex: 1;
+}
+
+.pop-up .last-week>.rank-list>div {
+    flex: 1;
+}
+
+.pop-up .last-week>.background {
+    width: 100%;
+}
+
+.pop-up .last-week h2 {
+    margin: 0;
+    padding: .5rem 0 .2rem 0;
+    text-align: center;
+}
+
+.pop-up .last-week .rank-boy {
+    padding-bottom: .4rem;
+}
+
+.pop-up .last-week .rank-item {
+    padding: .1rem;
+    display: flex;
+}
+
+.pop-up .last-week .rank-item>.head {
+    border-radius: 50%;
+}
+
+.pop-up .last-week .rank-item>.rank-info {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    margin-left: .2rem;
+}
+
+.pop-up .last-week .rank-item>.rank-info>p {
+    margin: 0;
+}
+
+.pop-up .last-week .rank-item>.rank-info>p:first-child {
+    justify-content: space-between;
+    display: inline-flex;
+    align-items: center;
+}
+
+.pop-up .last-week .rank-item>.rank-info>p:last-child {
+    flex: 2;
+    background: url(../images/box.png) no-repeat center;
+    background-size: contain;
+    text-align: center;
+    line-height: 25px;
+}
+
+.pop-up .last-week .rank-item>.rank-info span {
+    color: #ffffff;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+.pop-up .last-week .rank-item>.rank-info .votes {
+    display: flex;
+    align-items: center;
+}
+
+.pop-up .last-week .rank-item>.rank-info .votes>span {
+    display: block;
+    width: 45px;
+    text-align: right;
+}
+
+.pop-up .close-week {
+    width: 20px;
+    position: absolute;
+    right: .5rem;
+    top: .4rem;
+    z-index: 99;
+}

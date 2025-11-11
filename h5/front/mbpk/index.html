@@ -1,0 +1,107 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>点点大PK</title>
+    <script type="text/javascript">
+        ! function() {
+            var documentElement = document.documentElement;
+            var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+
+            function resize() {
+                var clientWidth = documentElement.clientWidth;
+                clientWidth = clientWidth > 750 ? 750 : clientWidth;
+                clientWidth = clientWidth <
+                    320 ? 320 : clientWidth;
+                var a = clientWidth / 7.5;
+                documentElement.style.fontSize = a + "px";
+                var real = parseFloat(window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize);
+                if (Math.abs(a - real) > 1) {
+                    documentElement.style.fontSize = a * (a / real) + "px";
+                }
+            }
+            resize();
+            window.addEventListener(resizeEvt, resize, false);
+            document.addEventListener('DOMContentLoaded', resize, false);
+        }(window, document);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/toolKit/css/index.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body class="step2">
+    <div class="container">
+        <!-- <div class="head-box head-box1">
+            <div class="head-title">点点币PK，多数派赢大量点点币!</div>
+            <div class="head-right"> <img src="images/mbzx.png" class="i_mbzx js_mbzx"></div>
+        </div> -->
+        <div class="task">
+            <div class="task_banner s2">
+                <img src="images/banner.png" alt="" class="img-responsive">
+                <span class="i_zj js_zj">往期战绩</span>
+                <span class="i_gz js_rule">游戏规则</span>
+            </div>
+            <div class="task-box">
+                <div class="task_title rel">
+                    <span style="font-weight:normal">PK&nbsp;</span>第<span class="js_term"></span>期
+                    <div class="abs task_right">往期回顾</div>
+                </div>
+                <div class="task_que js_title"></div>
+                <div class="task_img">
+                    <div class="task_g"><span class="i_g  js_bluePic"></span><span class="task_p"><span class="js_bluePolls"></span>票</span><span class="aa1  js_blueAnswer">支持蓝色</span>
+                        <span class="aa2">已支持</span>
+                    </div>
+                    <div class="task_b"><span class="i_g js_redPic"></span><span class="task_p"><span class=" js_redPolls"></span>票</span><span class="aa1 js_redAnswer">支持红色</span>
+                        <span class="aa2">已支持</span>
+                    </div>
+                </div>
+                <!-- <div class="task_btn">
+                    <div class="i_red js_redAnswer"></div>
+                    <div class="i_vs"></div>
+                    <div class="i_blue js_blueAnswer"></div>
+                </div> -->
+                <div class="task_task2_tip s2">每期首次投票免费，此后每次参与消耗10点点币</div>
+                <div class="task_tip"><span class="red js_lotteryTime"></span> 开奖，多数派瓜分 <span class="red"><span class="js_carveUpMcoinNum"></span>点点币</span>，每次参与投票消耗10点点币</div>
+                <span class="task_show s1 js_detail">查看详情</span>
+                <span class="task_yq s2 js_yq">邀请好友一起玩</span>
+            </div>
+        </div>
+    </div>
+    <div class="pop">
+        <div class="pop_mask"></div>
+        <div class="pop_con">
+            <div class="pop_close"></div>
+            <div class="pop_t">
+                游戏规则
+            </div>
+            <ul class="pop_note">
+                <li>选择支持任意一方即可参与游戏；</li>
+                <li>pk开始时，平台将给“多数派”瓜分奖池金额；</li>
+                <li>每期pk开奖时间/下期pk开启时间由平台而定，用户可在活动首页知悉；</li>
+                <li>如发现任何作弊行为，微博将取消用户获得积分的资格；</li>
+                <li>该活动及奖励与APPLE INC.无关。</li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="popnone">
+        <div><img src="./images/none.png" class="none1"></div>
+        <p class="none2">活动尚未开始噢 ! 请留意官方消息</p>
+    </div>
+</body>
+<script src="../lib/common.js"></script>
+<script src="../lib/zepto.min.js"></script>
+<script src="../lib/toolKit/js/index.js"></script>
+<!-- <script src="../lib/vconsole.min.js"></script> -->
+<script src="js/index.js"></script>
+<!-- <script>
+    $toast.show({
+                text: '活动尚未开启，敬请期待！',
+                time: 13000
+            })
+</script> -->
+
+</html>
