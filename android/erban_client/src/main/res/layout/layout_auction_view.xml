@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/auction_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_auction_wing" />
+
+    <com.vslk.lbgx.ui.common.widget.CircleImageView
+        android:id="@+id/auction_owner_avatar"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        app:cborder_color="@color/color_33FFFFFF"
+        app:cborder_width="3sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:src="@drawable/icon_be_acution" />
+
+
+    <TextView
+        android:id="@+id/auction_owner_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auction_header"
+        android:layout_centerHorizontal="true"
+        android:drawablePadding="5dp"
+        android:text="南方菇娘"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_medium" />
+
+    <ImageView
+        android:id="@+id/icon_current_auction_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/auction_owner_nick"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/icon_current_auction_list" />
+
+
+    <RelativeLayout
+        android:layout_width="77dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rl_second"
+        android:layout_toLeftOf="@+id/rl_second"
+
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/auction_first_avatar"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp" />
+
+        <ImageView
+            android:id="@+id/iv_first_current_list"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:src="@drawable/icon_current_list_first" />
+
+
+        <TextView
+            android:id="@+id/auction_first_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_first_current_list"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="任性女皇"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/auction_first_corn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/auction_first_nick"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:drawablePadding="4dp"
+            android:drawableRight="@drawable/icon_auction_corn"
+            android:text="5000"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_second"
+        android:layout_width="77dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/icon_current_auction_list"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="13dp"
+
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/auction_second_avatar"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp" />
+
+        <ImageView
+            android:id="@+id/iv_second_current_list"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:src="@drawable/icon_current_list_second" />
+
+
+        <TextView
+            android:id="@+id/auction_second_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_second_current_list"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="任性女皇"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/auction_second_corn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/auction_second_nick"
+            android:layout_centerHorizontal="true"
+            android:drawablePadding="4dp"
+            android:drawableRight="@drawable/icon_auction_corn"
+            android:text="5000"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="77dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rl_second"
+        android:layout_toRightOf="@+id/rl_second"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/auction_third_avatar"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="11dp" />
+
+        <ImageView
+            android:id="@+id/iv_third_current_list"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:src="@drawable/icon_current_list_third" />
+
+
+        <TextView
+            android:id="@+id/auction_third_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_third_current_list"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="任性女皇"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_small" />
+
+        <TextView
+            android:id="@+id/auction_third_corn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/auction_third_nick"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:drawablePadding="4dp"
+            android:drawableRight="@drawable/icon_auction_corn"
+            android:text="5000"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_medium" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/auction_tip_image"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/auction_btn_image"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:paddingBottom="6dp"
+        android:src="@drawable/icon_hammer_tip" />
+
+    <ImageView
+        android:id="@+id/auction_btn_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+
+        android:src="@drawable/icon_hammer" />
+</merge>

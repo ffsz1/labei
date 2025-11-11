@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="title_bar_style">
+        <attr name="left" format="integer|reference"></attr>
+        <attr name="right" format="integer|reference"></attr>
+        <attr name="center" format="integer|reference"></attr>
+        <attr name="bg" format="integer|reference|color"></attr>
+    </declare-styleable>
+</resources>

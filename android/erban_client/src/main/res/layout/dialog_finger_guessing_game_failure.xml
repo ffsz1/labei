@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:src="@drawable/ic_close" />
+
+    <ImageView
+        android:id="@+id/iv_start_finger_guessing_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_close"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_finger_guessing_game_failure" />
+
+    <TextView
+        android:id="@+id/one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_60"
+        android:text="好像慢了一步，无法参与本次猜拳"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_15" />
+
+    <TextView
+        android:id="@+id/tv_start_finger_guessing_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/one"
+        android:layout_marginStart="@dimen/dp_90"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_marginEnd="@dimen/dp_90"
+        android:background="@drawable/bg_btn_login_selected"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="发起猜拳"
+        android:textColor="@color/white" />
+</RelativeLayout>

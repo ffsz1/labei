@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="263dp"
+        android:layout_height="327dp"
+        android:background="@drawable/ic_gift_reward_bg">
+
+        <TextView
+            android:id="@+id/tv_gift_reward_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_85"
+            android:text="空气猫"
+            android:textColor="@color/color_ffd800"
+            android:textSize="@dimen/text_size_21" />
+
+
+        <ImageView
+            android:id="@+id/iv_gift_reward"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="170dp"
+            />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_gift_reward_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_25"
+        android:src="@mipmap/ic_pound_egg_close" />
+
+
+</LinearLayout>

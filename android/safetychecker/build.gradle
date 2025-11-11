@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    sourceSets { main { jni.srcDirs = []
+        jniLibs.srcDirs = ['libs'] } }
+
+    buildTypes {
+        product {
+
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    uploadArchives {
+        repositories {
+            apply plugin: 'maven'
+            mavenDeployer {
+                repository(url: 'http://121.196.184.56:8071/repository/hncxco_android/') {
+                    authentication(userName: 'zzd', password: 'zzd123456')
+                }
+
+                pom.project {
+                    version '1.0.9'
+                    artifactId 'safetychecker'
+                    groupId 'com.hncxco'
+                    packaging 'aar'
+                    description 'dependences lib'
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="4">
+
+    <TextView
+        android:id="@+id/tv_weixin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/ic_login_weixin"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="微信"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/font_medium" />
+
+    <TextView
+        android:id="@+id/tv_weixinpy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/icon_weixinpy"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="朋友圈"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/font_medium" />
+
+    <TextView
+        android:id="@+id/tv_qq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/ic_login_qq"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="QQ"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/font_medium" />
+
+    <TextView
+        android:id="@+id/tv_qq_zone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/icon_qq_zone"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="QQ空间"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/font_medium" />
+</merge>

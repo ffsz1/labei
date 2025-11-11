@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.vslk.lbgx.ui.common.widget.StatusLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FAFAFA"
+    android:orientation="vertical">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_base_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_FAFAFA">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_FAFAFA">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_base_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="7.5dp"
+                android:layout_marginRight="7.5dp"
+                android:background="@color/color_FAFAFA" />
+        </FrameLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</com.vslk.lbgx.ui.common.widget.StatusLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/avatar_container"
+    android:layout_width="wrap_content"
+    android:layout_height="58dp">
+    <!--    android:background="@drawable/bg_gift_dialog_avatar_selected"-->
+    <FrameLayout
+        android:id="@+id/bg_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_room_call_user_off">
+
+        <com.vslk.lbgx.ui.common.widget.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_default_avatar" />
+    </FrameLayout>
+
+    <CheckBox
+        android:id="@+id/cb_member_select"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_gravity="bottom|center"
+        android:background="@drawable/selector_send_gift_people"
+        android:button="@null"
+        android:clickable="false"
+        android:gravity="center"
+        android:paddingBottom="1.2dp"
+        android:textColor="@color/selector_gift_avatar_all_username"
+        android:textSize="@dimen/text_size_10" />
+</FrameLayout>

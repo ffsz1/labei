@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <View
+        android:id="@+id/seat"
+        android:layout_width="5dp"
+        android:layout_height="1dp" />
+
+    <ImageView
+        android:id="@+id/exper_level"
+        android:layout_width="@dimen/level_icon_width"
+        android:layout_height="@dimen/level_icon_height"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:contentDescription="@string/empty"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/charm_level"
+        android:layout_width="@dimen/charm_icon_width"
+        android:layout_height="@dimen/charm_icon_height"
+        android:contentDescription="@string/empty"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>

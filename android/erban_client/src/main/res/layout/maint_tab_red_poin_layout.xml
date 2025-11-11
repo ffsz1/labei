@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_main_tab_home_pressed" />
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:text="首页"
+        android:textColor="#333333"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/msg_number"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/iv_icon"
+        android:background="@drawable/bg_msg_number"
+        android:gravity="center"
+        android:minWidth="16dp"
+        android:layout_marginLeft="-15dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_9"
+        android:visibility="visible" />
+</merge>

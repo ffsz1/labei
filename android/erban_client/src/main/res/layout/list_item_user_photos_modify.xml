@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.vslk.lbgx.ui.widget.SquareLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dp_5">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_user_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:riv_corner_radius="@dimen/dp_10"/>
+
+    </com.vslk.lbgx.ui.widget.SquareLayout>
+
+    <ImageView
+        android:id="@+id/iv_photo_delete"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@null"
+        android:src="@drawable/icon_photo_delete"/>
+
+</RelativeLayout>

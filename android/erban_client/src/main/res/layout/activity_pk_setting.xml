@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.vslk.lbgx.base.view.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </com.vslk.lbgx.base.view.TitleBar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="126dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="79dp"
+                    android:layout_height="79dp"
+                    android:background="@drawable/ic_pk_left_avatar">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/riv_pk_user_icon_1"
+                        android:layout_width="63dp"
+                        android:layout_height="63dp"
+                        android:layout_centerInParent="true"
+                        app:riv_oval="true" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_pk_user_name_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:paddingHorizontal="15dp"
+                    android:singleLine="true"
+                    android:textColor="@color/mm_theme"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="67dp"
+                android:layout_height="47dp"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/ic_pk_logo" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="79dp"
+                    android:layout_height="79dp"
+                    android:background="@drawable/ic_pk_right_avatar">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/riv_pk_user_icon_2"
+                        android:layout_width="63dp"
+                        android:layout_height="63dp"
+                        android:layout_centerInParent="true"
+                        app:riv_oval="true" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_pk_user_name_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:paddingHorizontal="15dp"
+                    android:singleLine="true"
+                    android:textColor="@color/color_fd0a0a"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/gray_fafafa" />
+
+        <RelativeLayout
+            android:id="@+id/rl_select_pk_type"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="投票类型"
+                android:textColor="@color/color_333333" />
+
+            <TextView
+                android:id="@+id/tv_pk_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@drawable/arrow_right"
+                android:gravity="center"
+                android:text="按礼物价值PK  "
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_fafafa" />
+
+        <RelativeLayout
+            android:id="@+id/rl_select_pk_time"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="时间限制"
+                android:textColor="@color/color_333333" />
+
+            <TextView
+                android:id="@+id/tv_pk_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@drawable/arrow_right"
+                android:gravity="center"
+                android:text="60秒  "
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_fafafa" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/bu_pk_submit"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/shape_blue_radius_22dp"
+            android:text="@string/add"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:baselineAligned="false"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/popup_dialog_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="20dp"
+        android:text="语音、文字、收藏，登录更精彩"
+        android:textColor="@color/common_color_7"
+        android:textSize="@dimen/long_text_tips_fnt" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:background="@color/white"
+        android:baselineAligned="false"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_register"
+            style="@style/HalfInverseBtn"
+            android:layout_marginRight="6dp"
+            android:text="注册"/>
+
+        <Button
+            android:id="@+id/btn_login"
+
+            style="@style/HalfPrimaryBtn"
+            android:layout_marginLeft="6dp"
+            android:text="登录"/>
+
+    </LinearLayout>
+</LinearLayout>

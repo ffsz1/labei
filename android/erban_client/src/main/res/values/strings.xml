@@ -1,0 +1,261 @@
+<resources>
+    <string name="deleted_key">deleted</string>
+    <string name="app_name">海角星球</string>
+    <string name="no_list_data">暂无数据</string>
+    <string name="str_network_not_capable">网络不给力</string>
+    <string name="network_error_reload">网络异常，请检查网络后点击刷新</string>
+    <string name="click_screen_reload">点击刷新</string>
+    <string name="loading">加载中&#8230;</string>
+    <string name="click_or_pull_refresh">点击或者下拉尝试刷新</string>
+    <string name="cancel">取消</string>
+    <string name="dian_dian_coin">点点币</string>
+
+    <string name="gift_action">送礼物</string>
+
+
+    <string name="setting">设置</string>
+    <string name="perm_tip">
+        当前应用缺少必要权限,请点击设置跳转权限页面
+    </string>
+    <string name="ask_again">请给予应用必要权限，让程序可正常工作。</string>
+    <string name="ask_camera">请给予应用相册权限，以便可以正常使用。</string>
+
+
+    <!--TakePhoto-->
+    <string name="tip_type_not_image">选择的不是图片</string>
+    <string name="tip_no_camera">没有相机</string>
+    <string name="tip_tips">提示</string>
+    <string name="tip_compress">正在压缩照片...</string>
+    <string name="tip_compress_failed">"%1$s 图片压缩失败:%2$s picturePath:%3$s"</string>
+    <string name="msg_crop_failed">"有裁切失败的图片"</string>
+    <string name="msg_compress_failed">"有压缩失败的图片"</string>
+    <string name="msg_crop_canceled">" 取消裁切"</string>
+    <string name="msg_operation_canceled">"操作被取消"</string>
+    <string name="tip_permission_camera">没有使用相机的权限，请在权限管理中开启</string>
+    <string name="tip_permission_storage">没有使用SD卡的权限，请在权限管理中开启</string>
+    <string name="tip_permission_camera_storage">没有使用相机和SD卡的权限，请在权限管理中开启</string>
+
+    <!--custom multipleimageselect -->
+    <string name="album_view">选择图片</string>
+    <string name="image_view">单击选择</string>
+
+    <string name="add">确定</string>
+    <string name="selected">已选</string>
+    <string name="limit_exceeded">最多能选 %d 张</string>
+    <!--TakePhoto-->
+
+    <string name="gift_income_gold">钻石</string>
+    <string name="gift_expend_gold">金币</string>
+
+    <string name="gold_num_text">%.1f</string>
+
+    <string name="red_packet_withdraw">奖励金提现</string>
+
+    <string name="bill_no_data_text">您还没有记录喔</string>
+
+    <string name="menu_level">我的等级</string>
+    <string name="menu_recommend">邀请注册</string>
+    <string name="menu_create_my_room">我的房间</string>
+    <string name="menu_activities">热门活动</string>
+
+    <string name="fan">粉丝</string>
+    <string name="star_list_title">魅力荣誉榜</string>
+    <string name="noble_list_title">土豪荣誉榜</string>
+    <string name="no_frenids_text">您暂无好友</string>
+    <string name="no_fan_text">您还没有粉丝哦</string>
+    <string name="bind_your_alipay">请先绑定您的微信帐号</string>
+    <string name="jewel_withdraw">注意：提现将在第二个工作日到账，到时未到账请联系客服微信号：xiaobandianyuyin3</string>
+    <string name="main_home">首页</string>
+    <string name="main_attention">关注</string>
+    <string name="main_attentioned">已关注</string>
+    <string name="main_msg">消息</string>
+    <string name="main_me">我的</string>
+
+    <!--主页-->
+
+    <!--我的页面-->
+    <string name="me_user_id">ID:%d</string>
+    <string name="me_user_id_null">ID:</string>
+    <string name="my_attention">关注</string>
+    <string name="my_fan">粉丝</string>
+    <string name="my_activities">活跃</string>
+
+    <string name="no_attention_text">你还没有关注好友哦</string>
+    <string name="search_hint">输入ID/昵称/房间号</string>
+
+    <!--个人主页-->
+
+    <!--我的钱包-->
+    <string name="my_wallet">我的钱包</string>
+
+    <!--我的收益-->
+
+    <!--兑换金币-->
+    <string name="exchange_gold_diamond_input_hint">请输入兑换的钻石数量</string>
+    <string name="exchange_gold_result_init">0</string>
+    <string name="exchange_gold_confirm_exchange">确认兑换</string>
+    <string name="exchange_gold_tips">钻石可兑换金币，兑换比例：10钻石=10金币，钻石数量必须为10的整数倍</string>
+    <string name="exchange_gold_error_empty_input">请输入要兑换的钻石数量</string>
+    <string name="exchange_gold_error_is_not_ten_multiple">兑换的钻石必须为10的整数倍</string>
+    <string name="exchange_gold_error_diamond_less">钻石数量少于兑换数量</string>
+    <string name="exchange_gold_success">兑换成功</string>
+
+    <!--充值-->
+    <string name="charge_gold">%.1f</string>
+    <string name="charge_webchat">微信支付</string>
+    <string name="charge_alipay">支付宝</string>
+    <string name="charge">充值</string>
+    <string name="charge_number">%d元</string>
+    <string name="charge_tips">请选择充值金额</string>
+    <string name="charge_warning">首冲送20金币</string>
+
+    <!--提现-->
+    <string name="withdraw_dialog_notice">您将要兑换%1$d红包=¥%2$d元</string>
+    <string name="withdraw_notice">温馨提示:大额提现,请关注官方公众号 海角星球 联系客户进行提现操作。谢谢!</string>
+    <string name="withdraw">提现</string>
+
+    <!--room-->
+    <string name="dearch_no_data">暂无搜索结果</string>
+    <string name="room_setting">房间设置</string>
+    <string name="input_pwd">输入密码</string>
+    <string name="waiting_text">请稍后…</string>
+    <string name="online_user_text">在线人数</string>
+    <string name="contribution_list_text">房间贡献榜</string>
+    <string name="mic_user_list_text">选择人员</string>
+    <string name="my_pound_egg_reward">我的中奖记录</string>
+    <string name="pound_egg_record">打call记录</string>
+    <string name="gift_history_list_text">礼物记录</string>
+    <string name="come_msg_tip_car">驾着“%s”来了</string>
+    <string name="come_msg_tip_not_car">来了</string>
+    <string name="lottery_egg_rule">1、打call可以获得捡海螺次数，捡海螺可以获得海量奖品； \n\n2、获得的奖品可以在背包中查看，并可以进行赠送； \n\n3、捡海螺还可以获得一定量的人气票，人气票可以用于人气活动中为你喜欢的主播投票，投票还有机会跟你喜欢的主播获得专属你们的的头像头饰； \n\n4、温馨小提示：多次捡海螺有机会获得更特别的礼物。</string>
+    <!--密聊-->
+
+    <!--消息-->
+    <string name="fan_success">关注成功，相互关注可成为好友哦！</string>
+
+    <!--提示-->
+    <string name="set_room_manager">您已被房主设置为管理员</string>
+    <string name="remove_room_manager">您已被房主移除管理员</string>
+    <string name="kick_mic">您已被房主或管理员踢下麦</string>
+    <string name="embrace_on_mic">您已被房主或管理员抱上麦，但并未开启麦克风，需要说话请打开麦克风</string>
+    <string name="online_text">在线</string>
+    <string name="contribute_text">贡献榜</string>
+    <string name="title_online">在线听众</string>
+    <string name="title_play_introduce">活动礼物玩法介绍</string>
+
+    <string name="listening_number">收听：%d</string>
+
+    <string name="forbid_mic">禁麦此座位</string>
+    <string name="no_forbid_mic">解除此座位禁麦</string>
+    <string name="embrace_up_mic">抱Ta上麦</string>
+    <string name="embrace_down_mic">抱Ta下麦</string>
+    <string name="unlock_mic">解封此座位</string>
+    <string name="lock_mic">封锁此座位</string>
+
+    <string name="message_view_bottom_tip">底部有新消息</string>
+    <string name="data_error">获取数据出错，请点击重试</string>
+    <string name="no_empty_mic">没有空余坑位</string>
+    <string name="crowded_down">您已被挤下麦</string>
+    <string name="down_mic_text">下麦旁听</string>
+    <string name="add_black_list">您已被管理员加入黑名单</string>
+    <string name="set_manager">设置管理员</string>
+    <string name="remove_manager">移除管理员</string>
+    <string name="empty"></string>
+    <!--user info dialog-->
+    <string name="dialog_user_info_report_text">举报</string>
+
+    <!--gift dialog-->
+    <string name="dialog_gift_avatar_list_default_value">所有麦上嘉宾</string>
+    <string name="gift_recharge_text"><![CDATA[充值 >]]></string>
+    <string name="gift_user_info_text">资料</string>
+    <string name="gift_to_text">送给</string>
+    <string name="gift_send_text">赠送</string>
+    <string name="gift_number_1">1</string>
+    <string name="gift_number_10">10</string>
+    <string name="gift_number_66">66</string>
+    <string name="gift_number_99">99</string>
+    <string name="gift_number_188">188</string>
+    <string name="gift_number_520">520</string>
+    <string name="gift_number_666">666</string>
+    <string name="gift_number_1314">1314</string>
+    <string name="gift_number_text_1">一心一意</string>
+    <string name="gift_number_text_10">十全十美</string>
+    <string name="gift_number_text_66">一切顺利</string>
+    <string name="gift_nubmer_text_99">长长久久</string>
+    <string name="gift_number_text_188">要抱抱</string>
+    <string name="gift_number_text_520">我爱你</string>
+    <string name="gift_number_text_666">大吉大利</string>
+    <string name="gift_number_text_1314">一生一世</string>
+    <string name="gift_gold_init">0金币</string>
+
+    <!--about-->
+    <string name="title_about_text">关于我们</string>
+    <string name="about_version_name">版本号：%s</string>
+    <string name="about_slogan">遇见喜欢的声音</string>
+    <string name="about_company_name">深圳市海欣程科技有限公司 版权所有</string>
+
+    <!--setting-->
+    <string name="setting_phone_binding">绑定/换绑手机</string>
+    <string name="setting_feedback">意见反馈</string>
+    <string name="setting_auth">实名认证</string>
+    <string name="setting_bind_phone">设置/重置密码</string>
+    <string name="private_letter_not_disturb">开启后，低于特定等级用户无法向您发起私信，但您主动私信的对象或好友不受该限制</string>
+    <string name="setting_contact_us">联系官方</string>
+    <string name="setting_help">帮助</string>
+    <string name="setting_about_us">关于我们</string>
+    <string name="setting_version_checking">版本检测</string>
+    <string name="setting_lab">实验室</string>
+    <string name="setting_logout">退出登录</string>
+
+    <string name="gift_pack_empty_str"><![CDATA[暂时木有对应的礼物哦~ >_<]]></string>
+    <string name="user_info_desc_empty">这个人很懒，什么都没有留下~</string>
+
+
+    <!--装扮商城模块文本-->
+    <string name="txt_headwear_emtpy">头饰都不见了呢</string>
+    <string name="txt_car_emtpy">座驾都不见了呢</string>
+    <string name="txt_my_headwear_emtpy">您还木有炫酷头饰，赶紧购买吧</string>
+    <string name="txt_my_car_emtpy">您还木有炫酷座驾，赶紧购买吧</string>
+    <string name="txt_dress_up">道具商城</string>
+    <string name="txt_dress_up_car_try">正在试驾座驾请稍后…</string>
+    <string name="txt_use">使用</string>
+    <string name="txt_cancel_use">取消使用</string>
+    <string name="txt_purchase_success">购买成功！</string>
+    <string name="txt_successful_renewal">续费成功！</string>
+    <string name="txt_cancel_use_success">取消使用成功！</string>
+    <string name="txt_use_success">使用成功！</string>
+    <string name="edit_password_selectable">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~`!@#$^*()-_+=>,.>?/;:\'"</string>
+    <string name="ranking_list_for_charm">魅力</string>
+    <string name="ranking_list_for_tycoon">财富</string>
+
+    <string name="exit_family_info">1.家族一经推出将不可逆\n2.你家族拥有的权限将全部失去</string>
+    <string name="manager_member">管理成员</string>
+    <string name="appoint">设置职位</string>
+    <string name="join_method">加入方式</string>
+    <string name="family_manager">家族管理</string>
+    <string name="gold_grade">财富等级</string>
+    <string name="charm_grade">魅力等级</string>
+    <string name="gold_tips">1金币=1财富值</string>
+    <string name="charm_tips">1金币=1魅力值</string>
+    <string name="gold_info">送礼</string>
+    <string name="charm_info">收礼</string>
+
+    <string name="speed_dating">匹配</string>
+    <string name="micro_position">%d号麦位</string>
+
+    <string name="txt_withdraw_alipay_account">账号：%s</string>
+    <string name="txt_withdraw_alipay_name">姓名：%s</string>
+    <string name="txt_withdraw_wx">当前为微信提现方式</string>
+
+    <string name="txt_kefu_num">haijiaoxingqiu6</string>
+    <string name="txt_common_num">haijiaoxingqiuapp</string>
+
+    <string name="txt_controduce">1、人气票：人气票是活动礼物，可以在送礼弹窗选择人气票为你喜欢的主播投票；送人气票可以提升主播在首页banner“海角星球人气之星”活动中的排名。\n\n2、人气票获取方式：人气票可在“捡海螺”活动中获取，每捡一次海螺都会随机获得1-3张人气票；也可以也可在海角商城中购买，人气票20金币/张。\n\n3、活动奖励：“海角星球人气之星”活动中，每周获得人气票最多的前三名男神/女神及各自首席星推官（给TA投票最多的用户）可获得特定礼物/座驾/头饰礼包。</string>
+    <string name="txt_pay_notify">1.本平台禁止套现等一切违法法律法规的行为，请您合理用卡，妥善保管个人及卡片信息，避 免给骗子可乘之机。\n2.请确保您所填写的账号信息准备无误再提交，如因个人失误，造成工资发放到错误的账号，一切后果由您自行承担。</string>
+
+
+    <string name="all">全部</string>
+    <string name="man">男</string>
+    <string name="girl">女</string>
+    <string name="chat">聊聊天</string>
+</resources>

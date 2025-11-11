@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_time_task"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_task_time"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tv_time_task_name"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_1A1A1A"
+        android:textSize="@dimen/text_size_13"/>
+
+    <ImageView
+        android:id="@+id/iv_time_gold"
+        android:layout_width="55dp"
+        android:layout_height="35dp" 
+        android:src="@drawable/bg_time_gold_icon"
+        android:layout_marginVertical="@dimen/dp_5"/>
+    
+    <TextView
+        android:id="@+id/tv_time_task_state"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_11"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/dp_12"
+        android:layout_marginBottom="@dimen/dp_10"
+        />
+
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="3dp"
+        android:gravity="center"
+        android:text="关注"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="15dp"
+        android:layout_height="1.5dp"
+        android:background="@drawable/bg_hot_type_line" />
+</LinearLayout>

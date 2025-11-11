@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_80000000_r_10"
+    android:gravity="center">
+    
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:src="@drawable/ic_task_list_gold"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="@dimen/dp_8"/>
+
+    <TextView
+        android:id="@+id/tv_task_toast_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_14"
+        android:textColor="@color/white"
+        android:layout_marginRight="@dimen/dp_20"/>
+
+</LinearLayout>

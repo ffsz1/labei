@@ -1,0 +1,83 @@
+apply plugin: 'com.android.library'
+apply plugin: 'realm-android'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+
+    buildTypes {
+        product {
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        product18 {
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        beta {
+            //关键代码，release， debug为library中已有buildType
+            matchingFallbacks = ['release', 'debug']
+        }
+    }
+
+    dependencies {
+        compile fileTree(include: ['*.jar'], dir: 'libs')
+
+        testCompile 'junit:junit:4.12'
+        androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+            exclude group: 'com.android.support', module: 'support-annotations'
+        })
+
+        compile rootProject.ext.dependencies.link_page
+        compile rootProject.ext.dependencies.qiniu
+
+        compile rootProject.ext.dependencies.logger
+
+        compile project(':lib_common')
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+
+
+
+dependencies {
+    compile project(':nim_uikit')
+    // compile files('libs/libammsdk.jar')
+    compile files('libs/MobCommons-2017.0819.1854.jar')
+    compile files('libs/MobTools-2017.0819.1854.jar')
+    implementation files('libs/zegoaudioroom.jar')
+}

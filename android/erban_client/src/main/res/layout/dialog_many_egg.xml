@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_pound_egg_closs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_above="@+id/rl_content"
+        android:layout_marginBottom="@dimen/dp_17"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/dialog_blue_close" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:layout_alignParentBottom="true"
+        android:background="@mipmap/give_bg">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/give_title"/>
+
+        <TextView
+            android:id="@+id/tv_ticket"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="-20dp"
+            android:layout_below="@+id/title"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/text_size_12"
+            tools:text="额外获得100人气票" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_lottery_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/ll_lottery_button"
+            android:layout_below="@+id/tv_ticket"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10" />
+
+        <LinearLayout
+            android:id="@+id/ll_lottery_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ll_gold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/bu_lottery_box_one"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/lottery_x1_btn"
+                android:textColor="@color/white" />
+
+
+            <Button
+                android:id="@+id/bu_lottery_box_ten"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@mipmap/lottery_x10_btn"
+                android:textColor="@color/white" />
+
+
+            <Button
+                android:id="@+id/bu_lottery_box_fifty"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/lottery_x50_btn"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_gold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="5dp"
+                android:src="@mipmap/icon_hl" />
+
+            <TextView
+                android:id="@+id/tv_gold_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10dp"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_lottery_box_recharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:padding="3dp"
+                android:text="获取>"
+                android:textColor="#599BED"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

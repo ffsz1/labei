@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FAFAFA"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:drawableStart="@mipmap/ic_home_attention"
+            android:drawablePadding="@dimen/dp_8"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_15"
+            android:text="我的关注"
+            android:textColor="@color/color_ff49464d"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/showAllAttention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:drawableEnd="@mipmap/ic_next_arrow"
+            android:drawablePadding="@dimen/dp_9"
+            android:paddingTop="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingBottom="8dp"
+            android:text="全部"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/text_size_13" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_home_attention_room"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/ll_head_attention_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tool:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/content_empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="你还没有关注任何人哦"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:drawableStart="@mipmap/ic_home_recommend_attention"
+        android:drawablePadding="@dimen/dp_8"
+        android:paddingStart="@dimen/dp_15"
+        android:text="推荐关注"
+        android:textColor="@color/color_ff49464d"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/ll_recommend_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tool:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/content_empty" />
+
+        <TextView
+            android:id="@+id/re_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="没有任何推荐关注的哦"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/text_size_14" />
+    </LinearLayout>
+
+</LinearLayout>

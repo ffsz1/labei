@@ -1,0 +1,44 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <!--    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+            <item name="android:windowBackground">@color/color_f5f5f5</item>
+            <item name="android:windowNoTitle">true</item>
+        </style>-->
+
+<!--    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:dashGap">@dimen/space_tiny</item>
+    </style>-->
+
+
+    <style name="AVRoomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowAnimationStyle">@style/myAnimation</item>
+    </style>
+
+
+    <style name="LeBubbleTextView">
+        <item name="bubbleBackgroundColor">@color/bubbleView_dark_background</item>
+        <item name="bubbleTextColor">@color/bubbleView_dark_text_color</item>
+        <item name="bubbleCornerRadius">@dimen/bubbleView_default_radius</item>
+        <item name="bubbleTextSize">@dimen/bubbleView_default_text_size</item>
+        <item name="bubbleBackgroundPressColor">@color/bubbleView_dark_press_background</item>
+    </style>
+
+    <style name="LeBubbleTextView.Dark">
+        <item name="bubbleBackgroundColor">@color/bubbleView_dark_background</item>
+        <item name="bubbleTextColor">@color/bubbleView_dark_text_color</item>
+        <item name="bubbleBackgroundPressColor">@color/bubbleView_dark_press_background</item>
+    </style>
+
+</resources>

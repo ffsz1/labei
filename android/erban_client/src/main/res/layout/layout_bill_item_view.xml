@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp">
+
+    <ImageView
+        android:id="@+id/iv_left_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/bill_item_view_margin_start"
+        android:src="@drawable/icon_bills_gift" />
+
+    <TextView
+        android:id="@+id/tv_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@+id/iv_left_icon"
+        android:text="密聊记录"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/bill_item_view_text_size" />
+
+    <ImageView
+        android:id="@+id/iv_arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/bill_item_view_margin_end"
+        android:src="@drawable/arrow_right" />
+
+    <include
+        android:id="@+id/view_line"
+        layout="@layout/layout_common_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bill_item_view_under_line_height"
+        android:layout_alignStart="@+id/iv_left_icon"
+        android:layout_alignParentBottom="true" />
+</merge>

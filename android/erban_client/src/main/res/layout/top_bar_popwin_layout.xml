@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/pop_sex_first"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/all_sex_tv"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@mipmap/sex_all_first"
+        android:text="全部" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/line_background"/>
+
+    <TextView
+        android:id="@+id/woman_sex_tv"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@mipmap/sex_woman_first"
+        android:text="女" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/line_background"/>
+
+    <TextView
+        android:id="@+id/man_sex_tv"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@mipmap/sex_man_first"
+        android:text="男" />
+</LinearLayout>

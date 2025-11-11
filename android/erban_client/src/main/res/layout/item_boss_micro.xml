@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/owner_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="-5dp"
+    android:layout_marginBottom="50dp"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/micro_layout"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/dp_5"
+            tools:background="#000">
+
+            <com.vslk.lbgx.room.avroom.widget.WaveView
+                android:id="@+id/waveview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:w_max_radius="25dp"
+                app:w_radius="20dp" />
+
+            <FrameLayout
+                android:id="@+id/avatar_bg"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center">
+
+                <com.vslk.lbgx.ui.common.widget.CircleImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_headwear"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null" />
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/up_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@mipmap/icon_room_up_micro" />
+
+            <ImageView
+                android:id="@+id/lock_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@mipmap/icon_room_lock_micro"
+                android:visibility="invisible"
+                tools:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/mute_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:background="@drawable/icon_room_mute_micro"
+                android:contentDescription="@null"
+                android:visibility="invisible"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="8dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_room_leave" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_micro_charm"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_14"
+                android:layout_marginTop="@dimen/dp_5"
+                android:drawablePadding="@dimen/dp_2"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_7"
+                android:paddingEnd="@dimen/dp_7"
+                android:textSize="@dimen/text_size_10"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="1dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11"
+                    tools:text="狐仙嘎嘎"
+                    tools:textColor="#000" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:src="@drawable/ic_master" />
+
+                <!--原因同上-->
+                <TextView
+                    android:id="@+id/iv_mic_gender"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:background="@mipmap/ic_room_male"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_10"
+                    android:visibility="gone"
+                    tools:text="1" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_charm_hat"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+</LinearLayout>

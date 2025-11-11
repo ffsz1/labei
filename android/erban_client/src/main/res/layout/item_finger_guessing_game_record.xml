@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_120033"
+    android:padding="@dimen/dp_15">
+
+    <ImageView
+        android:id="@+id/iv_user_head"
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_45"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:src="@drawable/ic_default_avatar" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/iv_gift"
+        android:layout_toEndOf="@+id/iv_user_head"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_12"
+        tools:text="HelloWorld" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_toStartOf="@+id/iv_gift"
+        android:layout_toEndOf="@+id/iv_user_head"
+        android:textColor="#80ffffff"
+        android:textSize="@dimen/text_size_10"
+        tools:text="2019-05-05 13:51:50" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_toStartOf="@+id/iv_gift"
+        android:layout_toEndOf="@+id/iv_user_head"
+        android:textColor="@color/color_C280FF"
+        android:textSize="@dimen/text_size_12"
+        tools:text="出了剪刀，赢了" />
+
+    <ImageView
+        android:id="@+id/iv_gift"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:layout_toStartOf="@+id/tv_gift_name_and_number"
+        android:src="@drawable/ic_default_avatar" />
+
+    <TextView
+        android:id="@+id/tv_gift_name_and_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_12"
+        tools:text="玫瑰花X1" />
+</RelativeLayout>

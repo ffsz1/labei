@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="423dp"
+            android:background="@mipmap/audio_record_bg">
+
+            <com.hncxco.library_ui.widget.AppToolBar
+                android:id="@+id/toolbar"
+                style="@style/AppToolBar_transparent_style"
+                app:leftImgRes="@drawable/icon_nav_back"
+                app:title="录制声音"
+                app:titleColor="@color/white"
+                app:titleSize="@dimen/text_size_17" />
+
+            <TextView
+                android:id="@+id/top_tips"
+                android:layout_width="220dp"
+                android:layout_height="170dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="愿你三冬暖，愿你春不寒\n\n愿你天黑有灯，下雨有伞\n\n愿你一路上，有良人相伴"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <FrameLayout
+                android:id="@+id/refresh"
+                android:layout_width="@dimen/dp_64"
+                android:layout_height="@dimen/dp_24"
+                android:layout_below="@id/top_tips"
+                android:layout_gravity="bottom|end"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:layout_toRightOf="@id/top_tips"
+                android:onClick="@{click}">
+
+                <com.hncxco.library_ui.widget.DrawableTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:d_radius="@dimen/dp_12"
+                    app:drawableType="shape"
+                    app:soildColor="@color/white_alpha_10" />
+
+                <ImageView
+                    android:id="@+id/ic_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dp_9"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_speed_refresh" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:text="换一换"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+
+            </FrameLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/container"
+            android:layout_marginTop="@dimen/dp_40"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/fl_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/dp_50"
+                    android:layout_marginRight="@dimen/dp_50">
+
+                    <ImageView
+                        android:id="@+id/iv_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{click}"
+                        android:src="@mipmap/icon_record" />
+
+                    <ImageView
+                        android:id="@+id/iv_recording"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="@{click}"
+                        android:src="@mipmap/icon_record"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_record_save"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="@{click}"
+                        android:src="@mipmap/icon_record"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_mc"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/icon_record_mc" />
+
+                    <TextView
+                        android:id="@+id/tv_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="停止"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/try_listen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/fl_record"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_toEndOf="@id/fl_record"
+                    android:onClick="@{click}"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:id="@+id/iv_try_listen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:src="@mipmap/icon_try_listen" />
+
+                    <TextView
+                        android:id="@+id/tv_try_listen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="试听"
+                        android:textColor="@color/color_1A1A1A" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/retry_record"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/fl_record"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_toStartOf="@id/fl_record"
+                    android:onClick="@{click}"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:id="@+id/iv_retry_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:src="@mipmap/icon_retry_record" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="重录"
+                        android:textColor="@color/color_1A1A1A" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_normal"
+                android:text="点击开始录制"
+                android:textColor="@color/color_b2b2b2"
+                android:textSize="@dimen/text_size_13" />
+
+            <Chronometer
+                android:id="@+id/tv_chronometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="#CCCCCC"
+                android:textSize="@dimen/text_size_13"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="最多可录制60S"
+                android:textColor="#CCCCCC"
+                android:textSize="@dimen/text_size_13" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

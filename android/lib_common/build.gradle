@@ -1,0 +1,77 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+    buildTypes {
+        product {
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        product18 {
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        beta {
+            //关键代码，release， debug为library中已有buildType
+            matchingFallbacks = ['release', 'debug']
+        }
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    api project(':erban_framework')
+
+//    compile rootProject.ext.dependencies.appcompatV7
+
+    api rootProject.ext.dependencies.design
+
+    api rootProject.ext.dependencies.retrofit
+    api rootProject.ext.dependencies.okhttp3
+    api rootProject.ext.dependencies.okhttp3_logging
+    api rootProject.ext.dependencies.retrofit_adapter_rxjava2
+    api rootProject.ext.dependencies.retrofit_converter_gson
+
+    api rootProject.ext.dependencies.retrofit_adapter_rxjava2
+    api rootProject.ext.dependencies.retrofit_converter_gson
+
+    api rootProject.ext.dependencies.lombok
+    api rootProject.ext.dependencies.utilcode
+    annotationProcessor rootProject.ext.dependencies.lombokAnnotationProcessor
+
+    api rootProject.ext.dependencies.SmartRefreshLayout
+    api rootProject.ext.dependencies.SmartRefreshLayoutHeader
+
+    api rootProject.ext.dependencies.rxjava2
+    api rootProject.ext.dependencies.rxjava2_android
+    api rootProject.ext.dependencies.rxlifecycle2
+    api rootProject.ext.dependencies.rxlifecycle2_components
+    api rootProject.ext.dependencies.rxlifecycle2_android
+    api rootProject.ext.dependencies.cardview
+    api project(path: ':ndklib_yingtao')
+
+}

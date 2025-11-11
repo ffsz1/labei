@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA">
+
+    <com.hncxco.library_ui.widget.AppToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barBackColor="@color/transparent"
+        app:hasLine="false"
+        app:hasRightImg="true"
+        app:isImmersive="true"
+        app:ivRightImgRes="@drawable/ic_grade_share"
+        app:layout_collapseMode="pin"
+        app:leftImgRes="@drawable/ic_back_black_arrow"
+        app:title="任务中心" />
+
+    <com.vslk.lbgx.ui.common.widget.StatusLayout
+        android:id="@+id/cl_home_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_mb_daily_task_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FAFAFA" />
+    </com.vslk.lbgx.ui.common.widget.StatusLayout>
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/text_size_18"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:text="提现或兑换请先通过验证"/>
+
+    <LinearLayout
+        android:id="@+id/fl_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_phone"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10">
+
+        <EditText
+            android:id="@+id/et_auth_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@drawable/shape_fafafa_20dp"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:maxLength="6"
+            android:enabled="true"
+            android:paddingStart="@dimen/dp_30"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingEnd="@dimen/dp_30"
+            android:paddingBottom="@dimen/dp_12"
+            android:textColor="@color/color_333333"
+            android:textColorHint="@color/color_C2C2C2"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:id="@+id/tv_get_code"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:background="@mipmap/bg_auth_code_selected"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="获取验证码"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_10" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_show_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/color_red_ccfa3c55" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/dp_30"
+            android:background="@mipmap/dialog_cancel_btn"
+            android:text="取消"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dialog_btn_text_fnt"/>
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="确定"
+            android:background="@mipmap/dialog_sure_btn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dialog_btn_text_fnt"/>
+    </LinearLayout>
+
+</LinearLayout>

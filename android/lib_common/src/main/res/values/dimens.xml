@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 所有圆角-->
+    <dimen name="radius_half_btn">4dp</dimen>
+    <dimen name="radius_small_btn">3dp</dimen>
+
+    <dimen name="dialog_msg_min_height">50dp</dimen>
+    <dimen name="dialog_msg_text_size">16sp</dimen>
+</resources>

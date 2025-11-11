@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="info"
+            type="com.tongdaxing.xchat_core.find.family.FamilyInfo"/>
+
+        <variable
+            name="isMyFamily"
+            type="Boolean"/>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/avatar_bg"
+                family_bg="@{info.familyBg}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_95"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_family_avatar_bg"/>
+
+            <ImageView
+                android:id="@+id/family_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:onClick="@{click}"
+                android:padding="@dimen/dp_17"
+                android:src="@drawable/ic_family_build_bg_pic"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/avatar_bg"
+                android:layout_marginStart="@dimen/dp_11"
+                android:layout_marginTop="-9dp"
+                android:layout_marginEnd="@dimen/dp_11"
+                android:background="@drawable/ic_family_info_bg"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/family_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@{info.familyName}"
+                    android:textColor="@color/color_4B404F"
+                    android:textSize="@dimen/text_size_20"
+                    tools:text="有钱的有cp家族"/>
+
+                <TextView
+                    android:id="@+id/family_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:text="@{`ID:` + info.familyId}"
+                    android:textColor="#FFCD71FB"
+                    android:textSize="@dimen/text_size_13"
+                    tools:text="ID:5234464874"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/enter_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/info"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-26dp"
+                android:background="@drawable/ic_enter_family_chat"
+                android:gravity="center"
+                android:onClick="@{click}"
+                android:text="家族群聊"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_15"
+                android:visibility="@{isMyFamily ? View.VISIBLE : View.INVISIBLE}"/>
+
+            <FrameLayout
+                android:id="@+id/avatar_container"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_90"
+                android:layout_below="@id/avatar_bg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-50dp"
+                android:onClick="@{click}">
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    roundImage="@{info.familyLogo}"
+                    android:layout_width="@dimen/dp_90"
+                    android:layout_height="@dimen/dp_90"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_default_avatar"/>
+
+                <ImageView
+                    android:id="@+id/avatar_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_family_build_avatar_pic"
+                    android:visibility="gone"/>
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/family_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_17"
+            android:onClick="@{click}"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_17"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:drawableEnd="@drawable/ic_next_arrow"
+                android:text="家族公告"
+                android:textColor="@color/color_37353B"
+                android:textSize="@dimen/text_size_18"/>
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_17"
+                android:text="@{info.familyNotice}"
+                android:textSize="@dimen/text_size_15"
+                tools:text="直接申请，青铜以上，加入改马甲，先和管理联系人不在的时候记得请假..."/>
+
+            <View
+                style="@style/divid_line_style"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_3"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/family_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{click}"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_17"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:drawableEnd="@drawable/ic_next_arrow"
+                android:text="@{`家族成员/` + info.member}"
+                android:textColor="@color/color_37353B"
+                android:textSize="@dimen/text_size_18"
+                tools:text="家族成员/150"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginStart="@dimen/dp_17"
+                android:layout_marginTop="@dimen/dp_17"
+                android:layout_marginBottom="@dimen/dp_15"/>
+
+            <View
+                style="@style/divid_line_style"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_3"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

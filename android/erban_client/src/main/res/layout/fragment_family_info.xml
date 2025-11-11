@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.vslk.lbgx.ui.common.widget.StatusLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/content"
+                layout="@layout/family_info_content" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </com.vslk.lbgx.ui.common.widget.StatusLayout>
+
+</layout>

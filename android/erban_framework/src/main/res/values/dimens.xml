@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--dialog-->
+    <dimen name="voice_seek_dialog">380dp</dimen>
+    <dimen name="dialog_gift_height">495dp</dimen>
+    <dimen name="dialog_payment_height">306dp</dimen>
+    <dimen name="dialog_face_height">221dp</dimen>
+    <dimen name="dialog_common_button_item_height">50dp</dimen>
+    <dimen name="dialog_voice_seek_height">100dp</dimen>
+    <dimen name="dialog_auction_height">300dp</dimen>
+</resources>

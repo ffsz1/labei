@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_layout"
+    android:layout_width="110dp"
+    android:layout_height="@dimen/dp_90">
+
+    <ImageView
+        android:id="@+id/iv_room_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_title"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_default_avatar" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_3"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/text_size_12"
+        tools:text="测试123" />
+
+</RelativeLayout>

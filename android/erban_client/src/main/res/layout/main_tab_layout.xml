@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="3dp"
+            android:orientation="horizontal">
+
+            <com.vslk.lbgx.ui.widget.MainGradientsTab
+                android:id="@+id/main_home_tab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_10"
+                app:tab_text="@string/main_home"
+                app:tab_text_color="@color/color_333333"
+                app:tab_text_color_select="@color/color_C280FF" />
+
+            <com.vslk.lbgx.ui.widget.MainGradientsTab
+                android:id="@+id/main_attention_tab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_10"
+                app:tab_text="交友"
+                app:tab_text_color="@color/color_333333"
+                app:tab_text_color_select="@color/color_C280FF" />
+
+            <!--占位控件-->
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1" />
+
+            <com.vslk.lbgx.ui.widget.MainRedPointTab
+                android:id="@+id/main_msg_tab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <com.vslk.lbgx.ui.widget.MainGradientsTab
+                android:id="@+id/main_me_tab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_10"
+                app:tab_text="@string/main_me"
+                app:tab_text_color="@color/color_333333"
+                app:tab_text_color_select="@color/color_C280FF" />
+        </LinearLayout>
+    </FrameLayout>
+</merge>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/shape_white_conner_15dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="邀请提示"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/color_black_ff666666"
+        android:textSize="@dimen/text_size_16" />
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_user_icon"
+            app:riv_corner_radius="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/color_black_333333"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bu_join"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape_conner_15dp"
+        android:text="进入房间"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+
+</LinearLayout>

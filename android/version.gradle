@@ -1,0 +1,152 @@
+ext {
+
+    //每次更改“isModule”的值后，需要点击 "Sync Project" 按钮
+    isModule = false
+
+    android = [
+            compileSdkVersion: 26,
+            buildToolsVersion: "26.0.2",
+            minSdkVersion    : 19,
+            targetSdkVersion : 26,
+            versionCode      : 15,
+            versionName      : '1.0.31',//每次升级版本记得更换签名key
+    ]
+
+    libsVersion = [
+            // App dependencies version
+            supportLibraryVersion = "26.1.0",
+            retrofitVersion = "2.3.0",
+            glideVersion = "4.3.1",
+            loggerVersion = "2.1.1",
+            eventbusVersion = "3.0.0",
+            gsonVersion = "2.8.2",
+            retrofit = "2.3.0",
+            rxjava = "2.1.7",
+            rxjava_android = "2.0.1",
+            rxlifecycle = "2.1.0",
+            rxjava_adapter = "2.3.0",
+            gson_converter = "2.3.0",
+
+            support_v4 = "26.1.0",
+            okhttp3 = "3.9.1",
+            multidex = "1.0.1",
+            leakcanaryVersion = "2.4",
+
+            overscroll_android = "1.0.4",
+            base_recyclerview_helper = "2.9.34",
+            ShortcutBadger = "1.1.17",
+            link_page = "1.0.25",
+            qiniu = "7.3.+",
+            pingppVersion = "2.1.14",
+            SVGAPlayerVersion = "2.1.8",
+            dialogplusVersion = "1.11",
+            autolayoutVersion = "1.4.5",
+            systembartintVersion = "1.0.4",
+            materialedittextVersion = "2.1.4",
+            datetimepickerVersion = "0.0.2",
+            lib_crop = "1.0.0",
+            multipleimageselect = "1.0.4",
+            advancedluban = "1.3.2",
+            gif_drawable = "1.2.7",
+            rollviewpager = "1.4.6",
+            roundedimageview = "2.3.0",
+            TimePickerDialog = "1.0.1",
+            EasyPopup = "1.0.2",
+            LabelsView = "1.2.0",
+            tinker = "1.9.1",
+            walleVersion = "1.1.5",
+            packerVersion = "2.0.0",
+            SmartRefreshLayoutVersion = "1.0.4",
+            RxNetVersion = "1.0.2",
+            NimNetVersion = "4.9.0",
+            butterKnifeVersion = "8.8.1",
+            pagerLayoutManager = "2.1.0",
+            ndklibVersion = ext.android.versionName,
+            //滑块布局
+            ViewPagerIndicator = '1.1.7',
+            safetycheckerVersion = '1.0.9',
+            uilibVersion = "1.0.9.3",
+            doraemonKitVersion="1.1.6",
+            lombokVersion="1.18.10",
+            utilcodeVersion="1.27.0"
+    ]
+
+    dependencies = [
+            appcompatV7                   : "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion",
+            design                        : "com.android.support:design:$rootProject.supportLibraryVersion",
+            cardview                      : "com.android.support:cardview-v7:$rootProject.supportLibraryVersion",
+            palette                       : "com.android.support:palette-v7:$rootProject.supportLibraryVersion",
+            recycleview                   : "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion",
+            support_v4                    : "com.android.support:support-v4:$rootProject.support_v4",
+            annotations                   : "com.android.support:support-annotations:$rootProject.supportLibraryVersion",
+            eventBus                      : "org.greenrobot:eventbus:$rootProject.eventbusVersion",
+            glide                         : "com.github.bumptech.glide:glide:$rootProject.glideVersion",
+            annotation_glide              : "com.github.bumptech.glide:compiler:$rootProject.glideVersion",
+            gson                          : "com.google.code.gson:gson:$rootProject.gsonVersion",
+            logger                        : "com.orhanobut:logger:$rootProject.loggerVersion",
+            retrofit                      : "com.squareup.retrofit2:retrofit:$rootProject.retrofit",
+            okhttp3                       : "com.squareup.okhttp3:okhttp:$rootProject.okhttp3",
+            okhttp3_logging               : "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3",
+
+            retrofit_adapter_rxjava2      : "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxjava_adapter",
+            retrofit_converter_gson       : "com.squareup.retrofit2:converter-gson:$rootProject.gson_converter",
+
+            rxjava2                       : "io.reactivex.rxjava2:rxjava:$rootProject.rxjava",
+            rxjava2_android               : "io.reactivex.rxjava2:rxandroid:$rootProject.rxjava_android",
+            rxlifecycle2                  : "com.trello.rxlifecycle2:rxlifecycle:$rootProject.rxlifecycle",
+            rxlifecycle2_components       : "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.rxlifecycle",
+            rxlifecycle2_android          : "com.trello.rxlifecycle2:rxlifecycle-android:$rootProject.rxlifecycle",
+            multidex                      : "com.android.support:multidex:$rootProject.multidex",
+
+            doraemonkit                   : "com.didichuxing.doraemonkit:doraemonkit:$rootProject.doraemonKitVersion",
+            doraemonkit_no_op             : "com.didichuxing.doraemonkit:doraemonkit-no-op:$rootProject.doraemonKitVersion",
+
+            leakcanary                    : "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanaryVersion",
+
+            overscroll_android            : "me.everything:overscroll-decor-android:$rootProject.overscroll_android",
+
+            base_recyclerview_helper      : "com.github.CymChad:BaseRecyclerViewAdapterHelper:$rootProject.base_recyclerview_helper",
+            ShortcutBadger                : "me.leolin:ShortcutBadger:$rootProject.ShortcutBadger@aar",
+            link_page                     : "cc.linkedme.deeplinks:link-page:$rootProject.link_page",//LinkedME
+            qiniu                         : "com.qiniu:qiniu-android-sdk:$rootProject.qiniu",
+            pingpp_code                   : "com.pingxx:pingpp-core:$rootProject.pingppVersion",// 必须添加
+            pingpp_alipy                  : "com.pingxx:pingpp-alipay:$rootProject.pingppVersion",// 使用支付宝时添加
+            pingpp_qpay                   : "com.pingxx:pingpp-qpay:$rootProject.pingppVersion",// 使用QQ钱包时添加
+            pingpp_wechat                 : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+",// 使用微信支付时添加,具体版本参考微信官方文档
+            SVGAPlayer                    : "com.github.yyued:SVGAPlayer-Android:$rootProject.SVGAPlayerVersion",
+            dialogplus                    : "com.orhanobut:dialogplus:$rootProject.dialogplusVersion@aar",
+            autolayout                    : "com.zhy:autolayout:$rootProject.autolayoutVersion",
+            systembartint                 : "com.readystatesoftware.systembartint:systembartint:$rootProject.systembartintVersion",
+            materialedittext              : "com.rengwuxian.materialedittext:library:$rootProject.materialedittextVersion",
+            datetimepicker                : "com.github.flavienlaurent.datetimepicker:library:$rootProject.datetimepickerVersion",
+            lib_crop                      : "com.soundcloud.android.crop:lib_crop:$rootProject.lib_crop",
+            multipleimageselect           : "com.darsh.multipleimageselect:multipleimageselect:$rootProject.multipleimageselect",
+            advancedluban                 : "me.shaohui.advancedluban:library:$rootProject.advancedluban",
+            gif_drawable                  : "pl.droidsonroids.gif:android-gif-drawable:$rootProject.gif_drawable",
+            rollviewpager                 : "com.jude:rollviewpager:$rootProject.rollviewpager",
+            roundedimageview              : "com.makeramen:roundedimageview:$rootProject.roundedimageview",
+            TimePickerDialog              : "com.jzxiang.pickerview:TimePickerDialog:$rootProject.TimePickerDialog",
+            EasyPopup                     : "com.github.zyyoona7:EasyPopup:$rootProject.EasyPopup",
+            LabelsView                    : "com.github.donkingliang:LabelsView:$rootProject.LabelsView",
+            //可选，用于生成application类
+            tinker_anno                   : "com.tencent.tinker:tinker-android-anno:$rootProject.tinker",
+            tinker_lib                    : "com.tencent.tinker:tinker-android-lib:$rootProject.tinker",
+            walle                         : "com.meituan.android.walle:library:$rootProject.walleVersion",
+            packer                        : "com.mcxiaoke.packer-ng:helper:$rootProject.packerVersion",
+            SmartRefreshLayout            : "com.scwang.smartrefresh:SmartRefreshLayout:$rootProject.SmartRefreshLayoutVersion",
+            SmartRefreshLayoutHeader      : "com.scwang.smartrefresh:SmartRefreshHeader:$rootProject.SmartRefreshLayoutVersion",
+            RxNet                         : "org.net.rxnet:RxNet:$rootProject.RxNetVersion",
+            NimNetBaseSdk                 : "com.netease.nimlib:basesdk:$rootProject.NimNetVersion",
+            NimNetChatRoomSdk             : "com.netease.nimlib:chatroom:$rootProject.NimNetVersion",
+            butterKnife                   : "com.jakewharton:butterknife:$rootProject.butterKnifeVersion",
+            butterKnifeAnnotationProcessor: "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion",
+            pagerLayoutManager            : "com.gcssloop.recyclerview:pagerlayoutmanager:$rootProject.pagerLayoutManager@aar",
+            ndklib                        : "com.hncx.xxm:ndklib:$rootProject.ndklibVersion",
+            safetychecker                 : "com.hncxco:safetychecker:$rootProject.safetycheckerVersion",
+            uilib                         : "com.hncxco:uilib:$rootProject.uilibVersion",
+            pageIndicator                 : "com.shizhefei:ViewPagerIndicator:$rootProject.ViewPagerIndicator",
+            lombok                          : "org.projectlombok:lombok:$rootProject.lombokVersion",
+            lombokAnnotationProcessor       : "org.projectlombok:lombok:$rootProject.lombokVersion",
+            utilcode                        : "com.blankj:utilcode:$rootProject.utilcodeVersion"
+    ]
+}

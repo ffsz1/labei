@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="userInfo"
+            type="com.netease.nimlib.sdk.uinfo.model.UserInfo" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:background="@drawable/bg_common_touch_while">
+
+        <ImageView
+            android:id="@+id/imageView"
+            roundImage="@{userInfo.avatar}"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_15"
+            android:src="@drawable/ic_default_avatar" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_userName"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignTop="@id/imageView"-->
+        <!--android:layout_marginStart="@dimen/dp_5"-->
+        <!--android:layout_marginTop="@dimen/dp_5"-->
+        <!--android:layout_toEndOf="@+id/imageView"-->
+        <!--android:ellipsize="end"-->
+        <!--android:lines="1"-->
+        <!--android:maxEms="5"-->
+        <!--android:singleLine="true"-->
+        <!--android:text="@{userInfo.name}"-->
+        <!--android:textColor="@color/color_333333"-->
+        <!--android:textSize="@dimen/sp_14"-->
+        <!--tools:text="萌声梦雨萌声梦雨萌声梦雨萌声梦雨萌声梦雨" />-->
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/imageView"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toEndOf="@id/imageView"
+            android:orientation="horizontal">
+
+            <com.vslk.lbgx.ui.widget.MarqueeTextView
+                android:id="@+id/mt_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="@{userInfo.name}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14"
+                tools:text="这是一个很长的标题长" />
+
+            <ImageView
+                android:id="@+id/iv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dp_2"
+                android:background="@drawable/icon_man" />
+
+            <com.vslk.lbgx.ui.widget.LevelView
+                android:id="@+id/level_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="ID:123456789123456"
+            android:textColor="@color/color_grey_999999"
+            android:textSize="@dimen/text_size_11" />
+
+
+        <View
+            android:id="@+id/top_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_half"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="89dp"
+            android:background="#eeeeee" />
+
+    </RelativeLayout>
+</layout>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_charm_number"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:drawableStart="@mipmap/ic_room_charm_heart"
+    android:drawablePadding="@dimen/dp_5"
+    android:textSize="@dimen/text_size_10"
+    android:paddingBottom="@dimen/dp_2"
+    android:paddingTop="@dimen/dp_2"
+    android:paddingStart="@dimen/dp_4"
+    android:paddingEnd="@dimen/dp_4"
+    tools:text="1234567891346">
+
+</TextView>
+
