@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.item.GiftSendRecordDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.item.domain.GiftSendRecordDO">
+        <selectKey resultType="java.lang.Long" keyProperty="sendRecordId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+        <trim prefix="INSERT INTO `gift_send_record` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="reciveUid != null">
+                recive_uid,
+            </if>
+            <if test="sendEnv != null">
+                send_env,
+            </if>
+            <if test="roomUid != null">
+                room_uid,
+            </if>
+            <if test="roomType != null">
+                room_type,
+            </if>
+            <if test="giftId != null">
+                gift_id,
+            </if>
+            <if test="giftNum != null">
+                gift_num,
+            </if>
+            <if test="totalGoldNum != null">
+                total_gold_num,
+            </if>
+            <if test="totalDiamondNum != null">
+                total_diamond_num,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="reciveUid != null">
+                #{reciveUid,jdbcType=BIGINT},
+            </if>
+            <if test="sendEnv != null">
+                #{sendEnv,jdbcType=TINYINT},
+            </if>
+            <if test="roomUid != null">
+                #{roomUid,jdbcType=BIGINT},
+            </if>
+            <if test="roomType != null">
+                #{roomType,jdbcType=TINYINT},
+            </if>
+            <if test="giftId != null">
+                #{giftId,jdbcType=INTEGER},
+            </if>
+            <if test="giftNum != null">
+                #{giftNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalGoldNum != null">
+                #{totalGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="totalDiamondNum != null">
+                #{totalDiamondNum,jdbcType=DOUBLE},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getUserSendTotalGold" parameterType="long" resultType="com.juxiao.xchat.dao.item.dto.UserTotalGoldDTO">
+        <![CDATA[
+
+
+          SELECT
+            `send_uid` AS `uid`,
+            SUM(`sum_gold`) AS `totalGoldNum`
+          FROM
+            `one_day_room_send_sum`
+          WHERE
+            send_uid=#{uid}
+
+
+        ]]>
+    </select>
+
+    <select id="getUserReceiveTotalGold" parameterType="long" resultType="com.juxiao.xchat.dao.item.dto.UserTotalGoldDTO">
+        <![CDATA[
+
+
+          SELECT
+            `recv_uid` AS `uid`,
+            SUM(`sum_gold`) AS `totalGoldNum`
+          FROM
+            `one_day_room_recv_sum`
+          WHERE
+            recv_uid=#{uid}
+
+
+        ]]>
+    </select>
+
+    <select id="roomRank" resultType="com.juxiao.xchat.dao.item.domain.RankActDO" parameterType="com.juxiao.xchat.dao.item.query.RoomRankQuery">
+        SELECT
+            u.uid,
+            u.erban_no AS erbanNo,
+            u.nick,
+            u.avatar,
+            SUM(o.sum_gold) AS total
+        FROM
+          one_day_room_recv_sum o
+        LEFT JOIN users u ON o.uid = u.uid
+        LEFT JOIN room r ON r.uid = o.uid
+        WHERE
+            r.is_permit_room = 1
+            AND DATE(o.create_time) = #{date}
+            AND r.tag_id = #{tagId}
+        GROUP BY
+          o.uid
+        ORDER BY
+          total DESC
+        limit #{total};
+    </select>
+
+    <insert id="saveCall" parameterType="com.juxiao.xchat.dao.item.domain.GiftSendRecordDO">
+        <selectKey resultType="java.lang.Long" keyProperty="sendRecordId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+        <trim prefix="INSERT INTO `call_record` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="reciveUid != null">
+                recive_uid,
+            </if>
+            <if test="sendEnv != null">
+                send_env,
+            </if>
+            <if test="roomUid != null">
+                room_uid,
+            </if>
+            <if test="roomType != null">
+                room_type,
+            </if>
+            <if test="giftId != null">
+                gift_id,
+            </if>
+            <if test="giftNum != null">
+                gift_num,
+            </if>
+            <if test="totalGoldNum != null">
+                total_gold_num,
+            </if>
+            <if test="totalDiamondNum != null">
+                total_diamond_num,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="reciveUid != null">
+                #{reciveUid,jdbcType=BIGINT},
+            </if>
+            <if test="sendEnv != null">
+                #{sendEnv,jdbcType=TINYINT},
+            </if>
+            <if test="roomUid != null">
+                #{roomUid,jdbcType=BIGINT},
+            </if>
+            <if test="roomType != null">
+                #{roomType,jdbcType=TINYINT},
+            </if>
+            <if test="giftId != null">
+                #{giftId,jdbcType=INTEGER},
+            </if>
+            <if test="giftNum != null">
+                #{giftNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalGoldNum != null">
+                #{totalGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="totalDiamondNum != null">
+                #{totalDiamondNum,jdbcType=DOUBLE},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="saveProp" parameterType="com.juxiao.xchat.dao.item.domain.GiftSendRecordDO">
+        <selectKey resultType="java.lang.Long" keyProperty="sendRecordId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+        <trim prefix="INSERT INTO `gift_prop_send_record` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="reciveUid != null">
+                recive_uid,
+            </if>
+            <if test="sendEnv != null">
+                send_env,
+            </if>
+            <if test="roomUid != null">
+                room_uid,
+            </if>
+            <if test="roomType != null">
+                room_type,
+            </if>
+            <if test="giftId != null">
+                gift_id,
+            </if>
+            <if test="giftNum != null">
+                gift_num,
+            </if>
+            <if test="totalGoldNum != null">
+                total_gold_num,
+            </if>
+            <if test="totalDiamondNum != null">
+                total_diamond_num,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="reciveUid != null">
+                #{reciveUid,jdbcType=BIGINT},
+            </if>
+            <if test="sendEnv != null">
+                #{sendEnv,jdbcType=TINYINT},
+            </if>
+            <if test="roomUid != null">
+                #{roomUid,jdbcType=BIGINT},
+            </if>
+            <if test="roomType != null">
+                #{roomType,jdbcType=TINYINT},
+            </if>
+            <if test="giftId != null">
+                #{giftId,jdbcType=INTEGER},
+            </if>
+            <if test="giftNum != null">
+                #{giftNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalGoldNum != null">
+                #{totalGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="totalDiamondNum != null">
+                #{totalDiamondNum,jdbcType=DOUBLE},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

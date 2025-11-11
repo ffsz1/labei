@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.UserShareRecordDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.UserShareRecordDO">
+        <trim prefix="INSERT INTO `user_share_record` (" suffix=")" suffixOverrides=",">
+            <if test="shareId != null">share_id,</if>
+            <if test="uid != null">uid,</if>
+            <if test="shareType != null">share_type,</if>
+            <if test="sharePageId != null">share_page_id,</if>
+            <if test="targetUid != null">target_uid,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shareId != null">#{shareId,jdbcType=VARCHAR},</if>
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="shareType != null">#{shareType,jdbcType=TINYINT},</if>
+            <if test="sharePageId != null">#{sharePageId,jdbcType=INTEGER},</if>
+            <if test="targetUid != null">#{targetUid,jdbcType=BIGINT},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <select id="countUserShareRecord" parameterType="java.lang.Long" resultType="int">
+        <![CDATA[
+        SELECT
+          COUNT(8)
+        FROM
+          `user_share_record`
+        WHERE
+          `uid` = #{uid}
+        ]]>
+    </select>
+
+    <select id="countTodayShareRecord" parameterType="com.juxiao.xchat.dao.user.query.TodayShareRecordQuery" resultType="int">
+        <![CDATA[
+        SELECT
+          COUNT(8)
+        FROM
+          `user_share_record`
+        WHERE
+          `uid` = #{uid}
+        AND
+          `create_time` <= #{endDate}
+        AND
+          `create_time` >= #{startDate}
+        ]]>
+    </select>
+</mapper>

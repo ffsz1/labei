@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.AccountDao">
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.user.domain.AccountDO">
+        <![CDATA[ UPDATE account ]]>
+        <set>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="erbanNo != null">
+                erban_no = #{erbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="neteaseToken != null">
+                netease_token = #{neteaseToken,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="registerIp != null">
+                register_ip = #{registerIp,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinOpenid != null">
+                weixin_openid = #{weixinOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinUnionid != null">
+                weixin_unionid = #{weixinUnionid,jdbcType=VARCHAR},
+            </if>
+            <if test="qqOpenid != null">
+                qq_openid = #{qqOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="qqUnionid != null">
+                qq_unionid = #{qqUnionid,jdbcType=VARCHAR},
+            </if>
+            <if test="os != null">
+                os = #{os,jdbcType=VARCHAR},
+            </if>
+            <if test="osversion != null">
+                osVersion = #{osversion,jdbcType=VARCHAR},
+            </if>
+            <if test="app != null">
+                app = #{app,jdbcType=VARCHAR},
+            </if>
+            <if test="imei != null">
+                imei = #{imei,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                channel = #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="linkedmeChannel != null">
+                linkedme_channel = #{linkedmeChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="ispType != null">
+                isp_type = #{ispType,jdbcType=VARCHAR},
+            </if>
+            <if test="netType != null">
+                net_type = #{netType,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                model = #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                app_version = #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="accBlockStartTime != null">
+                acc_block_start_time = #{accBlockStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accBlockEndTime != null">
+                acc_block_end_time = #{accBlockEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceBlockStartTime != null">
+                device_block_start_time = #{deviceBlockStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceBlockEndTime != null">
+                device_block_end_time = #{deviceBlockEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signTime != null">
+                sign_time = #{signTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ WHERE uid = #{uid,jdbcType=BIGINT} ]]>
+    </update>
+
+    <resultMap id="AccountResultMap" type="com.juxiao.xchat.dao.user.dto.AccountDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="netease_token" property="neteaseToken" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
+        <result column="register_ip" property="registerIp" jdbcType="VARCHAR"/>
+        <result column="weixin_openid" property="weixinOpenid" jdbcType="VARCHAR"/>
+        <result column="weixin_unionid" property="weixinUnionid" jdbcType="VARCHAR"/>
+        <result column="qq_openid" property="qqOpenid" jdbcType="VARCHAR"/>
+        <result column="qq_unionid" property="qqUnionid" jdbcType="VARCHAR"/>
+        <result column="os" property="os" jdbcType="VARCHAR"/>
+        <result column="osVersion" property="osversion" jdbcType="VARCHAR"/>
+        <result column="app" property="app" jdbcType="VARCHAR"/>
+        <result column="imei" property="imei" jdbcType="VARCHAR"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="linkedme_channel" property="linkedmeChannel" jdbcType="VARCHAR"/>
+        <result column="isp_type" property="ispType" jdbcType="VARCHAR"/>
+        <result column="net_type" property="netType" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="acc_block_start_time" property="accBlockStartTime" jdbcType="TIMESTAMP"/>
+        <result column="acc_block_end_time" property="accBlockEndTime" jdbcType="TIMESTAMP"/>
+        <result column="device_block_start_time" property="deviceBlockStartTime" jdbcType="TIMESTAMP"/>
+        <result column="device_block_end_time" property="deviceBlockEndTime" jdbcType="TIMESTAMP"/>
+        <result column="sign_time" property="signTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="widthdraw_wx_name" property="widthdrawWxName" jdbcType="VARCHAR"/>
+        <result column="widthdraw_wx_open_id" property="widthdrawWxOpenId" jdbcType="VARCHAR"/>
+        <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR"/>
+        <result column="alipay_name" property="alipayName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="AccountResultMap2" type="com.juxiao.xchat.dao.user.dto.AccountDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="password_second" property="passwordSecond" jdbcType="VARCHAR"/>
+        <result column="netease_token" property="neteaseToken" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
+        <result column="register_ip" property="registerIp" jdbcType="VARCHAR"/>
+        <result column="weixin_openid" property="weixinOpenid" jdbcType="VARCHAR"/>
+        <result column="weixin_unionid" property="weixinUnionid" jdbcType="VARCHAR"/>
+        <result column="qq_openid" property="qqOpenid" jdbcType="VARCHAR"/>
+        <result column="qq_unionid" property="qqUnionid" jdbcType="VARCHAR"/>
+        <result column="os" property="os" jdbcType="VARCHAR"/>
+        <result column="osVersion" property="osversion" jdbcType="VARCHAR"/>
+        <result column="app" property="app" jdbcType="VARCHAR"/>
+        <result column="imei" property="imei" jdbcType="VARCHAR"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="linkedme_channel" property="linkedmeChannel" jdbcType="VARCHAR"/>
+        <result column="isp_type" property="ispType" jdbcType="VARCHAR"/>
+        <result column="net_type" property="netType" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="acc_block_start_time" property="accBlockStartTime" jdbcType="TIMESTAMP"/>
+        <result column="acc_block_end_time" property="accBlockEndTime" jdbcType="TIMESTAMP"/>
+        <result column="device_block_start_time" property="deviceBlockStartTime" jdbcType="TIMESTAMP"/>
+        <result column="device_block_end_time" property="deviceBlockEndTime" jdbcType="TIMESTAMP"/>
+        <result column="sign_time" property="signTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="widthdraw_wx_name" property="widthdrawWxName" jdbcType="VARCHAR"/>
+        <result column="widthdraw_wx_open_id" property="widthdrawWxOpenId" jdbcType="VARCHAR"/>
+        <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR"/>
+        <result column="alipay_name" property="alipayName" jdbcType="VARCHAR"/>
+        <result column="weixin_nick" property="weixinNick" jdbcType="VARCHAR"/>
+        <result column="qq_nick" property="qqNick" jdbcType="VARCHAR"/>
+        <result column="apple_username" property="appleUserName" jdbcType="VARCHAR"/>
+        <result column="apple_user" property="appleUser" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getAccount" parameterType="java.lang.Long" resultMap="AccountResultMap2" >
+        <![CDATA[
+        select
+          uid,phone, erban_no, password, netease_token, state, last_login_time, last_login_ip, register_ip, weixin_openid, weixin_unionid,
+          qq_openid, qq_unionid, os, osVersion, app, imei, channel, linkedme_channel, isp_type, net_type, model, device_id, app_version,
+          acc_block_start_time, acc_block_end_time, device_block_start_time, device_block_end_time, sign_time, update_time,widthdraw_wx_name,
+          widthdraw_wx_open_id,alipay_account,alipay_name,weixin_nick,qq_nick,apple_username,apple_user, password_second
+        from
+          `account`
+        where
+          `uid` = #{uid,jdbcType=BIGINT}
+        ]]>
+    </select>
+
+    <select id="getByNetEaseToken" parameterType="string" resultMap="AccountResultMap" >
+        <![CDATA[
+        SELECT
+          uid,phone, erban_no, password, netease_token, state, last_login_time, last_login_ip, register_ip, weixin_openid, weixin_unionid,
+          qq_openid, qq_unionid, os, osVersion, app, imei, channel, linkedme_channel, isp_type, net_type, model, device_id, app_version,
+          acc_block_start_time, acc_block_end_time, device_block_start_time, device_block_end_time, sign_time, update_time
+        FROM
+          `account`
+        WHERE
+          `netease_token` = #{netEaseToken}
+        LIMIT 1
+        ]]>
+    </select>
+    <select id="getBindNickMap" resultType="java.util.Map">
+        select weixin_nick as weixinNick,qq_nick as qqNick,apple_username as appleUserName from account where uid=#{uid}
+    </select>
+
+
+    <update id="updateByPassword">
+        update account set password = #{password} where uid = #{uid}
+    </update>
+
+    <update id="updateBySecondPassword">
+        update account set password_second = #{passwordSecond} where uid = #{uid}
+    </update>
+
+    <insert id="insert" parameterType="com.juxiao.xchat.dao.user.dto.AccountDTO">
+        <selectKey resultType="java.lang.Long" keyProperty="uid" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into account (phone, erban_no, password,
+        netease_token, state, last_login_time,
+        last_login_ip, register_ip, weixin_openid,
+        weixin_unionid, qq_openid, qq_unionid,
+        os, osVersion, app,
+        imei, channel, linkedme_channel,
+        isp_type, net_type, model,
+        device_id, app_version, acc_block_start_time,
+        acc_block_end_time, device_block_start_time,
+        device_block_end_time, sign_time, update_time
+        )
+        values (#{phone,jdbcType=VARCHAR}, #{erbanNo,jdbcType=BIGINT}, #{password,jdbcType=VARCHAR},
+        #{neteaseToken,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP},
+        #{lastLoginIp,jdbcType=VARCHAR}, #{registerIp,jdbcType=VARCHAR}, #{weixinOpenid,jdbcType=VARCHAR},
+        #{weixinUnionid,jdbcType=VARCHAR}, #{qqOpenid,jdbcType=VARCHAR}, #{qqUnionid,jdbcType=VARCHAR},
+        #{os,jdbcType=VARCHAR}, #{osversion,jdbcType=VARCHAR}, #{app,jdbcType=VARCHAR},
+        #{imei,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, #{linkedmeChannel,jdbcType=VARCHAR},
+        #{ispType,jdbcType=VARCHAR}, #{netType,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR},
+        #{deviceId,jdbcType=VARCHAR}, #{appVersion,jdbcType=VARCHAR}, #{accBlockStartTime,jdbcType=TIMESTAMP},
+        #{accBlockEndTime,jdbcType=TIMESTAMP}, #{deviceBlockStartTime,jdbcType=TIMESTAMP},
+        #{deviceBlockEndTime,jdbcType=TIMESTAMP}, #{signTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <update id="updateBySelective" parameterType="com.juxiao.xchat.dao.user.domain.AccountDO">
+        <![CDATA[ UPDATE account ]]>
+        <set>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="erbanNo != null">
+                erban_no = #{erbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="neteaseToken != null">
+                netease_token = #{neteaseToken,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="registerIp != null">
+                register_ip = #{registerIp,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinOpenid != null">
+                weixin_openid = #{weixinOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="weixinUnionid != null">
+                weixin_unionid = #{weixinUnionid,jdbcType=VARCHAR},
+            </if>
+
+            <if test="widthdrawWxName != null">
+                widthdraw_wx_name = #{widthdrawWxName,jdbcType=VARCHAR},
+            </if>
+            <if test="widthdrawWxOpenId != null">
+                widthdraw_wx_open_id = #{widthdrawWxOpenId,jdbcType=VARCHAR},
+            </if>
+
+            <if test="alipayAccount != null">
+                alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="alipayName != null">
+                alipay_name = #{alipayName,jdbcType=VARCHAR},
+            </if>
+            <if test="qqOpenid != null">
+                qq_openid = #{qqOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="qqUnionid != null">
+                qq_unionid = #{qqUnionid,jdbcType=VARCHAR},
+            </if>
+            <if test="os != null">
+                os = #{os,jdbcType=VARCHAR},
+            </if>
+            <if test="osversion != null">
+                osVersion = #{osversion,jdbcType=VARCHAR},
+            </if>
+            <if test="app != null">
+                app = #{app,jdbcType=VARCHAR},
+            </if>
+            <if test="imei != null">
+                imei = #{imei,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                channel = #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="linkedmeChannel != null">
+                linkedme_channel = #{linkedmeChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="ispType != null">
+                isp_type = #{ispType,jdbcType=VARCHAR},
+            </if>
+            <if test="netType != null">
+                net_type = #{netType,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                model = #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                app_version = #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="accBlockStartTime != null">
+                acc_block_start_time = #{accBlockStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accBlockEndTime != null">
+                acc_block_end_time = #{accBlockEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceBlockStartTime != null">
+                device_block_start_time = #{deviceBlockStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceBlockEndTime != null">
+                device_block_end_time = #{deviceBlockEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="signTime != null">
+                sign_time = #{signTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ WHERE uid = #{uid,jdbcType=BIGINT} ]]>
+    </update>
+
+</mapper>

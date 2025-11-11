@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.charge.ChargeRecordDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.charge.domain.ChargeRecordDO">
+        <![CDATA[ INSERT INTO `charge_record` ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="chargeRecordId != null">
+                charge_record_id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="roomUid != null">
+                room_uid,
+            </if>
+            <if test="pingxxChargeId != null">
+                pingxx_charge_id,
+            </if>
+            <if test="chargeProdId != null">
+                charge_prod_id,
+            </if>
+            <if test="channel != null">
+                channel,
+            </if>
+            <if test="bussType != null">
+                buss_type,
+            </if>
+            <if test="chargeStatus != null">
+                charge_status,
+            </if>
+            <if test="chargeStatusDesc != null">
+                charge_status_desc,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="totalGold != null">
+                total_gold,
+            </if>
+            <if test="clientIp != null">
+                client_ip,
+            </if>
+            <if test="wxPubOpenid != null">
+                wx_pub_openid,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="body != null">
+                body,
+            </if>
+            <if test="extra != null">
+                extra,
+            </if>
+            <if test="metadata != null">
+                metadata,
+            </if>
+            <if test="chargeDesc != null">
+                charge_desc,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="chargeRecordId != null">
+                #{chargeRecordId,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="roomUid != null">
+                #{roomUid,jdbcType=BIGINT},
+            </if>
+            <if test="pingxxChargeId != null">
+                #{pingxxChargeId,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeProdId != null">
+                #{chargeProdId,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="bussType != null">
+                #{bussType,jdbcType=TINYINT},
+            </if>
+            <if test="chargeStatus != null">
+                #{chargeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="chargeStatusDesc != null">
+                #{chargeStatusDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=BIGINT},
+            </if>
+            <if test="totalGold != null">
+                #{totalGold,jdbcType=BIGINT},
+            </if>
+            <if test="clientIp != null">
+                #{clientIp,jdbcType=VARCHAR},
+            </if>
+            <if test="wxPubOpenid != null">
+                #{wxPubOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="body != null">
+                #{body,jdbcType=VARCHAR},
+            </if>
+            <if test="extra != null">
+                #{extra,jdbcType=VARCHAR},
+            </if>
+            <if test="metadata != null">
+                #{metadata,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeDesc != null">
+                #{chargeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.charge.domain.ChargeRecordDO">
+        <![CDATA[ UPDATE charge_record ]]>
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="roomUid != null">
+                room_uid = #{roomUid,jdbcType=BIGINT},
+            </if>
+            <if test="pingxxChargeId != null">
+                pingxx_charge_id = #{pingxxChargeId,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeProdId != null">
+                charge_prod_id = #{chargeProdId,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                channel = #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="bussType != null">
+                buss_type = #{bussType,jdbcType=TINYINT},
+            </if>
+            <if test="chargeStatus != null">
+                charge_status = #{chargeStatus,jdbcType=TINYINT},
+            </if>
+            <if test="chargeStatusDesc != null">
+                charge_status_desc = #{chargeStatusDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=BIGINT},
+            </if>
+            <if test="totalGold != null">
+                total_gold = #{totalGold,jdbcType=BIGINT},
+            </if>
+            <if test="clientIp != null">
+                client_ip = #{clientIp,jdbcType=VARCHAR},
+            </if>
+            <if test="wxPubOpenid != null">
+                wx_pub_openid = #{wxPubOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                subject = #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="body != null">
+                body = #{body,jdbcType=VARCHAR},
+            </if>
+            <if test="extra != null">
+                extra = #{extra,jdbcType=VARCHAR},
+            </if>
+            <if test="metadata != null">
+                metadata = #{metadata,jdbcType=VARCHAR},
+            </if>
+            <if test="chargeDesc != null">
+                charge_desc = #{chargeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ WHERE charge_record_id = #{chargeRecordId,jdbcType=VARCHAR} ]]>
+    </update>
+
+    <resultMap id="ChargeRecordResultMap" type="com.juxiao.xchat.dao.charge.dto.ChargeRecordDTO">
+        <id column="charge_record_id" property="chargeRecordId" jdbcType="VARCHAR"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="room_uid" property="roomUid" jdbcType="BIGINT"/>
+        <result column="pingxx_charge_id" property="pingxxChargeId" jdbcType="VARCHAR"/>
+        <result column="charge_prod_id" property="chargeProdId" jdbcType="VARCHAR"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="buss_type" property="bussType" jdbcType="TINYINT"/>
+        <result column="charge_status" property="chargeStatus" jdbcType="TINYINT"/>
+        <result column="charge_status_desc" property="chargeStatusDesc" jdbcType="VARCHAR"/>
+        <result column="amount" property="amount" jdbcType="BIGINT"/>
+        <result column="total_gold" property="totalGold" jdbcType="BIGINT"/>
+        <result column="client_ip" property="clientIp" jdbcType="VARCHAR"/>
+        <result column="wx_pub_openid" property="wxPubOpenid" jdbcType="VARCHAR"/>
+        <result column="subject" property="subject" jdbcType="VARCHAR"/>
+        <result column="body" property="body" jdbcType="VARCHAR"/>
+        <result column="extra" property="extra" jdbcType="VARCHAR"/>
+        <result column="metadata" property="metadata" jdbcType="VARCHAR"/>
+        <result column="charge_desc" property="chargeDesc" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getChargeRecord" parameterType="string" resultMap="ChargeRecordResultMap">
+        SELECT
+          charge_record_id,
+          uid, room_uid,
+          pingxx_charge_id,
+          charge_prod_id,
+          channel,
+          buss_type,
+          charge_status,
+          charge_status_desc,
+          amount,
+          total_gold,
+          client_ip,
+          wx_pub_openid,
+          subject,
+          body,
+          extra,
+          metadata,
+          charge_desc,
+          create_time,
+          update_time
+        FROM
+          `charge_record`
+        WHERE
+          `charge_record_id`=#{chargeRecordId}
+    </select>
+</mapper>

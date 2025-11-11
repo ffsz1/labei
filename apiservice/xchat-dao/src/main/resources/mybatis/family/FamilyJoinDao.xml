@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.family.dao.FamilyJoinDAO">
+
+    <select id="selectByFamilyJoin" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.family.dto.FamilyJoinDTO">
+        select fj.id,fj.role_status as roleStatus,fj.team_id as teamId,fj.uid,fj.create_time as createTime,fj.magree,fj.mute,fj.ope
+        from family_join fj
+        where fj.uid = #{uid}  and fj.team_id = #{teamId}
+    </select>
+
+    <delete id="deleteByUid" parameterType="java.lang.Long">
+        delete from family_join where uid =#{uid}
+    </delete>
+
+
+    <update id="setupAdministrator">
+        UPDATE family_join SET role_status = 2 WHERE uid = #{uid} AND team_id = #{teamId}
+    </update>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.juxiao.xchat.dao.family.domain.FamilyJoinDO">
+        INSERT INTO family_join(team_id,uid,role_status,create_time,magree,mute,ope)
+        VALUES (#{teamId},#{uid},#{roleStatus},#{createTime},#{magree},#{mute},#{ope})
+    </insert>
+
+    <select id="countMember" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT  COALESCE(count(*),0)
+        FROM family_join WHERE team_id = #{teamId}
+    </select>
+
+    <select id="selectFamilyJoinByUid" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.family.domain.FamilyJoinDO">
+        select id,uid,team_id as teamId,role_status as roleStatus,create_time as createTime,magree,mute,ope
+        from family_join where uid = #{uid}
+    </select>
+
+    <select id="selectFamilyTeamJoinByTeamId"  resultType="com.juxiao.xchat.dao.family.dto.FamilyTeamJoinDTO">
+        SELECT fj.id,fj.uid,u.erban_no as erbanNo,u.nick as nike,u.avatar,u.user_desc as userDesc,fj.role_status as roleStatus,fj.magree,fj.mute,fj.ope
+        FROM family_join fj
+        INNER JOIN users u on fj.uid = u.uid
+        WHERE fj.team_id = #{teamId}
+        ORDER BY fj.role_status ASC
+        limit #{current} , #{pageSize}
+    </select>
+    <select id="getRoleStatusCount" resultType="java.lang.Integer">
+        select count(*) as number from family_join where team_id = #{teamId} and role_status = 2
+    </select>
+    <select id="selectByUserId" resultType="com.juxiao.xchat.dao.family.domain.FamilyJoinDO">
+        select id,uid,role_status as roleStatus,magree,mute,ope
+        from family_join where uid = #{userId}
+    </select>
+
+    <delete id="deleteByUidAndTeamId">
+        DELETE FROM family_join WHERE team_id = #{teamId} AND uid = #{uid}
+    </delete>
+
+    <update id="removeAdmin">
+        UPDATE family_join SET role_status = 3 WHERE uid = #{uid} AND team_id = #{teamId}
+    </update>
+
+    <update id="updateFamilyJoinByOpe">
+         UPDATE family_join SET ope = #{ope} WHERE id = #{id}
+    </update>
+
+    <update id="updateFamilyJoinByMute">
+        UPDATE family_join SET mute = #{mute} WHERE id = #{id}
+    </update>
+
+    <select id="countMemberByFamilyId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT  COALESCE(count(*),0)
+        FROM family_join  fj
+        inner join family_team ft on fj.team_id = ft.id
+        where ft.family_id = #{familyId}
+    </select>
+    <select id="selectRoleStatusByUid" resultType="java.lang.Integer">
+        select role_status from family_join where uid = #{uid}
+    </select>
+</mapper>

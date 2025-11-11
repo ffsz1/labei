@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.UsersDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.UsersDO">
+        <trim prefix="INSERT IGNORE INTO `users` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="erbanNo != null">erban_no,</if>
+            <if test="hasPrettyErbanNo != null">has_pretty_erban_no,</if>
+            <if test="phone != null">phone,</if>
+            <if test="birth != null">birth,</if>
+            <if test="star != null">star,</if>
+            <if test="nick != null">nick,</if>
+            <if test="email != null">email,</if>
+            <if test="signture != null">signture,</if>
+            <if test="userVoice != null">user_voice,</if>
+            <if test="voiceDura != null">voice_dura,</if>
+            <if test="followNum != null">follow_num,</if>
+            <if test="fansNum != null">fans_num,</if>
+            <if test="defUser != null">def_user,</if>
+            <if test="fortune != null">fortune,</if>
+            <if test="channelType != null">channel_type,</if>
+            <if test="lastLoginTime != null">last_login_time,</if>
+            <if test="lastLoginIp != null">last_login_ip,</if>
+            <if test="gender != null">gender,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="region != null">region,</if>
+            <if test="userDesc != null">user_desc,</if>
+            <if test="alipayAccount != null">alipay_account,</if>
+            <if test="alipayAccountName != null">alipay_account_name,</if>
+            <if test="bankCard != null">bank_card,</if>
+            <if test="bankCardName != null">bank_card_name,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="wxPubFansOpenid != null">wx_pub_fans_openid,</if>
+            <if test="wxPubFansGender != null">wx_pub_fans_gender,</if>
+            <if test="roomUid != null">room_uid,</if>
+            <if test="shareUid != null">share_uid,</if>
+            <if test="shareChannel != null">share_channel,</if>
+            <if test="wxOpenid != null">wx_openId,</if>
+            <if test="os != null">os,</if>
+            <if test="osversion != null">osVersion,</if>
+            <if test="app != null">app,</if>
+            <if test="imei != null">imei,</if>
+            <if test="channel != null">channel,</if>
+            <if test="linkedmeChannel != null">linkedme_channel,</if>
+            <if test="ispType != null">isp_type,</if>
+            <if test="netType != null">net_type,</if>
+            <if test="model != null">model,</if>
+            <if test="deviceId != null">device_id,</if>
+            <if test="appVersion != null">app_version,</if>
+            <if test="nobleId != null">noble_id,</if>
+            <if test="nobleName != null">noble_name,</if>
+            <if test="withdrawStatus != null">withdraw_status,</if>
+            <if test="shareCode != null">share_code,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="erbanNo != null">#{erbanNo,jdbcType=BIGINT},</if>
+            <if test="hasPrettyErbanNo != null">#{hasPrettyErbanNo,jdbcType=BIT},</if>
+            <if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+            <if test="birth != null">#{birth,jdbcType=DATE},</if>
+            <if test="star != null">#{star,jdbcType=TINYINT},</if>
+            <if test="nick != null">#{nick,jdbcType=VARCHAR},</if>
+            <if test="email != null">#{email,jdbcType=VARCHAR},</if>
+            <if test="signture != null">#{signture,jdbcType=VARCHAR},</if>
+            <if test="userVoice != null">#{userVoice,jdbcType=VARCHAR},</if>
+            <if test="voiceDura != null">#{voiceDura,jdbcType=INTEGER},</if>
+            <if test="followNum != null">#{followNum,jdbcType=INTEGER},</if>
+            <if test="fansNum != null">#{fansNum,jdbcType=INTEGER},</if>
+            <if test="defUser != null">#{defUser,jdbcType=TINYINT},</if>
+            <if test="fortune != null">#{fortune,jdbcType=BIGINT},</if>
+            <if test="channelType != null">#{channelType,jdbcType=TINYINT},</if>
+            <if test="lastLoginTime != null">#{lastLoginTime,jdbcType=TIMESTAMP},</if>
+            <if test="lastLoginIp != null">#{lastLoginIp,jdbcType=VARCHAR},</if>
+            <if test="gender != null">#{gender,jdbcType=TINYINT},</if>
+            <if test="avatar != null">#{avatar,jdbcType=VARCHAR},</if>
+            <if test="region != null">#{region,jdbcType=VARCHAR},</if>
+            <if test="userDesc != null">#{userDesc,jdbcType=VARCHAR},</if>
+            <if test="alipayAccount != null">#{alipayAccount,jdbcType=VARCHAR},</if>
+            <if test="alipayAccountName != null">#{alipayAccountName,jdbcType=VARCHAR},</if>
+            <if test="bankCard != null">#{bank_card,jdbcType=VARCHAR},</if>
+            <if test="bankCardName != null">#{bank_card_name,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+            <if test="wxPubFansOpenid != null">#{wxPubFansOpenid,jdbcType=VARCHAR},</if>
+            <if test="wxPubFansGender != null">#{wxPubFansGender,jdbcType=TINYINT},</if>
+            <if test="roomUid != null">#{roomUid,jdbcType=BIGINT},</if>
+            <if test="shareUid != null">#{shareUid,jdbcType=BIGINT},</if>
+            <if test="shareChannel != null">#{shareChannel,jdbcType=TINYINT},</if>
+            <if test="wxOpenid != null">#{wxOpenid,jdbcType=VARCHAR},</if>
+            <if test="os != null">#{os,jdbcType=VARCHAR},</if>
+            <if test="osversion != null">#{osversion,jdbcType=VARCHAR},</if>
+            <if test="app != null">#{app,jdbcType=VARCHAR},</if>
+            <if test="imei != null">#{imei,jdbcType=VARCHAR},</if>
+            <if test="channel != null">#{channel,jdbcType=VARCHAR},</if>
+            <if test="linkedmeChannel != null">#{linkedmeChannel,jdbcType=VARCHAR},</if>
+            <if test="ispType != null">#{ispType,jdbcType=VARCHAR},</if>
+            <if test="netType != null">#{netType,jdbcType=VARCHAR},</if>
+            <if test="model != null">#{model,jdbcType=VARCHAR},</if>
+            <if test="deviceId != null">#{deviceId,jdbcType=VARCHAR},</if>
+            <if test="appVersion != null">#{appVersion,jdbcType=VARCHAR},</if>
+            <if test="nobleId != null">#{nobleId,jdbcType=INTEGER},</if>
+            <if test="nobleName != null">#{nobleName,jdbcType=VARCHAR},</if>
+            <if test="withdrawStatus != null">#{withdrawStatus,jdbcType=TINYINT},</if>
+            <if test="shareCode != null">#{shareCode,jdbcType=BIGINT},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.user.domain.UsersDO">
+        <![CDATA[ UPDATE users ]]>
+        <set>
+            <if test="erbanNo != null">erban_no = #{erbanNo,jdbcType=BIGINT},</if>
+            <if test="hasPrettyErbanNo != null">has_pretty_erban_no = #{hasPrettyErbanNo,jdbcType=BIT},</if>
+            <if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+            <if test="birth != null">birth = #{birth,jdbcType=DATE},</if>
+            <if test="star != null">star = #{star,jdbcType=TINYINT},</if>
+            <if test="nick != null">nick = #{nick,jdbcType=VARCHAR},</if>
+            <if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+            <if test="signture != null">signture = #{signture,jdbcType=VARCHAR},</if>
+            <if test="userVoice != null">user_voice = #{userVoice,jdbcType=VARCHAR},</if>
+            <if test="voiceDura != null">voice_dura = #{voiceDura,jdbcType=INTEGER},</if>
+            <if test="followNum != null">follow_num = #{followNum,jdbcType=INTEGER},</if>
+            <if test="fansNum != null">fans_num = #{fansNum,jdbcType=INTEGER},</if>
+            <if test="defUser != null">def_user = #{defUser,jdbcType=TINYINT},</if>
+            <if test="fortune != null">fortune = #{fortune,jdbcType=BIGINT},</if>
+            <if test="channelType != null">channel_type = #{channelType,jdbcType=TINYINT},</if>
+            <if test="lastLoginTime != null">last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},</if>
+            <if test="lastLoginIp != null">last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},</if>
+            <if test="gender != null">gender = #{gender,jdbcType=TINYINT},</if>
+            <if test="avatar != null">avatar = #{avatar,jdbcType=VARCHAR},</if>
+            <if test="region != null">region = #{region,jdbcType=VARCHAR},</if>
+            <if test="userDesc != null">user_desc = #{userDesc,jdbcType=VARCHAR},</if>
+            <if test="alipayAccount != null">alipay_account = #{alipayAccount,jdbcType=VARCHAR},</if>
+            <if test="alipayAccountName != null">alipay_account_name = #{alipayAccountName,jdbcType=VARCHAR},</if>
+            <if test="bankCard != null">bank_card = #{bankCard,jdbcType=VARCHAR},</if>
+            <if test="bankCardName != null">bank_card_name = #{bankCardName,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+            <if test="wxPubFansOpenid != null">wx_pub_fans_openid = #{wxPubFansOpenid,jdbcType=VARCHAR},</if>
+            <if test="wxPubFansGender != null">wx_pub_fans_gender = #{wxPubFansGender,jdbcType=TINYINT},</if>
+            <if test="roomUid != null">room_uid = #{roomUid,jdbcType=BIGINT},</if>
+            <if test="shareUid != null">share_uid = #{shareUid,jdbcType=BIGINT},</if>
+            <if test="shareChannel != null">share_channel = #{shareChannel,jdbcType=TINYINT},</if>
+            <if test="wxOpenid != null">wx_openId = #{wxOpenid,jdbcType=VARCHAR},</if>
+            <if test="os != null">os = #{os,jdbcType=VARCHAR},</if>
+            <if test="osversion != null">osVersion = #{osversion,jdbcType=VARCHAR},</if>
+            <if test="app != null">app = #{app,jdbcType=VARCHAR},</if>
+            <if test="imei != null">imei = #{imei,jdbcType=VARCHAR},</if>
+            <if test="channel != null">channel = #{channel,jdbcType=VARCHAR},</if>
+            <if test="linkedmeChannel != null">linkedme_channel = #{linkedmeChannel,jdbcType=VARCHAR},</if>
+            <if test="ispType != null">isp_type = #{ispType,jdbcType=VARCHAR},</if>
+            <if test="netType != null">net_type = #{netType,jdbcType=VARCHAR},</if>
+            <if test="model != null">model = #{model,jdbcType=VARCHAR},</if>
+            <if test="deviceId != null">device_id = #{deviceId,jdbcType=VARCHAR},</if>
+            <if test="appVersion != null">app_version = #{appVersion,jdbcType=VARCHAR},</if>
+            <if test="nobleId != null">noble_id = #{nobleId,jdbcType=INTEGER},</if>
+            <if test="nobleName != null">noble_name = #{nobleName,jdbcType=VARCHAR},</if>
+            <if test="withdrawStatus != null">withdraw_status = #{withdrawStatus,jdbcType=TINYINT},</if>
+            <if test="shareCode != null">share_code = #{shareCode,jdbcType=BIGINT},</if>
+            <if test="realNamePhone != null">real_name_phone = #{realNamePhone,jdbcType=VARCHAR},</if>
+        </set>
+        <![CDATA[ WHERE uid = #{uid,jdbcType=BIGINT} ]]>
+    </update>
+
+    <resultMap id="UsersDtoResultMap" type="com.juxiao.xchat.dao.user.dto.UsersDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="has_pretty_erban_no" property="hasPrettyErbanNo" jdbcType="BIT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="DATE"/>
+        <result column="star" property="star" jdbcType="TINYINT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="signture" property="signture" jdbcType="VARCHAR"/>
+        <result column="user_voice" property="userVoice" jdbcType="VARCHAR"/>
+        <result column="voice_dura" property="voiceDura" jdbcType="INTEGER"/>
+        <result column="follow_num" property="followNum" jdbcType="INTEGER"/>
+        <result column="fans_num" property="fansNum" jdbcType="INTEGER"/>
+        <result column="def_user" property="defUser" jdbcType="TINYINT"/>
+        <result column="fortune" property="fortune" jdbcType="BIGINT"/>
+        <result column="channel_type" property="channelType" jdbcType="TINYINT"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="region" property="region" jdbcType="VARCHAR"/>
+        <result column="user_desc" property="userDesc" jdbcType="VARCHAR"/>
+        <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR"/>
+        <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR"/>
+        <result column="bank_card" property="bankCard" jdbcType="VARCHAR"/>
+        <result column="bank_card_name" property="bankCardName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="wx_pub_fans_openid" property="wxPubFansOpenid" jdbcType="VARCHAR"/>
+        <result column="wx_pub_fans_gender" property="wxPubFansGender" jdbcType="TINYINT"/>
+        <result column="room_uid" property="roomUid" jdbcType="BIGINT"/>
+        <result column="share_uid" property="shareUid" jdbcType="BIGINT"/>
+        <result column="share_channel" property="shareChannel" jdbcType="TINYINT"/>
+        <result column="wx_openId" property="wxOpenid" jdbcType="VARCHAR"/>
+        <result column="os" property="os" jdbcType="VARCHAR"/>
+        <result column="osVersion" property="osversion" jdbcType="VARCHAR"/>
+        <result column="app" property="app" jdbcType="VARCHAR"/>
+        <result column="imei" property="imei" jdbcType="VARCHAR"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="linkedme_channel" property="linkedmeChannel" jdbcType="VARCHAR"/>
+        <result column="isp_type" property="ispType" jdbcType="VARCHAR"/>
+        <result column="net_type" property="netType" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="noble_id" property="nobleId" jdbcType="INTEGER"/>
+        <result column="noble_name" property="nobleName" jdbcType="VARCHAR"/>
+        <result column="withdraw_status" property="withdrawStatus" jdbcType="TINYINT"/>
+        <result column="share_code" property="shareCode" jdbcType="BIGINT"/>
+        <result column="real_name_phone" property="realNamePhone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getUser" parameterType="java.lang.Long" resultMap="UsersDtoResultMap">
+        <![CDATA[
+            SELECT
+                uid,
+                erban_no,
+                has_pretty_erban_no,
+                phone,
+                birth,
+                star,
+                nick,
+                email,
+                ifnull(signture, '') as signture,
+                ifnull(user_voice, '') as user_voice,
+                ifnull(voice_dura, 0) as voice_dura,
+                follow_num,
+                fans_num,
+                def_user,
+                fortune,
+                channel_type,
+                last_login_time,
+                last_login_ip,
+                gender,
+                avatar,
+                region,
+                user_desc,
+                alipay_account,
+                alipay_account_name,
+                create_time,
+                update_time,
+                wx_pub_fans_openid,
+                wx_pub_fans_gender,
+                room_uid,
+                share_uid,
+                share_channel,
+                wx_openId,
+                os,
+                osVersion,
+                app,
+                imei,
+                channel,
+                linkedme_channel,
+                isp_type,
+                net_type,
+                model,
+                device_id,
+                app_version,
+                noble_id,
+                noble_name,
+                withdraw_status,
+                share_code,
+                bank_card,
+                bank_card_name,
+                real_name_phone
+            FROM
+                `users`
+            WHERE
+                `uid` = #{uid,jdbcType=BIGINT}
+        ]]>
+    </select>
+
+    <select id="listNewUsers" parameterType="com.juxiao.xchat.dao.user.query.UserNewQuery"
+            resultType="com.juxiao.xchat.dao.user.dto.UserNewDTO">
+        SELECT
+        u.uid AS uid,
+        u.erban_no AS erbanNo,
+        u.phone AS phone,
+        u.birth AS birth,
+        u.star AS star,
+        u.nick AS nick,
+        u.email AS email,
+        u.signture AS signture,
+        u.user_voice AS userVoice,
+        u.follow_num AS followNum,
+        u.fans_num AS fansNum,
+        u.fortune AS fortune,
+        u.gender AS gender,
+        u.avatar AS avatar,
+        DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(u.birth)), '%Y')+0 AS age
+        FROM
+        `users` u
+        <where>
+            u.def_user = 1
+            AND
+            date_sub(curdate(), INTERVAL 7 DAY) &lt;= date(u.create_time)
+            AND
+            NOT EXISTS (
+            SELECT DISTINCT
+            a.uid
+            FROM
+            `account_block` a
+            WHERE
+            u.uid = a.uid
+            AND
+            a.block_status = 1
+            AND
+            a.block_end_time > NOW()
+            )
+            <if test="uid != null">AND u.uid != #{uid}</if>
+            <if test="gender != null">AND u.gender = #{gender}</if>
+        </where>
+        ORDER BY u.create_time DESC
+        LIMIT #{startRecord}, #{pageSize};
+    </select>
+
+
+    <select id="selectByParam" resultType="com.juxiao.xchat.dao.output.vo.OutputValueVO"
+            parameterType="com.juxiao.xchat.dao.output.bo.OutputValueParam">
+        SELECT
+        DATE_FORMAT( a.sign_time, '%Y-%m-%d' ) AS signDate,
+        COUNT( 1 ) AS signNum,
+        GROUP_CONCAT( u.uid ) AS uidList,
+        0 AS firstNum,
+        0 AS secondNum,
+        0 AS thirdNum,
+        0 AS fourthNum,
+        0 AS fifthNum,
+        0 AS sixthNum,
+        0 AS seventhNum,
+        0 AS eighthNum,
+        0 AS ninthNum,
+        0 AS tenthNum,
+        0 AS eleventhNum,
+        0 AS twelfthNum,
+        0 AS thirteenthNum,
+        0 AS fourteenthNum,
+        0 AS sumNum
+        from users u
+        INNER JOIN account a ON u.uid = a.uid
+        <where>
+            u.def_user != 3
+            <if test="signBegin!=null">
+                AND a.sign_time &gt;= #{signBegin}
+            </if>
+            <if test="signEnd!=null">
+                AND a.sign_time &lt;= #{signEnd}
+            </if>
+            <if test="os!=null and os!=''">
+                AND u.os = #{os}
+            </if>
+            <if test="channel!=null and channel!=''">
+                AND u.channel= #{channel}
+            </if>
+            <if test="shareUid != null">
+                AND u.share_uid = #{shareUid}
+            </if>
+            <if test="shareUidList != null and shareUidList.size() > 0">
+                AND u.share_uid IN
+                <foreach collection="shareUidList" index="index" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="linkedmeChannel!=null and linkedmeChannel!=''">
+                AND u.linkedme_channel = #{linkedmeChannel}
+            </if>
+            <if test="mediumChannel != null and mediumChannel.size() > 0">
+                AND u.linkedme_channel IN
+                <foreach collection="mediumChannel" index="index" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="gender!=null">
+                AND u.gender = #{gender}
+            </if>
+        </where>
+        GROUP BY signDate
+        ORDER BY signDate DESC
+    </select>
+
+    <select id="countCharge" resultType="com.juxiao.xchat.dao.output.vo.OutputVO">
+        SELECT
+        SUM(cr.amount) / 100 AS totalAmount,
+        COUNT(DISTINCT cr.uid) AS chargeUserNum
+        FROM charge_record cr
+        LEFT JOIN account a ON a.uid = cr.uid
+        LEFT JOIN users u ON u.uid = a.uid
+        <where>
+            u.def_user != 3
+            AND cr.charge_status = '2'
+            <if test="signBegin!=null">
+                AND a.sign_time &gt;= #{signBegin}
+            </if>
+            <if test="signEnd!=null">
+                AND a.sign_time &lt;= #{signEnd}
+            </if>
+            <if test="os!=null and os!=''">
+                AND u.os = #{os}
+            </if>
+            <if test="channel!=null and channel!=''">
+                AND u.channel= #{channel}
+            </if>
+            <if test="shareUid != null">
+                AND u.share_uid = #{shareUid}
+            </if>
+            <if test="shareUidList != null and shareUidList.size() > 0">
+                AND u.share_uid IN
+                <foreach collection="shareUidList" index="index" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="linkedmeChannel!=null and linkedmeChannel!=''">
+                AND u.linkedme_channel = #{linkedmeChannel}
+            </if>
+            <if test="mediumChannel != null and mediumChannel.size() > 0">
+                AND u.linkedme_channel IN
+                <foreach collection="mediumChannel" index="index" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="gender!=null">
+                AND u.gender = #{gender}
+            </if>
+        </where>
+    </select>
+
+    <select id="listByShareUid" resultType="com.juxiao.xchat.dao.user.dto.ChannelUserDTO">
+        SELECT
+        u.erban_no,
+        u.nick,
+        u.avatar,
+        u.create_time
+        FROM
+        users u
+        <where>
+            <if test="shareUidList != null and shareUidList.size() > 0">
+                AND u.share_uid IN
+                <foreach collection="shareUidList" index="index" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="registerDate != null">
+                AND TO_DAYS( u.create_time ) = TO_DAYS(#{registerDate})
+            </if>
+        </where>
+    </select>
+
+    <select id="listUsersByPage" parameterType="java.lang.Long" resultMap="UsersDtoResultMap">
+        <![CDATA[
+            SELECT
+                uid,
+                erban_no,
+                has_pretty_erban_no,
+                phone,
+                birth,
+                star,
+                nick,
+                email,
+                signture,
+                user_voice,
+                voice_dura,
+                follow_num,
+                fans_num,
+                def_user,
+                fortune,
+                channel_type,
+                last_login_time,
+                last_login_ip,
+                gender,
+                avatar,
+                region,
+                user_desc,
+                alipay_account,
+                alipay_account_name,
+                create_time,
+                update_time,
+                wx_pub_fans_openid,
+                wx_pub_fans_gender,
+                room_uid,
+                share_uid,
+                share_channel,
+                wx_openId,
+                os,
+                osVersion,
+                app,
+                imei,
+                channel,
+                linkedme_channel,
+                isp_type,
+                net_type,
+                model,
+                device_id,
+                app_version,
+                noble_id,
+                noble_name,
+                withdraw_status,
+                share_code
+            FROM
+                `users`
+            ORDER BY uid ASC
+                LIMIT #{start}, 20
+        ]]>
+    </select>
+</mapper>

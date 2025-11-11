@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.family.dao.FamilyTeamRecordDAO">
+
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into family_team_record (team_id,num,years,create_time)
+        values
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (#{item.teamId},#{item.num},#{item.years},#{item.createTime})
+        </foreach>
+    </insert>
+
+</mapper>

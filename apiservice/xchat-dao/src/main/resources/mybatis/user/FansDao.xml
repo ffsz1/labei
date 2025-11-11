@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.FansDao">
+    <resultMap id="FansResultMap" type="com.juxiao.xchat.dao.user.dto.FansDTO">
+        <id column="fan_id" property="fanId" jdbcType="BIGINT"/>
+        <result column="like_uid" property="likeUid" jdbcType="BIGINT"/>
+        <result column="liked_uid" property="likedUid" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getUserLike" parameterType="long" resultMap="FansResultMap">
+        <![CDATA[
+        SELECT
+          `fan_id`,`like_uid`,`liked_uid`,`create_time`
+        FROM
+          `fans`
+        WHERE
+          `like_uid` = #{likeUid}
+        AND
+          `liked_uid` = #{likedUid}
+        LIMIT 1
+        ]]>
+    </select>
+
+    <select id="coutFollowOrFans" parameterType="com.juxiao.xchat.dao.user.query.UserFansQuery" resultType="int">
+        <![CDATA[
+        SELECT
+          COUNT(*)
+        FROM
+          `fans` fan
+	    ]]>
+        <where>
+            <choose>
+                <when test="likeUid != null">
+                    fan.`like_uid` = #{likeUid}
+                </when>
+                <when test="likedUid != null">
+                    fan.`liked_uid` = #{likedUid}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="listFollowOrFans" parameterType="com.juxiao.xchat.dao.user.query.UserFansQuery" resultType="com.juxiao.xchat.dao.user.dto.FansFollowDTO">
+        <![CDATA[ SELECT ]]>
+        <choose>
+            <when test="likedUid != null">fan.`like_uid`</when>
+            <when test="likeUid != null">fan.`liked_uid`</when>
+        </choose>
+        <![CDATA[
+          AS uid
+        FROM
+          `fans` fan
+	    ]]>
+        <choose>
+            <when test="likeUid != null">
+                WHERE
+                  fan.`like_uid` = #{likeUid}
+            </when>
+            <when test="likedUid != null">
+                WHERE
+                  fan.`liked_uid` = #{likedUid}
+            </when>
+        </choose>
+        <if test="offset != null and pageSize != null">
+            <![CDATA[ LIMIT #{offset}, #{pageSize} ]]>
+        </if>
+    </select>
+
+</mapper>

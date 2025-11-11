@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.room.RoomDao">
+    <resultMap id="RoomResultMap" type="com.juxiao.xchat.dao.room.dto.RoomDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="room_id" property="roomId" jdbcType="BIGINT"/>
+        <result column="room_pwd" property="roomPwd" jdbcType="VARCHAR"/>
+        <result column="tag_id" property="tagId" jdbcType="INTEGER"/>
+        <result column="tag_pict" property="tagPict" jdbcType="VARCHAR"/>
+        <result column="room_tag" property="roomTag" jdbcType="VARCHAR"/>
+        <result column="badge" property="badge" jdbcType="VARCHAR"/>
+        <result column="meeting_name" property="meetingName" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="official_room" property="officialRoom" jdbcType="TINYINT"/>
+        <result column="ab_channel_type" property="abChannelType" jdbcType="TINYINT"/>
+        <result column="reward_id" property="rewardId" jdbcType="BIGINT"/>
+        <result column="reward_money" property="rewardMoney" jdbcType="BIGINT"/>
+        <result column="serv_dura" property="servDura" jdbcType="INTEGER"/>
+        <result column="operator_status" property="operatorStatus" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="room_desc" property="roomDesc" jdbcType="VARCHAR"/>
+        <result column="room_notice" property="roomNotice" jdbcType="VARCHAR"/>
+        <result column="back_pic" property="backPic" jdbcType="VARCHAR"/>
+        <result column="open_time" property="openTime" jdbcType="TIMESTAMP"/>
+        <result column="is_permit_room" property="isPermitRoom" jdbcType="TINYINT"/>
+        <result column="online_num" property="onlineNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_exception_close" property="isExceptionClose" jdbcType="BIT"/>
+        <result column="exception_close_time" property="exceptionCloseTime" jdbcType="TIMESTAMP"/>
+        <result column="recom_seq" property="recomSeq" jdbcType="BIGINT"/>
+        <result column="can_show" property="canShow" jdbcType="TINYINT"/>
+        <result column="def_backpic" property="defBackpic" jdbcType="VARCHAR"/>
+        <result column="gift_effect_switch" property="giftEffectSwitch" jdbcType="TINYINT"/>
+        <result column="public_chat_switch" property="publicChatSwitch" jdbcType="TINYINT"/>
+        <result column="face_type" property="faceType" jdbcType="TINYINT"/>
+        <result column="gift_card_switch" property="giftCardSwitch" jdbcType="INTEGER"/>
+        <result column="charm_open" property="charmOpen" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.room.domain.RoomDO">
+        <trim prefix="INSERT INTO `room` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="roomId != null">room_id,</if>
+            <if test="roomPwd != null">room_pwd,</if>
+            <if test="tagId != null">tag_id,</if>
+            <if test="tagPict != null">tag_pict,</if>
+            <if test="roomTag != null">room_tag,</if>
+            <if test="badge != null">badge,</if>
+            <if test="meetingName != null">meeting_name,</if>
+            <if test="title != null">title,</if>
+            <if test="valid != null">valid,</if>
+            <if test="type != null">`type`,</if>
+            <if test="officialRoom != null">official_room,</if>
+            <if test="abChannelType != null">ab_channel_type,</if>
+            <if test="rewardId != null">reward_id,</if>
+            <if test="rewardMoney != null">reward_money,</if>
+            <if test="servDura != null">serv_dura,</if>
+            <if test="operatorStatus != null">operator_status,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="roomDesc != null">room_desc,</if>
+            <if test="roomNotice != null">room_notice,</if>
+            <if test="backPic != null">back_pic,</if>
+            <if test="openTime != null">open_time,</if>
+            <if test="isPermitRoom != null">is_permit_room,</if>
+            <if test="onlineNum != null">online_num,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isExceptionClose != null">is_exception_close,</if>
+            <if test="exceptionCloseTime != null">exception_close_time,</if>
+            <if test="recomSeq != null">recom_seq,</if>
+            <if test="canShow != null">can_show,</if>
+            <if test="defBackpic != null">def_backpic,</if>
+            <if test="giftEffectSwitch != null">`gift_effect_switch`,</if>
+            <if test="publicChatSwitch != null">`public_chat_switch`,</if>
+            <if test="giftCardSwitch != null">`gift_card_switch`,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="roomId != null">#{roomId,jdbcType=BIGINT},</if>
+            <if test="roomPwd != null">#{roomPwd,jdbcType=VARCHAR},</if>
+            <if test="tagId != null">#{tagId,jdbcType=INTEGER},</if>
+            <if test="tagPict != null">#{tagPict,jdbcType=VARCHAR},</if>
+            <if test="roomTag != null">#{roomTag,jdbcType=VARCHAR},</if>
+            <if test="badge != null">#{badge,jdbcType=VARCHAR},</if>
+            <if test="meetingName != null">#{meetingName,jdbcType=VARCHAR},</if>
+            <if test="title != null">#{title,jdbcType=VARCHAR},</if>
+            <if test="valid != null">#{valid,jdbcType=BIT},</if>
+            <if test="type != null">#{type,jdbcType=TINYINT},</if>
+            <if test="officialRoom != null">#{officialRoom,jdbcType=TINYINT},</if>
+            <if test="abChannelType != null">#{abChannelType,jdbcType=TINYINT},</if>
+            <if test="rewardId != null">#{rewardId,jdbcType=BIGINT},</if>
+            <if test="rewardMoney != null">#{rewardMoney,jdbcType=BIGINT},</if>
+            <if test="servDura != null">#{servDura,jdbcType=INTEGER},</if>
+            <if test="operatorStatus != null">#{operatorStatus,jdbcType=TINYINT},</if>
+            <if test="avatar != null">#{avatar,jdbcType=VARCHAR},</if>
+            <if test="roomDesc != null">#{roomDesc,jdbcType=VARCHAR},</if>
+            <if test="roomNotice != null">#{roomNotice,jdbcType=VARCHAR},</if>
+            <if test="backPic != null">#{backPic,jdbcType=VARCHAR},</if>
+            <if test="openTime != null">#{openTime,jdbcType=TIMESTAMP},</if>
+            <if test="isPermitRoom != null">#{isPermitRoom,jdbcType=TINYINT},</if>
+            <if test="onlineNum != null">#{onlineNum,jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+            <if test="isExceptionClose != null">#{isExceptionClose,jdbcType=BIT},</if>
+            <if test="exceptionCloseTime != null">#{exceptionCloseTime,jdbcType=TIMESTAMP},</if>
+            <if test="recomSeq != null">#{recomSeq,jdbcType=BIGINT},</if>
+            <if test="canShow != null">#{canShow,jdbcType=TINYINT},</if>
+            <if test="defBackpic != null">#{defBackpic,jdbcType=VARCHAR},</if>
+            <if test="giftEffectSwitch != null">#{giftEffectSwitch},</if>
+            <if test="publicChatSwitch != null">#{publicChatSwitch},</if>
+            <if test="giftCardSwitch != null">#{giftCardSwitch},</if>
+        </trim>
+        <trim prefix="ON DUPLICATE KEY UPDATE" suffixOverrides=",">
+            <if test="roomId != null">room_id = #{roomId,jdbcType=BIGINT},</if>
+            <if test="roomPwd != null">room_pwd = #{roomPwd,jdbcType=VARCHAR},</if>
+            <if test="tagId != null">tag_id = #{tagId,jdbcType=INTEGER},</if>
+            <if test="tagPict != null">tag_pict = #{tagPict,jdbcType=VARCHAR},</if>
+            <if test="roomTag != null">room_tag = #{roomTag,jdbcType=VARCHAR},</if>
+            <if test="badge != null">badge = #{badge,jdbcType=VARCHAR},</if>
+            <if test="meetingName != null">meeting_name = #{meetingName,jdbcType=VARCHAR},</if>
+            <if test="title != null">title = #{title,jdbcType=VARCHAR},</if>
+            <if test="valid != null">valid = #{valid,jdbcType=BIT},</if>
+            <if test="type != null">`type` = #{type,jdbcType=TINYINT},</if>
+            <if test="officialRoom != null">official_room = #{officialRoom,jdbcType=TINYINT},</if>
+            <if test="abChannelType != null">ab_channel_type = #{abChannelType,jdbcType=TINYINT},</if>
+            <if test="rewardId != null">reward_id = #{rewardId,jdbcType=BIGINT},</if>
+            <if test="rewardMoney != null">reward_money = #{rewardMoney,jdbcType=BIGINT},</if>
+            <if test="servDura != null">serv_dura = #{servDura,jdbcType=INTEGER},</if>
+            <if test="operatorStatus != null">operator_status = #{operatorStatus,jdbcType=TINYINT},</if>
+            <if test="avatar != null">avatar = #{avatar,jdbcType=VARCHAR},</if>
+            <if test="roomDesc != null">room_desc = #{roomDesc,jdbcType=VARCHAR},</if>
+            <if test="roomNotice != null">room_notice = #{roomNotice,jdbcType=VARCHAR},</if>
+            <if test="backPic != null">back_pic = #{backPic,jdbcType=VARCHAR},</if>
+            <if test="openTime != null">open_time = #{openTime,jdbcType=TIMESTAMP},</if>
+            <if test="isPermitRoom != null">is_permit_room = #{isPermitRoom,jdbcType=TINYINT},</if>
+            <if test="onlineNum != null">online_num = #{onlineNum,jdbcType=INTEGER},</if>
+            <if test="createTime != null">create_time = #{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if>
+            <if test="isExceptionClose != null">is_exception_close = #{isExceptionClose,jdbcType=BIT},</if>
+            <if test="exceptionCloseTime != null">exception_close_time = #{exceptionCloseTime,jdbcType=TIMESTAMP},</if>
+            <if test="recomSeq != null">recom_seq = #{recomSeq,jdbcType=BIGINT},</if>
+            <if test="canShow != null">can_show = #{canShow,jdbcType=TINYINT},</if>
+            <if test="defBackpic != null">def_backpic = #{defBackpic,jdbcType=VARCHAR},</if>
+            <if test="giftEffectSwitch != null">`gift_effect_switch` = #{giftEffectSwitch},</if>
+            <if test="publicChatSwitch != null">`public_chat_switch` = #{publicChatSwitch},</if>
+            <if test="giftCardSwitch != null">`gift_card_switch` = #{giftCardSwitch},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.room.domain.RoomDO">
+        <![CDATA[ UPDATE room ]]>
+        <set>
+            <if test="roomId != null">
+                room_id = #{roomId,jdbcType=BIGINT},
+            </if>
+            <if test="roomPwd != null">
+                room_pwd = #{roomPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                tag_id = #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagPict != null">
+                tag_pict = #{tagPict,jdbcType=VARCHAR},
+            </if>
+            <if test="roomTag != null">
+                room_tag = #{roomTag,jdbcType=VARCHAR},
+            </if>
+            <if test="badge != null">
+                badge = #{badge,jdbcType=VARCHAR},
+            </if>
+            <if test="meetingName != null">
+                meeting_name = #{meetingName,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="valid != null">
+                valid = #{valid,jdbcType=BIT},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="officialRoom != null">
+                official_room = #{officialRoom,jdbcType=TINYINT},
+            </if>
+            <if test="abChannelType != null">
+                ab_channel_type = #{abChannelType,jdbcType=TINYINT},
+            </if>
+            <if test="rewardId != null">
+                reward_id = #{rewardId,jdbcType=BIGINT},
+            </if>
+            <if test="rewardMoney != null">
+                reward_money = #{rewardMoney,jdbcType=BIGINT},
+            </if>
+            <if test="servDura != null">
+                serv_dura = #{servDura,jdbcType=INTEGER},
+            </if>
+            <if test="operatorStatus != null">
+                operator_status = #{operatorStatus,jdbcType=TINYINT},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="roomDesc != null">
+                room_desc = #{roomDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="roomNotice != null">
+                room_notice = #{roomNotice,jdbcType=VARCHAR},
+            </if>
+            <if test="backPic != null">
+                back_pic = #{backPic,jdbcType=VARCHAR},
+            </if>
+            <if test="openTime != null">
+                open_time = #{openTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isPermitRoom != null">
+                is_permit_room = #{isPermitRoom,jdbcType=TINYINT},
+            </if>
+            <if test="onlineNum != null">
+                online_num = #{onlineNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isExceptionClose != null">
+                is_exception_close = #{isExceptionClose,jdbcType=BIT},
+            </if>
+            <if test="exceptionCloseTime != null">
+                exception_close_time = #{exceptionCloseTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recomSeq != null">
+                recom_seq = #{recomSeq,jdbcType=BIGINT},
+            </if>
+            <if test="canShow != null">
+                can_show = #{canShow,jdbcType=TINYINT},
+            </if>
+            <if test="defBackpic != null">
+                def_backpic = #{defBackpic,jdbcType=VARCHAR},
+            </if>
+            <if test="giftEffectSwitch != null">
+                `gift_effect_switch` = #{giftEffectSwitch},
+            </if>
+            <if test="publicChatSwitch != null">
+                `public_chat_switch` = #{publicChatSwitch},
+            </if>
+            <if test="audioLevel != null">
+                `audio_level` = #{audioLevel},
+            </if>
+            <if test="giftCardSwitch != null">
+                `gift_card_switch` = #{giftCardSwitch},
+            </if>
+        </set>
+        <where>
+            uid = #{uid,jdbcType=BIGINT}
+        </where>
+    </update>
+
+    <select id="getRoom" parameterType="long" resultMap="RoomResultMap">
+        <![CDATA[
+        SELECT
+          uid,
+          room_id,
+          room_pwd,
+          tag_id,
+          tag_pict,
+          room_tag,
+          badge,
+          meeting_name,
+          title,
+          valid,
+          `type`,
+          official_room,
+          ab_channel_type,
+          reward_id,
+          reward_money,
+          serv_dura,
+          operator_status,
+          avatar,
+          room_desc,
+          room_notice,
+          back_pic,
+          open_time,
+          is_permit_room,
+          online_num,
+          create_time,
+          update_time,
+          is_exception_close,
+          exception_close_time,
+          recom_seq,
+          can_show,
+          def_backpic,
+          `gift_effect_switch`,
+          `public_chat_switch`,
+          ri.play_info AS  playInfo,
+          audio_level AS audioLevel,
+          gift_card_switch
+        FROM
+          room r
+        LEFT JOIN room_info ri ON ri.room_uid = r.uid
+        ]]>
+        <where>`room_id` = #{roomId}</where>
+    </select>
+
+    <select id="getUserRoom" parameterType="long" resultMap="RoomResultMap">
+        <![CDATA[
+        SELECT
+          uid,
+          room_id,
+          room_pwd,
+          tag_id,
+          tag_pict,
+          room_tag,
+          badge,
+          meeting_name,
+          title,
+          valid,
+          `type`,
+          official_room,
+          ab_channel_type,
+          reward_id,
+          reward_money,
+          serv_dura,
+          operator_status,
+          avatar,
+          room_desc,
+          room_notice,
+          back_pic,
+          open_time,
+          is_permit_room,
+          online_num,
+          create_time,
+          update_time,
+          is_exception_close,
+          exception_close_time,
+          recom_seq,
+          can_show,
+          def_backpic,
+          `gift_effect_switch`,
+          `public_chat_switch`,
+          ri.play_info AS  playInfo,
+          audio_level AS audioLevel,
+          face_type,
+          gift_card_switch,
+          charm_open
+        FROM
+          room r
+        LEFT JOIN room_info ri ON ri.room_uid = r.uid
+        ]]>
+        <where> r.uid = #{uid}</where>
+    </select>
+
+    <resultMap id="RoomSearchResultMap" type="com.juxiao.xchat.dao.room.dto.RoomSearchDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="room_id" property="roomId" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="BIT"/>
+        <result column="valid" property="valid" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="BIT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="fans_num" property="fansNum" jdbcType="INTEGER"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="has_pretty_erban_no" property="hasPrettyErbanNo" jdbcType="BIT"/>
+        <result column="tag_pict" property="tagPict" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--<select id="listSearchRoom" parameterType="com.juxiao.xchat.dao.room.query.RoomSearchQuery" resultMap="RoomSearchResultMap">
+        <bind name="nick" value="'%' + key + '%'"/>
+        <bind name="title" value="'%' + key + '%'"/>
+        <if test="queryErbanNo == true">
+            <bind name="erbanNo" value="key + '%'"/>
+            <![CDATA[
+        SELECT
+          u.uid,
+          r.room_id,
+          r.title,
+          r.type,
+          r.valid,
+          u.avatar,
+          u.gender,
+          u.nick,
+          u.fans_num,
+          u.erban_no,
+          u.has_pretty_erban_no
+        FROM
+          `room` r
+        RIGHT JOIN
+          users u
+        ON
+          r.uid=u.uid
+        WHERE
+          u.erban_no LIKE #{erbanNo}
+        UNION
+            ]]>
+        </if>
+        <![CDATA[
+        SELECT
+          u.uid,
+          r.room_id,
+          r.title,
+          r.type,
+          r.valid,
+          u.avatar,
+          u.gender,
+          u.nick,
+          u.fans_num,
+          u.erban_no,
+          u.has_pretty_erban_no
+        FROM
+          room r
+        RIGHT JOIN
+          users u
+        ON
+          r.uid=u.uid
+        WHERE
+          u.nick LIKE #{nick}
+        UNION
+        SELECT
+          u.uid,
+          r.room_id,
+          r.title,
+          r.type,
+          r.valid,
+          u.avatar,
+          u.gender,
+          u.nick,
+          u.fans_num,
+          u.erban_no,
+          u.has_pretty_erban_no
+        FROM
+          room r
+        RIGHT JOIN
+          users u
+        ON
+          r.uid=u.uid
+        WHERE
+          r.title LIKE #{title}
+        ORDER BY room_id desc, erban_no ASC
+        LIMIT 0,50
+        ]]>
+    </select>-->
+
+    <select id="listSearchRoom" resultMap="RoomSearchResultMap">
+        <bind name="erban_no" value="key + '%'"/>
+        SELECT
+        u.uid,
+        r.room_id,
+        r.title,
+        r.type,
+        r.valid,
+        u.avatar,
+        u.gender,
+        u.nick,
+        u.fans_num,
+        u.erban_no as erban_no,
+        u.has_pretty_erban_no,
+        r.tag_pict
+        FROM room r
+        RIGHT JOIN users u
+        ON r.uid=u.uid
+        WHERE
+        1=1
+<!--        AND r.can_search = 1-->
+        <if test="uids != null and uids.size> 0">
+            AND u.uid IN
+            <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="key != null">
+            AND u.erban_no LIKE #{erban_no}
+        </if>
+        union
+        SELECT
+        u.uid,
+        r.room_id,
+        r.title,
+        r.type,
+        r.valid,
+        u.avatar,
+        u.gender,
+        u.nick,
+        u.fans_num,
+        u.erban_no as erban_no,
+        u.has_pretty_erban_no,
+        r.tag_pict
+        FROM room r
+        RIGHT JOIN users u
+        ON r.uid=u.uid
+        WHERE
+        1=1
+        <if test="uids != null and uids.size> 0">
+            AND u.uid IN
+            <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="key != null">
+            AND u.nick LIKE #{erban_no}
+        </if>
+        union
+        SELECT
+        u.uid,
+        r.room_id,
+        r.title,
+        r.type,
+        r.valid,
+        u.avatar,
+        u.gender,
+        u.nick,
+        u.fans_num,
+        u.erban_no as erban_no,
+        u.has_pretty_erban_no,
+        r.tag_pict
+        FROM room r
+        RIGHT JOIN users u
+        ON r.uid=u.uid
+        WHERE
+        1=1
+        <if test="uids != null and uids.size> 0">
+            AND u.uid IN
+            <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="key != null">
+            AND r.title LIKE #{erban_no}
+        </if>
+        ORDER BY erban_no ASC
+        limit 0,50
+    </select>
+
+    <select id="listByTagIds" resultType="com.juxiao.xchat.dao.room.dto.RoomDTO">
+        SELECT * FROM room
+        <where>
+            <if test="tagIds != null and tagIds.size > 0">
+                tag_id IN
+                <foreach item="item" index="index" collection="tagIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="onlineNum != null">
+                AND online_num >= #{onlineNum}
+            </if>
+        </where>
+    </select>
+</mapper>

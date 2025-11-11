@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.UserGiftPurseDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.UserGiftPurseDO" useGeneratedKeys="true" keyProperty="giftPurseId">
+        <trim prefix="INSERT INTO `user_gift_purse`(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="giftId != null">gift_id,</if>
+            <if test="countNum != null">count_num,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="giftId != null">#{giftId,jdbcType=INTEGER},</if>
+            <if test="countNum != null">#{countNum,jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.user.domain.UserGiftPurseDO">
+        <![CDATA[ UPDATE user_gift_purse ]]>
+        <set>
+            <if test="giftPurseId != null">
+                gift_purse_id = #{giftPurseId,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="giftId != null">
+                gift_id = #{giftId,jdbcType=INTEGER},
+            </if>
+            <if test="countNum != null">
+                count_num = #{countNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ WHERE `gift_purse_id` = #{giftPurseId} ]]>
+
+    </update>
+
+    <select id="sumGiftDiamond" parameterType="java.lang.Integer" resultType="java.lang.Double">
+        <![CDATA[
+        SELECT
+            SUM(ugp.count_num * g.gold_price ) AS gift_nomal_diamond_sum
+        FROM
+	        user_gift_purse ugp
+	    INNER JOIN
+	        gift g
+	    ON
+	        ugp.gift_id = g.gift_id
+	    WHERE
+	      g.gift_type = #{giftType}
+        ]]>
+    </select>
+</mapper>

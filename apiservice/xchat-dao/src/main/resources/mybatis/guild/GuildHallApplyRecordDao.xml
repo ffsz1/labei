@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.guild.GuildHallApplyRecordDao" >
+  <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.guild.domain.GuildHallApplyRecordDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hall_id" property="hallId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="approver_uid" property="approverUid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="approve_time" property="approveTime" jdbcType="TIMESTAMP" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hall_id, uid, type, status, approver_uid, create_time, update_time, approve_time, reason, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from guild_hall_apply_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from guild_hall_apply_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallApplyRecordDO" useGeneratedKeys="true" keyProperty="id">
+    insert into guild_hall_apply_record (id, hall_id, uid, type,
+      status, approver_uid, create_time, 
+      update_time, approve_time, reason, remark)
+    values (#{id,jdbcType=BIGINT}, #{hallId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{type,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{approverUid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{approveTime,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallApplyRecordDO" useGeneratedKeys="true" keyProperty="id">
+    insert into guild_hall_apply_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hallId != null" >
+        hall_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="approverUid != null" >
+        approver_uid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="approveTime != null" >
+        approve_time,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hallId != null" >
+        #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="approverUid != null" >
+        #{approverUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveTime != null" >
+        #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallApplyRecordDO" >
+    update guild_hall_apply_record
+    <set >
+      <if test="hallId != null" >
+        hall_id = #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="approverUid != null" >
+        approver_uid = #{approverUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveTime != null" >
+        approve_time = #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallApplyRecordDO" >
+    update guild_hall_apply_record
+    set hall_id = #{hallId,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      approver_uid = #{approverUid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      approve_time = #{approveTime,jdbcType=TIMESTAMP},
+      reason = #{reason,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByUidAndTypeAndStatus" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallApplyRecordDTO" parameterType="Map" >
+    select
+        jr.id,
+        jr.hall_id as hallId,
+        r.title as hallTitle,
+        jr.uid,
+        jr.status,
+        jr.approver_uid as approverUid,
+        jr.create_time as createTime,
+        jr.approve_time as approverTime,
+        jr.reason,
+        g.id as guildId,
+        u.nick,
+        u.erban_no as erbanNo,
+        u2.nick as approverNick
+    from guild_hall_apply_record jr
+        inner join guild_hall h on h.id=jr.hall_id
+        inner join room r on h.room_id=r.room_id
+        inner join guild g on g.id=h.guild_id
+        inner join users u on jr.uid=u.uid
+        left join users u2 on jr.approver_uid=u2.uid
+    where g.is_del=false and h.is_del=false and jr.uid = #{uid} and jr.type=#{type} and jr.status=#{status}
+  </select>
+
+    <select id="findByUidAndTypeAndStatus" resultType="com.juxiao.xchat.dao.guild.domain.GuildHallApplyRecordDO" parameterType="Map" >
+    select
+        <include refid="Base_Column_List" />
+    from guild_hall_apply_record jr
+    where jr.uid = #{uid} and jr.type=#{type} and jr.status=#{status}
+  </select>
+
+  <select id="getPageByGuildId" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallApplyRecordDTO" parameterType="Map" >
+    select
+        jr.id,
+        jr.hall_id as hallId,
+        r.title as hallTitle,
+        jr.uid,
+        jr.type,
+        jr.status,
+        jr.approver_uid as approverUid,
+        jr.create_time as createTime,
+        jr.approve_time as approverTime,
+        jr.reason,
+        g.id as guildId,
+        u.nick,
+        u.erban_no as erbanNo,
+        u2.nick as approverNick
+    from guild_hall_apply_record jr
+        inner join guild_hall h on h.id=jr.hall_id
+        inner join room r on h.room_id=r.room_id
+        inner join guild g on g.id=h.guild_id
+        inner join users u on jr.uid=u.uid
+        left join users u2 on jr.approver_uid=u2.uid
+    where g.is_del=false and h.is_del=false and (jr.type=0 or jr.type=1) and h.guild_id=#{guildId}
+    order by jr.create_time desc
+    limit #{startIndex}, #{pageSize}
+  </select>
+
+  <select id="getPageByHallId" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallApplyRecordDTO" parameterType="Map" >
+    select
+        jr.id,
+        jr.hall_id as hallId,
+        r.title as hallTitle,
+        jr.uid,
+        jr.type,
+        jr.status,
+        jr.approver_uid as approverUid,
+        jr.create_time as createTime,
+        jr.approve_time as approverTime,
+        jr.reason,
+        g.id as guildId,
+        u.nick,
+        u.erban_no as erbanNo,
+        u2.nick as approverNick
+    from guild_hall_apply_record jr
+        inner join guild_hall h on h.id=jr.hall_id
+        inner join room r on h.room_id=r.room_id
+        inner join guild g on g.id=h.guild_id
+        inner join users u on jr.uid=u.uid
+        left join users u2 on jr.approver_uid=u2.uid
+    where g.is_del=false and h.is_del=false and (jr.type=0 or jr.type=1) and h.id=#{hallId}
+    order by jr.create_time desc
+    limit #{startIndex}, #{pageSize}
+  </select>
+
+  <select id="countAuditingByGuildIdAndStatus" resultType="int" parameterType="Map" >
+    select
+        count(jr.id)
+    from guild_hall_apply_record jr
+        inner join guild_hall h on h.id=jr.hall_id
+        inner join guild g on g.id=h.guild_id
+    where g.is_del=false and h.is_del=false and h.guild_id = #{guildId} and (jr.type=0 or jr.type=1) and jr.status=#{status}
+  </select>
+
+  <select id="countAuditingByHallIdAndStatus" resultType="int" parameterType="Map" >
+    select
+        count(jr.id)
+    from guild_hall_apply_record jr
+        inner join guild_hall h on h.id=jr.hall_id
+        inner join guild g on g.id=h.guild_id
+    where g.is_del=false and h.is_del=false and jr.hall_id = #{hallId} and (jr.type=0 or jr.type=1) and jr.status=#{status}
+  </select>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.sysconf.AppVersionDao">
+
+    <select id="listAppVersions"  resultType="com.juxiao.xchat.dao.sysconf.dto.AppVersionDTO">
+        SELECT
+          version_id AS versionId,
+          os AS os,
+          version AS version,
+          platform AS platform,
+          status AS status,
+          version_desc AS versionDesc,
+          create_time AS createTime,
+          publish_time AS publishTime,
+          appid AS appid,
+          download_url AS downloadUrl
+        FROM
+          app_version
+        <where>
+            <if test="version != null and version !=''">
+                AND version = #{version}
+            </if>
+            <if test="os != null and os !=''">
+                AND os = #{os}
+            </if>
+            <if test="appId != null and appId !=''">
+                AND appid = #{appId}
+            </if>
+        </where>
+        order by version_id desc
+        limit 1
+    </select>
+</mapper>

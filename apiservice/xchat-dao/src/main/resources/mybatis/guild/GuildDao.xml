@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.guild.GuildDao" >
+  <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.guild.domain.GuildDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="guild_no" property="guildNo" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="president_uid" property="presidentUid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, guild_no, name, logo_url, president_uid, create_time,
+    update_time, is_del
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from guild
+    where id = #{id,jdbcType=BIGINT} and is_del=false
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from guild
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.juxiao.xchat.dao.guild.domain.GuildDO" >
+    insert into guild (id, guild_no, name, 
+      logo_url, president_uid, create_time, update_time,
+      is_del)
+    values (#{id,jdbcType=BIGINT}, #{guildNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{logoUrl,jdbcType=VARCHAR}, #{presidentUid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{isDel,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildDO" >
+    insert into guild
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="guildNo != null" >
+        guild_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="presidentUid != null" >
+        president_uid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="guildNo != null" >
+        #{guildNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="presidentUid != null" >
+        #{presidentUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildDO" >
+    update guild
+    <set >
+      <if test="guildNo != null" >
+        guild_no = #{guildNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="presidentUid != null" >
+        president_uid = #{presidentUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.juxiao.xchat.dao.guild.domain.GuildDO" >
+    update guild
+    set guild_no = #{guildNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      president_uid = #{presidentUid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getRecommendList" resultType="com.juxiao.xchat.dao.guild.dto.GuildDTO" parameterType="Map" >
+    select
+        g.id,
+        g.guild_no as guildNo,
+        g.name,
+        g.logo_url as logoUrl,
+        g.president_uid as presidentUid,
+        g.create_time as createTime,
+		(select sum(tr.gold) from guild_daily_turnover_report tr where g.id=tr.guild_id and DATE_FORMAT(tr.report_date, '%Y-%m-%d') = DATE_FORMAT(now(),'%Y-%m-%d')) as gold
+    from guild g
+    where g.is_del = false
+    group by g.id,
+        g.guild_no,
+        g.name,
+        g.logo_url,
+        g.president_uid,
+        g.create_time
+    order by gold desc
+    limit #{startIndex}, #{pageSize}
+  </select>
+
+  <select id="getDTOById" resultType="com.juxiao.xchat.dao.guild.dto.GuildDTO" parameterType="Map" >
+    select
+        g.id,
+        g.guild_no as guildNo,
+        g.name,
+        g.logo_url as logoUrl,
+        g.president_uid as presidentUid,
+        g.create_time as createTime,
+        (select count(*) from guild_hall h where h.is_del=false and h.guild_id=g.id) as hallCount,
+        (select count(*) from guild_hall_member m where m.is_del=false and m.guild_id=g.id) as memberCount,
+        sum(tr.gold) as gold
+    from guild g
+        left join guild_daily_turnover_report tr on g.id=tr.guild_id
+    where g.is_del = false and hall_id is null and tr.member_id is null and g.id=#{id}
+    group by g.id,
+        g.guild_no,
+        g.name,
+        g.logo_url,
+        g.president_uid,
+        g.create_time
+
+  </select>
+
+  <select id="searchValidList" resultType="com.juxiao.xchat.dao.guild.dto.GuildExtendDTO" parameterType="Map" >
+    <bind name="search_key" value="'%' + key + '%'"/>
+    select
+        g.id,
+        g.guild_no as guildNo,
+        g.name,
+        g.logo_url as logoUrl,
+        g.president_uid as presidentUid,
+        g.create_time as createTime
+    from guild g
+    where g.is_del = false and (g.guild_no like #{search_key} or g.name like #{search_key})
+  </select>
+
+  <select id="getDTOByPresidentUid" resultType="com.juxiao.xchat.dao.guild.dto.GuildDTO" parameterType="Map" >
+    select
+        g.id,
+        g.guild_no as guildNo,
+        g.name,
+        g.logo_url as logoUrl,
+        g.president_uid as presidentUid,
+        g.create_time as createTime,
+        sum(tr.gold) as gold
+    from guild g
+        left join guild_daily_turnover_report tr on g.id=tr.guild_id and tr.hall_id is null and tr.member_id is null
+    where g.is_del = false and g.president_uid=#{presidentUid}
+    group by g.id,
+        g.guild_no,
+        g.name,
+        g.logo_url,
+        g.president_uid,
+        g.create_time
+  </select>
+</mapper>

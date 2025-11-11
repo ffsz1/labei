@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.guild.GuildDailyTurnoverReportDao" >
+  <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.guild.domain.GuildDailyTurnoverReportDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="guild_id" property="guildId" jdbcType="BIGINT" />
+    <result column="hall_id" property="hallId" jdbcType="BIGINT" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="gold" property="gold" jdbcType="BIGINT" />
+    <result column="report_date" property="reportDate" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, guild_id, hall_id, room_id, member_id, gold, report_date, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from guild_daily_turnover_report
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from guild_daily_turnover_report
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.juxiao.xchat.dao.guild.domain.GuildDailyTurnoverReportDO" >
+    insert into guild_daily_turnover_report (id, guild_id, hall_id, 
+      room_id, member_id, gold, report_date,
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{guildId,jdbcType=BIGINT}, #{hallId,jdbcType=BIGINT}, 
+      #{roomId,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{gold,jdbcType=BIGINT}, #{reportDate,jdbcType=DATE},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildDailyTurnoverReportDO" >
+    insert into guild_daily_turnover_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="guildId != null" >
+        guild_id,
+      </if>
+      <if test="hallId != null" >
+        hall_id,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="gold != null" >
+        gold,
+      </if>
+      <if test="reportDate != null" >
+        report_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="guildId != null" >
+        #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="hallId != null" >
+        #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="gold != null" >
+        #{gold,jdbcType=BIGINT},
+      </if>
+      <if test="reportDate != null" >
+        #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildDailyTurnoverReportDO" >
+    update guild_daily_turnover_report
+    <set >
+      <if test="guildId != null" >
+        guild_id = #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="hallId != null" >
+        hall_id = #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="gold != null" >
+        gold = #{gold,jdbcType=BIGINT},
+      </if>
+      <if test="reportDate != null" >
+        report_date = #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.juxiao.xchat.dao.guild.domain.GuildDailyTurnoverReportDO" >
+    update guild_daily_turnover_report
+    set guild_id = #{guildId,jdbcType=BIGINT},
+      hall_id = #{hallId,jdbcType=BIGINT},
+      room_id = #{roomId,jdbcType=BIGINT},
+      member_id = #{memberId,jdbcType=BIGINT},
+      gold = #{gold,jdbcType=BIGINT},
+      report_date = #{reportDate,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getMemberTurnovers" resultMap="BaseResultMap" parameterType="Map" >
+    select
+    <include refid="Base_Column_List" />
+    from
+    guild_daily_turnover_report
+    where
+    member_id = #{memberId}
+    and hall_id=#{hallId}
+    <if test="startTime != null">
+      <![CDATA[ AND DATE_FORMAT(report_date, '%Y-%m-%d') >= DATE_FORMAT(#{startTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+    </if>
+    <if test="endTime != null">
+      <![CDATA[ AND DATE_FORMAT(report_date, '%Y-%m-%d') <= DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+    </if>
+    order by report_date desc
+  </select>
+
+  <select id="getByParams" resultMap="BaseResultMap" parameterType="Map" >
+    select
+    <include refid="Base_Column_List" />
+    from
+        guild_daily_turnover_report
+    <where>
+      <choose>
+        <when test="memberId != null">
+         and member_id = #{memberId}
+        </when>
+        <otherwise>
+          and member_id is null
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="hallId != null">
+          and hall_id = #{hallId}
+        </when>
+        <otherwise>
+          and hall_id is null
+        </otherwise>
+      </choose>
+      <if test="guildId != null">
+        and guild_id=#{guildId}
+      </if>
+      <if test="date != null">
+        AND DATE_FORMAT(report_date, '%Y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%Y-%m-%d')
+      </if>
+    </where>
+  </select>
+
+  <select id="sumGuildTurnover" resultType="java.lang.Long" parameterType="Map">
+    select
+    sum(s.total_gold_num)
+    from gift_send_record s
+    where s.room_uid in (
+      select r.uid from guild_hall h inner join room r on h.room_id=r.room_id where h.guild_id=#{guildId} and h.is_del=false
+      )
+      and s.create_time between #{start_time} and #{end_time}
+  </select>
+
+  <select id="sumHallTurnover" resultType="java.lang.Long" parameterType="Map">
+    select
+      sum(s.total_gold_num)
+    from gift_send_record s
+      inner join room r on s.room_uid=r.uid
+      inner join guild_hall h on h.room_id=r.room_id
+    where h.id=#{hallId}
+      and s.create_time between #{start_time} and #{end_time}
+  </select>
+
+  <select id="sumMemberTurnover" resultType="java.lang.Long" parameterType="Map">
+    select
+      sum(s.total_gold_num)
+    from gift_send_record s
+      INNER JOIN room r on r.uid=s.room_uid
+	  INNER JOIN guild_hall h on r.room_id=h.room_id
+      inner join guild_hall_member m on s.recive_uid=m.uid and h.id=m.hall_id
+    where m.id=#{memberId} and h.id=#{hallId}
+      and s.create_time between #{start_time} and #{end_time}
+  </select>
+
+  <select id="sumGuildDailyTurnover" resultType="java.lang.Long" parameterType="Map">
+    select
+      sum(gold)
+    from
+    guild_daily_turnover_report
+    <where>
+      <choose>
+        <when test="memberId != null">
+          and member_id = #{memberId}
+        </when>
+        <otherwise>
+          and member_id is null
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="hallId != null">
+          and hall_id = #{hallId}
+        </when>
+        <otherwise>
+          and hall_id is null
+        </otherwise>
+      </choose>
+      <choose>
+        <when test="guildId != null">
+          and guild_id = #{guildId}
+        </when>
+        <otherwise>
+          and guild_id is null
+        </otherwise>
+      </choose>
+      <if test="startTime != null">
+        <![CDATA[ AND DATE_FORMAT(report_date, '%Y-%m-%d') >= DATE_FORMAT(#{startTime},'%Y-%m-%d') ]]>
+      </if>
+      <if test="endTime != null">
+        <![CDATA[ AND DATE_FORMAT(report_date, '%Y-%m-%d') <= DATE_FORMAT(#{endTime},'%Y-%m-%d') ]]>
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.wish.WishDao">
+
+    <insert id="insertWish" parameterType="com.juxiao.xchat.dao.wish.domain.Wish">
+        <trim prefix="REPLACE INTO `wish` (" suffix=")" suffixOverrides=",">
+            <if test="wish.uid != null">uid,</if>
+            <if test="wish.remarks != null">remarks,</if>
+            <if test="wish.viceUrl != null">vice_url,</if>
+            <if test="wish.createTime != null">create_time,</if>
+            <if test="wish.updateTime != null">update_time,</if>
+            <if test="wish.audioDura != null">audio_dura,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="wish.uid != null">#{wish.uid},</if>
+            <if test="wish.remarks != null">#{wish.remarks},</if>
+            <if test="wish.viceUrl != null">#{wish.viceUrl},</if>
+            <if test="wish.createTime != null">#{wish.createTime},</if>
+            <if test="wish.updateTime != null">#{wish.updateTime},</if>
+            <if test="wish.audioDura != null">#{wish.audioDura},</if>
+        </trim>
+    </insert>
+    <select id="listWish" resultType="com.juxiao.xchat.dao.wish.dto.WishDTO">
+        SELECT
+        t1.uid,
+        t2.erban_no as erbanNo,
+        t2.nick,
+        t2.avatar,
+        t2.gender,
+        t1.remarks,
+        t1.vice_url as viceUrl,
+        t1.audio_dura as audioDura,
+        t1.create_time as createTime,
+        t1.update_time as updateTime
+        FROM wish t1 join users t2 on t1.uid=t2.uid
+        <where>
+            <if test="query.erbanNo != null">
+                AND t2.erban_no=#{query.erbanNo}
+            </if>
+            <if test="query.nick != null">
+                AND t2.nick=#{query.nick}
+            </if>
+            <if test="query.gender != null">
+                AND t2.gender=#{query.gender}
+            </if>
+            <if test="query.updateTime != null">
+                AND t1.update_time >#{query.updateTime}
+            </if>
+
+            <if test="query.remarks != null">
+                AND t1.remarks like concat('%',#{query.remarks},'%')
+            </if>
+        </where>
+        <trim prefix="LIMIT ">
+            <if test="page!= null"> #{page.bottom},#{page.pageSize}</if>
+        </trim>
+    </select>
+    <select id="getSize" resultType="java.lang.Long">
+        select count(1) FROM wish t1 join users t2 on t1.uid=t2.uid
+        <where>
+            <if test="query.erbanNo != null">
+                AND t2.erbanNo=#{query.erbanNo}
+            </if>
+            <if test="query.nick != null">
+                AND t2.nick=#{query.nick}
+            </if>
+            <if test="query.gender != null">
+                AND t2.gender=#{query.gender}
+            </if>
+            <if test="query.updateTime != null">
+                AND t1.update_time >#{query.updateTime}
+            </if>
+            <if test="query.remarks != null">
+                AND t1.remarks like concat('%',#{query.remarks},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getById" resultType="com.juxiao.xchat.dao.wish.domain.Wish">
+        SELECT <include refid="resultCol"/>
+        FROM wish where uid=#{uid}
+    </select>
+
+    <select id="listUidsByRecords" resultType="java.lang.Long">
+        select uid from users where gender=#{gender}
+    </select>
+
+
+    <sql id="resultCol">
+        uid,
+        remarks,
+        vice_url as viceUrl,
+        audio_dura as audioDura,
+        create_time as createTime,
+        update_time as updateTime
+    </sql>
+
+</mapper>

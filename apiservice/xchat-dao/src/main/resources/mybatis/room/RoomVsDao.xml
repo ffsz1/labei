@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.room.RoomVsDao" >
+  <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.room.domain.RoomVsDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="room_uid" property="roomUid" jdbcType="BIGINT" />
+    <result column="seconds" property="seconds" jdbcType="INTEGER" />
+    <result column="score_type" property="scoreType" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="result_type" property="resultType" jdbcType="INTEGER" />
+    <result column="win_team_id" property="winTeamId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="start_user" property="startUser" jdbcType="BIGINT" />
+    <result column="end_user" property="endUser" jdbcType="BIGINT" />
+    <result column="terminate_time" property="terminateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, room_uid, seconds, score_type, start_time, end_time, result_type, win_team_id, 
+    status, start_user, end_user, terminate_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from room_vs
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from room_vs
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.juxiao.xchat.dao.room.domain.RoomVsDO" useGeneratedKeys="true" keyProperty="id">
+    insert into room_vs (id, room_uid, seconds, 
+      score_type, start_time, end_time, 
+      result_type, win_team_id, status, 
+      start_user, end_user, terminate_time, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{roomUid,jdbcType=BIGINT}, #{seconds,jdbcType=INTEGER}, 
+      #{scoreType,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{resultType,jdbcType=INTEGER}, #{winTeamId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{startUser,jdbcType=BIGINT}, #{endUser,jdbcType=BIGINT}, #{terminateTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.juxiao.xchat.dao.room.domain.RoomVsDO" >
+    insert into room_vs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roomUid != null" >
+        room_uid,
+      </if>
+      <if test="seconds != null" >
+        seconds,
+      </if>
+      <if test="scoreType != null" >
+        score_type,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="resultType != null" >
+        result_type,
+      </if>
+      <if test="winTeamId != null" >
+        win_team_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="startUser != null" >
+        start_user,
+      </if>
+      <if test="endUser != null" >
+        end_user,
+      </if>
+      <if test="terminateTime != null" >
+        terminate_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roomUid != null" >
+        #{roomUid,jdbcType=BIGINT},
+      </if>
+      <if test="seconds != null" >
+        #{seconds,jdbcType=INTEGER},
+      </if>
+      <if test="scoreType != null" >
+        #{scoreType,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resultType != null" >
+        #{resultType,jdbcType=INTEGER},
+      </if>
+      <if test="winTeamId != null" >
+        #{winTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="startUser != null" >
+        #{startUser,jdbcType=BIGINT},
+      </if>
+      <if test="endUser != null" >
+        #{endUser,jdbcType=BIGINT},
+      </if>
+      <if test="terminateTime != null" >
+        #{terminateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.juxiao.xchat.dao.room.domain.RoomVsDO" >
+    update room_vs
+    <set >
+      <if test="roomUid != null" >
+        room_uid = #{roomUid,jdbcType=BIGINT},
+      </if>
+      <if test="seconds != null" >
+        seconds = #{seconds,jdbcType=INTEGER},
+      </if>
+      <if test="scoreType != null" >
+        score_type = #{scoreType,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resultType != null" >
+        result_type = #{resultType,jdbcType=INTEGER},
+      </if>
+      <if test="winTeamId != null" >
+        win_team_id = #{winTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="startUser != null" >
+        start_user = #{startUser,jdbcType=BIGINT},
+      </if>
+      <if test="endUser != null" >
+        end_user = #{endUser,jdbcType=BIGINT},
+      </if>
+      <if test="terminateTime != null" >
+        terminate_time = #{terminateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.juxiao.xchat.dao.room.domain.RoomVsDO" >
+    update room_vs
+    set room_uid = #{roomUid,jdbcType=BIGINT},
+      seconds = #{seconds,jdbcType=INTEGER},
+      score_type = #{scoreType,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      result_type = #{resultType,jdbcType=INTEGER},
+      win_team_id = #{winTeamId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      start_user = #{startUser,jdbcType=BIGINT},
+      end_user = #{endUser,jdbcType=BIGINT},
+      terminate_time = #{terminateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

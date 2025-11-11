@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.room.RoomAttentionDao">
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into room_attention(room_id,uid,create_time) values(#{roomId},#{uid},#{createTime})
+    </insert>
+
+    <select id="selectUidByRoomAttentions" resultType="com.juxiao.xchat.dao.room.dto.RoomAttentionDTO">
+        select ra.id,ra.room_id as roomId,u.erban_no as erbanNo,r.uid,ra.create_time as createTime,r.title,r.avatar,r.room_tag as roomTag,r.tag_pict as roomTagPic
+        from room_attention ra
+        inner join room r on ra.room_id = r.room_id
+        inner join users u on r.uid = u.uid
+        where ra.uid = #{uid}
+        order by ra.create_time desc limit #{pageNum},#{pageSize}
+    </select>
+
+    <select id="selectByUidAndRoomId" resultType="com.juxiao.xchat.dao.room.domain.RoomAttentionDO">
+        select id,room_id as roomId,uid,create_time as createTime from room_attention where uid = #{uid} and room_id =  #{roomId}
+    </select>
+
+    <delete id="delAttentions">
+        DELETE FROM room_attention WHERE  uid = #{uid} and room_id = #{roomId}
+    </delete>
+
+    <select id="selectRoomAttentionByUidAndRoomId"
+            resultType="com.juxiao.xchat.dao.room.dto.UsersRoomAttentionDTO">
+        select uid,room_id as roomId
+        from room_attention where uid = #{uid}  and room_id = #{roomId}
+    </select>
+</mapper>

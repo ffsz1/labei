@@ -1,0 +1,172 @@
+external:
+  caih:
+    clientId:
+    password:
+    smsSendUrl: http://api.mms.caih.com/sms-partner/access/
+    smsTemplate: 【拉贝星球】您的验证码：%s，2分钟内有效，请尽快完成验证。
+    deviceIdDayLimit: 20
+    uidDayLimit: 20
+  agora:
+    appId:
+    appCertificate:
+  netease:
+    appKey:
+    appSecret:
+    smsAppKey:
+    smsAppSecret:
+    smsTemplateid:
+    alarmSmsTemplateid:
+  pingxx:
+    appId: ${external.pingxx.appId}
+    apiKey: ${external.pingxx.apiKey}
+    publicKey: ${external.pingxx.publicKey}
+    privateKeyPath: ${external.pingxx.pingxxPrivateKeyPath}
+  joinpay:
+    merchantNo:
+    tradeMerchantNo:  # 公众号报备商户号
+    tradeMerchantNoAPP3:  # APP+报备商户号
+    notifyUrl: ${external.joinpay.notifyUrl}
+    wxAppId:
+    gzhAppId:
+  sandpay:
+    publicKey: classpath:sand.cer # 杉德公钥(不是商户公钥)
+    privateKey: classpath:xxx.pfx # 商户号对应的私钥和密码
+    privateKeyPassword:  # 私钥密码
+    merchMid:  # 商户基础信息
+    merchPlmid:
+    merchProductcode: 00002000
+    gateWayUrl: http:// :19080/gw/
+    gateWayFrontUrl:  ${external.sandpay.gateWayFrontUrl} # 支付结束后跳转回商户平台的http/https路径
+    gateWayBacknoticeUrl: ${external.sandpay.gateWayBacknoticeUrl} # 商户后端通知接收地址 http://商户后端通知接收地址
+  qiniu:
+    accessUrl:
+    accessKey:
+    secretKey:
+    bucket:
+  weixin:
+    appid:
+    secret:
+    mchid:
+    paykey:
+    notifyUrl: ${external.weixin.notifyUrl}
+    wxappId:
+    wxSecret:
+    encodingAesKey:
+  jpush:
+    appKey:
+    secret:
+  dingtalk:
+    # 产品开发群
+    developChatbot: https://oapi.dingtalk.com/robot/send
+    # 举报群
+    reportWebHook: https://oapi.dingtalk.com/robot/send
+    # 产品经理
+    pm:
+      -
+    report:
+      -
+      -
+      -
+    programmer:
+      -
+      -
+  im:
+    host: ${external.im.host}
+  zego:
+    appId:
+    secret:
+    tokenUrl: ${external.zego.tokenUrl}
+scheduling:
+  executor:
+    corePoolSize: 50
+    maxPoolSize: 100
+    queueCapacity: 100
+    keepAliveSeconds: 300
+    threadNamePrefix: xchat-task-
+
+common:
+  aes:
+    key: 09051825305fd819
+    iv: 2dba43c93e7884b9
+  giftdraw:
+    tmpDrawGifts:   468,469,470,471        # 临时捡海螺礼物
+    tmpDrawGiftsPrice:   0,0,0,18880       # 临时捡海螺礼物价格
+    ticketGiftId: 457                      # 捡海螺礼物ID必须要与人气票礼物ID不一致
+    defaultGiftId: 432
+    fullGiftId: 440
+    giftPrices: 1, 10, 100, 500, 1000, 5000, 10000, 20000, 30000, 50000
+    # 海螺
+    drawGifts: 432,  433,  434,  435,  436,  503, 437,  438,  439,  440
+    firstDrawRates: 0.75663,0.958058,0.970887,0.994993,0.999514,0.99999,0.999994,0.999997,0.999999,1
+    lowDrawRates: 0.75663,0.958058,0.970887,0.994993,0.999514,0.99999,0.999994,0.999997,0.999999,1
+    highDrawRates: 0.76413,0.97563,0.986459,0.994465,0.998986,0.999462,0.99974,0.999976,0.999994,1
+    # 相亲
+    xqDrawGifts:  492,  493,  494,  495,  496,  497,  498,  499,  500
+    xqFirstDrawRates: 0.76393,0.98393,0.98493,0.99283,0.99734,0.99891,0.99974,0.999965,1
+    xqLowDrawRates: 0.76393,0.98393,0.98493,0.99283,0.99734,0.99891,0.99974,0.999965,1
+    xqHighDrawRates: 0.76393,0.98393,0.98493,0.99283,0.99734,0.99891,0.99974,0.999965,1
+    # 活动
+    hdDrawGifts:  492,  493,  494,  495,  496,  497,  498,  499,  500
+    hdFirstDrawRates: 0.76393,0.98393,0.98493,0.99283,0.99734,0.99891,0.99974,0.999965,1
+    hdLowDrawRates: 0.76393,0.98393,0.98493,0.99283,0.99734,0.99891,0.99974,0.999965,1
+    hdHighDrawRates: 0.76393,0.98393,0.98493,0.99283,0.99734,0.99891,0.99974,0.999965,1
+
+    drawTypes:
+      1:
+        drawType: 1
+        drawCount: 1
+      2:
+        drawType: 2
+        drawCount: 10
+      4:
+        drawType: 4
+        drawCount: 50
+      5:
+        drawType: 5
+        drawCount: 100
+  system:
+    env: ${common.system.env}
+    envName: ${common.system.envName}
+    # 自定义消息UID
+    secretaryUid: ${common.system.secretaryUid}
+    # 关注用户UID
+    likeMsgUid: ${common.system.likeMsgUid}
+    drawAkira: 0.65
+    appAkira: 0.65
+    roomOwnerAkira: 0.2
+    defaultNick: 官方新人
+    defaultHead: https://
+    defaultPhoto: https://
+    defaultHeadNan: https://
+    defaultHeadNv: https://
+    jpegPrefix:
+    # 大厅公聊官方账号
+    officialUid: ${common.system.officialUid}
+    # 大厅房间ID
+    officialRoomId: ${common.system.officialRoomId}
+    # 大厅小秘书图片
+    officialAvatar:
+    # 大厅小秘书昵称
+    officialNick: 官方官方
+    # 大厅小秘书文字颜色
+    txtColor: FF0030
+    # 审核账号 UID
+    auditAccountList:
+      - 500092
+    bundleIds: ${external.bundleIds}
+    iosChargeProds:
+      - com.ify_8
+      - com.ify_30
+      - com.ify_98
+      - com.ify_488
+      - com.ify_998
+      - com.ify_2998
+    serverDomain: ${common.system.serverDomain}
+    xiangQinTagId: 18
+  #积分商城
+  integralmall:
+    headwearLimitTimeId: 79       #限时头饰Id
+    gifCarLimitTimeId: 74         #限时座驾Id
+    gold: 50                  #金币50
+    mallHeadwearId: 63       #商城头饰Id
+    mallGifCarId: 58       #商城座驾Id

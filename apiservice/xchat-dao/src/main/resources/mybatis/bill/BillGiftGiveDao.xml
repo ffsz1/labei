@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.bill.BillGiftGiveDao">
+
+    <select id="listUserGiftPay" parameterType="com.juxiao.xchat.dao.bill.query.BillUserQuery" resultType="com.juxiao.xchat.dao.bill.dto.BillUserGiftDTO">
+        <![CDATA[
+        SELECT
+            gu.nick AS srcNick,
+            gu.avatar AS srcAvatar,
+            ru.nick AS targetNick,
+            ru.avatar AS targetAvatar,
+            bgg.create_time as recordTime,
+            g.pic_url AS giftPict,
+            g.gift_name AS giftName,
+            bgg.gift_num AS giftNum,
+            bgg.diamond_amount AS diamondNum,
+            bgg.gold_cost AS goldNum
+        FROM
+            bill_gift_give bgg
+        LEFT JOIN
+            `users` gu
+        ON
+            bgg.giver_uid = gu.uid
+        LEFT JOIN
+            `users` ru
+        ON
+            bgg.receiver_uid = ru.uid
+        LEFT JOIN
+            gift g
+        ON
+            g.gift_id = bgg.gift_id
+        WHERE
+            bgg.giver_uid = #{uid}
+        AND
+            bgg.create_time < #{date}
+        ORDER BY bgg.create_time DESC
+        LIMIT #{startRecord}, #{prePage}
+        ]]>
+    </select>
+
+    <select id="listUserGiftIncome" parameterType="com.juxiao.xchat.dao.bill.query.BillUserQuery" resultType="com.juxiao.xchat.dao.bill.dto.BillUserGiftDTO">
+        <![CDATA[
+        SELECT
+            gu.nick AS targetNick,
+            gu.avatar AS targetAvatar,
+            ru.nick AS srcNick,
+            ru.avatar AS srcAvatar,
+            bgg.`create_time` as `recordTime`,
+            g.pic_url AS giftPict,
+            g.gift_name AS giftName,
+            bgg.gift_num AS giftNum,
+            bgg.diamond_amount AS diamondNum,
+            bgg.gold_cost AS goldNum
+        FROM
+            bill_gift_give bgg
+        LEFT JOIN
+            `users` gu
+        ON
+            bgg.giver_uid = gu.uid
+        LEFT JOIN
+            `users` ru
+        ON
+            bgg.receiver_uid = ru.uid
+        LEFT JOIN
+            gift g
+        ON
+            g.gift_id = bgg.gift_id
+        WHERE
+            bgg.receiver_uid = #{uid}
+        AND
+            bgg.create_time < #{date}
+        UNION ALL
+        SELECT
+            '官方官方' AS targetNick,
+            NULL AS targetAvatar,
+            u.nick AS srcNick,
+            u.avatar AS srcAvatar,
+            bgh.`create_time` as `recordTime`,
+            'https://pic.chaoxuntech.com/logo.png' AS giftPict,
+            '回馈钻石' AS giftName,
+            1 AS giftNum,
+            bgh.diamond_amount AS diamondNum,
+            NULL AS goldNum
+        FROM
+            `bill_gift_bonus` bgh
+        LEFT JOIN
+            `users` u
+        ON
+            bgh.uid = u.uid
+        WHERE
+            bgh.uid = #{uid}
+        AND
+            bgh.create_time < #{date}
+        ORDER BY
+	        recordTime DESC
+        LIMIT #{startRecord}, #{prePage}
+        ]]>
+    </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.room.RoomTagDao">
+    <select id="listAppTopTags" resultType="com.juxiao.xchat.dao.room.dto.RoomTagDTO">
+        SELECT * FROM room_tag WHERE status = 1 ORDER BY seq DESC
+    </select>
+
+    <select id="listAppAllTags" resultType="com.juxiao.xchat.dao.room.dto.RoomTagDTO">
+        SELECT * FROM room_tag WHERE `type` = 1 AND status = 1 ORDER BY seq DESC
+    </select>
+
+    <select id="listAppSearchTags" resultType="com.juxiao.xchat.dao.room.dto.RoomTagDTO">
+        SELECT * FROM room_tag WHERE tmpint = 1 AND status = 1 ORDER BY seq DESC
+    </select>
+
+    <select id="getById" resultType="com.juxiao.xchat.dao.room.dto.RoomTagDTO">
+        SELECT * FROM room_tag WHERE id = #{id} AND status = 1 ORDER BY seq DESC
+    </select>
+
+    <select id="getByName" resultType="com.juxiao.xchat.dao.room.dto.RoomTagDTO">
+        SELECT * FROM room_tag WHERE name = #{name} AND status = 1 ORDER BY seq DESC
+    </select>
+
+    <select id="getRoomUsersTagByTagName" resultType="java.lang.String">
+        SELECT rt.name FROM room_users_tag rut LEFT JOIN room_tag rt ON rut.tag_id = rt.id WHERE uid = #{uid}
+    </select>
+</mapper>

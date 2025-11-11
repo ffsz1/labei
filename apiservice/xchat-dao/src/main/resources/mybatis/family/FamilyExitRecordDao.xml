@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.family.dao.FamilyExitRecordDAO">
+
+   <insert id="save" parameterType="com.juxiao.xchat.dao.family.domain.FamilyExitRecordDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO family_exit_record (team_id,uid,status,type,create_time,update_time,remark)
+        VALUES (#{teamId},#{uid},#{status},#{type},#{createTime},#{updateTime},#{remark})
+   </insert>
+
+    <select id="selectByTeamIdAndUid" resultType="com.juxiao.xchat.dao.family.domain.FamilyExitRecordDO">
+        select id,uid,team_id as teamId,status,type,create_time as createTime,update_time as updateTime
+        from family_exit_record
+        where uid = #{uid} and team_id = #{teamId} and status = 0
+    </select>
+
+    <update id="updateByStatus">
+        update family_exit_record
+        set status = #{status} , update_time = #{updateTime}
+        where team_id = #{teamId} and uid = #{uid}
+    </update>
+
+    <select id="selectByFamilyId" resultType="com.juxiao.xchat.dao.family.dto.FamilyRecordDTO">
+        select fer.create_time as createTime,u.nick,u.erban_no as erbanNo,u.uid,u.avatar,fer.status
+        from family_exit_record fer
+        inner join users u on fer.uid = u.uid
+        where fer.team_id = #{teamId}
+        order by  fer.create_time desc
+        LIMIT #{current},#{pageSize}
+    </select>
+
+    <update id="updateStatusByTeamIdAndUid">
+        update family_exit_record
+        set status = 3
+        where team_id = #{teamId} and uid = #{uid}
+    </update>
+
+</mapper>

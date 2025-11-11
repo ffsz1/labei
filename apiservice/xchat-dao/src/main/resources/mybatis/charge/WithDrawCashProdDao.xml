@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.charge.WithDrawCashProdDao">
+
+    <select id="getCashProd" parameterType="string" resultType="com.juxiao.xchat.dao.charge.dto.WithDrawCashProdDTO">
+        <![CDATA[
+        SELECT
+          `cash_prod_id` AS `cashProdId`,
+          `cash_prod_name` AS `cashProdName`,
+          `diamond_num` AS `diamondNum`,
+          `cash_num` AS `cashNum`,
+          `seq_no` AS `seqNo`
+        FROM
+          `withdraw_cash_prod`
+        WHERE
+          `cash_prod_id` = #{cashProdId,jdbcType=VARCHAR}
+        ]]>
+    </select>
+
+    <select id="listAllCashProds" resultType="com.juxiao.xchat.dao.charge.dto.WithDrawCashProdDTO">
+        <![CDATA[
+        SELECT
+          `cash_prod_id` AS `cashProdId`,
+          `cash_prod_name` AS `cashProdName`,
+          `diamond_num` AS `diamondNum`,
+          `cash_num` AS `cashNum`,
+          `seq_no` AS `seqNo`
+        FROM
+          `withdraw_cash_prod`
+        ORDER BY `seq_no`
+        ]]>
+    </select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.bill.BillGiftDrawDao">
+<!--    <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.bill.dto.BillGiftDrawDTO">-->
+<!--        <id column="uid" property="uid" jdbcType="BIGINT"/>-->
+<!--        <result column="gift_num" property="giftId" jdbcType="BIGINT"/>-->
+<!--        <result column="gold_cost" property="receiptVotes" jdbcType="INTEGER"/>-->
+<!--        <result column="gift_id" property="giftId" jdbcType="INTEGER"/>-->
+<!--        <result column="gift_name" property="avatar" jdbcType="VARCHAR"/>-->
+<!--        <result column="pic_url" property="nick" jdbcType="VARCHAR"/>-->
+<!--        <result column="gold_price" property="rank" jdbcType="INTEGER"/>-->
+<!--        <result column="create_time" property="rank" jdbcType="INTEGER"/>-->
+<!--        <result column="avatar" property="rank" jdbcType="INTEGER"/>-->
+<!--        <result column="nick" property="rank" jdbcType="INTEGER"/>-->
+<!--        <result column="gender" property="rank" jdbcType="INTEGER"/>-->
+<!--    </resultMap>-->
+
+    <insert id="saveMany" parameterType="list">
+        INSERT INTO `bill_gift_draw` (
+          `uid`,`gift_id`,`gift_num`,`gold_cost`,`create_time`
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.uid}, #{item.giftId}, #{item.giftNum}, #{item.goldCost}, #{item.createTime})
+        </foreach>
+    </insert>
+
+    <select id="listByUid" resultType="com.juxiao.xchat.dao.bill.dto.BillGiftDrawDTO">
+        SELECT
+            b.uid,
+            b.gift_num,
+            b.gold_cost,
+            b.gift_id,
+            g.gift_type,
+            g.gift_name,
+            g.pic_url,
+            g.gold_price,
+            b.create_time,
+            u.avatar,
+            u.nick,
+            u.gender
+        FROM
+            bill_gift_draw b
+            LEFT JOIN gift g ON g.gift_id = b.gift_id
+            LEFT JOIN users u ON u.uid = b.uid
+        WHERE
+            b.uid = #{uid}
+            <if test="giftType != null">
+                and g.gift_type = #{giftType}
+            </if>
+        ORDER BY
+            b.id DESC
+            LIMIT #{begin}, #{size}
+    </select>
+
+</mapper>

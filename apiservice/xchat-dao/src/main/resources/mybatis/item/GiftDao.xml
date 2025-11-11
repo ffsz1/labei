@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.item.GiftDao">
+
+    <select id="getGift" parameterType="int" resultType="com.juxiao.xchat.dao.item.dto.GiftDTO">
+        <![CDATA[
+        SELECT
+          `gift_id` as giftId,
+          `gift_name` as giftName,
+          `gold_price` as goldPrice,
+          `seq_no` as seqNo,
+          `noble_id` as nobleId,
+          `noble_name` as nobleName,
+          `is_noble_gift` as isNobleGift,
+          `gift_type` as giftType,
+          `gift_status` as giftStatus,
+          `pic_url` as picUrl,
+          `has_gif_pic` as hasGifPic,
+          `gif_url` as gifUrl,
+          `has_vgg_pic` as hasVggPic,
+          `vgg_url` as vggUrl,
+          `is_latest` as isLatest,
+          `is_time_limit` as isTimeLimit,
+          `has_effect` as hasEffect,
+          `start_valid_time` as startValidTime,
+          `end_valid_time` as endValidTime,
+          `create_time` as createTime,
+          `is_can_give` as isCanGive,
+          `is_express_gift` as isExpressGift
+        FROM
+          `gift`
+        WHERE
+          `gift_id` = #{giftId}
+        ]]>
+    </select>
+
+    <select id="listGifts" resultType="com.juxiao.xchat.dao.item.dto.GiftDTO">
+        SELECT
+          `gift_id` as giftId,
+          `gift_name` as giftName,
+          `gold_price` as goldPrice,
+          `seq_no` as seqNo,
+          `noble_id` as nobleId,
+          `noble_name` as nobleName,
+          `is_noble_gift` as isNobleGift,
+          `gift_type` as giftType,
+          `gift_status` as giftStatus,
+          `pic_url` as picUrl,
+          `has_gif_pic` as hasGifPic,
+          `gif_url` as gifUrl,
+          `has_vgg_pic` as hasVggPic,
+          `vgg_url` as vggUrl,
+          `is_latest` as isLatest,
+          `is_time_limit` as isTimeLimit,
+          `has_effect` as hasEffect,
+          `start_valid_time` as startValidTime,
+          `end_valid_time` as endValidTime,
+          `create_time` as createTime,
+          `is_can_give` as isCanGive,
+          `is_express_gift` as isExpressGift
+        FROM
+          `gift`
+        WHERE
+          `gift_status` = 1
+          <if test="giftType != null">AND `gift_type` = #{giftType}</if>
+        ORDER BY `seq_no` ASC
+</select>
+</mapper>

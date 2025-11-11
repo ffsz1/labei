@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.mora.MoraRecordDAO">
+
+    <update id="updateById">
+        update mora_record
+        <set>
+            <if test="roomId != null">
+                room_id = #{roomId},
+            </if>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+
+            <if test="isReturnGold != null">
+                is_return_gold = #{isReturnGold},
+            </if>
+
+            <if test="isFinish != null">
+                is_finish = #{isFinish},
+            </if>
+
+            <if test="result != null">
+                result = #{result},
+            </if>
+
+            <if test="isValid != null">
+                is_valid = #{isValid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateByRefId">
+        update mora_record
+        <set>
+            <if test="roomId != null">
+                room_id = #{roomId},
+            </if>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+
+            <if test="isReturnGold != null">
+                is_return_gold = #{isReturnGold},
+            </if>
+
+            <if test="isFinish != null">
+                is_finish = #{isFinish},
+            </if>
+
+            <if test="result != null">
+                result = #{result},
+            </if>
+        </set>
+        where ref_id = #{refId}
+    </update>
+</mapper>

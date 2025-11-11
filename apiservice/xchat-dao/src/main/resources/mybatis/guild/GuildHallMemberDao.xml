@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.guild.GuildHallMemberDao" >
+  <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.guild.domain.GuildHallMemberDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hall_id" property="hallId" jdbcType="BIGINT" />
+    <result column="guild_id" property="guildId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+    <result column="member_type" property="memberType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hall_id, guild_id, uid, create_time, update_time, is_del, member_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from guild_hall_member
+    where id = #{id,jdbcType=BIGINT} and is_del=false
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from guild_hall_member
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallMemberDO" >
+    insert into guild_hall_member (id, hall_id, guild_id, 
+      uid, create_time, update_time, is_del, member_type
+      )
+    values (#{id,jdbcType=BIGINT}, #{hallId,jdbcType=BIGINT}, #{guildId,jdbcType=BIGINT}, 
+      #{uid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      , #{isDel,jdbcType=BIT}, #{memberType,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallMemberDO" >
+    insert into guild_hall_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hallId != null" >
+        hall_id,
+      </if>
+      <if test="guildId != null" >
+        guild_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="memberType != null" >
+        member_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hallId != null" >
+        #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="guildId != null" >
+        #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="memberType != null" >
+        #{memberType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallMemberDO" >
+    update guild_hall_member
+    <set >
+      <if test="hallId != null" >
+        hall_id = #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="guildId != null" >
+        guild_id = #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memberType != null" >
+        member_type = #{memberType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallMemberDO" >
+    update guild_hall_member
+    set hall_id = #{hallId,jdbcType=BIGINT},
+      guild_id = #{guildId,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=TIMESTAMP},
+      member_type = #{memberType,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getGuildMemberInfo" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallMemberDTO">
+    select
+      g.id as guildId,
+      g.guild_no as guildNo,
+      g.name as guildName,
+      g.president_uid as guildPresidentUid,
+      g.logo_url as guildLogoUrl,
+
+      m.hall_id as hallId,
+      m.uid,
+      r.uid as hallUid,
+      u.nick,
+      u.erban_no as erbanNo,
+      u.avatar,
+      m.member_type as memberType,
+      m.id as memberId
+    from guild_hall_member m
+      inner join users u on m.uid=u.uid
+      left join guild_hall h on h.id=m.hall_id and h.is_del=false
+      left join guild g on g.id=h.guild_id or g.id=m.guild_id
+      left join room r on r.room_id=h.room_id
+    where m.uid=#{uid} and g.is_del=false and m.is_del=false
+  </select>
+
+  <select id="getGuildMembers" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallMemberListDTO">
+    <![CDATA[
+      select
+      u.uid,
+      u.erban_no as erbanNo,
+      u.nick,
+      u.avatar,
+      m.create_time,
+      m.member_type as type
+      from guild_hall_member m
+      inner join users u on u.uid=m.uid
+      where m.guild_id=#{guildId} and m.is_del=false
+      order by m.create_time desc
+    ]]>
+  </select>
+
+  <select id="getHallMembers" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallMemberListDTO">
+    <![CDATA[
+    select
+      m.uid,
+      u.erban_no as erbanNo,
+      u.nick,
+      u.avatar,
+      m.create_time,
+      m.member_type as type
+    from guild_hall_member m
+        inner join users u on u.uid=m.uid
+    where m.hall_id=#{hallId} and m.is_del=false
+    order by m.create_time desc
+    ]]>
+  </select>
+
+  <select id="findByHallId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from guild_hall_member
+    where hall_id = #{hallId} and is_del=false
+  </select>
+
+  <select id="getByUid" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from guild_hall_member
+    where uid=#{uid} and is_del=false
+  </select>
+</mapper>

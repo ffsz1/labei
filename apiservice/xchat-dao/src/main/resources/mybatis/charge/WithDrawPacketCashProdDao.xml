@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.charge.WithDrawPacketCashProdDao">
+    <resultMap id="WithDrawPacketCashProdResultMap" type="com.juxiao.xchat.dao.charge.dto.WithDrawPacketCashProdDTO">
+        <id column="packet_prod_cash_id" property="packetProdCashId" jdbcType="INTEGER"/>
+        <result column="packet_num" property="packetNum" jdbcType="DOUBLE"/>
+        <result column="prod_stauts" property="prodStauts" jdbcType="TINYINT"/>
+        <result column="seq_no" property="seqNo" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="listUseingPacketCashProd" resultType="com.juxiao.xchat.dao.charge.dto.RedPacketCashProdDTO">
+        <![CDATA[
+        SELECT
+          packet_prod_cash_id AS packetId,
+          packet_num AS packetNum,
+          prod_stauts AS prodStauts,
+          seq_no AS seqNo
+        FROM
+          withdraw_packet_cash_prod
+        WHERE
+            prod_stauts =${@com.juxiao.xchat.dao.charge.enumeration.WithDrawPacketCashProdStatus@USING.getValue()}
+        ]]>
+    </select>
+
+    <select id="getPacketCashProd" parameterType="java.lang.Integer" resultMap="WithDrawPacketCashProdResultMap">
+        <![CDATA[
+        SELECT
+          `packet_prod_cash_id`,
+          `packet_num`,
+          `prod_stauts`,
+          `seq_no`,
+          `create_time`
+        FROM
+          `withdraw_packet_cash_prod`
+        WHERE
+          `packet_prod_cash_id` = #{packetProdId}
+        ]]>
+    </select>
+</mapper>

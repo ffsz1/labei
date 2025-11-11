@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.mcoin.BillMcoinDrawDao">
+    <!--1，进行中-->
+    <select id="listUserDrawingRecords" resultType="com.juxiao.xchat.dao.mcoin.dto.McoinUserDrawRecordDTO">
+        <![CDATA[
+        SELECT
+          bmd.id AS record_id,
+          bmd.issue_id AS issueId,
+          mdi.item_type AS itemType
+        FROM
+          `bill_mcoin_draw` bmd
+        INNER JOIN
+          mcoin_draw_issue mdi
+        ON
+          bmd.issue_id = mdi.id
+        WHERE
+          bmd.uid = #{uid}
+	    AND
+	      mdi.issue_status = 2
+	    AND
+	      mdi.start_time < NOW( )
+	    GROUP BY
+	      mdi.id
+        ORDER BY
+          mdi.update_time DESC
+	    LIMIT #{start}, #{limit}
+        ]]>
+    </select>
+
+    <!--2已开奖-->
+    <select id="listUserDrawedRecords" resultType="com.juxiao.xchat.dao.mcoin.dto.McoinUserDrawRecordDTO">
+        <![CDATA[
+        SELECT
+            draw.id AS record_id,
+            draw.issue_id AS issueId,
+            IF( prize.uid = #{uid}, 1, 2 ) AS drawStatus,
+            prize.create_time AS updateTime
+        FROM
+            `bill_mcoin_draw` draw
+        LEFT JOIN
+          `mcoin_draw_prize` prize
+        ON
+          draw.issue_id = prize.issue_id
+        AND
+          draw.uid = prize.uid
+        LEFT JOIN
+          mcoin_draw_ticket ticket
+        ON
+          prize.ticket_id = ticket.id
+        AND
+          ticket.record_id = draw.id
+        WHERE
+            draw.`uid` = #{uid}
+        AND
+          EXISTS ( SELECT * FROM mcoin_draw_issue WHERE id = draw.issue_id AND issue_status = 3 )
+        AND (
+          prize.ticket_id IS NULL OR ticket.id IS NOT NULL
+        )
+        GROUP BY draw.issue_id
+        ORDER BY prize.create_time DESC
+        LIMIT #{start}, #{limit}
+        ]]>
+    </select>
+
+    <!--3，已中奖-->
+    <select id="listUserPrizeRecords" resultType="com.juxiao.xchat.dao.mcoin.dto.McoinUserDrawRecordDTO">
+        <![CDATA[
+        SELECT
+            ticket.record_id	AS record_id,
+            prize.issue_id AS issueId,
+            prize.create_time AS updateTime
+        FROM
+            `mcoin_draw_prize` prize
+            LEFT JOIN mcoin_draw_ticket ticket ON prize.ticket_id = ticket.id
+        WHERE
+            prize.`uid` = #{uid}
+        ORDER BY prize.create_time DESC
+        LIMIT #{start}, #{limit}
+        ]]>
+    </select>
+
+    <!--4，查询-->
+    <select id="listPrizeHistroyRecords" resultType="com.juxiao.xchat.dao.mcoin.dto.McoinUserHistoryRecordDTO">
+        <![CDATA[
+        SELECT
+            issue_id AS issueId,
+            uid AS uid
+        FROM
+            mcoin_draw_prize
+        ORDER BY create_time DESC
+        LIMIT #{start}, #{limit}
+        ]]>
+    </select>
+</mapper>

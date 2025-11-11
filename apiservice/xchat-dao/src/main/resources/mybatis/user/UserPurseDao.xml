@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.UserPurseDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.UserPurseDO">
+        <![CDATA[ INSERT INTO `user_purse` ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">`uid`,</if>
+            <if test="chargeGoldNum != null">`charge_gold_num`,</if>
+            <if test="nobleGoldNum != null">`noble_gold_num`,</if>
+            <if test="goldNum != null">`gold_num`,</if>
+            <if test="conchNum != null">`conch_num`,</if>
+            <if test="diamondNum != null">`diamond_num`,</if>
+            <if test="depositNum != null">`deposit_num`,</if>
+            <if test="isFirstCharge != null">`is_first_charge`,</if>
+            <if test="firstRechargeTime != null">`first_recharge_time`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="chargeGoldNum != null">#{chargeGoldNum,jdbcType=BIGINT},</if>
+            <if test="nobleGoldNum != null">#{nobleGoldNum,jdbcType=BIGINT},</if>
+            <if test="goldNum != null">#{goldNum,jdbcType=BIGINT},</if>
+            <if test="conchNum != null">#{conchNum,jdbcType=BIGINT},</if>
+            <if test="diamondNum != null">#{diamondNum,jdbcType=DOUBLE},</if>
+            <if test="depositNum != null">#{depositNum,jdbcType=BIGINT},</if>
+            <if test="isFirstCharge != null">#{isFirstCharge,jdbcType=BIT},</if>
+            <if test="firstRechargeTime != null">#{firstRechargeTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+        <![CDATA[ ON DUPLICATE KEY UPDATE ]]>
+        <trim suffixOverrides=",">
+            <if test="chargeGoldNum != null">`charge_gold_num`=#{chargeGoldNum},</if>
+            <if test="nobleGoldNum != null">`noble_gold_num`=#{nobleGoldNum},</if>
+            <if test="goldNum != null">`gold_num`=#{goldNum},</if>
+            <if test="conchNum != null">`conch_num`=#{conchNum},</if>
+            <if test="diamondNum != null">`diamond_num`=#{diamondNum},</if>
+            <if test="depositNum != null">`deposit_num`=#{depositNum},</if>
+            <if test="isFirstCharge != null">`is_first_charge`=#{isFirstCharge},</if>
+            <if test="firstRechargeTime != null">`first_recharge_time`=#{firstRechargeTime},</if>
+            <if test="updateTime != null">`update_time`=#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.user.domain.UserPurseDO">
+        <![CDATA[ UPDATE user_purse ]]>
+        <set>
+            <if test="chargeGoldNum != null">
+                charge_gold_num = #{chargeGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="nobleGoldNum != null">
+                noble_gold_num = #{nobleGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="goldNum != null">
+                gold_num = #{goldNum,jdbcType=BIGINT},
+            </if>
+            <if test="conchNum != null">
+                conch_num = #{conchNum,jdbcType=BIGINT},
+            </if>
+            <if test="diamondNum != null">
+                diamond_num = #{diamondNum,jdbcType=DOUBLE},
+            </if>
+            <if test="depositNum != null">
+                deposit_num = #{depositNum,jdbcType=BIGINT},
+            </if>
+            <if test="isFirstCharge != null">
+                is_first_charge = #{isFirstCharge,jdbcType=BIT},
+            </if>
+            <if test="firstRechargeTime != null">
+                first_recharge_time = #{firstRechargeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ WHERE uid = #{uid,jdbcType=BIGINT} ]]>
+    </update>
+
+    <resultMap id="UserPurseDtoResultMap" type="com.juxiao.xchat.dao.user.dto.UserPurseDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="charge_gold_num" property="chargeGoldNum" jdbcType="BIGINT"/>
+        <result column="noble_gold_num" property="nobleGoldNum" jdbcType="BIGINT"/>
+        <result column="gold_num" property="goldNum" jdbcType="BIGINT"/>
+        <result column="conch_num" property="conchNum" jdbcType="BIGINT"/>
+        <result column="diamond_num" property="diamondNum" jdbcType="DOUBLE"/>
+        <result column="deposit_num" property="depositNum" jdbcType="BIGINT"/>
+        <result column="is_first_charge" property="isFirstCharge" jdbcType="BIT"/>
+        <result column="first_recharge_time" property="firstRechargeTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getUserPurse" parameterType="java.lang.Long" resultMap="UserPurseDtoResultMap">
+        <![CDATA[
+
+        SELECT
+          uid,
+          charge_gold_num,
+          noble_gold_num,
+          gold_num,
+          conch_num,
+          trycoin_num,
+          diamond_num,
+          deposit_num,
+          is_first_charge,
+          first_recharge_time,
+          update_time
+        FROM
+          user_purse
+        WHERE
+          uid = #{uid,jdbcType=BIGINT}
+
+        ]]>
+    </select>
+</mapper>

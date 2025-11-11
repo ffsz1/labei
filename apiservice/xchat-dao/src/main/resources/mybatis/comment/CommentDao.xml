@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.comment.CommentDao">
+  <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.comment.domain.Comment">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="topicid" jdbcType="BIGINT" property="topicid" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="replynum" jdbcType="INTEGER" property="replynum"/>
+      <result column="praisenum" jdbcType="INTEGER" property="praisenum"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <resultMap id="BaseResultMap2" type="com.juxiao.xchat.dao.comment.dto.CommentDTO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="topicid" jdbcType="BIGINT" property="topicid" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="replynum" jdbcType="INTEGER" property="replynum"/>
+      <result column="praisenum" jdbcType="INTEGER" property="praisenum"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="gender" property="gender" jdbcType="TINYINT"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, uid, topicid, state, comment, replynum,praisenum,create_time, update_time
+  </sql>
+  <sql id="comment_users">
+    comment.id,
+    comment.uid,
+    comment.topicid,
+    comment.state,
+    comment.comment,
+    comment.replynum,
+    comment.praisenum,
+    comment.create_time,
+    comment.update_time,
+    users.gender,
+    users.nick,
+    users.avatar
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="listComment" resultMap="BaseResultMap2">
+    select
+    <include refid="comment_users" />
+    from comment join users on comment.uid=users.uid
+    <where>
+      <if test="query.topicid != null">
+        AND comment.topicid=#{query.topicid}
+      </if>
+      <if test="query.state != null">
+        AND comment.state=#{query.state}
+      </if>
+      <if test="query.comment != null">
+        AND comment.comment like concat('%',#{query.comment},'%')
+      </if>
+    </where>
+    <trim prefix="LIMIT ">
+      <if test="page!= null"> #{page.bottom},#{page.pageSize}</if>
+    </trim>
+  </select>
+
+  <select id="listCommentOrderByCTime" resultMap="BaseResultMap2">
+    select
+    <include refid="comment_users" />
+    from comment join users on comment.uid=users.uid
+    <where>
+      <if test="query.topicid != null">
+        AND comment.topicid=#{query.topicid}
+      </if>
+      <if test="query.state != null">
+        AND comment.state=#{query.state}
+      </if>
+      <if test="query.comment != null">
+        AND comment.comment like concat('%',#{query.comment},'%')
+      </if>
+    </where>
+    <if test=" isorder != null and isorder==1">
+      order by comment.create_time asc
+    </if>
+    <trim prefix="LIMIT ">
+      <if test="page!= null"> #{page.bottom},#{page.pageSize}</if>
+    </trim>
+  </select>
+
+  <select id="getSize" resultType="java.lang.Long">
+    select count(1)
+    from comment join users on comment.uid=users.uid
+    <where>
+      <if test="query.topicid != null">
+        AND comment.topicid=#{query.topicid}
+      </if>
+      <if test="query.state != null">
+        AND comment.state=#{query.state}
+      </if>
+      <if test="query.comment != null">
+        AND comment.comment like concat('%',#{query.comment},'%')
+      </if>
+    </where>
+  </select>
+  <select id="selectById" resultMap="BaseResultMap2">
+    select
+    <include refid="comment_users" />
+    from comment join users on comment.uid=users.uid
+    where comment.id=#{id}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.juxiao.xchat.dao.comment.domain.Comment">
+    insert into comment (id, uid, topicid, 
+      state, comment,replynum,praisenum, create_time,
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{topicid,jdbcType=BIGINT}, 
+      #{state,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{replynum},#{praisenum},#{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.juxiao.xchat.dao.comment.domain.Comment">
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="topicid != null">
+        topicid,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="replynum != null">
+        replynum,
+      </if>
+      <if test="praisenum != null">
+        praisenum,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="topicid != null">
+        #{topicid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="replynum != null">
+        #{replynum},
+      </if>
+      <if test="praisenum != null">
+            #{praisenum},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.juxiao.xchat.dao.comment.domain.Comment">
+    update comment
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="topicid != null">
+        topicid = #{topicid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="replynum != null">
+        replynum = #{replynum},
+      </if>
+        <if test="praisenum != null">
+            praisenum = #{praisenum},
+        </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.juxiao.xchat.dao.comment.domain.Comment">
+    update comment
+    set uid = #{uid,jdbcType=BIGINT},
+      topicid = #{topicid,jdbcType=BIGINT},
+      state = #{state,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      replynum = #{replynum},
+      praisenum = #{praisenum},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="upReplynum">
+    update comment set replynum=replynum+#{num} where id=#{id}
+  </update>
+  <update id="upPraisenum">
+    update comment set praisenum=praisenum+#{num} where id=#{id}
+  </update>
+</mapper>

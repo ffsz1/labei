@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.sysconf.SmsRecordDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.sysconf.domain.SmsRecordDO">
+        <trim prefix="INSERT INTO sms_record (" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="imei != null">
+                imei,
+            </if>
+            <if test="os != null">
+                os,
+            </if>
+            <if test="osversion != null">
+                osVersion,
+            </if>
+            <if test="channel != null">
+                channel,
+            </if>
+            <if test="appVersion != null">
+                app_version,
+            </if>
+            <if test="model != null">
+                model,
+            </if>
+            <if test="smsCode != null">
+                sms_code,
+            </if>
+            <if test="smsType != null">
+                sms_type,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="imei != null">
+                #{imei,jdbcType=VARCHAR},
+            </if>
+            <if test="os != null">
+                #{os,jdbcType=VARCHAR},
+            </if>
+            <if test="osversion != null">
+                #{osversion,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="smsCode != null">
+                #{smsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="smsType != null">
+                #{smsType,jdbcType=TINYINT},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

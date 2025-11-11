@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.UserDrawRecordDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.UserDrawRecordDO" useGeneratedKeys="true" keyProperty="recordId">
+        <![CDATA[ INSERT INTO user_draw_record ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="drawStatus != null">
+                draw_status,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="srcObjId != null">
+                src_obj_id,
+            </if>
+            <if test="srcObjName != null">
+                src_obj_name,
+            </if>
+            <if test="srcObjAmount != null">
+                src_obj_amount,
+            </if>
+            <if test="drawPrizeId != null">
+                draw_prize_id,
+            </if>
+            <if test="drawPrizeName != null">
+                draw_prize_name,
+            </if>
+            <if test="drawPrizePutout != null">
+                draw_prize_putout,
+            </if>
+            <if test="recordDesc != null">
+                record_desc,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="drawStatus != null">
+                #{drawStatus,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="srcObjId != null">
+                #{srcObjId,jdbcType=VARCHAR},
+            </if>
+            <if test="srcObjName != null">
+                #{srcObjName,jdbcType=VARCHAR},
+            </if>
+            <if test="srcObjAmount != null">
+                #{srcObjAmount,jdbcType=BIGINT},
+            </if>
+            <if test="drawPrizeId != null">
+                #{drawPrizeId,jdbcType=INTEGER},
+            </if>
+            <if test="drawPrizeName != null">
+                #{drawPrizeName,jdbcType=VARCHAR},
+            </if>
+            <if test="drawPrizePutout != null">
+                #{drawPrizePutout,jdbcType=TINYINT},
+            </if>
+            <if test="recordDesc != null">
+                #{recordDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.user.domain.UserDrawRecordDO">
+        <![CDATA[ UPDATE `user_draw_record` ]]>
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="drawStatus != null">
+                draw_status = #{drawStatus,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="srcObjId != null">
+                src_obj_id = #{srcObjId,jdbcType=VARCHAR},
+            </if>
+            <if test="srcObjName != null">
+                src_obj_name = #{srcObjName,jdbcType=VARCHAR},
+            </if>
+            <if test="srcObjAmount != null">
+                src_obj_amount = #{srcObjAmount,jdbcType=BIGINT},
+            </if>
+            <if test="drawPrizeId != null">
+                draw_prize_id = #{drawPrizeId,jdbcType=INTEGER},
+            </if>
+            <if test="drawPrizeName != null">
+                draw_prize_name = #{drawPrizeName,jdbcType=VARCHAR},
+            </if>
+            <if test="drawPrizePutout != null">
+                draw_prize_putout = #{drawPrizePutout,jdbcType=TINYINT},
+            </if>
+            <if test="recordDesc != null">
+                record_desc = #{recordDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where record_id = #{recordId,jdbcType=INTEGER}
+    </update>
+
+    <resultMap id="UserDrawRecordResultMap" type="com.juxiao.xchat.dao.user.dto.UserDrawRecordDTO">
+        <id column="record_id" property="recordId" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="draw_status" property="drawStatus" jdbcType="TINYINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="src_obj_id" property="srcObjId" jdbcType="VARCHAR"/>
+        <result column="src_obj_name" property="srcObjName" jdbcType="VARCHAR"/>
+        <result column="src_obj_amount" property="srcObjAmount" jdbcType="BIGINT"/>
+        <result column="draw_prize_id" property="drawPrizeId" jdbcType="INTEGER"/>
+        <result column="draw_prize_name" property="drawPrizeName" jdbcType="VARCHAR"/>
+        <result column="draw_prize_putout" property="drawPrizePutout" jdbcType="TINYINT"/>
+        <result column="record_desc" property="recordDesc" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getUserCreateDrawRecord" parameterType="Map" resultMap="UserDrawRecordResultMap">
+        <![CDATA[
+        SELECT
+          record_id,
+          uid,
+          draw_status,
+          `type`,
+          src_obj_id,
+          src_obj_name,
+          src_obj_amount,
+          draw_prize_id,
+          draw_prize_name,
+          draw_prize_putout,
+          record_desc,
+          create_time,
+          update_time
+        FROM
+          `user_draw_record`
+        ]]>
+        <where>
+            uid = #{uid}
+        AND
+            `draw_status` =${@com.juxiao.xchat.dao.user.enumeration.UserDrawRecordStatus@CREATE.getValue()}
+        AND `type` in
+            <foreach collection="types" index="value" open="(" separator=", " close=")">
+                #{value}
+            </foreach>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="getUserCreateDrawRecord2" parameterType="Map" resultMap="UserDrawRecordResultMap">
+        <![CDATA[
+        SELECT
+          record_id,
+          uid,
+          draw_status,
+          `type`,
+          src_obj_id,
+          src_obj_name,
+          src_obj_amount,
+          draw_prize_id,
+          draw_prize_name,
+          draw_prize_putout,
+          record_desc,
+          create_time,
+          update_time
+        FROM
+          `user_draw_record`
+        ]]>
+        <where>
+            uid = #{uid}
+            AND
+            `draw_status` =${@com.juxiao.xchat.dao.user.enumeration.UserDrawRecordStatus@CREATE.getValue()}
+            and
+            `type` = #{type}
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="getUserCreateDrawRecord3" parameterType="Map" resultMap="UserDrawRecordResultMap">
+        <![CDATA[
+        SELECT
+          record_id,
+          uid,
+          draw_status,
+          `type`,
+          src_obj_id,
+          src_obj_name,
+          src_obj_amount,
+          draw_prize_id,
+          draw_prize_name,
+          draw_prize_putout,
+          record_desc,
+          create_time,
+          update_time
+        FROM
+          `user_draw_record`
+        ]]>
+        <where>
+            uid = #{uid}
+            AND
+            `draw_status` =${@com.juxiao.xchat.dao.user.enumeration.UserDrawRecordStatus@CREATE.getValue()}
+            AND
+            `type` = #{type}
+            AND
+            src_obj_id = #{srcObjId}
+        </where>
+        LIMIT 1
+    </select>
+
+
+    <select id="listUserDrawWinRecord" resultMap="UserDrawRecordResultMap">
+        <![CDATA[
+        SELECT
+          uid,
+          draw_status,
+          `type`,
+          src_obj_name,
+          draw_prize_name
+        FROM
+          `user_draw_record`
+        WHERE
+          draw_status = 3
+        ORDER BY
+          draw_prize_id DESC,
+          create_time DESC
+        LIMIT 0, 20
+        ]]>
+    </select>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.sysconf.NetEaseConversationDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.sysconf.domain.NetEaseConversationDO" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[ INSERT INTO `netease_conversation` ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="convType != null">conv_type,</if>
+            <if test="toStr != null">to_str,</if>
+            <if test="fromAccount != null">from_account,</if>
+            <if test="fromClientType != null">from_client_type,</if>
+            <if test="fromDeviceId != null">from_device_id,</if>
+            <if test="fromNick != null">from_nick,</if>
+            <if test="msgTimestamp != null">msg_timestamp,</if>
+            <if test="msgType != null">msg_type,</if>
+            <if test="body != null">body,</if>
+            <if test="attach != null">attach,</if>
+            <if test="msgidClient != null">msgid_client,</if>
+            <if test="msgidServer != null">msgid_server,</if>
+            <if test="resendFlag != null">resend_flag,</if>
+            <if test="customSafeFlag != null">custom_safe_flag,</if>
+            <if test="customApnsText != null">custom_apns_text,</if>
+            <if test="tMembers != null">t_members,</if>
+            <if test="ext != null">ext,</if>
+            <if test="antispam != null">antispam,</if>
+            <if test="yidunRes != null">yidun_res,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="convType != null">#{convType,jdbcType=VARCHAR},</if>
+            <if test="toStr != null">#{toStr,jdbcType=VARCHAR},</if>
+            <if test="fromAccount != null">#{fromAccount,jdbcType=VARCHAR},</if>
+            <if test="fromClientType != null">#{fromClientType,jdbcType=VARCHAR},</if>
+            <if test="fromDeviceId != null">#{fromDeviceId,jdbcType=VARCHAR},</if>
+            <if test="fromNick != null">#{fromNick,jdbcType=VARCHAR},</if>
+            <if test="msgTimestamp != null">#{msgTimestamp,jdbcType=VARCHAR},</if>
+            <if test="msgType != null">#{msgType,jdbcType=VARCHAR},</if>
+            <if test="body != null">#{body,jdbcType=VARCHAR},</if>
+            <if test="attach != null">#{attach,jdbcType=VARCHAR},</if>
+            <if test="msgidClient != null">#{msgidClient,jdbcType=VARCHAR},</if>
+            <if test="msgidServer != null">#{msgidServer,jdbcType=VARCHAR},</if>
+            <if test="resendFlag != null">#{resendFlag,jdbcType=VARCHAR},</if>
+            <if test="customSafeFlag != null">#{customSafeFlag,jdbcType=VARCHAR},</if>
+            <if test="customApnsText != null">#{customApnsText,jdbcType=VARCHAR},</if>
+            <if test="tMembers != null">#{tMembers,jdbcType=VARCHAR},</if>
+            <if test="ext != null">#{ext,jdbcType=VARCHAR},</if>
+            <if test="antispam != null">#{antispam,jdbcType=VARCHAR},</if>
+            <if test="yidunRes != null">#{yidunRes,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+</mapper>

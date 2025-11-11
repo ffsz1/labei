@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.bill.BillTransferDao">
+
+    <select id="listUserTransfer" parameterType="com.juxiao.xchat.dao.bill.query.BillUserQuery"
+            resultType="com.juxiao.xchat.dao.bill.dto.BillUserTransferDTO">
+        <![CDATA[
+        SELECT
+            u.`nick` AS `srcNick`,
+            u.`avatar` AS `srcAvatar`,
+            bt.`create_time` as `recordTime`,
+            1 AS `giftNum`,
+            -bt.`cost` AS `diamondNum`,
+            bt.`money` AS `money`
+        FROM
+            `bill_transfer` bt
+        INNER JOIN
+            `users` u
+        ON
+            bt.`uid` = u.`uid`
+        WHERE
+            bt.`uid` = #{uid}
+        AND
+            bt.`create_time` < #{date}
+        ORDER BY bt.`create_time` DESC
+        LIMIT #{startRecord}, #{prePage}
+        ]]>
+    </select>
+
+
+</mapper>

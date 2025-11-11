@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.wish.WishLabelDao">
+
+<!--    <sql id="baseCol">
+        uid,
+        label_id
+    </sql>-->
+    <insert id="insertWishLabels">
+        insert into wish_label (
+        uid,
+        label_id
+        )values
+        <foreach collection="ids" item="item" separator=",">
+          (
+            #{uid},#{item}
+          )
+        </foreach>
+    </insert>
+    <delete id="deleteByUid">
+        delete from wish_label where uid=#{uid}
+    </delete>
+
+    <select id="listLabelName" resultType="java.lang.String">
+      select name from label t1 join wish_label t2 on t1.id=t2.label_id where t1.type=#{type} and t2.uid=#{uid}
+    </select>
+</mapper>

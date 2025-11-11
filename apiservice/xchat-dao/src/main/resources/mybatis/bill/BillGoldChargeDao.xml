@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.bill.BillGoldChargeDao">
+
+    <select id="listUserCharge" parameterType="com.juxiao.xchat.dao.bill.query.BillUserQuery"
+            resultType="com.juxiao.xchat.dao.bill.dto.BillGoldUserChargeDTO">
+        <![CDATA[
+        SELECT
+            srcu.nick as srcNick,
+            srcu.avatar as srcAvatar,
+            IF(targ_uid, srcu.nick, NULL) as targetNick,
+            IF(targ_uid, srcu.avatar, NULL) as targetAvatar,
+            charge.create_time as recordTime,
+            charge.gold_amount as goldNum,
+            charge.money as money,
+            charge.show_str as showStr
+        FROM (
+            SELECT
+                bgc.uid as src_uid,
+                TRUE as targ_uid,
+                bgc.create_time as create_time,
+                bgc.gold_amount as gold_amount,
+                bgc.money as money,
+                CONCAT('充值(',bgc.money,')元') as show_str
+            FROM
+                bill_gold_charge bgc
+            WHERE
+                bgc.uid = #{uid}
+            AND
+                bgc.create_time < #{date}
+            UNION ALL
+            SELECT
+                bge.uid as src_uid,
+                TRUE as targ_uid,
+                bge.create_time as create_time,
+                bge.gold_amount as gold_amount,
+                null as money,
+                '兑换钻石' as show_str
+            FROM
+                bill_gold_exchange bge
+            WHERE
+                bge.uid = #{uid}
+            AND
+                bge.create_time < #{date}
+            UNION ALL
+            SELECT
+                bgd.uid as src_uid,
+                FALSE as targ_uid,
+                bgd.create_time as create_time,
+                bgd.gold_amount as gold_amount,
+                null as money,
+                '扭蛋所得' as show_str
+            FROM
+                bill_gold_draw bgd
+            WHERE
+                bgd.uid = #{uid}
+            AND
+                bgd.create_time < #{date}
+                
+            UNION ALL
+            SELECT
+                ogr.uid as src_uid,
+                FALSE as targ_uid,
+                ogr.create_time as create_time,
+                ogr.gold_num as gold_amount,
+                null as money,
+                '官方活动赠送' as show_str
+            FROM
+                official_gold_record ogr
+            WHERE
+                ogr.uid = #{uid}
+            AND
+                ogr.create_time < #{date}
+        ) charge
+        LEFT JOIN
+          users srcu
+        ON
+          charge.src_uid = srcu.uid
+        ORDER BY charge.create_time DESC
+        LIMIT #{startRecord}, #{prePage}
+        ]]>
+    </select>
+</mapper>

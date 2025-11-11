@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.sysconf.AdvertiseDao">
+
+    <select id="list" resultType="com.juxiao.xchat.dao.sysconf.dto.AdvertiseDTO">
+        SELECT
+          *
+        FROM
+          advertise
+        WHERE
+          adv_status = 1
+        ORDER BY
+          seq_no ASC
+    </select>
+</mapper>

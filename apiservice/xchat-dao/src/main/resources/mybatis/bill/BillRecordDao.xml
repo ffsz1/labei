@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.bill.BillRecordDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.bill.domain.BillRecordDO">
+        <trim prefix="INSERT INTO bill_record (" suffix=")" suffixOverrides=",">
+            <if test="billId != null">bill_id,</if>
+            <if test="uid != null">uid,</if>
+            <if test="targetUid != null">target_uid,</if>
+            <if test="roomUid != null">room_uid,</if>
+            <if test="billStatus != null">bill_status,</if>
+            <if test="objId != null">obj_id,</if>
+            <if test="objType != null">obj_type,</if>
+            <if test="giftId != null">gift_id,</if>
+            <if test="giftNum != null">gift_num,</if>
+            <if test="diamondNum != null">diamond_num,</if>
+            <if test="goldNum != null">gold_num,</if>
+            <if test="money != null">money,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="billId != null">#{billId,jdbcType=VARCHAR},</if>
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="targetUid != null">#{targetUid,jdbcType=BIGINT},</if>
+            <if test="roomUid != null">#{roomUid,jdbcType=BIGINT},</if>
+            <if test="billStatus != null">#{billStatus,jdbcType=TINYINT},</if>
+            <if test="objId != null">#{objId,jdbcType=VARCHAR},</if>
+            <if test="objType != null">#{objType,jdbcType=TINYINT},</if>
+            <if test="giftId != null">#{giftId,jdbcType=INTEGER},</if>
+            <if test="giftNum != null">#{giftNum,jdbcType=INTEGER},</if>
+            <if test="diamondNum != null">#{diamondNum,jdbcType=DOUBLE},</if>
+            <if test="goldNum != null">#{goldNum,jdbcType=BIGINT},</if>
+            <if test="money != null">#{money,jdbcType=BIGINT},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+</mapper>

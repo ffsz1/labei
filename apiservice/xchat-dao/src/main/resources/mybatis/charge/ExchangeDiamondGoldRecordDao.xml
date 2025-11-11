@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.charge.ExchangeDiamondGoldRecordDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.charge.ExchangeDiamondGoldRecordDao">
+        <![CDATA[ INSERT INTO `exchange_diamond_gold_record` ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">record_id,</if>
+            <if test="uid != null">uid,</if>
+            <if test="exDiamondNum != null">ex_diamond_num,</if>
+            <if test="exGoldNum != null">ex_gold_num,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">#{recordId,jdbcType=VARCHAR},</if>
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="exDiamondNum != null">#{exDiamondNum,jdbcType=DOUBLE},</if>
+            <if test="exGoldNum != null">#{exGoldNum,jdbcType=BIGINT},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+</mapper>

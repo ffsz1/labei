@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.UserPacketDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.UserPacketDO">
+        <trim prefix="INSERT IGNORE INTO `user_packet` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="packetNum != null">packet_num,</if>
+            <if test="histPacketNum != null">hist_packet_num,</if>
+            <if test="firstGetTime != null">first_get_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="packetNum != null">#{packetNum,jdbcType=DOUBLE},</if>
+            <if test="histPacketNum != null">#{histPacketNum,jdbcType=DOUBLE},</if>
+            <if test="firstGetTime != null">#{firstGetTime,jdbcType=TIMESTAMP},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.user.domain.UserPacketDO">
+        <![CDATA[ UPDATE user_packet ]]>
+        <set>
+            <if test="packetNum != null">
+                packet_num = #{packetNum,jdbcType=DOUBLE},
+            </if>
+            <if test="histPacketNum != null">
+                hist_packet_num = #{histPacketNum,jdbcType=DOUBLE},
+            </if>
+            <if test="firstGetTime != null">
+                first_get_time = #{firstGetTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ WHERE uid = #{uid,jdbcType=BIGINT} ]]>
+    </update>
+
+    <resultMap id="UserPacketResultMap" type="com.juxiao.xchat.dao.user.dto.UserPacketDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="packet_num" property="packetNum" jdbcType="DOUBLE"/>
+        <result column="hist_packet_num" property="histPacketNum" jdbcType="DOUBLE"/>
+        <result column="first_get_time" property="firstGetTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getUserPacket" parameterType="long" resultMap="UserPacketResultMap">
+        <![CDATA[
+
+        SELECT
+          uid,
+          packet_num,
+          hist_packet_num, first_get_time,
+          create_time,
+          update_time
+        FROM
+          `user_packet`
+        WHERE
+          `uid` = #{uid,jdbcType=BIGINT}
+
+        ]]>
+    </select>
+
+    <select id="listPacketActivityRank" resultType="com.juxiao.xchat.dao.user.dto.StatPacketActRankDTO">
+        <![CDATA[
+
+        SELECT
+          usrpck.seq_no AS seqNo,
+          usrpck.uid AS uid,
+          usrpck.hist_packet_num AS packetNum,
+          usr.nick AS nick,
+          usr.avatar AS avatar
+        FROM (
+          SELECT
+            @rownum := @rownum + 1 AS seq_no,
+            up.*
+          FROM
+            user_packet up,
+            stat_packet_activity act,
+            (SELECT @rownum:=0)rnk
+          WHERE
+            up.uid=act.uid
+          ORDER BY
+            up.hist_packet_num DESC
+          limit 0,50
+        ) usrpck
+        LEFT JOIN
+          users usr
+        ON
+          usrpck.uid = usr.uid
+
+        ]]>
+    </select>
+
+    <select id="listInviteBonus" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.user.dto.StatPacketBounsDTO">
+        <![CDATA[
+
+        SELECT
+          u.uid AS uid,
+          if(record.type=4,u.nick,(select su.nick from stat_packet_register ss INNER JOIN users su on ss.uid = su.uid where ss.register_uid = u.uid)) as nick,
+          if(record.type=4,'',u.nick) as lowerNick,
+          record.packet_num AS packetNum,
+          record.create_time AS createTime
+        FROM
+          user_packet_record record,
+          users u
+        WHERE
+          record.uid=  #{uid,jdbcType=BIGINT}
+        AND
+          u.uid=record.src_uid
+        AND
+          record.type in (4,6)
+        ORDER BY
+          record.create_time DESC
+
+        ]]>
+    </select>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.praise.PraiseDao" >
+
+  <sql id="baseCol">
+    id,
+    uid,
+    topicid,
+    type,
+    state,
+    create_time as createTime
+  </sql>
+
+  <insert id="insertSelect" parameterType="com.juxiao.xchat.dao.praise.domain.Praise">
+    insert into praise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+    <if test="id != null" >
+      id,
+    </if>
+    <if test="uid != null" >
+      uid,
+    </if>
+      <if test="topicid != null" >
+        topicid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="uid != null" >
+        #{uid},
+      </if>
+      <if test="topicid != null" >
+        #{topicid},
+      </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+      <if test="state != null" >
+        #{state},
+      </if>
+      <if test="createTime != null" >
+        #{createTime}
+      </if>
+    </trim>
+  </insert>
+  <delete id="delete">
+    delete from praise where type=1 and uid=#{uid} and topicid=#{topicid}
+  </delete>
+  <delete id="deleteType">
+    delete from praise where type=#{type} and uid=#{uid} and topicid=#{topicid}
+  </delete>
+  <select id="selectPraise" resultType="com.juxiao.xchat.dao.praise.domain.Praise">
+    select <include refid="baseCol"/> from praise where type=1 and uid=#{uid} and topicid=#{topicid}
+  </select>
+  <select id="selectPraiseType" resultType="com.juxiao.xchat.dao.praise.domain.Praise">
+    select <include refid="baseCol"/> from praise where type=#{type} and uid=#{uid} and topicid=#{topicid}
+  </select>
+
+</mapper>

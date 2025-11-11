@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.PrivatePhotoDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.PrivatePhotoDO" useGeneratedKeys="true" keyProperty="pid">
+        <trim prefix="INSERT INTO `private_photo` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="photoUrl != null">photo_url,</if>
+            <if test="seqNo != null">seq_no,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="photoStatus != null">photo_status,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="photoUrl != null">#{photoUrl,jdbcType=VARCHAR},</if>
+            <if test="seqNo != null">#{seqNo,jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="photoStatus != null">#{photoStatus,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+</mapper>

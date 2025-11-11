@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.room.RoomPkVoteDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.room.domain.RoomPkVoteDO" useGeneratedKeys="true" keyProperty="id">
+        <trim prefix="INSERT INTO `room_pk_vote` (" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">`room_id`,</if>
+            <if test="pkType != null">`pk_type`,</if>
+            <if test="uid != null">`uid`,</if>
+            <if test="voteCount != null">`vote_count`,</if>
+            <if test="pkUid != null">`pk_uid`,</if>
+            <if test="pkVoteCount != null">`pk_vote_count`,</if>
+            <if test="expireSeconds != null">`expire_seconds`,</if>
+            <if test="createTime != null">`create_time`,</if>
+            <if test="updateTime != null">`update_time`,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">#{roomId},</if>
+            <if test="pkType != null">#{pkType},</if>
+            <if test="uid != null">#{uid},</if>
+            <if test="voteCount != null">#{voteCount},</if>
+            <if test="pkUid != null">#{pkUid},</if>
+            <if test="pkVoteCount != null">#{pkVoteCount},</if>
+            <if test="expireSeconds != null">#{expireSeconds},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.room.domain.RoomPkVoteDO">
+        UPDATE `room_pk_vote`
+        <set>
+            <if test="roomId != null">`room_id` = #{roomId},</if>
+            <if test="pkType != null">`pk_type` = #{pkType},</if>
+            <if test="uid != null">`uid` = #{uid},</if>
+            <if test="voteCount != null">`vote_count` = #{voteCount},</if>
+            <if test="pkUid != null">`pk_uid` = #{pkUid},</if>
+            <if test="pkVoteCount != null">`pk_vote_count` = #{pkVoteCount},</if>
+            <if test="expireSeconds != null">`expire_seconds` = #{expireSeconds},</if>
+            `update_time` = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="getEffectivePkVote" parameterType="long" resultType="com.juxiao.xchat.dao.room.dto.RoomPkVoteDTO">
+        <![CDATA[
+        SELECT
+          `id` AS id,
+          `room_id` AS roomId,
+          `pk_type` AS pkType,
+          `uid` AS uid,
+          `vote_count` AS voteCount,
+          `pk_uid` AS pkUid,
+          `pk_vote_count` AS pkVoteCount,
+          `expire_seconds` AS expireSeconds,
+          `create_time` AS createTime,
+          `update_time` AS updateTime
+        FROM
+          `room_pk_vote`
+        WHERE
+          room_id = #{roomId}
+        AND
+		  UNIX_TIMESTAMP(`create_time`) + expire_seconds > UNIX_TIMESTAMP(now())
+		LIMIT 1
+        ]]>
+    </select>
+
+    <select id="listPkVotes" parameterType="com.juxiao.xchat.dao.room.query.PkVotesListQuery" resultType="com.juxiao.xchat.dao.room.dto.RoomPkVoteHistroyDTO">
+        <![CDATA[
+        SELECT
+            `room_id` AS roomId,
+            `pk_type` AS pkType,
+            `uid` AS uid,
+            `vote_count` AS voteCount,
+            `pk_uid` AS pkUid,
+            `pk_vote_count` AS pkVoteCount,
+            `expire_seconds` AS expireSeconds,
+            `create_time` AS createTime
+        FROM
+          `room_pk_vote`
+        WHERE
+          room_id = #{roomId}
+        AND
+          UNIX_TIMESTAMP(`create_time`) + expire_seconds< UNIX_TIMESTAMP(now())
+        ORDER BY `create_time` DESC
+        LIMIT #{startRecord}, #{pageSize}
+        ]]>
+    </select>
+
+</mapper>

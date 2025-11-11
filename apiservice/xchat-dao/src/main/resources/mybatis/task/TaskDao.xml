@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.task.TaskDao">
+    <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.room.domain.StatRoomFlowOnlinePeriod">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="room_id" property="roomId" jdbcType="BIGINT"/>
+        <result column="room_pwd" property="roomPwd" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="tag_id" property="tagId" jdbcType="INTEGER"/>
+        <result column="tag_pict" property="tagPict" jdbcType="VARCHAR"/>
+        <result column="room_tag" property="roomTag" jdbcType="VARCHAR"/>
+        <result column="badge" property="badge" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="room_desc" property="roomDesc" jdbcType="VARCHAR"/>
+        <result column="back_pic" property="backPic" jdbcType="VARCHAR"/>
+        <result column="operator_status" property="operatorStatus" jdbcType="TINYINT"/>
+        <result column="official_room" property="officialRoom" jdbcType="TINYINT"/>
+        <result column="is_permit_room" property="isPermitRoom" jdbcType="TINYINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="recom_seq" property="recomSeq" jdbcType="BIGINT"/>
+        <result column="online_num" property="onlineNum" jdbcType="INTEGER"/>
+        <result column="flow_sum_total" property="flowSumTotal" jdbcType="BIGINT"/>
+        <result column="score" property="score" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <select id="selectRoomFlowOnlinePeriod" resultMap="BaseResultMap">
+        SELECT period.uid,period.recom_seq,period.flow_sum_total,period.score,
+            room.room_id, room.room_pwd, room.valid, room.title, room.tag_id, room.tag_pict, room.room_tag, room.online_num,
+            room.badge, room.room_desc, room.back_pic,room.operator_status, room.official_room, room.is_permit_room, room.type,
+            users.gender, users.nick,users.avatar,ifnull(users.user_desc, '') as userDescription
+        FROM
+            stat_room_flow_online_period period
+        LEFT JOIN room ON period.uid = room.uid
+        INNER JOIN users on users.uid = room.uid
+        where room.can_show = 1
+        AND ifnull( room.room_pwd, '' ) = ''
+        <if test="recommendUidList != null and recommendUidList.size() > 0">
+            AND room.uid NOT IN
+            <foreach item="item" index="index" collection="recommendUidList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="tagIds != null and tagIds.size() > 0">
+            AND room.tag_id IN
+            <foreach item="item1" index="index" collection="tagIds" open="(" separator="," close=")">
+                #{item1}
+            </foreach>
+        </if>
+        <if test="isPermitRoom != null and isPermitRoom.size() > 0">
+            AND room.is_permit_room IN
+            <foreach item="item2" index="index" collection="isPermitRoom" open="(" separator="," close=")">
+                #{item2}
+            </foreach>
+        </if>
+        ORDER BY room.is_hei asc, period.score DESC
+        LIMIT #{size}
+    </select>
+
+    <select id="getGreenHome" resultMap="BaseResultMap">
+        SELECT
+        rt.uid as uid,
+        rt.room_id as room_uid,
+        rt.room_pwd as room_pwd,
+        rt.operator_status as operator_status,
+        rt.title as title,
+        rt.tag_id as tag_id,
+        rt.tag_pict as tag_pict,
+        rt.room_tag as room_tag,
+        IF ( rt.badge = '', NULL, rt.badge ) as badge,
+        rt.room_desc as room_desc,
+        rt.back_pic as back_pic,
+        rt.valid as valid,
+        u.avatar as avatar,
+        u.nick as nick,
+        u.gender as gender,
+        rt.official_room as official_room,
+        rt.is_permit_room as is_permit_room,
+        rt.type as type,
+        rt.recom_seq as recom_seq,
+        COALESCE ( rt.online_num, 0 ) as online_num
+        FROM
+        user_configure uc
+        LEFT JOIN room rt ON rt.uid = uc.uid
+        LEFT JOIN users u ON u.uid = uc.uid
+        WHERE
+        uc.green_recom = 1
+        <if test="recomUids != null and recomUids.size() > 0">
+            AND u.uid NOT IN
+            <foreach item="item" index="index" collection="recomUids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND ( rt.room_pwd IS NULL OR rt.room_pwd = '' )
+        AND rt.valid = 1
+        ORDER BY rt.recom_seq DESC LIMIT #{size}
+    </select>
+
+    <select id="getRoomForFirstCharge" resultMap="BaseResultMap">
+        select *
+        from stat_room_flow_online_period
+        where 1 = 1
+        <if test="recomUids != null">
+            AND uid NOT IN
+            <foreach item="item" index="index" collection="recomUids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND is_permit_room in (2, 3)
+        AND online_num>0
+        AND valid=1
+        ORDER BY recom_seq DESC, is_permit_room+if(online_num>=2,0,1) ASC, score DESC LIMIT #{size}
+    </select>
+
+    <select id="findFamilyExitRecord" resultType="com.juxiao.xchat.dao.family.domain.FamilyExitRecordDO">
+        select fer.id, fer.team_id as teamId, fer.uid, fer.status, fer.type, fer.create_time as createTime, fer.update_time as updateTime, fer.remark, ft.family_id as familyId, ft.room_id as roomId
+        from family_exit_record fer
+        left join family_team ft on ft.id = fer.team_id
+        where fer.type = 1 and fer.status in (0, 2)
+    </select>
+
+    <select id="getGreenListHome" resultMap="BaseResultMap">
+        SELECT
+            rt.uid as uid,
+            rt.room_id as room_uid,
+            rt.room_pwd as room_pwd,
+            rt.operator_status as operator_status,
+            rt.title as title,
+            rt.tag_id as tag_id,
+            rt.tag_pict as tag_pict,
+            rt.room_tag as room_tag,
+            IF ( rt.badge = '', NULL, rt.badge ) as badge,
+            rt.room_desc as room_desc,
+            rt.back_pic as back_pic,
+            rt.valid as valid,
+            u.avatar as avatar,
+            u.nick as nick,
+            u.gender as gender,
+            rt.official_room as official_room,
+            rt.is_permit_room as is_permit_room,
+            rt.type as type,
+            rt.recom_seq as recom_seq,
+            COALESCE (rt.online_num, 0 ) as online_num
+        FROM
+            user_configure uc
+            LEFT JOIN room rt ON rt.uid = uc.uid
+            LEFT JOIN users u ON u.uid = uc.uid
+        WHERE
+            uc.green_recom = 1
+            AND ( rt.room_pwd IS NULL OR rt.room_pwd = '' )
+            AND rt.valid = 1
+        ORDER BY rt.recom_seq DESC LIMIT #{size}
+    </select>
+
+    <select id="findRoomGameConfig" resultType="com.juxiao.xchat.dao.room.dto.RoomGameConfigDTO">
+        select max(id) as id,uid,start,end,status,create_time as createTime
+        from  room_game_config
+        where status = 1
+        group by uid
+    </select>
+
+    <insert id="saveActivationInfo" parameterType="com.juxiao.xchat.dao.task.domain.DeviceInfoDO">
+        <trim prefix="INSERT IGNORE INTO `activation_info` (" suffix=")" suffixOverrides=",">
+            <if test="os != null">os,</if>
+            <if test="osVersion != null">os_version,</if>
+            <if test="app != null">app,</if>
+            <if test="imei != null">imei,</if>
+            <if test="channel != null">channel,</if>
+            <if test="linkedmeChannel != null">linkedme_channel,</if>
+            <if test="ispType != null">isp_type,</if>
+            <if test="netType != null">net_type,</if>
+            <if test="model != null">model,</if>
+            <if test="deviceId != null">device_id,</if>
+            <if test="appVersion != null">app_version,</if>
+            <if test="ip != null">activation_ip,</if>
+            `activation_time`
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="os != null">#{os,jdbcType=VARCHAR},</if>
+            <if test="osVersion != null">#{osVersion,jdbcType=VARCHAR},</if>
+            <if test="app != null">#{app,jdbcType=VARCHAR},</if>
+            <if test="imei != null">#{imei,jdbcType=VARCHAR},</if>
+            <if test="channel != null">#{channel,jdbcType=VARCHAR},</if>
+            <if test="linkedmeChannel != null">#{linkedmeChannel,jdbcType=VARCHAR},</if>
+            <if test="ispType != null">#{ispType,jdbcType=VARCHAR},</if>
+            <if test="netType != null">#{netType,jdbcType=VARCHAR},</if>
+            <if test="model != null">#{model,jdbcType=VARCHAR},</if>
+            <if test="deviceId != null">#{deviceId,jdbcType=VARCHAR},</if>
+            <if test="appVersion != null">#{appVersion,jdbcType=VARCHAR},</if>
+            <if test="ip != null">#{ip,jdbcType=VARCHAR},</if>
+            now()
+        </trim>
+    </insert>
+
+    <select id="listWinActivity" parameterType="int" resultType="com.juxiao.xchat.dao.sysconf.dto.AppActivityWinDTO">
+        <![CDATA[
+        SELECT
+          `act_id` AS `actId`,
+          `act_name` AS `actName`,
+          `act_alert_version` AS `actAlertVersion`,
+          `alert_win` AS `alertWin`,
+          `alert_win_pic` AS `alertWinPic`,
+          `alert_win_loc` AS `alertWinLoc`,
+          `skip_type` AS `skipType`,
+          `skip_url` AS `skipUrl`
+        FROM
+          `app_activity`
+        WHERE
+          `act_status` = #{actStatus}
+        AND
+          `alert_win_loc` = #{alertWinLoc}
+        ]]>
+    </select>
+
+</mapper>

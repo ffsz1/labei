@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.UserDrawDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.UserDrawDO">
+        <![CDATA[ INSERT INTO `user_draw` ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="leftDrawNum != null">
+                left_draw_num,
+            </if>
+            <if test="totalDrawNum != null">
+                total_draw_num,
+            </if>
+            <if test="totalWinDrawNum != null">
+                total_win_draw_num,
+            </if>
+            <if test="isFirstShare != null">
+                is_first_share,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="leftDrawNum != null">
+                #{leftDrawNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalDrawNum != null">
+                #{totalDrawNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalWinDrawNum != null">
+                #{totalWinDrawNum,jdbcType=INTEGER},
+            </if>
+            <if test="isFirstShare != null">
+                #{isFirstShare,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.user.domain.UserDrawDO">
+        <![CDATA[ UPDATE user_draw ]]>
+        <set>
+            <if test="leftDrawNum != null">
+                left_draw_num = #{leftDrawNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalDrawNum != null">
+                total_draw_num = #{totalDrawNum,jdbcType=INTEGER},
+            </if>
+            <if test="totalWinDrawNum != null">
+                total_win_draw_num = #{totalWinDrawNum,jdbcType=INTEGER},
+            </if>
+            <if test="isFirstShare != null">
+                is_first_share = #{isFirstShare,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>uid = #{uid,jdbcType=BIGINT}</where>
+    </update>
+
+    <resultMap id="UserDrawResultMap" type="com.juxiao.xchat.dao.user.dto.UserDrawDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="left_draw_num" property="leftDrawNum" jdbcType="INTEGER"/>
+        <result column="total_draw_num" property="totalDrawNum" jdbcType="INTEGER"/>
+        <result column="total_win_draw_num" property="totalWinDrawNum" jdbcType="INTEGER"/>
+        <result column="is_first_share" property="isFirstShare" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getUserDraw" parameterType="java.lang.Long" resultMap="UserDrawResultMap">
+        <![CDATA[
+        SELECT
+          uid,
+          left_draw_num,
+          total_draw_num,
+          total_win_draw_num,
+          is_first_share,
+          create_time,
+          update_time
+        FROM
+          `user_draw`
+        ]]>
+        <where>`uid` = #{uid,jdbcType=BIGINT}</where>
+    </select>
+</mapper>

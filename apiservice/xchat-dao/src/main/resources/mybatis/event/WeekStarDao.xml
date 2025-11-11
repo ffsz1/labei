@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.event.WeekStarGiftDAO">
+
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.event.domain.WeekStarGiftDO" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into week_star_gift (status, create_time, gift_id, seq)
+    values (#{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{giftId,jdbcType=INTEGER},#{seq,jdbcType=INTEGER})
+  </insert>
+    <insert id="insert" parameterType="com.juxiao.xchat.dao.event.domain.WeekStarItemRewardDO" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+      insert into week_star_item_reward (id, status, create_time,
+      gift_id, item_id, admin_id,
+      type, days, content,
+      seq)
+    values (#{id,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{giftId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER},
+      #{type,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
+      #{seq,jdbcType=INTEGER})
+    </insert>
+
+
+    <update id="updateByWeekStarGiftStatus">
+        update week_star_gift set status = 2 where id = #{id}
+    </update>
+
+    <update id="updateByWeekStarGiftNoticeStatus">
+        update week_star_gift_notice set status = 2 where id = #{id}
+    </update>
+
+    <update id="updateByWeekStarItemRewardStatus">
+        update week_star_item_reward set status = 2 where id = #{id}
+    </update>
+
+    <update id="updateByWeekStarItemNoticeRewardStatus">
+        update week_star_item_notice_reward set status = 2 where id = #{id}
+    </update>
+
+
+</mapper>

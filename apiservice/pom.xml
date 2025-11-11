@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+            http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.1.RELEASE</version>
+    </parent>
+
+    <groupId>com.juxiao.xchat</groupId>
+    <artifactId>xchat</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+    <name>xchat</name>
+    <description>官方语音新服务</description>
+    <modules>
+        <module>xchat-base</module>
+        <module>xchat-dao</module>
+        <module>xchat-manager</module>
+        <module>xchat-service-admin</module>
+        <module>xchat-service-api</module>
+        <module>xchat-service-common</module>
+        <module>xchat-service-oauth2</module>
+        <module>xchat-service-record</module>
+        <module>xchat-service-task</module>
+        <module>xchat-web-admin</module>
+        <module>xchat-web-api</module>
+        <module>xchat-web-oauth2</module>
+        <module>xchat-web-record</module>
+        <module>xchat-web-task</module>
+    </modules>
+
+    <properties>
+        <alibaba.druid>1.1.9</alibaba.druid>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <configuration>
+                        <encoding>utf-8</encoding>
+                        <useDefaultDelimiters>true</useDefaultDelimiters>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+
+
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>pfx</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>crt</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>cer</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>key</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.pfx</include>
+                    <include>**/*.cer</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+    <dependencies>
+        <!-- ================================== springboot开始 ================================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- ================================== springboot结束 ================================== -->
+
+        <!-- ================================== mysql jdbc驱动开始 ================================== -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- ================================== mysql jdbc驱动结束 ================================== -->
+
+        <!-- ================================== alibaba的druid数据库连接池开始 ================================== -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.9</version>
+        </dependency>
+        <!-- ================================== alibaba的druid数据库连接池结束 ================================== -->
+
+        <!-- ==================================整合mybatis 开始 ================================== -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+        <!-- ==================================整合mybatis 结束 ================================== -->
+
+        <!-- ================================== jackson 开始 ================================== -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+        </dependency>
+        <!-- ================================== jackson 开始 ================================== -->
+
+        <!-- ================================== redis缓存开始 ================================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- ================================== redis缓存结束 ================================== -->
+
+        <!-- ================================== activemq缓存开始 ================================== -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.47</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jms_1.1_spec</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+        </dependency>
+        <!-- ================================== activemq缓存结束 ================================== -->
+
+        <!-- ================================== httpclient 开始 ================================== -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+        </dependency>
+
+
+        <!-- ================================== httpclient 结束 ================================== -->
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-io -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.datasource.master.url><![CDATA[jdbc:mysql://  :3306/庫名?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true]]></spring.datasource.master.url>
+                <spring.datasource.master.username><![CDATA[root]]></spring.datasource.master.username>
+                <spring.datasource.master.password><![CDATA[   ]]></spring.datasource.master.password>
+                <spring.datasource.slave.url><![CDATA[jdbc:mysql://  :3306/庫名?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true]]></spring.datasource.slave.url>
+                <spring.datasource.slave.username><![CDATA[root]]></spring.datasource.slave.username>
+                <spring.datasource.slave.password><![CDATA[   ]]></spring.datasource.slave.password>
+                <spring.redis.host><![CDATA[  ]]></spring.redis.host>
+                <spring.redis.port><![CDATA[6379]]></spring.redis.port>
+                <spring.redis.password><![CDATA[  ]]></spring.redis.password>
+                <spring.activemq.brokerurl><![CDATA[tcp://  :61616]]></spring.activemq.brokerurl>
+
+                <logback.stdout><![CDATA[
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %p [%thread] (%logger:%line\) - %m%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <logger name="org.apache.ibatis.logging.jdbc" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+                ]]></logback.stdout>
+                <logback.root><![CDATA[
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+                ]]></logback.root>
+
+                <common.system.env>local</common.system.env>
+                <common.system.envName>本地</common.system.envName>
+                <common.system.secretaryUid>401000051</common.system.secretaryUid>
+                <common.system.likeMsgUid>401000051</common.system.likeMsgUid>
+                <common.system.officialUid>401000051</common.system.officialUid>
+                <common.system.officialRoomId>10001798</common.system.officialRoomId>
+                <common.system.serverDomain>http://域名</common.system.serverDomain>
+
+                <external.pingxx.appId>app_WjHqbPu9inzHaTuT</external.pingxx.appId>
+                <external.pingxx.apiKey>sk_test_TybjzLKKezzTr1iPCOjL8WfL</external.pingxx.apiKey>
+                <external.pingxx.publicKey>-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1XOQ6+nEvX3ypCO9n9FNKki6B5f//oxaKSRzWbOKryidMmYvbs2Mo4cOcILsRFOyS8n1a8q5bBwCer3CryTkEuTsEcCwNrEVg0KKJERoHimN+TQ355/+vesuoxnzz7NtQx6YTQwlL2fVWxElTW7jKo2mnk1FUROiS2TXZSbvjoYXIRkK9lMpS3nYly8pBqZrFaYrWYLAAAFLygM8xbrJ6N5Hu8yfYhYBtCK2OlTwIz/ydllzhKgFXwCdhGvGhGRPDO2vpQUFvJbKsyuUDecWkS+2IBeCTQINiQs9jFqyyKFlZg5rbciqT8+e7yzWtnp1tab7SccjpX/XOd88TpQtywIDAQAB-----END PUBLIC KEY-----</external.pingxx.publicKey>
+                <external.pingxx.pingxxPrivateKeyPath>/pingxxPath/pingxx_rsa_private_key.pem</external.pingxx.pingxxPrivateKeyPath>
+                <external.weixin.notifyUrl>http:// .com/wx/payCallback</external.weixin.notifyUrl>
+                <external.im.host>http://  </external.im.host>
+                <external.zego.tokenUrl>https://test2-liveroom-api.zego.im/cgi/token</external.zego.tokenUrl>
+                <external.joinpay.notifyUrl>http:// .com/joinpay/callback</external.joinpay.notifyUrl>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.datasource.master.url><![CDATA[jdbc:mysql://127.0.0.1:3306/庫名?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true]]></spring.datasource.master.url>
+                <spring.datasource.master.username><![CDATA[root]]></spring.datasource.master.username>
+                <spring.datasource.master.password><![CDATA[   ]]></spring.datasource.master.password>
+
+                <spring.datasource.slave.url><![CDATA[jdbc:mysql://127.0.0.1:3306/庫名?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true]]></spring.datasource.slave.url>
+                <spring.datasource.slave.username><![CDATA[root]]></spring.datasource.slave.username>
+                <spring.datasource.slave.password><![CDATA[   ]]></spring.datasource.slave.password>
+
+                <spring.redis.host><![CDATA[127.0.0.1]]></spring.redis.host>
+                <spring.redis.port><![CDATA[6379]]></spring.redis.port>
+                <spring.redis.password><![CDATA[  ]]></spring.redis.password>
+
+                <spring.activemq.brokerurl><![CDATA[tcp://127.0.0.1:61616]]></spring.activemq.brokerurl>
+
+                <logback.stdout>
+                </logback.stdout>
+                <logback.root>
+                </logback.root>
+
+                <common.system.env>test</common.system.env>
+                <common.system.envName>测试</common.system.envName>
+                <common.system.secretaryUid>401000051</common.system.secretaryUid>
+                <common.system.likeMsgUid>401000051</common.system.likeMsgUid>
+                <common.system.officialUid>401000051</common.system.officialUid>
+                <common.system.officialRoomId>401000051</common.system.officialRoomId>
+                <common.system.serverDomain>http://域名</common.system.serverDomain>
+
+                <external.pingxx.appId>app_CS0qfL0u5GSKzTWD</external.pingxx.appId>
+                <external.pingxx.apiKey>sk_live_TSqX9CTCanX9irD4a1GmXnnH</external.pingxx.apiKey>
+                <external.pingxx.publicKey>-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApk3Ygg0naCYbSl7/qvgfwVfi6H1q0ACotgFd5uOUJUPyg0SJcGOtq7l9eaxacn0G7AaOQbtLaw0bRm8e9b9xDqUDVkJRHKrShIKL/aG8i2WaJFvzsCpblHaM7usQtrYsgC9TZpCrj1XFfw83EKZtLx4fGB7YlUwIeUy/n+l18BPNDQkLqi2EOgh12dRR4sIAZwXom3Sd4Z9RyGJMnuHiHItBq9/l434A8HQF3WzeLnQpfyXg5RMlImV5zU9ykmEnEjxHya9G9DtnF2AN3e7beiCfUHzelvEWhsvdyG7A3BVxXrte0UIVbj6DnppCjZHCxPy1J0+QY/pwr9ZT6Iz6SwIDAQAB-----END PUBLIC KEY-----</external.pingxx.publicKey>
+                <external.pingxx.pingxxPrivateKeyPath>/pingxxPath/pingxx_rsa_private_key.pem</external.pingxx.pingxxPrivateKeyPath>
+                <external.weixin.notifyUrl>http://域名/wx/payCallback</external.weixin.notifyUrl>
+                <external.im.host>http://127.0.0.1</external.im.host>
+                <external.zego.tokenUrl>https://liveroom197844898-api.zego.im/cgi/token</external.zego.tokenUrl>
+                <external.joinpay.notifyUrl>http://域名/joinpay/callback</external.joinpay.notifyUrl>
+                <external.sandpay.gateWayFrontUrl>http://域名/front/pay_huiju_new/index.html</external.sandpay.gateWayFrontUrl>
+                <external.sandpay.gateWayBacknoticeUrl>http://域名/sand/callback</external.sandpay.gateWayBacknoticeUrl>
+                <external.bundleIds>com.irh.hjtest</external.bundleIds>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.datasource.master.url><![CDATA[jdbc:mysql://MySQL:3306/庫名?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true]]></spring.datasource.master.url>
+                <spring.datasource.master.username><![CDATA[root]]></spring.datasource.master.username>
+                <spring.datasource.master.password><![CDATA[   ]]></spring.datasource.master.password>
+
+                <spring.datasource.slave.url><![CDATA[jdbc:mysql://MySQL:3306/庫名?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true]]></spring.datasource.slave.url>
+                <spring.datasource.slave.username><![CDATA[root]]></spring.datasource.slave.username>
+                <spring.datasource.slave.password><![CDATA[   ]]></spring.datasource.slave.password>
+
+                <spring.redis.host><![CDATA[ip地址]]></spring.redis.host>
+                <spring.redis.port><![CDATA[6379]]></spring.redis.port>
+                <spring.redis.password><![CDATA[  ]]></spring.redis.password>
+
+                <spring.activemq.brokerurl><![CDATA[tcp://ip地址:61616]]></spring.activemq.brokerurl>
+
+                <logback.stdout>
+                </logback.stdout>
+                <logback.root>
+                </logback.root>
+
+                <common.system.env>prod</common.system.env>
+                <common.system.envName>正式</common.system.envName>
+                <common.system.secretaryUid>401000051</common.system.secretaryUid>
+                <common.system.likeMsgUid>401000051</common.system.likeMsgUid>
+                <common.system.officialUid>401000051</common.system.officialUid>
+                <common.system.officialRoomId>10001798</common.system.officialRoomId>
+                <common.system.serverDomain>http://域名</common.system.serverDomain>
+
+                <external.pingxx.appId>app_CS0qfL0u5GSKzTWD</external.pingxx.appId>
+                <external.pingxx.apiKey>sk_live_TSqX9CTCanX9irD4a1GmXnnH</external.pingxx.apiKey>
+                <external.pingxx.publicKey>-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApk3Ygg0naCYbSl7/qvgfwVfi6H1q0ACotgFd5uOUJUPyg0SJcGOtq7l9eaxacn0G7AaOQbtLaw0bRm8e9b9xDqUDVkJRHKrShIKL/aG8i2WaJFvzsCpblHaM7usQtrYsgC9TZpCrj1XFfw83EKZtLx4fGB7YlUwIeUy/n+l18BPNDQkLqi2EOgh12dRR4sIAZwXom3Sd4Z9RyGJMnuHiHItBq9/l434A8HQF3WzeLnQpfyXg5RMlImV5zU9ykmEnEjxHya9G9DtnF2AN3e7beiCfUHzelvEWhsvdyG7A3BVxXrte0UIVbj6DnppCjZHCxPy1J0+QY/pwr9ZT6Iz6SwIDAQAB-----END PUBLIC KEY-----</external.pingxx.publicKey>
+                <external.pingxx.pingxxPrivateKeyPath>/pingxxPath/pingxx_rsa_private_key.pem</external.pingxx.pingxxPrivateKeyPath>
+                <external.weixin.notifyUrl>http://域名/wx/payCallback</external.weixin.notifyUrl>
+                <external.im.host>http://ip地址:81</external.im.host>
+                <external.zego.tokenUrl>https://liveroom197844898-api.zego.im/cgi/token</external.zego.tokenUrl>
+                <external.joinpay.notifyUrl>http://域名/joinpay/callback</external.joinpay.notifyUrl>
+                <external.sandpay.gateWayFrontUrl>http://域名/front/pay_huiju_new/index.html</external.sandpay.gateWayFrontUrl>
+                <external.sandpay.gateWayBacknoticeUrl>http://域名/sand/callback</external.sandpay.gateWayBacknoticeUrl>
+                <external.bundleIds>com.irh.hj</external.bundleIds>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <properties>
+                <spring.datasource.master.url><![CDATA[jdbc:mysql://mysql:3306/庫名?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true]]></spring.datasource.master.url>
+                <spring.datasource.master.username><![CDATA[]]></spring.datasource.master.username>
+                <spring.datasource.master.password><![CDATA[]]></spring.datasource.master.password>
+
+                <spring.datasource.slave.url><![CDATA[jdbc:mysql://mysql:3306/庫名?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true]]></spring.datasource.slave.url>
+                <spring.datasource.slave.username><![CDATA[]]></spring.datasource.slave.username>
+                <spring.datasource.slave.password><![CDATA[]]></spring.datasource.slave.password>
+
+                <spring.redis.host><![CDATA[mysql]]></spring.redis.host>
+                <spring.redis.port><![CDATA[6379]]></spring.redis.port>
+                <spring.redis.password><![CDATA[庫名2@0)1!9(]]></spring.redis.password>
+
+                <spring.activemq.brokerurl><![CDATA[tcp://127.0.0.1:61616]]></spring.activemq.brokerurl>
+
+                <logback.stdout>
+                </logback.stdout>
+                <logback.root>
+                </logback.root>
+
+                <common.system.env>release</common.system.env>
+                <common.system.envName>预发布服</common.system.envName>
+                <common.system.secretaryUid>500001</common.system.secretaryUid>
+                <common.system.likeMsgUid>500001</common.system.likeMsgUid>
+                <common.system.officialUid>500001</common.system.officialUid>
+                <common.system.officialRoomId>1000016</common.system.officialRoomId>
+                <common.system.serverDomain>http://域名</common.system.serverDomain>
+
+                <external.pingxx.appId>app_bTuTaPTSOm58j1S0</external.pingxx.appId>
+                <external.pingxx.apiKey>sk_live_ijnj1ODWDijLXXT8OS5uLSiL</external.pingxx.apiKey>
+                <external.pingxx.publicKey>-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1XOQ6+nEvX3ypCO9n9FNKki6B5f//oxaKSRzWbOKryidMmYvbs2Mo4cOcILsRFOyS8n1a8q5bBwCer3CryTkEuTsEcCwNrEVg0KKJERoHimN+TQ355/+vesuoxnzz7NtQx6YTQwlL2fVWxElTW7jKo2mnk1FUROiS2TXZSbvjoYXIRkK9lMpS3nYly8pBqZrFaYrWYLAAAFLygM8xbrJ6N5Hu8yfYhYBtCK2OlTwIz/ydllzhKgFXwCdhGvGhGRPDO2vpQUFvJbKsyuUDecWkS+2IBeCTQINiQs9jFqyyKFlZg5rbciqT8+e7yzWtnp1tab7SccjpX/XOd88TpQtywIDAQAB-----END PUBLIC KEY-----</external.pingxx.publicKey>
+                <external.pingxx.pingxxPrivateKeyPath>/pingxxPath/pingxx_rsa_private_key.pem</external.pingxx.pingxxPrivateKeyPath>
+                <external.weixin.notifyUrl>http://域名/wx/payCallback</external.weixin.notifyUrl>
+                <external.im.host>http://127.0.0.1:3007</external.im.host>
+                <external.zego.tokenUrl>https://liveroom197844898-api.zego.im/cgi/token</external.zego.tokenUrl>
+                <external.joinpay.notifyUrl>http://域名/joinpay/callback</external.joinpay.notifyUrl>
+            </properties>
+        </profile>
+    </profiles>
+</project>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.event.PopularityListDAO">
+    <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.event.dto.PopularityListDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="recive_uid" property="receiptId" jdbcType="BIGINT"/>
+        <result column="votes" property="receiptVotes" jdbcType="INTEGER"/>
+        <result column="send_votes" property="sendVotes" jdbcType="INTEGER"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="rank" property="rank" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="queryTop20List" resultMap="BaseResultMap">
+        select sum(gift_num) votes, gsr.recive_uid, u.avatar, u.nick
+        from gift_prop_send_record gsr
+        inner join users u on u.uid = gsr.recive_uid
+        where gift_id = #{giftId} and u.gender = #{gender}
+        and YEARWEEK(date_format(gsr.create_time, '%Y-%m-%d'), 1) = YEARWEEK(now(), 1)
+        group by recive_uid
+        order by votes desc
+        limit 20;
+    </select>
+    <select id="queryLastWeekRank" resultMap="BaseResultMap">
+        select sum(gift_num) votes, gsr.recive_uid, u.avatar, u.nick, gsr.create_time
+        from gift_prop_send_record gsr
+        inner join users u on u.uid = gsr.recive_uid
+        where gift_id = #{giftId} and u.gender = #{gender}
+        and YEARWEEK(date_format(gsr.create_time, '%Y-%m-%d'), 1) = YEARWEEK(now(), 1) - 1
+        group by recive_uid
+        order by votes desc
+        limit 3;
+    </select>
+    <select id="queryUserRecommend" resultMap="BaseResultMap">
+        select sum(gift_num) send_votes, gsr.uid, u.avatar, u.nick
+        from gift_prop_send_record gsr
+        inner join users u on u.uid = gsr.uid
+        where gift_id = #{giftId} and recive_uid = #{receiveId}
+        and YEARWEEK(date_format(gsr.create_time, '%Y-%m-%d'), 1) = YEARWEEK(now(), 1)
+        group by gsr.uid
+        order by send_votes desc
+        limit 3;
+    </select>
+    <select id="queryUserRecommendLastWeek" resultMap="BaseResultMap">
+        select sum(gift_num) send_votes, gsr.uid, u.avatar, u.nick
+        from gift_prop_send_record gsr
+        inner join users u on u.uid = gsr.uid
+        where gift_id = #{giftId} and recive_uid = #{receiveId}
+        and YEARWEEK(date_format(gsr.create_time, '%Y-%m-%d'), 1) = YEARWEEK(now(), 1) - 1
+        group by gsr.uid
+        order by send_votes desc
+        limit 1;
+    </select>
+    <select id="queryMyRank" resultMap="BaseResultMap">
+        select t.* from (
+            select @rank := @rank + 1 AS rank, a.votes, a.recive_uid, a.avatar, a.nick from (
+                select sum(gift_num) votes, gsr.recive_uid, u.avatar, u.nick
+                from gift_prop_send_record gsr
+                inner join users u
+                on u.uid = gsr.recive_uid
+                where gift_id = #{giftId} and u.gender = #{gender}
+                group by recive_uid
+                order by votes desc
+            ) a, (SELECT @rank := 0) c
+        ) t where recive_uid = #{receiveId}
+    </select>
+    <select id="querySendVotes" resultType="java.lang.Integer">
+        select ifnull(sum(gift_num), 0) as send_votes
+        from gift_prop_send_record
+        where gift_id = #{giftId} and uid = #{uid}
+        and YEARWEEK(date_format(create_time, '%Y-%m-%d'), 1) = YEARWEEK(now(), 1)
+    </select>
+</mapper>

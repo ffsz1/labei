@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.room.HomeHotManualRecommDao">
+    <resultMap id="RecommResultMap" type="com.juxiao.xchat.dao.room.dto.HomeHotManualRecommDTO">
+        <id column="recomm_id" property="recommId" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="seq_no" property="seqNo" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="start_valid_time" property="startValidTime" jdbcType="TIMESTAMP"/>
+        <result column="end_valid_time" property="endValidTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.room.domain.HomeHotManualRecommDO" useGeneratedKeys="true" keyProperty="recommId">
+        <trim prefix="INSERT INTO home_hot_manual_recomm (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="seqNo != null">seq_no,</if>
+            <if test="status != null">`status`,</if>
+            <if test="startValidTime != null">start_valid_time,</if>
+            <if test="endValidTime != null">end_valid_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="type != null">type,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="seqNo != null">#{seqNo,jdbcType=INTEGER},</if>
+            <if test="status != null">#{status,jdbcType=TINYINT},</if>
+            <if test="startValidTime != null">#{startValidTime,jdbcType=TIMESTAMP},</if>
+            <if test="endValidTime != null">#{endValidTime,jdbcType=TIMESTAMP},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="type != null">#{type,jdbcType=TINYINT},</if>
+        </trim>
+    </insert>
+</mapper>

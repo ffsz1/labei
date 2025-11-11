@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.sysconf.AppActivityDao">
+
+    <select id="listWinActivity" parameterType="int" resultType="com.juxiao.xchat.dao.sysconf.dto.AppActivityWinDTO">
+        <![CDATA[
+        SELECT
+          `act_id` AS `actId`,
+          `act_name` AS `actName`,
+          `act_alert_version` AS `actAlertVersion`,
+          `alert_win` AS `alertWin`,
+          `alert_win_pic` AS `alertWinPic`,
+          `alert_win_loc` AS `alertWinLoc`,
+          `skip_type` AS `skipType`,
+          `skip_url` AS `skipUrl`
+        FROM
+          `app_activity`
+        WHERE
+          `act_status` = #{actStatus}
+        AND
+          `alert_win_loc` = #{alertWinLoc}
+        ]]>
+    </select>
+
+    <select id="listAllActivity" parameterType="int" resultType="com.juxiao.xchat.dao.sysconf.dto.AppActivityWinDTO">
+        <![CDATA[
+        SELECT
+          `act_id` AS `actId`,
+          `act_name` AS `actName`,
+          `act_alert_version` AS `actAlertVersion`,
+          `alert_win` AS `alertWin`,
+          `alert_win_pic` AS `alertWinPic`,
+          `alert_win_loc` AS `alertWinLoc`,
+          `skip_type` AS `skipType`,
+          `skip_url` AS `skipUrl`
+        FROM
+          `app_activity`
+        WHERE
+          `act_status` = #{actStatus}
+        order by act_id desc
+        ]]>
+    </select>
+
+</mapper>

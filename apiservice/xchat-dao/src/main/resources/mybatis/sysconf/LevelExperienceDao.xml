@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.sysconf.LevelExperienceDao">
+
+    <select id="getExperienceLevel" parameterType="long" resultType="com.juxiao.xchat.dao.sysconf.dto.LevelExperienceDTO">
+        <![CDATA[
+        SELECT
+          `id` AS `id`,
+          `level_seq` AS `levelSeq`,
+          `level_name` AS `levelName`,
+          `level_grp` AS `levelGrp`,
+          `amount` AS `amount`,
+          `need_min` AS `needMin`,
+          `need_max` AS `needMax`,
+          `status` AS `status`,
+          `broadcast` AS `broadcast`,
+          `interaction` AS `interaction`,
+          `create_time` AS `createTime`
+        FROM
+          `level_experience`
+        WHERE
+           need_min <= #{experience}
+        AND
+          need_max > #{experience}
+        AND
+          `status` = 1
+        ]]>
+    </select>
+
+    <select id="getByName"  resultType="com.juxiao.xchat.dao.sysconf.dto.LevelExperienceDTO">
+        <![CDATA[
+        SELECT
+          `id` AS `id`,
+          `level_seq` AS `levelSeq`,
+          `level_name` AS `levelName`,
+          `level_grp` AS `levelGrp`,
+          `amount` AS `amount`,
+          `need_min` AS `needMin`,
+          `need_max` AS `needMax`,
+          `status` AS `status`,
+          `broadcast` AS `broadcast`,
+          `interaction` AS `interaction`,
+          `create_time` AS `createTime`
+        FROM
+          `level_experience`
+        WHERE
+          `status` = 1
+        AND
+          `level_name` = #{levelName}
+        ]]>
+    </select>
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.mcoin.McoinMissionDao">
+    <insert id="saveOrUpdateMcoinDailyMission">
+        <![CDATA[
+        INSERT INTO `mcoin_daily_mission`(
+            `uid`,`mission_id`,`complete_date`,`mission_status`,`create_time`,`update_time`
+        ) VALUES (
+            #{uid}, #{missionId}, CURDATE(), #{missionStatus}, NOW(), NOW()
+        ) ON DUPLICATE KEY UPDATE
+            `mission_status` = #{missionStatus},
+            `update_time` = NOW()
+        ]]>
+    </insert>
+
+    <insert id="saveOrUpdateMcoinOnceMission">
+        <![CDATA[
+        INSERT INTO `mcoin_once_mission`(
+            `uid`, `mission_id`, `mission_status`, `create_time`, `update_time`
+        ) VALUES (
+             #{uid}, #{missionId}, #{missionStatus}, NOW(), NOW()
+        ) ON DUPLICATE KEY UPDATE
+            `mission_status` = #{missionStatus},
+            `update_time` = NOW()
+        ]]>
+    </insert>
+
+    <insert id="saveOrUpdateMcoinWeeklyMission">
+        <![CDATA[
+        INSERT INTO `mcoin_daily_mission` (
+            `uid`, `mission_id`, `complete_date`, `mission_status`, `create_time`, `update_time`
+        ) VALUES (
+          #{uid}, #{missionId},CURRENT_DATE (), 3, NOW( ), NOW( )
+        ) ON DUPLICATE KEY UPDATE
+            `mission_status` = 3,
+            `update_time` = NOW()
+        ]]>
+    </insert>
+
+    <select id="getUserCrntWeeklyMission" parameterType="long"  resultType="com.juxiao.xchat.dao.mcoin.dto.McoinMissionInfoDTO">
+        <![CDATA[
+        SELECT
+            m.`id` AS missionId,
+            m.`mission_name` AS missionName,
+            m.`mcoin_amount` AS mcoinAmount,
+            m.`freebies_type` AS freebiesType,
+            m.`freebies_id` AS freebiesId,
+            IF(usrmsn.`mission_status` = 3, m.`complete_pic_url`, m.`incomplete_pic_url`)  AS picUrl,
+            usrmsn.`complete_date` AS completeDate,
+            usrmsn.`mission_status` AS missionStatus
+        FROM
+            `mcoin_mission` m
+            LEFT JOIN `mcoin_daily_mission` usrmsn ON m.`id` = usrmsn.`mission_id`
+            AND usrmsn.`uid` = #{uid}
+            AND complete_date >= (SELECT MAX(complete_date) FROM mcoin_daily_mission WHERE uid=usrmsn.`uid` AND mission_id = 12)
+        WHERE
+            m.`mission_type` = 3
+        AND (
+            mission_status IS NULL OR complete_date = CURRENT_DATE()
+        )
+        LIMIT 1
+        ]]>
+    </select>
+
+    <!--// 1，新手任务；2，每日任务；3，签到任务 4.邀请注册任务-->
+    <select id="listUserMcoinOnceMissions" resultType="com.juxiao.xchat.dao.mcoin.dto.McoinMissionInfoDTO">
+        <![CDATA[
+        SELECT
+          m.`id` AS missionId,
+          m.`mission_name` AS missionName,
+          m.`mcoin_amount` AS mcoinAmount,
+          m.`freebies_type` AS freebiesType,
+          m.`freebies_id` AS freebiesId,
+          IF(usrmsn.`mission_status` = 3, m.`complete_pic_url`, m.`incomplete_pic_url`)  AS picUrl,
+          usrmsn.`mission_status` AS missionStatus
+        FROM
+          `mcoin_mission` m
+        LEFT JOIN
+          `mcoin_once_mission` usrmsn
+        ON
+          m.`id` = usrmsn.`mission_id`
+        AND
+          usrmsn.`uid` = #{uid}
+        WHERE
+          m.`mission_type` = 1
+        AND (
+          usrmsn.`mission_status` IS NULL OR usrmsn.`mission_status` <> 3
+        )
+        ]]>
+        <if test="auditing">AND m.mission_scope = 1</if>
+        <![CDATA[ ORDER BY m.seq ]]>
+    </select>
+
+    <!--// 1，新手任务；2，每日任务；3，签到任务 4.邀请注册任务-->
+    <select id="listUserMcoinDailyMissions" resultType="com.juxiao.xchat.dao.mcoin.dto.McoinMissionInfoDTO">
+        <![CDATA[
+        SELECT
+          m.`id` AS missionId,
+          m.`mission_name` AS missionName,
+          m.`mcoin_amount` AS mcoinAmount,
+          m.`freebies_type` AS freebiesType,
+          m.`freebies_id` AS freebiesId,
+          IF(usrmsn.`mission_status` = 3, m.`complete_pic_url`, m.`incomplete_pic_url`)  AS picUrl,
+          usrmsn.`complete_date` AS  completeDate,
+          usrmsn.`mission_status` AS missionStatus
+        FROM
+          `mcoin_mission` m
+        LEFT JOIN `mcoin_daily_mission` usrmsn
+        ON
+            m.`id` = usrmsn.`mission_id`
+        AND
+            usrmsn.`uid` = #{uid}
+        AND
+          usrmsn.`complete_date` = curdate()
+        WHERE
+          m.`mission_type` = 2
+        ]]>
+        <if test="auditing">AND m.mission_scope = 1</if>
+        <![CDATA[ ORDER BY m.seq ]]>
+    </select>
+
+    <!--// 1，新手任务；2，每日任务；3，签到任务 4.邀请注册任务-->
+    <select id="listUserMcoinWeeklyMissions" resultType="com.juxiao.xchat.dao.mcoin.dto.McoinMissionInfoDTO">
+        <![CDATA[
+        SELECT
+            m.`id` AS missionId,
+            m.`mission_name` AS missionName,
+            m.`mcoin_amount` AS mcoinAmount,
+            m.`freebies_type` AS freebiesType,
+            m.`freebies_id` AS freebiesId,
+            IF(usrmsn.`mission_status` = 3, m.`complete_pic_url`, m.`incomplete_pic_url`)  AS picUrl,
+            usrmsn.`complete_date` AS completeDate,
+            usrmsn.`mission_status` AS missionStatus
+        FROM
+            `mcoin_mission` m
+            LEFT JOIN `mcoin_daily_mission` usrmsn ON m.`id` = usrmsn.`mission_id`
+            AND usrmsn.`uid` = #{uid}
+            AND complete_date >= (SELECT MAX(complete_date) FROM mcoin_daily_mission WHERE uid=usrmsn.`uid` AND mission_id = 12)
+        WHERE
+            m.`mission_type` = 3
+        ]]>
+        <if test="auditing">AND m.mission_scope = 1</if>
+        <![CDATA[
+        ORDER BY
+            m.seq;
+        ]]>
+    </select>
+
+    <!--// 1，新手任务；2，每日任务；3，签到任务 4.邀请注册任务-->
+    <select id="listUserMcoinShareRegisterMissions" resultType="com.juxiao.xchat.dao.mcoin.dto.McoinMissionInfoDTO">
+        <![CDATA[
+        SELECT
+             m.`id` AS missionId,
+              m.`mission_name` AS missionName,
+              m.`mcoin_amount` AS mcoinAmount,
+              m.`freebies_type` AS freebiesType,
+              m.`freebies_id` AS freebiesId,
+              IF(usrmsn.`mission_status` = 3, m.`complete_pic_url`, m.`incomplete_pic_url`)  AS picUrl,
+              usrmsn.`mission_status` AS missionStatus
+        FROM
+            `mcoin_mission` m
+            LEFT JOIN `mcoin_once_mission` usrmsn ON m.`id` = usrmsn.`mission_id`
+            AND usrmsn.`uid` = #{uid}
+        WHERE
+            m.`mission_type` = 4
+        ]]>
+        <if test="auditing">AND m.mission_scope = 1</if>
+        <![CDATA[
+        ORDER BY
+            m.seq;
+        ]]>
+    </select>
+</mapper>

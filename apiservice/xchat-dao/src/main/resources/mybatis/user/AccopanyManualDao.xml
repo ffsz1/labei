@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.AccompanyManualDao">
+
+
+    <insert id="save" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO accompany_manual_recomm (uid,type,status,seq_no,start_time,end_time,create_time,is_display)
+        VALUES (#{uid},#{type},#{status},#{seqNo},#{startTime},#{endTime},#{createTime},#{isDisplay})
+    </insert>
+    <select id="selectAccompanyTypeByList" resultType="com.juxiao.xchat.dao.user.domain.AccompanyTypeDO">
+        select id,name,pic,status,create_time as createTime from accompany_type
+    </select>
+
+
+</mapper>

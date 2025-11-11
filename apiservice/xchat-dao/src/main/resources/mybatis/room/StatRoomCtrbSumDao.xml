@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.room.StatRoomCtrbSumDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.room.domain.StatRoomCtrbSumDO">
+        <trim prefix="INSERT INTO `stat_room_ctrb_sum` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="ctrbUid != null">ctrb_uid,</if>
+            <if test="sumGold != null">sum_gold,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="ctrbUid != null">#{ctrbUid,jdbcType=BIGINT},</if>
+            <if test="sumGold != null">#{sumGold,jdbcType=BIGINT},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+        </trim>
+        <![CDATA[ ON DUPLICATE KEY UPDATE ]]>
+        <if test="sumGold != null">sum_gold=VALUES#{sumGold,jdbcType=BIGINT},</if>
+        <if test="updateTime != null">update_time=#{updateTime,jdbcType=TIMESTAMP},</if>
+    </insert>
+
+    <select id="getUserRoomCtrb" parameterType="long" resultType="com.juxiao.xchat.dao.room.dto.StatRoomCtrbSumDTO">
+        <![CDATA[
+
+        SELECT
+          ctrb_id AS ctrbId,
+          uid AS uid,
+          ctrb_uid AS ctrbUid,
+          sum_gold AS sumGold,
+          create_time AS createTime,
+          update_time AS updateTime
+        FROM
+          `stat_room_ctrb_sum`
+        WHERE
+          uid = #{uid}
+        AND
+          ctrb_uid = #{ctrbUid}
+
+        ]]>
+    </select>
+
+    <select id="listRoomWealthCtrb" parameterType="com.juxiao.xchat.dao.room.query.RoomContributionQuery" resultType="com.juxiao.xchat.dao.room.dto.StatRoomUserCtrbSumDTO">
+        <![CDATA[
+        SELECT
+          ctrbstat.uid AS `uid`,
+          ctrbstat.ctrb_uid AS  ctrbUid,
+          usr.nick AS nick,
+          usr.avatar AS avatar,
+          usr.gender AS gender,
+          ctrbstat.sum_gold AS sumGold
+        FROM (
+          SELECT
+            `uid` AS `uid`,
+            `send_uid` AS `ctrb_uid`,
+            SUM(`normal_sum_gold` + `draw_sum_gold`) AS `sum_gold`
+          FROM
+            `one_day_room_send_sum`
+          WHERE
+             `uid` = #{roomUid,jdbcType=BIGINT}
+        ]]>
+        <if test="startTime != null and endTime != null">
+            AND (`create_time` BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP})
+        </if>
+        <![CDATA[
+          GROUP BY
+           `send_uid`
+          ORDER BY
+            `sum_gold` DESC
+          LIMIT 20
+      ) ctrbstat
+      LEFT JOIN
+        users usr
+      ON
+        ctrbstat.ctrb_uid = usr.uid
+        ]]>
+    </select>
+
+    <select id="listXqRoomWealthCtrb" parameterType="com.juxiao.xchat.dao.room.query.RoomContributionQuery" resultType="com.juxiao.xchat.dao.room.dto.StatRoomUserCtrbSumDTO">
+        <![CDATA[
+        SELECT
+          ctrbstat.uid AS `uid`,
+          ctrbstat.ctrb_uid AS  ctrbUid,
+          usr.nick AS nick,
+          usr.avatar AS avatar,
+          usr.gender AS gender,
+          ctrbstat.sum_gold AS sumGold
+        FROM (
+          SELECT
+            `uid` AS `uid`,
+            `send_uid` AS `ctrb_uid`,
+            SUM(`normal_sum_gold` + `xq_sum_gold`) AS `sum_gold`
+          FROM
+            `one_day_room_send_sum`
+          WHERE
+             `uid` = #{roomUid,jdbcType=BIGINT}
+        ]]>
+        <if test="startTime != null and endTime != null">
+            AND (`create_time` BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP})
+        </if>
+        <![CDATA[
+          GROUP BY
+           `send_uid`
+          ORDER BY
+            `sum_gold` DESC
+          LIMIT 20
+      ) ctrbstat
+      LEFT JOIN
+        users usr
+      ON
+        ctrbstat.ctrb_uid = usr.uid
+        ]]>
+    </select>
+
+    <select id="getRoomCharmCtrbTop" parameterType="com.juxiao.xchat.dao.room.query.RoomContributionQuery" resultType="com.juxiao.xchat.dao.room.dto.StatRoomUserCtrbSumDTO">
+        <![CDATA[
+        SELECT
+          usr.avatar AS avatar
+        FROM (
+          SELECT
+            `uid` AS `uid`,
+            `send_uid` AS `ctrb_uid`,
+            SUM(`sum_gold`) AS `sum_gold`
+          FROM
+            `one_day_room_send_sum`
+          WHERE
+             `uid` = #{roomUid,jdbcType=BIGINT}
+          AND (
+             `create_time` BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+          )
+          GROUP BY
+           `send_uid`
+          ORDER BY
+            `sum_gold` DESC
+          LIMIT 1
+      ) ctrbstat
+      LEFT JOIN
+        users usr
+      ON
+        ctrbstat.ctrb_uid = usr.uid
+        ]]>
+    </select>
+
+    <select id="listRoomCharmCtrb" parameterType="com.juxiao.xchat.dao.room.query.RoomContributionQuery" resultType="com.juxiao.xchat.dao.room.dto.StatRoomUserCtrbSumDTO">
+        <![CDATA[
+        SELECT
+          ctrbstat.uid AS `uid`,
+          ctrbstat.ctrb_uid AS  ctrbUid,
+          usr.nick AS nick,
+          usr.avatar AS avatar,
+          usr.gender AS gender,
+          ctrbstat.sum_gold AS sumGold
+        FROM (
+          SELECT
+            `uid` AS `uid`,
+            `recv_uid` AS `ctrb_uid`,
+            SUM(`normal_sum_gold` + `draw_sum_gold`) AS `sum_gold`
+          FROM
+            `one_day_room_recv_sum`
+          WHERE
+            uid = #{roomUid,jdbcType=BIGINT}
+        ]]>
+        <if test="startTime != null and endTime != null">
+            AND (`create_time` BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP})
+        </if>
+        <![CDATA[
+          GROUP BY
+            recv_uid
+          ORDER BY sum_gold desc
+           LIMIT 20
+        ) ctrbstat
+        LEFT JOIN
+          users usr
+        ON
+          ctrbstat.ctrb_uid = usr.uid
+        ]]>
+    </select>
+
+    <select id="listXqRoomCharmCtrb" parameterType="com.juxiao.xchat.dao.room.query.RoomContributionQuery" resultType="com.juxiao.xchat.dao.room.dto.StatRoomUserCtrbSumDTO">
+        <![CDATA[
+        SELECT
+          ctrbstat.uid AS `uid`,
+          ctrbstat.ctrb_uid AS  ctrbUid,
+          usr.nick AS nick,
+          usr.avatar AS avatar,
+          usr.gender AS gender,
+          ctrbstat.sum_gold AS sumGold
+        FROM (
+          SELECT
+            `uid` AS `uid`,
+            `recv_uid` AS `ctrb_uid`,
+            SUM(`normal_sum_gold` + `xq_sum_gold`) AS `sum_gold`
+          FROM
+            `one_day_room_recv_sum`
+          WHERE
+            uid = #{roomUid,jdbcType=BIGINT}
+        ]]>
+        <if test="startTime != null and endTime != null">
+            AND (`create_time` BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP})
+        </if>
+        <![CDATA[
+          GROUP BY
+            recv_uid
+          ORDER BY sum_gold desc
+           LIMIT 20
+        ) ctrbstat
+        LEFT JOIN
+          users usr
+        ON
+          ctrbstat.ctrb_uid = usr.uid
+        ]]>
+    </select>
+
+    <select id="getRoomWealthCtrbTop" parameterType="com.juxiao.xchat.dao.room.query.RoomContributionQuery" resultType="com.juxiao.xchat.dao.room.dto.StatRoomUserCtrbSumDTO">
+        <![CDATA[
+        SELECT
+          usr.avatar AS avatar
+        FROM (
+          SELECT
+            `uid` AS `uid`,
+            `recv_uid` AS `ctrb_uid`,
+            SUM(`sum_gold`) AS `sum_gold`
+          FROM
+            `one_day_room_recv_sum`
+          WHERE
+            uid = #{roomUid,jdbcType=BIGINT}
+          AND (
+            `create_time` BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+          )
+          GROUP BY
+            recv_uid
+          ORDER BY sum_gold desc
+           LIMIT 1
+        ) ctrbstat
+        LEFT JOIN
+          users usr
+        ON
+          ctrbstat.ctrb_uid = usr.uid
+        ]]>
+    </select>
+
+    <select id="getRoomOwnerFlow" parameterType="Map" resultType="com.juxiao.xchat.dao.room.domain.StatRoomFlowDo">
+        <![CDATA[
+        SELECT
+            g.uid AS uid,
+            SUM( g.sum_gold ) AS totalGoldNum,
+            u.erban_no AS erban_no,
+            u.nick AS nick,
+            u.phone AS phone,
+            r.room_id AS roomId,
+            r.room_tag AS roomTag,
+            r.is_permit_room AS is_permit_room,
+            DATE_FORMAT(g.create_time, '%Y-%m-%d') AS create_time
+        FROM
+            one_day_room_send_sum g
+            INNER JOIN users u ON g.uid = u.uid
+            INNER JOIN room r ON r.uid = g.uid
+        WHERE
+        	g.uid = #{uid}
+            AND
+            DATE_FORMAT(g.create_time, '%Y-%m-%d') BETWEEN DATE_FORMAT(#{startTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
+            AND DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP},'%Y-%m-%d')
+            AND r.is_permit_room = 1
+        GROUP BY
+            g.uid
+        ]]>
+    </select>
+
+    <select id="getRoomOwnerShareRecord" parameterType="Map" resultType="com.juxiao.xchat.dao.room.domain.StatRoomFlowDo">
+        <![CDATA[
+            SELECT
+                *
+            FROM
+                room_owner_share_record
+            WHERE
+                uid = #{uid}
+                AND create_time = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%Y-%m-%d')
+        ]]>
+    </select>
+
+    <insert id="saveShare" parameterType="com.juxiao.xchat.dao.room.domain.StatRoomFlowDo" useGeneratedKeys="true" keyProperty="id">
+        <trim prefix="INSERT INTO `room_owner_share_record` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">uid,</if>
+            <if test="room_id != null">room_id,</if>
+            <if test="room_tag != null">room_tag,</if>
+            <if test="is_permit_room != null">is_permit_room,</if>
+            <if test="erban_no != null">erban_no,</if>
+            <if test="nick != null">nick,</if>
+            <if test="phone != null">phone,</if>
+            <if test="create_time != null">create_time,</if>
+            <if test="total_gold_num != null">total_gold_num,</if>
+            <if test="share_diamond_num != null">share_diamond_num,</if>
+            <if test="status != null">status</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">#{uid,jdbcType=BIGINT},</if>
+            <if test="roomId != null">#{roomId,jdbcType=BIGINT},</if>
+            <if test="roomTag != null">#{roomTag,jdbcType=VARCHAR},</if>
+            <if test="isPermitRoom != null">#{isPermitRoom,jdbcType=TINYINT},</if>
+            <if test="erbanNo != null">#{erbanNo,jdbcType=BIGINT},</if>
+            <if test="nick != null">#{nick,jdbcType=VARCHAR},</if>
+            <if test="phone != null">#{phone,jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="totalGoldNum != null">#{totalGoldNum,jdbcType=BIGINT},</if>
+            <if test="shareDiamondNum != null">#{shareDiamondNum,jdbcType=DOUBLE},</if>
+            <if test="status != null">#{status,jdbcType=TINYINT},</if>
+        </trim>
+    </insert>
+
+    <select id="getRoomOwnerFlowV2" parameterType="Map" resultType="java.lang.Long">
+        <![CDATA[
+        SELECT
+            SUM( g.sum_gold ) AS totalGoldNum
+        FROM
+            one_day_room_send_sum g
+        WHERE
+        	g.uid = #{uid}
+        ]]>
+        <if test="startTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+        <![CDATA[
+        GROUP BY
+            g.uid
+        ]]>
+    </select>
+
+    <select id="getUserInRoomFlow" parameterType="Map" resultType="java.lang.Long">
+        <![CDATA[
+        SELECT
+            SUM( g.sum_gold ) AS totalGoldNum
+        FROM
+            one_day_room_recv_sum g
+        WHERE
+        	g.uid = #{roomUid}
+        	AND g.recv_uid=#{uid}
+        ]]>
+        <if test="startTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+        <![CDATA[
+        GROUP BY
+            g.uid
+        ]]>
+    </select>
+
+    <select id="getGuildFlow" parameterType="Map" resultType="java.lang.Long">
+        <![CDATA[
+        SELECT
+            SUM( g.sum_gold ) AS totalGoldNum
+        FROM
+            one_day_room_send_sum g
+            INNER JOIN room r ON r.uid = g.uid
+        WHERE
+        	r.room_id in (
+        	select gh.room_id from guild_hall gh where gh.guild_id=#{guildId}
+        	)
+        ]]>
+        <if test="startTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+    </select>
+
+    <select id="getGuildHallFlow" parameterType="Map" resultType="java.lang.Long">
+        <![CDATA[
+        SELECT
+            SUM(g.sum_gold) AS totalGoldNum
+        FROM
+            one_day_room_send_sum g
+            INNER JOIN room r ON r.uid = g.uid
+            inner join guild_hall h on h.room_id=r.room_id
+        WHERE
+        	h.id=#{hallId}
+        ]]>
+        <if test="startTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+    </select>
+
+    <select id="getGuildHallMemberFlow" parameterType="Map" resultType="java.lang.Long">
+        <![CDATA[
+        SELECT
+            SUM(g.sum_gold) AS totalGoldNum
+        FROM
+            one_day_room_recv_sum g
+            INNER JOIN room r ON r.uid = g.uid
+            inner join guild_hall h on h.room_id=r.room_id
+        WHERE
+            g.recv_uid=#{uid}
+        	and h.id=#{hallId}
+        ]]>
+        <if test="startTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+        <if test="endTime != null">
+            <![CDATA[ AND DATE_FORMAT(g.create_time, '%Y-%m-%d') <= DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+        </if>
+    </select>
+</mapper>

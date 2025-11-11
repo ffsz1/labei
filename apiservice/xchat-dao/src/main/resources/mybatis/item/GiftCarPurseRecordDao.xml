@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.item.GiftCarPurseRecordDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.item.domain.GiftCarPurseRecordDO" useGeneratedKeys="true" keyProperty="recordId">
+        <trim prefix="INSERT INTO `gift_car_purse_record` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="carId != null">
+                car_id,
+            </if>
+            <if test="carDate != null">
+                car_date,
+            </if>
+            <if test="totalGoldNum != null">
+                total_gold_num,
+            </if>
+            <if test="isUse != null">
+                is_use,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="carId != null">
+                #{carId,jdbcType=BIGINT},
+            </if>
+            <if test="carDate != null">
+                #{carDate,jdbcType=INTEGER},
+            </if>
+            <if test="totalGoldNum != null">
+                #{totalGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="isUse != null">
+                #{isUse,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.item.domain.GiftCarPurseRecordDO">
+        <![CDATA[ UPDATE gift_car_purse_record ]]>
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="carId != null">
+                car_id = #{carId,jdbcType=BIGINT},
+            </if>
+            <if test="carDate != null">
+                car_date = #{carDate,jdbcType=INTEGER},
+            </if>
+            <if test="totalGoldNum != null">
+                total_gold_num = #{totalGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="isUse != null">
+                is_use = #{isUse,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ WHERE record_id = #{recordId,jdbcType=BIGINT} ]]>
+    </update>
+
+    <select id="getUserCarPurseRecord" parameterType="long" resultType="com.juxiao.xchat.dao.item.dto.GiftCarPurseRecordDTO">
+        <![CDATA[
+        SELECT
+          `record_id` AS `recordId`,
+          `uid` AS `uid`,
+          `car_id` AS `carId`,
+          `car_date` AS `carDate`,
+          `total_gold_num` AS `totalGoldNum`,
+          `is_use` AS `isUse`,
+          `create_time` AS `createTime`
+        FROM
+          `gift_car_purse_record`
+        WHERE
+          `uid` = #{uid}
+        AND
+          `car_id` = #{carId}
+        ]]>
+    </select>
+
+    <select id="listUserInuseCars" parameterType="long" resultType="com.juxiao.xchat.dao.item.dto.GiftCarPurseRecordDTO">
+        <![CDATA[
+        SELECT
+          `record_id` AS `recordId`,
+          `uid` AS `uid`,
+          `car_id` AS `carId`,
+          `car_date` AS `carDate`,
+          `total_gold_num` AS `totalGoldNum`,
+          `is_use` AS `isUse`,
+          `create_time` AS `createTime`
+        FROM
+          `gift_car_purse_record`
+        WHERE
+          `uid` = #{uid}
+        AND
+          `is_use` = 1
+        ]]>
+    </select>
+
+    <select id="listUserPurseCarids" parameterType="long" resultType="java.lang.Integer">
+        <![CDATA[
+         SELECT
+          `car_id` AS carId
+        FROM
+          `gift_car_purse_record`
+        WHERE
+          uid = #{uid}
+        AND car_date > 0
+        order by create_time desc
+        ]]>
+    </select>
+
+</mapper>

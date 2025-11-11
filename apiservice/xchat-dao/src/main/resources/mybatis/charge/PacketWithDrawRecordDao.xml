@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.charge.PacketWithDrawRecordDao">
+
+    <select id="listSuccessPacketRecord" resultType="com.juxiao.xchat.dao.charge.dto.UserPacketRecordDTO">
+        <![CDATA[
+        SELECT
+          pwr.record_id AS `recordId`,
+          pwr.packet_prod_cash_id AS `packetProdCashId`,
+          pwr.packet_num AS `packetNum`,
+          pwr.create_time AS `createTime`,
+          pwr.uid AS `uid`,
+          usr.erban_no AS `erbanNo`,
+          usr.nick AS `nick`,
+          usr.avatar AS `avatar`
+        FROM
+	      packet_withdraw_record pwr
+        INNER JOIN
+	      users usr
+        ON
+	      pwr.uid = usr.uid
+        WHERE
+          pwr.record_status = #{status}
+        ]]>
+    </select>
+    <select id="selectWithdrawRedPacketRecordByList"
+            resultType="com.juxiao.xchat.dao.charge.dto.WithdrawRedPacketRecordDTO">
+                select uid,packet_num as packetNum,create_time as createTime
+                from packet_withdraw_record
+                where uid = #{uid} order by  create_time desc
+    </select>
+</mapper>

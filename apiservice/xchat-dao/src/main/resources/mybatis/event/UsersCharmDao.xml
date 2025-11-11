@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.event.UsersCharmDAO">
+    <select id="selectUsersCharmByPage" resultType="com.juxiao.xchat.dao.event.dto.UsersCharmDTO">
+        SELECT totalNum as  total,recv_uid as uid, @rownum := @rownum + 1 AS rank
+        FROM (SELECT @rownum := 0) r ,
+        (select COALESCE(SUM(sum_gold),0) totalNum,recv_uid
+        from one_day_room_recv_sum where recv_uid in
+        <foreach item="item" index="index" collection="list"  open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and YEARWEEK(date_format(create_time,'%Y-%m-%d')) = YEARWEEK(now()) group by recv_uid order by totalNum desc) as t
+        limit 50
+    </select>
+
+    <select id="selectByUid" resultType="java.lang.Long">
+        select uid from users_charm
+    </select>
+</mapper>

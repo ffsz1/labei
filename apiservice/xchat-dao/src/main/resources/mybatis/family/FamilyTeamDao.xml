@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.family.dao.FamilyTeamDAO">
+
+   <insert id="save" parameterType="com.juxiao.xchat.dao.family.domain.FamilyTeamDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO family_team (family_id,uid,family_logo,family_name,family_notice,hall,status,prestige,bgimg,verification,create_time,update_time,display,mute_type,beinvitemode,invitemode,uptinfomode)
+        VALUES (#{familyId},#{uid},#{familyLogo},#{familyName},#{familyNotice},#{hall},#{status},#{prestige},#{bgImg},#{verification},#{createTime},#{updateTime},#{display},#{muteType},#{beinvitemode},#{invitemode},#{uptinfomode})
+   </insert>
+
+    <select id="selectByTeamId" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.family.domain.FamilyTeamDO">
+        SELECT id,family_id AS familyId,uid,family_logo AS familyLogo,family_name AS familyName,family_notice AS familyNotice,
+               hall,status,prestige,bgimg,verification,create_time AS createTime,update_time AS updateTime,room_id AS roomId,
+               mute_type as muteType,beinvitemode,invitemode,uptinfomode
+        FROM family_team
+        WHERE family_id = #{familyId}
+    </select>
+
+    <update id="updateByLogoAndNotice" parameterType="com.juxiao.xchat.dao.family.domain.FamilyTeamDO">
+        UPDATE  family_team
+        SET family_logo = #{familyLogo} , family_notice = #{familyNotice},bgimg = #{bgImg}
+        WHERE id = #{id}
+    </update>
+
+    <update id="setApplyJoinMethod">
+        UPDATE  family_team
+        SET   verification = #{verification}
+        WHERE id = #{id} AND family_id = #{familyId}
+    </update>
+
+    <select id="selectByList" resultType="com.juxiao.xchat.dao.family.dto.FamilyDTO">
+        SELECT @rowno:=@rowno + 1 AS ranking,a.* FROM (select ft.family_logo as familyLogo,
+        ft.hall,ft.uid,ft.verification,ft.create_time as createTime,ft.update_time as updateTime,
+        ft.room_id,ft.family_name as familyName,ft.family_notice as familyNotice,
+        ft.family_id as familyId,ft.mute_type as muteType,ft.beinvitemode,ft.invitemode,ft.uptinfomode,
+        (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+        (select  COALESCE(count(*),0) from family_join where team_id = ft.id) as member
+        from family_team ft
+        where ft.status = 1 and ft.display = 1
+        order by prestige desc,ft.create_time desc) a,(SELECT @rowno:=0) b
+    </select>
+
+    <select id="selectByPage" resultType="com.juxiao.xchat.dao.family.dto.FamilyDTO">
+        SELECT @rowno:=@rowno + 1 AS ranking,a.* FROM (select ft.family_logo as familyLogo,
+        ft.hall,ft.uid,ft.verification,ft.create_time as createTime,ft.update_time as updateTime,
+        ft.room_id,ft.family_name as familyName,ft.family_notice as familyNotice,ft.id,ft.bgimg as bgimg,
+        ft.family_id as familyId,ft.mute_type as muteType,ft.beinvitemode,ft.invitemode,ft.uptinfomode,
+        (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+        (select  COALESCE(count(*),0) from family_join where team_id = ft.id) as member
+        from family_team ft
+        where ft.status = 1 and ft.display = 1
+        <if test="familyId != null and familyId != ''">
+            and ft.family_id = #{familyId}
+        </if>
+        order by prestige desc,ft.create_time desc) a,(SELECT @rowno:=0) b
+        limit #{current},#{pageSize}
+    </select>
+
+    <select id="selectByUid" resultType="com.juxiao.xchat.dao.family.dto.FamilyJoinsDTO">
+       select fj.id,fj.uid,fj.role_status as roleStatus,ft.family_logo as familyLogo,ft.room_id,
+                ft.family_name as familyName,ft.family_notice as familyNotice,ft.family_id as familyId,
+               (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+               fj.magree,fj.mute,fj.ope
+        from family_join fj
+        left join family_team ft on fj.team_id = ft.id
+        where fj.uid = #{uid}
+    </select>
+
+    <select id="selectByRankingList" resultType="com.juxiao.xchat.dao.family.dto.FamilyTeamDTO">
+        SELECT @rowno:=@rowno + 1 AS ranking,a.* FROM (select ft.family_logo as familyLogo,
+            ft.family_name as familyName,ft.family_notice as familyNotice,ft.family_id as familyId,
+           (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+           ft.mute_type as muteType,ft.beinvitemode,ft.invitemode,ft.uptinfomode
+        from family_team ft
+        where ft.status = 1 and ft.display = 1
+        order by prestige desc) a,(SELECT @rowno:=0) b
+    </select>
+
+    <select id="selectTeamIdByUsers" resultType="com.juxiao.xchat.dao.family.dto.FamilyTeamUsersDTO">
+        select ft.uid,ft.family_id as familyId,us.erban_no as erbanNo,us.phone,us.nick,us.avatar,ft.family_name as familyName
+        from family_team ft
+        inner join users us on ft.uid = us.uid
+        where ft.id = #{teamId}
+    </select>
+
+    <select id="selectByUidAndFamilyId" resultType="com.juxiao.xchat.dao.family.dto.FamilyJoinsDTO">
+        select fj.id,fj.uid,fj.role_status as roleStatus,ft.family_logo as familyLogo,ft.room_id,
+                ft.family_name as familyName,ft.family_notice as familyNotice,ft.family_id as familyId,
+               (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+              fj.magree,fj.mute,fj.ope
+        from family_join fj
+        left join family_team ft on fj.team_id = ft.id
+        where fj.uid = #{uid}
+          <if test="familyId != null and familyId != ''">
+              and ft.family_id = #{familyId}
+          </if>
+    </select>
+
+    <select id="selectByUserId" resultType="com.juxiao.xchat.dao.family.domain.FamilyTeamDO">
+         SELECT id,family_id AS familyId,uid,family_logo AS familyLogo,family_name AS familyName,family_notice AS familyNotice,
+               hall,status,prestige,bgimg,verification,create_time AS createTime,update_time AS updateTime,room_id AS roomId,
+               mute_type as muteType,beinvitemode,invitemode,uptinfomode
+        FROM family_team
+        WHERE uid = #{uid} and status != 2
+    </select>
+
+
+    <select id="selectByUidRanking" resultType="com.juxiao.xchat.dao.family.dto.FamilyJoinsDTO">
+        SELECT @rowno:=@rowno + 1 AS ranking,a.* FROM (select ft.family_logo as familyLogo,
+            ft.family_name as familyName,ft.family_notice as familyNotice,ft.family_id as familyId,
+           (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+           fj.magree,fj.mute,fj.role_status as roleStatus,fj.ope,ft.bgimg as bgimg
+        from family_team ft
+				inner join family_join fj on fj.team_id = ft.id
+        where ft.status = 1 and ft.display = 1 and fj.uid = #{uid}
+        order by prestige desc,ft.create_time desc) a,(SELECT @rowno:=0) b
+    </select>
+
+    <update id="updateByInvoteMode">
+         UPDATE family_team SET invitemode = #{invitemode} WHERE id = #{id}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.family.domain.FamilyTeamDO">
+        SELECT id,family_id AS familyId,uid,family_logo AS familyLogo,family_name AS familyName,family_notice AS familyNotice,
+               hall,status,prestige,bgimg,verification,create_time AS createTime,update_time AS updateTime,room_id AS roomId,
+               mute_type as muteType,beinvitemode,invitemode,uptinfomode
+        FROM family_team
+        WHERE id = #{teamId}
+    </select>
+
+
+    <select id="selectByFamilyId" resultType="com.juxiao.xchat.dao.family.domain.FamilyTeamDO">
+        SELECT id,family_id AS familyId,uid,family_logo AS familyLogo,family_name AS familyName,family_notice AS familyNotice,
+                       create_time AS createTime
+        FROM family_team
+        WHERE family_id = #{familyId}
+    </select>
+
+    <select id="selectAuditingVersion" resultType="com.juxiao.xchat.dao.family.dto.FamilyDTO">
+         SELECT @rowno:=@rowno + 1 AS ranking,a.* FROM (select ft.family_logo as familyLogo,
+                ft.hall,ft.uid,ft.verification,ft.create_time as createTime,ft.update_time as updateTime,
+                ft.room_id,ft.family_name as familyName,ft.family_notice as familyNotice,ft.bgimg,
+                ft.family_id as familyId,ft.mute_type as muteType,ft.beinvitemode,ft.invitemode,ft.uptinfomode,
+                (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+                (select  COALESCE(count(*),0) from family_join where team_id = ft.id) as member
+         from family_team ft where ft.family_id in (1652,9444)
+         order by prestige desc,ft.create_time desc) a,(SELECT @rowno:=0) b
+    </select>
+    <select id="selectAuditingGGLVersion" resultType="com.juxiao.xchat.dao.family.dto.FamilyDTO">
+        SELECT @rowno:=@rowno + 1 AS ranking,a.* FROM (select ft.family_logo as familyLogo,
+                ft.hall,ft.uid,ft.verification,ft.create_time as createTime,ft.update_time as updateTime,
+                ft.room_id,ft.family_name as familyName,ft.family_notice as familyNotice,
+                ft.family_id as familyId,ft.mute_type as muteType,ft.beinvitemode,ft.invitemode,ft.uptinfomode,
+                (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+                (select  COALESCE(count(*),0) from family_join where team_id = ft.id) as member
+         from family_team ft where ft.family_id in (3651)
+         order by prestige desc,ft.create_time desc) a,(SELECT @rowno:=0) b
+    </select>
+    <select id="selectFamilyMemberByTeamId" resultType="com.juxiao.xchat.dao.family.dto.FamilyUsersDTO">
+        select u.uid ,u.nick,u.avatar from family_join fj
+        inner join users u on fj.uid = u.uid
+        where fj.team_id= #{teamId}
+        ORDER BY fj.create_time DESC
+        LIMIT #{size}
+    </select>
+    <select id="selectFamilyByUid" resultType="com.juxiao.xchat.dao.family.dto.FamilyDTO">
+        SELECT @rowno:=@rowno + 1 AS ranking,a.* FROM (select ft.family_logo as familyLogo,
+               ft.hall,ft.uid,ft.verification,ft.create_time as createTime,ft.update_time as updateTime,
+               ft.room_id,ft.family_name as familyName,ft.family_notice as familyNotice,ft.id,ft.room_id as roomId,
+               ft.family_id as familyId,ft.mute_type as muteType,ft.beinvitemode,ft.invitemode,ft.uptinfomode,ft.bgimg,
+              (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,
+              (select  COALESCE(count(*),0) from family_join where team_id = ft.id) as member
+        from family_team ft inner join  family_join fj on fj.team_id = ft.id
+        where ft.status = 1 and ft.display = 1 and fj.uid = #{uid}
+        order by prestige desc,ft.create_time desc) a,(SELECT @rowno:=0) b
+        group by roomId
+    </select>
+    <select id="selectFamilyById" resultType="com.juxiao.xchat.dao.family.dto.FamilyDTO">
+        SELECT @rowno:=@rowno + 1 AS ranking,a.* FROM (select ft.family_logo as familyLogo,
+               ft.hall,ft.uid,ft.verification,ft.create_time as createTime,ft.update_time as updateTime,
+               ft.room_id,ft.family_name as familyName,ft.family_notice as familyNotice,ft.id,ft.room_id as roomId,
+               ft.family_id as familyId,ft.mute_type as muteType,ft.beinvitemode,ft.invitemode,ft.uptinfomode,
+               (select  COALESCE(SUM(num),0) from family_gift_record where team_id = ft.id) as prestige,ft.bgimg,
+               (select  COALESCE(count(*),0) from family_join where team_id = ft.id) as member
+        from family_team ft inner join  family_join fj on fj.team_id = ft.id
+        where ft.status = 1 and ft.display = 1 and ft.family_id = #{familyId}
+        order by prestige desc,ft.create_time desc) a,(SELECT @rowno:=0) b
+        group by roomId
+    </select>
+
+</mapper>

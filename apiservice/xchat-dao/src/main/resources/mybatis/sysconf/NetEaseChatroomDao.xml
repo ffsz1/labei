@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.sysconf.NetEaseChatroomDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.sysconf.domain.NetEaseChatroomDO" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[ INSERT INTO `netease_chatroom` ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attach != null">
+                attach,
+            </if>
+            <if test="ext != null">
+                ext,
+            </if>
+            <if test="fromAccount != null">
+                from_account,
+            </if>
+            <if test="fromAvator != null">
+                from_avator,
+            </if>
+            <if test="fromClientType != null">
+                from_client_type,
+            </if>
+            <if test="fromExt != null">
+                from_ext,
+            </if>
+            <if test="fromNick != null">
+                from_nick,
+            </if>
+            <if test="msgTimestamp != null">
+                msg_timestamp,
+            </if>
+            <if test="msgType != null">
+                msg_type,
+            </if>
+            <if test="msgidClient != null">
+                msgid_client,
+            </if>
+            <if test="resendFlag != null">
+                resend_flag,
+            </if>
+            <if test="roleInfoTimetag != null">
+                role_info_timetag,
+            </if>
+            <if test="roomId != null">
+                room_id,
+            </if>
+            <if test="antispam != null">
+                antispam,
+            </if>
+            <if test="yidunRes != null">
+                yidun_res,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="attach != null">
+                #{attach,jdbcType=VARCHAR},
+            </if>
+            <if test="ext != null">
+                #{ext,jdbcType=VARCHAR},
+            </if>
+            <if test="fromAccount != null">
+                #{fromAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="fromAvator != null">
+                #{fromAvator,jdbcType=VARCHAR},
+            </if>
+            <if test="fromClientType != null">
+                #{fromClientType,jdbcType=VARCHAR},
+            </if>
+            <if test="fromExt != null">
+                #{fromExt,jdbcType=VARCHAR},
+            </if>
+            <if test="fromNick != null">
+                #{fromNick,jdbcType=VARCHAR},
+            </if>
+            <if test="msgTimestamp != null">
+                #{msgTimestamp,jdbcType=VARCHAR},
+            </if>
+            <if test="msgType != null">
+                #{msgType,jdbcType=VARCHAR},
+            </if>
+            <if test="msgidClient != null">
+                #{msgidClient,jdbcType=VARCHAR},
+            </if>
+            <if test="resendFlag != null">
+                #{resendFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="roleInfoTimetag != null">
+                #{roleInfoTimetag,jdbcType=VARCHAR},
+            </if>
+            <if test="roomId != null">
+                #{roomId,jdbcType=VARCHAR},
+            </if>
+            <if test="antispam != null">
+                #{antispam,jdbcType=VARCHAR},
+            </if>
+            <if test="yidunRes != null">
+                #{yidunRes,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

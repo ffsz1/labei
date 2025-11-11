@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.item.GiftCarDao">
+
+    <select id="getGiftCar" parameterType="int" resultType="com.juxiao.xchat.dao.item.dto.GiftCarDTO">
+        <![CDATA[
+        SELECT
+          `car_id` AS `carId`,
+          `car_name` AS `carName`,
+          `gold_price` AS `goldPrice`,
+          `seq_no` AS `seqNo`,
+          `car_status` AS `carStatus`,
+          `pic_url` AS `picUrl`,
+          `has_gif_pic` AS `hasGifPic`,
+          `gif_url` AS `gifUrl`,
+          `has_vgg_pic` AS `hasVggPic`,
+          `vgg_url` AS `vggUrl`,
+          `is_time_limit` AS `isTimeLimit`,
+          `effective_time` AS `effectiveTime`,
+          `create_time` AS `createTime`,
+          `allow_purse` AS `allowpurse`,
+          `left_level` AS `leftlevel`,
+          `mark_pic` AS `markPic`
+        FROM
+          `gift_car`
+        WHERE
+          `car_id` = #{carId}
+        ]]>
+    </select>
+</mapper>

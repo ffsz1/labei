@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.family.dao.FamilyGiftRecordDAO">
+
+   <select id="countPrestige" parameterType="java.lang.Long" resultType="java.lang.Integer">
+       select  COALESCE(SUM(fgr.num),0)
+       from family_gift_record fgr WHERE fgr.team_id = #{teamId}
+   </select>
+    <select id="countPrestigeByUidAndTeamId" resultType="java.lang.Integer">
+        select  COALESCE(SUM(fgr.num),0)
+        from family_gift_record fgr WHERE fgr.team_id = #{teamId} and fgr.uid = #{uid}
+    </select>
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.family.domain.FamilyGiftRecordDO" useGeneratedKeys="true" keyProperty="id">
+        insert into family_gift_record(gift_id,team_id,uid,num,create_time)
+        values(#{giftId},#{teamId},#{uid},#{num},#{createTime})
+    </insert>
+
+    <update id="removeUserGiftRecord">
+        UPDATE family_gift_record set uid = 0 where team_id = #{teamId} and uid = #{userId}
+    </update>
+
+    <select id="selectByTeamGiftRecord" resultType="com.juxiao.xchat.dao.family.dto.FamilyTeamRecordDTO">
+        <![CDATA[
+            select id,team_id as teamId,sum(num) as num,DATE_FORMAT(create_time,'%Y-%m-%d') as years
+            from family_gift_record
+            where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(create_time)
+            group by team_id
+        ]]>
+    </select>
+</mapper>

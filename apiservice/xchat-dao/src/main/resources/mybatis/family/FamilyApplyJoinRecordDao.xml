@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.family.dao.FamilyApplyJoinRecordDAO">
+
+    <select id="selectByUidAndTeamId" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.family.domain.FamilyApplyJoinRecordDO">
+        select fajr.id,fajr.status,fajr.team_id as teamId,fajr.uid,fajr.create_time as createTime,fajr.update_time as updateTime
+        from family_apply_join_record fajr
+        where fajr.uid = #{uid} and fajr.team_id = #{teamId} and fajr.status = 0
+    </select>
+
+    <update id="updateByStatus">
+        update family_apply_join_record
+        set status = #{status}
+        where uid = #{uid} and team_id = #{teamId}
+    </update>
+
+    <select id="selectByFamilyId"  resultType="com.juxiao.xchat.dao.family.dto.FamilyRecordDTO">
+        select fajr.create_time as createTime,u.nick,u.erban_no as erbanNo,u.uid,u.avatar,fajr.status
+        from family_apply_join_record fajr
+        inner join users u on fajr.uid = u.uid
+        where fajr.team_id = #{familyId}
+        order by fajr.create_time desc
+        LIMIT #{current},#{pageSize}
+    </select>
+
+    <insert id="insert" parameterType="com.juxiao.xchat.dao.family.domain.FamilyApplyJoinRecordDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO family_apply_join_record (team_id,uid,status,create_time,update_time)
+        VALUES (#{teamId},#{uid},#{status},#{createTime},#{updateTime})
+    </insert>
+</mapper>

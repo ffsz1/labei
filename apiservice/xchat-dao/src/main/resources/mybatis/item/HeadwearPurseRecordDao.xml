@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.item.HeadwearPurseRecordDao">
+
+    <insert id="save" parameterType="com.juxiao.xchat.dao.item.domain.HeadwearPurseRecordDO" useGeneratedKeys="true" keyProperty="recordId">
+        <trim prefix="INSERT INTO `headwear_purse_record` (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="headwearId != null">
+                headwear_id,
+            </if>
+            <if test="headwearDate != null">
+                headwear_date,
+            </if>
+            <if test="totalGoldNum != null">
+                total_gold_num,
+            </if>
+            <if test="isUse != null">
+                is_use,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="headwearId != null">
+                #{headwearId,jdbcType=BIGINT},
+            </if>
+            <if test="headwearDate != null">
+                #{headwearDate,jdbcType=INTEGER},
+            </if>
+            <if test="totalGoldNum != null">
+                #{totalGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="isUse != null">
+                #{isUse,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.juxiao.xchat.dao.item.domain.HeadwearPurseRecordDO">
+        <![CDATA[ UPDATE `headwear_purse_record` ]]>
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="headwearId != null">
+                headwear_id = #{headwearId,jdbcType=BIGINT},
+            </if>
+            <if test="headwearDate != null">
+                headwear_date = #{headwearDate,jdbcType=INTEGER},
+            </if>
+            <if test="totalGoldNum != null">
+                total_gold_num = #{totalGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="isUse != null">
+                is_use = #{isUse,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ where record_id = #{recordId,jdbcType=BIGINT} ]]>
+    </update>
+
+    <resultMap id="HeadwearPurseRecordResultMap" type="com.juxiao.xchat.dao.item.dto.HeadwearPurseRecordDTO">
+        <id column="record_id" property="recordId" jdbcType="BIGINT"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="headwear_id" property="headwearId" jdbcType="BIGINT"/>
+        <result column="headwear_date" property="headwearDate" jdbcType="INTEGER"/>
+        <result column="total_gold_num" property="totalGoldNum" jdbcType="BIGINT"/>
+        <result column="is_use" property="isUse" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="listInuseHeadwearRecord" parameterType="long" resultMap="HeadwearPurseRecordResultMap">
+        <![CDATA[
+        SELECT
+          record_id,
+          uid,
+          headwear_id,
+          headwear_date,
+          total_gold_num,
+          is_use,
+          create_time
+        FROM
+          `headwear_purse_record`
+        WHERE
+          `uid` = #{uid}
+        AND
+          `is_use` = 1
+        ]]>
+    </select>
+
+    <select id="getUserHeadwearPurseRecord" parameterType="com.juxiao.xchat.dao.item.query.UserHeadwearRecordQuery" resultMap="HeadwearPurseRecordResultMap">
+        <![CDATA[
+        SELECT
+          record_id,
+          uid,
+          headwear_id,
+          headwear_date,
+          total_gold_num,
+          is_use,
+          create_time
+        FROM
+          `headwear_purse_record`
+        WHERE
+          uid = #{uid}
+        AND
+          headwear_id = #{headwearId}
+        LIMIT 1
+        ]]>
+    </select>
+
+</mapper>

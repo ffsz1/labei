@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.sysconf.HomeRoomFlowDao">
+
+    <select id="listHomeHotManualRoom" resultType="com.juxiao.xchat.dao.sysconf.dto.HomeRoomFlowDTO">
+        SELECT
+            room.uid AS uid,
+            room.online_num AS onlineNum,
+            recomm.seq_no AS seqNo
+        FROM
+            home_hot_manual_recomm recomm,
+            room room
+        WHERE
+            recomm.uid = room.uid
+        AND room.valid = TRUE
+        AND now() BETWEEN recomm.start_valid_time
+        AND recomm.end_valid_time
+        ORDER BY
+            recomm.seq_no DESC,
+            (
+                SELECT
+                    SUM(g.total_gold_num)
+                FROM
+                    gift_send_record g
+                WHERE
+                    g.room_uid = room.uid
+                AND g.create_time >= date_sub(sysdate(), INTERVAL 2 MINUTE)
+            ) DESC,
+            recomm.recomm_id ASC
+    </select>
+</mapper>

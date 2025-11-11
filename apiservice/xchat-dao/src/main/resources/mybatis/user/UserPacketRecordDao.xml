@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.user.UserPacketRecordDao">
+    <insert id="save" parameterType="com.juxiao.xchat.dao.user.domain.UserPacketRecordDO">
+        <trim prefix="INSERT INTO `user_packet_record` (" suffix=")" suffixOverrides=",">
+            <if test="packetId != null">
+                packet_id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="packetNum != null">
+                packet_num,
+            </if>
+            <if test="srcUid != null">
+                src_uid,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="objId != null">
+                obj_id,
+            </if>
+            <if test="hasUnpack != null">
+                has_unpack,
+            </if>
+            <if test="packetStatus != null">
+                packet_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="packetId != null">
+                #{packetId,jdbcType=VARCHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="packetNum != null">
+                #{packetNum,jdbcType=DOUBLE},
+            </if>
+            <if test="srcUid != null">
+                #{srcUid,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="objId != null">
+                #{objId,jdbcType=VARCHAR},
+            </if>
+            <if test="hasUnpack != null">
+                #{hasUnpack,jdbcType=BIT},
+            </if>
+            <if test="packetStatus != null">
+                #{packetStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.juxiao.xchat.dao.user.domain.UserPacketRecordDO">
+        <![CDATA[ UPDATE `user_packet_record` ]]>
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="packetNum != null">
+                packet_num = #{packetNum,jdbcType=DOUBLE},
+            </if>
+            <if test="srcUid != null">
+                src_uid = #{srcUid,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="objId != null">
+                obj_id = #{objId,jdbcType=VARCHAR},
+            </if>
+            <if test="hasUnpack != null">
+                has_unpack = #{hasUnpack,jdbcType=BIT},
+            </if>
+            <if test="packetStatus != null">
+                packet_status = #{packetStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <![CDATA[ WHERE `packet_id` = #{packetId,jdbcType=VARCHAR} ]]>
+    </update>
+
+    <select id="listPacketRecord" parameterType="com.juxiao.xchat.dao.user.query.PacketRecordQuery" resultType="com.juxiao.xchat.dao.user.dto.PacketRecordDTO">
+        <![CDATA[
+
+        SELECT
+            upr.`uid` AS `uid`,
+            upr.`create_time` as `recordTime`,
+            upr.`type` as `type`,
+            upr.`packet_num` as `packetNum`
+        FROM
+            `user_packet_record` upr
+        WHERE
+            upr.`uid` = #{uid}
+        AND
+            upr.`create_time` < #{date}
+        AND
+            upr.`type` != 5
+        ORDER BY
+            upr.`create_time` DESC
+        LIMIT #{startRecord}, #{pageSize}
+
+        ]]>
+    </select>
+
+    <select id="listPacketDeposiRecord" parameterType="com.juxiao.xchat.dao.user.query.PacketRecordQuery" resultType="com.juxiao.xchat.dao.user.dto.PacketRecordDTO">
+        <![CDATA[
+        SELECT
+            upr.`uid` AS `uid`,
+            upr.`create_time` as `recordTime`,
+            upr.`type` as `type`,
+            upr.`packet_num` as `packetNum`
+        FROM
+            `user_packet_record` upr
+        WHERE
+            upr.`uid` = #{uid}
+        AND
+            upr.`create_time` < #{date}
+        AND
+            upr.`type` = 5
+        ORDER BY
+            upr.`create_time` DESC
+        LIMIT #{startRecord}, #{pageSize}
+        ]]>
+    </select>
+
+    <select id="listPacketInviteRegister" parameterType="java.lang.Long" resultType="com.juxiao.xchat.dao.user.dto.UserPacketInviteRecordDTO">
+        <![CDATA[
+        SELECT
+          u.uid AS uid,
+          u.nick AS nick,
+          u.avatar AS avatar,
+          record.packet_num AS packetNum,
+          record.create_time AS createTime
+        FROM
+          user_packet_record record,
+          users u
+        WHERE
+          record.uid = #{uid,jdbcType=BIGINT}
+        AND
+          record.src_uid = u.uid
+        AND
+          record.type = ${@com.juxiao.xchat.dao.user.enumeration.UserPacketRecordTypeEnum@PACKET_FOR_INVITE.getValue()}
+        ORDER BY record.create_time DESC
+        ]]>
+    </select>
+</mapper>

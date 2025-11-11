@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juxiao.xchat.dao.bill.BillUserGiveRecordDao">
+    <insert id="insert" parameterType="com.juxiao.xchat.dao.charge.domain.UserGiveRecordDo">
+        <![CDATA[ INSERT INTO `user_give_record` ]]>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="giveId != null">
+                give_id,
+            </if>
+            <if test="sendUid != null">
+                send_uid,
+            </if>
+            <if test="recvUid != null">
+                recv_uid,
+            </if>
+            <if test="gold != null">
+                gold,
+            </if>
+            <if test="sendBeforeGoldNum != null">
+                send_before_gold_num,
+            </if>
+            <if test="sendAfterGoldNum != null">
+                send_after_gold_num,
+            </if>
+            <if test="recvBeforeGoldNum != null">
+                recv_before_gold_num,
+            </if>
+            <if test="recvAfterGoldNum != null">
+                recv_after_gold_num,
+            </if>
+            <if test="giveDesc != null">
+                give_desc,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="giveId != null">
+                #{giveId,jdbcType=VARCHAR},
+            </if>
+            <if test="sendUid != null">
+                #{sendUid,jdbcType=BIGINT},
+            </if>
+            <if test="recvUid != null">
+                #{recvUid,jdbcType=BIGINT},
+            </if>
+            <if test="gold != null">
+                #{gold,jdbcType=BIGINT},
+            </if>
+            <if test="sendBeforeGoldNum != null">
+                #{sendBeforeGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="sendAfterGoldNum != null">
+                #{sendAfterGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="recvBeforeGoldNum != null">
+                #{recvBeforeGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="recvAfterGoldNum != null">
+                #{recvAfterGoldNum,jdbcType=BIGINT},
+            </if>
+            <if test="giveDesc != null">
+                #{giveDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+
+        </trim>
+    </insert>
+
+    <select id="listUserGiveGold" parameterType="com.juxiao.xchat.dao.bill.query.BillUserQuery" resultType="com.juxiao.xchat.dao.bill.dto.BillUserGiveGoldDTO">
+        <![CDATA[
+        SELECT
+            ugr.`send_uid` AS `sendUid`,
+            su.`avatar` AS `sendAvatar`,
+            su.`nick` AS `sendNick`,
+            ugr.`recv_uid` AS `recvUid`,
+            ru.`avatar` AS `recvAvatar`,
+            ru.`nick` AS `recvNick`,
+            ugr.`gold` AS `goldNum`,
+            ugr.`create_time` AS `recordTime`
+        FROM
+            `user_give_record` ugr
+            LEFT JOIN `users` su ON ugr.`send_uid` = su.`uid`
+            LEFT JOIN `users` ru ON ugr.`recv_uid` = ru.`uid`
+        WHERE
+            (ugr.`send_uid` = #{uid}
+            OR ugr.`recv_uid` = #{uid})
+            AND ugr.`create_time` < #{date}
+        ORDER BY
+            ugr.`create_time` DESC
+            LIMIT #{startRecord}, #{prePage}
+        ]]>
+    </select>
+</mapper>

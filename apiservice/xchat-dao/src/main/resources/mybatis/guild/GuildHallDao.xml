@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.juxiao.xchat.dao.guild.GuildHallDao" >
+  <resultMap id="BaseResultMap" type="com.juxiao.xchat.dao.guild.domain.GuildHallDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="guild_id" property="guildId" jdbcType="BIGINT" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, guild_id, room_id, create_time, update_time, is_del
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from guild_hall
+    where id = #{id,jdbcType=BIGINT} and is_del=false
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from guild_hall
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallDO" >
+    insert into guild_hall (id, guild_id, room_id, 
+      create_time, update_time, is_del
+      )
+    values (#{id,jdbcType=BIGINT}, #{guildId,jdbcType=BIGINT}, #{roomId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallDO" >
+    insert into guild_hall
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="guildId != null" >
+        guild_id,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="guildId != null" >
+        #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallDO" >
+    update guild_hall
+    <set >
+      <if test="guildId != null" >
+        guild_id = #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.juxiao.xchat.dao.guild.domain.GuildHallDO" >
+    update guild_hall
+    set guild_id = #{guildId,jdbcType=BIGINT},
+      room_id = #{roomId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getDTOById" parameterType="Map" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallDTO">
+    select
+        h.id as hallId,
+        h.guild_id as guildId,
+        h.room_id as roomId,
+        r.uid as hallUid,
+        u.erban_no as erbanNo,
+        (select count(*) from guild_hall_member m where m.is_del=false and m.hall_id=h.id) as memberCount,
+        r.title as roomTitle,
+        r.room_tag as roomTag,
+        u.avatar as roomAvatar
+    from guild_hall h
+    inner join room r on h.room_id=r.room_id
+    inner join users u on r.uid=u.uid
+    where h.id=#{id} and h.is_del=false
+  </select>
+
+  <select id="findByGuildIdOrderByGoldDesc" parameterType="Map" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallDTO">
+    select
+        h.id as hallId,
+        h.guild_id as guildId,
+        h.room_id as roomId,
+
+        r.uid as hallUid,
+        u.erban_no as erbanNo,
+
+        r.title as roomTitle,
+        r.room_tag as roomTag,
+        u.avatar as roomAvatar,
+        sum(o.sum_gold) as gold
+    from guild_hall h
+    inner join room r on h.room_id=r.room_id
+    inner join users u on r.uid=u.uid
+    left join one_day_room_send_sum o on r.uid=o.uid and DATE_FORMAT(o.create_time, '%Y-%m-%d')=DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%Y-%m-%d')
+    where h.guild_id=#{guildId} and h.is_del=false
+    group by h.id, h.guild_id,h.room_id,r.uid,u.erban_no,r.title,r.room_tag,r.avatar
+    order by gold desc
+  </select>
+
+  <select id="getDTOByHallUid" parameterType="Map" resultType="com.juxiao.xchat.dao.guild.dto.GuildHallDTO">
+    select
+        h.id as hallId,
+        h.guild_id as guildId,
+        h.room_id as roomId,
+
+        r.uid as hallUid,
+        u.erban_no as erbanNo,
+
+        r.title as roomTitle,
+        r.room_tag as roomTag,
+        u.avatar as roomAvatar
+    from guild_hall h
+    inner join room r on h.room_id=r.room_id
+    inner join users u on r.uid=u.uid
+    where u.uid=#{uid} and h.is_del=false
+  </select>
+
+  <select id="findByGuildId" parameterType="Map" resultType="com.juxiao.xchat.dao.guild.domain.GuildHallDO">
+    select
+    <include refid="Base_Column_List" />
+    from guild_hall h
+    where h.guild_id=#{guildId} and h.is_del=false
+  </select>
+
+</mapper>
