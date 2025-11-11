@@ -1,0 +1,196 @@
+//
+//  PrefixHeader.pch
+//  HJLive
+//
+//  Created by feiyin on 2020/6/22.
+//  Copyright © 2020 com.wdqj.gz. All rights reserved.
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "YYViewControllers.h"
+    #import "UIViewController+YYViewControllers.h"
+    #import "MBProgressHUD+YY.h"
+    #import "UIImageView+QiNiu.h"
+
+    #import "Masonry.h"
+    #import <UIImageView+WebCache.h>
+    #import "YPYYTheme.h"
+    #import "YPPlaceholder.h"
+    #import <YYCategories/YYCategories.h>
+    #import "YPMidSure.h"
+    #import "YPLocalizableDefine.h"
+    #import "LocalizableFrameworkDefine.h"
+    #import "HJLocalizableCoreDefine.h"
+    #import <Availability.h>
+
+
+    #import "GGIBInspectableKit.h"
+//define class
+    #import "YPStoryboard.h"
+    #import "JXFontDefine.h"
+
+    #import "GGStoryBoardDefine.h"
+
+    #import "YPCoreManager.h"
+    #import "NSObject+AutoCoding.h"
+    #import "GCDHelper.h"
+    #import "NSString+SpecialClean.h"
+    #import "YPCoreError.h"
+    #import "CommonLocalization.h"
+    #import "ReactiveCocoa.h"
+    #import "YYHttpClient.h"
+    #import "YPEnvironmentDefine.h"
+    #import "YPAuthCoreHelp.h"
+    #import "YPWebSocketCore.h"
+    #import "HJWebSocketCoreClient.h"
+    #import "YPHomeCore.h"
+    #import "YPJXLogManager.h"
+    #import "YPUserCoreHelp.h"
+
+    #import "NSString+GGImage.h"
+    #import "LogDefine.h"
+    #import "GCDHelper.h"
+    #import "UserID.h"
+    #import "NSString+SpecialClean.h"
+    #import "NSArray+Safe.h"
+    #import "NSMutableArray+Safe.h"
+    #import "XBDWeakTimer.h"
+    #import "JSONTools.h"
+    #import "SJXCSMIPHelper.h"
+    #import "LocalizableFrameworkDefine.h"
+    #import "YPFoundationDefine.h"
+    #import "YPFYTool.h"
+#import "YYAnimatedImageView+ImageShow.h"
+#endif
+
+
+#define EnvID @"ErbanEnv"
+
+#define kErbanRankURL @"mm/rank/index.html"
+#define kImageDomainURL @"https://pic.hnyueqiang.com"
+
+
+// color
+#define RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
+#define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f \
+alpha:(a)]
+
+#define HSVCOLOR(h,s,v) [UIColor colorWithHue:(h) saturation:(s) value:(v) alpha:1]
+#define HSVACOLOR(h,s,v,a) [UIColor colorWithHue:(h) saturation:(s) value:(v) alpha:(a)]
+
+#define RGBA(r,g,b,a) (r)/255.0f, (g)/255.0f, (b)/255.0f, (a)
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+#define  IsFirstLaunchApp  [GetCore(HomeCore) checkIsFirstLaunchApp]
+
+
+// 自定义Log
+#ifdef DEBUG
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#define SDGLog(...)
+#endif
+
+// Screen
+#define XC_SCREE_W [UIScreen mainScreen].bounds.size.width
+#define XC_SCREE_H [UIScreen mainScreen].bounds.size.height
+#define XC_Height_NavBar ((iPhoneX==YES)?88.0f: 64.0f)
+#define XC_Height_TabBar ((iPhoneX==YES)?83.0f: 49.0f)
+
+//iphone size
+#define iPhone4s ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO) //判断是否iphone4
+
+#define iPhone5s ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO) //判断是否iphone5
+#define iPhone6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO) //判断是否iphone6
+//#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO) //判断是否iPhoneX
+#define iphonePlus ([UIScreen mainScreen].bounds.size.height == 736.0)
+
+#define iOS10 ([[UIDevice currentDevice].systemVersion doubleValue] >= 10.0)
+
+//Size ratio
+#define XC_RATIO_WIDTH(_X_) ((_X_) * XC_SCREE_W / 375.f)
+#define XC_RATIO_HEIGHT(_X_) ((_X_) * XC_SCREE_H / 667.f)
+
+//判断是否iPhoneX系列//
+#define iPhoneX \
+({BOOL isPhoneX = NO;\
+if (@available(iOS 11.0, *)) {\
+isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom > 0.0;\
+}\
+(isPhoneX);})
+
+//判断是否是ipad
+#define isPad ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+
+
+
+
+
+
+
+
+
+
+
+//// 联通
+//#define TRAFFIC_DATA 0
+
+// 当前版本是否为开发中的版本，影响到崩溃日志的分类（崩溃后台会根据此字段，显示该崩溃日志是来至测试版，还是正式版）
+// 0 表示当前版本为正式发布的版本，在发布之前要把此参数改成 0
+// 1 表示当前版本为开发中的版本
+//#define IS_DEVELOPING_VERSION 1
+
+//欢聚直播云sdk APPKey
+#define YCloudSDKAppKey 1243801303
+#define YCloudSDKAppSercet @"8033090e_2"
+
+#define EnvID @"ErbanEnv"
+
+#define BadgeShowID @"BadgeShow"
+
+
+#define dispatch_sync_safe_main(block)\
+if ([NSThread isMainThread])\
+{\
+block();\
+}\
+else\
+{\
+dispatch_sync(dispatch_get_main_queue(), block);\
+}
+
+#define dispatch_async_safe_main(block)\
+if ([NSThread isMainThread])\
+{\
+block();\
+}\
+else\
+{\
+dispatch_async(dispatch_get_main_queue(), block);\
+}
+
+#define callback_and_refresh_realm(block)\
+dispatch_async_safe_main(^(void)\
+{\
+[[RLMRealm defaultRealm] refresh];\
+if(block)\
+{\
+block();\
+}\
+});\
+
+#ifndef JX_STR_AVOID_nil
+#define JX_STR_AVOID_nil( _value_ ) (_value_) ? : @""
+#endif
+
+#ifndef JX_OBJECT_AVOID_nil
+#define JX_OBJECT_AVOID_nil( _value_, _className_ ) (_value_) ? : [[_className_ class] new]
+
+
+#define XDBLoger(infoTitle,infoStr) [[YPJXLogManager sharedInstance] logInfo:infoTitle logStr:infoStr,nil];
+
+
+#endif

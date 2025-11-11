@@ -1,0 +1,126 @@
+
+/* Class = "UIButton"; normalTitle = " 关注"; ObjectID = "105-p4-MGq"; */
+"105-p4-MGq.normalTitle" = " 关注";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "1f3-7E-5JB"; */
+"1f3-7E-5JB.text" = "Label";
+
+/* Class = "UILabel"; text = "11''"; ObjectID = "2C6-80-8lH"; */
+"2C6-80-8lH.text" = "11''";
+
+/* Class = "UIButton"; normalTitle = "粉丝"; ObjectID = "3iw-Dz-w4N"; */
+"3iw-Dz-w4N.normalTitle" = "粉丝";
+
+/* Class = "UILabel"; text = "个人介绍"; ObjectID = "3w5-z7-rG2"; */
+"3w5-z7-rG2.text" = "个人介绍";
+
+/* Class = "UILabel"; text = "直播中"; ObjectID = "5Oc-2O-s7S"; */
+"5Oc-2O-s7S.text" = "直播中";
+
+/* Class = "UIButton"; normalTitle = " 去找TA"; ObjectID = "5nL-lW-dTB"; */
+"5nL-lW-dTB.normalTitle" = " 去找TA";
+
+/* Class = "UIButton"; normalTitle = " 私聊"; ObjectID = "6bT-Ta-Trq"; */
+"6bT-Ta-Trq.normalTitle" = " 私聊";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "6hp-Ij-xrc"; */
+"6hp-Ij-xrc.text" = "Label";
+
+/* Class = "UILabel"; text = "nick"; ObjectID = "9ie-zI-WLp"; */
+"9ie-zI-WLp.text" = "nick";
+
+/* Class = "UILabel"; text = "资料"; ObjectID = "AvT-Px-nZL"; */
+"AvT-Px-nZL.text" = "资料";
+
+/* Class = "UILabel"; text = "按住说话"; ObjectID = "G1h-Ag-DMA"; */
+"G1h-Ag-DMA.text" = "按住说话";
+
+/* Class = "UILabel"; text = "星座"; ObjectID = "H6e-AC-5WY"; */
+"H6e-AC-5WY.text" = "星座";
+
+/* Class = "UILabel"; text = "相册"; ObjectID = "IyA-Se-4LD"; */
+"IyA-Se-4LD.text" = "相册";
+
+/* Class = "UILabel"; text = "30"; ObjectID = "LTa-kY-pHj"; */
+"LTa-kY-pHj.text" = "30";
+
+/* Class = "UILabel"; text = "试听"; ObjectID = "Ldt-o1-FgR"; */
+"Ldt-o1-FgR.text" = "试听";
+
+/* Class = "UILabel"; text = "00:00"; ObjectID = "M7k-3K-QKa"; */
+"M7k-3K-QKa.text" = "00:00";
+
+/* Class = "UILabel"; text = "喜翻鸭号"; ObjectID = "Ry9-GB-IFI"; */
+"Ry9-GB-IFI.text" = "喜翻鸭号";
+
+/* Class = "UILabel"; text = "ID:123456"; ObjectID = "U7a-4a-jdU"; */
+"U7a-4a-jdU.text" = "ID:123456";
+
+/* Class = "UILabel"; text = "相册"; ObjectID = "XuI-uL-dBS"; */
+"XuI-uL-dBS.text" = "相册";
+
+/* Class = "UIButton"; normalTitle = " TA的窝"; ObjectID = "ZTB-RG-ZYJ"; */
+"ZTB-RG-ZYJ.normalTitle" = " TA的窝";
+
+/* Class = "UIButton"; normalTitle = "关注"; ObjectID = "Zax-9K-SYB"; */
+"Zax-9K-SYB.normalTitle" = "关注";
+
+/* Class = "UILabel"; text = "您暂无个人签名"; ObjectID = "baH-La-deI"; */
+"baH-La-deI.text" = "您暂无个人签名";
+
+/* Class = "UILabel"; text = "个人签名"; ObjectID = "cdQ-6f-mIY"; */
+"cdQ-6f-mIY.text" = "个人签名";
+
+/* Class = "UILabel"; text = "性别"; ObjectID = "cw2-i7-Lx0"; */
+"cw2-i7-Lx0.text" = "性别";
+
+/* Class = "UILabel"; text = "关注"; ObjectID = "d75-6W-poA"; */
+"d75-6W-poA.text" = "关注";
+
+/* Class = "UILabel"; text = "TA还没上传照片噢~"; ObjectID = "dBD-jD-8JI"; */
+"dBD-jD-8JI.text" = "TA还没上传照片噢~";
+
+/* Class = "UIButton"; normalTitle = "3"; ObjectID = "dVv-PW-tvc"; */
+"dVv-PW-tvc.normalTitle" = "3";
+
+/* Class = "UILabel"; text = "个性签名"; ObjectID = "dcj-tf-NiP"; */
+"dcj-tf-NiP.text" = "个性签名";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "de0-Dk-pVw"; */
+"de0-Dk-pVw.text" = "0";
+
+/* Class = "UILabel"; text = "生日"; ObjectID = "e5j-Bs-630"; */
+"e5j-Bs-630.text" = "生日";
+
+/* Class = "UILabel"; text = "天蝎"; ObjectID = "ghm-8o-3hR"; */
+"ghm-8o-3hR.text" = "天蝎";
+
+/* Class = "UILabel"; text = "重录"; ObjectID = "gum-xa-0Qg"; */
+"gum-xa-0Qg.text" = "重录";
+
+/* Class = "UILabel"; text = "昵称"; ObjectID = "lfQ-9G-QQS"; */
+"lfQ-9G-QQS.text" = "昵称";
+
+/* Class = "UILabel"; text = "白羊座"; ObjectID = "oAG-oy-Mob"; */
+"oAG-oy-Mob.text" = "白羊座";
+
+/* Class = "UILabel"; text = "粉丝数"; ObjectID = "oOE-QE-GN5"; */
+"oOE-QE-GN5.text" = "粉丝数";
+
+/* Class = "UILabel"; text = "性别"; ObjectID = "pHS-wA-IQq"; */
+"pHS-wA-IQq.text" = "性别";
+
+/* Class = "UIButton"; normalTitle = "1364"; ObjectID = "pTW-pb-eu1"; */
+"pTW-pb-eu1.normalTitle" = "1364";
+
+/* Class = "UILabel"; text = "你暂时还没有上传照片喔..."; ObjectID = "qhE-57-4so"; */
+"qhE-57-4so.text" = "你暂时还没有上传照片喔...";
+
+/* Class = "UILabel"; text = "头像"; ObjectID = "u1P-BD-BPw"; */
+"u1P-BD-BPw.text" = "头像";
+
+/* Class = "UILabel"; text = "女"; ObjectID = "u3E-pW-s1b"; */
+"u3E-pW-s1b.text" = "女";
+
+/* Class = "UILabel"; text = "星座"; ObjectID = "y5Y-5p-QfR"; */
+"y5Y-5p-QfR.text" = "星座";

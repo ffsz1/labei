@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="YPEnterRoomWithPwdView">
+            <rect key="frame" x="0.0" y="0.0" width="255" height="246"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yp_room_lockbkg" translatesAutoresizingMaskIntoConstraints="NO" id="Ze7-xr-F3B">
+                    <rect key="frame" x="0.0" y="0.0" width="255" height="246"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1It-qS-8yR">
+                    <rect key="frame" x="32" y="174" width="80" height="40"/>
+                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="TgI-bJ-595"/>
+                        <constraint firstAttribute="height" constant="40" id="l9u-Af-eKf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="cancelBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Rny-Vl-uGh"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPp-7H-T6h">
+                    <rect key="frame" x="25" y="104" width="205" height="48"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入房间密码" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ght-Co-7ga">
+                            <rect key="frame" x="0.0" y="0.0" width="205" height="48"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="ght-Co-7ga" secondAttribute="bottom" id="2FE-G7-jFL"/>
+                        <constraint firstAttribute="trailing" secondItem="ght-Co-7ga" secondAttribute="trailing" id="MO7-RY-z27"/>
+                        <constraint firstItem="ght-Co-7ga" firstAttribute="top" secondItem="bPp-7H-T6h" secondAttribute="top" id="R8W-c3-AI5"/>
+                        <constraint firstAttribute="height" constant="48" id="dbe-QG-bfW"/>
+                        <constraint firstItem="ght-Co-7ga" firstAttribute="leading" secondItem="bPp-7H-T6h" secondAttribute="leading" id="mZc-GT-d4f"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="24"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="房间被锁住了" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seB-p3-2iG">
+                    <rect key="frame" x="94.5" y="32" width="128.5" height="25.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密码错误，请重新输入" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lOo-2s-Dlt">
+                    <rect key="frame" x="76.5" y="158" width="102.5" height="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" red="0.8666666666666667" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ORi-Lb-CVd">
+                    <rect key="frame" x="143" y="174" width="80" height="40"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="Bd7-ky-5Fv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="解锁" backgroundImage="yp_room_unlockbtn">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="enterChatRoomBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="miY-9P-Yxn"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="bPp-7H-T6h" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="104" id="1ce-Q0-Saw"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="seB-p3-2iG" secondAttribute="trailing" constant="32" id="7GL-Ei-1RZ"/>
+                <constraint firstItem="Ze7-xr-F3B" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="MJa-NH-ywt"/>
+                <constraint firstItem="Ze7-xr-F3B" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Mg6-cG-etL"/>
+                <constraint firstItem="lOo-2s-Dlt" firstAttribute="top" secondItem="bPp-7H-T6h" secondAttribute="bottom" constant="6" id="OTl-UE-Wli"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bPp-7H-T6h" secondAttribute="trailing" constant="25" id="Oqr-1Q-S9g"/>
+                <constraint firstItem="lOo-2s-Dlt" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="PUR-Nl-Dsn"/>
+                <constraint firstItem="ORi-Lb-CVd" firstAttribute="centerY" secondItem="1It-qS-8yR" secondAttribute="centerY" id="RSh-Qa-wdc"/>
+                <constraint firstItem="1It-qS-8yR" firstAttribute="height" secondItem="ORi-Lb-CVd" secondAttribute="height" id="T0x-qI-58F"/>
+                <constraint firstItem="1It-qS-8yR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="32" id="feC-a8-dcx"/>
+                <constraint firstItem="Ze7-xr-F3B" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gxi-hl-SGK"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1It-qS-8yR" secondAttribute="bottom" constant="32" id="hr4-8J-88H"/>
+                <constraint firstItem="bPp-7H-T6h" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="iah-Wg-cV0"/>
+                <constraint firstItem="seB-p3-2iG" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="32" id="m7N-4S-dOB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ORi-Lb-CVd" secondAttribute="trailing" constant="32" id="w7G-6f-O6P"/>
+                <constraint firstItem="Ze7-xr-F3B" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="xDA-S4-xqw"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="pwdErrTip" destination="lOo-2s-Dlt" id="tc0-ID-ACc"/>
+                <outlet property="pwdTextField" destination="ght-Co-7ga" id="KY6-Fc-d9y"/>
+            </connections>
+            <point key="canvasLocation" x="-13.6" y="28.785607196401802"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="yp_room_lockbkg" width="128" height="128"/>
+        <image name="yp_room_unlockbtn" width="128" height="128"/>
+    </resources>
+</document>

@@ -1,0 +1,13 @@
+//
+//  OnlineCore.h
+//  HJLive
+//
+//  Created by feiyin on 2020/7/2.
+//  Copyright © 2020 com.wdqj.gz. All rights reserved.
+//
+
+#import "YPBaseCore.h"
+
+@interface YPOnlineCore : YPBaseCore
+- (void)showGitToUidFromOnline:(UserID)uid withName:(NSString *)name;
+@end

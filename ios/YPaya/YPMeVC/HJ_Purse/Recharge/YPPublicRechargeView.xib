@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="em3-hE-hmQ" customClass="YPPublicRechargeView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30b-iD-Cm8">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pW3-It-KxP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsY-PS-Azj">
+                    <rect key="frame" x="49.5" y="361" width="315" height="174"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="充值功能正在开发中，请先移步微信公众号充值：" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ayv-y3-wwO">
+                            <rect key="frame" x="24" y="30" width="267" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="KOa-06-WR8"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                            <color key="textColor" red="0.32156862749999998" green="0.32156862749999998" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="haijiaoxingqiuapp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Num-RG-urW">
+                            <rect key="frame" x="0.0" y="83" width="315" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="Rea-xE-b9q"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.47843137254901957" green="0.61568627450980395" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rF9-2U-D5x">
+                            <rect key="frame" x="30" y="112" width="105" height="38"/>
+                            <color key="backgroundColor" red="0.81960784313725488" green="0.89803921568627454" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="105" id="9Qk-Q8-l1h"/>
+                                <constraint firstAttribute="height" constant="38" id="ENy-an-qc3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                            <state key="normal" title="复制微信号">
+                                <color key="titleColor" red="0.47843137250000001" green="0.61568627450000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="showWeixinBtnAction:" destination="em3-hE-hmQ" eventType="touchUpInside" id="fpL-fi-L7o"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ouh-bb-lmD">
+                            <rect key="frame" x="165" y="111" width="120" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="kP9-c6-nG1"/>
+                                <constraint firstAttribute="width" constant="120" id="zcc-CA-7E1"/>
+                            </constraints>
+                            <state key="normal" title="取消">
+                                <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="cancelBtnAction:" destination="em3-hE-hmQ" eventType="touchUpInside" id="h5J-rx-Vac"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ayv-y3-wwO" firstAttribute="leading" secondItem="bsY-PS-Azj" secondAttribute="leading" constant="24" id="6qV-CR-oJL"/>
+                        <constraint firstAttribute="height" constant="174" id="D5g-dI-c6f"/>
+                        <constraint firstItem="Num-RG-urW" firstAttribute="top" secondItem="ayv-y3-wwO" secondAttribute="bottom" constant="13" id="Fq1-qb-NcO"/>
+                        <constraint firstItem="ayv-y3-wwO" firstAttribute="top" secondItem="bsY-PS-Azj" secondAttribute="top" constant="30" id="GiA-Dj-gVf"/>
+                        <constraint firstAttribute="trailing" secondItem="ayv-y3-wwO" secondAttribute="trailing" constant="24" id="MPB-PO-lI4"/>
+                        <constraint firstItem="Num-RG-urW" firstAttribute="leading" secondItem="bsY-PS-Azj" secondAttribute="leading" id="Mnn-qr-qYx"/>
+                        <constraint firstItem="rF9-2U-D5x" firstAttribute="leading" secondItem="bsY-PS-Azj" secondAttribute="leading" constant="30" id="QMK-cC-Vvu"/>
+                        <constraint firstAttribute="trailing" secondItem="Ouh-bb-lmD" secondAttribute="trailing" constant="30" id="UGb-Eo-7Fy"/>
+                        <constraint firstAttribute="bottom" secondItem="rF9-2U-D5x" secondAttribute="bottom" constant="24" id="VXP-Uo-sNG"/>
+                        <constraint firstAttribute="trailing" secondItem="Num-RG-urW" secondAttribute="trailing" id="YZc-Wo-42y"/>
+                        <constraint firstItem="Ouh-bb-lmD" firstAttribute="centerY" secondItem="rF9-2U-D5x" secondAttribute="centerY" id="bc9-GK-oEj"/>
+                        <constraint firstAttribute="width" constant="315" id="dLW-1y-bZJ"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="30b-iD-Cm8" firstAttribute="leading" secondItem="LMD-Z3-Bam" secondAttribute="leading" id="Ace-8z-gek"/>
+                <constraint firstAttribute="bottom" secondItem="30b-iD-Cm8" secondAttribute="bottom" id="Hul-2k-EVx"/>
+                <constraint firstItem="bsY-PS-Azj" firstAttribute="centerX" secondItem="em3-hE-hmQ" secondAttribute="centerX" id="I2t-MB-Sx4"/>
+                <constraint firstItem="LMD-Z3-Bam" firstAttribute="trailing" secondItem="30b-iD-Cm8" secondAttribute="trailing" id="JT7-yl-4Rb"/>
+                <constraint firstItem="30b-iD-Cm8" firstAttribute="top" secondItem="em3-hE-hmQ" secondAttribute="top" id="MVP-zg-EM3"/>
+                <constraint firstItem="bsY-PS-Azj" firstAttribute="centerY" secondItem="em3-hE-hmQ" secondAttribute="centerY" id="WPZ-3L-IH3"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="LMD-Z3-Bam"/>
+            <connections>
+                <outlet property="bgview" destination="bsY-PS-Azj" id="yH0-em-0or"/>
+                <outlet property="canelBtn" destination="Ouh-bb-lmD" id="cWr-pA-I7s"/>
+                <outlet property="effectView" destination="30b-iD-Cm8" id="m9r-44-vdn"/>
+                <outlet property="mobileCenterYLayout" destination="WPZ-3L-IH3" id="Iet-fO-g4N"/>
+                <outlet property="showWeixinBtn" destination="rF9-2U-D5x" id="QUG-Ck-uZ0"/>
+            </connections>
+            <point key="canvasLocation" x="288" y="178"/>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="YPShareView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dx-R7-39r">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ctn-oi-JUw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="cu4-ZK-Yp2" appends="YES" id="Gh0-hr-eDM"/>
+                        </connections>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bFJ-ns-4GG">
+                    <rect key="frame" x="0.0" y="711" width="414" height="185"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lc2-zz-Bj3" customClass="GGButton">
+                            <rect key="frame" x="30" y="125" width="354" height="40"/>
+                            <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="LCx-ZD-9fK"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="16"/>
+                            <state key="normal" title="取消">
+                                <color key="titleColor" red="0.45490196078431372" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="connerRadius">
+                                    <real key="value" value="17"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="cancelAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="eKu-Ee-bfQ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIB-r1-JMD" customClass="YPverticalButton">
+                            <rect key="frame" x="103.5" y="10" width="103.5" height="100"/>
+                            <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
+                            <state key="normal" title="微信朋友圈" image="yp_share_wxCircle">
+                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="titleSpacing">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="wxCircleBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Epr-QA-2Z6"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pMO-IT-wlt" customClass="YPverticalButton">
+                            <rect key="frame" x="207" y="10" width="103.5" height="100"/>
+                            <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
+                            <state key="normal" title="QQ" image="yp_share_qq">
+                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="titleSpacing">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="qqAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="hLl-cU-H4g"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UXm-W4-xm2" customClass="YPverticalButton">
+                            <rect key="frame" x="310.5" y="10" width="103.5" height="100"/>
+                            <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
+                            <state key="normal" title="QQ空间" image="yp_share_qqZone">
+                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="titleSpacing">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="qqZoneAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="sNC-tI-sup"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80g-Bi-Z9j" customClass="YPverticalButton">
+                            <rect key="frame" x="0.0" y="10" width="103.5" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="9Ot-qa-Bvf"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
+                            <state key="normal" title="微信好友" image="yp_share_wx">
+                                <color key="titleColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="titleSpacing">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="wxBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Oef-5L-Q50"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.95999999999999996" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="80g-Bi-Z9j" firstAttribute="width" secondItem="bFJ-ns-4GG" secondAttribute="width" multiplier="1:4" id="3jk-fv-4ko"/>
+                        <constraint firstItem="UXm-W4-xm2" firstAttribute="top" secondItem="pMO-IT-wlt" secondAttribute="top" id="9UA-7S-TxV"/>
+                        <constraint firstAttribute="trailing" secondItem="lc2-zz-Bj3" secondAttribute="trailing" constant="30" id="Agz-sB-yJd"/>
+                        <constraint firstItem="lc2-zz-Bj3" firstAttribute="leading" secondItem="bFJ-ns-4GG" secondAttribute="leading" constant="30" id="CnL-E8-pg0"/>
+                        <constraint firstItem="UIB-r1-JMD" firstAttribute="width" secondItem="80g-Bi-Z9j" secondAttribute="width" id="E94-Pi-Jkg"/>
+                        <constraint firstAttribute="height" constant="185" id="HkN-rQ-1Qq"/>
+                        <constraint firstItem="UIB-r1-JMD" firstAttribute="leading" secondItem="80g-Bi-Z9j" secondAttribute="trailing" id="NTT-Uq-Lch"/>
+                        <constraint firstItem="UXm-W4-xm2" firstAttribute="leading" secondItem="pMO-IT-wlt" secondAttribute="trailing" id="Si5-QY-yGZ"/>
+                        <constraint firstItem="80g-Bi-Z9j" firstAttribute="top" secondItem="bFJ-ns-4GG" secondAttribute="top" constant="10" id="Vta-wO-wwj"/>
+                        <constraint firstItem="pMO-IT-wlt" firstAttribute="width" secondItem="80g-Bi-Z9j" secondAttribute="width" id="ZUE-Ni-Un0"/>
+                        <constraint firstItem="UXm-W4-xm2" firstAttribute="width" secondItem="80g-Bi-Z9j" secondAttribute="width" id="ep7-dP-PBT"/>
+                        <constraint firstItem="pMO-IT-wlt" firstAttribute="top" secondItem="UIB-r1-JMD" secondAttribute="top" id="fpp-7L-fLU"/>
+                        <constraint firstItem="80g-Bi-Z9j" firstAttribute="leading" secondItem="bFJ-ns-4GG" secondAttribute="leading" id="hHK-Cg-F8d"/>
+                        <constraint firstItem="UIB-r1-JMD" firstAttribute="top" secondItem="80g-Bi-Z9j" secondAttribute="top" id="jdx-Xi-kie"/>
+                        <constraint firstAttribute="bottom" secondItem="lc2-zz-Bj3" secondAttribute="bottom" constant="20" id="mme-ti-YQL"/>
+                        <constraint firstItem="pMO-IT-wlt" firstAttribute="height" secondItem="80g-Bi-Z9j" secondAttribute="height" id="qQP-2q-5fu"/>
+                        <constraint firstItem="UXm-W4-xm2" firstAttribute="height" secondItem="80g-Bi-Z9j" secondAttribute="height" id="rNm-Mo-d6y"/>
+                        <constraint firstItem="UIB-r1-JMD" firstAttribute="height" secondItem="80g-Bi-Z9j" secondAttribute="height" id="yFX-Nt-xpO"/>
+                        <constraint firstItem="pMO-IT-wlt" firstAttribute="leading" secondItem="UIB-r1-JMD" secondAttribute="trailing" id="zyU-hF-UpO"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="3dx-R7-39r" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="0Eo-T4-eK5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="3dx-R7-39r" secondAttribute="trailing" id="5kr-Kx-T1Q"/>
+                <constraint firstItem="3dx-R7-39r" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QM4-9H-Xlc"/>
+                <constraint firstItem="bFJ-ns-4GG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="V5e-Hs-nyV"/>
+                <constraint firstItem="bFJ-ns-4GG" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="aoE-XB-sp1"/>
+                <constraint firstAttribute="bottom" secondItem="bFJ-ns-4GG" secondAttribute="bottom" id="jp0-vc-Znl"/>
+                <constraint firstAttribute="bottom" secondItem="3dx-R7-39r" secondAttribute="bottom" id="qBT-8B-xob"/>
+            </constraints>
+            <connections>
+                <outlet property="bottom_shareView" destination="jp0-vc-Znl" id="Gxe-eo-Cj4"/>
+                <outlet property="left_qqBtn" destination="zyU-hF-UpO" id="4wV-ct-wNU"/>
+                <outlet property="qqBtn" destination="pMO-IT-wlt" id="lBN-Sj-gd5"/>
+                <outlet property="qqZoneBtn" destination="UXm-W4-xm2" id="gqM-9Q-UUD"/>
+                <outlet property="shareView" destination="bFJ-ns-4GG" id="9E6-eB-ti3"/>
+                <outlet property="wxBtn" destination="80g-Bi-Z9j" id="z0W-eo-Eyj"/>
+                <outlet property="wxCircleBtn" destination="UIB-r1-JMD" id="WOd-rU-a52"/>
+            </connections>
+            <point key="canvasLocation" x="47.826086956521742" y="35.491071428571423"/>
+        </view>
+        <tapGestureRecognizer id="cu4-ZK-Yp2">
+            <connections>
+                <action selector="tapAction:" destination="iN0-l3-epB" id="h8a-DF-Se0"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="yp_share_qq" width="48" height="48"/>
+        <image name="yp_share_qqZone" width="48" height="48"/>
+        <image name="yp_share_wx" width="48" height="48"/>
+        <image name="yp_share_wxCircle" width="48" height="48"/>
+    </resources>
+</document>

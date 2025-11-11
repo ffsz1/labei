@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YPYYActionSheetViewController">
+            <connections>
+                <outlet property="containerHeightConstraint" destination="gQl-8c-Ure" id="jTW-Pt-MMT"/>
+                <outlet property="containerView" destination="QpR-gd-BhH" id="Xl1-of-y7j"/>
+                <outlet property="containerViewBottomConstraint" destination="zE0-Gm-syy" id="RLF-CB-CGF"/>
+                <outlet property="tableView" destination="U85-Zc-6Sb" id="uqr-Fv-k83"/>
+                <outlet property="tableViewTopConstraint" destination="152-JY-cg6" id="a7a-u9-TrH"/>
+                <outlet property="titleLabel" destination="l2d-2Y-Mh7" id="n6j-q2-phf"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QpR-gd-BhH">
+                    <rect key="frame" x="0.0" y="561" width="375" height="106"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2d-2Y-Mh7">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="DiG-5K-xeG"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="U85-Zc-6Sb">
+                            <rect key="frame" x="0.0" y="44" width="375" height="62"/>
+                            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="U85-Zc-6Sb" firstAttribute="top" secondItem="QpR-gd-BhH" secondAttribute="top" constant="44" id="152-JY-cg6"/>
+                        <constraint firstAttribute="trailing" secondItem="l2d-2Y-Mh7" secondAttribute="trailing" id="I67-7u-3nT"/>
+                        <constraint firstItem="l2d-2Y-Mh7" firstAttribute="leading" secondItem="QpR-gd-BhH" secondAttribute="leading" id="OgF-fb-dhJ"/>
+                        <constraint firstAttribute="bottom" secondItem="U85-Zc-6Sb" secondAttribute="bottom" id="SxI-zL-U9l"/>
+                        <constraint firstAttribute="trailing" secondItem="U85-Zc-6Sb" secondAttribute="trailing" id="VtZ-hn-N2s"/>
+                        <constraint firstItem="U85-Zc-6Sb" firstAttribute="leading" secondItem="QpR-gd-BhH" secondAttribute="leading" id="ZdT-Ei-DkZ"/>
+                        <constraint firstAttribute="height" constant="106" id="gQl-8c-Ure"/>
+                        <constraint firstItem="l2d-2Y-Mh7" firstAttribute="top" secondItem="QpR-gd-BhH" secondAttribute="top" id="iKi-kI-Coe"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="QpR-gd-BhH" secondAttribute="trailing" id="O6y-Wf-lAs"/>
+                <constraint firstItem="QpR-gd-BhH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="e0S-tu-rO8"/>
+                <constraint firstAttribute="bottom" secondItem="QpR-gd-BhH" secondAttribute="bottom" id="zE0-Gm-syy"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="tz9-Y2-uDv" appends="YES" id="pla-Pe-eFt"/>
+            </connections>
+        </view>
+        <tapGestureRecognizer id="tz9-Y2-uDv">
+            <connections>
+                <action selector="tapBlankSpace:" destination="-1" id="tob-bX-fMd"/>
+                <outlet property="delegate" destination="-1" id="Pf8-vS-dH1"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>

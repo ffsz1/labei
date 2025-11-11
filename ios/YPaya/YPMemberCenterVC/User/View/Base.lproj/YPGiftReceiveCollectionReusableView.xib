@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="YPGiftReceiveCollectionReusableView" id="U6b-Vx-4bR" customClass="YPGiftReceiveCollectionReusableView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TA收到的礼物" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxA-t1-0VV">
+                    <rect key="frame" x="10" y="15" width="137" height="20.5"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20.5" id="R8q-ES-Hke"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(637325)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAN-pa-5Tv">
+                    <rect key="frame" x="157" y="15" width="65" height="20.5"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20.5" id="Shb-wu-CiI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AKO-Np-aTo">
+                    <rect key="frame" x="0.0" y="49" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="ibr-LW-T0b"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="AKO-Np-aTo" firstAttribute="leading" secondItem="9Gg-ye-v9C" secondAttribute="leading" id="8nF-ZO-aYC"/>
+                <constraint firstItem="AKO-Np-aTo" firstAttribute="bottom" secondItem="9Gg-ye-v9C" secondAttribute="bottom" id="TgF-tY-M6X"/>
+                <constraint firstItem="vxA-t1-0VV" firstAttribute="centerY" secondItem="9Gg-ye-v9C" secondAttribute="centerY" id="fek-as-M0y"/>
+                <constraint firstItem="vxA-t1-0VV" firstAttribute="leading" secondItem="9Gg-ye-v9C" secondAttribute="leading" constant="10" id="gRl-HS-KO0"/>
+                <constraint firstItem="bAN-pa-5Tv" firstAttribute="centerY" secondItem="9Gg-ye-v9C" secondAttribute="centerY" id="hnB-uI-siQ"/>
+                <constraint firstItem="bAN-pa-5Tv" firstAttribute="leading" secondItem="vxA-t1-0VV" secondAttribute="trailing" constant="10" id="khK-QK-dXX"/>
+                <constraint firstItem="AKO-Np-aTo" firstAttribute="trailing" secondItem="9Gg-ye-v9C" secondAttribute="trailing" id="l4u-LX-m6g"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="9Gg-ye-v9C"/>
+            <connections>
+                <outlet property="giftReceiveNumber" destination="bAN-pa-5Tv" id="5d6-5C-GvF"/>
+                <outlet property="giftReceiveTitle" destination="vxA-t1-0VV" id="RL1-1y-ZOd"/>
+            </connections>
+            <point key="canvasLocation" x="135" y="155"/>
+        </collectionReusableView>
+    </objects>
+</document>

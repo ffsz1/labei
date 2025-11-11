@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "yp_tixianway_icon_yes.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "yp_tixianway_icon_yes@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "yp_tixianway_icon_yes@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="YPGiftListView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y0E-4J-g6t">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zG1-ol-7vG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zE3-us-ydY">
+                    <rect key="frame" x="95" y="0.0" width="280" height="100"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="礼物记录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dz-eE-eUN">
+                            <rect key="frame" x="66" y="39.5" width="73.5" height="21.5"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nl0-DT-bH9">
+                            <rect key="frame" x="230" y="25" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="0ek-tG-3rb"/>
+                                <constraint firstAttribute="height" constant="50" id="0o5-EU-nev"/>
+                            </constraints>
+                            <state key="normal" image="close_card_logo"/>
+                            <connections>
+                                <action selector="closeAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="mQo-dM-Smd"/>
+                            </connections>
+                        </button>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yp_room_gift_iconn" translatesAutoresizingMaskIntoConstraints="NO" id="jIu-pa-XvR">
+                            <rect key="frame" x="30" y="37" width="24" height="26"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="26" id="5Km-MC-R4B"/>
+                                <constraint firstAttribute="width" constant="24" id="7Hw-gm-r8Y"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.30086377640845069" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="66e-nB-Ty9"/>
+                        <constraint firstAttribute="trailing" secondItem="nl0-DT-bH9" secondAttribute="trailing" id="Fr7-O0-0Km"/>
+                        <constraint firstItem="1dz-eE-eUN" firstAttribute="leading" secondItem="jIu-pa-XvR" secondAttribute="trailing" constant="12" id="Gf4-q6-8WT"/>
+                        <constraint firstAttribute="height" constant="100" id="XrV-nw-ehA"/>
+                        <constraint firstItem="jIu-pa-XvR" firstAttribute="centerY" secondItem="zE3-us-ydY" secondAttribute="centerY" id="kZX-rT-GPQ"/>
+                        <constraint firstItem="1dz-eE-eUN" firstAttribute="centerY" secondItem="zE3-us-ydY" secondAttribute="centerY" id="pzV-gJ-kIF"/>
+                        <constraint firstItem="nl0-DT-bH9" firstAttribute="centerY" secondItem="zE3-us-ydY" secondAttribute="centerY" id="vDK-YQ-zSU"/>
+                        <constraint firstItem="jIu-pa-XvR" firstAttribute="leading" secondItem="zE3-us-ydY" secondAttribute="leading" constant="30" id="wmn-L8-zHp"/>
+                        <constraint firstItem="nl0-DT-bH9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1dz-eE-eUN" secondAttribute="trailing" constant="8" symbolic="YES" id="yeF-ow-JU4"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7Xo-FU-kTm">
+                    <rect key="frame" x="95" y="100" width="280" height="567"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.29891065140845069" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="6Ec-Do-VOr"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="Ztf-A3-S1v"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="qyx-5f-wJk"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="zE3-us-ydY" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="4yM-zO-nps"/>
+                <constraint firstItem="Y0E-4J-g6t" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="CDU-J1-97f"/>
+                <constraint firstItem="7Xo-FU-kTm" firstAttribute="top" secondItem="zE3-us-ydY" secondAttribute="bottom" id="KeQ-K4-lfV"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="7Xo-FU-kTm" secondAttribute="bottom" id="LY2-Ek-6wl"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7Xo-FU-kTm" secondAttribute="trailing" id="MG6-p8-8iH"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Y0E-4J-g6t" secondAttribute="bottom" id="ZfR-xn-OPS"/>
+                <constraint firstItem="Y0E-4J-g6t" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="aDA-eo-ieA"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Y0E-4J-g6t" secondAttribute="trailing" id="c5j-W6-Hec"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zE3-us-ydY" secondAttribute="trailing" id="yVt-fB-bHO"/>
+            </constraints>
+            <connections>
+                <outlet property="tableView" destination="7Xo-FU-kTm" id="Ok2-ji-wc5"/>
+            </connections>
+            <point key="canvasLocation" x="133.59999999999999" y="152.47376311844079"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close_card_logo" width="15" height="15"/>
+        <image name="yp_room_gift_iconn" width="128" height="128"/>
+    </resources>
+</document>

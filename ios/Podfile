@@ -1,0 +1,79 @@
+source 'https://cdn.cocoapods.org/'
+
+
+inhibit_all_warnings!
+
+platform :ios, "9.0"
+#s.ios.deployment_target = "6.0" 
+
+target "YPaya" do
+    # 压缩
+    pod "AvoidCrash"
+    pod "SSZipArchive"
+    pod "SZTextView", "1.1.5"
+    
+    # LinkedME
+    pod "LinkedME_LinkPage"
+
+    #网络&数据&layout
+    pod "AFNetworking"
+    pod "WCDB"
+    pod "Masonry"
+    
+    #svga & gif
+    pod "SVGAPlayer"
+    pod "FLAnimatedImage"
+    pod "SDWebImage/GIF"
+    
+    #image
+    pod "Qiniu"
+    #alert
+    pod "TYAlertController"
+
+    # MVVM
+    pod "libextobjc", " ~> 0.4"
+    pod "ReactiveViewModel", "0.1.1"
+    pod "ReactiveCocoa"
+    
+    #hud
+    pod "MBProgressHUD", "~> 0.8"
+   
+    #YYKit
+    pod "YYModel"
+    pod "YYImage"
+    pod "YYWebImage"
+    pod "YYText", "~> 1.0.7"
+    pod "YYCache", "~> 1.0.4"
+    pod "YYCategories"
+    
+    #云信依赖
+    pod "SDWebImage", "~> 4.2.3"
+    pod "Toast", "~> 3.1.0"
+    pod "M80AttributedLabel", "~> 1.6.3"
+    
+    #云信
+    pod "NIMSDK_LITE"#, "~> 5.0.1"
+
+    #声网
+    pod "AgoraRtcEngine_iOS"
+    
+    #iap
+    pod "IAPHelper"
+    
+    #下拉刷新
+    pod "MJRefresh"
+    
+    #keyboard
+    pod "IQKeyboardManager"  ,"6.5.3"
+    pod "IQDropDownTextField"
+    pod "pop", "~> 1.0.10"
+    
+    pod "JPush"
+    pod "VerifyCode"
+    pod "SocketRocket"
+    pod "UMCAnalytics"
+
+
+end
+
+

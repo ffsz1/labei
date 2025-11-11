@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="KGk-i7-Jjw" customClass="YPFriendListCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CGw-NR-KYC">
+                        <rect key="frame" x="15" y="10" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="5Z7-QR-6qG"/>
+                            <constraint firstAttribute="height" constant="60" id="5n6-7X-qMy"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="海角星球" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odd-Ur-H1g">
+                        <rect key="frame" x="85" y="29.5" width="73.5" height="21.5"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ur2-rd-GTI">
+                        <rect key="frame" x="235" y="25" width="70" height="30"/>
+                        <color key="backgroundColor" red="0.0" green="0.76078431369999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="OEV-9N-POa"/>
+                            <constraint firstAttribute="width" constant="70" id="iQN-A9-QaA"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <state key="normal" title="赠送"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="sendClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tez-xD-ufz"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Odd-Ur-H1g" secondAttribute="trailing" id="6UQ-nB-vXE"/>
+                    <constraint firstItem="CGw-NR-KYC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="6ic-Um-U0E"/>
+                    <constraint firstItem="Odd-Ur-H1g" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Gq7-Dk-fJS"/>
+                    <constraint firstItem="CGw-NR-KYC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Huf-0O-PS0"/>
+                    <constraint firstItem="Odd-Ur-H1g" firstAttribute="leading" secondItem="CGw-NR-KYC" secondAttribute="trailing" constant="10" id="KYG-ja-UbB"/>
+                    <constraint firstItem="Ur2-rd-GTI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Odd-Ur-H1g" secondAttribute="trailing" id="fGq-ed-gCj"/>
+                    <constraint firstItem="Ur2-rd-GTI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lPe-dG-hIV"/>
+                    <constraint firstAttribute="trailing" secondItem="Ur2-rd-GTI" secondAttribute="trailing" constant="15" id="nA1-pr-2dT"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="avatar" destination="CGw-NR-KYC" id="iI6-Ei-xw0"/>
+                <outlet property="sendBtn" destination="Ur2-rd-GTI" id="pWE-hJ-OjP"/>
+                <outlet property="usernameLabel" destination="Odd-Ur-H1g" id="7cc-i8-TQs"/>
+            </connections>
+            <point key="canvasLocation" x="133" y="147"/>
+        </tableViewCell>
+    </objects>
+</document>

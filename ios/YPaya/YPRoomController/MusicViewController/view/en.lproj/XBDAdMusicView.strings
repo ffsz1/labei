@@ -1,0 +1,18 @@
+
+/* Class = "UIButton"; normalTitle = "确定"; ObjectID = "19x-Rk-9Na"; */
+"19x-Rk-9Na.normalTitle" = "确定";
+
+/* Class = "UILabel"; text = "可在打开的网页上导入和删除歌曲\n歌曲导入完成前，请不要退出当前页面"; ObjectID = "28q-GH-O0d"; */
+"28q-GH-O0d.text" = "可在打开的网页上导入和删除歌曲\n歌曲导入完成前，请不要退出当前页面";
+
+/* Class = "UILabel"; text = "已导入0首歌"; ObjectID = "4M2-lw-w1K"; */
+"4M2-lw-w1K.text" = "已导入0首歌";
+
+/* Class = "UILabel"; text = "请连接wifi"; ObjectID = "TIK-Fj-U4n"; */
+"TIK-Fj-U4n.text" = "请连接wifi";
+
+/* Class = "UILabel"; text = "如图：请在同一WIFI下电脑浏览器上输入"; ObjectID = "TaE-UK-8e9"; */
+"TaE-UK-8e9.text" = "如图：请在同一WIFI下电脑浏览器上输入";
+
+/* Class = "UILabel"; text = "http://"; ObjectID = "dih-wl-ck7"; */
+"dih-wl-ck7.text" = "http://";

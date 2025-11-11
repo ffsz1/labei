@@ -1,0 +1,9 @@
+
+/* Class = "UIButton"; normalTitle = "充值"; ObjectID = "RTg-Fw-crp"; */
+"RTg-Fw-crp.normalTitle" = "充值";
+
+/* Class = "UILabel"; text = "0金币"; ObjectID = "T1l-dw-JeL"; */
+"T1l-dw-JeL.text" = "0金币";
+
+/* Class = "UIButton"; normalTitle = "发送"; ObjectID = "zdf-dR-1rO"; */
+"zdf-dR-1rO.normalTitle" = "发送";

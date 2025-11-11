@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="vBc-zM-68o" customClass="YPBadNetworkAlertView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="279"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJQ-HO-moW">
+                    <rect key="frame" x="20" y="69.5" width="335" height="143"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="15"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---------" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="np3-7o-MWd">
+                    <rect key="frame" x="40" y="130.5" width="295" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="------" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPh-X9-iVg">
+                    <rect key="frame" x="164" y="89.5" width="47" height="21"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AO1-m0-zHl">
+                    <rect key="frame" x="20" y="168.5" width="167.5" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="2gf-5h-hhD"/>
+                    </constraints>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" red="1" green="0.14939361809999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="leftBtnClick:" destination="vBc-zM-68o" eventType="touchUpInside" id="MZF-IP-y6f"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBb-08-6ja">
+                    <rect key="frame" x="187.5" y="168.5" width="167.5" height="44"/>
+                    <state key="normal" title="设置"/>
+                    <connections>
+                        <action selector="rightBtnClick:" destination="vBc-zM-68o" eventType="touchUpInside" id="pl6-vg-bBN"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="AO1-m0-zHl" firstAttribute="leading" secondItem="PJQ-HO-moW" secondAttribute="leading" id="2ng-1B-fM7"/>
+                <constraint firstItem="AO1-m0-zHl" firstAttribute="width" secondItem="dBb-08-6ja" secondAttribute="width" id="3ky-1Y-rKM"/>
+                <constraint firstItem="np3-7o-MWd" firstAttribute="centerX" secondItem="vBc-zM-68o" secondAttribute="centerX" id="6JS-81-2WD"/>
+                <constraint firstItem="PJQ-HO-moW" firstAttribute="leading" secondItem="cgR-eR-mtf" secondAttribute="leading" constant="20" id="Ae3-5s-nwV"/>
+                <constraint firstItem="dBb-08-6ja" firstAttribute="centerY" secondItem="AO1-m0-zHl" secondAttribute="centerY" id="Btn-N5-Slq"/>
+                <constraint firstItem="cgR-eR-mtf" firstAttribute="trailing" secondItem="PJQ-HO-moW" secondAttribute="trailing" constant="20" id="MFe-nN-I2u"/>
+                <constraint firstItem="AO1-m0-zHl" firstAttribute="top" secondItem="np3-7o-MWd" secondAttribute="bottom" constant="20" id="Q5B-dw-ZEQ"/>
+                <constraint firstItem="dBb-08-6ja" firstAttribute="trailing" secondItem="PJQ-HO-moW" secondAttribute="trailing" id="U7r-gj-ceX"/>
+                <constraint firstItem="dBb-08-6ja" firstAttribute="leading" secondItem="AO1-m0-zHl" secondAttribute="trailing" id="XS1-Qe-HlK"/>
+                <constraint firstItem="JPh-X9-iVg" firstAttribute="centerX" secondItem="vBc-zM-68o" secondAttribute="centerX" id="ZB9-65-FfO"/>
+                <constraint firstItem="PJQ-HO-moW" firstAttribute="bottom" secondItem="AO1-m0-zHl" secondAttribute="bottom" id="bj6-xI-FGE"/>
+                <constraint firstItem="PJQ-HO-moW" firstAttribute="top" secondItem="JPh-X9-iVg" secondAttribute="top" constant="-20" id="d3n-qQ-H2S"/>
+                <constraint firstItem="AO1-m0-zHl" firstAttribute="height" secondItem="dBb-08-6ja" secondAttribute="height" id="gNM-0Y-Br5"/>
+                <constraint firstItem="np3-7o-MWd" firstAttribute="leading" secondItem="PJQ-HO-moW" secondAttribute="leading" constant="20" id="m2p-mM-iHV"/>
+                <constraint firstItem="np3-7o-MWd" firstAttribute="top" secondItem="JPh-X9-iVg" secondAttribute="bottom" constant="20" id="o05-DS-ctr"/>
+                <constraint firstItem="np3-7o-MWd" firstAttribute="centerY" secondItem="vBc-zM-68o" secondAttribute="centerY" id="oPm-kp-D0Y"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="cgR-eR-mtf"/>
+            <connections>
+                <outlet property="cancelBtn" destination="AO1-m0-zHl" id="nhL-BU-ZeZ"/>
+                <outlet property="descLabel" destination="np3-7o-MWd" id="ueI-hU-gx0"/>
+                <outlet property="rightBtn" destination="dBb-08-6ja" id="hd8-pk-Z2c"/>
+                <outlet property="titleLabel" destination="JPh-X9-iVg" id="wfO-8m-OCl"/>
+            </connections>
+            <point key="canvasLocation" x="199" y="243"/>
+        </view>
+    </objects>
+</document>

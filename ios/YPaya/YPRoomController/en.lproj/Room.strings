@@ -1,0 +1,114 @@
+
+/* Class = "UILabel"; text = "------"; ObjectID = "3S2-4v-eit"; */
+"3S2-4v-eit.text" = "------";
+
+/* Class = "UILabel"; text = "------"; ObjectID = "43o-pm-0yy"; */
+"43o-pm-0yy.text" = "------";
+
+/* Class = "UILabel"; text = "------"; ObjectID = "5Y9-hB-7CA"; */
+"5Y9-hB-7CA.text" = "------";
+
+/* Class = "UILabel"; text = "房间背景"; ObjectID = "7UG-Zo-gn9"; */
+"7UG-Zo-gn9.text" = "房间背景";
+
+/* Class = "UILabel"; text = "房间名字"; ObjectID = "AP2-8Q-dS9"; */
+"AP2-8Q-dS9.text" = "房间名字";
+
+/* Class = "UILabel"; text = "音乐"; ObjectID = "Aeg-g8-9or"; */
+"Aeg-g8-9or.text" = "音乐";
+
+/* Class = "UIButton"; normalTitle = "分享"; ObjectID = "BT6-xu-Taf"; */
+"BT6-xu-Taf.normalTitle" = "分享";
+
+/* Class = "UILabel"; text = "封面、背景及内容含低俗、引导、暴露等都会被屏蔽处理， 泄露用户隐私、导流第三方平台、欺诈用户等将被封号处 理。请珍惜自己的直播间哦！"; ObjectID = "Bnb-Ru-Y5s"; */
+"Bnb-Ru-Y5s.text" = "封面、背景及内容含低俗、引导、暴露等都会被屏蔽处理， 泄露用户隐私、导流第三方平台、欺诈用户等将被封号处 理。请珍惜自己的直播间哦！";
+
+/* Class = "UILabel"; text = "(开启后礼物只能公屏显示)"; ObjectID = "Cye-iT-D3n"; */
+"Cye-iT-D3n.text" = "(开启后礼物只能公屏显示)";
+
+/* Class = "UILabel"; text = "房间话题"; ObjectID = "Eqt-3r-MNZ"; */
+"Eqt-3r-MNZ.text" = "房间话题";
+
+/* Class = "UITextField"; placeholder = "请输入房间名字"; ObjectID = "GEx-z6-6yw"; */
+"GEx-z6-6yw.placeholder" = "请输入房间名字";
+
+/* Class = "UILabel"; text = "------"; ObjectID = "HKo-ub-ZNA"; */
+"HKo-ub-ZNA.text" = "------";
+
+/* Class = "UILabel"; text = "密码"; ObjectID = "I78-LF-TKM"; */
+"I78-LF-TKM.text" = "密码";
+
+/* Class = "UILabel"; text = "礼物飘动效果"; ObjectID = "JZz-Aa-xC1"; */
+"JZz-Aa-xC1.text" = "礼物飘动效果";
+
+/* Class = "UILabel"; text = "------"; ObjectID = "JcX-x4-SBN"; */
+"JcX-x4-SBN.text" = "------";
+
+/* Class = "UIButton"; normalTitle = "在线"; ObjectID = "KxG-2C-KtK"; */
+"KxG-2C-KtK.normalTitle" = "在线";
+
+/* Class = "UILabel"; text = "ID:___"; ObjectID = "OH6-wT-012"; */
+"OH6-wT-012.text" = "ID:___";
+
+/* Class = "UIButton"; normalTitle = "直播请求发布"; ObjectID = "OOw-LI-6bd"; */
+"OOw-LI-6bd.normalTitle" = "直播请求发布";
+
+/* Class = "UILabel"; text = "黑名单"; ObjectID = "PfM-sM-2ls"; */
+"PfM-sM-2ls.text" = "房间黑名单";
+
+/* Class = "UILabel"; text = "暂无音乐播放"; ObjectID = "PiH-Z2-2Yh"; */
+"PiH-Z2-2Yh.text" = "暂无音乐播放";
+
+/* Class = "UIButton"; normalTitle = "返回"; ObjectID = "QGT-bv-JTW"; */
+"QGT-bv-JTW.normalTitle" = "返回";
+
+/* Class = "UILabel"; text = "房间类型"; ObjectID = "UlA-7b-41W"; */
+"UlA-7b-41W.text" = "房间类型";
+
+/* Class = "UILabel"; text = "ID:___"; ObjectID = "VWJ-G0-YV2"; */
+"VWJ-G0-YV2.text" = "ID:___";
+
+/* Class = "UILabel"; text = "封面、背景及内容含低俗、引导、暴露等都会被屏蔽处理， 泄露用户隐私、导流第三方平台、欺诈用户等将被封号处 理。请珍惜自己的直播间哦！"; ObjectID = "WCC-4x-wa1"; */
+"WCC-4x-wa1.text" = "封面、背景及内容含低俗、引导、暴露等都会被屏蔽处理， 泄露用户隐私、导流第三方平台、欺诈用户等将被封号处 理。请珍惜自己的直播间哦！";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "YKB-9m-oyb"; */
+"YKB-9m-oyb.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "收听："; ObjectID = "ZGl-cS-POH"; */
+"ZGl-cS-POH.text" = "收听：";
+
+/* Class = "UILabel"; text = "封面、背景及内容含低俗、引导、暴露等都会被屏蔽处理， 泄露用户隐私、导流第三方平台、欺诈用户等将被封号处 理。请珍惜自己的直播间哦！"; ObjectID = "c8u-AM-v4g"; */
+"c8u-AM-v4g.text" = "封面、背景及内容含低俗、引导、暴露等都会被屏蔽处理， 泄露用户隐私、导流第三方平台、欺诈用户等将被封号处 理。请珍惜自己的直播间哦！";
+
+/* Class = "UITextField"; placeholder = "输入标题更吸引粉丝哦。。。"; ObjectID = "cPK-tl-lLo"; */
+"cPK-tl-lLo.placeholder" = "输入标题更吸引粉丝哦。。。";
+
+/* Class = "UILabel"; text = "来了"; ObjectID = "d96-jh-BzI"; */
+"d96-jh-BzI.text" = "来了";
+
+/* Class = "UILabel"; text = "------------"; ObjectID = "fN5-iq-lIs"; */
+"fN5-iq-lIs.text" = "------------";
+
+/* Class = "UILabel"; text = "------"; ObjectID = "hjo-4u-chd"; */
+"hjo-4u-chd.text" = "------";
+
+/* Class = "UILabel"; text = "        "; ObjectID = "jww-sh-b95"; */
+"jww-sh-b95.text" = "        ";
+
+/* Class = "UITextField"; placeholder = "可以为房间加锁喔～"; ObjectID = "kxu-i6-zwb"; */
+"kxu-i6-zwb.placeholder" = "可以为房间加锁喔～";
+
+/* Class = "UILabel"; text = "——————"; ObjectID = "mW3-yd-7Jy"; */
+"mW3-yd-7Jy.text" = "——————";
+
+/* Class = "UILabel"; text = "------"; ObjectID = "sRC-l9-S2h"; */
+"sRC-l9-S2h.text" = "------";
+
+/* Class = "UIButton"; normalTitle = "贡献榜"; ObjectID = "tjN-8h-zMN"; */
+"tjN-8h-zMN.normalTitle" = "贡献榜";
+
+/* Class = "UILabel"; text = "------"; ObjectID = "vBY-iv-ypw"; */
+"vBY-iv-ypw.text" = "------";
+
+/* Class = "UILabel"; text = "管理员"; ObjectID = "yjO-Hh-U2g"; */
+"yjO-Hh-U2g.text" = "房间管理员";
