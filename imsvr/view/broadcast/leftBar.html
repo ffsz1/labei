@@ -1,0 +1,232 @@
+<style>
+    .switchState{width: 40px; height: 31px; float: right; cursor: pointer;}
+    .switchState .Online{float: left; margin-top: 5px;}
+    .switchState .OnlineImg{float: left; margin-top: 8px; margin-left: 13px;}
+    .switchState .Stealth{float: left; margin-top: 12px; margin-left: 3px;}
+    .switchState .StealthImg{float: left; margin-top: 8px; margin-left: 13px;}
+    .switchState ul{width: 145px; height: 135px; border-radius: 4px; position: absolute; z-index: 999; top:37px; left: 30px;}
+    .switchState ul li{height: 33px; background-color: #FFF; border-bottom: 1px solid #D7D7D7; padding: 0px; cursor: pointer;}
+    .switchState ul li:nth-child(1){border-top-left-radius: 4px; border-top-right-radius: 4px;}
+    .switchState ul li:nth-child(4){border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;}
+    .switchState ul li .text{float: left; margin-top: 4px; margin-left: 13px; color: #6B6B6B;}
+</style>
+<!-- left nav start -->
+<div class="left-nav">
+    <!-- user info start -->
+    <div class="user-info">
+        <div class="content">
+            <a href="/broadcast/profile">
+                <div class="avatar_30">
+                    <img class="user_avatar" src="<%=userInfo.avatar_img%>" alt=""/>
+                </div>
+            </a>
+            <div class="user-name" title="<%=userInfo.nick_name%>"><%=userInfo.nick_name%></div>
+            <div class="switchState">
+                <img id="Online" class="Online" src="<%=public_path%>/img/<%if(userInfo.is_hidden){%>invisible.png<%}else{%>online-icon.png<%}%>">
+                <img class="Stealth" src="<%=public_path%>/img/arrow-down.png">
+                <ul class="switchStateUl" style="display: none;">
+                    <li class="OnlineEven">
+                        <div class="OnlineImg"><img src="<%=public_path%>/img/u14.png"></div>
+                        <div class="text">Set as Visible</div>
+                    </li>
+                    <li class="StealthEven">
+                        <div class="StealthImg"><img src="<%=public_path%>/img/u474.png"></div>
+                        <div class="text">Set as Invisible</div>
+                    </li>
+                    <li>
+                        <a href="/broadcast/profile"><div class="text" style="color: #0066FF; width: 133px;">Profile Setting</div></a>
+                    </li>
+                    <li class="LogoutEven">
+                        <div class="text" style="color: #0066FF; width: 133px;">Logout</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- user info end -->
+
+    <a href="/broadcast/home"><div class="home">Home</div></a>
+
+    <div class="cat">BROADCAST MANAGEMENT</div>
+    <ul class="BM">
+        <a href="/broadcast/scheduledLive">
+            <li class="Scheduled">Broadcast Bookings
+                <%if(getScheduledNoReadNum > 0){%>
+                <div class="count"><%=getScheduledNoReadNum%></div>
+                <%}%>
+            </li>
+        </a>
+        <a href="/broadcast/instant/incoming">
+            <li class="Instant">Instant Broadcast Invites
+                <%if(getInviteNoReadNum > 0){%>
+                <div class="count"><%=getInviteNoReadNum%></div>
+                <%}%>
+            </li>
+        </a>
+    </ul>
+
+    <div class="cat">GUESTS AND FOLLOWERS</div>
+    <ul class="GAF BM">
+        <a href="/broadcast/browseUser/userOnlineList"><li class="OnlineList">Browse Users</li></a>
+        <a href="/broadcast/privateLiveGuests"><li class="Private">My Private Viewers</li></a>
+        <a href="/broadcast/fans"><li class="Fans">My Followers</li></a>
+        <!--<a href="/broadcast/hangout/friends">-->
+            <!--<li class="Hangout">Hang-out friends-->
+                <!--<%if(hangoutFriendsUnreadCount > 0){%>-->
+                <!--<div class="count"><%=hangoutFriendsUnreadCount%></div>-->
+                <!--<%}%>-->
+            <!--</li>-->
+        <!--</a>-->
+    </ul>
+
+    <div class="cat">COMMUNICATIONS</div>
+    <ul class="GAF BM">
+        <%if(greetingMailPriv){%>
+        <a href="/anchor/admire/admire/admireTemplateList?status=1"><li class="GreetingMail">Greeting Mail</li></a>
+        <%}%>
+        <%if(mailPriv){%>
+        <a href="/anchor/emf/inbox/lists">
+            <li class="Mail">Mail
+                <%if(MailCount != 0){%>
+                <div id="MailNum" class="count"><%=MailCount%></div>
+                <%}%>
+            </li>
+        </a>
+        <%}%>
+        <a href="/broadcast/directMessages">
+            <li data-num="-99999" class="Message">Private Messages
+                <div id="MessageNum" class="count"></div>
+            </li>
+        </a>
+        <a href="/anchor/communication/album/albumList"><li class="Media">Communication Media</li></a>
+    </ul>
+
+    <div class="cat">MY STUFF</div>
+    <ul class="MS">
+        <a href="/broadcast/cover/pass"><li class="Cover">Broadcast Cover</li></a>
+        <a href="/broadcast/myAlbum/auditing"><li class="Album">Profile Album</li></a>
+        <a href="/broadcast/myShow/approved"><li class="Show">My Show Calendar</li></a>
+        <a href="/broadcast/talent/auditing"><li class="Talents">My Talent Shows</li></a>
+        <a href="/broadcast/myTimeTable/generalTimetable"><li class="Timetable">My Booking Timetable</li></a>
+        <a href="/broadcast/shots/auditing"><li class="Shots">My Shots</li></a>
+    </ul>
+
+    <div class="cat">STATISTICS</div>
+    <ul class="STA">
+        <a href="/broadcast/income/monthly"><li class="Income">Earning Statistics</li></a>
+    </ul>
+
+    <a class="download_icon" href="/broadcast/downloadPage"><img src="<%=public_path%>/img/downloadPage/down_icon.png">Download Mobile App</a>
+</div>
+<!-- left nav end -->
+<script>
+    $(function(){
+        var card_auth = '<%=anchorInfo.card_auth%>';
+        if(card_auth == 0){
+            parent.layer.closeAll();
+            authentication();
+        } else if(card_auth == 2){
+            parent.layer.closeAll();
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                area : ['567px', '196px'],
+                content: ['/broadcast/authenticationLayer/authenticationVeto','no'],
+                end: function(){
+                    authentication();
+                }
+            });
+        }else{
+            parent.layer.closeAll();
+        }
+
+        function authentication(){
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                area : ['1020px', '700px'],
+                content: ['/broadcast/authenticationLayer/authentication','no'],
+                end: function(){
+                    var status = Cookies.getJSON('verificationStatus');
+                    Cookies.remove('verificationStatus');
+                    if(status && status.status == 1){
+                        window.location.href='/broadcast/cover/pass';
+                    }else if(status && status.status == 2){
+                        window.location.href='/broadcast/myAlbum/auditing';
+                    }else if(status && status.status == 3){
+                        window.location.href='/broadcast/talent/auditing';
+                    }else if(status && status.status == 4){
+                        window.location.href='/broadcast/myTimeTable/generalTimetable';
+                    }
+                }
+            });
+        }
+
+        $("select").msDropdown({roundedBorder:false});
+        $(".left-nav").css("height", $(".content").height());
+
+        $('.switchState').click(function () {
+            if($(".switchStateUl").is(":hidden")){
+                $(".switchStateUl").show();
+
+            }else{
+                $(".switchStateUl").hide();
+            }
+        })
+
+        var public_path = '<%=public_path%>';
+        //设置为在线
+        $('.OnlineEven').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/broadcast/setOnlineStatus',
+                data: {online_status:1},
+                dataType: 'json',
+                success: function(data){
+                    if(data.errno == 0){
+                        $('#Online').attr('src', public_path+'/img/online-icon.png');
+                        $('.switchStateUl').hide();
+                    }
+                },
+            });
+        });
+        //设置为隐身
+        $('.StealthEven').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/broadcast/setOnlineStatus',
+                data: {online_status:2},
+                dataType: 'json',
+                success: function(data){
+                    if(data.errno == 0){
+                        $('#Online').attr('src', public_path+'/img/invisible.png');
+                        $('.switchStateUl').hide();
+                    }else{
+                        myParentAlert(data.data);
+                    }
+                },
+            });
+        });
+
+        $('.LogoutEven').click(function () {
+            parent.window.setTokenOvertimeShow();
+            $.ajax({
+                beforeSend:function(xhr){ xhr.setRequestHeader('zb',1)},
+                type: 'POST',
+                url: '/broadcast/logout',
+                data: {},
+                dataType: 'json',
+                success: function(data){
+                    if(data.errno == 0){
+                        parent.window.location.reload();
+                    }
+                },
+            });
+        });
+    })
+
+</script>

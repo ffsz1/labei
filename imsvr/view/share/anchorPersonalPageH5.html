@@ -1,0 +1,38 @@
+<div class="homepage">
+    <img class="avatar" src="<%=photourl%>">
+    <div class="nameBlock">
+        <div>
+            <span class="fontSize0_3rem Ellipses" style="width: 2rem; float: left;"><%=nickname%></span>
+            <img class="userLevel" src="<%=anchorLevelInfo[level].icon%>">
+        </div>
+        <div class="clear"></div>
+        <div class="fontSize0_24rem userID">
+            ID:<%=userid%>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <div class="relationBlock">
+        <div class="fontSize0_36rem relationFollowers">
+            <span class="fontWeight600"><%=fans_num%></span><br>
+            <span class="fontSize0_22rem">Followers</span>
+        </div>
+        <div class="fontSize0_36rem relationOne">
+            <span class="fontWeight600"><%=fans_private_num%></span><br>
+            <span class="fontSize0_22rem">One-on-One Viewers</span>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<a class="homepageDetails" href="/lady/v1/anchorPersonalProfilePageH5?<%=urlParameter%>" target="_blank">
+    <div class="icon">
+        <img class="iconImg" src="<%=public_path%>img/man/u001.png">
+    </div>
+    <span class="fontSize0_24rem">My Profile</span>
+    <div class="arrow">
+        <div class="arrowDiv">
+            <img class="center arrowImg" src="<%=public_path%>img/man/u002.png">
+        </div>
+    </div>
+</a>

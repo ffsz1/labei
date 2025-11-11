@@ -1,0 +1,463 @@
+
+    <script src="<%=public_path%>/js/jquery.js"></script>
+    <style type="text/css">
+        div{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        html,body{padding: 0px;margin: 0px; font-family: "Arial","sans-serif","open sans"}
+        ul,li{list-style: none;padding: 0;margin: 0;}
+        .ticket_img{
+            width: 100%;
+            height: 155px;
+            position: relative;
+        }
+        .ticket_img img{
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .ticket_img .cover{
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100% auto;
+        }
+        .mask{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            display: block;
+            background-image: -moz-linear-gradient( 90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+            background-image: -webkit-linear-gradient( 90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+            background-image: -ms-linear-gradient( 90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+            z-index: 10;
+        }
+
+        .profile-info{
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            z-index: 11;
+            display: flex;
+            padding: 10px;
+        }
+        .profile-info .anchor_avatar {
+            width: 50px;
+            height: 50px;
+            border:2px solid #ffffff;
+            border-radius: 50% 50%;
+            overflow: hidden;
+            margin-right: 8px;
+            background-color: #ffffff;
+        }
+        .anchor_avatar .profile-info img{
+            width: 100%;
+            height: 100%;
+        }
+
+        .profile-desc{
+            color: #ffffff;
+        }
+
+        .profile-desc .show_title{
+            font-size: 18px;
+            padding-top: 4px;
+        }
+
+        .ticket-date-box{
+            padding: 10px;
+            border-bottom: 4px solid #ecedf1;
+            display: flex;
+        }
+        .ticket-date-box .t-date{
+            width: 33%;
+            text-align: center;
+            line-height: 18px;
+        }
+
+        .ticket-date-box .t-date .t-title{
+            font-size: 12px;
+            color: #999999;
+        }
+
+        .ticket-date-box .t-date .t-info{
+            font-size: 12px;
+            color: #383838;
+            font-weight: bold;
+        }
+
+        .content{
+            background-color: #ffffff;
+            padding: 12px;
+        }
+        .content .title{
+            font-size: 18px;
+            color: #383838;
+            font-weight: bold;
+            line-height: 34px;
+        }
+        .content .desc{
+            font-size: 14px;
+        }
+
+        .bottom-btn{
+            position: fixed;
+            width: 100%;
+            bottom: 0px;
+            display: flex;
+            justify-content:center;
+            border-top:1px solid #ccc;
+        }
+        .ticket_btn{
+            font-size: 16px;
+            color: #fff;
+            border-radius: 22px;
+            background-color: #ccc;
+            overflow: hidden;
+            text-decoration: none;
+            line-height: 36px;
+            width: 40%;
+            text-align: center;
+            margin: 14px 12px 14px;
+        }
+        .ticket_btn:active{
+            box-shadow: 0px 0px 8.19px 0.81px rgba(0, 0, 0, 0.39);
+        }
+
+        .notify{
+            color: #383838;
+            border:1px solid #383838;
+            background-color: #ffffff;
+        }
+
+        .notify i{
+            display: inline-block;
+            width: 26px;
+            height: 28px;
+            margin-right: 4px;
+            vertical-align: middle;
+
+        }
+        .notify i.on{
+            background: url(images/on-notify-icon.png) no-repeat center center;
+        }
+        .notify i.off{
+            background: url(images/off-notify-icon.png) no-repeat center center;
+        }
+
+        .orange{
+            background-color: #ff7100;
+        }
+        .green{
+            background-color: #090;
+        }
+        .grey{
+            background-color: #bfbfbf;
+        }
+        .only{
+            width: 60%;
+        }
+        .t-notic{
+            line-height: 75px;
+            color: #9a9a9a;
+        }
+
+
+    </style>
+<div id="TicketDetail" class="TicketDetail">
+    <div class="ticket_img">
+        <div class="profile-info">
+            <div class="anchor_avatar">
+                <img src="">
+            </div>
+            <div class="profile-desc">
+                <div class="show_title">-</div>
+                <div class="anchor_nickname_yrs">-</div>
+            </div>
+        </div>
+        <div class="mask"></div>
+        <div class="cover">
+            <!-- <img src="images/ticket.jpg"> -->
+        </div>
+    </div>
+    <div class="ticket-date-box">
+        <div class="t-date">
+            <div class="t-title">Date</div>
+            <div class="t-info start_time">-</div>
+        </div>
+        <div class="t-date">
+            <div class="t-title">Duration</div>
+            <div class="t-info duration">-</div>
+        </div>
+        <div class="t-date">
+            <div class="t-title">Price</div>
+            <div class="t-info price">-</div>
+        </div>
+
+    </div>
+    <div class="content">
+        <div class="title">Description</div>
+        <div class="desc">-</div>
+    </div>
+</div>
+
+<div class="bottom-btn">
+
+</div>
+
+<!-- 7种底部按钮状态 -->
+<!-- // 1 未购买门票，未关注 -->
+<!-- <div class="bottom-btn">
+    <a class="ticket_btn orange" onclick="LiveApp.callbackWebAuthExpired ('Your authorization has expired. Please login again.')">Get Ticket</a>
+    <a class="ticket_btn notify" onclick="LiveApp.callbackWebRechange ('xxxxx.)"><i class="on"></i>Notify me</a>
+</div> -->
+<!-- // 2 已购票 -->
+<!-- <div class="bottom-btn">
+    <div class="t-notic">You have reserved this show</div>
+</div> -->
+<!-- // 3 未购买门票，已关注 -->
+<!-- <div class="bottom-btn">
+    <a class="ticket_btn orange" onclick="LiveApp.callbackWebAuthExpired ('Your authorization has expired. Please login again.')">Get Ticket</a>
+    <a class="ticket_btn notify" onclick="LiveApp.callbackWebRechange ('xxxxx.)"><i class="off"></i>Notify me</a>
+</div> -->
+<!-- // 4 门票售罄 -->
+<!-- <div class="bottom-btn">
+    <a class="ticket_btn grey">No Tickets Left</a>
+    <a class="ticket_btn orange" onclick="LiveApp.callbackWebRechange ('xxxxx.)"><i class="on"></i>My Other Shows</a>
+</div> -->
+<!-- // 5 开播中（节目开始时间前1min可进入） -->
+<!-- <div class="bottom-btn">
+    <a class="ticket_btn green only" onclick="LiveApp.callbackWebAuthExpired ('Your authorization has expired. Please login again.')">Watch Now</a>
+</div> -->
+<!-- // 6 已结束  -->
+<!-- <div class="bottom-btn">
+    <a class="ticket_btn grey only">Finished</a>
+</div> -->
+<!-- // 7 节目已取消 -->
+<!-- <div class="bottom-btn">
+    <div class="t-notic">Cancelled</div>
+</div> -->
+
+<script type="text/javascript">
+    // var get_url='http://192.168.88.17:8817/share/v1/getShowDetail?live_show_id=A18';
+    //     $(function () {
+    //         console.log(get_data);
+    //         $.ajax({
+    //              type : "POST",
+    //              url : get_url,
+    //             // dataType: "json",
+    //              success : function(result) {
+    //                console.log(result);
+    //              },
+    //              error:function(a,b,c){
+    //               //console.log(a);
+    //                 //console.log(b);
+    //                // console.log(c);
+    //              }
+    //         });
+    //     })
+
+    //临时数据
+    var get_data = <%-get_data%>;
+
+    var len = Object.keys(get_data).length;
+
+    if (len == 0) {
+        LiveApp.callbackWebReload("10004");
+    }
+
+
+    //日期格式化
+    //var currentTime = date.Format("yyyy-MM-dd hh:mm:ss");
+    Date.prototype.Format = function(format) {
+        var o = {
+            "M+": this.getMonth() + 1, //month
+            "d+": this.getDate(), //day
+            "h+": this.getHours(), //hour
+            "m+": this.getMinutes(), //minute
+            "s+": this.getSeconds(), //second
+            "q+": Math.floor((this.getMonth() + 3) / 3), //quarter
+            "S": this.getMilliseconds() //millisecond
+        }
+        if (/(y+)/.test(format)) {
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(format)) {
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+            }
+        }
+        return format;
+    }
+
+    function date_start_time(date){
+        var g_start_time=new Date(parseInt(date)*1000);
+        //start_time=g_start_time.toLocaleString();
+        var month,s_month;
+        var start_time_month=g_start_time.getMonth();
+        if(start_time_month){
+            switch(start_time_month+1){
+                case 1:
+                    s_month="Jun";
+                    break;
+                case 2:
+                    s_month="Feb";
+                    break;
+                case 3:
+                    s_month="Mar";
+                    break;
+                case 4:
+                    s_month="Apr";
+                    break;
+                case 5:
+                    s_month="May";
+                    break;
+                case 6:
+                    s_month="June";
+                    break;
+                case 7:
+                    s_month="July";
+                    break;
+                case 8:
+                    s_month="Aug";
+                    break;
+                case 9:
+                    s_month="Sept";
+                    break;
+                case 10:
+                    s_month="Oct";
+                    break;
+                case 11:
+                    s_month="Nov";
+                    break;
+                case 12:
+                    s_month="Dec";
+                    break;
+                default:
+                    s_month="-";
+            }
+            month=s_month;
+        }else{
+            return "-";
+        }
+        var day = g_start_time.getDate();
+        var time=g_start_time.Format("hh:mm");
+
+        return month+" "+day+" "+time;
+    }
+
+    var ticket_img,cover,show_title,anchor_nickname_yrs,approve_time,start_time,duration,price,show_introduce,status,has_ticket,has_follow,ticket_is_full,btn_type,left_sec_to_start,left_sec_to_enter;
+
+    anchor_avatar=get_data.data.show_info.anchor_avatar;
+    cover=get_data.data.show_info.cover;
+    show_title=get_data.data.show_info.show_title;
+    anchor_nickname_yrs=get_data.data.show_info.anchor_nickname_yrs;
+    //approve_time=date_approve_time(get_data.data.show_info.approve_time);
+    start_time=date_start_time(get_data.data.show_info.start_time);
+    duration=get_data.data.show_info.duration;
+    price=get_data.data.show_info.price;
+    show_introduce=get_data.data.show_info.show_introduce;
+    left_sec_to_start=get_data.data.show_info.left_sec_to_start;
+    left_sec_to_enter=get_data.data.show_info.left_sec_to_enter;
+    //status 获取节目状态 [整形]
+    // 节目状态 0：未审核 1：审核通过 2：审核被拒 3：节目完美结束 4：节目超时 5：节目取消
+    // has_ticket: 整形是否已买票 0：否 1：已买
+    // has_follow: 整形是否已关注 0：否 1：已关注
+    // ticket_is_full: 整形 票是否已满 0：否 1：满
+    status=get_data.data.show_info.status;
+    has_ticket=get_data.data.show_info.has_ticket;
+    has_follow=get_data.data.show_info.has_follow;
+    ticket_is_full=get_data.data.show_info.ticket_is_full;
+
+    //  1min before show
+    var time_start=new Date(get_data.data.show_info.start_time);
+    var time_now=new Date();
+    var goingshow=time_start-time_now;
+
+    // 1 未购买门票，未关注
+    // 2 已购票
+    // 3 未购买门票，已关注
+    // 4 门票售罄
+    // 5 开播中（节目开始时间前1min可进入）
+    // 6 已结束
+    // 7 节目已取消
+
+    if(status==5){
+        btn_type=7;//节目已取消
+    }else if(status==3){
+        btn_type=6;//已结束
+    }else if(has_ticket && left_sec_to_start>0){
+        btn_type=2;//已购票
+        if(left_sec_to_enter>0 ){
+            btn_type=5;//开播中（节目开始时间前1min可进入）
+        }
+    }else if(!has_ticket && !has_follow){
+        btn_type=1;//未购买门票，未关注
+    }else if(!has_ticket && has_follow){
+        btn_type=3;//未购买门票，已关注
+    }else if(ticket_is_full){
+        btn_type=4;//门票售罄
+    }else{
+        //btn_type=6;//未准时进入则结束？
+    }
+
+
+    var click_fun_1="LiveApp.callbackWebAuthExpired ('Your authorization has expired. Please login again.')";
+    var click_fun_2="LiveApp.callbackWebRechange ('xxxxx.)";
+
+    var btn_str;
+
+
+    //设置状态
+    switch (btn_type){
+        case 1:
+            btn_str='<a class="ticket_btn orange" onclick="'+click_fun_1+'">Get Ticket</a><a class="ticket_btn notify" onclick="'+click_fun_2+'"><i class="on"></i>Notify me</a>';
+            break;
+        case 2:
+            btn_str='<div class="t-notic">You have reserved this show</div>';
+            break;
+        case 3:
+            btn_str='<a class="ticket_btn orange" onclick="'+click_fun_1+'">Get Ticket</a><a class="ticket_btn notify" onclick="'+click_fun_2+'"><i class="off"></i>Notify me</a>';
+            break;
+        case 4:
+            btn_str='<a class="ticket_btn grey">No Tickets Left</a><a class="ticket_btn orange" onclick="'+click_fun_2+'"><i class="on"></i>My Other Shows</a>';
+            break;
+        case 5:
+            btn_str='<a class="ticket_btn green only" onclick="'+click_fun_1+'">Watch Now</a>';
+            break;
+        case 6:
+            btn_str='<a class="ticket_btn grey only">Finished</a>';
+            break;
+        case 7:
+            btn_str='<div class="t-notic">Cancelled</div>';
+            break;
+    }
+    $(".bottom-btn").html(btn_str);
+
+    $(function () {
+//reset data
+        $(".ticket_img .cover").css("background-image","url("+cover+")");
+        $(".anchor_avatar img").attr("src",ticket_img);
+        $(".show_title").text(show_title);
+        $(".anchor_nickname_yrs").text(anchor_nickname_yrs);
+        $(".approve_time").text(approve_time);
+        $(".start_time").text(start_time);
+        $(".duration").text(duration+" min");
+        $(".price").text(price+" crdits");
+        $(".content .desc").text(show_introduce);
+
+    })
+
+
+
+</script>

@@ -1,0 +1,20 @@
+<html>
+<body>
+<br />
+<h3><%=title %></h3>
+<div style="margin: 15px;">
+	<% data.forEach(function(file){ %>
+		<%if(file.is_folder == true){%>
+			<%=file.name %><br>
+			<%file.sub_file.forEach(function(log){%>
+				&nbsp;&nbsp;<a href="<%='downLogs?userid=fdl&prefix='+file.prefix+'&filename='+log%>"><%=log %></a><br>
+			<%})%>
+			<br>
+		<%}else {%>
+			<a href="<%='downLogs?userid=fdl&prefix='+file.prefix+'&filename='+file.name%>"><%=file.name %></a><br><br>
+		<%}%>
+	<% }) %>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<style>
+    .CoverPiece{position: absolute; let: 0px; top: 0px; width: 85px; height: 25px; overflow: hidden;}
+    .CoverInput{display: none;}
+    .CoverLabel{height: 25px; width: 85px; float: left; cursor: pointer;}
+</style>
+<div id="tabs-container">
+    <ul class="tabs-menu">
+        <a href="/broadcast/cover/auditing"><li class="Auditing"><span>UNDER REVIEW</span></li></a><!--待审核-->
+        <a href="/broadcast/cover/pass"><li class="Pass"><span>APPROVED</span></li></a><!--审核通过-->
+        <a href="/broadcast/cover/failed"><li class="Failed"><span>REJECTED</span></li></a><!--审核否决-->
+    </ul>
+    <ul class="plusBtn">
+        <li>
+            <a href="javascript:;">
+                <div class="plusPhoto redButton">+ Photo</div>
+                <div class="CoverPiece">
+                    <label class="CoverLabel">
+                        <input class="CoverInput" type="file" name="file" accept="image/jpg,image/jpeg,image/png">
+                    </label>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+<script>
+    var change_status = 0;//防止多次点击
+    var coverCount = '<%=coverCount%>';
+    window.parent.originalImg = '';
+    $(document).on('change', 'input[name="file"]', function(){
+
+        if(coverCount > 29){
+            myParentAlert('Can not upload more than 30 broadcast covers.');
+            emptiedFile();
+            return false;
+        }
+
+        if(this.files[0].type != 'image/jpg' && this.files[0].type != 'image/jpeg' && this.files[0].type != 'image/png'){
+            myParentAlert('Incorrect format. Only JPG and PNG format allowed. File size must be 3M or less.');
+            emptiedFile();
+            return false;
+        }
+
+        window.parent.originalImg = this.files[0];
+        var objUrl = getObjectURL(this.files[0]);
+        var type = this.files[0].type;
+        if(this.files[0].size > 3 * 1024 * 1024){
+            myParentAlert('Incorrect format. Only JPG and PNG format allowed. File size must be 3M or less.');
+            emptiedFile();
+            return false;
+        }
+        var image = new Image();
+        image.src = objUrl;
+        image.onload = function(){
+            var width = image.width;
+            var height = image.height;
+            if(width<1024 || height<1024){
+                myParentAlert('PNG and JPG format only, less than 3MB. Size: 1024px * 1024px to 2400px * 2400px.');
+                emptiedFile();
+                return false;
+            }
+
+            if(width>2400 || height>2400){
+                myParentAlert('PNG and JPG format only, less than 3MB. Size: 1024px * 1024px to 2400px * 2400px.');
+                emptiedFile();
+                return false;
+            }
+
+            var windowHeigth = $(parent).height();
+            var windowWidth = $(parent).width();
+            var imgHeigth = '';
+            var imgWidth = '';
+            if(windowHeigth < (height+120) || windowWidth < (width+50)){
+                windowHeigth = parseInt(windowHeigth * 0.6);
+                windowWidth = parseInt(windowWidth * 0.6);
+                height = windowHeigth;
+                width = windowWidth;
+                imgHeigth = windowHeigth;
+                imgWidth = windowWidth;
+            }else{
+                imgHeigth = height;
+                imgWidth = width;
+            }
+            width = width + 50 + 'px';
+            height = (height * (imgHeigth/imgWidth)) + 120 + 'px';
+            if(change_status){
+                return false;
+            }
+            change_status = 1;
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                area : [width, height],
+                content: '/broadcast/coverLayer/addCover?blobImg='+objUrl+'&type='+type+'&width='+imgWidth+'&height='+imgHeigth,
+                end:function(){
+                    change_status = 0;//防止多次点击
+                    var status = Cookies.getJSON('add_success_cover');
+                    Cookies.remove('add_success_cover');
+                    if(status && status.status == 1){
+                        window.location.href='/broadcast/cover/auditing';
+                    }
+                    emptiedFile();
+                }
+            });
+        }
+
+        //关闭窗口清空表单数据，解决重复选择同一张图片的问题。
+        function emptiedFile(){
+            $("input[name='file']").val('');
+        }
+    })
+</script>

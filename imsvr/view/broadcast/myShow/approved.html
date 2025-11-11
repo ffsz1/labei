@@ -1,0 +1,143 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">My Shows</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+
+            <div class="showApproved">
+                <div class="showApprovedTitle">
+                    <ul>
+                        <li>Show title</li>
+                        <li>Show type</li>
+                        <li>Start time</li>
+                        <li>Duration</li>
+                        <li>Tickets sold</li>
+                        <li></li>
+                    </ul>
+                </div>
+
+                <%if(approvedList.length>0){%>
+                <%for(var data of approvedList){%>
+                <div class="showApprovedList">
+                    <ul>
+                        <li>
+                            <%if(data.no_read){%>
+                            <div><img class="unreadLiveShow" src="<%=public_path%>/img/u84.png"></div>
+                            <%}%>
+                            <a href="/broadcast/myShow/liveShowInfo?live_show_sn=<%=data.live_show_id%>" class="beyondHiding" style="display: block; width: 140px;"><%=data.show_title%></a>
+                        </li>
+                        <li class="beyondHiding"><%=showType[data.classify]%></li>
+                        <li class="scheduledLiveListTimeSent showColor_139818" data-time="<%=data.start_time*1000%>"></li>
+                        <li class="showColor_F8834E"><%=data.duration%> minutes</li>
+                        <li><%=data.ticket_num%></li>
+                        <li>
+                            <div class="liveShowStartTime" data-id="<%=data.live_show_id%>" data-time="<%=data.left_sec_to_start%>" data-duration="<%=data.duration%>" style="margin-top: 10px; margin-left: 50px;">
+                                <a target="_blank" class="liveShowStartTimeBtn noliveing cursorDefault">Start My Show</a>
+
+                                <div class="Countdown" style="display: none;">
+                                    start in <span class="startTime"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <%}%>
+                <%}else{%>
+                <div class="noData clear">No shows approved.</div>
+                <%}%>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        liveShowStartTime();
+        function liveShowStartTime(){
+            var RemainingTime = $('.liveShowStartTime');
+            for(var i=0; i < RemainingTime.length; i++) {
+                var reservationTime  = RemainingTime.eq(i).attr('data-time');
+                thirtyCount(reservationTime,RemainingTime.eq(i));
+            }
+        }
+
+        /**
+         * 节目列表30分钟倒计时功能
+         * @param startTime
+         * @param demo
+         */
+        function thirtyCount(startTime,demo){
+            var time = startTime;
+            var liveShowId = demo.attr('data-id');
+            var duration = demo.attr('data-duration');
+            duration = -duration;
+            var url = '/page/anchor.html#liveShowid='+liveShowId;
+            if(time < 0){return;};
+            if(time > 30 * 60){
+                //30分钟之前不需要倒数
+                setTimeout(()=>{thirtyCount(startTime,demo);},(time - 30* 60) * 1000);
+                return;
+            };
+            //分钟数
+            var min = Math.ceil(time/60);
+            //秒数零头
+            var seconds = time%60;
+            //倒数30分钟需要修改按钮状态
+            var Countdown = function (){
+                if(min < 30 && min > 3){
+                    var html = min+':00';
+                    demo.find('.startTime').html(html);
+                    demo.find('.Countdown').show();
+                }else if(min <= 3 && min > duration){
+                    var html = min+':00';
+                    if(min <= 0 && min > duration){
+                        demo.find('.Countdown').hide();
+                    }else{
+                        demo.find('.Countdown').show();
+                    }
+                    demo.find('.startTime').html(html);
+                    demo.find('.liveShowStartTimeBtn').attr('href',url);
+                    demo.find('.liveShowStartTimeBtn').removeClass('noliveing');
+                    demo.find('.liveShowStartTimeBtn').removeClass('cursorDefault');
+                    demo.find('.liveShowStartTimeBtn').addClass('liveing');
+                }
+            }
+
+            Countdown();
+            var timefn = function fn(){
+                min--;
+                //倒数30分钟需要修改按钮状态
+                Countdown();
+                if(min == duration){
+                    demo.find('.Countdown').hide();
+                    demo.find('.liveShowStartTimeBtn').removeAttribute('href');
+                    demo.find('.liveShowStartTimeBtn').addClass('noliveing');
+                    demo.find('.liveShowStartTimeBtn').addClass('cursorDefault');
+                    demo.find('.liveShowStartTimeBtn').removeClass('liveing');
+                    return;
+                };
+                setTimeout(()=>{fn();},60 * 1000);
+            };
+            //初次使用
+            setTimeout(()=>{timefn();},seconds * 1000);
+        };
+
+        anchorReservationTimeSent();
+        //分页
+        var pages = Math.ceil(<%=approvedListCount%>/<%=step%>);
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

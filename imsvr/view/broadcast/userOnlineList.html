@@ -1,0 +1,64 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .userOnlineList{width: 812px; margin: 25px auto 0px;}
+    .userOnlineBlock{width: 248px; height: 126px; float: left; margin-right: 25px; margin-top: 10px; border: 2px solid #5BC5FF;}
+    .userOnlineBlock:nth-child(3n){margin-right: 0px;}
+    .userOnlineBlockImg{width: 99px; height: 126px; float: left;}
+    .userOnlineBlockText{width: 132px; height: 126px; float: left; margin-left: 10px; font-size: 13px;}
+    .userOnlineBlockName{margin-top: 15px; font-weight: 700; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;}
+    .userOnlineBlockInfo{color: #7B7B7B;}
+    .userOnlineBlockFloat{float: left; width: 132px; height: 30px;}
+</style>
+<div class="content">
+    <% include leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">Online Users</div>
+        <div class="userOnlineList">
+            <%if(onlineUserList.length){%>
+            <% for(var data of onlineUserList){%>
+            <div class="userOnlineBlock">
+                <img class="userOnlineBlockImg" src="<%=data.avatar_img%>">
+                <div id="<%=data.id%>" class="userOnlineBlockText">
+                    <div class="userOnlineBlockName" title="<%=data.nick_name%>"><%=data.nick_name%></div>
+                    <div class="userOnlineBlockInfo" >From <%=data.country%></div>
+                    <div class="userOnlineBlockInfo" ><%=data.age%> years old</div>
+                    <img class="userOnlineBlockFloat invitePublic cursor" src="<%=public_path%>/img/u653.png">
+                    <a href="/page/anchor.html#userid=<%=data.id%>&type=private" target="_blank"><img class="userOnlineBlockFloat oneOnone cursor" src="<%=public_path%>/img/u651.gif"></a>
+                </div>
+            </div>
+            <%}%>
+            <div class="clear"></div>
+            <div id="page" class="pagenation"></div>
+            <%}else{%>
+            <div style="margin: 0px auto; width: 100%; text-align: center; padding: 10px;">No online users at the moment.</div>
+            <%}%>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        $('.invitePublic').click(function(){
+            var img = '<%=public_path%>/img/u652.png';
+            var that = $(this);
+            var id = that.parent('div').attr('id');
+            $.post('/lady/v1/inviteUserPublicRoom',{userid:id},function(data){
+                if(data.errno == 0){
+                    that.attr('src',img);
+                }else{
+                    alert(data.errmsg);
+                }
+            });
+        });
+
+        //分页
+        var pages = Math.ceil('<%=onlineUserListCount%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

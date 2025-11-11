@@ -1,0 +1,55 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">My Shows</div>
+        <div class="shotsDetails">
+            <a style="color: #1AA3DA;" href="javascript:history.back(-1);"><< Back to My shows</a>
+
+            <div class="liveShowInfo">
+                <div class="cover">
+                    <img class="coverImg" src="<%=liveShowInfo.cover%>">
+                    <div class="coverTitle"><%=liveShowInfo.show_title%></div>
+                </div>
+                <div class="clear"></div>
+
+                <div class="liveShowTimeBlock">
+                    <div class="liveShowTime">
+                        <span class="liveShowTime_a">Date</span><br><br>
+                        <span class="liveShowTime_b scheduledLiveListTimeSent" data-time="<%=liveShowInfo.start_time*1000%>"></span>
+                    </div>
+
+                    <div class="liveShowTime">
+                        <span class="liveShowTime_a">Duration</span><br><br>
+                        <span class="liveShowTime_b"><%=liveShowInfo.duration%> minutes</span>
+                    </div>
+
+                    <div class="liveShowTime">
+                        <span class="liveShowTime_a">Tickets sold</span><br><br>
+                        <span class="liveShowTime_b"><%=liveShowInfo.ticket_num%></span>
+                    </div>
+                </div>
+
+                <div class="liveShowIntroduce">
+                    <span>Description:</span><br><br>
+                    <span class="word-wrap"><%=liveShowInfo.show_introduce%></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        anchorReservationTimeSent();
+    })
+</script>

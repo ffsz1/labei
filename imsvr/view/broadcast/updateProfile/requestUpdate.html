@@ -1,0 +1,109 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myProfile" style="min-height: 700px;">
+        <div class="pageInfo">My Profile</div>
+        <div id="tabs-container" style="display: block;">
+            <% include topBar.html %>
+            <div class="clear"></div>
+            <div id="numberOne" class="updateProfile">
+                <div class="title">What do you want to change?</div>
+                <div class="updateProfileRadio">
+                    <label><input class="updateProfileType" name="type" type="radio" checked="checked" value="3" />Change nickname</label><br><br>
+                    <label><input class="updateProfileType" name="type" type="radio" value="4" />Change profile information <span style="color: #BCBCBC;">(Except nickname)</span></label>
+                    <div class="updateProfileContinue numberOneContinue cursor">Continue</div>
+                </div>
+            </div>
+
+            <div id="numberTwo" class="updateProfile" style="height: 350px; display: none;">
+                <div class="title">Nickname change request</div>
+                <div class="numberTwoBlock">
+                    <span class="numberTwoBlockTitle" style="">Your current nickname</span><br><br>
+                    <span class="numberTwoBlockNick_name"><%=anchorInfo.nick_name%></span><br><br>
+                    <span class="numberTwoBlockTitle" style="">New nickname</span><br>
+                    <input class="numberTwoBlockNicknameInput" type="text" name="nickname"><br><br>
+                    <span class="numberTwoBlockTitle" style="">Describe your reason</span><br>
+                    <textarea class="numberTwoBlockDescription" name="description"></textarea>
+                    <div class="updateProfileContinue numberTwoContinue cursor" style="margin-top: 10px;">Submit</div>
+                </div>
+            </div>
+
+            <div id="numberThree" class="updateProfile" style="height: 250px; display: none;">
+                <div class="title">Profile information change request</div>
+                <div class="numberTwoBlock">
+                    <span class="numberTwoBlockTitle" style="">Description what do you want to change here</span><br><br>
+                    <textarea class="numberTwoBlockDescription" name="descriptionThree"></textarea>
+                    <div class="updateProfileContinue numberThreeContinue cursor" style="margin-top: 10px;">Submit</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="agency">
+            Note: If you have any questions, please consult your agency.<br>
+            Your agency: <%=agency.name%>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        $('.numberOneContinue').click(function(){
+            var checked = $('input[name="type"]:checked').val();
+            if(checked == 3){
+                $('#numberTwo').show();
+                $('#numberOne').hide();
+            }else if(checked == 4){
+                $('#numberThree').show();
+                $('#numberOne').hide();
+            }else {
+                return false;
+            }
+        })
+
+        $('.numberTwoContinue').click(function(){
+            var nickname = $('input[name="nickname"]').val();
+            var nicknameLength = nickname.length;
+            var description = $('textarea[name="description"]').val();
+            if(!nickname){
+                myParentAlert('Please add a new nickname');
+                return false;
+            }
+            if(!description){
+                myParentAlert('Please describe your reasons of this change.');
+                return false;
+            }
+            if(nicknameLength < 4 || nicknameLength > 24){
+                myParentAlert('Nickname must be 4 - 24 characters.');
+                return false;
+            }
+            $.post('/broadcast/profileLayer/editName',{nickName:nickname,description:description},function(data){
+                if(data.errno == 0){
+                    window.location.href = '/broadcast/updateProfile/requestUpdateList';
+                }else{
+                    myParentAlert(data.data);
+                }
+            })
+        })
+
+        $('.numberThreeContinue').click(function(){
+            var description = $('textarea[name="descriptionThree"]').val();
+            if(!description){
+                myParentAlert('Description what do you want to change here');
+                return false;
+            }
+            $.post('/broadcast/profileLayer/description',{description:description},function(data){
+                if(data.errno == 0){
+                    window.location.href = '/broadcast/updateProfile/requestUpdateList';
+                }else{
+                    myParentAlert(data.data);
+                }
+            })
+        })
+    })
+</script>

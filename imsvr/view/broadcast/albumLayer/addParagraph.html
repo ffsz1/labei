@@ -1,0 +1,54 @@
+<div class="plusForm text">
+    <div>
+        <div class="title">Add Text</div>
+        <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <div class="content">
+            <textarea name="paragraph" maxlength="140" placeholder=""  style="height:100px; resize: none;"></textarea>
+            <button class="Submit cursor">Submit</button>
+            <div class="tips"><label id="descriptionNumber">0</label> / 140</div>
+    </div>
+</div>
+<script>
+    $(function(){
+
+        $('textarea[name="paragraph"]').on('input', function(){
+            let description = $(this).val();
+            $('#descriptionNumber').text(description.length);
+        })
+
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            parent.layer.close(index);
+        })
+        var change_status = 0;//防止多次点击
+        $('.Submit').click(function(){
+            if(change_status){
+                return false;
+            }
+            change_status = 1;
+            var paragraph = $('textarea[name="paragraph"]').val();
+            if(!paragraph){
+                myParentAlert('You have not entered any text yet.');
+                change_status = 0;
+                return false;
+            }
+            if(paragraph.length > 140){
+                myParentAlert('Can not exceed 140 character.');
+                change_status = 0;
+                return false;
+            }
+            $.post('/broadcast/albumLayer/addParagraph', {paragraph:paragraph}, function(data){
+                if(data.errno == 0){
+                    Cookies.set('add_success_paragraph', {status:1});
+                    parent.layer.close(index);
+                    parent.layer.msg('Submit successfully. Auditing soon.');
+                }else{
+                    myParentAlert('Failed to submit. Please try again.');
+                    change_status = 0;
+                }
+            })
+        })
+    })
+</script>

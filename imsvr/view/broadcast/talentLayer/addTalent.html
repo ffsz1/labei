@@ -1,0 +1,113 @@
+<div class="plusForm add">
+    <div>
+        <div class="title">Add Talent</div>
+        <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <div class="content">
+            <input type="hidden" name="id" value="<%=talentInfo.id%>">
+            <div>Name of your talent:</div>
+            <input id="uploadFile" class="uploadFile" name="name" maxlength="40" placeholder="40 characters limited"/>
+
+            <div>Performance Price:</div>
+            <select name="price">
+                <%for(let i=1000; i<=2500; i=i+500){%>
+                <option <%if(i == talentInfo.credit){%> selected <%}%>  value="<%=i%>"><%=i%></option>
+                <%}%>
+            </select>
+
+            <div>Type:</div>
+            <select name="type">
+                <%for(let val of talentType){%>
+                <option <%if(val.id == talentInfo.talent_type_id){%> selected <%}%>  value="<%=val.id%>"><%=val.type%></option>
+                <%}%>
+            </select>
+            <textarea name="description" maxlength="140" placeholder="" style="height:100px"><%=talentInfo.talent_desc%></textarea>
+            <button class="Submit cursor">Submit</button>
+            <div class="tips"><label id="descriptionNumber">0</label> / 140</div>
+
+    </div>
+</div>
+<script>
+    $(function(){
+//        计算字数
+        $('input[name="name"]').on('input', function(){
+            let name = $('input[name="name"]').val();
+            let description = $('textarea[name="description"]').val();
+            $('#number').text(name.length);
+            if(name.length > 0 && description.length > 0){
+                $('.editSubmit').addClass('Available');
+            }
+        })
+        $('textarea[name="description"]').on('input', function(){
+            let name = $('input[name="name"]').val();
+            let description = $('textarea[name="description"]').val();
+            $('#descriptionNumber').text(description.length);
+            if(name.length > 0 && description.length > 0){
+                $('.editSubmit').addClass('Available');
+            }
+        })
+
+//        弹窗
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            Cookies.remove('add_talent');
+            parent.layer.close(index);
+        })
+        $(document).on('click','.Submit',function(){
+            let editSubmitStart = layer.load(2);//load遮罩
+            var id = $('input[name="id"]').val();
+            var name = $('input[name="name"]').val();
+            var type = $('select[name="type"]').val();
+            var description = $('textarea[name="description"]').val();
+            var price = $('select[name="price"]').val();
+            if(!name){
+                myParentAlert('Name of talent is required.');
+                layer.close(editSubmitStart);//关闭load遮罩
+                return false;
+            }
+            if(!description){
+                myParentAlert('Please enter the talent description. ');
+                layer.close(editSubmitStart);//关闭load遮罩
+                return false;
+            }
+
+            if(description.length > 140){
+                myParentAlert('Talent description can not exceed 140 character.');
+                layer.close(editSubmitStart);//关闭load遮罩
+                return false;
+            }
+            if(name.length > 40){
+                myParentAlert('Name of talent can not exceed 40 characters.');
+                layer.close(editSubmitStart);//关闭load遮罩
+                return false;
+            }
+
+            if(id){
+                $.post('/broadcast/talentLayer/editTalent', {id:id,name:name,type:type,description:description,price:price}, function(data){
+                    layer.close(editSubmitStart);//关闭load遮罩
+                    if(data.errno == 0){
+                        Cookies.set('add_success_talent', {status:1});
+                        parent.layer.close(index);
+                        parent.layer.msg('Submit successfully. Auditing soon.');
+                    }else{
+                        parent.layer.close(index);
+                        myParentAlert('Failed to submit. Please try again.');
+                    }
+                })
+            }else{
+                $.post('/broadcast/talentLayer/addTalent', {name:name,type:type,description:description,price:price}, function(data){
+                    layer.close(editSubmitStart);//关闭load遮罩
+                    if(data.errno == 0){
+                        Cookies.set('add_success_talent', {status:1});
+                        parent.layer.close(index);
+                        parent.layer.msg('Submit successfully. Auditing soon.');
+                    }else{
+                        parent.layer.close(index);
+                        myParentAlert('Failed to submit. Please try again.');
+                    }
+                })
+            }
+        })
+    })
+</script>

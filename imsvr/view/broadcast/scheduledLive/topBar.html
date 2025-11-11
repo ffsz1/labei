@@ -1,0 +1,23 @@
+<ul class="newtabs-menu">
+    <a href="/broadcast/scheduledLive">
+        <li class="Pending">
+            <span>NEW REQUESTS</span>
+            <%if(scheduledLiveNumber.pending_no_read_num > 0){%>
+            (<span style="margin-left: 0px;" class="pendingNoRead"><%=scheduledLiveNumber.pending_no_read_num%></span>)
+            <%}%>
+        </li>
+        <div class="PendingImg"></div>
+    </a>
+    <a href="/broadcast/scheduledLiveUnconfirmed">
+        <li class="Unconfirmed"><span>PENDING CONFIRM</span></li>
+        <div class="UnconfirmedImg"></div>
+    </a>
+    <a href="/broadcast/scheduledLiveSchedules">
+        <li class="Schedules"><span>SCHEDULED</span></li>
+        <div class="SchedulesImg"></div>
+    </a>
+    <a href="/broadcast/scheduledLiveHistory">
+        <li class="History"><span>HISTORY</span></li>
+        <div class="HistoryImg"></div>
+    </a>
+</ul>

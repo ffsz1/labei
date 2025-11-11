@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Bookings | CharmLive.com</title>
+    <meta name="keywords" content="Charmlive.com,live broadcast,live streaming,watch live streaming,video streaming sites" />
+    <meta name="description" content="You can request one-on-one broadcast.Find the specific details of your bookings,including sent and received, and check the booking status." />
+    <meta  id="pageSetMeta" content="*">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script src="<%=public_path%>/js/jquery.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>     
+    <script>      
+    $.ajaxSetup({
+        cache: true
+    });
+    $.get('/page/list.html', {}, function(res) {
+        var str = res.replace(/[\r\n]/g, "");
+        var source = {},
+            scriptArr = [];
+        source.style = str.match(/<style.*?<\/style>/g);
+        source.link = str.match(/<link.*?>/g);
+        scriptArr = str.match(/<script.*?<\/script>/g);
+        var script = '';
+        for (var key in source) {
+            if (Object.prototype.toString.call(source[key]) == '[object Array]') {
+                source[key].forEach(function(value) {
+                    $('body').append(value);
+                })
+            }
+        }
+        scriptArr.forEach(function(value) {
+            if (value.toLowerCase().indexOf('jquery.min.js') > -1) return;
+            $('body').append(value);
+        })
+    })
+    </script>        
+  </body>
+</html>

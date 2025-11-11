@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>100715</title>
+</head>
+<body>
+<div>
+</div>
+<input id="uid" type="text" value="100715" placeholder="uid" /> <br />
+<input id="ticket" type="text" value="eyJhbGciOiJIUzI1NiJ9.eyJ0aWNrZXRfdHlwZSI6bnVsbCwidWlkIjoxMDA3MTUsInRpY2tldF9pZCI6ImQ0MGNlNDBjLWMwYzYtNGRjNC1hN2Y0LTc1MjIwYWFjZTQ0YiIsImV4cCI6MzYwMCwiY2xpZW50X2lkIjoiZXJiYW4tY2xpZW50In0.mJrvfq4VUQ9DRm0qsZm0jA6Q-h_FulsA4IxIBzDgk0o" placeholder="ticket" /> <br />
+<input type="button" value="login" onclick="login()"/><br/>
+<hr>
+<input id="roomId" type="text" value="25477895" placeholder="roomId" /> <br />
+<input type="button" value="进入房间" onclick="enterChatRoom()"/><br/>
+<hr>
+<input id="message" type="text" value="" placeholder="message" /> <br />
+<input type="button" value="发送文本消息" onclick="sendMessage()"/><br/>
+<hr>
+<hr>
+<script>
+
+var socket = new WebSocket("ws://39.105.187.28:3006");
+socket.onopen = function(event) {
+    console.log("connect suc");
+	// 监听消息
+	socket.onmessage = function(event) { 
+		console.log('Client received a message '+event.data); 
+		var msg = JSON.parse(event.data);
+	}; 
+
+	// 监听Socket的关闭
+	socket.onclose = function(event) { 
+		console.log('Client notified socket has closed'); 
+	}; 
+
+  // 关闭Socket.... 
+  //socket.close() 
+};
+
+
+//测试登录im接口
+function login() {
+	var data = {};
+	data['id'] = 1;
+	data['route'] = 'login';
+	var req_data = {};
+	req_data.page_name = 3;
+	req_data.uid = document.getElementById("uid").value;
+	req_data.ticket = document.getElementById("ticket").value;
+	data['req_data'] = req_data;
+	socket.send(JSON.stringify(data));
+}
+
+function enterChatRoom() {
+	socket.send(JSON.stringify({
+		"id":1,
+		"route":"enterChatRoom",
+		"req_data":{
+			"room_id":document.getElementById("roomId").value
+		}
+	}));
+}
+
+function sendMessage() {
+	socket.send(JSON.stringify({
+		"id":1,
+		"route":"sendMessage",
+		"req_data":{
+			"room_id":document.getElementById("roomId").value,
+			"content":document.getElementById("message").value,
+		}
+	}));
+}
+
+
+function heartbeat() {
+	var data = {};
+	data['id'] = 1;
+	data['route'] = 'heartbeat';
+    var req_data = {};
+    req_data.page_name = 3;
+    //data['req_data'] = req_data;
+	var str = JSON.stringify(data);
+	socket.send(str);
+}
+setInterval(function() {heartbeat();}, 5000);
+</script>
+</body>
+</html>
+　　

@@ -1,0 +1,26 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content" >
+        <div class="pageInfo">Private Message</div>
+        <div id="message" data-left="253" data-top="55" style="width: 970px; height: 675px;">
+
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+<script>
+    $(function(){
+        //没有执行过才会执行加载动画
+        var numMessage = $('.Message').attr('data-num');
+        if(numMessage == '-99999'){
+            setNum(numMessage);
+        }
+    })
+</script>
+

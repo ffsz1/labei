@@ -1,0 +1,300 @@
+<style>
+    .right-content{
+        padding:80px 20px 20px 20px!important;
+    }
+    .prompts{width: 700px; height: 40px; line-height: 40px; text-align: center; font-size: 13px; font-weight: 400; color: #333333; margin-bottom: 10px; background-color: #00DB8A;}
+    .close{font-size: 16px; float: right; margin-right: 15px;}
+    .red {color: red;}
+    .shareBanner{width: 210px; height: 168px;}
+    .homeCoinsBlock{width: 435px; height: 122px; background: linear-gradient(135deg, rgba(51, 153, 255, 1) 0%, rgba(51, 153, 255, 1) 0%, rgba(138, 137, 217, 1) 100%, rgba(138, 137, 217, 1) 100%); border-radius: 6px; display: inline-block; text-align: center;}
+    .homeCoins{font-family: 'Arial Negreta', 'Arial Normal', 'Arial';  font-weight: 700;  font-style: normal;  font-size: 28px;  color: #FFFFFF;}
+    .homeCoinsDescription{font-size: 13px;  color: #FFFFFF;}
+</style>
+<script>
+    $(function(){
+        var Jump = getHash();
+        Jump = Jump.scheduledLiveJump;
+        window.parent.location.hash='';
+        if(Jump == 1){
+            location.href = '/broadcast/scheduledLive';
+        }else if(Jump == 2){
+            location.href = '/broadcast/scheduledLiveUnconfirmed';
+        }else if(Jump == 3){
+            location.href = '/broadcast/scheduledLiveSchedules';
+        }else if(Jump == 4){
+            location.href = '/broadcast/scheduledLiveHistory';
+        }
+    })
+</script>
+<div class="content">
+    <% include leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">HOME</div>
+        <%if(anchorInfo.prompts < 3 && anchorInfo.card_auth == 3){%>
+        <div class="prompts">Congratulations! Your identity verification has been approved. You can start broadcast now.<div class="close cursor">X</div></div>
+        <%}%>
+
+        <div style="margin-bottom: 20px;">
+            <div style="margin-bottom: 20px;">Welcome back, <%=userInfo.nick_name%>!</div>
+            <div>
+                <div class="homeCoinsBlock">
+                    <br><br>
+                    <span class="homeCoins"><a href="/broadcast/income/dailiyDetail?day=<%=day%>" style="color: #ffffff;" id="dayCredit"></a></span>
+                    <br>
+                    <span class="homeCoinsDescription">COINS TODAY</span>
+                </div>
+
+                <div class="homeCoinsBlock" style="margin-left: 55px;">
+                    <br><br>
+                    <span class="homeCoins"><a href="/broadcast/income/monthlyDetail?month=<%=month%>" style="color: #ffffff;" id="monthTotalCredit"></a></span>
+                    <br>
+                    <span class="homeCoinsDescription">COINS THIS MONTH</span>
+                </div>
+            </div>
+        </div>
+        <!--<section class="AS">-->
+            <!--<div class="title">ACCOUNT SUMMARY</div>-->
+            <!--<div class="content-UI">-->
+                <!--<div class="left-tab">-->
+                    <!--<p>-->
+                        <!--<strong style="line-height:30px;">Welcome back <%=userInfo.nick_name%>,</strong><br><br>-->
+                        <!--Today is <span id="localData"></span>, your monthly target is <span id="validDays" class="red">0</span> live day(s). Now you have finished <span id="sufficeLiveTimeCount" class="red">0</span> live day(s),total of <span id="anchorLiveTimeHour" class="red">0</span> hour(s) and <span id="anchorLiveTimeMinute" class="red">0</span> minute(s). Great job! (this statistics may have 24 hours delayed.)-->
+                    <!--</p>-->
+                    <!--<div style="width:322px; margin-top:20px;">-->
+                        <!--<strong>TASK PROGRESS</strong><strong style="float:right;" id="validDaysSchedule"></strong>-->
+                        <!--<div class="gray"><div class="green" id="progressBar"></div></div>-->
+
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="right-tab">-->
+                    <!--<ul>-->
+                        <!--<li><div><div style="color: #949494;"><label class="credit" id="dayCredit"></label>COINS TODAY</div></div></li>-->
+                        <!--<li><div><div style="color: #949494;"><label class="credit" id="monthTotalCredit" style="color: #339980;"></label>COINS THIS <br />MONTH</div></div></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</section>-->
+
+        <section class="ACT">
+            <div class="titleB">ACTIVITIES</div>
+            <div class="contentB">
+                <div class="left-tab">
+                    <div class="title">TODO-List </div>
+                    <ul>
+                        <a href="/broadcast/scheduledLive"><li>Unconfirmed Bookings<div id="getAnchorUnconfirmedCount" class="count none">0</div></li></a>
+                        <a href="/broadcast/scheduledLiveSchedules"> <li>Upcoming Scheduled Broadcasts<div id="getAnchorScheduledCount" class="count none">0</div></li></a>
+                        <a href="/broadcast/directMessages"><li>New Private Messages<div id="privateMessageObjectIds" class="count none">0</div></li></a>
+
+                        <a href="/anchor/emf/inbox/lists"><li>New Mails<div id="mailNoReadingCount" class="count none">0</div></li></a>
+                    </ul>
+
+                </div>
+                <div class="right-tab">
+                    <div class="title">What I missed </div>
+                    <ul>
+                        <a href="/broadcast/scheduledLiveHistory"><li>Unconfirmed Bookings<div id="AnchorMissUnconfirmedUnreadcount" class="count none">0</div></li></a>
+                        <a href="/broadcast/scheduledLiveHistory"><li>Scheduled Broadcasts<div id="AnchorMissScheduledUnreadcount" class="count none">0</div></li></a>
+                        <a href="/broadcast/instant/incoming"><li>Instant Broadcast Invites<div id="instantMissUnreadcount" class="count none">0</div></li></a>
+                    </ul>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="PBV">
+            <div class="titleB">MY RECENT ONE-ON-ONE BROADCAST VIEWER<div class="more"><a href="/broadcast/privateLiveGuests">MORE</a></div></div>
+            <div class="contentB">
+                <ul>
+                    <% for(var i = 0; i < privateList.data.length; ++i) { %>
+                    <li class="homeLi">
+                    <div class="online" <% if(privateList.data[i].online_status == 2 && privateList.data[i].is_hidden == 0){%> style="display:block; <% }%>">
+                        <img src="<%=public_path%>/img/u224.png" width="16" height="16" alt=""/>
+                    </div>
+                    <div class="user-photo"><img src="<%= privateList.data[i].avatar_img%>" alt=""/></div>
+                    <div class="name" style="display:block;" title="<%= privateList.data[i].nick_name%>"><a href="/broadcast/privateLiveGuests"> <%= privateList.data[i].nick_name%></a></div>
+                    <ul class="statue" style="display:block;">
+                        <div class="userlevel" style="margin-left: 0px;">
+                            <img src="<%=public_path%>/img/intimacy_<%= privateList.data[i].intimacy%>.png"/>
+                        </div>
+                        <div class="userlevel" style="margin-left: 8px;">
+                            <img src="<%=userLevelInfo[privateList.data[i].level].icon%>"/>
+                        </div>
+                    </ul>
+                    </li>
+                    <% } %>
+
+                    <% for(var i=0; i<7-privateList.data.length; i++){%>
+                    <li class="homeLi">
+                        <div class="online">
+                            <img src="<%=public_path%>/img/u224.png" width="16" height="16" alt=""/>
+                        </div>
+                        <div class="user-photo"></div>
+                        <div class="name"></div>
+                        <ul class="statue">
+                            <li><div class="icon"><img src="<%=public_path%>/img/u172.png" width="9" height="9" alt=""/></div><div class="count">0</div></li>
+                            <li><div class="icon"><img src="<%=public_path%>/img/u166.png" width="10" height="10" alt=""/></div><div class="count">0</div></li>
+                        </ul>
+                    </li>
+                    <%}%>
+
+                    <div class="clear"></div>
+                </ul>
+            </div>
+        </section>
+
+        <section class="PBV">
+            <div class="titleB">MY TOP ONE-ON-ONE BROADCAST VIEWER<div class="more"><a href="/broadcast/privateLiveGuests">MORE</a></div></div>
+            <div class="contentB">
+                <ul>
+                    <% for(var i = 0; i < topPrivateList.data.length; ++i) { %>
+                    <li class="homeLi">
+                    <div class="online" <% if(topPrivateList.data[i].online_status == 2 && topPrivateList.data[i].is_hidden == 0){%> style="display:block; <% }%>">
+                    <img src="<%=public_path%>/img/u224.png" width="16" height="16" alt=""/>
+                    </div>
+                    <div class="user-photo"><img src="<%= topPrivateList.data[i].avatar_img%>" alt=""/></div>
+                    <div class="name" style="display:block;" title="<%= topPrivateList.data[i].nick_name%>"><a href="/broadcast/privateLiveGuests"> <%= topPrivateList.data[i].nick_name%></a></div>
+                    <ul class="statue" style="display:block;">
+                        <div class="userlevel" style="margin-left: 0px;">
+                            <img src="<%=public_path%>/img/intimacy_<%= topPrivateList.data[i].intimacy%>.png"/>
+                        </div>
+                        <div class="userlevel" style="margin-left: 8px;">
+                            <img src="<%=userLevelInfo[topPrivateList.data[i].level].icon%>"/>
+                        </div>
+                    </ul>
+                    </li>
+                    <% } %>
+
+                    <% for(var i=0; i<7-topPrivateList.data.length; i++){%>
+                    <li class="homeLi">
+                        <div class="online"><img src="<%=public_path%>/img/u224.png" width="16" height="16" alt=""/></div>
+                        <div class="user-photo"></div>
+                        <div class="name"></div>
+                        <ul class="statue">
+                            <li><div class="icon"><img src="<%=public_path%>/img/u172.png" width="9" height="9" alt=""/></div><div class="count"></div>0</li>
+                            <li><div class="icon"><img src="<%=public_path%>/img/u166.png" width="10" height="10" alt=""/></div><div class="count"></div>0</li>
+                        </ul>
+                    </li>
+                    <%}%>
+                    <div class="clear"></div>
+                </ul>
+            </div>
+        </section>
+
+        <section class="PBV">
+            <div class="titleB">MY NEW FOLLOWERS<div class="more"><a href="/broadcast/fans">MORE</a></div></div>
+            <div class="contentB">
+                <ul>
+                    <% for(var i = 0; i < fans.data.length; ++i) { %>
+                    <li class="homeLi">
+                        <div class="online" <% if(fans.data[i].online_status == 2 && fans.data[i].is_hidden == 0){%> style="display:block;" <%}%>>
+                        <img src="<%=public_path%>/img/u224.png" width="16" height="16" alt=""/>
+                        </div>
+                        <div class="user-photo">
+                            <img src="<%= fans.data[i].avatar_img%>" alt=""/>
+                        </div>
+                        <div class="name" style="display:block;" title="<%= fans.data[i].nick_name%>"><a href="/broadcast/fans"> <%= fans.data[i].nick_name%></a></div>
+                        <ul class="statue" style="display:block;">
+                            <div class="userlevel" style="margin-left: 0px;">
+                                <img src="<%=public_path%>/img/intimacy_<%= fans.data[i].intimacy%>.png"/>
+                            </div>
+                            <div class="userlevel" style="margin-left: 8px;">
+                                <img src="<%=userLevelInfo[fans.data[i].level].icon%>"/>
+                            </div>
+                        </ul>
+                    </li>
+                    <%}%>
+
+                    <% for(var i=0; i<14-fans.data.length; i++){%>
+                    <li class="homeLi">
+                        <div class="online">
+                            <img src="<%=public_path%>/img/u224.png" width="16" height="16" alt=""/>
+                        </div>
+                        <div class="user-photo"></div>
+                        <div class="name"></div>
+                        <ul class="statue">
+                            <li>0</li>
+                            <li>0</li>
+                        </ul>
+                    </li>
+                    <%}%>
+                    <div class="clear"></div>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+    <!-- right content end -->
+</div>
+
+
+<script>
+    $(function(){
+        localData();
+        function localData(){
+            var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var reservationTime = new Date().getTime();
+            var tmpM = fDatetime("M", reservationTime)
+            var tmpData = month[parseInt(tmpM) - 1] + ' ' + fDatetime("dd", reservationTime);
+            $('#localData').html(tmpData);
+        }
+
+        var swiper = new Swiper('.swiper-container', {
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay:true
+        });
+
+        $('.close').click(function(){
+            $('.prompts').remove();
+            $.get('/broadcast/authentication/authenticationPrompts');
+        })
+
+        $.get('/broadcast/anchorStatisticalAjax',{},function(data){
+            if(data.errno == 0){
+                var hour = parseInt(data.data.anchorLiveTimeTotal/3600);
+                var minute = parseInt((data.data.anchorLiveTimeTotal%3600)/60);
+                $('#anchorLiveTimeHour').text(hour);
+                $('#anchorLiveTimeMinute').text(minute);
+
+                $('#validDays').text(data.data.validDays);
+                $('#sufficeLiveTimeCount').text(data.data.sufficeLiveTimeCount);
+                $('#validDaysSchedule').text(data.data.validDaysSchedule+'%');
+                $('#progressBar').css('width', data.data.validDaysSchedule+'%');
+                $('#dayCredit').text(data.data.dayCredit);
+                $('#monthTotalCredit').text(data.data.monthTotalCredit);
+
+                if(data.data.getAnchorUnconfirmedCount > 0){
+                    $('#getAnchorUnconfirmedCount').text(data.data.getAnchorUnconfirmedCount)
+                    $('#getAnchorUnconfirmedCount').removeClass('none');
+                }
+                if(data.data.getAnchorScheduledCount > 0){
+                    $('#getAnchorScheduledCount').text(data.data.getAnchorScheduledCount)
+                    $('#getAnchorScheduledCount').removeClass('none');
+                }
+                if(data.data.privateMessageObjectIds > 0){
+                    $('#privateMessageObjectIds').text(data.data.privateMessageObjectIds)
+                    $('#privateMessageObjectIds').removeClass('none');
+                }
+                if(data.data.mailNoReadingCount.length != 0){
+                    $('#mailNoReadingCount').text(data.data.mailNoReadingCount)
+                    $('#mailNoReadingCount').removeClass('none');
+                }
+                if(data.data.AnchorMissUnconfirmedUnreadcount > 0){
+                    $('#AnchorMissUnconfirmedUnreadcount').text(data.data.AnchorMissUnconfirmedUnreadcount)
+                    $('#AnchorMissUnconfirmedUnreadcount').removeClass('none');
+                }
+                if(data.data.AnchorMissScheduledUnreadcount > 0){
+                    $('#AnchorMissScheduledUnreadcount').text(data.data.AnchorMissScheduledUnreadcount)
+                    $('#AnchorMissScheduledUnreadcount').removeClass('none');
+                }
+                if(data.data.instantMissUnreadcount > 0){
+                    $('#instantMissUnreadcount').text(data.data.instantMissUnreadcount)
+                    $('#instantMissUnreadcount').removeClass('none');
+                }
+            }
+        })
+    })
+</script>

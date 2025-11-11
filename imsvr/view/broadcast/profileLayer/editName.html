@@ -1,0 +1,50 @@
+<div class="profile-edit nickname">
+    <div>
+        <div class="title">Edit Nickname</div>
+        <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <div class="content">
+        <div>Please enter your nickname <label>(6 - 24 characters)</label></div>
+        <input type="text" class="dec" name="nickName" value="<%=userInfo.nick_name%>">
+        <button class="Submit">Submit</button>
+        <div class="tips">Your new nickname will be submitted to approval. Only approved nickname will appear to
+            other users.
+            Before the approval or your new nickname is rejected, your current nickname will still appear to
+            others.
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function(){
+//        弹窗
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            Cookies.remove('add_talent');
+            parent.layer.close(index);
+        })
+        $(document).on('click','.Submit',function(){
+            var nickName = $('input[name="nickName"]').val();
+            if(!nickName){
+                myParentAlert('Please enter your new nickname.');
+                return false;
+            }
+            if(nickName.length > 24 || nickName.length < 6){
+                myParentAlert('Sorry, nickname should be in 6 - 24 characters.');
+                return false;
+            }
+
+            $.post('/broadcast/profileLayer/editName', {nickName:nickName}, function(data){
+                if(data.errno == 0){
+                    Cookies.set('add_success_name', {status:1});
+                    parent.layer.msg(data.data);
+                    parent.layer.close(index);
+                }else{
+                    myParentAlert(data.data);
+                    parent.layer.close(index);
+                }
+            })
+        })
+    })
+</script>

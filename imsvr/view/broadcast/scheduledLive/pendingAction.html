@@ -1,0 +1,234 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    #tabs-container #tab-1 ul li.name{width: 150px;}
+    .noRead{position: absolute;left: 8px;top: 6px;}
+    .noReadGroup{position: absolute;left: 20px;top: 6px;}
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">Broadcast Bookings</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+            <a href="javascript:;"><div id="showTbooking" class="Tbooking-btn">Today's Booking (0)</div></a>
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="subject">
+                        <ul>
+                            <li>From</li>
+                            <li>Time sent</li>
+                            <li>Broadcast Time</li>
+                            <li>Attached gifts</li>
+                        </ul>
+                    </div>
+
+                    <%if(data.list.length){%>
+                    <%for(let List of data.list){%>
+                        <%if(List.length == 1){%>
+                            <%for(let data of List){%>
+                            <div class="list">
+                                <ul>
+                                    <li>
+                                        <div>
+                                            <%if(!data.read){%>
+                                            <img src="<%=public_path%>/img/u802.png" class="noRead">
+                                            <%}%>
+                                            <a href="/broadcast/viewerProfile?manid=<%=data.fromid%>">
+                                                <div class="avatar_instant">
+                                                <img src="<%=data.opposite_photourl%>" class="profile-pic" alt=""/>
+                                                </div>
+                                            </a>
+                                            <ul>
+                                                <li class="name Ellipses" title="<%=data.opposite_nickname%>"><a href="/broadcast/viewerProfile?manid=<%=data.fromid%>"><%=data.opposite_nickname%></a></li>
+                                                <li class="contry"><%=data.opposite_country%></li>
+                                                <li>
+                                                    <div class="userlevel">
+                                                        <img src="<%=public_path%>/img/intimacy_<%=data.intimacy%>.png"/>
+                                                    </div>
+                                                    <div class="userlevel">
+                                                        <img src="<%=userLevelInfo[data.level].icon%>"/>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="scheduledLiveListTimeSent" data-time="<%=data.add_time*1000%>"></li>
+                                    <li class="scheduledLiveListTime" data-time="<%=data.book_time*1000%>"></li>
+                                    <li>
+                                        <%if(data.gift_num > 0){%>
+                                        <div style="float:left">
+                                            <img src="<%=data.gift_small_imgurl%>" style="width: 50px; height: 50px;" alt=""/>
+                                            <label>X</label>
+                                            <label class="count"><%=data.gift_num%></label>
+                                        </div>
+                                        <%}%>
+                                        <button class="decline scheduledLiveListReject" data-user="<%=data.inviteid%>">Decline</button>
+                                        <button class="confirm scheduledLiveListConfirm" data-user="<%=data.inviteid%>">Confirm</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <%}%>
+                        <%}else{%>
+                            <div class="rejected">
+                                <div class="alert">Only one booking can be accepted per time slot. Once accepted, other bookings for the same time slot will be automaically rejected.</div>
+                                <div class="list">
+                                    <%for(let data of List){%>
+                                    <ul>
+                                        <li>
+                                            <div>
+                                                <%if(!data.read){%>
+                                                <img src="<%=public_path%>/img/u802.png" class="noReadGroup">
+                                                <%}%>
+                                                <a href="/broadcast/viewerProfile?manid=<%=data.fromid%>">
+                                                    <div class="avatar_scheduled">
+                                                        <img src="<%=data.opposite_photourl%>" class="profile-pic" alt=""/>
+                                                    </div>
+                                                </a>
+                                                <ul>
+                                                    <li class="name Ellipses" title="<%=data.opposite_nickname%>">
+                                                        <div><a href="/broadcast/viewerProfile?manid=<%=data.fromid%>"><%=data.opposite_nickname%></a></div>
+                                                    </li>
+                                                    <li class="contry">
+                                                        <div><%=data.opposite_country%></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="userlevel">
+                                                            <img src="<%=public_path%>/img/intimacy_<%=data.intimacy%>.png"/>
+                                                        </div>
+                                                        <div class="userlevel">
+                                                            <img src="<%=userLevelInfo[data.level].icon%>"/>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="scheduledLiveListTimeSent" data-time="<%=data.add_time*1000%>"></li>
+                                        <li class="scheduledLiveListTime" data-time="<%=data.book_time*1000%>"></li>
+                                        <li>
+                                            <%if(data.gift_num > 0){%>
+                                            <div style="float:left">
+                                                <img src="<%=data.gift_small_imgurl%>" style="width: 50px; height: 50px;" alt=""/>
+                                                <label>X</label>
+                                                <label class="count"><%=data.gift_num%></label>
+                                            </div>
+                                            <%}%>
+
+                                            <button class="decline scheduledLiveListReject" data-user="<%=data.inviteid%>">Decline</button>
+                                            <button class="confirm scheduledLiveListConfirm" data-user="<%=data.inviteid%>">Confirm</button>
+                                        </li>
+                                    </ul>
+                                    <%}%>
+                                </div>
+                            </div>
+                        <%}%>
+                    <%}%>
+                    <%}else{%>
+                        <div class="empty">No bookings at the moment.</div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //获取一天中确认的预约数
+        $.get('/broadcast/scheduledLiveLayer/todayAjax', {}, function(data){
+            if(data.errno == 0){
+                let Reservation = data.data.todayBooking;
+                let temData = {};
+                //计算本地时间
+                for (let val of Reservation){
+                    let anchorWeek = new Date(val.book_timestamp*1000).getDay();
+                    if(anchorWeek == new Date().getDay()){
+                        temData[new Date(val.book_timestamp*1000).getHours()+":"+new Date(val.book_timestamp*1000).getMinutes()] = val.book_timestamp
+                    }
+                }
+
+                if(Object.keys(temData).length  > 0){
+                    $('#showTbooking').addClass('showTbooking');
+                    $('#showTbooking').text(`Today's Booking (${Object.keys(temData).length})`);
+                }
+            }
+        })
+
+        $('.scheduledLiveListConfirm').on('click', function(){
+            var id = $(this).attr('data-user');
+            $.post('/lady/v1/acceptScheduledInvite', {invite_id:id}, function(data){
+                if(data.errno == 0){
+                    window.location.reload();
+                }else if(data.errno == 16182){
+                    myParentAlert(data.errmsg);
+                }
+                else{
+                    myParentAlert('The booking could not be confirmed.');
+                }
+            })
+        })
+
+        $('.scheduledLiveListReject').on('click', function(){
+            var id = $(this).attr('data-user');
+            parent.layer.confirm('Are you sure you wish to decline this booking request?', {
+                btn:['Cancel', 'Yes'],
+                title:'',
+                btnAlign:'c',
+                closeBtn: 0,
+                shadeClose:true,
+                shade:0.01
+            }, function(){
+                parent.layer.msg('Cancel');
+            }, function(){
+                $.post('/lady/v1/rejectScheduledInvite', {invite_id:id}, function(data){
+                    if(data.errno == 0){
+                        window.location.href='/broadcast/scheduledLiveHistory';
+                    }else if(data.errno == 16182){
+                        myParentAlert(data.errmsg);
+                    }else if(data.errno == 16181){
+                        myParentAlert(data.errmsg);
+                    }else{
+                        myParentAlert('Failed to reject private live request. Please try again later.');
+                    }
+                })
+            });
+
+        })
+
+        $(document).on('click', '.showTbooking', function(){
+            var windowHeigth = $(parent).height();
+            var openHeigth = '';
+            var openWidth = '';
+            if(windowHeigth < 850){
+                openHeigth = parseInt(windowHeigth * 0.8) + 'px';
+                openWidth = '550px';
+            }else{
+                openHeigth = '795px';
+                openWidth = '530px';
+            }
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : [openWidth, openHeigth],
+                content: '/broadcast/scheduledLiveLayer/today'
+            });
+        })
+
+        anchorReservationTime();
+        anchorReservationTimeSent();
+
+        //分页
+        var pages = Math.ceil('<%=data.total%>'/15);
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

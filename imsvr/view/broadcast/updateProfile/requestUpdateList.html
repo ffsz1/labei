@@ -1,0 +1,60 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myProfile" style="min-height: 700px;">
+        <div class="pageInfo">My Profile</div>
+        <div id="tabs-container" style="display: block; margin-bottom: 30px;">
+            <% include topBar.html %>
+            <div class="clear"></div>
+            <div>
+                <ul class="UpdateList">
+                    <li>
+                        <div class="Time" >Time</div>
+                        <div class="Type" >Request  type</div>
+                        <div class="Status" >Status</div>
+                        <div class="Processing" >Processing time</div>
+                    </li>
+                    <% if(list.length){%>
+                    <% for(let data of list){%>
+                    <li>
+                        <div class="Time localTime" data-time="<%=data.add_time*1000%>"></div>
+                        <div class="Type" ><a href="/broadcast/updateProfile/requestUpdateInfo?id=<%=data.id%>"><%=type[data.type]%></a></div>
+                        <div class="Status" ><%=status[data.status]%></div>
+                        <div class="Processing localTime" <%if(data.status != 1){%> data-time="<%=data.update_time*1000%>" <%}%> >
+                            <%if(data.status == 1){%>
+                            -
+                            <%}%>
+                        </div>
+                    </li>
+                    <% }%>
+                    <% }else{%>
+                    <li style="text-align: center;">-</li>
+                    <%}%>
+                </ul>
+            </div>
+            <div id="page" class="pagenation"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="agency">
+            Note: If you have any questions, please consult your agency.<br>
+            Your agency: <%=agency.name%>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        localTime();//显示本地时间
+        //分页
+        var pages = Math.ceil('<%=total%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

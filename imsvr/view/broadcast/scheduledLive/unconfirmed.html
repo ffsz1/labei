@@ -1,0 +1,110 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    #tabs-container #tab-1 ul li.name{width: 150px;}
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">Broadcast Bookings</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="subject">
+                        <ul>
+                            <li>From</li>
+                            <li>Time sent</li>
+                            <li>Broadcast Time</li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <% if(data.list.length){%>
+                    <div class="list">
+                        <% for(var value of data.list){%>
+                        <ul>
+                            <li>
+                                <div>
+                                    <a href="/broadcast/viewerProfile?manid=<%=value.fromid%>">
+                                        <div class="avatar_instant">
+                                        <img src="<%=value.opposite_photourl%>" class="profile-pic" alt=""/>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=value.opposite_nickname%>">
+                                            <div><a href="/broadcast/viewerProfile?manid=<%=value.fromid%>"><%=value.opposite_nickname%></a></div>
+                                        </li>
+                                        <li class="contry">
+                                            <div><%=value.opposite_country%></div>
+                                        </li>
+                                        <li>
+                                            <ul class="statue" style="display:block;">
+                                                <div class="userlevel">
+                                                    <img src="<%=public_path%>/img/intimacy_<%=value.intimacy%>.png"/>
+                                                </div>
+                                                <div class="userlevel">
+                                                    <img src="<%=userLevelInfo[value.level].icon%>"/>
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="scheduledLiveListTimeSent" data-time="<%=value.add_time*1000%>"></li>
+                            <li class="scheduledLiveListTime" data-time="<%=value.book_time*1000%>"></li>
+                            <li>
+                                <button class="cancle" data-user="<%=value.inviteid%>">Cancel</button>
+                            </li>
+                        </ul>
+                        <%}%>
+                    </div>
+                    <%}else{%>
+                        <div class="empty">No bookings.</div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        anchorReservationTime();
+        anchorReservationTimeSent();
+        $('.cancle').on('click', function(){
+            var id = $(this).attr('data-user');
+            parent.layer.confirm('Are you sure you wish to cancel this booking request?', {
+                btn:['Cancel', 'Yes'],
+                title:'',
+                btnAlign:'c',
+                closeBtn: 0,
+                shadeClose:true,
+                shade:0.01
+            }, function(){
+                parent.layer.msg('Cancel');
+            }, function(){
+                $.post('/lady/v1/cancelScheduledInvite', {invite_id:id}, function(data){
+                    if(data.errno == 0){
+                        window.location.href='/broadcast/scheduledLiveHistory';
+                        myParentAlert('Your booking has been canceled successfully.');
+                    }else{
+                        window.location.reload();
+                        myParentAlert('Could not cancel the booking. Please try again later.');
+                    }
+                })
+            });
+
+        })
+
+        //分页
+        var pages = Math.ceil('<%=data.total%>'/15);
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

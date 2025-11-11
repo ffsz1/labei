@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Broadcasters | CharmLive.com</title>
+    <meta name="keywords" content="Charmlive.com,live streaming,broadcasting,videostream,free live video chat,live cam girls" />
+    <meta name="description" content="See who is live streaming on CharmLive.com.Join our talented broadcasters to explore as much fun as possible." />
+    <meta  id="pageSetMeta" content="*">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script src="<%=public_path%>/js/jquery.js"></script>
+  </head>
+  <body>
+    <div id="app"></div> 
+    <script>
+    $.ajaxSetup({
+        cache: true
+    });
+    $.get('/page/list.html', {}, function(res) {
+        var str = res.replace(/[\r\n]/g, "");
+        var source = {},
+            scriptArr = [];
+        source.style = str.match(/<style.*?<\/style>/g);
+        source.link = str.match(/<link.*?>/g);
+        scriptArr = str.match(/<script.*?<\/script>/g);
+        var script = '';
+        for (var key in source) {
+            if (Object.prototype.toString.call(source[key]) == '[object Array]') {
+                source[key].forEach(function(value) {
+                    $('body').append(value);
+                })
+            }
+        }
+        scriptArr.forEach(function(value) {
+            if (value.toLowerCase().indexOf('jquery.min.js') > -1) return;
+            $('body').append(value);
+        })
+    })
+    </script>   
+  </body>
+</html>

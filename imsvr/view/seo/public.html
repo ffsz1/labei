@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title><%=anchorInfo.nick_name%> | Live Broadcasting on CharmLive.com</title>
+    <meta name="keywords" content="charmlive.com,live broadcast,live video chat,live broadcasting,live video streaming" />
+    <meta name="description" content="Watch <%=anchorInfo.nick_name%> live! Join to explore live streaming and chat in real time." />
+    <!-- Open Graph data -->
+    <meta property="og:title" content="Live - <%=anchorInfo.nick_name%> is broadcasting on CharmLive" />
+    <meta property="og:description" content="Watch and explore live streaming and chat in real time." />
+    <meta property="og:url" content="<%-url%>" />                                  <meta property="og:image" content="<%=cover%>" />
+    <meta property="og:type" content="video.other" />
+    <meta property="og:site_name" content="CharmLive.com"/>
+    <meta property="fb:app_id" content="2022708618006078"/>
+    <!-- Twitter Card data -->
+    <meta name ="twitter:card"content ="summary_large_image">
+    <meta name="twitter:title" content="Live - <%=anchorInfo.nick_name%> is broadcasting on CharmLive">
+    <meta name="twitter:description" content="Watch and explore live streaming and chat in real time.">
+    <meta name="twitter:url" content="<%-url%>">
+    <meta name="twitter:image" content="<%=cover%>">
+    <meta name="twitter:site" content="@CharmLivePage">
+    <script src="<%=public_path%>/js/jquery.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+
+    $.ajaxSetup({
+        cache: true
+    });
+    $.get('/page/live.html', {}, function(res) {
+        var str = res.replace(/[\r\n]/g, "");
+        var source = {},
+                scriptArr = [];
+        source.style = str.match(/<style.*?<\/style>/g);
+        source.link = str.match(/<link.*?>/g);
+        scriptArr = str.match(/<script.*?<\/script>/g);
+        var script = '';
+        for (var key in source) {
+            if (Object.prototype.toString.call(source[key]) == '[object Array]') {
+                source[key].forEach(function(value) {
+                    $('body').append(value);
+                })
+            }
+        }
+        scriptArr.forEach(function(value) {
+            if (value.toLowerCase().indexOf('jquery.min.js') > -1) return;
+            $('body').append(value);
+        })
+    })
+</script>
+</body>
+</html>

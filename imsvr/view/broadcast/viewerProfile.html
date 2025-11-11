@@ -1,0 +1,263 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .no-self-Intro{width: 100%; text-align: center; font-weight: 400; color: #949494; font-style: italic;}
+</style>
+<div class="content">
+    <% include leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myProfile" style="min-height: 700px;">
+        <div class="pageInfo">Viewer's Profile</div>
+        <div id="tabs-container">
+            <div class="profile-pic">
+                <img src="<%=viewerProfile.img%>" style="width: 180px;" alt=""/>
+            </div>
+            <div class="profile-info">
+                <ul>
+                    <li>
+                        <div class="name"><%=viewerProfile.firstname%></div>
+                    </li>
+                </ul>
+
+                <ul class="section">
+                    <li>Basic Information</li>
+                    <li>
+                        <div class="subject">Profile ID</div>
+                        <div class="info"><%=viewerProfile.manid%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Viewer Level</div>
+                        <div class="info">
+                            <div class="userlevel">
+                                <img src="<%=userLevelInfo[viewerInfo.level].icon%>"/>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="subject">Gender</div>
+                        <div class="info"><%if(viewerProfile.gender == 'M'){%>male<%}else{%>Female<%}%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Age</div>
+                        <div class="info"><%=viewerProfile.age%> years old</div>
+                    </li>
+                    <li>
+                        <div class="subject">Ethnicity</div>
+                        <div class="info"><%=viewerProfile.ethnicity%></div>
+                    </li>
+
+                    <li>
+                        <div class="subject">Primary Language</div>
+                        <div class="info"><%=viewerProfile.language%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Height</div>
+                        <div class="info"><%=viewerProfile.height%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Weight</div>
+                        <div class="info"><%=viewerProfile.weight%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Education</div>
+                        <div class="info"><%=viewerProfile.education%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Profession</div>
+                        <div class="info"><%=viewerProfile.profession%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Smoke</div>
+                        <div class="info"><%=viewerProfile.smoke%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Drink</div>
+                        <div class="info"><%=viewerProfile.drink%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Marital Status</div>
+                        <div class="info"><%=viewerProfile.marry%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Have Children</div>
+                        <div class="info"><%=viewerProfile.children%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Religion</div>
+                        <div class="info"><%=viewerProfile.religion%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Zodiac</div>
+                        <div class="info"><%=viewerProfile.zodiac%></div>
+                    </li>
+                </ul>
+
+                <ul class="section self-Intro">
+                    <li>
+                        <div>Self-Intro</div>
+                    </li>
+                    <li>
+                        <div style="width: 686px; word-wrap:break-word;">
+                            <%if(viewerProfile.jj){%>
+                            <%=viewerProfile.jj%>
+                            <%}else{%>
+                            <div class="no-self-Intro">This viewer does not say anything about himself.</div>
+                            <%}%>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="section hobbies">
+                    <li>
+                        <div>Hobbies / Interests</div>
+                    </li>
+                    <%if(viewerInterest.length > 0){%>
+                    <li>
+                        <ul>
+                            <%for(let val of viewerInterest){%>
+                            <li>
+                                <div style="width: 100px; height: 52px; line-height: 80px; border: 1px solid #e0e0e0;">
+                                    <img style="width: auto; border: none;" src="<%=public_path%>/img/interests/interests_<%=val%>.png">
+                                </div>
+                                <div><%=interest[val]%></div>
+                            </li>
+                            <%}%>
+                        </ul>
+                    </li>
+                    <%}else{%>
+                    <li><div class="no-self-Intro">This viewer does not set any hobbies / interests.</div></li>
+                    <%}%>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //显示修改和删除
+        $('.profile-pic').mouseenter(function(){
+            $('.editAvatar').stop();
+            $('.editAvatar').slideDown(300);
+        })
+        $('.profile-pic').mouseleave(function(){
+            $('.editAvatar').stop();
+            $('.editAvatar').slideUp(300);
+        })
+
+        //修改头像
+        $(document).on('change', 'input[name="file"]', function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            if(this.files[0].size > 3 * 1024 * 1024){
+                myParentAlert('Incorrect format. Only JPG and PNG format allowed. File size must be 3M or less.');
+                emptiedFile();
+                return false;
+            }
+            var image = new Image();
+            image.src = objUrl;
+            image.onload = function(){
+                var width = image.width;
+                var height = image.height;
+                if(width<256 || height<256){
+                    myParentAlert('The image size must be larger than 256px(width) * 256px(height).');
+                    emptiedFile();
+                    return false;
+                }
+                if(width>2400 || height>2400){
+                    myParentAlert('The photo resolution can not be larger than 3600 * 3600.');
+                    emptiedFile();
+                    return false;
+                }
+                if(width > 1440){width = 1440;}
+                if(height > 780){height = 780;}
+                width = width + 50 + 'px';
+                height = height + 120 + 'px';
+                parent.layer.open({
+                    type: 2,
+                    title: '',
+                    closeBtn: 0,
+                    resize: false,
+                    shadeClose: true,
+                    area : [width, height],
+                    content: '/broadcast/profileLayer/editAvatar?blobImg='+objUrl,
+                    end:function(){
+                        var status = Cookies.getJSON('add_success_avatar');
+                        Cookies.remove('add_success_avatar');
+                        if(status && status.status == 1){
+                            window.location.reload();
+                        }
+                        $("input[name='file']").val('');//关闭窗口情况表单数据，解决重复选择同一张图片的问题。
+                    }
+                });
+            }
+        })
+
+        //修改名称
+        $('.editName').on('click', function(){
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : ['556px', '217px'],
+                content: '/broadcast/profileLayer/editName',
+                end: function(){
+                    var status = Cookies.getJSON('add_success_name');
+                    Cookies.remove('add_success_name');
+                    if(status && status.status == 1){
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+
+        //修改个人简介
+        $('.editBrief').on('click', function(){
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : ['556px', '266px'],
+                content: '/broadcast/profileLayer/editBrief',
+                end: function(){
+                    var status = Cookies.getJSON('add_success_name');
+                    Cookies.remove('add_success_name');
+                    if(status && status.status == 1){
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+
+        //修改个人兴趣爱好
+        $('.editHobbies').on('click', function(){
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : ['556px', '159px'],
+                content: '/broadcast/profileLayer/editHobbies',
+                end: function(){
+                    var status = Cookies.getJSON('add_success_hobbies');
+                    Cookies.remove('add_success_hobbies');
+                    if(status && status.status == 1){
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+
+        //关闭窗口清空表单数据，解决重复选择同一张图片的问题。
+        function emptiedFile(){
+            $("input[name='file']").val('');
+        }
+
+    })
+</script>

@@ -1,0 +1,276 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .CoverPiece{position: absolute; left: 0px; top: 0px; overflow: hidden; width: 182px; filter: alpha(Opacity=0); -moz-opacity: 0; opacity: 0;}
+    .CoverInput{float: left; height:30px; margin-left: -69px;}
+    .noIntro{width: 686px; word-wrap:break-word; font-weight: 400; color: #949494; font-size: 13px; text-align: center;}
+    .interestsImg{}
+</style>
+<div class="content">
+    <% include leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myProfile" style="min-height: 700px;">
+        <div class="pageInfo">My Profile</div>
+        <div id="tabs-container" style="display: block;">
+            <% include updateProfile/topBar.html %>
+            <div class="profile-pic">
+                <%if(!checkAvatar){%>
+                <!--<a href="javascript:;">-->
+                    <!--<div class="edit editAvatar" style="display: none;">-->
+                        <!--Edit-->
+                        <!--<div class="CoverPiece" >-->
+                            <!--<input class="CoverInput" type="file" name="file" accept="image/jpg,image/jpeg,image/png">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</a>-->
+                <%}%>
+                <img src="<%if(checkAvatar){%><%=checkAvatar%><%}else{%><%=userInfo.avatar_img%><%}%>" style="width: 180px; height: 180px;" alt=""/>
+                <%if(checkAvatar){%>
+                <div class="pendingApproval" style="display:block;">(pending approval)</div>
+                <%}%>
+            </div>
+            <div class="profile-info">
+                <ul>
+                    <li>
+                        <%if(anchorInfo.card_auth == 3){%>
+                        <img title="Your identity has been confirmed!" class="authenticationStatus" src="<%=public_path%>/img/u565.png">
+                        <%}else if(anchorInfo.card_auth == 1){%>
+                        <img title="Your identity is under review." class="authenticationStatus" src="<%=public_path%>/img/u566.png">
+                        <%}%>
+                        <div class="name" style="float: left;"><%=userInfo.nick_name%></div>
+                    </li>
+                    <a href="/broadcast/editPassword"><div id="showTbooking" class="Tbooking-btn" style="top:57px;">Change password</div></a>
+                </ul>
+
+                <ul class="section">
+                    <li>Basic Information</li>
+                    <li>
+                        <div class="subject">Profile ID</div>
+                        <div class="info"><%=userInfo.id%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Level</div>
+                        <div class="info">
+                            <div class="userlevel">
+                                <img src="<%=anchorLevelInfo[userInfo.level].icon%>"/>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="subject">Gender</div>
+                        <div class="info"><%if(anchorInfo.sex == 2){%>male<%}else{%>Female<%}%></div>
+                    </li>
+                    <li>
+                        <div class="subject">Date of birth</div>
+                        <%if(userInfo.birthday){%>
+                        <div class="info"><%=userInfo.birthday%></div>
+                        <%}else{%>
+                        <div class="info">-</div>
+                        <%}%>
+                    </li>
+                    <li>
+                        <div class="subject">Nationality</div>
+                        <%if(userInfo.country){%>
+                        <div class="info"><%=userInfo.country%></div>
+                        <%}else{%>
+                        <div class="info">-</div>
+                        <%}%>
+                    </li>
+                </ul>
+
+                <ul class="section self-Intro">
+                    <li>
+                        <div>Self-Intro</div>
+                    </li>
+                    <li>
+                        <%if(anchorInfo.introduction){%>
+                        <div style="width: 686px; word-wrap:break-word;"><%=anchorInfo.introduction%></div>
+                        <%}else{%>
+                        <div class="noIntro">You did not say anything about yourself.</div>
+                        <%}%>
+                    </li>
+                </ul>
+
+                <ul class="section hobbies" style="margin-bottom: 20px;">
+                    <li>
+                        <div>Hobbies / Interests</div>
+                        <a href="javascript:;"><div class="edit editHobbies">Edit</div></a>
+                    </li>
+                    <%if(anchorInterest.length > 0){%>
+                    <li>
+                        <ul>
+                            <%for(let val of anchorInterest){%>
+                            <li>
+                                <div class="anchorHobbies">
+                                    <img style="width: 55px; height: 50px; border: 0px; padding: 0px;" src="<%=public_path%>/img/interests/interests_<%=val%>.png">
+                                </div>
+                                <div><%=interest[val]%></div>
+                            </li>
+                            <%}%>
+                        </ul>
+                    </li>
+                    <%}%>
+                </ul>
+                <a href="/broadcast/updateProfile/requestUpdate">
+                    <div class="requestUpdate">Request Update</div>
+                </a>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="agency">
+            Note: If you have any questions, please consult your agency.<br>
+            Your agency: <%=agency.name%>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //显示修改和删除
+        $('.profile-pic').mouseenter(function(){
+            $('.editAvatar').stop();
+            $('.editAvatar').slideDown(300);
+        })
+        $('.profile-pic').mouseleave(function(){
+            $('.editAvatar').stop();
+            $('.editAvatar').slideUp(300);
+        })
+
+        //修改头像
+        var change_status = 0;//防止多次点击
+        window.parent.avatarOriginalImg = '';
+        $(document).on('change', 'input[name="file"]', function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            var type = this.files[0].type;
+            if(this.files[0].size > 3 * 1024 * 1024){
+                myParentAlert('Incorrect format. Only JPG and PNG format allowed. File size must be 3M or less.');
+                emptiedFile();
+                return false;
+            }
+            window.parent.avatarOriginalImg = this.files[0];
+            var image = new Image();
+            image.src = objUrl;
+            image.onload = function(){
+                var width = image.width;
+                var height = image.height;
+                if(width<768 || height<768){
+                    myParentAlert('PNG and JPG format only, less than 3MB. Size: 768px * 768px to 2400px * 2400px.');
+                    emptiedFile();
+                    return false;
+                }
+                if(width>2400 || height>2400){
+                    myParentAlert('PNG and JPG format only, less than 3MB. Size: 768px * 768px to 2400px * 2400px.');
+                    emptiedFile();
+                    return false;
+                }
+
+                var windowHeigth = $(parent).height();
+                var windowWidth = $(parent).width();
+                var imgHeigth = '';
+                var imgWidth = '';
+                if(windowHeigth < (height+120) || windowWidth < (width+50)){
+                    windowHeigth = parseInt(windowHeigth * 0.6);
+                    windowWidth = parseInt(windowWidth * 0.6);
+                    height = windowHeigth;
+                    width = windowWidth;
+                    imgHeigth = windowHeigth;
+                    imgWidth = windowWidth;
+                }else{
+                    imgHeigth = height;
+                    imgWidth = width;
+                }
+                width = width + 50 + 'px';
+                height = height + 120 + 'px';
+                if(change_status){
+                    return false;
+                }
+                change_status = 1;
+                parent.layer.open({
+                    type: 2,
+                    title: '',
+                    closeBtn: 0,
+                    resize: false,
+                    area : [width, height],
+                    content: '/broadcast/profileLayer/editAvatar?blobImg='+objUrl+'&type='+type+'&width='+imgWidth+'&height='+imgHeigth,
+                    end:function(){
+                        change_status = 0;//防止多次点击
+                        var status = Cookies.getJSON('add_success_avatar');
+                        Cookies.remove('add_success_avatar');
+                        if(status && status.status == 1){
+                            window.location.reload();
+                        }
+                        $("input[name='file']").val('');//关闭窗口情况表单数据，解决重复选择同一张图片的问题。
+                    }
+                });
+            }
+        })
+
+        //修改名称
+        $('.editName').on('click', function(){
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : ['556px', '217px'],
+                content: '/broadcast/profileLayer/editName',
+                end: function(){
+                    var status = Cookies.getJSON('add_success_name');
+                    Cookies.remove('add_success_name');
+                    if(status && status.status == 1){
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+
+        //修改个人简介
+        $('.editBrief').on('click', function(){
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : ['556px', '266px'],
+                content: '/broadcast/profileLayer/editBrief',
+                end: function(){
+                    var status = Cookies.getJSON('add_success_name');
+                    Cookies.remove('add_success_name');
+                    if(status && status.status == 1){
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+
+        //修改个人兴趣爱好
+        $('.editHobbies').on('click', function(){
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : ['556px', '159px'],
+                content: '/broadcast/profileLayer/editHobbies',
+                end: function(){
+                    var status = Cookies.getJSON('add_success_hobbies');
+                    Cookies.remove('add_success_hobbies');
+                    if(status && status.status == 1){
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+
+        //关闭窗口清空表单数据，解决重复选择同一张图片的问题。
+        function emptiedFile(){
+            $("input[name='file']").val('');
+        }
+
+    })
+</script>

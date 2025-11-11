@@ -1,0 +1,78 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myTalents-underReview">
+        <div class="pageInfo">My talents</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="subject">
+                        <ul style="float: left;">
+                            <li style="width: 190px;">Name</li>
+                            <li style="width: 74px; text-align: center; margin-left:20px; margin-right: 20px;">Type</li>
+                            <li style="width: 100px; text-align: center; margin-right: 30px;">Price (coin)</li>
+                            <li style="width: 474px;">Description</li>
+                        </ul>
+                    </div>
+                    <%if(data.length){%>
+                    <div class="list">
+                        <%for(let val of data){%>
+                        <ul class="">
+                            <li style="width: 190px; padding:0px;">
+                                <table border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td style="max-width: 190px; word-break:keep-all; overflow: hidden;"><%=val.talent_name%></td>
+                                    </tr>
+                                </table>
+                            </li>
+                            <li style="width: 74px; margin-left:20px; margin-right: 20px; padding:0px;">
+                                <table border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td style="width: 74px; text-align: center; word-break:keep-all;"><%=val.type%></td>
+                                    </tr>
+                                </table>
+                            </li>
+                            <li style="width: 100px; text-align: center; margin-right: 30px; padding:0px;">
+                                <table border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td style="width: 100px; text-align: center; word-break:break-all;"><%=val.credit%></td>
+                                    </tr>
+                                </table>
+                            </li>
+                            <li style="width: 474px; padding:0px;">
+                                <table border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td style="max-width: 474px; word-break:keep-all; overflow: hidden;"><%=val.talent_desc%></td>
+                                    </tr>
+                                </table>
+                            </li>
+                        </ul>
+                        <%}%>
+                    </div>
+                    <%}else{%>
+                    <div class="empty">No talents set. </div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //分页
+        var pages = Math.ceil('<%=count.total%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

@@ -1,0 +1,158 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myAlbum-underReview">
+        <div class="pageInfo">My Shots</div>
+
+        <div class="shotsDetails">
+            <a style="color: #1AA3DA;" href="/broadcast/shots/pass"><< Back to My Shots</a>
+
+            <div class="shotsDetailsAddTime">Posted at <span class="localTime" data-time="<%=shotsInfo.add_time%>"></span></div>
+
+            <div style="margin-top: 10px;">
+                <div class="shotsDetailsImg">
+                    <% if(shotsInfo.type == 1) {%>
+                    <img class="showOriginal cursor center height240" data-img="<%=shotsInfo.originImg%>" src="<%=shotsInfo.img%>">
+                    <% }else{%>
+                    <img class="center height240" data-img="<%=shotsInfo.originImg%>" src="<%=shotsInfo.img%>">
+                    <img class="shotsMainShotsVideo video cursor" data-video="<%=shotsInfo.video%>" data-status="<%=shotsInfo.video_file_status%>" src="<%=public_path%>/img/play_video.png">
+                    <% }%>
+                </div>
+            </div>
+
+            <div class="shotsDetailsContent"><%=shotsInfo.content%></div>
+
+            <div id="tabs-container" class="shotsDetailsLikeList" style="margin: 0px;">
+                <ul class="newtabs-menu ">
+                    <a href="/broadcast/shots/shotsDetailsLike?id=<%=shotsInfo.id%>">
+                        <li class="Pending current shotsDetailsLikeListTable">
+                            <span>LIKE </span>
+                            (<span style="margin-left: 0px;" class="pendingNoRead"><%=shotsInfo.like_num%></span>)
+                        </li>
+                        <div class="PendingImg current"></div>
+                    </a>
+
+                    <a href="/broadcast/shots/shotsDetailsComment?id=<%=shotsInfo.id%>">
+                        <li class="Pending shotsDetailsLikeListTable">
+                            <span>COMMENT  </span>
+                            (<span style="margin-left: 0px;" class="pendingNoRead"><%=shotsInfo.comment_num%></span>)
+                        </li>
+                        <div class="PendingImg"></div>
+                    </a>
+                </ul>
+
+                <div class="shotsDetailsList">
+                    <ul>
+                        <%if(likeList.length > 0){%>
+                        <% var i = 1; for(var data of likeList){%>
+                        <li>
+                            <img src="<%=data.avatar_img%>">
+                            <div class="shotsDetailsListLike" <%if(shotsInfo.like_num <= 5 && i==likeList.length){%>style="border-bottom: 0px;"<%}%> >
+                                <span style="color: #6684FF;"><%=data.nick_name%></span> likes your shot.
+                                <span class="shotsDetailsListLikeTime localTime" data-time="<%=data.add_time%>"></span>
+                            </div>
+                        </li>
+                        <% i++;}%>
+                        <%}else{%>
+                        <div class="shotsNoData">No likes at the moment.</div>
+                        <%}%>
+                    </ul>
+                    <%if(shotsInfo.like_num > 5){%>
+                    <div id="page" class="pagenation"></div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //查看视频
+        $('.video').on('click', function(){
+            var videoUrl = $(this).attr('data-video');
+            var status = $(this).attr('data-status');
+            if(status == 1){
+                parent.layer.open({
+                    type: 2,
+                    title: '',
+                    closeBtn: 0,
+                    resize: false,
+                    area : ['640px', '519px'],
+                    content: '/broadcast/shotsLayer/playVideo?videoUrl='+videoUrl
+                });
+            }else{
+                parent.layer.open({
+                    type: 2,
+                    title: '',
+                    closeBtn: 0,
+                    resize: false,
+                    area : ['640px', '522px'],
+                    content: '/broadcast/shotsLayer/playError'
+                });
+            }
+
+        })
+
+        //查看图片
+        var showOriginal = 0;
+        $('.showOriginal').on('click', function(){
+            if(showOriginal) {
+                return false;
+            }
+            showOriginal = 1;
+            var img = $(this).attr('data-img');
+            var image = new Image();
+            image.src = img;
+            image.onload = function(){
+                var width = image.width;
+                var height = image.height;
+
+                width = width*0.9;
+                height = height*0.9;
+                var windowHeigth = $(parent).height();
+                var windowWidth = $(parent).width();
+                var imgHeigth = '';
+                var imgWidth = '';
+                if(windowHeigth < height){
+                    windowHeigth = parseInt(windowHeigth * 0.6);
+                    windowWidth = parseInt(windowWidth * 0.6);
+                    height = windowHeigth;
+                    width = windowWidth;
+                    imgHeigth = windowHeigth;
+                    imgWidth = windowWidth;
+                }else{
+                    imgHeigth = height;
+                    imgWidth = width;
+                }
+                width = width + 20 + 'px';
+                height = height + 50 + 'px';
+                parent.layer.open({
+                    type: 2,
+                    title: '',
+                    closeBtn: 0,
+                    resize: false,
+                    shadeClose: true,
+                    area : [width, height],
+                    content: '/broadcast/shotsLayer/showOriginal?img='+img+'&width='+imgWidth+'&height='+imgHeigth,
+                    end:function(){
+                        showOriginal = 0;
+                    }
+                });
+            }
+        })
+        localTime();//显示本地时间
+        //分页
+        var pages = Math.ceil('<%=shotsInfo.like_num%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

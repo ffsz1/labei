@@ -1,0 +1,75 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myAlbum-underReview">
+        <div class="pageInfo">My Shots</div>
+        <% include topBar.html %>
+        <div class="shotsMain" >
+            <div class="shotsMainTitle" >
+                <div class="shotsMainShots" >Shot</div>
+                <div class="shotsMainLike" >Like</div>
+                <div class="shotsMainComment" >Comment</div>
+                <div class="shotsMainTime" >Time posted</div>
+            </div>
+
+            <% if(list.length) {%>
+                <% for(var data of list){%>
+                <div class="shotsMainList">
+                    <div class="shotsMainShots shotsMainShotsBody">
+                        <!--图片-->
+                        <div class=" shotsMainShotsImg">
+                            <% if(data.type == 1) {%>
+                            <img class="shotsMainShotsImgBody showOriginal cursor" data-img="<%=data.originImg%>" src="<%=data.img%>">
+                            <% }else{%>
+                            <!--视频-->
+                            <img class="shotsMainShotsImgBody" data-img="<%=data.originImg%>" src="<%=data.img%>">
+                            <img class="shotsMainShotsVideo video cursor" data-video="<%=data.video%>" data-status="<%=data.video_file_status%>" src="<%=public_path%>/img/play_video.png">
+                            <% }%>
+                        </div>
+                        <!--内容-->
+                        <%if(F.getByteLen(data.content) > 220){%>
+                        <div class="shotsMainShotsContent" title="<%=data.content%>">
+                                <%=data.content%>
+                        </div>
+                        <%}else{%>
+                        <div class="shotsMainShotsContent">
+                            <div class="shotsMainShotsContentText" title="<%=data.content%>">
+                                <%=data.content%>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+
+                    <div class="shotsMainLike shotsMainListLike">
+                        <a href="/broadcast/shots/shotsDetailsLike?id=<%=data.id%>"><%=data.like_num%></a>
+                    </div>
+                    <div class="shotsMainComment shotsMainListLike">
+                        <a href="/broadcast/shots/shotsDetailsComment?id=<%=data.id%>"><%=data.comment_num%></a>
+                    </div>
+                    <div class="shotsMainTime shotsMainListLike localTime" data-time="<%=data.add_time%>"></div>
+                </div>
+                <% }%>
+            <%}else{%>
+                <div class="noData" style="width: 932px;">No shots approved.</div>
+            <% }%>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        localTime();//显示本地时间
+        //分页
+        var pages = Math.ceil('<%=total%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

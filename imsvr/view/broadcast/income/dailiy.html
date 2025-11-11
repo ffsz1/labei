@@ -1,0 +1,74 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content incomeStatictics-monthly incomeStatictics-daily">
+        <div class="pageInfo">My Income Staticstic</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+
+                    <div class="list">
+                        <form action="/broadcast/income/dailiy" method="get" style="margin-bottom: 3px;">
+                        <ul class="fliter">
+                            <li>From:<input id="from" name="from" type="text" style="margin-left: 0px; height: 22px; padding: 0px;" placeholder="" value="<%=from%>"></li>
+                            <li>To:<input id="to" name="to" type="text" style=" height: 22px; padding: 0px;" placeholder="" value="<%=to%>"></li>
+                            <li>
+                                <input type="submit" style="width: 88px; height: 26px;" class="cursor" value="fliter">
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                        </form>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr bgcolor="#f2f2f2">
+                                <td width="200" height="60" align="center" valign="middle">Month</td>
+                                <td colspan="2" align="center" valign="middle" width="108">Coins</td>
+                            </tr>
+                            <%for(var value of data){%>
+                            <tr>
+                                <td align="center" valign="middle"><%=value.day%></td>
+                                <td align="center" valign="middle">
+                                    <a href="/broadcast/income/dailiyDetail?day=<%=value.day%>" style="display: inline-block; width: 729px; height: 37px; line-height: 37px;"><%=(value.public_anchor_credit_sum+value.private_anchor_credit_sum+value.anchor_msg_credit_sum+value.anchor_ticket_credit_sum+value.emf_anchor_credit_sum+value.paid_photo_anchor_total_credit_sum).toFixed(3)%></a>
+                                </td>
+                            </tr>
+                            <%}%>
+                            </tbody>
+                        </table>
+                        <%if(data.length <= 0){%>
+                        <div class="noData" style="width: 928px;">No data</div>
+                        <%}%>
+                        <div class="tips">Note: the data summary is based on GMT+0.</div>
+                    </div>
+                </div>
+            </div>
+            <div id="page" class="pagenation"></div>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+
+        $('#from').datepicker({
+            inline: true,
+            dateFormat:"yy-mm-dd"
+        });
+        $('#to').datepicker({
+            inline: true,
+            dateFormat:"yy-mm-dd"
+        });
+        //分页
+        var pages = Math.ceil('<%=count.total%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

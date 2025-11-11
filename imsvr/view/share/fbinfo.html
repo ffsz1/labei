@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <meta name="description" content="<%= description %>">
+
+    <meta property="og:image" content="<%= image %>">
+    <meta property="og:description" content="<%= description %>">
+    <meta property="og:title" content="<%= title %>">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="<%= title %>">
+    <meta name="twitter:description" content="<%= description %>">
+    <meta name="twitter:image" content="<%= image %>">
+
+</head>
+<body>
+<script>
+    var ua_str=navigator.userAgent.toLowerCase();
+    var isMobile = ua_str.match(/ipad/i) == "ipad" || ua_str.match(/iphone os/i) == "iphone os" || ua_str.match(/midp/i) == "midp" || ua_str.match(/rv:1.2.3.4/i) == "rv:1.2.3.4" || ua_str.match(/ucweb/i) == "ucweb" || ua_str.match(/android/i) == "android" || ua_str.match(/windows ce/i) == "windows ce" || ua_str.match(/windows mobile/i) == "windows mobile";
+    var pcUrl = "<%- redirect.pcUrl %>";
+    var msiteUrl = "<%= redirect.msiteUrl %>";
+    location.href = isMobile ? msiteUrl : pcUrl;
+</script>
+</body>
+</html>

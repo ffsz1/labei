@@ -1,0 +1,16 @@
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+        <% if (errno == 10002 || errno == 10004) { %>
+             <script>
+		window.onload=function(){LiveAnchorApp.callbackWebAuthExpired("Your authorization has expired. Please login again.");}  
+             </script>
+        <% }else{ %>
+                <div class="noData">
+                        <%= errmsg %>
+                </div>
+        <%}%>
+</body>
+</html>

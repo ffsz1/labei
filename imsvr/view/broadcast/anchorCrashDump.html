@@ -1,0 +1,57 @@
+<style>
+    input{width: 90px;}
+    .datalist tr td{padding: 0 5px; height: 30px;}
+    table tr{background-color: #ffffff;}
+</style>
+
+<div style="width: 1600px; margin: 0px auto;">
+    <div style="border: 1px solid #ccc; height: 24px; margin-bottom: 25px; padding: 10px;">
+        <form method="post">
+        搜索条件：
+        提交日期：<input type="text" name="create_time_start" value="<%=F.fDatetime('yyyy-MM-dd',data.create_time_start*1000)%>"> 至 <input type="text" name="create_time_end" value="<%=F.fDatetime('yyyy-MM-dd',data.create_time_end*1000)%>">
+        用户ID：<input type="text" name="user_id" value="<%=data.user_id%>">
+        设备类型：<select name="dev_type">
+                    <option value="">全部</option>
+                    <option <%if(data.dev_type == 30){%>selected<%}%> value="30">App Android Phone</option>
+                    <option <%if(data.dev_type == 31){%>selected<%}%> value="31">App iPhone</option>
+                    <option <%if(data.dev_type == 32){%>selected<%}%> value="32">App iPad</option>
+                    <option <%if(data.dev_type == 33){%>selected<%}%> value="33">Client PC</option>
+                    <option <%if(data.dev_type == 34){%>selected<%}%> value="34">App Android Tablet</option>
+                </select>
+        设备ID：<input type="text" name="deviceid" value="<%=data.deviceid%>">
+        版本号：<input type="text" name="ver" value="<%=data.ver%>">
+                <input type="hidden" name="hash" value="<%=hash%>">
+                <input type="submit" value=" 搜 索 ">
+        </form>
+    </div>
+
+    <table class="datalist" width="100%" cellspacing="1" bgcolor="#cccccc" cellpadding="0" align="center" border="0">
+        <tbody>
+            <tr class="headtitle" style="line-height: 32px; background-color: #eeeeee; font-weight: bold;">
+                <td width="3%">序号</td>
+                <td width="20%">文件名称</td>
+                <td width="10%">提交时间</td>
+                <td width="8%">用户ID</td>
+                <td width="10%">设备类型</td>
+                <td width="10%">设备ID</td>
+                <td width="8%">版本号</td>
+                <td width="8%">操作</td>
+            </tr>
+            <% var i=1; for(var data of crashDumpList.list){%>
+            <tr>
+                <td width="3%"><%=i%></td>
+                <td width="20%"><%=data.fileName%></td>
+                <td width="10%"><%=F.fDatetime('yyyy-MM-dd HH:mm:ss',data.create_time)%></td>
+                <td width="8%"><%=data.anchor_id%></td>
+                <td width="10%"><%=data.dev_name%></td>
+                <td width="10%"><%=data.deviceid%></td>
+                <td width="8%"><%=data.ver%></td>
+                <td width="8%">【<a target="_blank" href="<%=data.crashfile%>">下载文件</a>】</td>
+            </tr>
+            <%++i;}%>
+        </tbody>
+    </table>
+    <div style=" text-align: center;">
+        总数：<%=crashDumpList.total%>
+    </div>
+</div>

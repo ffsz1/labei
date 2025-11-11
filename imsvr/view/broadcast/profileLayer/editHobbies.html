@@ -1,0 +1,52 @@
+<div class="profile-edit hobbies">
+    <div>
+        <div class="title">Edit Hobbies / Interests</div>
+        <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <div class="content">
+        <div>
+            <%for(let index in interest){%>
+            <%if(index != 'prefix'){%>
+            <div>
+                <input name="interest" type="checkbox" <%if(F.in_array(index,anchorInterest)){%>checked<%}%> value="<%=index%>"> <%=interest[index]%>
+            </div>
+            <%}%>
+            <%}%>
+        </div>
+        <button class="Submit">Submit</button>
+    </div>
+</div>
+<script>
+    $(function(){
+//        弹窗
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            Cookies.remove('add_talent');
+            parent.layer.close(index);
+        })
+        $(document).on('click','.Submit',function(){
+            var interest = $('input:checkbox:checked');
+            var chk_value =[];
+            interest.each(function(){
+                chk_value.push($(this).val());
+            })
+
+            if(chk_value.length < 4){
+                myParentAlert('Please select at least 4 hobbies / interests.');
+                return false;
+            }
+
+            $.post('/broadcast/profileLayer/editHobbies', {interest:chk_value}, function(data){
+                if(data.errno == 0){
+                    Cookies.set('add_success_hobbies', {status:1});
+                    parent.layer.msg(data.data);
+                    parent.layer.close(index);
+                }else{
+                    myParentAlert(data.data);
+                    parent.layer.close(index);
+                }
+            })
+        })
+    })
+</script>

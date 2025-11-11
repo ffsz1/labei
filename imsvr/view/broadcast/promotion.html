@@ -1,0 +1,139 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .width100{width: 100%;}
+    .promotionBody{width: 920px; margin: 0px auto;}
+    .promotionBodyTitle{font-size: 24px; color: #ee30d5; margin-top: 24px; margin-bottom: 24px; text-align: center;}
+    .thisMonth{color: #242424;}
+    .thisMonthTitle{font-size: 14px; height: 34px; line-height: 34px; text-indent:24px; border-radius: 6px 6px 0px 0px; background-color: #99D4FF;}
+    .shareSchedule{float: left; width: 894px; padding-left: 24px; font-size: 14px; border: 1px #C9C9C9 ridge; border-top: none;}
+    .shareScheduleCode{margin-top: 18px; float: left;}
+    .shareScheduleLine{border-bottom: 1px #AEAEAE ridge; float: left; width: 842px; margin-top: 10px;}
+    .shareScheduleGift{float: left; margin-left: 60px; margin-bottom: 18px;}
+    .shareScheduleGiftBlock{margin-top: 18px; float: left;}
+    .shareScheduleGiftFloat{float: left; margin-left: 32px; text-align: center;}
+    .shareScheduleGiftFloat img{width: 120px; height: 90px;}
+    .shareScheduleGiftTitle{color: #6665ff; margin-top: 10px;}
+    .floatLeft{float: left;}
+    .shareProgressBar{width: 700px; height: 18px; border-radius: 15px; background-color: #BCBCBC; margin-left: 25px; position: relative;}
+    .shareProgressBarComplete{height: 18px; border-radius: 15px; background-color: #6666FF; position: absolute;}
+    .shareCompleteValue{float: left; margin-left: 130px; margin-top: 10px;}
+    .shareScheduleGiftBlock table{width: 827px; text-align: center; border-collapse:collapse;}
+    .shareScheduleGiftBlock table tr:nth-child(1){background-color: #FF9806;}
+    .shareScheduleGiftBlock table tr td{width: 274px; height: 30px; border: 1px solid #C9C9C9;}
+</style>
+<div class="content">
+    <% include leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myProfile" style="min-height: 700px;">
+        <div class="pageInfo">Promotion</div>
+        <div class="promotionBody">
+            <div class="width100 promotionBodyTitle">Share Your Public Broadcast Room to Get Rewards</div>
+            <div class="width100 thisMonth">
+                <div class="thisMonthTitle">This Month’s Results</div>
+                <div class="shareSchedule">
+                    <div class="shareScheduleCode">Your Invite Code:<%=invitation_code%></div>
+                    <div class="shareScheduleLine"></div>
+                    <div style="margin-top: 10px; float: left;">Your Current Progress:<%=shareRecharge%></div>
+                    <div class="clear"></div>
+                    <div class="shareScheduleGiftBlock">
+                        <div style="margin-top: 24px; float: left;">Gift Rewarded</div>
+                        <div class="shareScheduleGift">
+                            <div class="shareScheduleGiftFloat">
+                                <img src="<%=public_path%>/img/shareGift1.png">
+                                <div class="shareScheduleGiftTitle">Earphones</div>
+                            </div>
+                            <div class="shareScheduleGiftFloat">
+                                <img src="<%=public_path%>/img/shareGift2.png">
+                                <div class="shareScheduleGiftTitle">HD Camera</div>
+                            </div>
+                            <div class="shareScheduleGiftFloat">
+                                <img src="<%=public_path%>/img/tx.png">
+                                <div class="shareScheduleGiftTitle">Multi-media Sound Card</div>
+                            </div>
+                            <div class="shareScheduleGiftFloat">
+                                <img src="<%=public_path%>/img/shareGift4.png">
+                                <div class="shareScheduleGiftTitle">Mobile Phone</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="floatLeft" style="margin-bottom: 10px;">
+                        <div class="floatLeft">Coins Rewarded</div>
+                        <div class="floatLeft">
+                            <div class="shareProgressBar" style="">
+                                <div class="shareProgressBarComplete" style="width: <%=width%>%;"></div>
+                            </div>
+                            <div class="shareCompleteValue" >50,000</div>
+                            <div class="shareCompleteValue">100,000</div>
+                            <div class="shareCompleteValue">200,000</div>
+                            <div class="shareCompleteValue">500,000</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="width100 thisMonth" style="margin-top: 15px;">
+                <div class="thisMonthTitle">Promotional Activity Details</div>
+                <div class="shareSchedule">
+                    <div class="shareScheduleCode">Marketing Methods</div>
+                    <div class="shareScheduleLine"></div>
+                    <div class="clear"></div>
+                    <div class="shareScheduleGiftBlock" style="width: 842px;">
+                        1) Marketing Methods<br>
+                        　a. You can share your public broadcast room outside of our site. Once a user registers as a member and buys coins, you will get coins and gift rewards; or<br>
+                        　b. You can share your invite code with your friends or anyone. Once they register as a member entering this code and buys coins, you will get coins and gift rewards.
+                        <br><br>
+                        2) Reward Calculation<br>
+                         　a. Rewards in coins for current month = 40% of coins purchased by new members brought by you.<br>
+                         　b. Once a specific amount of coin rewards has been obtained, you will receive extra gifts as follows:
+                        <br><br><br>
+                    </div>
+
+
+                    <div class="shareScheduleCode">Promotional Activity Gifts</div>
+                    <div class="shareScheduleLine"></div>
+                    <div class="clear"></div>
+                    <div class="shareScheduleGiftBlock" style="margin-bottom: 70px;">
+                        <table>
+                            <tr>
+                                <td>Coins Purchased by Members</td>
+                                <td>Coin Rewards</td>
+                                <td>Gift Rewards</td>
+                            </tr>
+                            <tr>
+                                <td>125,000</td>
+                                <td>50,000</td>
+                                <td>Earphones</td>
+                            </tr>
+                            <tr>
+                                <td>250,000</td>
+                                <td>100,000</td>
+                                <td>HD Camera</td>
+                            </tr>
+                            <tr>
+                                <td>500,000</td>
+                                <td>200,000</td>
+                                <td>Multi-media Sound Card</td>
+                            </tr>
+                            <tr>
+                                <td>1,250,000</td>
+                                <td>500,000</td>
+                                <td>Mobile Phone</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+
+</script>

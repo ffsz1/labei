@@ -1,0 +1,209 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    #tabs-container #tab-1 ul.history li.name{width: 90px;}
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">Broadcast Bookings</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="subject">
+                        <ul class="history">
+                            <li>From</li>
+                            <li>To</li>
+                            <li>Time sent</li>
+                            <li>Broadcast Time</li>
+                            <li>Attached gifts</li>
+                            <li>Booking status</li>
+                            <li>Broadcast status</li>
+                        </ul>
+                    </div>
+
+                    <%if(data.list.length){%>
+                    <% for(var value of data.list){%>
+                    <div class="list">
+                        <%if(value.type == 1){%>
+                        <ul class="history">
+                            <li>
+                                <div>
+                                    <a href="/broadcast/viewerProfile?manid=<%=value.fromid%>">
+                                        <div class="avatar_50">
+                                            <img src="<%=value.opposite_photourl%>" class="profile-pic" alt=""/>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=value.opposite_nickname%>">
+                                            <a href="/broadcast/viewerProfile?manid=<%=value.fromid%>"><%=value.opposite_nickname%></a>
+                                        </li>
+                                        <li class="contry"><%=value.opposite_country%></li>
+                                        <li>
+                                            <ul class="statue" style="display:block;">
+                                                <div class="userlevel" style="margin-left: 0px;">
+                                                    <img src="<%=public_path%>/img/intimacy_<%=value.intimacy%>.png"/>
+                                                </div>
+                                                <div class="userlevel">
+                                                    <img src="<%=userLevelInfo[value.level].icon%>"/>
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="to">
+                                <div>
+                                    <div class="avatar_50">
+                                    <img src="<%=userInfo.avatar_img%>" class="profile-pic" alt=""/>
+                                    </div>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=userInfo.nick_name%>">
+                                            <%=userInfo.nick_name%>
+                                        </li>
+                                        <li class="old">
+                                            <div><%=userInfo.age%> years old</div>
+                                        </li>
+                                        <li class="contry">
+                                            <div><%=userInfo.country%></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="scheduledLiveListTimeSent" data-time="<%=value.add_time*1000%>"></li>
+                            <li class="scheduledLiveListTime" data-time="<%=value.book_time*1000%>"></li>
+                            <li>
+                                <%if(value.gift_num > 0){%>
+                                <div class="gift" style="display:block;">
+                                    <img src="<%=value.gift_small_imgurl%>" style="width: 25px; height: 25px;" alt=""/>
+                                    <label>X</label>
+                                    <label class="count"><%=value.gift_num%></label>
+                                </div>
+                                <%}%>
+                            </li>
+                            <li>
+                                <% if(value.reply_type == 4){%>
+                                <span>Unconfirmed</span>
+                                <% }else if(value.reply_type == 6 || value.reply_type == 7 || value.reply_type == 8){%>
+                                <span>Confirmed</span>
+                                <% }else if(value.reply_type == 5){%>
+                                <span>Canceled</span>
+                                <% }else if(value.reply_type == 3){%>
+                                <span>Declined</span>
+                                <% }%>
+                            </li>
+                            <li style="width: 110px; text-align: center;">
+                                <% if(value.reply_type == 8){%>
+                                <span>Completed</span>
+                                <% }else if(value.reply_type == 7){%>
+                                <span>Viewer No-Show</span>
+                                <% }else if(value.reply_type == 6){%>
+                                <span>Broadcaster No-Show</span>
+                                <% }else{%>
+                                <span>-</span>
+                                <% }%>
+                            </li>
+                        </ul>
+                        <%}else if(value.type == 2){%>
+                        <ul class="history">
+                            <li>
+                                <div>
+                                    <div class="avatar_50">
+                                    <img src="<%=userInfo.avatar_img%>" class="profile-pic" alt=""/>
+                                    </div>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=userInfo.nick_name%>"><%=userInfo.nick_name%></li>
+                                        <li class="old"><%=userInfo.age%> years old</li>
+                                        <li class="contry"><%=userInfo.country%></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="to">
+                                <div>
+                                    <a href="/broadcast/viewerProfile?manid=<%=value.fromid%>">
+                                        <div class="avatar_50">
+                                        <img src="<%=value.opposite_photourl%>" class="profile-pic" alt=""/>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=value.opposite_nickname%>">
+                                            <a href="/broadcast/viewerProfile?manid=<%=value.fromid%>"><%=value.opposite_nickname%></a>
+                                        </li>
+                                        <li class="contry"><%=value.opposite_country%></li>
+                                        <li>
+                                            <ul class="statue" style="display:block;">
+                                                <div class="userlevel" style="margin-left: 0px;">
+                                                    <img src="<%=public_path%>/img/intimacy_<%=value.intimacy%>.png"/>
+                                                </div>
+                                                <div class="userlevel">
+                                                    <img src="<%=userLevelInfo[value.level].icon%>"/>
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="scheduledLiveListTimeSent" data-time="<%=value.add_time*1000%>"></li>
+                            <li class="scheduledLiveListTime" data-time="<%=value.book_time*1000%>"></li>
+                            <li>
+                                <%if(value.gift_num > 0){%>
+                                <div class="gift">
+                                    <img src="<%=value.gift_small_imgurl%>" style="width: 25px; height: 25px;" alt=""/>
+                                    <label>X</label>
+                                    <label class="count"><%=value.gift_num%></label>
+                                </div>
+                                <%}%>
+                            </li>
+                            <li>
+                                <% if(value.reply_type == 4){%>
+                                <span>Unconfirmed</span>
+                                <% }else if(value.reply_type == 6 || value.reply_type == 7 || value.reply_type == 8){%>
+                                <span>Confirmed</span>
+                                <% }else if(value.reply_type == 5){%>
+                                <span>Canceled</span>
+                                <% }else if(value.reply_type == 3){%>
+                                <span>Declined</span>
+                                <% }%>
+                            </li>
+                            <li style="width: 110px; text-align: center;">
+                                <% if(value.reply_type == 8){%>
+                                <span>Completed</span>
+                                <% }else if(value.reply_type == 7){%>
+                                <span>Viewer No-Show</span>
+                                <% }else if(value.reply_type == 6){%>
+                                <span>Broadcaster No-Show</span>
+                                <% }else{%>
+                                <span>-</span>
+                                <% }%>
+                            </li>
+                        </ul>
+                        <%}%>
+                    </div>
+                    <% }%>
+                    <%}else{%>
+                    <div class="empty">No histories.</div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //分页
+        var pages = Math.ceil('<%=data.total%>'/15);
+        if(pages>1) {
+            page('page', pages);
+        }
+
+        anchorReservationTime();
+        anchorReservationTimeSent();
+    })
+</script>

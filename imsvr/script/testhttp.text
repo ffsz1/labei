@@ -1,0 +1,53 @@
+im http接口测试用例
+
+4.12.http：获取聊天室成员信息（Client→Server）[完成] 志龙
+http://39.105.187.28/imroom/v1/fetchRoomMembers?limit=50&room_id=25504463&start=0&ticket=eyJhbGciOiJIUzI1NiJ9.eyJ0aWNrZXRfdHlwZSI6bnVsbCwidWlkIjoxMDAwODIsInRpY2tldF9pZCI6IjM2NzA1YzY5LTlmMTQtNGZhYi05NzFjLTE5NGM0OGY2Y2IxZSIsImV4cCI6MzYwMCwiY2xpZW50X2lkIjoiZXJiYW4tY2xpZW50In0.QhuVsn3_YiGDnRwHarZOD6aqrmhL7jw3Dns39N03y8s&uid=100082
+
+4.15.http：添加移除聊天室黑名单（Client→Server）
+http://39.105.187.28/imroom/v1/markChatRoomBlackList?room_id=25449219&uid=100065&ticket=eyJhbGciOiJIUzI1NiJ9.eyJ0aWNrZXRfdHlwZSI6bnVsbCwidWlkIjoxMDAwNjUsInRpY2tldF9pZCI6IjM3NjYzYzhlLTI0YzktNDhhMS05MGJhLWFhOWNhMjAxNTVkOCIsImV4cCI6MzYwMCwiY2xpZW50X2lkIjoiZXJiYW4tY2xpZW50In0.GxQAke0XaUW81C_SrnGm6pQgGYbEdpWr5pPZbopsx70&account=100811&is_add=0
+
+4.23.http：查询房间管理员列表（Client → Server）军圣
+http://39.105.187.28/imroom/v1/fetchRoomManagers?room_id=25449219&uid=100691&ticket=eyJhbGciOiJIUzI1NiJ9.eyJ0aWNrZXRfdHlwZSI6bnVsbCwidWlkIjoxMDA2OTEsInRpY2tldF9pZCI6IjIzNzBiZjk3LTQ3MzQtNDY0OC1iMjM3LTExMWRiMTk3NTliZiIsImV4cCI6MzYwMCwiY2xpZW50X2lkIjoiZXJiYW4tY2xpZW50In0.s3S5WKIFRFaLIjpUwmS_VjBNg0RvQnQ_rD6oFxPVroQ
+
+4.24.http：查询房间黑名单列表（Client → Server）军圣
+http://39.105.187.28/imroom/v1/fetchRoomBlackList?room_id=25449219&uid=100691&ticket=eyJhbGciOiJIUzI1NiJ9.eyJ0aWNrZXRfdHlwZSI6bnVsbCwidWlkIjoxMDA2OTEsInRpY2tldF9pZCI6IjIzNzBiZjk3LTQ3MzQtNDY0OC1iMjM3LTExMWRiMTk3NTliZiIsImV4cCI6MzYwMCwiY2xpZW50X2lkIjoiZXJiYW4tY2xpZW50In0.s3S5WKIFRFaLIjpUwmS_VjBNg0RvQnQ_rD6oFxPVroQ
+
+4.25.http：往单个房间推送自定义消息（Java→IM）军圣
+http://39.105.187.28/imroom/v1/pushRoomMsg
+{
+	"msg_info" : {
+		"room_id":25449219,
+		"custom":{
+			"first": 16,
+			"second": 16,
+			"data": {
+				"params":{
+                    "giftName":"宇宙飞碟",
+                    "count":1,
+                    "nick":"雨声有你",
+                    "isFull":true
+                }
+			}
+		}
+	}
+}
+
+4.26.http：往所有房间推送自定义消息（Java→IM）军圣
+http://39.105.187.28/imroom/v1/pushAllRoomMsg
+{
+	"msg_info" : {
+		"room_id":25449219,
+		"custom":{
+			"first": 16,
+			"second": 16,
+			"data": {
+                "params":{
+                    "giftName":"宇宙飞碟",
+                    "count":1,
+                    "nick":"雨声有你",
+                    "isFull":true
+                }
+			}
+		}
+	}
+}

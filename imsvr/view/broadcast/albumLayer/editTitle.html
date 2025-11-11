@@ -1,0 +1,37 @@
+<div class="editAlbumTitle">
+    <div class="editTitle">Photo / Video Title</div>
+    <input type="hidden" name="id" value="<%=id%>">
+    <input class="editTitleInput" type="text" name="title" maxlength="30" value="" placeholder="Write something...">
+    <div class="editCancel">Cancel</div>
+    <div class="editSubmit">Submit</div>
+</div>
+<script>
+    $(function(){
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.editCancel').click(function(){
+            Cookies.remove('edit_title');
+            parent.layer.close(index);
+        })
+        $('.editSubmit').click(function(){
+            var id = $('input[name="id"]').val();
+            var title = $('input[name="title"]').val();
+            $.post('/broadcast/albumLayer/editTitle', {id:id, title:title}, function(data){
+                if(data.errno == 0){
+                    Cookies.set('edit_title', {status:1, id:id, title:title});
+                    parent.layer.close(index);
+                    parent.layer.msg('Submit successfully. Auditing soon.');
+                }else{
+                    Cookies.remove('edit_title');
+                    parent.layer.close(index);
+                    parent.layer.alert('Failed to submit. Please try again..', {
+                        title:'',
+                        btnAlign:'c',
+                        closeBtn: 0,
+                        shade:0
+                    });
+                }
+            })
+        })
+    })
+</script>

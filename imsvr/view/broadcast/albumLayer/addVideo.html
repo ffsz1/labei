@@ -1,0 +1,234 @@
+<style>
+    .plusForm div.btn {padding: 0px;}
+    .plusForm .content div{margin-bottom: 0px;}
+    #filePicker>.webuploader-pick,#fileVideo>.webuploader-pick{background: none; color: #000000; padding: 0px; height: 29px; line-height: 29px; width: 98px; border: none;}
+    .progress{height: 30px; position: relative; display: none;}
+    .schedule{float: right;}
+    .totalProgress{height: 11px; background-color: #F0F0F0; border-radius: 11px;}
+    .complete{width: 0%; height: 11px; position: absolute; left: 0px; top: 14px; background-color: #03C501; border-radius: 11px;}
+</style>
+<div class="plusForm photo">
+    <div>
+        <div class="title">Upload video</div>
+        <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <div class="content">
+
+        <div>Video cover <label>(JPG & PNG only, size less than 3M. Image short-edit must be longer than 380px.)</label></div>
+        <input class="uploadFile" id="uploadFile" disabled="disabled" style="background: none;" placeholder=""/>
+        <div class="fileUpload btn btn-primary">
+            <div id="filePicker">Video cover</div>
+            <input type="hidden" name="img" value="">
+        </div>
+
+        <div>Video <label>(MP4, MOV format allowed)</label></div>
+        <input class="uploadFile" id="uploadVideo" disabled="disabled" style="background: none;" placeholder="">
+        <div class="fileUpload btn btn-primary">
+            <div id="fileVideo">Browse video</div>
+            <input type="hidden" name="video" value="">
+        </div>
+
+        <!--<div>Video description <label> (28 character limited)</label></div>-->
+        <!--<input type="text" name="title" class="dec" maxlength="28">-->
+
+        <div class="progress" style="margin-bottom: 5px;">
+            <div>Upload progress<span class="schedule">0%</span></div>
+            <div class="totalProgress"></div>
+            <div class="complete"></div>
+        </div>
+
+        <button class="Submit cursor">Upload</button>
+
+    </div>
+</div>
+<script>
+    $(function(){
+        var anchor_video_key = '';
+        var server = '';
+        //创建文件上传
+        var uploader_video = WebUploader.create({
+            auto: true,
+            fileSingleSizeLimit: 1024*1024*30,//视频最大可以上传30M
+            swf: '<%=public_path%>' + '/js/webuploader/Uploader.swf',
+            server: server,
+            pick: '#fileVideo',
+            resize: false,
+            timeout: 30 * 60 * 1000,
+            accept: {
+                title: 'Video',
+                extensions: 'mp4,mov',
+                mimeTypes: 'video/mp4,video/quicktime'
+            },
+            compress: null
+        });
+
+        /**
+         * 上传前设置参数
+         */
+        uploader_video.on( 'startUpload', function() {
+            var serverType = <%=serverType%>;
+            anchor_video_key = getCodeKey();
+            server = '<%=url%>/AnchorVideoUpload/AnchorVideoServlet.htm?siteID=8&anchorID=<%=userInfo.id%>&agentID=<%=anchorInfo.agency_id%>&anchor_video_key='+anchor_video_key+'&video_type=0&serverType='+serverType;
+            uploader_video.options.server = server;
+        });
+
+        // 文件上传中
+        var uploadVideo = 0;//防止重复提示
+        var loadVideo = '';
+        uploader_video.on( 'uploadProgress', function( file, percentage ) {
+            $('.progress').show();
+            parent.layer.iframeAuto(index);
+            $('.schedule').text(parseInt(percentage*100)+'%');
+            $('.complete').css('width',parseInt(percentage*100)+'%');
+            if (!uploadVideo) {
+                loadVideo = layer.load(2);
+            }
+            uploadVideo = 1//等于1表示上传动作已经开启
+        });
+
+        //文件上传成功
+        uploader_video.on( 'uploadSuccess', function( file, response) {
+            uploader_video.removeFile( file );//从队列中移除上传的文件，以便可以重复上传
+            uploadVideo =0;//重置开关
+            layer.close(loadVideo);
+            $('.progress').hide();
+            if(response._raw){
+                $('#uploadVideo').val(file.name);
+                $('input[name="video"]').val(anchor_video_key);
+            }else{
+                myParentAlert("Failed to upload. Please try again.");
+            }
+        });
+
+        //文件上传失败
+        uploader_video.on( 'uploadError', function( file , reason) {
+            uploadVideo = 0;//重置开关
+            layer.close(loadVideo);
+            $('.progress').hide();
+            if(reason == 'timeout'){
+                myParentAlert("Could not upload video. The process has timed out.");
+            }else{
+                myParentAlert("Failed to upload. Please try again.");
+            }
+
+        });
+
+        //文件错误提示
+        uploader_video.on("error", function (type) {
+            $('.progress').hide();
+            if(type == "Q_TYPE_DENIED"){
+                myParentAlert("Only  MP4, MOV format allowed for video file.");
+            }
+            if(type == "F_EXCEED_SIZE"){
+                myParentAlert("The file size can not larger than 30M.");
+            }
+        });
+
+
+        //创建图片上传
+        var uploader = WebUploader.create({
+            auto: true,
+            fileSingleSizeLimit: 1024*1024*3,//最大只能上传3M
+            swf: '<%=public_path%>' + '/js/webuploader/Uploader.swf',
+            server: '<%=server_host%>/api/?act=uploadAlbumVideoCover',
+            pick: '#filePicker',
+            accept: {
+                title: 'Images',
+                extensions: 'jpg,jpeg,png',
+                mimeTypes: 'image/jpg,image/jpeg,image/png'
+            },
+            compress: null
+        });
+
+        // 图片上传中
+        var uploadProgress = 0;//防止重复提示
+        var load = '';
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            $('.progress').show();
+            parent.layer.iframeAuto(index);
+            $('.schedule').text(parseInt(percentage*100)+'%');
+            $('.complete').css('width',parseInt(percentage*100)+'%');
+            if (!uploadProgress) {
+                load = layer.load(2);
+            }
+            uploadProgress = 1//等于1表示不上传动作已经开启
+        });
+
+        //图片上传成功
+        uploader.on( 'uploadSuccess', function( file, response) {
+            $('.progress').hide();
+            if(response.errno == 13){
+                myParentAlert("JPG & PNG only, size less than 3M. Image short-edit must be longer than 380px.");
+            }
+            if(response.errno == 14){
+                myParentAlert("The photo resolution can not be larger than 3600 * 3600.");
+            }
+            uploader.removeFile( file );//从队列中移除上传的文件，以便可以重复上传
+            if(response.errno == 0){
+                $('#uploadFile').val(file.name);
+                $('input[name="img"]').val(response.data.url);
+            }
+            uploadProgress =0;//重置开关
+            layer.close(load);
+        });
+
+        //图片上传失败
+        uploader.on( 'uploadError', function( file ) {
+            $('.progress').hide();
+            uploadProgress = 0;//重置开关
+            layer.close(load);
+            myParentAlert("Failed to upload. Please try again.");
+        });
+
+        //错误提示
+        uploader.on("error", function (type) {
+            $('.progress').hide();
+            if(type == "Q_TYPE_DENIED"){
+                myParentAlert("Only JPG and PNG format allowed for video cover. File size must be 3M or less.");
+            }
+            if(type == "F_EXCEED_SIZE"){
+                myParentAlert("Incorrect format. Only JPG and PNG format allowed. File size must be 3M or less.");
+            }
+        });
+
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            parent.layer.close(index);
+        })
+        var change_status = 0;//防止多次点击
+        $('.Submit').click(function(){
+            if(change_status){
+                return false;
+            }
+            change_status = 1;
+//            var title = $('input[name="title"]').val();
+            var img = $('input[name="img"]').val();
+            var video = $('input[name="video"]').val();
+            if(!img){
+                myParentAlert('Please select a video cover image.');
+                change_status = 0;
+                return false;
+            }else if(!video){
+                myParentAlert('Please select an valid video file.');
+                change_status = 0;
+                return false;
+            }
+//            if(!title){
+//                myParentAlert('Please enter video description.');
+//                change_status = 0;
+//                return false;
+//            }
+            $.post('/broadcast/albumLayer/addVideo', {img:img, video:video}, function(data){
+                if(data.errno == 0){
+                    Cookies.set('add_success_video', {status:1});
+                    parent.layer.close(index);
+                    parent.layer.msg('Submit successfully. Auditing soon.');
+                }else{
+                    myParentAlert('Failed to submit. Please try again.');
+                    change_status = 0;
+                }
+            })
+        })
+    })
+</script>

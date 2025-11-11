@@ -1,0 +1,165 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .noSelectTime{background-color: #EAEAEA!important;}
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myTimetable-timetable">
+        <div class="pageInfo">My Timetable</div>
+        <div id="tabs-container">
+            <div style="margin-bottom: 10px; font-weight: 400; font-size: 13px; color: rgb(51, 51, 51);">
+                Please set the times you are available for One-on-One broadcast bookings. You will only be able to send and receive booking requests for these times. If no times are set, viewers will not be able to send you requests.
+            </div>
+
+            <ul class="tabs-menu">
+                <li class="current"><a>TIMETABLE</a></li>
+            </ul>
+
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="subject">
+                        <ul class="week">
+                            <li class="weekAction" id="0">SUN</li>
+                            <li id="1">MON</li>
+                            <li id="2">TUE</li>
+                            <li id="3">WED</li>
+                            <li id="4">THU</li>
+                            <li id="5">FRI</li>
+                            <li id="6">SAT</li>
+                        </ul>
+                    </div>
+                    <form class="formTimetable" method="post">
+                        <input type="hidden" name="time_zone">
+                        <div id="Timetable" class="list" style="min-height: 776px;">
+
+                        </div>
+                        <ul class="setting">
+                            <li>Apply the same setting to:</li>
+                            <li><label><input name="week" type="checkbox" value="1">Monday</label></li>
+                            <li><label><input name="week" type="checkbox" value="2">Tuesday</label></li>
+                            <li><label><input name="week" type="checkbox" value="3">Wednesday</label></li>
+                            <li><label><input name="week" type="checkbox" value="4">Thursday</label></li>
+                            <li><label><input name="week" type="checkbox" value="5">Friday</label></li>
+                            <li><label><input name="week" type="checkbox" value="6">Saturday</label></li>
+                            <div class="clear"></div>
+                        </ul>
+                        <div class="save"><input class="submitTimetable cursor" type="submit" value="Save"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+</div>
+<script>
+    let isSave = '<%=isSave%>';
+
+    if(isSave == 1){
+        parent.layer.msg('Save Successfully');
+    }
+
+    $(document).on('click', '.reservation', function(){
+        var reservation = $(this).find('input').prop('checked');
+        if(!reservation){
+            $(this).find('input').prop("checked", true);
+            $(this).addClass('selectTime');
+        }else{
+            $(this).find('input').prop("checked", false);
+            $(this).removeClass('selectTime');
+        }
+    })
+
+    $('.week li').on('click', function(){
+        var week = $(this).attr('id');
+        if(week != 0){
+            $('.setting').hide();
+        }else{
+            $('.setting').show();
+        }
+        $(this).siblings().removeClass('weekAction');
+        $(this).addClass('weekAction');
+        $('.weekTable').hide();
+        $('#t'+week).show();
+    })
+
+    $('input[name="time_zone"]').val(new Date().getTimezoneOffset());
+
+
+    $.get('/broadcast/myTimeTable/generalTimetableAjax', {}, function(data){
+        if(data.errno == 0){
+            var Reservation = data.data.Reservation;
+//            var anchorWeekTime = data.data.anchorWeekTime;//节目预约时间
+            var temData = {};
+//            var weekTimeList = getWeekTimeList();
+            //计算本地时间
+            for(let w in Reservation){
+                for(let d in Reservation[w]){
+                    let anchorWeek = new Date(Reservation[w][d].time).getDay();
+                    if(!temData[anchorWeek]){temData[anchorWeek] = {};}
+                    temData[anchorWeek][new Date(Reservation[w][d].time).getHours()+":"+new Date(Reservation[w][d].time).getMinutes()] = Reservation[w][d];
+                }
+            }
+            let html = '';
+            let display = '';
+            let selectTime = '';
+            let checked = '';
+            let reservation = 'reservation';
+            for(let w=0; w<7; w++){
+                if(w>0){
+                    display = 'style="display: none;"';
+                }
+                html += `
+                    <table id="t${w}" class="weekTable" width="100%" border="0" cellpadding="0" cellspacing="0" ${display}>
+                    <tr>
+                        <td align="center" valign="middle">Clock / Minute</td>
+                        <td align="center" valign="middle">00</td>
+                        <td align="center" valign="middle">15</td>
+                        <td align="center" valign="middle">30</td>
+                        <td align="center" valign="middle">45</td>
+                    </tr>
+                `;
+                for(var i=0; i<24; i++){
+                    html += `
+                        <tr>
+                            <td align="center" valign="middle">${fix(i,2)}' clock</td>
+                    `;
+                    for(var j=0; j<60; j=j+15){
+                        if(temData[w] && temData[w][i+':'+j]){
+                            selectTime = 'selectTime';
+                            checked = 'checked';
+                        }else{
+                            selectTime = '';
+                            checked = '';
+                        }
+//                        var dataStr = weekTimeList[`${w}-${i}-${j}`];
+                        //判断是否存在节目预约时间
+//                        if(!isNull(anchorWeekTime[dataStr])){
+//                            reservation = '';
+//                            selectTime = 'noSelectTime';
+//                            checked = '';
+//                        }else{
+//                            reservation = 'reservation';
+//                        }
+
+                        html += `
+                            <td align="center" valign="middle" class=" ${reservation} ${selectTime}">
+                                <input name="time[w-${w}][]" type="checkbox" ${checked} value="${i}:${j}">
+                            </td>
+                        `;
+                    }
+                    html += `</tr>`;
+
+                }
+
+                html += `</table>`;
+            }
+            $('#Timetable').html(html);
+        }
+    })
+
+</script>

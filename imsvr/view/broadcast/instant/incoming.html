@@ -1,0 +1,104 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">Instant Broadcast Invites</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="subject">
+                        <ul class="IBI">
+                            <li>From</li>
+                            <li>Time sent</li>
+                            <li>Invite status</li>
+                            <li>Broadcast status</li>
+                        </ul>
+                    </div>
+
+                    <%if(list.length){%>
+                    <div class="list">
+                        <% for(let val of list){%>
+                        <ul class="IBI">
+                            <li>
+                                <div>
+                                    <a href="/broadcast/viewerProfile?manid=<%=val.opposite_id%>">
+                                        <div class="avatar_instant">
+                                            <img src="<%=val.opposite_photourl%>" class="profile-pic" alt=""/>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li class="name">
+                                            <div><a class="Ellipses" href="/broadcast/viewerProfile?manid=<%=val.opposite_id%>"><%=val.opposite_nickname%></a></div>
+                                        </li>
+                                        <li class="contry">
+                                            <div><%=val.opposite_contry%></div>
+                                        </li>
+                                        <li>
+                                            <ul class="statue" style="display:block;">
+                                                <div class="userlevel">
+                                                    <img src="<%=public_path%>/img/intimacy_<%=val.intimacy%>.png"/>
+                                                </div>
+                                                <div class="userlevel">
+                                                    <img src="<%=userLevelInfo[val.opposite_level].icon%>"/>
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="scheduledLiveListTimeSent" data-time="<%=val.add_time*1000%>"></li>
+                            <li <%if(val.reply_type == 4 && val.read == 0){%>class="missed"<%}%> >
+                                <%if(val.reply_type == 2 || val.reply_type == 6 || val.reply_type == 7 || val.reply_type == 8){%>
+                                Accepted
+                                <% }else if (val.reply_type == 4){%>
+                                Missed
+                                <% }else if (val.reply_type == 5){%>
+                                Canceled
+                                <% }else if (val.reply_type == 3){%>
+                                <div>Declined</div>
+                                    <%if(val.reject_reason){%>
+                                    <div class="arrow"><img src="<%=public_path%>/img/arrow-left.png" alt=""/></div>
+                                    <div class="tips" title="<%=val.reject_reason%>">Message: <%=val.reject_reason%></div>
+                                    <%}%>
+                                <% }%>
+                            </li>
+                            <%if(val.reply_type == 8){%>
+                            <li>Completed</li>
+                            <%}else if(val.reply_type == 7){%>
+                            <li>Viewer No-Show</li>
+                            <%}else if(val.reply_type == 6){%>
+                            <li>Broadcaster No-Show</li>
+                            <%}else{%>
+                            <li>-</li>
+                            <%}%>
+
+                        </ul>
+                        <% }%>
+                    </div>
+                    <%}else{%>
+                    <div class="empty">No incoming invites.</div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        anchorReservationTimeSent();
+        //分页
+        var pages = Math.ceil('<%=total%>'/15);
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

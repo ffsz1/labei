@@ -1,0 +1,51 @@
+<div class="top">
+	<img src="<%=photourl%>" alt="" class="userPhoto">
+	<p class="name" style="overflow: hidden; width: 6.7rem; height: .4rem;">
+	<% if (is_online) { %>
+	  <span class="online"> </span>
+	 <% }else{ %>
+	   <span class="offline"> </span>
+	<% } %>
+	<span class="nickname"><%=nickname%></span>
+	</p>
+	<div class="clear"></div>
+	<div class="id">
+		<span class="userid">ID:<%=userid%></span>
+		<img class="level" src="<%=anchorLevelInfo[user_level].icon%>">
+		<img class="itmacy" src="<%=public_path%>img/intimacy_<%=love_level%>.png%>" alt="">
+	</div>
+</div>
+<div class="basic">
+	<p class="title"><img  class="basic-icon" src="<%=public_path%>img/man/basic.png" />Basic Information</p>
+	<p class="age"><%=age%>,<%=country%></p>
+</div>
+<div class="interests">
+	<p  class="title"><img  class="basic-icon" src="<%=public_path%>img/man/interest.png" /></span>Interests</p>
+	<div class="interests-box">
+		<% if (interests.length) { %>
+			<% interests.forEach(function(interest){ %>
+			<%- '<span class=\"color'+Math.floor(Math.random()*7)+'\">'%><%= interest %><%-'</span>'%>
+			<% }) %>
+		<% }else{ %>
+			<div class="noData">
+				This viewer does not set any hobbies / interests.
+			</div>
+		<%}%>
+	</div>
+</div>
+<div class="intro">
+	<p  class="title"><img  class="basic-icon" src="<%=public_path%>img/man/self.png" />Self-Intro</p>
+	<%if(profile.length){%>
+		<p class="intro-text word-wrap"><%=profile%></p>
+	<%}else{%>
+		<div class="profileNoData">
+			This viewer does not say anything about himself.
+		</div>
+	<%}%>
+</div>
+
+<%if(showinvite == 1){%>
+<div class="one-on-one">
+	<a href="javascript:;" onclick='LiveAnchorApp.callbackInvite("<%=userid%>","<%=nickname%>","<%=photourl%>");'>START ONE-ON-ONE</a>
+</div>
+<%}%>

@@ -1,0 +1,43 @@
+{
+  "apps": [{
+    "name": "proxy",
+    "script": "proxy.js",
+    "exec_mode":"fork",
+    "cwd": "",
+    "error_file" : "",
+    "out_file": "",
+    "max_memory_restart": "1G",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_dev": {
+      "NODE_ENV": "development"
+    },
+    "env_pro" : {
+      "NODE_ENV": "production"
+    }
+  },{
+    "name": "im-svr",
+    "script": "im-svr.js",
+    "exec_mode":"fork",
+    "cwd": "",
+    "error_file" : "",
+    "out_file": "",
+    "max_memory_restart": "1G",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_dev": {
+      "NODE_ENV": "development"
+    },
+    "env_pro" : {
+      "NODE_ENV": "production"
+    }
+  }]
+}

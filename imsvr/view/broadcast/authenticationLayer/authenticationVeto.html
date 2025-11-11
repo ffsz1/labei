@@ -1,0 +1,44 @@
+<style>
+    /*认证不通过*/
+    .border-radius-top{border-radius: 10px 10px 0px 0px;}
+    .authenticationVeto{width: 567px;}
+    .authenticationVetoTitle{height:45px; line-height: 45px; padding-left: 20px; font-weight: 400;font-size: 16px;color: #434343;background-color: #E4E4E4; margin-bottom: 10px;}
+    .authenticationVetoBody{}
+    .authenticationVetoBodyText{margin-left: 20px; line-height: 20px; margin-bottom: 20px; word-wrap: break-word;}
+    .authenticationVetoBodyText span{font-weight: 400;font-style: normal;font-size: 13px;color: #333333;}
+    .authenticationVetoBodyBtn{margin-left: 20px; width: 150px; height: 34px; line-height: 34px; text-align: center; background-image: url(<%=public_path%>/img/u613.png);font-weight: 700; font-size: 13px; color: #FFFFFF; margin-bottom: 10px;}
+    .annotations{font-weight: 400;font-size: 13px; color: #949494; margin-left: 20px; margin-bottom: 15px;}
+</style>
+<div class="authenticationVeto">
+    <div class="authenticationVetoTitle border-radius-top">
+        Your identity verification has been declined.
+    </div>
+
+    <div class="authenticationVetoBody">
+        <div class="authenticationVetoBodyText">
+            <span>Your identity verification request has been declined due to the following reason:</span></br>
+            <span style="color: #FF6600;"><%=anchorInfo.anchorProveVeto%></span>
+        </div>
+
+        <div class="authenticationVetoBodyText">
+            <span>Review message:</span></br>
+            <%if(anchorInfo.anchorProveRemark){%>
+            <span style="color: #FF6600;"><%=anchorInfo.anchorProveRemark%></span>
+            <%}else{%>
+            <span style="color: #FF6600;">No message.</span>
+            <%}%>
+        </div>
+        <div class="authenticationVetoBodyBtn cursor">
+            SUBMIT AGAIN
+        </div>
+
+        <div class="annotations">Note: Please submit another identity verification request in order to further proceed.</div>
+    </div>
+</div>
+<script>
+    var indexVeto = parent.layer.getFrameIndex(window.name);
+    parent.layer.iframeAuto(indexVeto);
+    $('.authenticationVetoBodyBtn').click(function(){
+        parent.layer.close(indexVeto);
+    })
+</script>

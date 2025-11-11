@@ -1,0 +1,104 @@
+<ul class="newtabs-menu">
+    <a href="/broadcast/myShow/approved">
+        <li class="approved">
+            <span>APPROVED</span>
+            <%if(noreadShowNum){%>
+            (<span style="margin-left: 0px;" class="approvedNoRead"><%=noreadShowNum%></span>)
+            <%}%>
+        </li>
+        <div class="approvedImg"></div>
+    </a>
+    <a href="/broadcast/myShow/underReview">
+        <li class="underReview"><span> UNDER REVIEW</span></li>
+        <div class="underReviewImg"></div>
+    </a>
+    <a href="/broadcast/myShow/rejected">
+        <li class="rejectedShow"><span>REJECTED</span></li>
+        <div class="rejectedShowImg"></div>
+    </a>
+    <a href="/broadcast/myShow/history">
+        <li class="history">
+            <span>HISTORY</span>
+            <%if(cancelNoreadShowNum){%>
+            (<span style="margin-left: 0px;" class="historyNoRead"><%=cancelNoreadShowNum%></span>)
+            <%}%>
+        </li>
+        <div class="historyImg"></div>
+    </a>
+</ul>
+
+<ul class="plusBtn">
+    <li>
+        <a id="Show" href="javascript:;"><div class="plusText">+ Show</div></a>
+    </li>
+</ul>
+
+<script>
+$(function(){
+    // 添加节目
+    $('#Show').on('click', function(){
+        parent.layer.open({
+            type: 2,
+            title: '',
+            closeBtn: 0,
+            resize: false,
+            shadeClose: true,
+            area : ['556px', '655px'],
+            content: '/broadcast/showLayer/addShow',
+            end:function(){
+                var status = Cookies.getJSON('add_success_show');
+                Cookies.remove('add_success_show');
+                if(status && status.status == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+
+    //查看图片
+    var showOriginal = 0;
+    $('.showOriginal').on('click', function(){
+        if(showOriginal) {
+            return false;
+        }
+        showOriginal = 1;
+        var img = $(this).attr('data-img');
+        var image = new Image();
+        image.src = img;
+        image.onload = function(){
+            var width = image.width;
+            var height = image.height;
+            var windowHeigth = $(parent).height();
+            var windowWidth = $(parent).width();
+            var imgHeigth = '';
+            var imgWidth = '';
+            if(windowHeigth <= height || windowWidth <= width){
+                windowHeigth = parseInt(windowHeigth * 0.6);
+                windowWidth = parseInt(windowWidth * 0.6);
+                height = windowHeigth;
+                width = windowWidth;
+                imgHeigth = windowHeigth;
+                imgWidth = windowWidth;
+            }else{
+                imgHeigth = height;
+                imgWidth = width;
+            }
+            width = width + 20 + 'px';
+            height = height + 50 + 'px';
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : [width, height],
+                content: '/broadcast/albumLayer/showOriginal?img='+img+'&width='+imgWidth+'&height='+imgHeigth+'&title=Show cover',
+                end:function(){
+                    showOriginal = 0;
+                }
+            });
+        }
+    })
+})
+</script>

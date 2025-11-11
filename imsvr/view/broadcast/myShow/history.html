@@ -1,0 +1,67 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">My Shows</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+
+            <div class="showApproved">
+                <div class="showApprovedTitle">
+                    <ul>
+                        <li>Show title</li>
+                        <li>Show type</li>
+                        <li>Start time</li>
+                        <li style="width: 100px;">Duration</li>
+                        <li>Tickets sold</li>
+                        <li style="width: 90px;">Status</li>
+                        <li>Time</li>
+                    </ul>
+                </div>
+
+                <%if(approvedList.length>0){%>
+                <%for(var data of approvedList){%>
+                <div class="showApprovedList">
+                    <ul>
+                        <li>
+                            <%if(data.no_read && data.status==5){%>
+                            <div><img class="unreadLiveShow" src="<%=public_path%>/img/u84.png"></div>
+                            <%}%>
+                            <a href="/broadcast/myShow/liveShowInfo?live_show_sn=<%=data.live_show_id%>" class="beyondHiding" style="display: block; width: 140px;"><%=data.show_title%></a>
+                        </li>
+                        <li class="beyondHiding"><%=showType[data.classify]%></li>
+                        <li class="scheduledLiveListTimeSent showColor_139818" data-time="<%=data.start_time*1000%>"></li>
+                        <li class="showColor_F8834E" style="width: 100px;"><%=data.duration%> minutes</li>
+                        <li><%=data.ticket_num%></li>
+                        <li style="width: 90px;"><%=showStatus[data.status]%></li>
+                        <li class="scheduledLiveListTimeSent" data-time="<%=data.show_status_change_time*1000%>"></li>
+                    </ul>
+                </div>
+                <%}%>
+                <%}else{%>
+                <div class="noData clear">No shows history.</div>
+                <%}%>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        anchorReservationTimeSent();
+        //分页
+        var pages = Math.ceil(<%=approvedListCount%>/<%=step%>);
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

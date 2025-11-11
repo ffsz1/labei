@@ -1,0 +1,83 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .showApprovedList ul li{height: 140px; line-height: 140px;}
+    .showApprovedList ul.height70 li{height: 70px; line-height: 70px;}
+    .showApproved ul li:nth-child(1){width: 174px; padding-left: 20px;}
+    .showApproved ul li:nth-child(2){width: 142px;}
+    .showApproved ul li:nth-child(3){width: 200px;}
+    .showApproved ul li:nth-child(4){width: 130px;}
+    .showApproved ul li:nth-child(5){width: 110px; text-align: left;}
+    .showApproved ul li:nth-child(6){width: 130px;}
+    .liveShowCoverBlock{position: relative; width: 130px; height: 140px;}
+    .liveShowCover{max-width: 122px; max-height: 100px;}
+    .show_introduce{width: 170px;}
+</style>
+
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">My Shows</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+
+            <div class="showApproved">
+                <div class="showApprovedTitle">
+                    <ul>
+                        <li>Show title</li>
+                        <li>Show type</li>
+                        <li>Show description</li>
+                        <li>Start time</li>
+                        <li>Duration</li>
+                        <li>Show cover</li>
+                    </ul>
+                </div>
+
+                <%if(approvedList.length>0){%>
+                <%for(var data of approvedList){%>
+                <div class="showApprovedList">
+                    <ul <%if(!data.cover) {%> class='height70' <%}%> >
+                        <li>
+                            <a href="/broadcast/myShow/liveShowInfo?live_show_sn=<%=data.live_show_id%>" class="beyondHiding" style="display: block; width: 140px;"><%=data.show_title%></a>
+                        </li>
+                        <li><%=showType[data.classify]%></li>
+                        <li>
+                            <div class="show_introduce beyondHiding"><%=data.show_introduce%></div>
+                        </li>
+                        <li class="scheduledLiveListTimeSent showColor_139818" data-time="<%=data.start_time*1000%>"></li>
+                        <li class="showColor_F8834E"><%=data.duration%> minutes</li>
+                        <li>
+                            <%if(data.cover){%>
+                            <div class="liveShowCoverBlock">
+                                <img class="liveShowCover center showOriginal cursor" data-img="<%=data.coverOrigin%>" src="<%=data.coverMicro%>">
+                            </div>
+                            <%}else{%>
+                            \
+                            <%}%>
+                        </li>
+                    </ul>
+                </div>
+                <%}%>
+                <%}else{%>
+                <div class="noData clear">No shows under review.</div>
+                <%}%>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        anchorReservationTimeSent();
+        //分页
+        var pages = Math.ceil(<%=approvedListCount%>/<%=step%>);
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

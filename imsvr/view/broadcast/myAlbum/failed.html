@@ -1,0 +1,121 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .editAlbumToggle{display: none; background: rgba(255,255,255,0.40); position: absolute; width: 225px; height: 40px; bottom: 31px; border: none;}
+    .myAlbum-underReview .covers-photos ul li .showOriginalBtn{
+        top: 20px;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myAlbum-underReview">
+        <div class="pageInfo">My Album</div>
+        <% include topBar.html %>
+        <%if(anchor_album.data.length){%>
+        <div class="covers-photos albumList">
+            <ul>
+                <% for(let val of anchor_album.data){ %>
+                <%if(val.type == 1){%>
+                <li id="<%=val.id%>" class="MyAlbum">
+                    <div style="height: 168px;"><img style="height: 168px;" src="<%=val.imgThumb%>" alt=""/></div>
+                    <div class="showOriginalBtn showOriginal cursor" data-img="<%=val.img%>"><img src="<%=public_path%>/img/u567.jpg" width="22" height="31" alt=""/></div>
+                    <div class="editAlbumToggle">
+                        <div class="editAlbumTextDelete" style=" height: 30px; width: 70px; margin: 10px auto 0px; border: none;">
+                            <img style="width: 20px; height: 20px; float: left" src="<%=public_path%>/img/u155.png" alt=""/>
+                            <a style="color: #000000; margin-top: 2px; float: left" class="operating_delete" href="javascript:;">Delete</a>
+                        </div>
+                    </div>
+                    <div class="dec Ellipses" title="<%=val.reject_reason%>">Reason:<%=val.reject_reason%></div>
+                    <%if(val.is_private == 1){%>
+                    <div class="lock-icon"><img src="<%=public_path%>/img/u182.png" alt=""/></div>
+                    <%}%>
+                </li>
+                <% }else if(val.type == 2){%>
+                <li id="<%=val.id%>" class="MyAlbum">
+                    <div style="height: 168px;"><img style="height: 168px;" src="<%=val.imgThumb%>" alt=""/></div>
+                    <div class="editAlbumToggle">
+                        <div class="editAlbumTextDelete" style=" height: 30px; width: 70px; margin: 10px auto 0px; border: none;">
+                            <img style="width: 20px; height: 20px; float: left" src="<%=public_path%>/img/u155.png" alt=""/>
+                            <a style="color: #000000; margin-top: 2px; float: left" class="operating_delete" href="javascript:;">Delete</a>
+                        </div>
+                    </div>
+                    <div class="dec Ellipses" title="<%=val.reject_reason%>">Reason:<%=val.reject_reason%></div>
+                    <div class="video" data-status="<%=val.video_file_status%>" data-video="<%=val.video%>" style="top: 20px;"><img src="<%=public_path%>/img/u206.png" width="22" height="31" alt=""/></div>
+                    <%if(val.is_private == 1){%>
+                    <div class="lock-icon"><img src="<%=public_path%>/img/u182.png" alt=""/></div>
+                    <%}%>
+                </li>
+                <% }else if(val.type == 3){%>
+                <li id="<%=val.id%>" class="MyAlbum">
+                    <div class="editAlbumToggle" style="height: 40px;">
+                        <div class="editAlbumTextDelete" style=" height: 30px; width: 70px; margin: 10px auto 0px; border: none;">
+                            <img style="width: 20px; height: 20px; float: left" src="<%=public_path%>/img/u155.png" alt=""/>
+                            <a style="color: #000000; margin-top: 2px; float: left" class="operating_delete" href="javascript:;">Delete</a>
+                        </div>
+                    </div>
+                    <table cellspacing="0" cellpadding="0" width="225" height="168" border="0" style="word-wrap: break-word;">
+                        <tbody>
+                        <tr>
+                            <td align="center" valign="middle" title="<%=val.file_desc%>"><%=val.file_desc%></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="position: absolute; z-index: 999; top:169px;" class="dec Ellipses" title="<%=val.reject_reason%>">Reason:<%=val.reject_reason%></div>
+                </li>
+                <% }%>
+                <% }%>
+            </ul>
+        </div>
+        <div class="tips">* Drag photo to reposition.</div>
+        <%}else{%>
+        <div class="noData">No photos rejected.</div>
+        <%}%>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        /*删除相册*/
+        $('.operating_delete').on('click', function(){
+            var id = $(this).parents('li.MyAlbum').attr('id');
+            parent.layer.confirm('Are you sure you wish to delete this photo?', {
+                btn:['Cancel', 'Yes'],
+                title:'',
+                btnAlign:'c',
+                closeBtn: 0,
+                shadeClose:true,
+                shade:0.01
+            }, function(){
+                parent.layer.msg('Cancel Delete');
+            }, function(){
+                $.post('/broadcast/albumLayer/deleteAlbum', {id:id}, function(data){
+                    if(data.errno == 0){
+                        window.location.reload();
+                        parent.layer.msg('deleted');
+                    }else{
+                        myParentAlert('Failed to delete');
+                    }
+                })
+            });
+        });
+
+        //显示修改和删除
+        $('.MyAlbum').mouseenter(function(){
+            $(this).find('div.editAlbumToggle').stop();
+            $(this).find('div.editAlbumToggle').slideDown(300);
+        })
+        $('.MyAlbum').mouseleave(function(){
+            $(this).find('div.editAlbumToggle').stop();
+            $(this).find('div.editAlbumToggle').slideUp(300);
+        })
+        //分页
+        var pages = Math.ceil('<%=anchor_album.count[0].total%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

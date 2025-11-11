@@ -1,0 +1,52 @@
+<div class="profile">
+    <div class="informationBlock">
+        Basic Information
+    </div>
+    <div class="photoBlock">
+        Profile photo
+        <div class="photoBlockImgDiv">
+            <img class="photoBlockImg" src="<%=photourl%>">
+        </div>
+    </div>
+
+    <div class="photoBlock">
+        ID
+        <span class="description"><%=userid%></span>
+    </div>
+
+    <div class="photoBlock">
+        Nickname
+        <span class="description"><%=nickname%></span>
+    </div>
+
+    <div class="photoBlock">
+        Gender
+        <span class="description"><%if(gender == 2){%>male<%}else{%>Female<%}%></span>
+    </div>
+
+    <div class="photoBlock">
+        Date of birth
+        <span class="description"><%=birthday%></span>
+    </div>
+
+    <div class="informationBlock">
+        Self-Intro
+    </div>
+    <div class="word-wrap SelfIntro">
+        <%=profile%>
+    </div>
+
+    <div class="informationBlock">
+        Hobbies / Interests
+    </div>
+    <div class="word-wrap SelfIntro">
+        <div class="interests-box">
+            <% if (interests.length) { %>
+            <% interests.forEach(function(interest){ %>
+            <%- '<span class=\"color'+Math.floor(Math.random()*7)+'\">'%><%= interest %><%-'</span>'%>
+            <% }) %>
+            <% } %>
+        </div>
+    </div>
+</div>
+

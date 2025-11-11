@@ -1,0 +1,361 @@
+<style>
+    body {font-family: 'Arial Normal', 'Arial'; font-size: 13px; margin: 0px; padding: 0px;}
+    /*自定义的layer样式*/
+    .plusForm  .content div{margin-bottom: 0px;}
+    .plusForm div.btn {padding: 0px; }
+    #filePicker>.webuploader-pick{background: none; color: #000000; padding: 0px; height: 34px; line-height: 34px; width: 98px; border: none;}
+    #filePicker input{height: 34px;}
+    .require{color:#f60000; display: inline-block; }
+    .plusForm .content input.uploadFile,textarea{text-indent: 4px; margin-bottom: 0px;}
+    .plusForm .content select{width: 150px; margin-bottom: 4px; line-height:24px; height: 24px; }
+    .plusForm .content .form-box{ margin-bottom: 16px;}
+    .plusForm .content .form-title{margin-bottom: 4px;}
+    .plusForm .content .select-group{width: 31.8%; float: left; margin-bottom: 4px;}
+    .select-group .form-title{font-size: 12px;color: #999;}
+</style>
+<div class="plusForm">
+    <div>
+        <div class="title">Add Show</div>
+        <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <div class="content">
+
+        <div class="form-box">
+            <div class="form-title"><div class="require">*</div> Show title:</div>
+            <input id="title" class="uploadFile" name="title" maxlength="30" placeholder="30 characters limited" style="width:100%; height: 24px;">
+        </div>
+
+        <div class="form-box">
+            <div class="form-title"><div class="require">*</div> Show type:</div>
+            <select name="type" style="width:220px;">
+                <option selected="" value="1">Singing</option>
+                <option value="2">Dancing</option>
+                <option value="3">Playing instrument</option>
+                <option value="4">Cooking</option>
+                <option value="5">Talk show</option>
+                <option value="6">Sports</option>
+                <option value="7">Outdoor activities</option>
+                <option value="8">Painting</option>
+                <option value="9">Others</option>
+            </select>
+        </div>
+
+        <div class="form-box">
+            <div class="form-title"><div class="require">*</div> Show description <label>(48 - 140 characters.)</label></div>
+            <textarea name="introduction" maxlength="140" placeholder="" style="width: 488px; height:100px; resize: none;"></textarea>
+            <div class="tips" style="float: right;"><label id="descriptionNumber" style="color: red;">0</label> / 140</div>
+            <div class="clear"></div>
+        </div>
+
+
+        <div class="form-box">
+            <div class="form-title"><div class="require">*</div> Start time:</div>
+            <div class="select-group">
+                <div class="form-title">Date</div>
+                <select id="date" name="date">
+                </select>
+            </div>
+
+            <div class="select-group">
+                <div class="form-title">Hour</div>
+                <select id="hour" name="hour">
+                </select>
+            </div>
+
+            <div class="select-group">
+                <div class="form-title">Minute</div>
+                <select id="min" name="min">
+                </select>
+            </div>
+
+            <div class="select-group">
+                <div class="form-title"><div class="require">*</div> Duration</div>
+                <select name="duration">
+                    <option value="10" selected="selected">10 minutes</option>
+                    <option value="15">15 minutes</option>
+                    <option value="20">20 minutes</option>
+                </select>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+
+
+        <div class="form-box">
+            <div>Show cover <label>(PNG, JPEG and JPG format only, less than 6MB. Image size must be between 640 * 640 pixel and 6000 * 6000 pixel.)</label></div>
+            <input class="uploadFile" id="uploadFile" disabled="disabled" style="background: none;" placeholder=""/>
+            <div class="fileUpload btn btn-primary" style="margin-bottom: 2px; height: 34px; line-height: 34px;">
+                <div id="filePicker">Browse photo</div>
+                <input type="hidden" name="img" value="">
+                <input type="hidden" name="handle_id" value="">
+            </div>
+        </div>
+
+        <button class="Submit cursor">Submit</button>
+        <img id="text" src="">
+        <p style="color: #666666; margin-top: 10px;">Note: If you don't show up at the show, a certain amount of coins will be deducted from your income.</p>
+    </div>
+
+</div>
+<script>
+
+    Date.prototype.format = function(fmt) {
+        var o = {
+            "M+" : this.getMonth()+1, //月份
+            "d+" : this.getDate(), //日
+            "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时
+            "H+" : this.getHours(), //小时
+            "m+" : this.getMinutes(), //分
+            "s+" : this.getSeconds(), //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S" : this.getMilliseconds() //毫秒
+        };
+        var week = {
+            "0" : "/u65e5",
+            "1" : "/u4e00",
+            "2" : "/u4e8c",
+            "3" : "/u4e09",
+            "4" : "/u56db",
+            "5" : "/u4e94",
+            "6" : "/u516d"
+        };
+        if(/(y+)/.test(fmt)){
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        }
+        if(/(E+)/.test(fmt)){
+            fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);
+        }
+        for(var k in o){
+            if(new RegExp("("+ k +")").test(fmt)){
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            }
+        }
+        return fmt;
+    }
+
+    Date.getDayOfMonth = function(y, Mm) {
+        if (typeof y == 'undefined') { y = (new Date()).getFullYear(); }
+        if (typeof Mm == 'undefined') { Mm = (new Date()).getMonth(); }
+        var Feb = (y % 4 == 0) ? 29 : 28;
+        var aM = new Array(31, Feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+        return  aM[Mm];
+    };
+
+    Date.getLastMonth = function() {
+        var dt = new Date();
+        var y = (dt.getMonth() == 0) ? (dt.getFullYear() - 1) : dt.getFullYear();
+        var m = (dt.getMonth() == 0) ? 11 : dt.getMonth() - 1;
+        var preM = Date.getDayOfMonth(y,m);
+        var d = (preM < dt.getDate()) ? preM : dt.getDate();
+        var new_time = new Date(y,m,d).format("yyyy-MM-dd HH:mm:ss");
+        return new_time;
+    };
+
+    var date_list = [];
+
+    var date_hour_dic = {};
+
+    var datehour_min_dic = {};
+
+    $(function() {
+
+        var time_list = [<%=time_list%>];
+
+        for (var i = 0; i < time_list.length; i++) {
+            var time = new Date();
+            time.setTime(time_list[i]*1000);
+            var date_str = time.format("yyyy-MM-dd");
+            var datehour_str = time.format("yyyy-MM-dd HH");
+            var min = time.format("yyyy-MM-dd HH:mm");
+            if (date_str in date_hour_dic) {
+                var value = date_hour_dic[date_str];
+                value[datehour_str] = 1;
+            } else {
+                var value = {};
+                value[datehour_str] = 1;
+                date_hour_dic[date_str] = value;
+            }
+
+            if (datehour_str in datehour_min_dic) {
+                var value = datehour_min_dic[datehour_str];
+                value[min] = time_list[i];
+            } else {
+                var value = {};
+                value[min] = time_list[i];
+                datehour_min_dic[datehour_str] = value;
+            }
+        }
+
+        filHourMinByDate = function(date) {
+            $("#hour").empty();
+            $("#min").empty();
+            var fir_hour = "";
+            var fir_date_value = date_hour_dic[date];
+            for (var key in fir_date_value) {
+                var hour = key.split(" ")[1];
+                var option = $("<option>").val(key).text(hour);
+                $("#hour").append(option);
+                if (fir_hour == "") fir_hour = key;
+            }
+            var fir_hour_value = datehour_min_dic[fir_hour];
+            for (var k in fir_hour_value) {
+                var v = fir_hour_value[k];
+                var min = k.split(" ")[1].split(":")[1];
+                var option = $("<option>").val(v).text(min);
+                $("#min").append(option);
+            }
+        }
+
+        filMinByHour = function(hour) {
+            $("#min").empty();
+            var fir_hour_value = datehour_min_dic[hour];
+            for (var k in fir_hour_value) {
+                var v = fir_hour_value[k];
+                var min = k.split(" ")[1].split(":")[1];
+                var option = $("<option>").val(v).text(min);
+                $("#min").append(option);
+            }
+        }
+
+        var fir_date = "";
+        for (var date in date_hour_dic) {
+            var option = $("<option>").val(date).text(date);
+            $("#date").append(option);
+            if (fir_date == "") fir_date = date;
+        }
+        filHourMinByDate(fir_date);
+
+
+        $("#date").change(function(){
+            var sel = $(this).children('option:selected').val();
+            filHourMinByDate(sel);
+        });
+
+        $("#hour").change(function(){
+            var sel = $(this).children('option:selected').val();
+            filMinByHour(sel);
+        });
+
+        $('textarea[name="introduction"]').on('input', function(){
+            let description = $(this).val();
+            $('#descriptionNumber').text(description.length);
+        })
+
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            parent.layer.close(index);
+        })
+        var change_status = 0;//防止多次点击
+
+        $('.Submit').click(function() {
+            if(change_status){
+                return false;
+            }
+            change_status = 1;
+            var title = $('input[name="title"]').val();
+            var classify = $('select[name="type"]').val();
+            var introduce = $('textarea[name="introduction"]').val();
+            var cover = $('input[name="img"]').val();
+            var handle_id = $('input[name="handle_id"]').val();
+            var start_time = $('select[name="min"]').val();
+            var duration = $('select[name="duration"]').val();
+            title = $.trim(title);
+            introduce = $.trim(introduce);
+            if(!title){
+                myParentAlert("Show title is required.");
+                change_status = 0;
+                return false;
+            }
+            if(title.length > 30){
+                myParentAlert("Show title can not exceed 30 characters.");
+                change_status = 0;
+                return false;
+            }
+
+            if(introduce.length < 48){
+                myParentAlert("Description must be at least 48 characters.");
+                change_status = 0;
+                return false;
+            }
+            if(introduce.length > 140){
+                myParentAlert("Description can not exceed 140 characters.");
+                change_status = 0;
+                return false;
+            }
+            var anchorTimezoneLiveShow = new Date();
+            $.post('/lady/v1/addProgram',
+                {title:title,classify:classify,introduce:introduce,cover:cover,handle_id:handle_id,start_time:start_time,duration:duration,anchorTimezoneLiveShow:anchorTimezoneLiveShow.toString()},
+                function(data){
+                if(data.errno == 0) {
+                    Cookies.set('add_success_show', {status:1});
+                    parent.layer.close(index);
+                    parent.layer.msg('Submit successfully. Auditing soon');
+                }else{
+                    myParentAlert(data.errmsg);
+                    change_status = 0;
+                }
+            })
+
+        })
+
+
+
+        //创建文件上传
+        var uploader = WebUploader.create({
+            auto: true,
+            fileSingleSizeLimit: 1024*1024*6,//最大只能上传6M
+            swf: '<%=public_path%>' + '/js/webuploader/Uploader.swf',
+            server: '<%=server_host%>/api/?act=uploadShowCoverStepa',
+            pick: '#filePicker',
+            accept: {
+                title: 'Images',
+                extensions: 'jpg,jpeg,png',
+                mimeTypes: 'image/jpg,image/jpeg,image/png'
+            },
+            compress: null
+        });
+
+        // 图片上传中
+        var uploadProgress = 0;//防止重复提示
+        var load = '';
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            if (!uploadProgress) {
+                load = layer.load(2);
+            }
+            uploadProgress = 1//等于1表示不上传动作已经开启
+        });
+
+        //图片上传成功
+        uploader.on( 'uploadSuccess', function( file, response) {
+            if(response.errno != 0){
+                myParentAlert("Image size must be between 640 * 640 pixel and 6000 * 6000 pixel.");
+            }
+            uploader.removeFile(file);//从队列中移除上传的文件，以便可以重复上传
+            var data = response.data;
+            if(response.errno == 0){
+                $('#uploadFile').val(file.name);
+                $('input[name="img"]').val(data.url.file);
+                $('input[name="handle_id"]').val(response.handle_id);
+            }
+            uploadProgress =0;//重置开关
+            layer.close(load);
+        });
+
+        //文件上传失败
+        uploader.on( 'uploadError', function( file ) {
+            myParentAlert("Failed to upload. Please try again.");
+            uploadProgress = 0;//重置开关
+            layer.close(load);
+        });
+
+        //错误提示
+        uploader.on("error", function (type) {
+            if(type == "Q_TYPE_DENIED"){
+                myParentAlert("Invalid show cover. PNG, JPEG and JPG format only, less than 6MB.");
+            }
+            if(type == "F_EXCEED_SIZE"){
+                myParentAlert("Invalid show cover. PNG, JPEG and JPG format only, less than 6MB.");
+            }
+        });
+    })
+</script>

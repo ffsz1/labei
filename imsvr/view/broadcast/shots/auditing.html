@@ -1,0 +1,61 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myAlbum-underReview">
+        <div class="pageInfo">My Shots</div>
+        <% include topBar.html %>
+
+        <div class="shotsMain" >
+            <div class="shotsMainTitle" >
+                <div class="shotsMainShots" >Shot</div>
+            </div>
+
+            <% if(list.length) {%>
+            <% for(var data of list){%>
+            <div class="shotsMainList">
+                <div class="shotsMainShots shotsMainShotsBody" style="width: 901px;">
+                    <!--图片-->
+                    <div class=" shotsMainShotsImg">
+                        <% if(data.type == 1) {%>
+                        <img class="shotsMainShotsImgBody showOriginal cursor" data-img="<%=data.originImg%>" src="<%=data.img%>">
+                        <% }else{%>
+                        <!--视频-->
+                        <img class="shotsMainShotsImgBody" data-img="<%=data.originImg%>" src="<%=data.img%>">
+                        <img class="shotsMainShotsVideo video cursor" data-video="<%=data.video%>" data-status="<%=data.video_file_status%>" src="<%=public_path%>/img/play_video.png">
+                        <% }%>
+                    </div>
+                    <!--内容-->
+                    <div class="shotsMainShotsContent" style="width: 666px;">
+                        <div class="shotsMainShotsContentText" style="width: 666px;" title="<%=data.content%>">
+                            <%=data.content%>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <% }%>
+            <%}else{%>
+            <div class="noData" style="width: 932px;">No shots under review.</div>
+            <% }%>
+        </div>
+
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //分页
+        var pages = Math.ceil('<%=total%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

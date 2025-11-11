@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title></title>
+    <style type="text/css">
+        div{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        body{padding: 0px;margin: 0px;}
+        *{font-family: "Open Sans",Arial,Helvetica,sans-serif!important;}
+        ul,li{list-style: none;padding: 0;margin: 0;}
+        #pop{
+            width:100%;
+            height: auto;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        #pop .banner_content{
+            text-align: center;
+            padding: 10px;
+            color: #222;
+            background-color: #fff;
+            background: url(<%=public_path%>img/man/userLP4-1/mbg.jpg) repeat-x bottom center;
+        }
+        #pop .banner_content img{
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        #pop .close_btn{
+            display: block;
+            border-radius: 25px;
+            width: 22px;
+            height: 22px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            margin-left: -20px;
+            line-height: 40px;
+            text-align: center;
+            color: #fff;
+            font-size: 30px;
+            font-family: 'Arial';
+            background: url(<%=public_path%>img/man/userLP4-1/clase_btn.png) no-repeat center center;
+            background-size: 50% 50%;
+            z-index: 10;
+        }
+        #pop .banner_img{
+            background:url(<%=public_path%>img/man/userLP4-1/banner_bg.jpg) no-repeat center center;
+            background-size: cover;
+            width: 100%;
+            position: relative;
+            text-align: center;
+            color: #fff;
+            overflow: hidden;
+            border-radius: 5px 5px 0px 0px;
+        }
+        #pop .banner_img img{
+            width: 100%;
+            height: auto;
+            border:0;
+            display: block;
+        }
+        #pop .banner_btn{
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 24px;
+            margin-bottom:4px;
+            text-transform: uppercase;
+            overflow: hidden;
+            text-decoration: none;
+            line-height: 2.8;
+            display: inline-block;
+            max-width: 260px;
+            min-width: 230px;
+            width: 66%;
+            border-radius: 22px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            background-color: #3ca0f8;
+            background-image: -moz-linear-gradient( 90deg, rgb(239,128,25) 0%, rgb(237,106,26) 0%, rgb(235,89,25) 0%, rgb(239,120,25) 45%, rgb(243,151,24) 55%);
+            background-image: -webkit-linear-gradient( 90deg, rgb(239,128,25) 0%, rgb(237,106,26) 0%, rgb(235,89,25) 0%, rgb(239,120,25) 45%, rgb(243,151,24) 55%);
+            background-image: -ms-linear-gradient( 90deg, rgb(239,128,25) 0%, rgb(237,106,26) 0%, rgb(235,89,25) 0%, rgb(239,120,25) 45%, rgb(243,151,24) 55%);
+            box-shadow: 0px 4px 9px 0px rgba(4, 0, 0, 0.35);
+        }
+
+        /*ticket list*/
+        #pop .ticket_box {
+            width: 100%;
+            height: auto;
+        }
+        #pop .ticket_box .ticket_list{
+            width: 310px;
+            height: auto;
+            background-size: contain;
+            position: relative;
+            margin: 0 auto;
+            margin-top: 18px;
+            width: 100%;
+            max-width: 310px;
+        }
+        #pop .ticket_box .ticket_list .t_left{
+            width: 40%;
+            height: 100%;
+            float: left;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+        #pop .ticket_box .ticket_list .t_left .nicname{
+            color: #fff;
+            position: absolute;
+            left: 12px;
+            bottom: 6px;
+            z-index: 12;
+            font-size: 12px;
+            font-weight: bold;
+            max-width: 100px;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+            overflow: hidden;
+        }
+        #pop .ticket_box .ticket_list .t_left .lady_cover{
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            width: 80%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-size: auto 100%;
+        }
+        #pop .ticket_box .ticket_list .t_left .lady_cover img{
+            height: 100%;
+        }
+        #pop .ticket_box .ticket_list .t_left .lady_avatar img{
+            width: 100%;
+            height: auto;
+            margin-top: 0px;
+        }
+        #pop .ticket_box .ticket_list .t_left .h_mask{
+            width: 100%;
+            height: 100%;
+            background: url(<%=public_path%>img/man/userLP4-1/h_mask.png?v=1.2) no-repeat 0px 0px;
+            background-size: cover;
+            overflow: hidden;
+            z-index: 10;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+        #pop .ticket_box .ticket_list .t_left .h_mask1{
+            width: 100%;
+            height: 100%;
+            background: url(<%=public_path%>img/man/userLP4-1/h_mask1.png?v=1.2) no-repeat 0px 0px;
+            background-size: cover;
+            overflow: hidden;
+            z-index: 10;
+            position: absolute;
+            top: 0px;
+            left: 5px;
+        }
+        #pop .ticket_box .ticket_list .t_left .h_mask2{
+            width: 100%;
+            height: 100%;
+            background: url(<%=public_path%>img/man/userLP4-1/h_mask2.png?v=1.2) no-repeat 0px 0px;
+            background-size: cover;
+            overflow: hidden;
+            z-index: 10;
+            position: absolute;
+            top: 0px;
+            left: 5px;
+        }
+
+
+        #pop .ticket_box .ticket_list .t_mid{
+            width: 54%;
+            float: left;
+            padding: 14px 0px 0px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+
+        #pop .ticket_box .ticket_list .t_mid .t_title{
+            color: #297af3;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: left;
+            width: 100%;
+            padding-right: 8px;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: break-all;
+            overflow: hidden;
+        }
+
+        #pop .ticket_box .ticket_list .t_mid .t_desc{
+            font-size: 12px;
+            line-height: 1.2;
+            color: #666666;
+            text-align: left;
+            padding-top: 8px;
+            width: 100%;
+            height: 42px;
+            overflow: hidden;
+        }
+        #pop .ticket_box .ticket_list .t_mid ._time .t-n{
+            font-weight: normal;
+            font-size: 12px;
+            color: #8dbbfe;
+            margin: 0;
+            line-height: 1;
+        }
+        #pop .ticket_box .ticket_list .t_mid ._time .n-t{
+            font-weight: bold;
+            font-size: 12px;
+            color: #666;
+            margin-top: 0px;
+            display: inline-block;
+        }
+
+
+        #pop .ticket_time{
+            width: 100%;
+            height: auto;
+            text-align: left;
+            margin-top: 12px;
+        }
+        #pop .ticket_time ._time{
+            width: 45%;
+            height: auto;
+            display: inline-block;
+            line-height: 1;
+        }
+
+        /*ticket list*/
+    </style>
+</head>
+
+<body>
+<div id="pop" class="pop">
+    <a class="close_btn" href="qpidnetwork://app/closewindow"></a>
+    <div class="banner_img">
+        <img src="<%=public_path%>img/man/userLP4-1/title_bg.jpg?v=1.2" />
+    </div>
+    <div class="banner_content">
+        <div class="ticket_box">
+            <% let i=1; for(let data of showListByAnchor){
+                if(showListByAnchor.length == 1){
+                    i=2;
+                }
+            %>
+            <div class="ticket_list">
+                <a href="qpidnetwork://app/open?service=live&module=main&listtype=3">
+                    <img src="<%=public_path%>img/man/userLP4-1/list_bg.png" />
+                    <div class="t_left">
+                        <div class="nicname"><%=data.anchor_nickname%></div>
+                        <div class="h_mask"></div>
+                        <div class="h_mask<%=i%>"></div>
+                        <div class="lady_cover lady_avatar">
+                            <img src="<%=data.anchor_avatar%>">
+                        </div>
+                    </div>
+
+                    <div class="t_mid">
+                        <div class="t_title"><%=data.show_title%></div>
+                        <div class="ticket_time">
+                            <div class="_time">
+                                <h3 class="t-n">Date(GMT)</h3>
+                                <span class="n-t"><%=data.TimeDay%></span>
+                            </div>
+                            <div  class="_time">
+                                <h3  class="t-n">Time(GMT)</h3>
+                                <span class="n-t"><%=data.TimeHour%></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <% i++;}%>
+
+        </div>
+        <a class="banner_btn" href="qpidnetwork://app/open?service=live&module=main&listtype=3">View Full Calendar </a>
+    </div>
+
+</div>
+</body>
+</html>

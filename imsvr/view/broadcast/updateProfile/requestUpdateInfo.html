@@ -1,0 +1,104 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myProfile" style="min-height: 700px;">
+        <div class="pageInfo">My Profile</div>
+        <div id="tabs-container" style="display: block; margin-bottom: 30px;">
+            <% include topBar.html %>
+            <div class="clear"></div>
+
+            <div class="updateInfo">
+                <a href="/broadcast/updateProfile/requestUpdateList"><div class="updateInfoBack">Back</div></a>
+
+                <% if(data.type == 3){%>
+                <div class="updateInfoNickname">
+                    <div class="updateInfoNicknameTitle">Nickname change request</div>
+                    <div class="updateInfoNicknameBody">
+                        <div class="updateInfoNicknameBodyTitle">Time</div>
+                        <div class="updateInfoNicknameBodyData localTime" data-time="<%=data.add_time*1000%>"></div>
+                        <div class="updateInfoNicknameBodyTitle">Original nickname</div>
+                        <div class="updateInfoNicknameBodyData"><%=data.current_value%></div>
+                        <div class="updateInfoNicknameBodyTitle">Nickname to change</div>
+                        <div class="updateInfoNicknameBodyData"><span style="color: #009900;"><%=data.update_value%></span></div>
+                        <div class="updateInfoNicknameBodyTitle">Description</div>
+                        <div class="updateInfoNicknameBodyData">
+                            <span class="updateInfoNicknameBodyDataMessage"><%=data.description%></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="updateInfoNickname">
+                    <%if(data.status == 1){%>
+                    <div class="updateInfoNicknameTitle">Process feedback</div>
+                    <div class="updateInfoNicknameBody" style="height: auto; color: #333333; text-align: center; margin-bottom: 15px;">
+                        <div>Not processed.</div>
+                    </div>
+                    <%}else{%>
+                    <div class="updateInfoNicknameTitle">Processing feedback</div>
+                    <div class="updateInfoNicknameBody" style="height: 220px;">
+                        <div class="updateInfoNicknameBodyTitle">Process Time</div>
+                        <div class="updateInfoNicknameBodyData localTime" data-time="<%=data.update_time*1000%>"></div>
+                        <div class="updateInfoNicknameBodyTitle">Status</div>
+                        <div class="updateInfoNicknameBodyData"><%=status[data.status]%></div>
+
+                        <div class="updateInfoNicknameBodyTitle">Feedback message</div>
+                        <div class="updateInfoNicknameBodyData">
+                            <span class="updateInfoNicknameBodyDataMessage"><%=data.agency_remark%></span>
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
+                <% }else if(data.type == 4){%>
+                <div class="updateInfoNickname">
+                    <div class="updateInfoNicknameTitle">Nickname profile request</div>
+                    <div class="updateInfoNicknameBody" style="height: 180px;">
+                        <div class="updateInfoNicknameBodyTitle">Time</div>
+                        <div class="updateInfoNicknameBodyData localTime" data-time="<%=data.add_time*1000%>"></div>
+                        <div class="updateInfoNicknameBodyTitle">Description</div>
+                        <div class="updateInfoNicknameBodyData">
+                            <span class="updateInfoNicknameBodyDataMessage"><%=data.description%></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="updateInfoNickname">
+                    <%if(data.status == 1){%>
+                    <div class="updateInfoNicknameTitle">Process feedback</div>
+                    <div class="updateInfoNicknameBody" style="height: auto; color: #333333; text-align: center; margin-bottom: 15px;">
+                        <div>Not processed.</div>
+                    </div>
+                    <%}else{%>
+                    <div class="updateInfoNicknameTitle">Processing feedback</div>
+                    <div class="updateInfoNicknameBody" style="height: 220px;">
+                        <div class="updateInfoNicknameBodyTitle">Process Time</div>
+                        <div class="updateInfoNicknameBodyData localTime" data-time="<%=data.update_time*1000%>"></div>
+                        <div class="updateInfoNicknameBodyTitle">Status</div>
+                        <div class="updateInfoNicknameBodyData"><%=status[data.status]%></div>
+
+                        <div class="updateInfoNicknameBodyTitle">Feedback message</div>
+                        <div class="updateInfoNicknameBodyData">
+                            <span class="updateInfoNicknameBodyDataMessage"><%=data.agency_remark%></span>
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
+                <% }%>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="agency">
+            Note: If you have any questions, please consult your agency.<br>
+            Your agency: <%=agency.name%>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+<script>
+    $(function(){
+        localTime();//显示本地时间
+    })
+</script>

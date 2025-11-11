@@ -1,0 +1,155 @@
+<link rel="stylesheet" href="<%=public_path%>/js/honeySwitch/honeySwitch.css">
+<script src="<%=public_path%>/js/honeySwitch/honeySwitch.js"></script>
+<div class="main-content">
+    <!-- top bar start -->
+    <div style="height: 61px;">
+        <img style="margin-top: 15px; margin-left: 40px;" src="<%=public_path%>/img/make-your-life-better.png">
+        <a href="/page/anchor.html" target="_blank" style="color: #ffffff; margin-top: 15px;" class="SPB-btn">Start Public Broadcast</a>
+        <div style="float: right; margin-top: 20px; margin-right: 10px; font-weight: 700; color: #ffffff;">
+            <!--<div style="float: left;" id="OngoingHangOut"></div>-->
+            <div style="float: left;">
+                <span class="switch-off" id="auto_push" themecolor="#4DD865" style="zoom:0.7;box-sizing: content-box;"></span>
+            </div>
+            <span style="float: left; margin-top: 4px; margin-left: 8px;">Auto Invitation</span>
+        </div>
+        <!--<div id="hangoutList" style="float: right;  margin-top: 20px; margin-right: 40px;"></div>-->
+    </div>
+    <!-- top bar end -->
+    <!-- content start -->
+    <iframe src="<%=url%>" width="100%" height="1500px;" scrolling="no" id="live" onload="reinitIframe('live', 600);" frameborder="0"></iframe>
+    <div id="app"></div>
+    <!-- content end -->
+</div>
+<!-- footer content end -->
+<div style="width: 1240px; margin: 0px auto;">
+<footer>
+    <ul>
+        <li><a id="HOME" href="javascript:;" data-href="/broadcast/home">HOME</a></li>|
+        <li><a id="Bookings" href="javascript:;" data-href="/broadcast/scheduledLive">Broadcast Bookings</a></li>|
+        <li><a id="Invites" href="javascript:;" data-href="/broadcast/instant/incoming">Instant Broadcast Invites</a></li>|
+        <li><a id="Messages" href="javascript:;" data-href="/broadcast/directMessages">Private Messages</a></li>|
+        <li><a id="Terms" href="javascript:;" data-href="/broadcast/terms/termsOne">Terms and Policies</a></li>
+    </ul>
+    <div>Copyright © 1998-2018 All Rights Reserved.<br>
+        Best viewed with Chrome version 59 and above.</div>
+</footer>
+</div>
+
+<div id="popups" class="popups" style="display: none;">
+    <div style="margin-top: 60px; text-align: center;">
+        Are you sure to start public broadcast？
+    </div>
+    <div style="margin-top: 28px;">
+        <div style="float: left; margin-left: 148px;">
+            <span class="switch-off" id="popups_auto_push" themecolor="#4DD865" style="zoom:0.7;"></span>
+        </div>
+        <span style="float: left; margin-top: 4px; margin-left: 8px;">Auto Invitation</span>
+        <div class="clear"></div>
+    </div>
+    <div style="margin-top: 28px;">
+        <a class="popups-no close_popups" href="javascript:;" >NO</a>
+        <a class="popups-yes close_popups" href="/page/anchor.html" target="_blank" >YES</a>
+    </div>
+</div>
+<!-- footer content end -->
+<script>
+    $(function(){
+        var autoPush = '<%=autoPush%>';
+        if(autoPush == 1){
+            honeySwitch.showOn("#auto_push");
+//            honeySwitch.showOn("#popups_auto_push");
+        }
+        //自动邀请开关
+        switchEvent("#auto_push",function(){
+            $.post('/broadcast/setAutoPush',{status:1},function(){});
+//            honeySwitch.showOn("#popups_auto_push");
+        },function(){
+            $.post('/broadcast/setAutoPush',{status:0},function(){});
+//            honeySwitch.showOff("#popups_auto_push");
+        });
+        //弹窗自动邀请开关
+//        switchEvent("#popups_auto_push",function(){
+//            $.post('/broadcast/setAutoPush',{status:1},function(){});
+//            honeySwitch.showOn("#auto_push");
+//        },function(){
+//            $.post('/broadcast/setAutoPush',{status:0},function(){});
+//            honeySwitch.showOff("#auto_push");
+//        });
+//
+        //底部连接
+        $('#HOME,#Bookings,#Invites,#Messages,#Terms').click(function(){
+            var text = $(this).attr('data-href');
+            $('#live').attr('src',text);
+        })
+
+        $.ajaxSetup({
+            cache: true,
+        });
+
+        window.onload = function (){
+            $.get('/page/chat.html?'+new Date().getTime(),{}, function(res){
+                var str=res.replace(/[\r\n]/g, "");
+                var source = {};
+                source.style=str.match(/<style.*?<\/style>/g);
+                source.link=str.match(/<link.*?>/g);
+                source.script=str.match(/<script.*?<\/script>/g);
+                var script = '';
+                for(var key in source){
+                    if(Object.prototype.toString.call(source[key]) == '[object Array]'){
+                        source[key].forEach(function(value){
+                            script += value;
+                        })
+                    }
+                }
+                $('body').append(script);
+            },"text")
+        }
+
+        function getToken(){
+            $.get('/broadcast/v1/getToken',{},function(res){})
+        }
+        setInterval(getToken, 600 * 1000);//10分钟获取一次token
+    })
+
+    //iframe自适应子页面的高度
+    function reinitIframe(iframeId, minHeight) {
+        var browserVersion = window.navigator.userAgent.toUpperCase();
+        var isOpera = browserVersion.indexOf("OPERA") > -1 ? true : false;
+        var isFireFox = browserVersion.indexOf("FIREFOX") > -1 ? true : false;
+        var isChrome = browserVersion.indexOf("CHROME") > -1 ? true : false;
+        var isSafari = browserVersion.indexOf("SAFARI") > -1 ? true : false;
+        var isIE = (!!window.ActiveXObject || "ActiveXObject" in window);
+        var isIE9More = (! -[1, ] == false);
+        try {
+            var iframe = document.getElementById(iframeId);
+            var bHeight = 0;
+            if (isChrome == false && isSafari == false)
+                bHeight = iframe.contentWindow.document.body.scrollHeight;
+
+            var dHeight = 0;
+            if (isFireFox == true)
+                dHeight = iframe.contentWindow.document.documentElement.offsetHeight + 2;
+            else if (isChrome == true)
+                dHeight = iframe.contentWindow.document.documentElement.offsetHeight
+            else if (isIE == false && isOpera == false) {
+                dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+            }
+            else if (isIE == true && isIE9More) {//ie9+
+                var heightDeviation = bHeight - eval("window.IE9MoreRealHeight" + iframeId);
+                if (heightDeviation == 0) {
+                    bHeight += 3;
+                } else if (heightDeviation != 3) {
+                    eval("window.IE9MoreRealHeight" + iframeId + "=" + bHeight);
+                    bHeight += 3;
+                }
+            }
+            else//ie[6-8]
+                bHeight += 3;
+
+            var height = Math.max(bHeight, dHeight);
+            if (height < minHeight) height = minHeight;
+            iframe.style.height = height + "px";
+        } catch (ex) { }
+    }
+
+</script>

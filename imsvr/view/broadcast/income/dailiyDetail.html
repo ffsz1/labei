@@ -1,0 +1,63 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content incomeStatictics-monthly">
+        <div class="pageInfo">My Income Staticstic</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+            <a href="/broadcast/income/dailiy" style="font-size: 14px;"><< Back</a><br><br>
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="list">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr bgcolor="#f2f2f2">
+                                <td width="90" height="60" align="center" valign="middle">No</td>
+                                <td width="170" align="center" valign="middle">Time</td>
+                                <td width="170" align="center" valign="middle">Product</td>
+                                <td width="170" align="center" valign="middle">Broadcast Type</td>
+                                <td width="170" align="center" valign="middle">From</td>
+                                <td width="160" align="center" valign="middle">Coins</td>
+                            </tr>
+                            <%if(data.length > 0){%>
+                            <%for(var value of data){ ++startId;%>
+                            <tr>
+                                <td align="center" valign="middle"><%=startId%></td>
+                                <td align="center" valign="middle" class="localTime" data-time="<%=value.add_timestamp*1000%>"><%=value.add_time%></td>
+                                <td align="center" valign="middle"><%=value.product%></td>
+                                <td align="center" valign="middle"><%=value.broadcastType%></td>
+                                <td align="center" valign="middle"><a href="/broadcast/viewerProfile?manid=<%=value.user_id%>"><%=value.userName%></a></td>
+                                <td align="center" valign="middle"><%=value.anchor_credit%></td>
+                            </tr>
+                            <%}%>
+                            <%}%>
+                            </tbody>
+                        </table>
+                        <%if(data.length <= 0){%>
+                        <div class="noData" style="width: 928px;">No data</div>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page" class="pagenation"></div>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        localTime("yyyy-MM-dd HH:mm:ss");
+        //分页
+        var pages = Math.ceil('<%=count%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

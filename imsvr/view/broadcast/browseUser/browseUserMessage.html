@@ -1,0 +1,64 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">Browse User</div>
+        <div class="userOnlineList">
+            <% include topBar.html %>
+
+            <div>
+                <%if(onlineUserList.length){%>
+                <% for(var data of onlineUserList){%>
+                <div class="userOnlineBlock">
+                    <img class="userOnlineBlockImg" src="<%=data.avatar_img%>">
+                    <div id="<%=data.id%>" class="userOnlineBlockText">
+                        <div class="userOnlineBlockName" title="<%=data.nick_name%>"><%=data.nick_name%></div>
+                        <div class="userOnlineBlockInfo beyondHiding" style="width: 132px;" title="<%=data.country%>">From <%=data.country%></div>
+                        <div class="userOnlineBlockInfo" ><%=data.age%> years old</div>
+                        <div class="sendMessage cursor" onclick="top.vStore({bool:true,id:'<%=data.id%>',photo:'<%=data.avatar_img%>',manname:'<%=data.nick_name%>',mancountry:'<%=data.country%>'})">Send Message</div>
+                    </div>
+                </div>
+                <%}%>
+                <div class="clear"></div>
+                <div id="page" class="pagenation"></div>
+                <%}else{%>
+                <div style="margin: 0px auto; width: 100%; text-align: center; padding: 10px;">No online users at the moment.</div>
+                <%}%>
+            </div>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        $('.invitePublic').click(function(){
+            var img = '<%=public_path%>/img/u652.png';
+            var that = $(this);
+            var id = that.parent('div').attr('id');
+            $.post('/lady/v1/inviteUserPublicRoom',{userid:id},function(data){
+                if(data.errno == 0){
+                    that.attr('src',img);
+                }else{
+                    alert(data.errmsg);
+                }
+            });
+        });
+
+        //分页
+        var pages = Math.ceil('<%=onlineUserListCount%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+
+    //用于跳转私信页面并带相应男士id
+    function toMessageById(id){
+        return id?(location.href = '/broadcast/directMessages?msgManid='+id):location.href = '/broadcast/directMessages';
+    };
+</script>

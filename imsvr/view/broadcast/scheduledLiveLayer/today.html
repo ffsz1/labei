@@ -1,0 +1,55 @@
+<div class="popup">
+    <div class="title">Today's confirmed bookings</div>
+    <table id="Timetable" width="100%" cellspacing="0" cellpadding="0">
+
+    </table>
+</div>
+<script>
+    $(function(){
+        $.get('/broadcast/scheduledLiveLayer/todayAjax', {}, function(data){
+            if(data.errno == 0){
+                let Reservation = data.data.todayBooking;
+                let temData = {};
+                //计算本地时间
+                for (let val of Reservation){
+                    let anchorWeek = new Date(val.book_timestamp*1000).getDay();
+                    if(anchorWeek == new Date().getDay()){
+                        temData[new Date(val.book_timestamp*1000).getHours()+":"+new Date(val.book_timestamp*1000).getMinutes()] = val.book_timestamp
+                    }
+                }
+                let html = '';
+                let selectTime = '';
+                    html += `
+                        <tr>
+                            <td>Clock / Minute&nbsp;</td>
+                            <td>00</td>
+                            <td>15</td>
+                            <td>30</td>
+                            <td>45</td>
+                        </tr>
+                    `;
+                    for(var i=0; i<24; i++){
+                        html += `
+                        <tr>
+                            <td>${fix(i,2)}' clock</td>
+                        `;
+                        for(var j=0; j<60; j=j+15){
+                            if(temData && temData[i+':'+j]){
+                                selectTime = 'selectTodayBookings';
+                            }else{
+                                selectTime = '';
+                            }
+
+                            html += `
+                            <td class="${selectTime}">
+
+                            </td>
+                        `;
+                        }
+                        html += `</tr>`;
+                    }
+                $('#Timetable').html(html);
+            }
+        })
+    })
+</script>

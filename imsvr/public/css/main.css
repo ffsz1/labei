@@ -1,0 +1,104 @@
+/* main css */
+body {min-width: 1024px; margin: 0px; padding: 0px; font-family: 'ArialMT', 'Arial';}
+/*共用类样式*/
+.clear{clear:both;}
+.action{color: #FF0000;}
+a{color: #333333; text-decoration:none;}
+ul{margin: 0px; padding: 0px;}
+li{list-style: none;}
+/*共用类样式end*/
+
+/*框架*/
+.main{margin: 0px auto; width: 1480px; font-family: 'ArialMT', 'Arial';}
+.head{height: 70px; background-color: #333333;}
+.bodyLeft{width: 1040px; float: left; height: 909px; margin-top: 30px; margin-left: 42px;}
+.bodyLeftIframe{width: 1040px; height: 909px; border: none;}
+.bodyRight{width: 340px; float: left; height: 909px; margin-top: 30px; margin-left: 50px;}
+.bodyRightIframe{width: 340px; height: 909px; border: none;}
+/*框架end*/
+
+/*头部*/
+.logo{width: 70px; height: 35px; float: left; margin-top: 12px; margin-left: 20px; background-color: #0b97c4;}
+.head h4{float: left; margin-left: 20px; color: #FFFFFF;}
+.user{min-width: 215px; height: 35px; float: right; line-height: 35px; margin-top: 12px;}
+.user img{width: 35px; height: 35px; float: right; border-radius:19px;}
+.user span{margin-left: 10px; float: right; color: #FFFFFF; font-weight: 700; font-style: normal; font-size: 16px;}
+.user>.level_icon {width: 16px; height: 16px; float: right; margin-top: 10px; margin-left: 7px;}
+.user>.level {margin-left: 3px;}
+.user>.online {width: 19px; height: 19px; float: right; margin-top: 8px; margin-left: 10px;}
+.go_live{width: 190px; height: 35px; line-height: 35px; text-align:center; float: right; margin-top: 12px; margin-left: 33px; margin-right: 60px; background-color: red; border-radius:19px;}
+.go_live a{color: #FFFFFF; font-size: 13px;}
+/*头部end*/
+
+/*导航*/
+.bodyLeftNavigation{float: left;}
+.bodyLeftNavigation ul{border: 1px solid #C9C9C9; width: 185px; height: 907px; padding: 0px; margin: 0px; text-align: center; font-size: 13px; font-family: 'ArialMT', 'Arial';}
+.bodyLeftNavigation ul li{border-bottom: 1px solid #C9C9C9; height: 46px; line-height: 46px; list-style: none;}
+/*导航end*/
+
+/*左侧主体*/
+.bodyLeftBody{width: 789px; height: 907px; float: left; border: 1px solid #C9C9C9; margin-left: 33px; font-family: 'ArialMT', 'Arial'; font-size: 13px;}
+.bodyLeftBodyPiece{width: 266px; float: left; margin-left: 56px; margin-top: 25px;}
+.bodyLeftBodyTitle{width: 266px; border-bottom: 1px solid #CCCCCC; color: #FF6600; font-weight: 700; font-style: normal; font-size: 16px;}
+.bodyLeftBodyTitle span{border-bottom: 2px solid #FF6600; height: 27px; display: inline-block; position:relative; top: 1px;}
+.bodyLeftBodyTitle a{float: right; font-weight:500;}
+
+.bodyLeftBodyIncome{float: left; width: 266px; height: 230px;}
+.bodyLeftBodyIncome ul{padding-left: 20px; }
+.bodyLeftBodyIncome ul li{margin-top: 29px; list-style-type:disc;}
+.bodyLeftBodyIncome ul li span{font-size: 48px; display: inline-block; margin-top: 10px; margin-left: 65px; margin-right: 16px;}
+
+.bodyLeftBodyAffairs{float: left; width: 266px; height: 230px;}
+.bodyLeftBodyAffairs ul{padding-left: 20px; }
+.bodyLeftBodyAffairs ul li{margin-top: 29px; list-style-type:disc; line-height: 20px; min-height: 78px;}
+.bodyLeftBodyAffairs ul li .title{font-weight: 600; color: #000;}
+.bodyLeftBodyAffairs ul li span{color: #FF6600;}
+
+.bodyLeftBodyPrivateList{width: 664px;}
+.bodyLeftBodyPrivateList .last{margin-right: 0px;}
+.bodyLeftBodyPrivateList li{float: left; margin-top: 24px; margin-right: 44px; width: 97px; text-align: center;}
+.bodyLeftBodyPrivateList ul li:last-child{margin-right: 0px;}
+.bodyLeftBodyPrivateList ul li:nth-child(5n){margin-right: 0px;}
+.bodyLeftBodyPrivateList li .avatar{width: 97px; height: 97px; border-radius:49px;}
+.bodyLeftBodyPrivateList li .name{margin: 5px 0px;}
+.bodyLeftBodyPrivateList li .level{border-radius:10px; padding-right: 4px; min-width: 35px; display: inline-block; height: 17px; line-height: 17px; background-color: #3399FF; color: #FFFFFF;}
+.bodyLeftBodyPrivateList li .level img{float: left; margin-top: 2px; margin-left: 4px;}
+.bodyLeftBodyPrivateList li .closeLevel{border-radius:10px; padding-right: 4px; min-width: 35px; display: inline-block; height: 17px; line-height: 17px; background-color: #FF66CC; color: #FFFFFF;}
+.bodyLeftBodyPrivateList li .closeLevel img {float: left; margin-top: 3px; margin-left: 4px;}
+
+.listNavigation{height: 53px; border-bottom: 1px solid #E4E4E4;}
+.listNavigation ul{line-height: 52px; float: left; margin-left: 8px;}
+.listNavigation ul li{float: left; margin: 0px 15px;}
+.listNavigation ul .action{border-bottom: 2px solid #FF6600;}
+
+.listNavigationRight{float: right; padding-top: 18px; margin-right: 13px;}
+.listNavigationRight>.Button{padding: 0px 15px; float: left; height: 23px; line-height: 23px; border: 1px solid #797979; margin-right: 10px; border-radius:6px;}
+.listNavigationRight>.redButton{background-color: #FF0000; color: #FFFFFF; padding: 0px 8px; float: left; height: 25px; line-height: 25px; margin-right: 10px; border-radius:6px;}
+.listNavigationRight>.redButton a{color: #FFFFFF;}
+
+.albumList{padding: 27px 25px;}
+.albumList ul li{width: 229px; height: 206px; float: left; margin-right: 26px; margin-bottom: 26px; text-align: center; overflow:hidden;}
+.albumList ul li:nth-child(3n){margin-right: 0px;}
+.albumList ul li .b_color{background-color: #F2F2F2; width: 229px; height: 173px; position: relative;}
+.albumList ul li .lock{width: 15px; height: 14px; position: absolute; top: 3%; left: 90%;}
+.albumList ul li .operating{width: 229px; height: 35px; position: absolute; bottom: 0px;}
+.albumList ul li .operating_bg{width: 229px; height: 35px; background-color: #FFFFFF; position: absolute; bottom: 0px; z-index: 10; filter:alpha(opacity=50); -moz-opacity:0.5; -khtml-opacity: 0.5; opacity: 0.5;}
+.albumList ul li .operating_edit{width: 115px; height: 35px; line-height: 35px; text-align: center; cursor:pointer; position: absolute; bottom: 0px; z-index: 11;}
+.albumList ul li .operating_edit img{width: 23px; height: 22px; position: absolute; left: 20px; bottom: 8px; z-index: 12;}
+.albumList ul li .operating_delete{width: 115px; height: 35px; line-height: 35px; text-align: center; cursor:pointer; position: absolute; left: 115px; bottom: 0px; z-index: 11;}
+.albumList ul li .operating_delete img{width: 23px; height: 22px; position: absolute; left: 17px; bottom: 7px; z-index: 12;}
+.albumList ul li .album{float: left; position: relative; left: 50%; }
+.albumList ul li .video{position: absolute; top: 33%; left: -13%; width: 70px; height: 70px; filter:alpha(opacity=50); -moz-opacity:0.5; -khtml-opacity: 0.5; opacity: 0.5;}
+.albumList ul li .video_start{position: absolute; top: 44%; left: -3%; width: 23px; height: 32px;}
+.albumList ul li img{height: 173px; float: left; position: relative; left: -50%;}
+.albumList ul li .title{float: left; border-left: 1px solid #F2F2F2; border-right: 1px solid #F2F2F2; border-bottom: 1px solid #F2F2F2; width: 227px; height: 32px; line-height: 31px; text-align: left; background-color: #FFFFFF;}
+.albumList ul li span{margin-left: 10px;}
+.albumList ul li .description{border: 1px solid #BCBCBC; width: 227px; height: 204px; display:table; }
+.albumList ul li .description_child{padding: 0px 15px; width: 227px; display:table-cell; vertical-align:middle; word-wrap:break-word;}
+/*左侧主体end*/
+
+/*右侧私信*/
+.bodyRightBody{width: 338px; height: 907px; float: left; border: 1px solid #C9C9C9;}
+/*右侧私信end*/
+
+.bottom{margin-top: 40px; height: 140px; background-color: #0d3349;}

@@ -1,0 +1,24 @@
+<style>
+    .plusForm div.btn {padding: 0px;}
+    .plusForm .content div{margin-bottom: 0px;}
+    #filePicker>.webuploader-pick{background: none; color: #000000; padding: 0px; height: 29px; line-height: 29px; width: 98px; border: none;}
+    video::-webkit-media-controls-fullscreen-button {
+         display: none;
+     }
+</style>
+<div class="plusForm photo">
+    <div style="width: 640px;">
+        <div class="title">Play Video</div>
+        <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <video src="<%=videoUrl%>" autoplay="autoplay" controls="controls" height="480px;" width="640px;"></video>
+</div>
+<script>
+    $(function(){
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            parent.layer.close(index);
+        })
+    })
+</script>

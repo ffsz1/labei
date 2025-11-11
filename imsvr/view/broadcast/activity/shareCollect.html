@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>开播有奖活动</title>
+		<link rel="stylesheet" type="text/css" href="<%=public_path%>/css/activity/reset.css"/>
+	</head>
+	<body>
+		<div class="banner">
+	    </div>
+	    <div class="received">
+	    	<div class="received-title">You Have Received</div>
+	    	<div class="text-gifts">
+	    		<ul>
+	    			<li>
+	    				<div class="img">
+	    					<img src="<%=public_path%>/img/gift1.png" />
+	    				</div>
+	    				<div class="gift-text">Kiss</div>
+	    				<div class="exp-num"><span><%=shareCollectGift.kissCount%></span> / 500</div>
+	    				<div class="exp">
+	    					<div class="exp-content" style="width: <%=(shareCollectGift.kissCount/500)*100%>%;"></div>
+	    				</div>
+	    			</li>
+	    			<li>
+	    				<div class="img">
+	    					<img src="<%=public_path%>/img/gift2.png" />
+	    				</div>
+	    				<div class="gift-text">Fancy Car</div>
+	    				<div class="exp-num"><span><%=shareCollectGift.carCount%></span> / 10</div>
+	    				<div class="exp">
+	    					<div class="exp-content" style="width: <%=(shareCollectGift.carCount/10)*100%>%;"></div>
+	    				</div>
+	    			</li>
+	    			<li>
+	    				<div class="img">
+	    					<img src="<%=public_path%>/img/gift3.png" />
+	    				</div>
+	    				<div class="gift-text">Marry Me</div>
+	    				<div class="exp-num"><span><%=shareCollectGift.meCount%></span> / 5</div>
+	    				<div class="exp">
+	    					<div class="exp-content" style="width: <%=(shareCollectGift.meCount/5)*100%>%;"></div>
+	    				</div>
+	    			</li>
+	    		</ul>
+	    		<div style="clear: both;"><!--清除浮动--></div>
+	    	</div>
+	    	<div class="received-msg">
+	    		<p>
+					* You have reached <span>Level <%=level%></span> and can get <span><%=levelReward[level]%> coins</span> as rewards.
+	    		</p>
+	    		<p>
+					<%if(level==0){%>
+	    			* To reach next level, you need <span><%=100-shareCollectGift.kissCount%> "Kiss"</span>, <span>0 "Fancy Car"</span> and <span>0 "Marry Me"</span>
+					<%}else if(level==1){%>
+					* To reach next level, you need <span><%=200-shareCollectGift.kissCount%> "Kiss"</span>, <span><%=5-shareCollectGift.carCount%> "Fancy Car"</span> and <span>0 "Marry Me"</span>
+					<%}else if(level==2){%>
+					* To reach next level, you need <span><%=200-shareCollectGift.kissCount%> "Kiss"</span>, <span><%=10-shareCollectGift.carCount%> "Fancy Car"</span> and <span><%=5-shareCollectGift.meCount%> "Marry Me"</span>
+					<%}%>
+	    		</p>
+	    	</div>
+	    </div>
+	    <div class="content">
+	    	<h2>
+	    		<div class="title-text">Activity Rules</div>
+	    	</h2>
+	    	<div class="text">
+	    		<p>
+	    			1. Activity time: <span>9 Jan,2018 ～ 31 Jan,2018(GMT)</span>
+	    		</p>
+	    		<p>
+	    			2. Broadcasters can <span>get rewards</span> according to <span>the number of activity gifts</span> they receive during the activity time.
+	    		</p>
+	    	</div>
+	    </div>
+	    <div class="content">
+	    	<h2>
+	    		<div class="title-text">Activity Gifts</div>
+	    	</h2>
+	    	<div class="text-gifts">
+	    		<ul>
+	    			<li>
+	    				<div class="img">
+	    					<img src="<%=public_path%>/img/gift1.png" />
+	    				</div>
+	    				<div class="gift-text">Kiss</div>
+	    			</li>
+	    			<li>
+	    				<div class="img">
+	    					<img src="<%=public_path%>/img/gift2.png" />
+	    				</div>
+	    				<div class="gift-text">Fancy Car</div>
+	    			</li>
+	    			<li>
+	    				<div class="img">
+	    					<img src="<%=public_path%>/img/gift3.png" />
+	    				</div>
+	    				<div class="gift-text">Marry Me</div>
+	    			</li>
+	    		</ul>
+	    		<div style="clear: both;"><!--清除浮动--></div>
+	    	</div>
+	    </div>
+	    <div class="content">
+	    	<h2>
+	    		<div class="title-text">Activity Rewards</div>
+	    	</h2>
+	    	<div class="text">
+	    		<p>
+	    			- Level 1：Receive <span>"Kiss" x 100</span> can get <span class="colorffb400">10000 coins</span>
+	    		</p>
+	    		<p>
+	    			- Level 2：Receive <span>"Kiss" x 200</span> & <span>"Fancy Car" x 5</span> can get <span class="colorffb400">50000 coins</span>
+	    		</p>
+	    		<p>
+	    			- Level 3：Receive <span>"Kiss" x 500</span> & <span>"Fancy Car" x 10</span> & <span>"Marry Mel" x 5</span>  can get <span class="colorffb400">100000 coins</span>
+	    		</p>
+	    	</div>
+	    </div>
+	    <div class="content content-last">
+	    	<h2>
+	    		<div class="title-text">Notes</div>
+	    	</h2>
+	    	<div class="text">
+	    		<p>
+	    			1. After the activity, rewards will be given out to broadcasters on pay day of next month.
+	    		</p>
+	    		<p>
+	    			2. Activity time is based on GMT.
+	    		</p>
+	    	</div>
+	    </div>
+	</body>
+</html>

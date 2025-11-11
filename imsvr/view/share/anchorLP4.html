@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title></title>
+</head>
+<body>
+<div id="ticket_popup" class="ticket_popup">
+    <div class="ticket_title">Meet our stunning broadcasters and get intimate with them now!</div>
+
+<!--  has ticket  -->
+    <%if(showListByAnchor.length > 0){%>
+    <div class="banner_content">
+
+        <div class="ticket_box">
+            <% let i=1; for(let data of showListByAnchor){
+                if(showListByAnchor.length == 1){
+                    i=2;
+                }
+            %>
+            <div class="ticket_list">
+                <a href="/page/list.html#/showorder/schs" target="_blank">
+                <div class="t_left">
+                    <div class="nicname"><%=data.anchor_nickname%></div>
+                    <div class="h_mask"></div>
+                    <div class="h_mask<%=i%>"></div>
+                    <div class="lady_cover lady_avatar">
+                        <img src="<%=data.anchor_avatar%>">
+                    </div>
+                </div>
+
+                <div class="t_mid">
+                    <div class="t_title"><%=data.show_title%></div>
+                    <div class="t_desc"><%=data.show_introduce%></div>
+                    <div class="ticket_time">
+                        <div class="_time">
+                            <h3 class="t-n">Date(GMT)</h3>
+                            <span class="n-t"><%=data.TimeDay%></span>
+                        </div>
+                        <div  class="_time">
+                            <h3  class="t-n">Time(GMT)</h3>
+                            <span class="n-t"><%=data.TimeHour%></span>
+                        </div>
+                        <div  class="_time">
+                            <h3  class="t-n">Duration</h3>
+                            <span class="n-t"><%=data.duration%> minutes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="t_right">
+                    <a class="t_btn" href="/page/list.html#/showorder/schs" target="_blank">Get Ticket</a>
+                </div>
+                </a>
+
+            </div>
+            <% i++;}%>
+        </div>
+        <a class="button" href="/page/list.html#/showorder/schs" target="_blank">
+            <img src="<%=public_path%>img/man/userLP4/pop_button_1.png"  alt="View Full Calendar" />
+        </a>
+    </div>
+    <%}else if(indexPageAnchorList.length > 0){%>
+<!--  has ticket --> 
+
+<!--  no ticket -->
+    <div class="banner_content">
+        <div class="live_online">
+            <ul>
+                <%for(let data of indexPageAnchorList){%>
+                <li>
+                    <%if((data.room_type == 1 || data.room_type == 3) && data.online_status == 1){%>
+                        <div class="live_icon"><img src="<%=public_path%>img/man/userLP4/live.gif">Live</div>
+                    <%}else if(data.online){%>
+                        <div class="live_icon online">Online</div>
+                    <%}%>
+
+                    <%if(data.room_type == 3){%>
+                        <div class="vipPublic">Premium Public</div>
+                    <%}%>
+
+                    <%if(data.room_type == 3){%>
+                        <a class="link" href="/page/list.html?anchorid=<%=data.userid%>" target="_blank">
+                            <img class="lady_img" src="<%=data.room_photourl%>">
+                        </a>
+                    <%}else{%>
+                        <a class="link" href="/page/list.html?anchorid=<%=data.userid%>" target="_blank">
+                            <img class="lady_img" src="<%=data.room_photourl%>">
+                        </a>
+                    <%}%>
+
+                    <div class="lady_info" <%if(!data.online){%>style="padding-top: 60px;"<%}%>>
+                        <h5 class="name"><a href="/page/list.html?anchorid=<%=data.userid%>" target="_blank"><%=data.nickname%></a></h5>
+                        <%if(data.room_type == 3 && data.online){%>
+                        <a class="lady_btn" target="_blank" href="/page/list.html?anchorid=<%=data.userid%>">
+                            <%if(userCanUseCouponPublic){%>
+                            <i class="i_free"></i>
+                            <%}%>
+                            View Now
+                        </a>
+                        <%}else if(data.online){%>
+                        <a class="lady_btn blue" target="_blank" href="/page/list.html?anchorid=<%=data.userid%>">
+                            <%if(userCanUseCouponPrivate){%>
+                            <i class="i_free"></i>
+                            <%}%>
+                            Start One-on-One
+                        </a>
+                        <%}%>
+                    </div>
+                </li>
+                <%}%>
+            </ul>
+            <div style="clear:both"></div>
+        </div>
+         <a class="button" href="/page/list.html" target="_blank">
+            <img src="<%=public_path%>img/man/userLP4/pop_button_2.png"  alt="View Full Calendar" />
+        </a>
+    </div>
+    <%}%>
+<!--  no ticket -->
+
+</div>
+</body>
+</html>
+<style type="text/css">
+
+    html,body{padding: 0; margin: 0;font-family: Arial, Helvetica, sans-serif;}
+    img{display: block;border:0; }
+    #ticket_popup img{border:0;display: inline-block;}
+    #ticket_popup a{text-decoration: none;}
+    #ticket_popup{
+        width: 700px;
+        border-radius: 8px;
+        height: 565px;
+    }
+    #ticket_popup .hd{display:none;}
+    #ticket_popup a{color: #ffffff;}
+
+    #ticket_popup .ticket_title {
+        font-size: 26px;
+        text-align: center;
+        line-height: 1.2;
+        color: #fff;
+        height: 113px;
+        width: 100%;
+        border-radius: 8px 8px 0px 0px;
+        background: url(<%=public_path%>img/man/userLP4/title_bg.jpg) no-repeat top center;
+        text-indent: -9999!important;
+        text-indent: -888em;
+    }
+
+    #ticket_popup .banner_content{
+        width: 100%;
+        border-radius: 0px 0px 8px 8px;
+        background: url(<%=public_path%>img/man/userLP4/banner_bg.jpg) repeat-x bottom center;
+        position: relative;
+    }
+    #ticket_popup .button {
+        width: auto;
+        height:auto;
+        transition: 0.2s;
+        -webkit-transition: 0.2s;
+        margin: 0 auto;
+        display: inline-block;
+        margin: 0px;
+        transform: scale(0.98,0.98);
+        -webkit-transform: scale(0.98,0.986);
+        display: block;
+        text-align: center;
+        padding-bottom: 6px;
+    }
+    #ticket_popup .button:hover {
+        transform: scale(1,1);
+        -webkit-transform: scale(1,1);
+    }
+
+    /*ticket list*/
+    #ticket_popup .ticket_box {
+        width: 100%;
+        /*height: 352px;*/
+        padding-top: 28px;
+    }
+    #ticket_popup .ticket_box .ticket_list{
+        width: 100%;
+        height: 172px;
+        background: url(<%=public_path%>img/man/userLP4/list_bg.png?v=1.2) no-repeat top center;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_left{
+        width: 261px;
+        height: 100%;
+        float: left;
+        position: relative;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_left .nicname{
+        color: #fff;
+        position: absolute;
+        left: 68px;
+        bottom: 32px;
+        z-index: 12;
+        font-size: 16px;
+        font-weight: bold;
+        width: 180px;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
+        overflow: hidden;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_left .lady_cover{
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 170px;
+        height: 148px;
+        overflow: hidden;
+        z-index: 2;
+        margin-top: 1px;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-size: auto 100%;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_left .lady_cover img{
+        height: 100%;
+        margin-left: -60px;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_left .lady_avatar img{
+        width: 100%;
+        height: auto;
+        margin-left: 0px;
+        margin-top: 1px;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_left .h_mask{
+        width: 100%;
+        height: 100%;
+        background: url(<%=public_path%>img/man/userLP4/h_mask.png?v=1.2) no-repeat 40px 0px;
+        overflow: hidden;
+        z-index: 10;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_left .h_mask1{
+        width: 100%;
+        height: 100%;
+        background: url(<%=public_path%>img/man/userLP4/h_mask1.png?v=1.2) no-repeat 40px 0px;
+        overflow: hidden;
+        z-index: 10;
+        position: absolute;
+        top: 0px;
+        left: 9px;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_left .h_mask2{
+        width: 100%;
+        height: 100%;
+        background: url(<%=public_path%>img/man/userLP4/h_mask2.png?v=1.2) no-repeat 40px 0px;
+        overflow: hidden;
+        z-index: 10;
+        position: absolute;
+        top: 0px;
+        left: 9px;
+    }
+
+
+    #ticket_popup .ticket_box .ticket_list .t_mid{
+        width: 270px;
+        float: left;
+        padding: 20px 0px 0px 16px;
+    }
+
+    #ticket_popup .ticket_box .ticket_list .t_mid .t_title{
+        color: #297af3;
+        font-size: 18px;
+        font-weight: bold;
+        height: 24px;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    #ticket_popup .ticket_box .ticket_list .t_mid .t_desc{
+        font-size: 12px;
+        line-height: 1.2;
+        color: #666666;
+        text-align: left;
+        padding-top: 8px;
+        width: 100%;
+        height: 42px;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+
+    }
+    #ticket_popup .ticket_box .ticket_list .t_mid ._time .t-n{
+        font-weight: normal;
+        font-size: 12px;
+        color: #8dbbfe;
+        margin: 0;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_mid ._time .n-t{
+        font-weight: bold;
+        font-size: 12px;
+        color: #666;
+        margin-top: 2px;
+        display: inline-block;
+    }
+
+    #ticket_popup .ticket_box .ticket_list .t_right{
+        width: 80px;
+        height: 100%;
+        float: left;
+    }
+    #ticket_popup .ticket_box .ticket_list .t_right .t_btn{
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-indent: -888em;
+        text-indent: -9999!important;
+    }
+    #ticket_popup .ticket_time{
+        width: 100%;
+        height: auto;
+        text-align: left;
+        margin-top: 12px;
+    }
+    #ticket_popup .ticket_time ._time{
+        width: 30%;
+        height: auto;
+        display: inline-block;
+        *float: left;
+    }
+
+    /*ticket list*/
+
+    /*lady list*/
+    #ticket_popup .live_online {
+        padding: 26px 0px 20px;
+        text-align: center;
+        font-size: 0;
+    }
+    #ticket_popup .live_online ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+    }
+    #ticket_popup .live_online ul li {
+        /*width: 256px;
+        height: 350px;*/
+        width: 230px;
+        height: 320px;
+        color: #FFF;
+        text-align: center;
+        font-size: 14px;
+        margin: 0px 12px;
+        padding: 0px;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
+        *display: inline;
+        zoom:1;
+    }
+    #ticket_popup .live_online .live_icon {
+        width: 66px;
+        height: 22px;
+        line-height: 22px;
+        top: 10px;
+        left: 6px;
+        position: absolute;
+        background: url(<%=public_path%>img/man/userLP4/live_bg.png) no-repeat center;
+        z-index: 10;
+    }
+    #ticket_popup .live_online .vipPublic{
+        width: 95px;
+        height: 17px;
+        right: 0;
+        top: 12px;
+        left: auto;
+        position: absolute;
+        line-height: 25px;
+        z-index: 9;
+        text-indent: -888em;
+        background: transparent url(<%=public_path%>img/man/userLP4/s-public-icon.png) no-repeat 100% 0 scroll;
+
+    }
+    #ticket_popup .live_online .link{
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+    }
+
+    #ticket_popup .live_online ul li .live_lady {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-size: 100% 100%;
+    }
+    #ticket_popup .live_online ul li .lady_img {
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        border: 0;
+        transition: 0.6s;
+        -webkit-transition: 0.6s;
+        transform: scale(1,1);
+        -webkit-transform: scale(1,1);
+    }
+    #ticket_popup .live_online .link:hover .lady_img{
+        transform: scale(1.06,1.06);
+        -webkit-transform: scale(1.06,1.06);
+    }
+    #ticket_popup .live_online .live_icon.online {
+        background: url(<%=public_path%>img/man/userLP4/onlive_bg.png) no-repeat center;
+    }
+
+    #ticket_popup .live_online .lady_info {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding-bottom: 16px;
+        background: url(<%=public_path%>img/man/userLP4/ladies_list_mask.png) repeat-x bottom;
+    }
+    #ticket_popup .live_online .lady_info .name{
+        font-size: 18px;
+        margin: 0;
+        padding-top: 8px;
+        font-weight: 400;
+        width: 88%;
+        display: inline-block;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
+        overflow: hidden;
+    }
+    #ticket_popup .live_online .lady_info .lady_btn{
+        display: inline-block;
+        width: 168px;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-top:14px;
+        position: relative;
+        background: url(<%=public_path%>img/man/userLP4/view_btn.png) repeat-x bottom;
+        transition: 0.2s;
+        -webkit-transition: 0.2s;
+        transform: scale(1,1);
+        -webkit-transform: scale(1,1);
+    }
+    #ticket_popup .live_online .lady_info .lady_btn.blue{
+        background: url(<%=public_path%>img/man/userLP4/blue_btn.png) repeat-x bottom;
+    }
+    #ticket_popup .live_online .lady_info .lady_btn:hover{
+        transform: scale(1.02,1.02);
+        -webkit-transform: scale(1.02,1.02);
+    }
+
+    #ticket_popup .live_online .lady_info .lady_btn .i_free{
+        position: absolute;
+        top: -10px;
+        right: 8px;
+        width: 36px;
+        height: 20px;
+        background: url(<%=public_path%>img/man/userLP4/free.png) no-repeat;
+    }
+
+    #ticket_popup .live_online ul li img {
+        margin-right: 4px;
+    }
+    /*lady list*/
+</style>

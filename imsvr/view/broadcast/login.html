@@ -1,0 +1,134 @@
+<script>
+    var href = '<%=href%>';
+    if(href == 1){
+        parent.window.location.href='/broadcast/login';
+    }
+</script>
+<div class="loginBlock" style="display: none;">
+    <div class="loginLogo" style="position: relative;">
+        <img src="<%=public_path%>/img/u572.png">
+        <div class="BrowserDescription">
+            <div class="BrowserDescriptionTitle">
+                <img class="BrowserDescriptionTitleImg" src="<%=public_path%>/img/u627.png">Attention!
+            </div>
+            <div class="BrowserDescriptionText">
+                We have detected that your browser is not currently supported by our broadcaster system. We strongly recommend that you use the newest <a style="text-decoration:underline;" href="https://www.google.com/chrome/" target="_blank">Chrome</a> browser to use our broadcaster system.
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="login">
+        <div class="text">
+            <img src="<%=public_path%>/img/u573.png">
+        </div>
+        <form >
+            <div class="loginInputBlock" style="margin-top: 24px;">
+                <input type="hidden" name="broadcast_url" value="<%=broadcast_url%>">
+                <input type="hidden" name="codeKey" value="<%=codeKey%>">
+                <img class="loginInputIcon" src="<%=public_path%>/img/u571.png">
+                <input class="loginInput" placeholder="Broadcaster ID" type="text" name="sn" value="">
+            </div>
+            <div class="loginInputBlock">
+                <img class="loginInputIcon" src="<%=public_path%>/img/u569.png">
+                <input class="loginInput" placeholder="Password" type="password" name="password" value="">
+            </div>
+            <div class="loginInputBlock" style="margin-bottom: 7px;">
+                <img class="loginInputIcon" src="<%=public_path%>/img/u568.png">
+                <input class="loginInput" style="width: 170px; float: left;" placeholder="Verification Code" type="text" name="code" value="">
+                <img class="imgCode cursor" src="<%=server_host%>/api/?act=verificationcode&key=<%=codeKey%>">
+            </div>
+
+            <div class="prompt">
+
+            </div>
+
+            <input type="button" class="cursor loginSubmit" value="LOGIN">
+        </form>
+    </div>
+</div>
+<script>
+    $(function(){
+        let url = '<%=server_host%>/api/?act=verificationcode&key=<%=codeKey%>';
+        $('.imgCode').click(function(){
+            $(this).attr('src',url+'&a='+Math.random());
+        })
+
+
+        $('body').keydown(function(e){
+            if(e.keyCode==13){
+                $('.loginSubmit').click();
+            }
+        });
+
+        $('.loginSubmit').click(function(){
+            var broadcast_url = '<%=broadcast_url%>';
+            var codeKey = '<%=codeKey%>';
+            var sn = $('input[name="sn"]').val();
+            var password = $('input[name="password"]').val();
+            var code = $('input[name="code"]').val();
+            if(!sn){
+                $('.prompt').show();
+                $('.prompt').text('Broadcaster ID is required.');
+                return false;
+            }
+            if(!password){
+                $('.prompt').show();
+                $('.prompt').text('Password ID is required.');
+                return false;
+            }
+            if(!code){
+                $('.prompt').show();
+                $('.prompt').text('Veirification is required.');
+                return false;
+            }
+            var anchorTimezone = new Date();
+            $.post('/login/v1/ladyLogin',{broadcast_url:broadcast_url,codeKey:codeKey,sn:sn,password:password,code:code,'anchorTimezone':anchorTimezone.toString()},function(data){
+                if(data.errno == 0){
+                    window.location.href = data.data.broadcast_login;
+                }else if(data.errno == 1){
+                    $('.prompt').show();
+                    $('.prompt').text('Verification code error.');
+                    $('.imgCode').click();
+                }else if(data.errno == 2){
+                    $('.prompt').show();
+                    $('.prompt').text('Incorrect broadcaster ID or password.');
+                    $('.imgCode').click();
+                }else if(data.errno == 3){
+                    $('.prompt').show();
+                    $('.prompt').text('Veirification is incorrect.');
+                    $('.imgCode').click();
+                }
+                $('input[name="code"]').val('');
+            })
+        })
+
+        showLogin();
+        $(window).resize(function() {
+            showLogin();
+        });
+        //居中登录框
+        function showLogin(){
+            var windowHeigth = $(parent).height();
+            var windowWidth = $(parent).width();
+            var marginHeigth = (windowHeigth - 513) * 0.4;
+            var marginLeft = (windowWidth - 386) / 2;
+            if(windowHeigth < 550){windowHeigth = 550;}
+            $('.loginBlock').height(windowHeigth);
+            $('.loginLogo').css('margin-top', marginHeigth);
+            $('.loginLogo').css('margin-left', marginLeft+69);
+            $('.login').css('margin-left', marginLeft);
+            $('.loginBlock').show();
+        }
+
+        //检查浏览器类型
+        checkBrowser();
+        function checkBrowser(){
+            var browserVersion = window.navigator.userAgent.toUpperCase();
+            var isChrome = browserVersion.indexOf("CHROME") > -1 ? true : false;
+            if(!isChrome){
+                $('.BrowserDescription').show();
+            }
+        }
+
+    })
+</script>

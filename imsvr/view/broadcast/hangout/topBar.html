@@ -1,0 +1,46 @@
+<div class="addFriends cursor">
+    + Add new friends
+</div>
+<ul class="newtabs-menu">
+    <a href="/broadcast/hangout/friends">
+        <li class="hangoutFriends">
+            <span>HANG-OUT FRIENDS</span>
+            <%if(unreadConsentRequestCount > 0){%>
+            (<span style="margin-left: 0px;" class="hangoutFriendsNoRead"><%=unreadConsentRequestCount%></span>)
+            <%}%>
+        </li>
+        <div class="hangoutFriendsImg"></div>
+    </a>
+    <a href="/broadcast/hangout/requests">
+        <li class="hangoutRequests">
+            <span>FRIEND REQUESTS</span>
+            <%if(unreadPendingCount > 0){%>
+            (<span style="margin-left: 0px;" class="hangoutFriendsNoRead"><%=unreadPendingCount%></span>)
+            <%}%>
+        </li>
+        <div class="hangoutRequestsImg"></div>
+    </a>
+</ul>
+<script>
+    //获取列表长度
+    let addFriendsListNum = '<%=addFriendsList.length%>';
+    var height = 0;
+    if(addFriendsListNum >= 6){
+        height = 342 +110;
+    }else if(addFriendsListNum > 0){
+        height = addFriendsListNum * 57+110;
+    }else{
+        height = 342 +104;
+    }
+    $('.addFriends').click(function(){
+        parent.layer.open({
+            type: 2,
+            title: '',
+            closeBtn: 0,
+            resize: false,
+            shadeClose: true,
+            area : ['470px',height+'px'],
+            content: '/broadcast/hangoutLayer/addLayer'
+        });
+    })
+</script>

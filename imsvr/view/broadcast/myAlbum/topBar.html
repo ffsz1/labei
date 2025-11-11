@@ -1,0 +1,200 @@
+<div id="tabs-container">
+    <ul class="tabs-menu">
+        <a href="/broadcast/myAlbum/auditing"><li class="Auditing"><span>UNDER REVIEW</span></li></a>
+        <a href="/broadcast/myAlbum/pass"><li class="Pass"><span>APPROVED</span></li></a>
+        <a href="/broadcast/myAlbum/failed"><li class="Failed"><span>REJECTED</span></li></a>
+    </ul>
+    <ul class="plusBtn">
+        <li>
+            <a id="Photo" href="javascript:;"><div class="plusPhoto">+ Photo</div></a>
+        </li>
+        <li>
+            <a id="Video" href="javascript:;"><div class="plusVideo">+ Video</div></a>
+        </li>
+        <li>
+            <a id="Paragraph" href="javascript:;"><div class="plusText">+ Text</div></a>
+        </li>
+    </ul>
+</div>
+<script>
+$(function(){
+    //查看视频
+    $('.video').on('click', function(){
+        var videoUrl = $(this).attr('data-video');
+        var status = $(this).attr('data-status');
+        if(status == 1){
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                area : ['640px', '519px'],
+                content: '/broadcast/albumLayer/playVideo?videoUrl='+videoUrl,
+                success: function(layero){
+                    setTimeout(function() {
+                        layero.removeClass('layer-anim');
+                    }, 0);
+                },
+            });
+        }else{
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                area : ['640px', '522px'],
+                content: '/broadcast/albumLayer/playError'
+            });
+        }
+
+    })
+
+    //查看图片
+    var showOriginal = 0;
+    $('.showOriginal').on('click', function(){
+        if(showOriginal) {
+            return false;
+        }
+        showOriginal = 1;
+        var img = $(this).attr('data-img');
+        var image = new Image();
+        image.src = img;
+        image.onload = function(){
+            var width = image.width;
+            var height = image.height;
+
+//            width = width*0.9;
+//            height = height*0.9;
+            var windowHeigth = $(parent).height();
+            var windowWidth = $(parent).width();
+            var imgHeigth = '';
+            var imgWidth = '';
+            if(windowHeigth <= height || windowWidth <= width){
+                windowHeigth = parseInt(windowHeigth * 0.6);
+                windowWidth = parseInt(windowWidth * 0.6);
+                height = windowHeigth;
+                width = windowWidth;
+                imgHeigth = windowHeigth;
+                imgWidth = windowWidth;
+            }else{
+                imgHeigth = height;
+                imgWidth = width;
+            }
+            width = width + 20 + 'px';
+            height = height + 50 + 'px';
+            parent.layer.open({
+                type: 2,
+                title: '',
+                closeBtn: 0,
+                resize: false,
+                shadeClose: true,
+                area : [width, height],
+                content: '/broadcast/albumLayer/showOriginal?img='+img+'&width='+imgWidth+'&height='+imgHeigth,
+                end:function(){
+                    showOriginal = 0;
+                }
+            });
+        }
+    })
+
+    //添加视频
+    $('#Video').on('click', function(){
+        parent.layer.open({
+            type: 2,
+            title: '',
+            closeBtn: 0,
+            resize: false,
+            area : ['556px', '235px'],
+            content: '/broadcast/albumLayer/addVideo',
+            end:function(){
+                var status = Cookies.getJSON('add_success_video');
+                Cookies.remove('add_success_video');
+                if(status && status.status == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+    //添加图片
+    $('#Photo').on('click', function(){
+        parent.layer.open({
+            type: 2,
+            title: '',
+            closeBtn: 0,
+            resize: false,
+            shadeClose: true,
+            area : ['556px', '165px'],
+            content: '/broadcast/albumLayer/addPhoto',
+            end:function(){
+                var status = Cookies.getJSON('add_success_photo');
+                Cookies.remove('add_success_photo');
+                if(status && status.status == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+    //添加文本
+    $('#Paragraph').on('click', function(){
+        parent.layer.open({
+            type: 2,
+            title: '',
+            closeBtn: 0,
+            resize: false,
+            shadeClose: true,
+            area : ['556px', '216px'],
+            content: '/broadcast/albumLayer/addParagraph',
+            end:function(){
+                var status = Cookies.getJSON('add_success_paragraph');
+                Cookies.remove('add_success_paragraph');
+                if(status && status.status == 1){
+                    window.location.reload();
+                }
+            }
+        });
+    })
+
+    //记录排序的数组
+    var sortData = '';
+    Sort();
+    //排序
+    function Sort(){
+        $(".albumList li").addClass('shadow');
+        $(".albumList" ).sortable({
+            cursor: "move",
+            items :"li",
+            opacity: 0.6,
+            revert: true,
+            update : function(event, ui){
+                sortData = $(this).sortable("toArray");
+                saveSort();
+            }
+        });
+    }
+
+    //保存
+    function saveSort(){
+        $( ".albumList" ).sortable( "destroy" );
+        var minSort = '<%= minSort %>';
+        //如果排序没有改变则不提交
+        if(sortData){
+            $.post('/broadcast/albumLayer/reorder', {minSort:minSort, sortData:sortData}, function(data){
+                sortData = '';
+                if(data.errno==0){
+                    parent.layer.msg('Saved successfully');
+                    Sort();
+                }else{
+                    parent.layer.alert('Failed to save. Please try again.',{
+                        title:'',
+                        closeBtn: 0,
+                        shade:0,
+                        btnAlign:'c'
+                    });
+                }
+            })
+        }
+    }
+})
+</script>

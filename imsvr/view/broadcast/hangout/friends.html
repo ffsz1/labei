@@ -1,0 +1,101 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .hangoutFriendsBody{font-family: 'Arial Normal', 'Arial'; font-weight: 700; font-size: 12px;color: #434343;}
+    .hangoutFriendsBodyHead{width: 935px; background-color: #99D4FF; height: 33px; line-height: 33px; float: left; border-radius: 5px 5px 0px 0px;}
+    .hangoutFriendsBodyList{ color: #626262; height: 71px; line-height: 71px; width: 933px; border: 1px solid #C9C9C9; border-top: none;}
+    .hangoutFriendsBodyListOnline{float: left; margin-top: 31px; margin-left: 4px; width: 8px; height: 8px;}
+    .hangoutFriendsBodyListAvatar{float: left; width: 48px; height: 48px; margin-top: 11px; border-radius: 100%;}
+    .hangoutFriendsBodyListName{margin-left: 15px; width: 70px;}
+    .hangoutFriendsBodyListAge{margin-left: 10px; width: 100px;}
+    .hangoutFriendsBodyListOperating{margin-left: 10px; margin-top: 25px;}
+    .addFriends{width: 137px; height: 30px; line-height: 30px; text-align: center; font-weight: 700; font-size: 12px; color: #FFFFFF; background-color: #05C775; margin-bottom: 5px; border-radius:15px;}
+    .width15{width: 15px;}
+    .width280{width: 280px;}
+    .width300{width: 300px;}
+    .width530{width: 530px;}
+    .width100{width: 100px;}
+    .height71{height: 71px;}
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">My Hang-out friends</div>
+        <div class="userOnlineList">
+            <% include topBar.html %>
+            <div class="hangoutFriendsBody">
+                <div class="hangoutFriendsBodyHead">
+                    <div class="float-left width280" style="margin-left: 20px;">Friend</div>
+                    <div class="float-left width530">Time added</div>
+                    <div class="float-left width100">Action</div>
+                </div>
+                <%if(myFriendList.length >0){%>
+                <%for(let data of myFriendList){%>
+                <div class="float-left hangoutFriendsBodyList">
+                    <div class="float-left width300 height71">
+                        <div class="float-left height71 width15">
+                            <%if(!data.is_read){%>
+                            <img class="hangoutFriendsBodyListOnline" src="<%=public_path%>/img/u84.png">
+                            <%}%>
+                        </div>
+                        <img class="hangoutFriendsBodyListAvatar" src="<%=data.avatar_img%>">
+                        <div class="float-left beyondHiding cursor hangoutFriendsBodyListName" title="<%=data.nick_name%>">
+                            <%=data.nick_name%>
+                        </div>
+                        <div class="float-left beyondHiding cursor hangoutFriendsBodyListAge" title="<%=data.age%>yrs / <%=data.country%>">
+                            <%=data.age%>yrs / <%=data.country%>
+                        </div>
+                    </div>
+                    <div class="float-left width530 hangoutFriendsAddTime" data-time="<%=data.add_timestamp * 1000%>"></div>
+                    <div class="float-left width100">
+                        <img class="float-left cursor hangoutFriendsBodyListOperating delete" data-id="<%=data.friend_id%>" data-name="<%=data.nick_name%>" src="<%=public_path%>/img/u655.png">
+                    </div>
+                </div>
+                <%}%>
+                <%}else{%>
+                <div class="noData clear">No Hang-out friends yet.</div>
+                <%}%>
+
+                <div id="page" class="pagenation"></div>
+            </div>
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        hangoutFriendsAddTime();
+        $('.delete').click(function(){
+            var friend_id = $(this).attr('data-id');
+            var anchor_name = $(this).attr('data-name');
+            parent.layer.confirm('Are you sure you wish to delete your friend '+anchor_name+'?', {
+                btn:['Cancel', 'Yes'],
+                title:'',
+                btnAlign:'c',
+                closeBtn: 0,
+                shadeClose:true,
+                shade:0.01
+            }, function(){
+                parent.layer.msg('Cancel Delete');
+            }, function(){
+                $.post('/lady/v1/deleteFriend', {friend_id:friend_id}, function(data){
+                    if(data.errno == 0){
+                        window.location.reload();
+                        parent.layer.msg('deleted');
+                    }else{
+                        myParentAlert('Failed to delete');
+                    }
+                })
+            });
+        });
+
+        //分页
+        var pages = Math.ceil('<%=myFriendListCount%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

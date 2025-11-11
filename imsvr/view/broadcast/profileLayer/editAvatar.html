@@ -1,0 +1,68 @@
+<div class="cropping" style="text-align: center;">
+    <div class="title">Cropping Area</div>
+    <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    <div class="clear"></div>
+    <div class="cropping-img">
+        <img src="<%=blobImg%>" style="max-height: <%=height%>px; max-width: <%=width%>px;">
+    </div>
+    <div class="clear"></div>
+    <div class="btn">
+        <button class="Submit" style="cursor: pointer;">Submit</button>
+    </div>
+</div>
+<script>
+    $(function(){
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            parent.layer.close(index);
+        })
+
+        var $img = $('.cropping-img > img');
+        $img.cropper({
+            aspectRatio: 1 / 1,
+            guides:false,
+            minCropBoxWidth:256,
+            minCropBoxHeight:256,
+            crop: function(data) {
+                // Output the result data for cropping image.
+            }
+        });
+
+        $('.Submit').click(function () {
+            $img.cropper('getCroppedCanvas').toBlob(function (blob) {
+                var formData = new FormData();
+                formData.append('croppedImage', blob);
+                formData.append('originalImage', window.parent.avatarOriginalImg);
+                let editSubmitStart = layer.load(2);//load遮罩
+                $.ajax('<%=server_host%>/api/?act=uploadAvatarStepa', {
+                    method: "POST",
+                    async: false,
+                    dataType: "json",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        var img = data.data.url.croppedImage;
+                        var handle_id = data.handle_id;
+                        $.post('/broadcast/profileLayer/editAvatar', {img:img,handle_id:handle_id}, function(data){
+                            if(data.errno == 0){
+                                layer.close(editSubmitStart);//关闭load遮罩
+                                Cookies.set('add_success_avatar', {status:1});
+                                parent.layer.close(index);
+                                parent.layer.msg(data.data);
+                            }else{
+                                parent.layer.close(index);
+                                myParentAlert(data.data);
+                            }
+                        })
+                    },
+                    error: function () {
+
+                    }
+                });
+            }, '<%=type%>');
+        })
+
+    })
+</script>

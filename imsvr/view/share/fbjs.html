@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Share <%=anchorname%>'s public broadcast</title>
+	<script>
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-N829M6R');
+	</script>
+    <style>
+
+
+        div,p,a,body,html,button,span,table,tbody,thead,tr,td,th,mark,ul,li,header,footer,aside,section,input,em,b,strong,h1,h2,h3,h4,h5,h6{
+            padding: 0;
+            margin: 0;
+            vertical-align:baseline;
+        }
+        header,footer,aside,nav,mark,section{
+            display:block;
+        }
+        body{
+            font-size:14px;
+            color:#ccc;
+            font-family:'microsoft yahei',Arial, Helvetica, sans-serif;
+            background-color:#fff;
+        }
+        body,html{width: 100%;height:100%;overflow:visible;}
+        a{text-decoration: none;}
+        #app{
+            /* min-width:1040px; */
+            min-width:1000px;
+            /*2017 10 27增加最短宽度是1260*/
+            margin:0px auto;
+            height:100%;
+        }
+        button,input,a{
+            outline:none;
+        }
+
+        li{
+            list-style: none;
+        }
+        /*2017 07 27修改盒子模型样式*/
+        *{
+            box-sizing:border-box;
+            -webkit-tap-highlight-color: rgba(0,0,0,0)!important;
+            -webkit-text-size-adjust:100%!important;
+        }
+        .text-ellipsis{
+            display:block;
+            overflow:hidden;
+            -o-text-overflow:ellipsis;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            word-break:break-all;
+        }
+        table{
+            border-spacing:0px;
+            border:0px;
+        }
+        /*table 样式初始化*/
+
+        .editorImg{
+            width: 22px;
+            height: 22px;
+            vertical-align: middle;
+        }
+        .msgText img,.detail img{
+            width: 26px;
+            height: 26px;
+            vertical-align: middle;
+        }
+
+        /*动画时间 start*/
+        /*数字代表零点多少秒*/
+        .animate3{
+            -webkit-transition:all 0.3s ease-in;
+            -moz-transition:all 0.3s ease-in;
+            -ms-transition:all 0.3s ease-in;
+            -o-transition:all 0.3s ease-in;
+            transition:all 0.3s ease-in;
+        }
+        /*动画时间 end*/
+
+
+        .edui-scale{
+            display: none!important;
+        }
+        .edui-toolbar{
+            display: none;
+        }
+        .edui-container,.edui-editor-body,.editorBox{
+            width: 100% !important;
+            height: 100% !important;
+        }
+        /* .editorBox{
+            border: .5px solid #000;
+        } */
+        .face{
+            display:inline-block;
+            width:20px;
+            height:20px;
+            vertical-align:middle;
+        }
+
+
+        /*2017 10 16 设置聊天表情的长宽为24 * 24 start*/
+        .setFaceRect img{
+            width:26px;
+            height:26px;
+        }
+        /*2017 10 16 设置聊天表情的长宽为24 * 24 end*/
+        .errorSty2 a{
+            text-decoration:underline;
+            color:inherit;
+        }
+        /*2017 10 26 充值遮罩样式*/
+        .orderPopupMask{
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: rgba(0,0,0,0.6);
+            z-index: 999999;
+            color: #FFFFFF;
+        }
+
+        /*2017 11 03 sander增加如果正在打开welcome to channel，那么隐藏新手引导 start*/
+        .isWelcomeChannesTK .GuideMask{
+            display:none!important;
+        }
+        /*2017 11 03 sander增加如果正在打开welcome to channel，那么隐藏新手引导 end*/
+        ::-webkit-input-placeholder{
+            color: #BFBFBF;
+        }
+        :-moz-placeholder{
+            color: #BFBFBF;
+        }
+        ::-moz-placeholder{
+            color: #BFBFBF;
+        }
+        :-ms-input-placeholder{
+            color: #BFBFBF;
+        }
+
+
+        .title{
+            height: 36px;
+            line-height: 36px;
+            color: #702b95;
+            font-size: 16px;
+            text-align: center;
+        }
+        .cover{
+            height: 210px;
+            width: 154px;
+            margin: 0 auto;
+
+        }
+        .cover img{
+            width: 100%;
+            height: 100%;
+        }
+        .link{
+            width: 100%;
+            height: 32px;
+            margin-top: 10px;
+            position: relative;
+        }
+        .link input{
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            border-radius: 2px;
+            border: 1px solid #d2d2d2;
+            color: #686868;
+            font-size: 12px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        .msg{
+            width: 166px;
+            height: 28px;
+            line-height: 26px;
+            border:1px solid #f1f1f1;
+            text-align: center;
+            font-size: 14px;
+            color: #6fd920;
+            border-radius: 2px;
+            position: absolute;
+            right: 0px;
+            background: #ffffff;
+            top: -38px;
+            box-shadow: 1px 1px 2px #b3b2b2;
+
+        }
+        .msg .msg-content{
+            height: 100%;
+            width: 100%;
+            position: relative;
+
+        }
+        .msg .msg-content img{
+            position: absolute;
+            right: 10px;
+            bottom: -11px;
+        }
+        .btn{
+            height: 42px;
+            margin-top: 12px;
+            padding-left: 12px;
+            padding-right: 12px;
+
+        }
+        .btn li{
+            float: left;
+            width: 33.333%;
+            position: relative;
+
+        }
+        .btn li img{
+            width: 42px;
+            height: 42px;
+            margin: 0 auto;
+            display: block;
+        }
+        .btn li iframe{
+            margin: 0 auto;
+            display: block;
+            margin-top: 12px;
+        }
+        .btn li .copy-msg{
+            position: absolute;
+            bottom: -26px;
+            right: 0px;
+            height: 26px;
+            line-height: 26px;
+            color: #f90;
+            font-size: 12px;
+            width: 300px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<div class="title">Share <%=anchorname%>'s public broadcast</div>
+<div class="cover">
+    <!--<img src="http://192.168.88.17:84/uploadfiles/cover_photo/small/201710/ee6273bcce4ce16e44433e93e184dd46.png">-->
+    <img src="<%=cover%>">
+</div>
+<div class="link">
+    <input type="text" id="oldUrl" value="<%=ShareLink%>"/>
+    <div class="msg" id="linkMsg" style="display:none;">
+        <div class="msg-content">
+            Broadcast link copied!
+            <img src="<%=public_path%>/img/msg.png">
+        </div>
+    </div>
+</div>
+<div class="btn">
+    <ul>
+    	<!--
+        <li>
+            <a href="javascript:void(0);" onclick="facebookShare()"><img src="<%=public_path%>/img/facebook_btn.png"></a>
+        </li>
+        <li>
+            <a href="https://twitter.com/intent/tweet" onclick="twitterShare(this)"><img src="<%=public_path%>/img/twitter_btn.png"></a>
+        </li>
+       -->
+        <li style="margin-left: 100px;">
+            <a href="javascript:void(0);" id="copy-msg-btn" data-clipboard-text="<%=ShareLink%>"><img src="<%=public_path%>/img/copy_link_btn.png"></a>
+            <div class="copy-msg" id="copy-msg">Copy success</div>
+        </li>
+    </ul>
+</div>
+
+
+<script src="<%=public_path%>/js/clipboard.min.js"></script>
+
+<script>
+    /**
+     * 大部分js逻辑做时再商量
+     */
+    var shareuserid = '<%=shareuserid%>';
+    var anchorid = '<%=anchorid%>';
+    var sharepagetype =  '<%=sharepagetype%>';
+    var source = '<%=source%>';
+
+    function facebookShare(){
+        Ajax.post('/nodeApi/getShareLink','shareuserid='+shareuserid+'&anchorid='+anchorid+'&sharetype=1&sharepagetype='+sharepagetype,function(data){
+            var data = eval('(' + data + ')');
+            data = data.data;
+            FB.ui({
+                method: 'share',
+                href: data.sharelink //这里换成你的网址
+            }, function(response) {
+                //分享回调
+                if(response && !response.error_message) {
+                    shareSuccessCallback(data.shareid,function(result){
+                        //提示分享成功
+                        var result = eval('(' + result + ')');
+                        copyMsg(result.data.msg);
+                    });
+                } else {
+                    console.log('分享失败');
+                }
+            })
+        });
+    }
+
+    function twitterShare(obj){
+        Ajax.post('/nodeApi/getShareLink','shareuserid='+shareuserid+'&anchorid='+anchorid+'&sharetype=2&sharepagetype='+sharepagetype,function(data){
+            var data = eval('(' + data + ')');
+            data = data.data;
+            obj.href = "https://twitter.com/intent/tweet?text="+encodeURIComponent(data.title)+"&url="+encodeURIComponent(data.sharelink);
+
+//            shareSuccessCallback(data.shareid);
+        });
+    }
+
+    /**
+     * 分享成功回调
+     */
+    function shareSuccessCallback(shareid,callback){
+    	try{
+    		dataLayer.push({'event':'eventTracking','ga-data':'20341'})
+    	}catch(e){console.log(e)}
+        Ajax.post('/nodeApi/setShareSuc','shareid='+shareid,function(data){
+            if(callback){
+                callback(data);
+            }
+        });
+    }
+
+
+    var Ajax={
+        get: function(url, fn) {
+            var obj = new XMLHttpRequest();
+            obj.open('GET', url, true);
+            obj.onreadystatechange = function() {
+                if (obj.readyState == 4 && obj.status == 200 || obj.status == 304) {
+                    fn.call(this, obj.responseText);
+                }
+            };
+            obj.send();
+        },
+        post: function (url, data, fn) {
+            var obj = new XMLHttpRequest();
+            obj.open("POST", url, false);
+            obj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            obj.setRequestHeader("dev-type", "33");
+            obj.onreadystatechange = function() {
+                if (obj.readyState == 4 && (obj.status == 200 || obj.status == 304)) {
+                    fn.call(this, obj.responseText);
+                }
+            };
+            obj.send(data);
+        }
+    }
+    function copyToClipBoard(s) {
+
+        var s = document.getElementById("oldUrl").value;
+        if (window.clipboardData) {
+            window.clipboardData.setData("Text", s);
+            copyMsg("Copy success");
+        } else if (navigator.userAgent.indexOf("Opera") != -1) {
+            window.location = s;
+        } else if (window.netscape) {
+            try {
+                netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+            } catch (e) {
+                copyMsg("Copy failed, please manually copy");
+            }
+            var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
+            if (!clip)
+                return;
+            var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
+            if (!trans)
+                return;
+            trans.addDataFlavor('text/unicode');
+            var str = new Object();
+            var len = new Object();
+            var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+            var copytext = s;
+            str.data = copytext;
+            trans.setTransferData("text/unicode", str, copytext.length * 2);
+            var clipid = Components.interfaces.nsIClipboard;
+            if (!clip)
+                return false;
+            clip.setData(trans, null, clipid.kGlobalClipboard);
+            copyMsg("Copy success");
+        }else{
+            if(typeof window.copy === "function"){
+                window.copy(s);
+                copyMsg("Copy success");
+            }else{
+                copyMsg("Copy failed, please manually copy");
+            }
+        }
+    }
+
+    try{
+        var clipboard = new Clipboard(document.getElementById("copy-msg-btn"));
+
+        clipboard.on('success', function(e) {
+        	try{
+	    		dataLayer.push({'event':'eventTracking','ga-data':'20342'})
+	    	}catch(e){console.log(e)}
+            copyMsg("Copy success",true);
+        });
+
+        clipboard.on('error', function(e) {
+        	try{
+	    		dataLayer.push({'event':'eventTracking','ga-data':'20342'})
+	    	}catch(e){console.log(e)}
+            copyMsg("Copy failed, please manually copy");
+        });
+    }catch(e){
+        console.log(e);
+    }
+
+    var copyMsgTimer = null;
+    function copyMsg(str,linkShow){
+        window.clearTimeout(copyMsgTimer);
+        var copyMsg = document.getElementById("copy-msg");
+        var linkMsg = document.getElementById("linkMsg");
+        copyMsg.style.display = "block";
+        copyMsg.innerHTML = str;
+        if(linkShow){
+            linkMsg.style.display = "block";
+        }
+        copyMsgTimer = window.setTimeout(function(){
+            copyMsg.style.display = "none";
+            linkMsg.style.display = "none";
+        },3000);
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if(r != null) return unescape(r[2]);
+        return null;
+    }
+
+    /**
+     */
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '2022708618006078',
+            cookie: true,
+            xfbml: true,
+            version: 'v2.11'
+        });
+
+        FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if(d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+        return t;
+    }(document, "script", "twitter-wjs"));
+
+</script>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N829M6R" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+</body>
+
+</html>

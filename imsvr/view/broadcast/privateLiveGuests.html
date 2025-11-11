@@ -1,0 +1,163 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">My Private Viewers</div>
+        <div class="MPV">
+            <div id="tabs-container">
+                <div class="tab">
+                    <div id="tab-1" class="tab-content">
+                        <div class="subject">
+                            <ul>
+                                <li>
+                                    <div>User Information</div>
+                                </li>
+                                <li>
+                                    <div class="title">Levels</div>
+                                </li>
+                                <li>
+                                    <div>Last Broadcasted</div>
+                                </li>
+                                <li>
+                                    <select name="carlist" form="carform">
+                                        <option value="">Sort by</option>
+                                        <option <%if(orderType == 1){%>selected<%}%> value="1">Last boardcast first(default)</option>
+                                        <option <%if(orderType == 2){%>selected<%}%> value="2">Online First</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <%if(privateList.data.length){%>
+                        <div class="list">
+                            <%for(let val of privateList.data){%>
+                            <ul>
+                                <li>
+                                    <div>
+                                        <a href="/broadcast/viewerProfile?manid=<%=val.user_id%>">
+                                            <div class="avatar">
+                                            <img src="<%=val.avatar_img%>" class="profile-pic" alt=""/>
+                                            </div>
+                                        </a>
+
+                                        <%if(val.online_status == 2 && val.is_hidden == 0){%>
+                                        <div class="online" style="display:block;">
+                                            <img src="<%=public_path%>/img/online-icon2.png" width="16" height="16" alt=""/>
+                                        </div>
+                                        <%}else{%>
+                                        <div class="offline" style="display:block;">
+                                            <img src="<%=public_path%>/img/offline-icon.png" width="16" height="16" alt=""/>
+                                        </div>
+                                        <%}%>
+                                        <ul>
+                                            <li class="name">
+                                                <div><a class="Ellipses" href="/broadcast/viewerProfile?manid=<%=val.user_id%>"><%=val.nick_name%></a></div>
+                                            </li>
+                                            <li class="contry">
+                                                <div><%=val.country%></div>
+                                            </li>
+                                            <li class="old">
+                                                <div><%=val.age%> years old</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <ul class="statue" style="display:block; width: 120px;">
+                                            <div class="userlevel" style="margin-left: 0px;">
+                                                <img src="<%=public_path%>/img/intimacy_<%=val.intimacy%>.png"/>
+                                            </div>
+                                            <div class="userlevel">
+                                                <img src="<%=userLevelInfo[val.level].icon%>"/>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="scheduledLiveListTimeSent" data-time="<%=val.lastBroadcasted*1000%>"></li>
+                                <li id="<%=val.user_id%>">
+                                    <div>
+                                        <a href="<%if(val.online_status == 2 && val.is_hidden == 0){%>/page/anchor.html#userid=<%=val.user_id%>&type=private<%}else{%>javascript:;<%}%>"
+                                           target="_blank"
+                                           class="<%if(val.online_status == 2 && val.is_hidden == 0){%>instant<%}else{%>offline<%}%>"
+                                           title="<%if(val.online_status == 2 && val.is_hidden == 0){%>Start One-on-One Broadcast.<%}else{%>Start One-on-One Broadcast.<%}%>">
+                                            <img src="<%=public_path%>/img/u169.png" width="20" height="20" alt=""/>
+                                        </a>
+
+                                        <%if(val.intimacy > 0){%>
+                                        <a href="javascript:;" data-uid="<%=val.user_id%>" data-avatar="<%=val.avatar_img%>" data-nickname="<%=val.nick_name%>" data-age="<%=val.age%>" class="popMsg" title="Send Private Message"><img src="<%=public_path%>/img/u225.png" width="32" height="32" alt=""/></a>
+                                        <%}else{%>
+                                        <!--<a href="javascript:;" title="You can only send private messages viewers with whom your Intimacy Level is 1 or above. " style="cursor: not-allowed;"><img src="<%=public_path%>/img/u226.jpg" width="32" height="32" alt=""/></a>-->
+                                        <a href="javascript:;" data-uid="<%=val.user_id%>" data-avatar="<%=val.avatar_img%>" data-nickname="<%=val.nick_name%>" data-age="<%=val.age%>" class="popMsg" title="Send Private Message"><img src="<%=public_path%>/img/u225.png" width="32" height="32" alt=""/></a>
+                                        <%}%>
+
+                                        <a href="javascript:;" class="reserve" title="Request booking"><img src="<%=public_path%>/img/u171.png" width="64" height="64" alt=""/></a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <%}%>
+                        </div>
+                        <%}else{%>
+                        <div class="empty">No recent private viewers.</div>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //主播立即邀请会员
+//        $('.instant').on('click', function(){
+//            var id = $(this).parents('li').attr('id');
+//            $.post('/lady/v1/instantInviteUser', {user_id:id}, function (data) {
+//                if(data.errno == 0){
+//                    parent.layer.msg('Instant private live invitation has been sent.');
+//                }else{
+//                    parent.layer.alert('Failed to send instant private live invitation. Please try again later.',{
+//                        title:'',
+//                        closeBtn: 0,
+//                        shade:0,
+//                        btnAlign:'c'
+//                    });
+//                }
+//            })
+//        });
+        $('.popMsg').click(function(){
+            var userid = $(this).attr('data-uid');
+            var avatar = $(this).attr('data-avatar');
+            var nickname = $(this).attr('data-nickname');
+            var age = $(this).attr('data-age');
+            var data = {userid:userid,photourl:avatar,nickname:nickname,age:age};
+            window.parent.popMsg(data);
+        })
+
+        /*主播预约会员*/
+        $('.reserve').on('click', function(){
+            let id = $(this).parents('li').attr('id');
+            let anchor_id = '<%=anchor_id%>';
+            window.parent.popRequest(anchor_id,id);
+        });
+
+        $('.enabled').click(function(){
+            let sort = $('select[name="carlist"]').val();
+            window.location.href = '/broadcast/privateLiveGuests?orderType='+sort;
+        })
+
+        anchorReservationTimeSent();
+        //分页
+        var pages = Math.ceil('<%=privateList.count.total%>'/20);
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

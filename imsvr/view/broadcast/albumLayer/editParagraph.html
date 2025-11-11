@@ -1,0 +1,38 @@
+<div class="editAlbumTitle" style="width: 298px;">
+    <div class="editTitle">Edit Paragraph</div>
+    <input type="hidden" name="id" value="<%=id%>">
+    <textarea style="width: 298px; height: 95px; padding: 5px 8px; margin-top: 25px; resize: none;" type="text" name="paragraph" maxlength="140" value="" placeholder="Tell us more about yourself."></textarea>
+    <div style="margin-left: 85px;margin-top: 5px;">The maximum number of words 140</div>
+    <div class="editCancel">Cancel</div>
+    <div class="editSubmit">Submit</div>
+</div>
+<script>
+    $(function(){
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.editCancel').click(function(){
+            Cookies.remove('add_paragraph');
+            parent.layer.close(index);
+        })
+        $('.editSubmit').click(function(){
+            var id = $('input[name="id"]').val();
+            var paragraph = $('textarea[name="paragraph"]').val();
+            $.post('/broadcast/albumLayer/editParagraph', {id:id, paragraph:paragraph}, function(data){
+                if(data.errno == 0){
+                    Cookies.set('add_paragraph', {status:1, id:id, paragraph:paragraph});
+                    parent.layer.close(index);
+                    parent.layer.msg('Submit successfully. Auditing soon.');
+                }else{
+                    Cookies.remove('add_paragraph');
+                    parent.layer.close(index);
+                    parent.layer.alert('Failed to submit. Please try again..', {
+                        title:'',
+                        btnAlign:'c',
+                        closeBtn: 0,
+                        shade:0
+                    });
+                }
+            })
+        })
+    })
+</script>

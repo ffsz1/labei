@@ -1,0 +1,15 @@
+<ul class="newtabs-menu">
+    <a href="/broadcast/instant/incoming">
+        <li class="Incoming">
+            <span>INCOMING INVITES</span>
+            <%if(getInviteNoReadNum > 0){%>
+            (<span class="incomingNoRead"><%=getInviteNoReadNum%></span>)
+            <%}%>
+        </li>
+        <div class="IncomingImg"></div>
+    </a>
+    <a href="/broadcast/instant/outgoing">
+        <li class="Outgoing"><span>OUTGOING INVITES</span></li>
+        <div class="OutgoingImg"></div>
+    </a>
+</ul>

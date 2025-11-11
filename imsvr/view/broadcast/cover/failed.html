@@ -1,0 +1,85 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myCover-underReview">
+        <div class="pageInfo">My Cover</div>
+        <% include topBar.html %>
+
+        <div class="covers-photos">
+            <%if(data.length){%>
+            <ul>
+                <%for(let val of data){%>
+                <li class="covers" id="<%=val.id%>" style="width: 210px;">
+                    <img src="<%=val.img%>" alt=""/>
+                    <div>
+                        <ul class="edit">
+                            <li>
+                                <a class="coverDelete" href="javascript:;">
+                                    <div><img src="<%=public_path%>/img/u155.png" alt=""/></div>
+                                    <div>Delete</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            <%}%>
+            </ul>
+            <%}else{%>
+            <div class="noData">No photos rejected.</div>
+            <%}%>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //显示修改和删除
+        $('.covers').mouseenter(function(){
+            $(this).find('ul.edit').stop();
+            $(this).find('ul.edit').slideDown(300);
+        })
+        $('.covers').mouseleave(function(){
+            $(this).find('ul.edit').stop();
+            $(this).find('ul.edit').slideUp(300);
+        })
+
+        /**
+         * 删除封面
+         */
+        $('.coverDelete').on('click', function () {
+            let id = $(this).parents('li.covers').attr('id');
+            parent.layer.confirm('Are you sure you wish to delete this photo?', {
+                btn:['Cancel', 'Yes'],
+                title:'',
+                btnAlign:'c',
+                closeBtn: 0,
+                shadeClose:true,
+                shade:0.01
+            }, function(){
+                parent.layer.msg('Cancel Delete');
+            }, function(){
+                $.post('/broadcast/cover/deleteCover',{id:id},function(data){
+                    if(data.errno == 0){
+                        window.location.reload();
+                        parent.layer.msg('deleted');
+                    }else{
+                        parent.layer.msg('Failed to delete');
+                    }
+                })
+            });
+        })
+
+        //分页
+        var pages = Math.ceil('<%=count.total%>'/8);
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

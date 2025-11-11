@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Backpack | CharmLive.com</title>
+    <meta name="keywords" content="Charmlive,livestream,live video chat,live broadcasting,free live video chat" />
+    <meta name="description" content="Here is your backpack which might contain free trial vouchers,gifts or rides specially for you.Just check what they are." />
+    <meta  id="pageSetMeta" content="*">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <script src="<%=public_path%>/js/jquery.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>     
+    <script>      
+    $.ajaxSetup({
+        cache: true
+    });
+    $.get('/page/list.html', {}, function(res) {
+        var str = res.replace(/[\r\n]/g, "");
+        var source = {},
+            scriptArr = [];
+        source.style = str.match(/<style.*?<\/style>/g);
+        source.link = str.match(/<link.*?>/g);
+        scriptArr = str.match(/<script.*?<\/script>/g);
+        var script = '';
+        for (var key in source) {
+            if (Object.prototype.toString.call(source[key]) == '[object Array]') {
+                source[key].forEach(function(value) {
+                    $('body').append(value);
+                })
+            }
+        }
+        scriptArr.forEach(function(value) {
+            if (value.toLowerCase().indexOf('jquery.min.js') > -1) return;
+            $('body').append(value);
+        })
+    })
+    </script>        
+  </body>
+</html>

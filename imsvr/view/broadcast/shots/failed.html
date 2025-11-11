@@ -1,0 +1,94 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myAlbum-underReview">
+        <div class="pageInfo">My Shots</div>
+        <% include topBar.html %>
+        <div class="shotsMain" >
+            <div class="shotsMainTitle" >
+                <div class="shotsMainShots" >Shot</div>
+                <div class="shotsMainTime" >Reject Reason</div>
+            </div>
+
+            <% if(list.length) {%>
+            <% for(var data of list){%>
+            <div class="shotsMainList">
+                <div class="shotsMainShots shotsMainShotsBody">
+                    <!--图片-->
+                    <div class=" shotsMainShotsImg">
+                        <% if(data.type == 1) {%>
+                        <img class="shotsMainShotsImgBody showOriginal cursor" data-img="<%=data.originImg%>" src="<%=data.img%>">
+                        <% }else{%>
+                        <!--视频-->
+                        <img class="shotsMainShotsImgBody" data-img="<%=data.originImg%>" src="<%=data.img%>">
+                        <img class="shotsMainShotsVideo video cursor" data-video="<%=data.video%>" data-status="<%=data.video_file_status%>" src="<%=public_path%>/img/play_video.png">
+                        <% }%>
+                    </div>
+                    <!--内容-->
+                    <%if(F.getByteLen(data.content) > 220){%>
+                    <div class="shotsMainShotsContent" title="<%=data.content%>">
+                        <%=data.content%>
+                    </div>
+                    <%}else{%>
+                    <div class="shotsMainShotsContent">
+                        <div class="shotsMainShotsContentText" title="<%=data.content%>">
+                            <%=data.content%>
+                        </div>
+                    </div>
+                    <%}%>
+                </div>
+                <div class="shotsRejectReason">
+                    <div class="center" style="width: 202px; word-wrap:break-word;"><%=data.reject_reason%></div>
+                </div>
+                <div class="shotsRejectDelete">
+                    <a id="<%=data.id%>" class="shotsRejectDeleteA" href="javascript:;">DELETE</a>
+                </div>
+            </div>
+            <% }%>
+            <%}else{%>
+            <div class="noData" style="width: 932px;">No shots rejected.</div>
+            <% }%>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        /*删除动态*/
+        $('.shotsRejectDeleteA').on('click', function(){
+            var id = $(this).attr('id');
+            parent.layer.confirm('Are you sure you wish to delete this shots?', {
+                btn:['Cancel', 'Yes'],
+                title:'',
+                btnAlign:'c',
+                closeBtn: 0,
+                shadeClose:true,
+                shade:0.01
+            }, function(){
+                parent.layer.msg('Cancel Delete');
+            }, function(){
+                $.post('/broadcast/shots/deleteShots', {id:id}, function(data){
+                    if(data.errno == 0){
+//                        window.location.reload();
+                        window.location.href="/broadcast/shots/failed";
+                        parent.layer.msg('deleted');
+                    }else{
+                        myParentAlert('Failed to delete');
+                    }
+                })
+            });
+        });
+        //分页
+        var pages = Math.ceil('<%=total%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

@@ -1,0 +1,128 @@
+<style>
+    .plusForm div.btn {padding: 0px;}
+    .plusForm .content div{margin-bottom: 0px;}
+    #filePicker>.webuploader-pick{background: none; color: #000000; padding: 0px; height: 29px; line-height: 29px; width: 98px; border: none;}
+</style>
+<div class="plusForm photo">
+    <div>
+        <div class="title">Upload photo</div>
+        <div class="close"><a href="javascript:;"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <div class="content">
+
+            <div>Photo <label>(JPG & PNG only, size less than 3M. Image short-edit must be longer than 380px.)</label></div>
+            <input class="uploadFile" id="uploadFile" disabled="disabled" style="background: none;" placeholder=""/>
+
+            <div class="fileUpload btn btn-primary">
+                <div id="filePicker">Browse photo</div>
+                <input type="hidden" name="img" value="">
+            </div>
+
+            <!--<div>Photo description <label> (28 character limited)</label></div>-->
+            <!--<input type="text" name="title" class="dec" maxlength="28">-->
+            <button class="Submit cursor">Upload</button>
+            <img id="text" src="">
+    </div>
+</div>
+<script>
+    $(function(){
+        //创建文件上传
+        var uploader = WebUploader.create({
+            auto: true,
+            fileSingleSizeLimit: 1024*1024*3,//最大只能上传10M
+            swf: '<%=public_path%>' + '/js/webuploader/Uploader.swf',
+            server: '<%=server_host%>/api/?act=uploadAlbum',
+            pick: '#filePicker',
+            accept: {
+                title: 'Images',
+                extensions: 'jpg,jpeg,png',
+                mimeTypes: 'image/jpg,image/jpeg,image/png'
+            },
+            compress: null
+        });
+
+        // 图片上传中
+        var uploadProgress = 0;//防止重复提示
+        var load = '';
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            if (!uploadProgress) {
+                load = layer.load(2);
+            }
+            uploadProgress = 1//等于1表示不上传动作已经开启
+        });
+
+        //文件上传成功
+        uploader.on( 'uploadSuccess', function( file, response) {
+            if(response.errno == 13){
+                myParentAlert("The image size must be larger than 380px(width) * 380px(height).");
+            }
+            if(response.errno == 14){
+                myParentAlert("The photo resolution can not be larger than 3600 * 3600.");
+            }
+            uploader.removeFile(file);//从队列中移除上传的文件，以便可以重复上传
+            if(response.errno == 0){
+                $('#uploadFile').val(file.name);
+                $('input[name="img"]').val(response.data.url);
+            }
+            uploadProgress =0;//重置开关
+            layer.close(load);
+        });
+
+        //文件上传失败
+        uploader.on( 'uploadError', function( file ) {
+            myParentAlert("Failed to upload. Please try again.");
+            uploadProgress = 0;//重置开关
+            layer.close(load);
+        });
+
+        //错误提示
+        uploader.on("error", function (type) {
+            if(type == "Q_TYPE_DENIED"){
+                myParentAlert("Incorrect format. Only JPG and PNG format allowed. File size must be 3M or less.");
+            }
+            if(type == "F_EXCEED_SIZE"){
+                myParentAlert("Incorrect format. Only JPG and PNG format allowed. File size must be 3M or less.");
+            }
+        });
+
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            parent.layer.close(index);
+        })
+        var change_status = 0;//防止多次点击
+        $('.Submit').click(function(){
+            if(change_status){
+                return false;
+            }
+            change_status = 1;
+//            var title = $('input[name="title"]').val();
+            var img = $('input[name="img"]').val();
+            if(!img){
+                myParentAlert('Please select an valid photo.');
+                change_status = 0;
+                return false;
+            }
+//            if(!title){
+//                myParentAlert('Please enter photo description.');
+//                change_status = 0;
+//                return false;
+//            }
+//            if(title.length > 28){
+//                myParentAlert('The photo description can not exceed 28 characters.');
+//                change_status = 0;
+//                return false;
+//            }
+            $.post('/broadcast/albumLayer/addPhoto', {img:img}, function(data){
+                if(data.errno == 0){
+                    Cookies.set('add_success_photo', {status:1});
+                    parent.layer.close(index);
+                    parent.layer.msg('Submit successfully. Auditing soon.');
+                }else{
+                    myParentAlert('Failed to submit. Please try again.');
+                    change_status = 0;
+                }
+            })
+        })
+    })
+</script>

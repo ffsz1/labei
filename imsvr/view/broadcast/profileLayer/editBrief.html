@@ -1,0 +1,52 @@
+<div class="profile-edit Self-Intro">
+    <div>
+        <div class="title">Edit Self-Intro</div>
+        <div class="close"><a href="#"><img src="<%=public_path%>/img/close-btn.png" alt=""/></a></div>
+    </div>
+    <div class="content">
+        <textarea name="description" maxlength="280"><%=anchorInfo.introduction%></textarea>
+        <button class="Submit">Submit</button>
+        <div><label id="descriptionNumber"><%=anchorInfo.introduction.length%></label> / 280</div>
+        <div class="tips" style="color: #a9a9a9; width: 492px; float: left;">
+            Your new self-intro will be submitted to approval. Only approved nickname will appear to other users.
+            Before the approval or your new self-intro is rejected, your current self-intro will still appear to others.
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('textarea[name="description"]').on('input', function(){
+            let description = $('textarea[name="description"]').val();
+            $('#descriptionNumber').text(description.length);
+        })
+//        弹窗
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.iframeAuto(index);
+        $('.close').click(function(){
+            Cookies.remove('add_talent');
+            parent.layer.close(index);
+        })
+        $(document).on('click','.Submit',function(){
+            var brief = $('textarea[name="description"]').val();
+            if(!brief){
+                layer.msg('Please enter your new self-intro.');
+                return false;
+            }
+            if(brief.length > 280 || brief.length < 30){
+                myParentAlert('Sorry, self-intro should be in 30 - 280 characters.');
+                return false;
+            }
+
+            $.post('/broadcast/profileLayer/editBrief', {brief:brief}, function(data){
+                if(data.errno == 0){
+                    Cookies.set('add_success_name', {status:1});
+                    parent.layer.msg(data.data);
+                    parent.layer.close(index);
+                }else{
+                    myParentAlert(data.data);
+                    parent.layer.close(index);
+                }
+            })
+        })
+    })
+</script>

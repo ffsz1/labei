@@ -1,0 +1,189 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    #tabs-container #tab-1 ul.scheduled li.name{width: 90px;}
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">Broadcast Bookings</div>
+        <div id="tabs-container">
+            <% include topBar.html %>
+
+            <div class="tab">
+                <div id="tab-1" class="tab-content">
+                    <div class="subject">
+                        <ul class="scheduled">
+                            <li>From</li>
+                            <li>To</li>
+                            <li>Broadcast time</li>
+                            <li>Time confirmed</li>
+                            <li style="width: 120px; margin-right: 20px; text-align: center;">Attached gifts</li>
+                            <li>Remaining Time</li>
+                        </ul>
+                    </div>
+
+                    <%if(data.list.length){%>
+                    <% for(var value of data.list){%>
+                    <div class="list">
+                        <%if(value.type == 1){%>
+                        <ul class="scheduled">
+                            <li>
+                                <div>
+                                    <a href="/broadcast/viewerProfile?manid=<%=value.fromid%>">
+                                        <div class="avatar_instant">
+                                        <img src="<%=value.opposite_photourl%>" class="profile-pic" alt=""/>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=value.opposite_nickname%>">
+                                            <div><a href="/broadcast/viewerProfile?manid=<%=value.fromid%>"><%=value.opposite_nickname%></a></div>
+                                        </li>
+                                        <li class="contry">
+                                            <div><%=value.opposite_country%></div>
+                                        </li>
+                                        <li>
+                                            <ul class="statue" style="display:block;">
+                                                <div class="userlevel">
+                                                    <img src="<%=public_path%>/img/intimacy_<%=value.intimacy%>.png"/>
+                                                </div>
+                                                <div class="userlevel">
+                                                    <img src="<%=userLevelInfo[value.level].icon%>"/>
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="to">
+                                <div>
+                                    <div class="avatar_instant">
+                                        <img src="<%=userInfo.avatar_img%>" class="profile-pic" alt=""/>
+                                    </div>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=userInfo.nick_name%>"><%=userInfo.nick_name%></li>
+                                        <li class="contry"><%=userInfo.age%> years old</li>
+                                        <li><%=userInfo.country%></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="scheduledLiveListTimeSent" data-time="<%=value.book_time*1000%>"></li>
+                            <li class="scheduledLiveListTime" data-time="<%=value.accept_time*1000%>"></li>
+                            <li style="width: 120px; margin-right: 20px; text-align: center;">
+                                <%if(value.gift_num > 0){%>
+                                <div>
+                                    <img src="<%=value.gift_small_imgurl%>" style="width: 50px; height: 50px;" alt=""/>
+                                    <label>X</label>
+                                    <label class="count"><%=value.gift_num%></label>
+                                </div>
+                                <%}%>
+                            </li>
+                            <li>
+                                <div class="RemainingTime" data-time="<%=value.valid_time%>">
+                                    <a class="Start_Now_a" style="display: none" href="/page/anchor.html#roomid=<%= value.roomid%>&user_id=<%=value.fromid%>" target="_blank;">
+                                        <div class="Start_Now_B">
+                                            <div class="countdown"></div>
+                                            <div class="Start_Now">Start Now</div>
+                                        </div>
+                                    </a>
+
+                                    <span style="font-size: 16px; display: none" class="reciprocal"></span>
+                                </div>
+                            </li>
+                        </ul>
+                        <%}else if(value.type == 2){%>
+                        <ul class="scheduled">
+                            <li>
+                                <div>
+                                    <div class="avatar_instant">
+                                        <img src="<%=userInfo.avatar_img%>" class="profile-pic" alt=""/>
+                                    </div>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=userInfo.nick_name%>"><%=userInfo.nick_name%></li>
+                                        <li class="contry"><%=userInfo.age%> years old</li>
+                                        <li><%=userInfo.country%></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="to">
+                                <div>
+                                    <a href="/broadcast/viewerProfile?manid=<%=value.fromid%>">
+                                        <div class="avatar_instant">
+                                        <img src="<%=value.opposite_photourl%>" class="profile-pic" alt=""/>
+                                        </div>
+                                    </a>
+                                    <ul>
+                                        <li class="name Ellipses" title="<%=value.opposite_nickname%>">
+                                            <div><a href="/broadcast/viewerProfile?manid=<%=value.fromid%>"><%=value.opposite_nickname%></a></div>
+                                        </li>
+                                        <li class="contry">
+                                            <div><%=value.opposite_country%></div>
+                                        </li>
+                                        <li>
+                                            <ul class="statue" style="display:block;">
+                                                <div class="userlevel" style="margin-left: 0px;">
+                                                    <img src="<%=public_path%>/img/intimacy_<%=value.intimacy%>.png"/>
+                                                </div>
+                                                <div class="userlevel">
+                                                    <img src="<%=userLevelInfo[value.level].icon%>"/>
+                                                </div>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="scheduledLiveListTimeSent" data-time="<%=value.book_time*1000%>"></li>
+                            <li class="scheduledLiveListTime" data-time="<%=value.accept_time*1000%>"></li>
+                            <li style="width: 120px; margin-right: 20px; text-align: center;">
+                                <%if(value.gift_num > 0){%>
+                                <div>
+                                    <img src="<%=value.gift_small_imgurl%>" style="width: 50px; height: 50px;" alt=""/>
+                                    <label>X</label>
+                                    <label class="count"><%=value.gift_num%></label>
+                                </div>
+                                <%}%>
+                            </li>
+                            <li>
+                                <div class="RemainingTime" data-time="<%=value.valid_time%>">
+                                    <a class="Start_Now_a" style="display: none" href="/page/anchor.html#roomid=<%= value.roomid%>&user_id=<%=value.fromid%>" target="_blank;">
+                                        <div class="Start_Now_B">
+                                            <div class="countdown"></div>
+                                            <div class="Start_Now">Start Now</div>
+                                        </div>
+                                    </a>
+
+                                    <span style="font-size: 16px; display: none" class="reciprocal"></span>
+                                </div>
+                            </li>
+                        </ul>
+                        <%}%>
+                    </div>
+                    <% }%>
+                    <%}else{%>
+                    <div class="empty">No schedules.</div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //分页
+        var pages = Math.ceil('<%=data.total%>'/15);
+        if(pages>1) {
+            page('page', pages);
+        }
+
+        anchorReservationTime();
+        anchorReservationTimeSent();
+//        startNow();
+        remainingTime();
+        setInterval(remainingTime, 1000);
+    })
+</script>

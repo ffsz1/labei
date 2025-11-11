@@ -1,0 +1,65 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+</style>
+
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content myAlbum-underReview">
+        <div class="pageInfo">My Album</div>
+        <% include topBar.html %>
+
+        <%if(anchor_album.data.length){%>
+        <div class="covers-photos albumList">
+            <ul>
+                <% for(let val of anchor_album.data){ %>
+                    <%if(val.type == 1){%>
+                    <li id="<%=val.id%>">
+                        <div><img src="<%=val.imgThumb%>" alt=""/></div>
+                        <div class="showOriginalBtn showOriginal cursor" data-img="<%=val.img%>"><img src="<%=public_path%>/img/u567.jpg" width="32" height="32" alt=""/></div>
+                        <%if(val.is_private == 1){%>
+                        <div class="lock-icon"><img src="<%=public_path%>/img/u182.png" alt=""/></div>
+                        <%}%>
+                    </li>
+                    <% }else if(val.type == 2){%>
+                    <li id="<%=val.id%>">
+                        <div><img src="<%=val.imgThumb%>" alt=""/></div>
+                        <div class="video" data-status="<%=val.video_file_status%>" data-video="<%=val.video%>"><img src="<%=public_path%>/img/u206.png" width="22" height="31" alt=""/></div>
+                        <%if(val.is_private == 1){%>
+                        <div class="lock-icon"><img src="<%=public_path%>/img/u182.png" alt=""/></div>
+                        <%}%>
+                    </li>
+                    <% }else if(val.type == 3){%>
+                    <li id="<%=val.id%>">
+                        <table width="225" height="200" border="0" style="word-break:break-all;">
+                            <tbody>
+                            <tr>
+                                <td align="center" valign="middle" title="<%=val.file_desc%>"><%=val.file_desc%></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                    <% }%>
+                <% }%>
+            </ul>
+        </div>
+        <div class="tips">* Drag photo to reposition.</div>
+        <%}else{%>
+        <div class="noData">No photos under review.</div>
+        <%}%>
+        <div id="page" class="pagenation"></div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        //分页
+        var pages = Math.ceil('<%=anchor_album.count[0].total%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+</script>

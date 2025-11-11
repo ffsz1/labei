@@ -1,0 +1,149 @@
+<style>
+    .right-content{
+        padding-top:54px!important; padding-left:0!important; width:970px!important;
+    }
+    .hangoutFriendsFrom{width: 250px; float: left;}
+    .hangoutFriendsFrom img{border-radius: 100%; width: 48px; height: 48px; float: left; margin-top: 11px; margin-left: 15px;}
+    .hangoutFriendsFromName{float: left; width: 150px; height: 14px; line-height: 14px; margin-left: 17px; margin-top: 15px;}
+    .hangoutFriendsFromAge{float: left; width: 150px; height: 14px; line-height: 14px; margin-left: 17px; margin-top: 10px;}
+    .hangoutFriendsSent{width: 219px; float: left;}
+    .hangoutFriendsSent img{border-radius: 100%; width: 48px; height: 48px; float: left; margin-top: 11px;}
+    .hangoutFriendsSentYou{width: 50px; float: left; margin-left: 15px;}
+    .hangoutFriendsAddTime{width: 160px; float: left;}
+    .hangoutFriendsSentPending{width: 115px; float: left;}
+    .hangoutFriendsSentAction{float: left; margin-top: 20px; width: 150px;}
+    .hangoutFriendsSentActionDecline{width: 63px; height: 30px; line-height: 30px; float: left; text-align: center; border: 1px solid #5ADA70; color: #5ADA70; border-radius: 15px;}
+    .hangoutFriendsSentActionAccept{width: 63px; height: 30px; line-height: 30px; float: left; margin-left: 10px; text-align: center; border: 1px solid #5ADA70;background-color: #5ADA70; color: #ffffff; border-radius: 15px;}
+    .hangoutFriendsSentPending div{float: left;}
+</style>
+<div class="content">
+    <% include ../leftBar.html %>
+    <!-- right content start -->
+    <div class="right-content">
+        <div class="pageInfo">My Hang-out friends</div>
+        <div class="userOnlineList">
+            <% include topBar.html %>
+
+            <div class="hangoutFriendsBody">
+                <div class="hangoutFriendsBodyHead">
+                    <div class="float-left" style="margin-left: 20px; width: 235px;">From</div>
+                    <div class="float-left" style="width: 220px;">Sent to</div>
+                    <div class="float-left" style="width: 160px;">Time sent</div>
+                    <div class="float-left" style="width: 100px;">Status</div>
+                    <div class="float-left" style="width: 150px; text-align: center;">Action</div>
+                </div>
+
+                <%if(myFriendHistory.length > 0){%>
+                <%for(let data of myFriendHistory){%>
+                <div class="float-left hangoutFriendsBodyList">
+
+                    <div class="hangoutFriendsFrom">
+                        <%if(data.initiator_id != my_id){%>
+                        <img src="<%=data.avatar_img%>">
+                        <div class="hangoutFriendsFromName beyondHiding"><%=data.nick_name%></div>
+                        <div class="hangoutFriendsFromAge beyondHiding"><%=data.age%>yrs / <%=data.country%></div>
+                        <%}else{%>
+                        <img src="<%=userInfo.avatar_img%>">
+                        <div class="hangoutFriendsSentYou">You</div>
+                        <%}%>
+                    </div>
+
+                    <div class="hangoutFriendsSent">
+                        <%if(data.initiator_id == my_id){%>
+                        <img src="<%=data.avatar_img%>">
+                        <div class="hangoutFriendsFromName beyondHiding"><%=data.nick_name%></div>
+                        <div class="hangoutFriendsFromAge beyondHiding"><%=data.age%>yrs / <%=data.country%></div>
+                        <%}else{%>
+                        <img src="<%=userInfo.avatar_img%>">
+                        <div class="hangoutFriendsSentYou">You</div>
+                        <%}%>
+                    </div>
+
+                    <div class="hangoutFriendsAddTime" data-time="<%=data.add_timestamp * 1000%>"></div>
+
+                    <div class="hangoutFriendsSentPending">
+                        <div id="<%=data.id%>"><%=is_agree_str[data.is_agree]%></div>
+                        <%if(data.is_agree == 0 && data.initiator_id != my_id){%>
+                        <img class="hangoutFriendsBodyListOnline" src="<%=public_path%>/img/u84.png">
+                        <%}%>
+                    </div>
+
+                    <%if(data.is_agree == 0 && data.initiator_id != my_id){%>
+                    <div class="hangoutFriendsSentAction">
+                        <div class="hangoutFriendsSentActionDecline cursor" data-id="<%=data.friend_id%>" data-name="<%=data.nick_name%>" data-hoid="<%=data.id%>">Decline</div>
+                        <div class="hangoutFriendsSentActionAccept cursor" data-id="<%=data.friend_id%>" data-name="<%=data.nick_name%>" data-hoid="<%=data.id%>">Accept</div>
+                    </div>
+                    <%}%>
+                </div>
+                <%}%>
+                <%}else{%>
+                <div class="noData clear">No friend requests yet.</div>
+                <%}%>
+                <div id="page" class="pagenation"></div>
+            </div>
+
+        </div>
+    </div>
+    <!-- right content end -->
+</div>
+
+<script>
+    $(function(){
+        hangoutFriendsAddTime();
+
+        $('.hangoutFriendsSentActionDecline').click(function(){
+            var that = $(this);
+            var friend_id = $(this).attr('data-id');
+            var anchor_name = $(this).attr('data-name');
+            var data_hoid = $(this).attr('data-hoid');
+            parent.layer.confirm('Are you sure you wish to decline this friend request?', {
+                btn:['Cancel', 'Yes'],
+                title:'',
+                btnAlign:'c',
+                closeBtn: 0,
+                shadeClose:true,
+                shade:0.01
+            }, function(){
+                parent.layer.msg('Cancel Decline');
+            }, function(){
+                $.post('/lady/v1/answerAddFriend', {friend_id:friend_id,accept:2}, function(data){
+                    if(data.errno == 0){
+                        window.location.reload();
+                    }else{
+                        myParentAlert(anchor_name + '  has been added as your friend.');
+                        if(data.errno == 16342){
+                            $('#'+data_hoid).text('Accepted');
+                        }else{
+                            $('#'+data_hoid).text('Declined');
+                        }
+                        that.parent('.hangoutFriendsSentAction').hide();
+                    }
+                })
+            });
+        });
+
+
+        $('.hangoutFriendsSentActionAccept').click(function(){
+            var that = $(this);
+            var friend_id = $(this).attr('data-id');
+            var anchor_name = $(this).attr('data-name');
+            var data_hoid = $(this).attr('data-hoid');
+            $.post('/lady/v1/answerAddFriend', {friend_id:friend_id,accept:1}, function(data){
+                if(data.errno == 0){
+                    window.location.reload();
+                }else{
+                    myParentAlert(anchor_name + '  has been added as your friend.');
+                    $('#'+data_hoid).text('Accepted');
+                    that.parent('.hangoutFriendsSentAction').hide();
+                }
+            })
+        })
+
+        //分页
+        var pages = Math.ceil('<%=myFriendHistoryCount%>'/'<%=step%>');
+        if(pages>1) {
+            page('page', pages);
+        }
+    })
+
+</script>

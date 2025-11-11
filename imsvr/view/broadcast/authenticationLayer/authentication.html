@@ -1,0 +1,606 @@
+<style>
+    .border-radius-top{border-radius: 4px 4px 0px 0px;}
+    .border-radius-bottom{border-radius:0px 0px 4px 4px;}
+    /*主播认证*/
+    /*认证第一步*/
+    .verificationOne{width: 1020px; word-wrap: break-word;}
+    .verificationTitle{height: 56px; line-height: 56px; font-size: 20px; font-weight: 700; font-style: normal; color: #333333; text-align: center; background-color: #E4E4E4;}
+    .verificationBody{font-weight: 400;font-style: normal;font-size: 13px;color: #333333;}
+    .verificationNext{height: 34px; line-height: 34px; text-align: center; color: #FFFFFF; font-weight: 700; font-style: normal; background-image: url(<%=public_path%>/img/u507.png);}
+    .verificationNextGray{height: 34px; line-height: 34px; text-align: center; color: #FFFFFF; font-weight: 700; font-style: normal; background-image: url(<%=public_path%>/img/u554.png);}
+    .verificationBodyStepOne{margin: 10px auto; width: 981px; height: 32px; background-image: url(<%=public_path%>/img/u614.png);}
+    .bold{font-weight: 700;font-size: 12px;}
+    .verificationBodyStepOneText{width: 981px; margin: 0px auto 15px;}
+    .verificationBodyStepOneTextSample{width: 888px; height: 150px; margin: 10px auto;}
+    .verificationBodyStepOneTextArrow{margin-left: 12px; margin-bottom: 55px; margin-right: 12px;}
+    .verificationBodyStepOneExample img{width: 149px; height: 100px; float: left;}
+    .verificationBodyStepOneExample div{float: left; height: 100px; line-height: 100px; margin-left: 12px; margin-right: 12px;}
+    /*认证第二步*/
+    .verificationTwo{width: 1020px; word-wrap: break-word;}
+    .verificationBodyStepTwo{margin: 10px auto; width: 981px; height: 32px; background-image: url(<%=public_path%>/img/u615.png);}
+    .verificationBodyFilePiece{text-align: center; position:relative; width: 970px; height: 536px; margin: 5px auto; background-color: #F2F2F2;}
+    .upFile{position: absolute; top:0px; left: 0px; width: 971px; height: 537px;}
+    /*认证第三步*/
+    .verificationThree{width: 1020px;}
+    .verificationBodyStepThree{margin: 10px auto; width: 981px; height: 32px; background-image: url(<%=public_path%>/img/u616.png);}
+    .selectImgPreviewBtn input{display: none;}
+    .videoBtn{width: 44px; height: 44px; border-radius: 100%; background-color: #ffffff; position: absolute; bottom: 33px; left: 48%; z-index: 900;}
+    .videoBtnB{width: 36px; height: 36px; border-radius: 100%; background-color: #000000; position: absolute; bottom: 4px; left: 4px; z-index: 901;}
+    .videoBtnR{width: 30px; height: 30px; border-radius: 100%; background-color: #ff0000; position: absolute; bottom: 3px; left: 3px; z-index: 902;}
+    .videoBtnNum{width: 26px; height: 26px; border-radius: 5px; background-color: #ff0000; position: absolute; bottom: 5px; left: 5px; z-index: 902; color: #ffffff; font-weight: 700; font-size: 16px; line-height: 26px; text-align: center;}
+    .videoBtnText{position: absolute; color: #ffffff; bottom: 13px; left: 46%; z-index: 900;}
+    .goback{position: absolute; border-radius: 4px; bottom: 200px; left: 430px; z-index: 900; width: 133px; height: 32px; line-height: 32px; text-align: center; font-weight: 700; background-color: #E0E0E0; color: #5E5E5E;}
+    .video{width: 990px; height: 558px; margin: 0px auto 20px; position: relative;}
+    .PlayVideo{position: absolute; top: 237px; left: 358px; width: 100px; height: 80px; text-align: center;}
+    .deleteVideo{position: absolute; top: 237px; left: 538px; width: 100px; height: 80px; text-align: center;}
+    .PreviewMasking{position: absolute;left: 0px;top: 0px;background-color: #000000; width: 100%; height: 100%;filter:alpha(opacity=50);-moz-opacity:0.5;opacity: 0.5;}
+    /*认证第四步*/
+    .verificationFour{width: 1020px;}
+    .verificationBodyStepFour{margin: 10px auto; width: 981px; height: 32px; background-image: url(<%=public_path%>/img/u617.png);}
+    .verificationFourPreview{width: 980px; margin: 20px auto;}
+    .verificationFourPreviewLeft{float: left; width: 484px;}
+    .verificationFourPreviewLeftDiv{height: 274px; margin-top: 5px; text-align: center; background-color: #E4E4E4;}
+    .verificationFourPreviewLeftImg{max-height: 274px; max-width: 484px;}
+    .PlayVideoFour{position: absolute; left: 195px; top:100px; width: 100px; height: 80px; text-align: center;}
+    .selectImgDescription{text-align: center; margin-top: 53px;}
+    .selectImgDescription a{color: #1E1E1E;}
+    .underline{text-decoration:underline;}
+    .PreviewMaskingFour{position: absolute;left: 0px;top: 0px;background-color: #000000; width: 100%; height: 100%;filter:alpha(opacity=50);-moz-opacity:0.5;opacity: 0.5;}
+    /*认证完成*/
+    .verificationFive{width: 1020px;}
+    .verificationBodyStepFive{margin: 10px auto; width: 981px; height: 32px; background-image: url(<%=public_path%>/img/u618.png);}
+    .complete{width: 165px; margin: 0px auto 10px;}
+    .completeText{font-size: 16px;color: #949494; margin-bottom: 20px;}
+    .completeHref{line-height: 20px;}
+    .completeHref span{text-decoration:underline;color: #339900;font-weight: 400;font-size: 13px;}
+</style>
+
+<!--认证第一步-->
+<div class="verificationOne" >
+    <div class="verificationTitle border-radius-top">
+        Identity Verification
+    </div>
+
+    <div class="verificationBody">
+        <div class="verificationBodyStepOne"></div>
+        <div class="clear"></div>
+        <div class="verificationBodyStepOneText">
+            In order to ensure that your account is used only by you personally, we will need to conduct identity verification by collecting your identity document soft copy and a video verification the first time you sign into our site.
+        </div>
+        <div class="verificationBodyStepOneText">
+            <span class="bold">1)  Requirements of your identity document soft copy</span><br>
+            <p style="text-indent: 14px;">The soft copy of your ID document must be clearly visible and identifiable.</p>
+        </div>
+        <div class="verificationBodyStepOneText">
+            <span class="bold">2)  Procedure of shooting your verification video</span><br>
+            <div class="verificationBodyStepOneTextSample">
+                <img src="<%=public_path%>/img/u823.png" style="width: 242px; height: 146px;">
+                <img class="verificationBodyStepOneTextArrow" src="<%=public_path%>/img/u857.png">
+                <img src="<%=public_path%>/img/u843.png" style="width: 242px; height: 146px;">
+                <img class="verificationBodyStepOneTextArrow" src="<%=public_path%>/img/u857.png">
+                <img src="<%=public_path%>/img/u847.png" style="width: 242px; height: 146px;">
+            </div>
+            <div style="width: 960px; margin: 0px auto;">
+                <div style="float: left; width: 310px; text-align: center;">Your face must be clearly visible and identifiable at the first screen</div>
+
+                <div style="float: left; width: 300px; margin-left: 8px; text-align: center;">Then hold your Application form for Broadcasting below your face. Your face and the form must be fully visible</div>
+
+                <div style="float: left; width: 300px; margin-left: 12px; text-align: center;">Move the form close to the front of your webcam and make sure the content is clearly identifiable</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div style="margin-left: 20px; margin-top: 40px; margin-bottom: 10px;">Note: Please download the application form template here in <a href="<%=public_path%>/file/<%=pdfFile%>" target="_blank">pdf document</a> or <a href="<%=public_path%>/file/<%=wordFile%>" target="_blank">word document</a></div>
+    </div>
+
+    <div class="verificationNext One cursor border-radius-bottom" >
+        <span>NEXT</span>
+    </div>
+</div>
+
+<!--认证第二步-->
+<div class="verificationTwo" style="display: none;">
+    <div class="verificationTitle border-radius-top">
+        Identity Verification
+    </div>
+
+    <div class="verificationBody">
+        <div class="verificationBodyStepTwo"></div>
+        <div class="clear"></div>
+        <div class="verificationBodyFilePiece">
+            <div id="selectFile">
+                <img id="showSelectFile" style="max-width: 971px; max-height: 537px;" src="<%=public_path%>/img/u536.png">
+                <label class="cursor upFile">
+                    <input type="file" name="file" style="display: none;" accept="image/jpg,image/jpeg,image/png">
+                </label>
+            </div>
+        </div>
+        <div style="margin-top: 5px; margin-bottom: 5px; margin-left: 25px;">Note: Only JPG and PNG allowed. File size must be less than 3MB. Image size must be between 560 * 560 to 2400 * 2400 pixels.</div>
+    </div>
+
+    <div class="verificationNext Two cursor border-radius-bottom" >
+        <span>NEXT</span>
+    </div>
+</div>
+
+<!--认证第三步-->
+<div class="verificationThree" style="display: none;">
+    <div class="verificationTitle border-radius-top">
+        Identity Verification
+    </div>
+
+    <div class="verificationBody">
+        <div class="verificationBodyStepThree"></div>
+        <!--推流-->
+        <div class="video record">
+            <embed src="<%=public_path%>/js/jQuery-webcam-master/LivePayerVideoCertification.swf" wmode="opaque" quality="High" bgcolor="#000000"  style="height:100%;width:100%;" id="publish" name="publish" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" flashvars="d=1&amp;sl=0&amp;w=640&amp;h=360&amp;ssb=1&amp;hp=main&amp;t=LIVE1001#uid#FPVOUW6Z_1512715135074&amp;bt=0&amp;btm=0&amp;pw=640&amp;ph=360&amp;ps=15&amp;pk=15&amp;ar=44&amp;pb=1000,800,600&amp;amp?">
+
+            <img class="disconnect" style="display: none" src="<%=public_path%>/img/u620.png">
+
+            <div class="goPreview" style="display: none">
+                <div class="goback cursor">GO BACK</div>
+            </div>
+
+            <div class="startRecording" style="display: none;">
+                <div class="videoBtn cursor"><div class="videoBtnB"><div class="videoBtnR"></div></div></div>
+                <div class="videoBtnText">Start recording</div>
+            </div>
+
+            <div class="endRecording" style="display: none;">
+                <div class="videoBtn cursor"><div class="videoBtnB"><div class="videoBtnNum">30</div></div></div>
+                <div class="videoBtnText" style="left: 47.3%;">Recording</div>
+            </div>
+        </div>
+
+        <!--生成视频-->
+        <div class="video load" style="background-color: #000000; text-align: center; display: none;">
+            <img style="margin-top: 130px;" src="<%=public_path%>/img/u648.gif">
+        </div>
+
+        <!--预览-->
+        <div class="video Preview" style="display: none;">
+            <video width="100%" height="100%" onended="showPlayVideo();" id="PreviewVideo"></video>
+
+            <div class="PreviewMasking"></div>
+            <div class="cursor PlayVideo">
+                <img src="<%=public_path%>/img/u626.png" style="height: 58px; width: 71px;">
+                <div style="color: #ffffff;">Preview Video</div>
+            </div>
+            <div class="cursor deleteVideo">
+                <img src="<%=public_path%>/img/u650.png" style="height: 58px;">
+                <div style="color: #ffffff;">Delete & Re-take</div>
+            </div>
+        </div>
+        <!--找不到摄像头-->
+        <div class="video noVideo" style="display: none;">
+            <img src="<%=public_path%>/img/u619.png">
+        </div>
+    </div>
+
+    <div class="verificationNextGray Three cursor border-radius-bottom" >
+        <span>NEXT</span>
+    </div>
+</div>
+
+<!--认证第四步-->
+<div class="verificationFour" style="display: none;">
+    <div class="verificationTitle border-radius-top">
+        Identity Verification
+    </div>
+
+    <div class="verificationBody">
+        <div class="verificationBodyStepFour"></div>
+        <div class="clear"></div>
+        <div class="verificationFourPreview">
+            <div class="verificationFourPreviewLeft">
+                <p>Your identity document soft copy</p>
+                <div class="verificationFourPreviewLeftDiv">
+                    <img class="verificationFourPreviewLeftImg">
+                </div>
+            </div>
+            <div class="verificationFourPreviewLeft" style="margin-left: 10px;">
+                <p>Your video verification</p>
+                <div class="verificationFourPreviewLeftDiv" style="position: relative;">
+                    <video width="100%" height="100%" onended="showPlayVideoFour();" id="PreviewVideoFour"></video>
+                    <div class="PreviewMaskingFour"></div>
+                    <div class="cursor PlayVideoFour">
+                        <img src="<%=public_path%>/img/u626.png" style="height: 58px; width: 71px;">
+                        <div style="color: #ffffff;">Preview Video</div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="selectImgDescription">
+                By submitting your verification, you agree to the</br>
+
+                <span class="underline"><a href="/broadcast/index?url=/broadcast/terms/termsOne" target="_blank">Terms of Use</a></span>, <span class="underline"><a href="/broadcast/index?url=/broadcast/terms/termsTwo" target="_blank">Service Fee Calculation</a></span> and <span class="underline"><a href="/broadcast/index?url=/broadcast/terms/termsThree" target="_blank">Broadcaster Code of Conduct</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="verificationNext Four cursor border-radius-bottom" >
+        <span>Submit</span>
+    </div>
+</div>
+
+<!--认证完成-->
+<div class="verificationFive" style="display: none;">
+    <div class="verificationTitle border-radius-top">
+        Identity Verification
+    </div>
+
+    <div class="verificationBody">
+        <div class="verificationBodyStepFive"></div>
+        <div class="clear"></div>
+        <div style="width: 980px; height: 420px; text-align: center;">
+            <br><br><br><br><br>
+            <div class="complete"><img src="<%=public_path%>/img/u523.png"></div>
+            <div class="completeText">
+                Your identity verification request has been submitted.</br>
+                We will conduct the review as soon as possible.
+            </div>
+            <div style="font-weight: 700;color: #6B6B6B; margin-bottom: 15px;">Before your identity is verified, you can:</div>
+            <div class="completeHref">
+                <span id="coverHref" class="cursor">Upload broadcast cover</span></br>
+                <span id="photosHref" class="cursor">Manage your album photos</span></br>
+                <span id="talentsHref" class="cursor">Manage your talents</span></br>
+                <span id="timetableHref" class="cursor">Setup your booking timetable</span></br>
+            </div>
+        </div>
+    </div>
+
+    <div class="verificationNext Five cursor border-radius-bottom" >
+        <span>Done</span>
+    </div>
+</div>
+
+<script>
+    var layerIndex = parent.layer.getFrameIndex(window.name);
+    parent.layer.iframeAuto(layerIndex);
+    $('#coverHref').click(function(){
+        Cookies.set('verificationStatus', {status:1});
+        parent.layer.close(layerIndex);
+    })
+
+    $('#photosHref').click(function(){
+        Cookies.set('verificationStatus', {status:2});
+        parent.layer.close(layerIndex);
+    })
+
+    $('#talentsHref').click(function(){
+        Cookies.set('verificationStatus', {status:3});
+        parent.layer.close(layerIndex);
+    })
+
+    $('#timetableHref').click(function(){
+        Cookies.set('verificationStatus', {status:4});
+        parent.layer.close(layerIndex);
+    })
+
+    //选择图片
+    var imgBlob = '';
+    var objUrl = '';
+    $(document).on('change', 'input[name="file"]', function(){
+        if(this.files[0]){
+            imgBlob = this.files[0];
+        }else{
+            imgBlob = imgBlob;
+        }
+        objUrl = getObjectURL(imgBlob);
+        if(imgBlob.size > 3 * 1024 * 1024){
+            myParentAlert('Only JPG and PNG allowed. File size must be less than 3MB. Image size must be between 560 * 560 to 2400 * 2400 pixels.');
+            emptiedFile();
+            imgBlob = '';
+            return false;
+        }
+        var image = new Image();
+        image.src = objUrl;
+        image.onload = function(){
+            var width = image.width;
+            var height = image.height;
+            if(width<560 || height<560){
+                myParentAlert('Only JPG and PNG allowed. File size must be less than 3MB. Image size must be between 560 * 560 to 2400 * 2400 pixels.');
+                emptiedFile();
+                imgBlob = '';
+                return false;
+            }
+
+            if(width>2400 || height>2400){
+                myParentAlert('Only JPG and PNG allowed. File size must be less than 3MB. Image size must be between 560 * 560 to 2400 * 2400 pixels.');
+                emptiedFile();
+                imgBlob = '';
+                return false;
+            }
+            $('#showSelectFile').attr('src',objUrl);
+        }
+    })
+
+    //清空表单数据，解决重复选择同一张图片的问题。
+    function emptiedFile(){
+        $("input[name='file']").val('');
+    }
+
+    //认证第一步
+    $('.One').click(function(){
+        $('.verificationOne').hide();
+        $('.verificationTwo').show();
+        //自适应高度
+        parent.layer.iframeAuto(layerIndex);
+    })
+    //认证第二步
+    $('.Two').click(function(){
+        if(!imgBlob){
+            return false;
+        }
+        $('.verificationTwo').hide();
+        $('.verificationThree').show();
+        //自适应高度
+        parent.layer.iframeAuto(layerIndex);
+    })
+
+    //认证第三步
+    $('.Three').click(function(){
+        if(!record_url){
+            return false;
+        }
+        $('.verificationThree').hide();
+        $('.verificationFour').show();
+        $('.verificationFourPreviewLeftImg').attr('src',objUrl);
+        $('#PreviewVideoFour').attr('src',record_url);
+        //自适应高度
+        parent.layer.iframeAuto(layerIndex);
+    })
+
+    //认证第四步
+    var subThree = 0;
+    $('.Four').click(function(){
+        if(!imgBlob || !record_url || subThree){
+            return false;
+        }
+        subThree = 1;
+        var loadVideo = layer.load(2);
+        var formData = new FormData();
+        formData.append("file",imgBlob);
+        $.ajax('<%=server_host%>/api/?act=uploadIdcard',
+                {
+                    method: "POST",
+                    dataType: "json",
+                    timeout: 120000,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if(data.errno == 0){
+                            var img = data.data.url;
+                            $.post('/broadcast/authenticationLayer/authenticationAjax', {img:img,record_url:record_url}, function(data){
+                                if(data.errno == 0){
+                                    $('.verificationFour').hide();
+                                    $('.verificationFive').show();
+                                }else{
+                                    myParentAlert(data.errno + ':' + data.errmsg);
+                                }
+                                subThree = 0;
+                                layer.close(loadVideo);
+                                //自适应高度
+                                parent.layer.iframeAuto(layerIndex);
+                            })
+                        }else{
+                            myParentAlert('Failed to submit your request. Please try again.' + data.errno);
+                            subThree = 0;
+                            layer.close(loadVideo);
+                        }
+                    },
+                    error: function (XMLHttpRequest, status, errorThrown) {
+                        if(status == 'timeout'){
+                            myParentAlert('Image upload timeout.');
+                        }else{
+                            myParentAlert(status);
+                        }
+                        subThree = 0;
+                        layer.close(loadVideo);
+                    }
+                }
+        )
+        //自适应高度
+        parent.layer.iframeAuto(layerIndex);
+    })
+
+    //认证完成
+    $('.Five').click(function(){
+        parent.layer.close(layerIndex);
+    })
+
+    /**
+     *以下是js 调用 as 方法
+     */
+    var microsoftStr= "Microsoft";
+    function getFlashMovie(movieName)
+    {
+        var isIE = navigator.appName.indexOf(microsoftStr) != -1;
+        return (isIE) ? window[movieName] : document[movieName];
+    }
+
+    //初始化，预览
+    function publishLoaded(){
+        closePublishSign = 1;
+        getFlashMovie('publish').previewVideo();
+    }
+
+    //开始推流
+    function startPublish(obj){
+        getFlashMovie('publish').startPublish(obj);
+    }
+
+    //停止推流
+    function closePublish(){
+        closePublishSign = 0;
+        $('.videoBtnNum').text(second);
+        getFlashMovie('publish').closePublish();
+        $('.record').hide();
+        $('.endRecording').hide();
+        $('.load').show();
+        setTimeout('getRecordUrl()',1000);
+    }
+
+    //检查摄像头
+    function existCamera(){
+        $('.startRecording').show();
+    }
+
+    //预览
+    function previewVideo(){
+        $('.Three').removeClass('verificationNext').addClass('verificationNextGray');
+        $('.Preview').hide();
+        $('.record').show();
+    }
+
+    //测速
+    var networkNum = 0;
+    function publishNetStreamInfo(info){
+        //网络差
+        if(parseFloat(info.bufferLength)>2){
+            stopTimer = 0;
+            closeTime = 1;
+            second = 30;//初始化倒计时
+            getFlashMovie('publish').closePublish();
+            $('#publish').hide();
+            $('.endRecording').hide();
+            $('.disconnect').show();
+            $('.goPreview').show();
+        }
+    }
+
+    //视频发布成功
+    function streamPublishSuccess(){
+        Timer();
+    }
+
+    //错误信息
+    function errorPublishMsg(data){
+        if(closePublishSign){
+            if(data.errorcode == 'error_1001'){
+                $('.video').hide();
+                $('.noVideo').show();
+                $('.Three').removeClass('verificationNextGray').addClass('verificationNext');
+                $('.Three').html('<span>RELOAD PAGE</span>');
+                $('.Three').addClass('reload');
+                //刷新页面
+                $('.reload').on('click',function(){
+                    window.location.reload();
+                });
+            }else{
+                $('#publish').hide();
+                $('.endRecording').hide();
+                $('.disconnect').show();
+                $('.goPreview').show();
+            }
+            stopTimer = 0;  //停止定时器标识符
+            second = 30;//初始化倒计时
+        }
+    }
+
+    //推流
+    var streamid = 0;
+    var initData = '';//推流信息
+    $('.startRecording').click(function(){
+        if($('#publish').is(":hidden")){
+            $('#publish').show();
+            $('.disconnect').hide();
+        }
+        $('.startRecording').hide();
+        $('.endRecording').show();
+        closeTime = 0;//开启定时器
+        second = 30;//初始化倒计时
+        if(!streamid){
+            $.get('/broadcast/authenticationLayer/initApproveAjax', {}, function(data){
+                if(data.errno == 0){
+                    streamid = data.data.streamid;
+                    initData = data.data;
+                    startPublish(initData);
+                }
+            })
+        }else{
+            startPublish(initData);
+        }
+
+    })
+    //30秒定时器
+    var second = 30;
+    var closeTime = 0;
+    function Timer(){
+        second -= 1;
+        $('.videoBtnNum').text(second);
+        if(second <= 0 || stopTimer){
+            stopTimer = 0;//初始化停止定时器标识符
+            second = 30;//初始化倒计时
+            closePublish();
+        }else {
+            if(!closeTime){
+                setTimeout('Timer()',1000)
+            }
+        }
+    }
+
+    //关闭
+    var closePublishSign = 1;
+    var record_url = '';
+    var stopTimer = 0;  //停止定时器标识符
+    $('.endRecording').click(function(){
+        stopTimer = 1;
+        closeTime = 1;
+    })
+    //轮询获取RecordUrl
+    function getRecordUrl(){
+        $.get('/broadcast/authenticationLayer/getRecordUrlAjax', {streamid:streamid}, function(data){
+            if(data.errno == 0){
+                stopTimer = 0;//初始化停止定时器标识符
+                second = 30;//初始化倒计时
+                $('.videoBtnNum').text(second);
+                record_url = data.data;
+                $('.load').hide();
+                $('.Three').removeClass('verificationNextGray').addClass('verificationNext');
+                $('.Preview').show();
+                $('#PreviewVideo').attr('src',record_url);
+            }else{
+                setTimeout('getRecordUrl()',1000)
+            }
+        })
+    }
+
+    //预览
+    $('.deleteVideo').click(function(){
+        record_url = '';
+        previewVideo();
+    })
+    //出错后，重新预览
+    $('.goPreview').click(function(){
+        record_url = '';
+        $('.goPreview').hide();
+        $('.disconnect').hide();
+        $('#publish').show();
+        previewVideo();
+    })
+    //video预览，第三步
+    $('.PlayVideo').click(function(){
+        $('#PreviewVideo')[0].play();
+        $('.PreviewMasking').hide();
+        $('.PlayVideo').hide();
+        $('.deleteVideo').hide();
+    })
+    //预览结束显示按钮
+    function showPlayVideo(){
+        $('.PreviewMasking').show();
+        $('.PlayVideo').show();
+        $('.deleteVideo').show();
+    }
+    //video预览，第四步
+    $('.PlayVideoFour').click(function(){
+        $('#PreviewVideoFour')[0].play();
+        $('.PreviewMaskingFour').hide();
+        $('.PlayVideoFour').hide();
+    })
+    //预览结束显示按钮
+    function showPlayVideoFour(){
+        $('.PreviewMaskingFour').show();
+        $('.PlayVideoFour').show();
+    }
+</script>

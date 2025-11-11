@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><%=!F.isNull(apptitleH5Page) ? apptitleH5Page : ''%></title>
+    <link rel="stylesheet" type="text/css" href="<%=public_path%>/css/man/main.css?v=<%=version%>">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+    <script>
+        (function(){
+            function setRemFontSize() {
+                var html = document.getElementsByTagName('html')[0];
+                html.style.fontSize=html.offsetWidth/750 * 100 +'px';
+            }
+            setRemFontSize();
+            window.onresize=setRemFontSize;
+        })()
+    </script>
+</head>
+<body>
+<%- body %>
+</body>
+</html>
