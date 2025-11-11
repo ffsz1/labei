@@ -1,0 +1,2 @@
+include ':erban_client', ':erban_core', ':erban_framework', ':nim_uikit', ':lib_common', ':ndklib_yingtao', ':safetychecker', ':library-ui'
+project(':nim_uikit').projectDir = new File('erban_nim_uikit')

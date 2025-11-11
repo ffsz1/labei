@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:background="@drawable/ic_diamond_header_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_diamond"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_12"
+            android:maxLines="1"
+            android:text="0.00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_34"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_2"
+            android:text="钻石余额"
+            android:textColor="@color/white_op_40"
+            android:textSize="@dimen/text_size_13"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/diamond_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="-50dp"
+        android:layout_marginEnd="@dimen/dp_22"
+        android:src="@drawable/ic_charge_diamond_menu"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/jewel_withdraw"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/text_size_13"/>
+
+    <com.hncxco.library_ui.widget.DrawableTextView
+        android:id="@+id/withdrawGold"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginHorizontal="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_48"
+        android:gravity="center"
+        android:text="兑换开心"
+        android:textColor="@color/color_ffff0066"
+        android:textSize="@dimen/text_size_17"
+        app:d_radius="@dimen/dp_22"
+        app:drawableType="shape"
+        app:strikeColor="@color/color_ffff0066"
+        app:strikeWidth="@dimen/dp_1"/>
+
+    <com.hncxco.library_ui.widget.DrawableTextView
+        android:id="@+id/withdraw"
+        style="@style/TextButtonGradientStyle_RED"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginHorizontal="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_15"
+        android:text="@string/withdraw"
+        app:strikeWidth="@dimen/dp_1"/>
+
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rly_gold"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bill_chat_item_height"
+    android:background="@color/white"
+    android:visibility="visible">
+
+    <com.vslk.lbgx.ui.common.widget.CircleImageView
+        android:id="@+id/pro_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/ic_default_avatar"
+        app:cborder_color="@color/color_ffc160"
+        app:cborder_width="1dp" />
+
+    <com.vslk.lbgx.ui.common.widget.CircleImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="45dp"
+        android:src="@drawable/ic_default_avatar"
+        app:cborder_color="@color/color_7ee7f6"
+        app:cborder_width="1dp" />
+
+    <TextView
+        android:id="@+id/tv_user_pro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="19dp"
+        android:layout_toLeftOf="@+id/tv_gold"
+        android:layout_toRightOf="@+id/user_avatar"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="红十三vs单页也是"
+        android:textColor="@color/color_333333"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_user_pro"
+        android:layout_below="@+id/tv_user_pro"
+        android:layout_marginTop="8dp"
+        android:text="16:21:14"
+        android:textColor="@color/color_999999"
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/tv_gold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="19dp"
+        android:text="-520"
+        android:textColor="#333333"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tv_bill_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tv_gold"
+        android:layout_below="@+id/tv_gold"
+        android:layout_marginTop="8dp"
+        android:text="@string/gift_expend_gold"
+        android:textColor="@color/color_999999"
+        android:textSize="13dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_alignLeft="@+id/tv_user_pro"
+        android:layout_alignParentBottom="true"
+        android:background="@color/common_divider_color" />
+</RelativeLayout>

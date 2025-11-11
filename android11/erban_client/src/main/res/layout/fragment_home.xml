@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FAFAFA"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_24">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_top_bar"
+        android:background="@color/color_FAFAFA">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_FAFAFA"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.vslk.lbgx.ui.widget.Banner
+                        android:id="@+id/top_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="112dp"
+                        android:layout_marginLeft="@dimen/dp_13"
+                        android:layout_marginRight="@dimen/dp_12"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/hot_head"
+                        layout="@layout/ly_home_hot_head"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_12"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_rank_rich"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@mipmap/img_rank_rich" />
+
+                        <ImageView
+                            android:id="@+id/img_rank_ml"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_8"
+                            android:layout_weight="1"
+                            android:src="@mipmap/img_rank_ml" />
+
+                        <ImageView
+                            android:id="@+id/img_home_search"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_8"
+                            android:layout_weight="1"
+                            android:src="@mipmap/ic_home_search" />
+
+                        <ImageView
+                            android:id="@+id/img_home_my_room"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_8"
+                            android:layout_weight="1"
+                            android:src="@mipmap/ic_home_my_room" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_FAFAFA"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tablayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    app:tabBackground="@color/transparent"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/transparent"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextColor="@color/white" />
+
+                <RadioGroup
+                    android:id="@+id/ll_group"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/color_FAFAFA"
+                    android:orientation="horizontal"
+                    android:paddingLeft="18dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/sex_switch_first_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/sex_all_first"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/open_switch_first_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:src="@mipmap/close_switch_first"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/lin_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/img_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_3"
+                        android:src="@drawable/ic_gender_all" />
+
+                    <ImageView
+                        android:id="@+id/img_gender_flag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_6"
+                        android:padding="@dimen/dp_3"
+                        android:src="@drawable/ic_triangle_down" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_home_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp_50"
+            android:background="@color/color_FAFAFA"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.design.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_FAFAFA"
+        android:orientation="vertical"
+        android:paddingTop="24dp">
+
+        <!--            <FrameLayout-->
+        <!--                android:id="@+id/fl_lucky"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="30dp"-->
+        <!--                android:layout_gravity="center_vertical"-->
+        <!--                android:layout_marginStart="@dimen/dp_15"-->
+        <!--                android:background="@drawable/bg_home_lucky"-->
+        <!--                android:visibility="gone">-->
+
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_gravity="center_vertical|center_horizontal"-->
+        <!--                    android:drawableStart="@drawable/ic_home_lucky"-->
+        <!--                    android:drawablePadding="@dimen/dp_3"-->
+        <!--                    android:text="转盘"-->
+        <!--                    android:textColor="@color/white"-->
+        <!--                    android:textSize="@dimen/text_size_11" />-->
+        <!--            </FrameLayout>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_8"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/circle_grey"
+                android:drawableStart="@mipmap/ic_search_grey"
+                android:drawablePadding="@dimen/dp_8"
+                android:gravity="center_vertical"
+                android:hint="输入ID/昵称/房间号"
+                android:padding="@dimen/dp_8"
+                android:textColor="@color/color_333333"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/iv_home_search"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:padding="6dp"
+                android:src="@mipmap/home_search"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_ranking"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="@dimen/dp_10"
+                android:padding="5dp"
+                android:src="@mipmap/ic_home_ranking"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_home_room"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="@dimen/dp_10"
+                android:padding="5dp"
+                android:src="@mipmap/ic_home_room" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_sign_in_entrance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/dp_5"
+        android:layout_marginBottom="200dp"
+        android:src="@drawable/ic_sign_in_entrance"
+        android:visibility="gone" />
+
+    <com.vslk.lbgx.ui.widget.Banner
+        android:id="@+id/b_recommend_banner"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:layout_marginBottom="110dp"
+        android:overScrollMode="never"
+        android:visibility="gone"
+        app:rollviewpager_play_delay="2000" />
+</RelativeLayout>
+
+
+

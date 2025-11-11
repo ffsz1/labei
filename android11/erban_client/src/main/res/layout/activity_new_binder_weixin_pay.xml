@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.hncxco.library_ui.widget.AppToolBar
+        android:id="@+id/toolbar"
+        style="@style/AppToolBar_white_style"
+        app:title="绑定微信" />
+
+    <TextView
+        android:id="@+id/et_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_60"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="请输入手机号码"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:singleLine="true"
+        android:textColor="@color/text_color_primary"
+        android:textColorHint="@color/color_d0d0d0"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/text_size_15" />
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/dp_half"-->
+    <!--android:layout_marginEnd="@dimen/dp_50"-->
+    <!--android:layout_marginStart="@dimen/dp_50"-->
+    <!--android:background="@color/line_color" />-->
+
+    <EditText
+        android:id="@+id/et_realName"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="请输入真实姓名"
+        android:inputType="text"
+        android:maxLength="10"
+        android:singleLine="true"
+        android:textColor="@color/text_color_primary"
+        android:textColorHint="@color/color_d0d0d0"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/dp_15"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_half"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:background="@color/line_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_20">
+
+        <EditText
+            android:id="@+id/et_smscode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="填写验证码"
+            android:inputType="number"
+            android:maxLength="5"
+            android:textColor="@color/text_color_primary"
+            android:textColorHint="@color/color_d0d0d0"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/btn_get_code"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginStart="@dimen/space_normal"
+            android:background="@drawable/shape_blue_radius_15dp"
+            android:gravity="center"
+            android:text="获取验证码"
+            android:textColor="@color/color_ffff0066"
+            android:textSize="@dimen/text_size_12" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_half"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_marginStart="@dimen/dp_50"
+        android:background="@color/line_color" />
+
+    <com.hncxco.library_ui.widget.DrawableTextView
+        android:id="@+id/btn_binder"
+        style="@style/TextButtonGradientStyle_RED"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_15"
+        android:paddingStart="@dimen/dp_15"
+        android:text="确认绑定" />
+
+    <TextView
+        android:id="@+id/tv_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="注：绑定微信后，可使用微信提现功能"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/text_size_14" />
+</LinearLayout>

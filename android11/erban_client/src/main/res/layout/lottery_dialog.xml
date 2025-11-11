@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="312dp"
+        android:layout_height="355dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="331dp"
+            android:layout_height="341dp"
+            android:background="@drawable/icon_lottery_bg"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/go_right_now"
+                android:layout_width="220dp"
+                android:layout_height="41dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="29dp"
+                android:src="@drawable/icon_go_right_now" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/icon_close_red" />
+
+</RelativeLayout>

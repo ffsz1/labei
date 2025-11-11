@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="roundedimageview">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="StrokeTextView">
+        <attr name="outerColor" format="color|reference" />
+        <attr name="innnerColor" format="color|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="HorizontalListView">
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
+    </declare-styleable>
+
+    <declare-styleable name="MarqueeViewStyle">
+        <attr name="mvInterval" format="integer|reference" />
+        <attr name="mvAnimDuration" format="integer|reference" />
+        <attr name="mvTextSize" format="dimension|reference" />
+        <attr name="mvTextColor" format="color|reference" />
+        <attr name="mvSingleLine" format="boolean" />
+        <attr name="mvGravity">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+        <attr name="mvDirection">
+            <enum name="bottom_to_top" value="0" />
+            <enum name="top_to_bottom" value="1" />
+            <enum name="right_to_left" value="2" />
+            <enum name="left_to_right" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="AbsHListView">
+        <attr name="android:listSelector" />
+        <attr name="android:smoothScrollbar" />
+        <attr name="android:drawSelectorOnTop" />
+        <attr name="android:cacheColorHint" />
+        <attr name="android:scrollingCache" />
+        <attr name="android:choiceMode" />
+        <attr name="hlv_stackFromRight" format="boolean" />
+        <attr name="hlv_transcriptMode">
+            <enum name="disabled" value="0" />
+            <enum name="normal" value="1" />
+            <enum name="alwaysScroll" value="2" />
+        </attr>
+    </declare-styleable>
+    <attr name="hlv_listViewStyle" format="reference" />
+    <attr name="hlv_absHListViewStyle" format="reference" />
+    <attr name="hlv_listPreferredItemWidth" format="dimension" />
+    <declare-styleable name="HListView">
+        <attr name="android:entries" />
+        <attr name="android:divider" />
+        <attr name="hlv_dividerWidth" format="dimension" />
+        <attr name="hlv_headerDividersEnabled" format="boolean" />
+        <attr name="hlv_footerDividersEnabled" format="boolean" />
+        <attr name="hlv_overScrollHeader" format="reference|color" />
+        <attr name="hlv_overScrollFooter" format="reference|color" />
+        <!--
+        When "wrap_content" is used as value of the layout_height property.
+        Pass the position, inside the adapter, of the view being used to measure the view
+        or '-1' to use the default behavior ( default is -1 )
+        -->
+        <attr name="hlv_measureWithChild" format="integer" />
+    </declare-styleable>
+
+
+    <!-- 页面状态-->
+    <declare-styleable name="StatusLayout">
+        <attr name="status_bottom" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ViewMultiPagerAttr">
+        <attr name="showIndicator" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ChangeColorIconWithText">
+        <attr name="icon"></attr>
+        <attr name="color"></attr>
+        <attr name="text"></attr>
+        <attr name="text_size"></attr>
+    </declare-styleable>
+
+    <attr name="icon" format="reference"></attr>
+    <attr name="color" format="color"></attr>
+    <attr name="text" format="string"></attr>
+    <attr name="text_size" format="dimension"></attr>
+    ®
+    <declare-styleable name="MaskImageView">
+
+        <attr name="miv_mask_level" format="enum">
+            <enum name="background" value="1" />
+            <enum name="foreground" value="2" />
+        </attr>
+        <!-- 设置了setClickable(true)才生效,默认开启遮罩-->
+        <attr name="miv_is_show_mask_on_click" format="boolean" />
+        <attr name="miv_mask_color" format="color" />
+        <!--是否忽略图片的透明度，默认为true,透明部分不显示遮罩 -->
+        <attr name="miv_is_ignore_alpha" format="boolean" />
+
+    </declare-styleable>
+
+    <declare-styleable name="RectRoundImageView">
+        <attr name="borderRadius" />
+        <attr name="type" />
+        <attr name="src" />
+    </declare-styleable>
+
+    <attr name="borderRadius" format="dimension" />
+    <attr name="type">
+        <enum name="circle" value="0" />
+        <enum name="round" value="1" />
+    </attr>
+
+    <attr name="src" format="reference"></attr>
+
+
+    <!--标题栏-->
+    <declare-styleable name="TitleBarStyle">
+        <attr name="mBackgroundColor" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="MagicTextView">
+        <attr name="innerShadowColor" format="color" />
+        <attr name="innerShadowRadius" format="float" />
+        <attr name="innerShadowDx" format="float" />
+        <attr name="innerShadowDy" format="float" />
+        <attr name="outerShadowColor" format="color" />
+        <attr name="outerShadowRadius" format="float" />
+        <attr name="outerShadowDx" format="float" />
+        <attr name="outerShadowDy" format="float" />
+        <attr name="typeface" format="string" />
+        <attr name="foreground" format="reference|color" />
+        <attr name="mstrokeWidth" format="float" />
+        <attr name="mstrokeMiter" format="float" />
+        <attr name="mstrokeColor" format="color" />
+        <attr name="strokeJoinStyle">
+            <enum name="miter" value="0" />
+            <enum name="bevel" value="1" />
+            <enum name="round" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="LeftGiftsItemLayout">
+        <attr name="left_gift_layout_index" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="cborder_width" format="dimension"></attr>
+        <attr name="cborder_color" format="color"></attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="LeBubbleTextView">
+        <!-- Corner radius for LeBubbleTextView. -->
+        <attr name="bubbleCornerRadius" format="dimension" />
+        <!-- Background color for LeBubbleTextView. -->
+        <attr name="bubbleBackgroundColor" format="color" />
+        <!-- text size for LeBubbleTextView. -->
+        <attr name="bubbleTextSize" format="dimension" />
+        <!-- text color for LeBubbleTextView. -->
+        <attr name="bubbleTextColor" format="color" />
+        <!-- text for LeBubbleTextView. -->
+        <attr name="bubbleText" format="string" />
+        <!-- text for LeBubbleTitleView. -->
+        <attr name="bubbleTitleText" format="string" />
+        <!-- direction for arrow. -->
+        <attr name="bubbleArrowDirection">
+            <enum name="left" value="1" />
+            <enum name="top" value="2" />
+            <enum name="right" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+        <!-- direction for arrow. -->
+        <attr name="relativePosition" format="fraction" />
+        <!-- Press curStatus Background color for LeBubbleTextView. -->
+        <attr name="bubbleBackgroundPressColor" format="color" />
+    </declare-styleable>
+
+    <!--账单item属性-->
+    <declare-styleable name="BillItemView">
+        <attr name="left_icon" format="reference" />
+        <attr name="item_text" format="string" />
+        <attr name="hide_line" format="boolean" />
+        <attr name="margin_start" format="dimension" />
+        <attr name="margin_end" format="dimension" />
+        <attr name="text_margin_start" format="dimension" />
+        <attr name="item_text_size" format="dimension" />
+        <attr name="item_text_color" format="color" />
+        <attr name="under_line_height" format="dimension" />
+    </declare-styleable>
+
+    <!--首页底部tab-->
+    <declare-styleable name="MainTab">
+        <attr name="tab_icon" format="reference" />
+        <attr name="tab_icon_select" format="reference" />
+        <attr name="tab_text_color" format="color" />
+        <attr name="tab_text_color_select" format="color" />
+        <attr name="tab_text" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="WaveView">
+        <attr name="w_radius" format="dimension" />
+        <!--中心圆颜色-->
+        <attr name="spread_center_color" format="color" />
+        <!--中心圆半径-->
+        <attr name="spread_radius" format="dimension" />
+        <!--扩散圆颜色-->
+        <attr name="spread_spread_color" format="color" />
+        <!--扩散间距-->
+        <attr name="spread_distance" format="dimension" />
+        <!--扩散最大半径-->
+        <attr name="spread_max_radius" format="dimension" />
+        <!--扩散延迟间隔-->
+        <attr name="spread_delay_milliseconds" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="TagCloudView">
+        <attr name="autoScrollMode">
+            <enum name="disable" value="0" />
+            <enum name="decelerate" value="1" />
+            <enum name="uniform" value="2" />
+        </attr>
+        <attr name="manualScroll" format="boolean" />
+        <attr name="radiusPercent" format="float" />
+        <attr name="scrollSpeed" format="float" />
+        <attr name="lightColor" format="color" />
+        <attr name="darkColor" format="color" />
+        <attr name="startAngleX" format="float" />
+        <attr name="startAngleY" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="MyRadioButton">
+
+        <attr name="drawableSize" format="dimension" />
+        <attr name="drawableTop" format="reference" />
+        <attr name="drawableLeft" format="reference" />
+        <attr name="drawableRight" format="reference" />
+        <attr name="drawableBottom" format="reference" />
+        <attr name="left_to_right" format="reference" />
+        <attr name="top_to_bottom" format="reference" />
+
+    </declare-styleable>
+
+</resources>

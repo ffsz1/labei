@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_black"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dp_70"
+    android:background="#14FFFFFF"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/fl_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_15">
+
+        <com.vslk.lbgx.ui.widget.SquareImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:src="@drawable/ic_default_avatar" />
+
+        <ImageView
+            android:id="@+id/iv_gender"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13"
+            android:layout_gravity="end|bottom"
+            android:background="@drawable/icon_woman" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/tv_userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_toRightOf="@id/fl_avatar"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="nick"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14" />
+
+    <TextView
+        android:id="@+id/remove_opration"
+        android:layout_width="@dimen/dp_55"
+        android:layout_height="@dimen/dp_20"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_15"
+        android:background="@drawable/icon_room_manager"
+        android:gravity="center"
+        android:scaleType="center"
+        android:text="移除"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_10" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="#5CFFFFFF" />
+
+</RelativeLayout>

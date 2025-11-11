@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_speed_bg"
+    android:orientation="vertical">
+
+    <com.hncxco.library_ui.widget.AppToolBar
+        android:id="@+id/toolbar"
+        style="@style/AppToolBar_transparent_style"
+        app:hasLeftImg="false"
+        app:hasRightImg="true"
+        app:title="交友"
+        app:titleColor="@color/white" />
+<!--    app:ivRightImgRes="@drawable/iv_speed_right_title"-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2">
+
+        <com.vslk.lbgx.ui.widget.cloud.TagCloudView
+            android:id="@+id/tagCloudView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:autoScrollMode="uniform"
+            app:radiusPercent="0.75"
+            app:scrollSpeed="0.5" />
+
+        <TextView
+            android:id="@+id/error_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/content_empty"
+            android:gravity="center"
+            android:text="暂无速配的用户哦"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/refresh"
+        android:layout_width="@dimen/dp_64"
+        android:layout_height="@dimen/dp_24"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/dp_12">
+
+        <com.hncxco.library_ui.widget.DrawableTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:d_radius="@dimen/dp_12"
+            app:drawableType="shape"
+            app:soildColor="@color/white_alpha_10" />
+
+        <ImageView
+            android:id="@+id/ic_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_9"
+            android:contentDescription="@null"
+            android:src="@mipmap/ic_speed_refresh" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:text="换一换"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_11" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/ic_speed_friend"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_50">
+
+            <com.hncxco.library_ui.widget.DrawableTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:d_radius="@dimen/dp_25"
+                app:drawableType="shape"
+                app:soildColor="@color/transparent"
+                app:strikeColor="@color/color_ffff237b"
+                app:strikeWidth="@dimen/dp_2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_speed_friend" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:text="一键匹配"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_15" />
+
+                <View
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_9"
+                    android:layout_marginEnd="@dimen/dp_9"
+                    android:background="#FF77B9" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="相遇是一种缘分"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/dp_17"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_right_arrow" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/ic_speed_xinyan"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_50"
+            android:visibility="gone">
+
+            <com.hncxco.library_ui.widget.DrawableTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:d_radius="@dimen/dp_25"
+                app:drawableType="shape"
+                app:soildColor="@color/transparent"
+                app:strikeColor="@color/color_ffff237b"
+                app:strikeWidth="@dimen/dp_2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_speed_xinyan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:text="心愿长廊"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_15" />
+
+                <View
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_9"
+                    android:layout_marginEnd="@dimen/dp_9"
+                    android:background="#FF77B9" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="让幸福来敲门"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_11" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/dp_17"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_right_arrow" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/ic_speed_square"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_20">
+
+            <com.hncxco.library_ui.widget.DrawableTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:d_radius="@dimen/dp_25"
+                app:drawableType="shape"
+                app:soildColor="@color/transparent"
+                app:strikeColor="@color/color_ffff237b"
+                app:strikeWidth="@dimen/dp_2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_speed_square" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:text="交友大厅"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_15" />
+
+                <View
+                    android:layout_width="@dimen/dp_2"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginStart="@dimen/dp_9"
+                    android:layout_marginEnd="@dimen/dp_9"
+                    android:background="#FF77B9" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_default_avatar" />
+
+                    <TextView
+                        android:id="@+id/userNick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:layout_toEndOf="@id/avatar"
+                        android:text="拉贝星球："
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/text_size_11" />
+
+                    <com.vslk.lbgx.ui.widget.marqueeview.MarqueeView
+                        android:id="@+id/marqueeView"
+                        android:layout_width="@dimen/dp_86"
+                        android:layout_height="@dimen/dp_18"
+                        android:layout_below="@id/avatar"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:textColor="@color/color_ffa59fd8"
+                        android:textSize="@dimen/text_size_11"
+                        app:mvAnimDuration="1000"
+                        app:mvDirection="bottom_to_top"
+                        app:mvGravity="left"
+                        app:mvInterval="3000"
+                        app:mvSingleLine="true"
+                        app:mvTextColor="@color/color_ffa59fd8"
+                        app:mvTextSize="@dimen/text_size_11"
+                        tools:text="今天也要开心鸭~" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/dp_17"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_right_arrow" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

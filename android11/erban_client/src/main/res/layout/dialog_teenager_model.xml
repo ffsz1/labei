@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="295dp"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_ffffff_bottom_15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_30"
+            android:text="青少年模式"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/text_size_17" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/dp_20"
+            android:gravity="center"
+            android:text="为呵护未成年人健康成长，拉贝星球升级了青少年模式,该模式下部分功能无法使用。请监护人主动选择并设置监护密码。"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/text_size_13" />
+
+        <TextView
+            android:id="@+id/tv_close_teenager_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:drawableRight="@drawable/teenager_right_corner"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center"
+            android:text="开启青少年模式"
+            android:textColor="@color/color_FF81A4"
+            android:textSize="@dimen/text_size_14" />
+
+        <TextView
+            android:id="@+id/tv_i_known"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_30"
+            android:gravity="center"
+            android:text="我知道了"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/bg_btn_teenager_model"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,44 @@
+apply from: "version.gradle"
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://jitpack.io"
+        }
+        maven {
+            url 'https://dl.bintray.com/linkedme2016/lkme-deeplinks'
+        }
+        maven { url 'https://maven.google.com' }
+
+        google()
+    }
+    dependencies {
+        classpath "io.realm:realm-gradle-plugin:3.1.1"
+        classpath 'com.android.tools.build:gradle:3.5.1'
+//        classpath 'com.meituan.android.walle:plugin:1.1.6'
+//        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.17'
+        // tinkersupport插件, 其中lastest.release指拉取最新版本，也可以指定明确版本号，例如1.0.4
+//        classpath "com.tencent.bugly:tinker-support:1.0.8"
+    }
+}
+
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+        maven {
+            url 'https://dl.bintray.com/linkedme2016/lkme-deeplinks'
+        }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven {
+            url "http://lib.gcssloop.com/repository/gcssloop-central/"
+        }
+    }
+}
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+

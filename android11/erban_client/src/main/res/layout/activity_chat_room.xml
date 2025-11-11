@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_bg_enter_room" />
+
+    <TextView
+        android:id="@+id/tv_entering_room_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/dp_8"
+        android:gravity="center"
+        android:drawableTop="@drawable/content_empty"
+        android:text="请耐心等待…"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14" />
+
+
+    <FrameLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--todo 这里可优化-->
+        <ImageView
+            android:id="@+id/iv_room_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_room_bg_default" />
+
+    </FrameLayout>
+
+    <ViewStub
+        android:id="@+id/vs_room_offline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/layout_room_live_finish" />
+
+</FrameLayout>

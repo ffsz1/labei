@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_hot_rb"
+    android:button="@null"
+    android:gravity="center_horizontal"
+    android:paddingTop="8dp"
+    android:textColor="#FF999999"
+    android:paddingBottom="8dp"
+    android:text="优质陪陪"
+    android:textSize="18sp" />

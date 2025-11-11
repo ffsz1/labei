@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.hncxco.library_ui.widget.AppToolBar
+            android:id="@+id/toolbar"
+            style="@style/AppToolBar_white_style"
+            app:title=""/>
+
+        <com.vslk.lbgx.ui.widget.ObservableScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/content"
+                    layout="@layout/family_info_content"/>
+
+                <TextView
+                    android:id="@+id/apply"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_32"
+                    android:layout_marginTop="61dp"
+                    android:layout_marginEnd="@dimen/dp_32"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:background="@drawable/icon_default_button_selector"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:text="申请加入"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_17"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </com.vslk.lbgx.ui.widget.ObservableScrollView>
+
+    </LinearLayout>
+</layout>

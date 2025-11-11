@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hncxco.library_ui.widget.AppToolBar
+        android:id="@+id/toolbar"
+        style="@style/AppToolBar_white_style"
+        app:title="开心账单"/>
+
+    <com.vslk.lbgx.ui.widget.magicindicator.MagicIndicator
+        android:id="@+id/mi_bill_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"/>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_f5f5f5"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_bill"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f7f7f7"/>
+</LinearLayout>
+

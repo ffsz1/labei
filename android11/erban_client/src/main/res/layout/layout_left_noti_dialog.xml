@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_content"
+    android:layout_width="259dp"
+    android:layout_height="match_parent"
+    android:background="#C8000000"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_noti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="82dp"
+        android:lineSpacingExtra="3dp"
+        android:lineSpacingMultiplier="1.5"
+        android:padding="@dimen/common_item_view_margin_left_right"
+        android:text="声优玩法： 手速上麦，先到先得！"
+        android:textColor="@color/color_b3b3b3"
+        android:textSize="@dimen/font_larger" />
+</LinearLayout>

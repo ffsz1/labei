@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_50"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:gravity="center_horizontal"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:text="好开心哦"
+        android:textColor="@color/color_ffa59fd8"
+        android:textSize="7sp" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iv_user_head"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"
+        app:riv_oval="true" />
+
+    <!--    <com.hncxco.library_ui.widget.DrawableTextView-->
+    <!--        android:id="@+id/dot"-->
+    <!--        android:layout_width="@dimen/dp_7"-->
+    <!--        android:layout_height="@dimen/dp_7"-->
+    <!--        android:layout_gravity="center_horizontal"-->
+    <!--        android:layout_marginTop="@dimen/dp_2"-->
+    <!--        app:d_radius="@dimen/dp_50"-->
+    <!--        app:drawableType="shape"-->
+    <!--        app:soildColor="@color/color_ffa59fd8"/>-->
+</LinearLayout>

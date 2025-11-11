@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_dialog_mic_in_list"
+    android:layout_width="match_parent"
+    android:layout_height="348dp"
+
+    android:background="@drawable/shape_exchange_awards_dialog_bg"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_mic_in_list_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="排麦人数"
+        android:textColor="@color/text_1A1A1A"
+        android:textSize="15sp" />
+
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:id="@+id/rv_mic_in_list_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/bu_mic_in_list_dialog_submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+        android:layout_marginHorizontal="33dp"
+
+        android:background="@drawable/shape_blue_radius_22dp"
+        android:text="排麦"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>

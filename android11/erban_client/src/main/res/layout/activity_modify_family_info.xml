@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isEdit"
+            type="Boolean"/>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="info"
+            type="com.tongdaxing.xchat_core.find.family.FamilyInfo"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.hncxco.library_ui.widget.AppToolBar
+            android:id="@+id/toolbar"
+            style="@style/AppToolBar_white_style"
+            app:hasRightTitle="true"
+            app:rightTitle=""
+            app:rightTitleColor="@color/color_9574F5"
+            app:rightTitleSize="@dimen/text_size_16"
+            app:title="家族公告"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_17"
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/avatar"
+                roundImage="@{info.familyLogo}"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_default_avatar"/>
+
+            <TextView
+                android:id="@+id/nickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dp_9"
+                android:text="@{info.familyName}"
+                android:textColor="#4F4A4A"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_19"
+            android:text="@{info.familyNotice}"
+            android:textColor="@color/color_403D3D"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="@{isEdit ? View.GONE : View.VISIBLE}"
+            tools:text="直接申请，青铜以上，加入改马甲，先和管理联系人不在的时候记得请假.禁止在家族借钱，注意骗子！"/>
+
+        <EditText
+            android:id="@+id/et_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入家族公告~"
+            android:padding="@dimen/dp_19"
+            android:text="@{info.familyNotice}"
+            android:textColor="@color/color_403D3D"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="@{isEdit ? View.VISIBLE : View.GONE}"
+            tools:text="直接申请，青铜以上，加入改马甲，先和管理联系人不在的时候记得请假.禁止在家族借钱，注意骗子！"/>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/ic_pound_egg"
+        android:duration="110" />
+    <item
+        android:drawable="@drawable/ic_pound_egg_18"
+        android:duration="110" />
+    <item
+        android:drawable="@drawable/ic_pound_egg_19"
+        android:duration="110" />
+    <item
+        android:drawable="@drawable/ic_pound_egg_20"
+        android:duration="110" />
+    <item
+        android:drawable="@drawable/ic_pound_egg_21"
+        android:duration="110" />
+    <item
+        android:drawable="@drawable/ic_pound_egg_22"
+        android:duration="110" />
+    <item
+        android:drawable="@drawable/ic_pound_egg_23"
+        android:duration="110" />
+    <item
+        android:drawable="@drawable/ic_pound_egg_24"
+        android:duration="110" />
+    <item
+        android:drawable="@drawable/ic_pound_egg"
+        android:duration="110" />
+</animation-list>

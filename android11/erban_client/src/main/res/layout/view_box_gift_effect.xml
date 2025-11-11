@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_main"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@mipmap/bg_box_effect_gift"
+    android:orientation="vertical"
+    android:layout_marginEnd="@dimen/dp_6"
+    tools:visibility="visible"
+    android:visibility="gone">
+
+    <com.vslk.lbgx.ui.common.widget.CircleImageView
+        android:id="@+id/img_header"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_4"
+        app:cborder_color="#7B34FB"
+        app:cborder_width="2dp"
+        android:src="@drawable/ic_default_avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:text="我是谁谁谁"
+        android:textColor="#ffffffff"
+        android:textSize="9sp"
+        app:layout_constraintEnd_toEndOf="@+id/img_header"
+        app:layout_constraintStart_toStartOf="@+id/img_header"
+        app:layout_constraintTop_toBottomOf="@+id/img_header" />
+
+    <TextView
+        android:id="@+id/tv_get_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="46dp"
+        android:text="通过活动获得"
+        android:textColor="#ff00cdff"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_gift_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:textColor="#ffffffff"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_get_tips"
+        app:layout_constraintStart_toStartOf="@+id/tv_get_tips"
+        app:layout_constraintTop_toBottomOf="@+id/tv_get_tips"
+        tools:text="草莓雪糕(1000）" />
+
+    <ImageView
+        android:id="@+id/img_gift"
+        android:layout_width="42dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_num"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/gift_record_title_icon" />
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:textColor="#ff00cdff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="X1" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fra_main"
+    android:background="#80000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:background="@mipmap/lottery_bg">
+
+
+        <ImageView
+            android:id="@+id/iv_lottery_box_box"
+            android:layout_width="174dp"
+            android:layout_height="174dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp_70"
+            android:layout_marginEnd="42dp"
+            android:background="@drawable/anim_lottery_open" />
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_lottery_box_box"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginEnd="@dimen/dp_68"
+            android:src="@mipmap/ic_text_mfhz" />
+
+        <ImageView
+            android:id="@+id/iv_pound_egg_closs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_16"
+            android:contentDescription="@null"
+            android:src="@mipmap/lottery_close_btn" />
+
+
+        <LinearLayout
+            android:id="@+id/left_btn_llt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/iv_lottery_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:drawableStart="@mipmap/lottery_paihang_btn"
+                android:drawablePadding="@dimen/dp_3"
+                android:gravity="center"
+                android:text="排行"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone"/>
+
+
+            <TextView
+                android:id="@+id/iv_lottery_prize_pool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:drawableStart="@mipmap/lottery_gift_btn"
+                android:drawablePadding="@dimen/dp_3"
+                android:gravity="center"
+                android:text="礼物"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/iv_lottery_rule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:drawableStart="@mipmap/lottery_guize_btn"
+                android:drawablePadding="@dimen/dp_3"
+                android:gravity="center"
+                android:text="规则"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/iv_lottery_win_prize_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_12"
+                android:drawableStart="@mipmap/lottery_jilu_btn"
+                android:drawablePadding="@dimen/dp_3"
+                android:gravity="center"
+                android:text="记录"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <!--<ImageView
+            android:id="@+id/iv_lottery_box_box"
+            android:layout_width="121dp"
+            android:layout_height="86dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/fy_room_egg_0" />-->
+
+
+        <LinearLayout
+            android:id="@+id/ll_lottery_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_15"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/bu_lottery_box_one"
+                android:layout_width="68dp"
+                android:layout_height="32dp"
+                android:background="@mipmap/lottery_x1_btn_on" />
+
+            <ImageView
+                android:id="@+id/bu_lottery_box_ten"
+                android:layout_width="68dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="@dimen/dp_24"
+                android:background="@mipmap/lottery_x10_btn" />
+
+            <ImageView
+                android:id="@+id/bu_lottery_box_fifty"
+                android:layout_width="68dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="@dimen/dp_24"
+                android:background="@mipmap/lottery_x50_btn" />
+
+            <ImageView
+                android:id="@+id/bu_lottery_box_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_24"
+                android:src="@mipmap/lottery_btn_open" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_14"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_hailuo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开心值："
+                android:textColor="#FFEC00"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_gold_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:textColor="#FFEC00"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_lottery_box_recharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:drawableEnd="@mipmap/ic_arrow_right_yellow"
+                android:text="+开心 "
+                android:textColor="#FFEC00"
+                android:textSize="@dimen/text_size_13" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="370dp"
+        android:src="@mipmap/ic_mfhz_text"
+        android:visibility="gone" />
+
+</RelativeLayout>

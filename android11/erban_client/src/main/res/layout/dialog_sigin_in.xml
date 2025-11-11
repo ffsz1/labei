@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:background="@drawable/bg_dialog_sign_in" />
+
+    <TextView
+        android:id="@+id/tv_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="签到成功"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_24" />
+
+    <TextView
+        android:id="@+id/tv_sign_in_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_one"
+        android:layout_marginStart="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_6"
+        android:background="@drawable/shape_50331924_10dp"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_2"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_10"
+        tools:text="已连续签到 0 天" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_35"
+        android:layout_marginStart="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_150"
+        android:layout_marginEnd="@dimen/dp_40"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/ll_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_view"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:drawableStart="@drawable/ic_sign_in_coin"
+            android:drawablePadding="@dimen/dp_5"
+            android:text="@string/dian_dian_coin"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/text_size_12" />
+
+        <TextView
+            android:id="@+id/tv_add_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:drawablePadding="@dimen/dp_5"
+            android:textColor="@color/color_FF80B3"
+            android:textSize="@dimen/text_size_18"
+            tools:text="+10" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_three"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:text="连续签到7天可获得礼物盒哦" />
+
+
+    <ImageView
+        android:id="@+id/sign_in_task_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_two"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_100"
+        android:src="@drawable/ic_sign_in_task_center_dialog" />
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_close" />
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/user_speek"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop" />
+
+    <com.vslk.lbgx.ui.common.widget.CircleImageView
+        android:id="@+id/avatar"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_centerInParent="true"
+        app:cborder_color="#33FFFFFF"
+        app:cborder_width="2dp" />
+
+    <ImageView
+        android:id="@+id/user_mic"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/icon_room_mic" />
+
+</RelativeLayout>

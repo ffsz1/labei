@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_210"
+    android:background="@drawable/ic_payment_dialog_bg"
+    >
+
+    <com.hncxco.library_ui.widget.DrawableTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:drawableType="shape"
+        app:leftTopRadius="@dimen/dp_16"
+        app:rightTopRadius="@dimen/dp_16"/>
+
+    <Button
+        android:id="@+id/iv_dialog_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:layout_marginTop="@dimen/dp_160"
+        android:textSize="@dimen/text_size_17"
+        android:textColor="@color/white"
+        android:background="@drawable/ic_payment_dialog_close"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_25"
+            android:text="选择提现方式"
+            android:textColor="@color/color_1A1A1A"
+            android:textSize="@dimen/text_size_17"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_25"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_weichat_pay_way"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_5"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_weichat_pay_logo"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_payment_wechat"/>
+
+                <!--<com.hncxco.library_ui.widget.DrawableTextView
+                    android:id="@+id/dtv_weichat_pay_state"
+                    android:layout_width="@dimen/dp_95"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_below="@id/iv_weichat_pay_logo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:layout_marginBottom="@dimen/dp_18"
+                    android:gravity="center"
+                    android:text="填写信息"
+                    android:textColor="@color/selector_weixin_pay_color"
+                    app:d_radius="@dimen/dp_15"
+                    app:drawableType="layer"
+                    app:selectSoildColor="@color/white"
+                    app:selectState="True"
+                    app:selectStrikeColor="@color/color_ff5cc750"
+                    app:selectStrikeWidth="@dimen/dp_half"
+                    app:soildColor="@color/color_ff5cc750"/>-->
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/rl_alipay_way"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_5"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:background="@drawable/selector_alipay"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_alipay_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:contentDescription="@null"
+                    android:src="@drawable/payment_ali_selector"/>
+
+                <com.hncxco.library_ui.widget.DrawableTextView
+                    android:id="@+id/dtv_alipay_state"
+                    android:layout_width="@dimen/dp_95"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:layout_marginBottom="@dimen/dp_18"
+                    android:gravity="center"
+                    android:text="填写信息"
+                    android:textColor="@color/selector_alipay_color"
+                    app:d_radius="@dimen/dp_15"
+                    app:drawableType="layer"
+                    app:selectSoildColor="@color/white"
+                    app:selectState="True"
+                    app:selectStrikeColor="@color/color_ff53d2f7"
+                    app:selectStrikeWidth="@dimen/dp_half"
+                    app:soildColor="@color/color_ff53d2f7"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

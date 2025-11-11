@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/message"
+        style="@style/DialogMsgText"/>
+
+    <!--<View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#f2dcdcdc"/>-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/dp_30"
+            android:background="@mipmap/dialog_cancel_btn"
+            android:text="取消"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dialog_btn_text_fnt"/>
+
+<!--
+        <View
+            android:layout_width="1px"
+            android:layout_height="43dp"
+            android:background="#f2dcdcdc"
+            android:gravity="center"
+            android:orientation="horizontal"/>
+-->
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="确定"
+            android:background="@mipmap/dialog_sure_btn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dialog_btn_text_fnt"/>
+    </LinearLayout>
+
+</LinearLayout>

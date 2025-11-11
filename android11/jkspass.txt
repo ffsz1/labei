@@ -1,0 +1,5 @@
+海角：
+别名： lbgx
+密码：lbgx123456
+
+命令：keytool -list -v -keystore D:\works\project\android\lbgx\lbgx.jks   -storepass lbgx123456

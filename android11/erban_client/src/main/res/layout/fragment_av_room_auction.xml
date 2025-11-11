@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="35dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_auction_fragment_avatar"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <com.vslk.lbgx.ui.common.widget.CircleImageView
+                    android:id="@+id/room_owner_avatar"
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_centerInParent="true"
+                    app:cborder_color="#33FFFFFF"
+                    app:cborder_width="2dp"
+                    tools:background="#FF0" />
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/room_owner_speek"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_centerInParent="true" />-->
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="14dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/room_owner_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxEms="4"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_small"
+                    tools:text="tian" />
+
+                <TextView
+                    android:id="@+id/room_owner_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_best_tiny"
+                    tools:text="收听: 333" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/attention_view"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/bg_auction_fragment_follow"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="+关注"
+                android:textSize="12dp"
+                android:visibility="gone"
+                tools:visibility="gone" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1.0"
+            android:gravity="right">
+
+            <com.vslk.lbgx.room.avroom.widget.UserListView
+                android:id="@+id/user_list_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center_vertical" />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/room_more"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:src="@drawable/icon_room_more" />
+
+    </LinearLayout>
+
+    <com.vslk.lbgx.room.avroom.widget.BottomView
+        android:id="@+id/bottom_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp" />
+
+    <com.vslk.lbgx.ui.praise.HiPraiseAnimationView
+        android:id="@+id/praise_animation_view"
+        android:layout_width="70dp"
+        android:layout_height="400dp"
+        android:layout_above="@id/bottom_view"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true" />
+
+    <View
+        android:id="@+id/praise_click_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_view"
+        android:layout_below="@id/header_layout"
+        android:layout_marginTop="13dp" />
+
+    <!--竞拍界面-->
+    <com.vslk.lbgx.room.avroom.widget.AuctionView
+        android:id="@+id/auction_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_view"
+        android:layout_below="@id/header_layout"
+        android:layout_marginTop="13dp" />
+
+    <com.vslk.lbgx.room.avroom.widget.MessageView
+        android:id="@+id/message_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_above="@id/bottom_view"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="30dp" />
+
+    <ImageView
+        android:id="@+id/activity_img"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_above="@id/bottom_view"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="110dp"
+        android:layout_marginRight="5dp" />
+
+    <RelativeLayout
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/input_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:hint="在此输入你要说的话!"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:textColor="#888889"
+                android:textColorHint="#c8c8c8"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/input_send"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/click_white_gray_selector"
+                android:scaleType="center"
+                android:src="@drawable/ic_menu_send" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/auction_list_btn"
+        android:layout_width="85dp"
+        android:layout_height="22dp"
+        android:layout_below="@id/header_layout"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/ic_user_online" />
+
+    <ImageView
+        android:id="@+id/auction_notice"
+        android:layout_width="85dp"
+        android:layout_height="22dp"
+        android:layout_below="@id/auction_list_btn"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/icon_room_notice" />
+
+    <com.vslk.lbgx.room.audio.widget.MusicPlayerView
+        android:id="@+id/music_player_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/auction_notice"
+        android:layout_marginTop="15dp" />
+
+    <com.vslk.lbgx.room.avroom.widget.GiftView
+        android:id="@+id/gift_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="gone" />
+
+</RelativeLayout>

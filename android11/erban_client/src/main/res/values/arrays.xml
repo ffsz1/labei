@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="bill_withdraw_titles">
+        <item>收礼记录</item>
+        <item>提现记录</item>
+        <item>红包提现</item>
+    </array>
+    <string-array name="hot_voice">
+        <item>@mipmap/ic_home_voice1</item>
+        <item>@mipmap/ic_home_voice2</item>
+    </string-array>
+</resources>

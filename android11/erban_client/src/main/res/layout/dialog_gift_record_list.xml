@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?><!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dialog_list_height"
+    app:cardCornerRadius="@dimen/dp_8">-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/gift_record_bg">
+
+        <!--<RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">-->
+
+        <TextView
+            android:id="@+id/tv_list_data_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:drawableLeft="@mipmap/gift_record_title_icon"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="@string/gift_history_list_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18" />
+
+        <!--<ImageView
+            android:id="@+id/iv_close_dialog"
+            android:src="@drawable/icon_close_dialog"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />-->
+        <!--        </RelativeLayout>-->
+
+        <!--<View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dialog_list_title_diver"
+            android:background="@color/app_bg"
+            android:layout_marginHorizontal="@dimen/dp_15"/>-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_list_data_title">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_gift_history_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableTop="@drawable/content_empty"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center"
+                android:text="暂时还没有人送礼"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout><!--</android.support.v7.widget.CardView>-->

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">xchat_core</string>
+
+    /*--------------------------------------- 分享文案 --------------------------------------------------------*/
+
+    <string name="share_h5_title">拉贝星球</string>
+    <string name="share_h5_desc">看见你一次，就喜欢你一次</string>
+<!--    <string name="share_room_title">邀请你连麦互动</string>-->
+    <string name="share_room_site">找到TA，竟然只用了0.1秒的时间</string>
+
+    /*--------------------------------------- 分享文案 --------------------------------------------------------*/
+
+</resources>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.hncxco.library_ui.widget.DrawableTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_150"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/dp_30"
+            android:text="消息中心"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20"
+            app:angle="LEFT_RIGHT"
+            app:centerColor="#8a27fc"
+            app:drawableType="gradient"
+            app:endColor="#9b32fb"
+            app:startColor="#7b1dfe" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="-72dp"
+            android:background="@drawable/ic_msg_item_bg"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_msg_friend"
+                android:drawablePadding="@dimen/dp_2"
+                android:gravity="center_horizontal"
+                android:paddingEnd="@dimen/dp_22_5"
+                android:text="好友"
+                android:textColor="@color/color_65625D"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_attention"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_msg_attention"
+                android:drawablePadding="@dimen/dp_2"
+                android:gravity="center_horizontal"
+                android:paddingStart="@dimen/dp_22_5"
+                android:paddingEnd="@dimen/dp_22_5"
+                android:text="关注"
+                android:textColor="@color/color_65625D"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_fans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_msg_fans"
+                android:drawablePadding="@dimen/dp_2"
+                android:gravity="center_horizontal"
+                android:paddingStart="@dimen/dp_22_5"
+                android:paddingEnd="@dimen/dp_22_5"
+                android:text="粉丝"
+                android:textColor="@color/color_65625D"
+                android:textSize="@dimen/text_size_13" />
+
+            <TextView
+                android:id="@+id/tv_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_msg_black"
+                android:drawablePadding="@dimen/dp_2"
+                android:gravity="center_horizontal"
+                android:paddingStart="@dimen/dp_22_5"
+                android:text="黑名单"
+                android:textColor="@color/color_65625D"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_50" />
+
+</LinearLayout>

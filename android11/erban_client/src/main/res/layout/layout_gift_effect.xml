@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:visibility="invisible"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/img_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"/>
+
+        <LinearLayout
+            android:id="@+id/benefactor_container"
+            android:layout_width="60dp"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignBottom="@id/img_bg"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.vslk.lbgx.ui.common.widget.CircleImageView
+                android:id="@+id/benefactor_avatar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_default_avatar"
+                app:cborder_color="@color/white_alpha_50"
+                app:cborder_width="@dimen/dp_1"/>
+
+            <TextView
+                android:id="@+id/benefactor_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12"
+                tools:text="送礼人"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/give_text"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignBottom="@id/img_bg"
+            android:layout_marginStart="17dp"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:layout_toEndOf="@id/benefactor_container"
+            android:gravity="center_vertical"
+            android:text="赠送"
+            android:textColor="#FEFEFE"
+            android:textSize="@dimen/text_size_12"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/iv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignBottom="@id/img_bg"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:layout_toEndOf="@id/benefactor_container"
+            android:src="@drawable/ic_send1"/>
+
+        <LinearLayout
+            android:id="@+id/receiver_container"
+            android:layout_width="60dp"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignBottom="@id/img_bg"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:layout_toEndOf="@id/iv_send"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.vslk.lbgx.ui.common.widget.CircleImageView
+                android:id="@+id/receiver_avatar"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_default_avatar"
+                app:cborder_color="@color/white_alpha_50"
+                app:cborder_width="@dimen/dp_1"/>
+
+            <TextView
+                android:id="@+id/receiver_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_3"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12"
+                tools:text="收礼人"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/gift_light_container"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignBottom="@id/img_bg"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:layout_toEndOf="@id/receiver_container">
+
+            <ImageView
+                android:id="@+id/gift_light_bg"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_light_rotate"/>
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/gift_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/gift_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="2dp"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp_10"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_super_gift_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignBottom="@id/img_bg"
+            android:layout_marginStart="@dimen/dp_40"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:layout_toStartOf="@id/gift_light_container"
+            android:gravity="center_vertical"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/gift_number"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_80"
+            android:layout_alignBottom="@id/img_bg"
+            android:layout_marginBottom="@dimen/dp_60"
+            android:layout_toEndOf="@+id/gift_light_container"
+            android:gravity="start|center_vertical"
+            android:text="xxxxx"
+            android:textColor="#FFFC1E"
+            android:textSize="@dimen/text_size_17"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/svga_imageview_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svga_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:autoPlay="true"/>
+
+</RelativeLayout>

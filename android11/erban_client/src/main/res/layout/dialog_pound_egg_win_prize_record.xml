@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_above="@+id/title_dialog_prize_rlt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="21dp"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:contentDescription="@null"
+        android:padding="5dp"
+        android:src="@mipmap/dialog_blue_close" />
+
+        <RelativeLayout
+            android:id="@+id/title_dialog_prize_rlt"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentBottom="true"
+            android:background="@mipmap/blue_rule_bg">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@mipmap/record_title"/>
+
+        <com.hncxco.library_ui.widget.NestedScrollSwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_below="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:id="@+id/rv_pay_income_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.hncxco.library_ui.widget.NestedScrollSwipeRefreshLayout>
+
+        </RelativeLayout>
+</RelativeLayout>

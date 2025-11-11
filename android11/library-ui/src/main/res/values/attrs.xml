@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--通用的App 标题栏-->
+    <declare-styleable name="AppToolBar">
+        <attr name="barBackColor" format="color" />
+
+        <!--状态栏-->
+        <attr name="isImmersive" format="boolean" />
+
+        <!--左侧图标-->
+        <attr name="hasLeftImg" format="boolean" />
+        <attr name="leftImgRes" format="reference" />
+        <attr name="leftImageState">
+            <enum name="visible" value="0x00000000" />
+            <enum name="gone" value="0x00000008" />
+            <enum name="invisible" value="0x00000004" />
+        </attr>
+        <attr name="ivMarginLeft" format="dimension" />
+        <attr name="ivPadding" format="dimension" />
+        <!--标题-->
+        <attr name="title" format="string" />
+        <attr name="titleSize" format="dimension" />
+        <attr name="titleHMargin" format="dimension" />
+        <attr name="titleColor" format="color" />
+
+        <!--底部横线-->
+        <attr name="hasLine" format="boolean" />
+        <attr name="lineColor" format="color" />
+        <attr name="lineHeight" format="dimension" />
+        <attr name="lineMarginLeft" format="dimension" />
+        <attr name="lineMarginRight" format="dimension" />
+
+        <!--右侧图片和文本-->
+        <!--文本-->
+        <attr name="hasRightTitle" format="boolean" />
+        <attr name="rightTextState">
+            <enum name="visible" value="0x00000000" />
+            <enum name="gone" value="0x00000008" />
+            <enum name="invisible" value="0x00000004" />
+        </attr>
+        <attr name="rightTitleSize" format="dimension" />
+        <attr name="rightTitleColor" format="color" />
+        <attr name="rightTitle" format="string" />
+        <attr name="tvRightMarginRight" format="dimension" />
+        <attr name="tvRightPadding" format="dimension" />
+        <!--图标-->
+        <attr name="hasRightImg" format="boolean" />
+        <attr name="rightImageState">
+            <enum name="visible" value="0x00000000" />
+            <enum name="gone" value="0x00000008" />
+            <enum name="invisible" value="0x00000004" />
+        </attr>
+        <attr name="ivRightImgRes" format="reference" />
+        <attr name="ivRightMarginRight" format="dimension" />
+        <attr name="ivRightPadding" format="dimension" />
+
+    </declare-styleable>
+
+    <declare-styleable name="DrawableTextView">
+        <attr name="drawableType">
+            <enum name="shape" value="0" />
+            <enum name="layer" value="1" />
+            <enum name="gradient" value="2" />
+        </attr>
+        <attr name="defineDrawable" format="boolean" />
+        <attr name="d_radius" format="dimension" />
+        <attr name="leftTopRadius" format="dimension" />
+        <attr name="leftBottomRadius" format="dimension" />
+        <attr name="rightTopRadius" format="dimension" />
+        <attr name="rightBottomRadius" format="dimension" />
+        <attr name="strikeColor" format="color" />
+        <attr name="strikeWidth" format="dimension" />
+        <attr name="soildColor" format="color" />
+
+        <attr name="pressState">
+            <enum name="False" value="0" />
+            <enum name="True" value="1" />
+        </attr>
+        <attr name="pressStrikeColor" format="color" />
+        <attr name="pressStrikeWidth" format="dimension" />
+        <attr name="pressSoildColor" format="color" />
+
+        <attr name="enableState">
+            <enum name="False" value="0" />
+            <enum name="True" value="1" />
+        </attr>
+        <attr name="enableStrikeColor" format="color" />
+        <attr name="enableStrikeWidth" format="dimension" />
+        <attr name="enableSoildColor" format="color" />
+
+        <attr name="checkState">
+            <enum name="False" value="0" />
+            <enum name="True" value="1" />
+        </attr>
+        <attr name="checkStrikeColor" format="color" />
+        <attr name="checkStrikeWidth" format="dimension" />
+        <attr name="checkSoildColor" format="color" />
+
+        <attr name="selectState">
+            <enum name="False" value="0" />
+            <enum name="True" value="1" />
+        </attr>
+        <attr name="selectStrikeColor" format="color" />
+        <attr name="selectStrikeWidth" format="dimension" />
+        <attr name="selectSoildColor" format="color" />
+
+
+        <attr name="startColor" format="color" />
+        <attr name="centerColor" format="color" />
+        <attr name="endColor" format="color" />
+        <attr name="angle">
+            <enum name="LEFT_RIGHT" value="0" />
+            <enum name="BL_TR" value="45" />
+            <enum name="BOTTOM_TOP" value="90" />
+            <enum name="BR_TL" value="135" />
+            <enum name="RIGHT_LEFT" value="180" />
+            <enum name="TR_BL" value="225" />
+            <enum name="TOP_BOTTOM" value="270" />
+            <enum name="TL_BR" value="315" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="WaveView">
+        <!--最小圈半径-->
+        <attr name="w_radius" format="dimension" />
+        <!--最大圈半径 *2(直径)应小于等于宽/高-->
+        <attr name="w_max_radius" format="dimension" />
+        <!--颜色-->
+        <attr name="w_color" format="color" />
+        <!--每start一次，最少绘制多久-->
+        <attr name="w_draw_time" format="integer" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="info"
+            type="com.tongdaxing.xchat_core.find.family.FamilyInfo"/>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.hncxco.library_ui.widget.AppToolBar
+            android:id="@+id/toolbar"
+            style="@style/AppToolBar_white_style"
+            app:title="家族管理"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_65"
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/avatar_container"
+                android:layout_width="@dimen/dp_65"
+                android:layout_height="@dimen/dp_65"
+                android:layout_marginStart="@dimen/dp_14"
+                android:onClick="@{click}">
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    roundImage="@{info.familyLogo}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_default_avatar"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/dp_4"
+                    android:src="@drawable/ic_family_build_avatar_pic"
+                    android:visibility="@{info.roleStatus == 1 ? View.VISIBLE : View.GONE}"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_11"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_toEndOf="@id/avatar_container"
+                android:text="@{info.familyName}"
+                android:textColor="@color/color_4B404F"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold"
+                tools:text="有钱的有cp家族"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_toEndOf="@id/avatar_container"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/family_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_11"
+                    android:textSize="@dimen/text_size_12"
+                    tools:text="ID:523446565"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  |  "
+                    android:textSize="@dimen/text_size_12"/>
+
+                <TextView
+                    android:id="@+id/family_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_12"
+                    tools:text="创建于/2018-09-18"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            style="@style/divid_line_style"
+            android:layout_height="@dimen/dp_7"
+            android:layout_marginTop="@dimen/dp_20"/>
+
+        <TextView
+            android:id="@+id/manager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_57"
+            android:drawableEnd="@drawable/ic_next_arrow"
+            android:gravity="center_vertical"
+            android:onClick="@{click}"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:text="管理家族"
+            android:textColor="@color/color_37353B"
+            android:textSize="@dimen/text_size_18"
+            android:visibility="@{(info.roleStatus == 1 || info.roleStatus == 2) ? View.VISIBLE : View.GONE}"/>
+
+        <View
+            style="@style/divid_line_style"
+            android:layout_marginStart="@dimen/dp_16"
+            android:visibility="@{(info.roleStatus == 1 || info.roleStatus == 2) ? View.VISIBLE : View.GONE}"/>
+
+        <TextView
+            android:id="@+id/applyMsg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_57"
+            android:drawableEnd="@drawable/ic_next_arrow"
+            android:gravity="center_vertical"
+            android:onClick="@{click}"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:text="申请记录"
+            android:textColor="@color/color_37353B"
+            android:textSize="@dimen/text_size_18"
+            android:visibility="@{(info.roleStatus == 1 || info.roleStatus == 2) ? View.VISIBLE : View.GONE}"/>
+
+        <View
+            style="@style/divid_line_style"
+            android:layout_marginStart="@dimen/dp_16"
+            android:visibility="@{(info.roleStatus == 1 || info.roleStatus == 2) ? View.VISIBLE : View.GONE}"/>
+
+        <TextView
+            android:id="@+id/exit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_57"
+            android:drawableEnd="@drawable/ic_next_arrow"
+            android:gravity="center_vertical"
+            android:onClick="@{click}"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:text="退出家族"
+            android:textColor="@color/color_37353B"
+            android:textSize="@dimen/text_size_18"
+            android:visibility="@{(info.roleStatus == 1) ? View.GONE : View.VISIBLE}"/>
+
+        <View
+            style="@style/divid_line_style"
+            android:layout_marginStart="@dimen/dp_16"
+            android:visibility="@{(info.roleStatus == 1) ? View.GONE : View.VISIBLE}"/>
+
+        <TextView
+            android:id="@+id/familyBg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_57"
+            android:drawableEnd="@drawable/ic_next_arrow"
+            android:gravity="center_vertical"
+            android:onClick="@{click}"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:text="更换背景"
+            android:textColor="@color/color_37353B"
+            android:textSize="@dimen/text_size_18"
+            android:visibility="@{(info.roleStatus == 1) ? View.VISIBLE : View.GONE}"/>
+
+        <View
+            style="@style/divid_line_style"
+            android:layout_marginStart="@dimen/dp_16"
+            android:visibility="@{(info.roleStatus == 1) ? View.VISIBLE : View.GONE}"/>
+
+        <TextView
+            android:id="@+id/remind"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_57"
+            android:drawableEnd="@drawable/ic_msg_remind_toggle"
+            android:gravity="center_vertical"
+            android:onClick="@{click}"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:text="消息免扰"
+            android:textColor="@color/color_37353B"
+            android:textSize="@dimen/text_size_18"/>
+
+        <View style="@style/divid_line_style"/>
+
+    </LinearLayout>
+</layout>

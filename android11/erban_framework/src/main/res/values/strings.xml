@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+    <string name="app_name">xchat_framework</string>
+
+    <string name="str_right_now">刚刚</string>
+    <string name="str_today">今天</string>
+    <string name="str_yesterday">昨天</string>
+    <string name="str_day_before_yesterday">前天</string>
+    <string name="str_short_date_format">%1$d月%2$d日</string>
+    <string name="str_date_format">%1$d年%2$d月%3$d日</string>
+    <string name="str_minutes_ago_format">%1$d分钟前</string>
+    <string name="str_hours_ago_format">%1$d小时前</string>
+
+    <string name="sensitive_word_data">发送失败，拉贝星球提醒您文明用语~</string>
+
+</resources>

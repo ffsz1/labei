@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_date"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bill_item_time"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="15dp"
+    android:gravity="center_vertical"
+    android:text="2017年9月11日"
+    android:textColor="@color/color_666666"
+    android:textSize="14sp" />
+

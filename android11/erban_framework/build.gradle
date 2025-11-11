@@ -1,0 +1,88 @@
+apply plugin: 'com.android.library'
+
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            //配置log日志信息开关
+            buildConfigField "boolean", "IS_OPEN_LOG", "true"
+            //开发环境，1是测试服、2是正式服、3是预发服
+            buildConfigField "int", "DEL_EVN", "1"
+        }
+
+        product {
+            //配置log日志信息开关
+            buildConfigField "boolean", "IS_OPEN_LOG", "false"
+            //开发环境，1是测试服、2是正式服、3是预发服
+            buildConfigField "int", "DEL_EVN", "2"
+        }
+
+        product18 {
+            //配置log日志信息开关
+            buildConfigField "boolean", "IS_OPEN_LOG", "false"
+            //开发环境，1是测试服、2是正式服、3是预发服
+            buildConfigField "int", "DEL_EVN", "3"
+        }
+
+        beta {
+            //关键代码，release， debug为library中已有buildType
+            matchingFallbacks = ['release', 'debug']
+        }
+    }
+
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir:
+            'libs')
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    compile rootProject.ext.dependencies.gson
+    compile(rootProject.ext.dependencies.appcompatV7) {
+//        exclude module: "support-v4"
+        exclude module: "support-annotations"
+    }
+    compile rootProject.ext.dependencies.SVGAPlayer
+    //网易云 易盾
+    compile 'com.github.yidun:captcha-android-demo:2.4.3.1'
+    compile 'com.gongwen:marqueelibrary:1.1.3'
+    //switchbutton的切换按钮
+    compile 'com.kyleduo.switchbutton:library:2.0.0'
+    //Android 源码系列之<二十>通过反射解决在HuaWei手机出现Register too many Broadcast Receivers的crash 反射库
+    //Github：https://github.com/llew2011/HuaWeiVerifier
+    //https://blog.csdn.net/llew2011/article/details/79054457
+    compile 'com.llew.huawei:verifier:1.0.6'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    api 'org.java-websocket:Java-WebSocket:1.3.9'
+    api rootProject.ext.dependencies.roundedimageview
+    api rootProject.ext.dependencies.utilcode
+    //没有仓库
+//    api rootProject.ext.dependencies.ndklib
+    api project(path: ':ndklib_yingtao')
+
+}

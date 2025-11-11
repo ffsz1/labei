@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#cc000000"
+    android:layout_centerInParent="true">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="活动规则"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_17" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_45"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_45"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:text="1、随机3个数字便可匹配您心仪的Ta，同时出现520和520仅有0.00214%的机会哦。\n\n2、我pick你，你出131，我选4，组合便是一生一世。\n\n3、目前本玩法处于测试阶段，仅限时开放，详情联系客服。"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btn_match_rule_close"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:background="@drawable/shape_lottery_dialog_ok"
+        android:text="关闭"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+</LinearLayout>

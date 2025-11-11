@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_8">
+
+        <include layout="@layout/layout_base_list"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/line_color"/>
+
+    <FrameLayout
+        android:id="@+id/ll_dress_up_action"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_15"
+            android:drawableStart="@mipmap/ic_ranking_gold"
+            android:drawablePadding="@dimen/dp_4"
+            android:text="/天"
+            android:textColor="#FFFDD069"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold"/>
+
+        <com.hncxco.library_ui.widget.DrawableTextView
+            android:id="@+id/tv_dress_up_left_action"
+            android:layout_width="@dimen/dp_68"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:gravity="center"
+            android:text="赠送"
+            android:textColor="@color/color_fffd1673"
+            android:textSize="@dimen/text_size_15"
+            app:d_radius="@dimen/dp_22"
+            app:drawableType="shape"
+            app:strikeColor="@color/color_fffd1673"
+            app:strikeWidth="@dimen/dp_1"/>
+
+    </FrameLayout>
+
+</LinearLayout>

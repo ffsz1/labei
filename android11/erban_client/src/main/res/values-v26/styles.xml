@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="SplashTheme" parent="MyMaterialTheme.Base">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--发现加入这个属性后刘海屏手机会上面的状态栏会无法出现，显示黑色  android P之前使用谷歌-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!-- windowNoTitle 和 android:windowNoTitle的区别 https://blog.csdn.net/vtming/article/details/52296090-->
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+</resources>

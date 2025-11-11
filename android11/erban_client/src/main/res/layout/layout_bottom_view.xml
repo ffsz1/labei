@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/dp_5">
+
+    <ImageView
+        android:id="@+id/icon_room_open_mic"
+        android:layout_width="@dimen/dp_34"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:contentDescription="@null"
+        android:src="@mipmap/icon_room_open_mic" />
+
+
+    <ImageView
+        android:id="@+id/icon_room_open_remote_mic"
+        android:layout_width="@dimen/dp_34"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:contentDescription="@null"
+        android:src="@mipmap/icon_remote_mute_close" />
+
+    <ImageView
+        android:id="@+id/icon_room_face"
+        android:layout_width="@dimen/dp_34"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:contentDescription="@null"
+        android:src="@mipmap/icon_room_face" />
+
+    <!--todo 隐藏排麦功能，等待新需求改版-->
+    <ImageView
+        android:id="@+id/icon_room_mic_in_list"
+        android:layout_width="@dimen/dp_34"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:contentDescription="@null"
+        android:src="@drawable/icon_paimai"
+        android:visibility="gone" />
+
+
+    <ImageView
+        android:id="@+id/icon_room_send_gift"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:src="@mipmap/icon_room_send_gift" />
+
+    <FrameLayout
+        android:id="@+id/rl_room_msg"
+        android:layout_width="@dimen/dp_34"
+        android:layout_height="@dimen/dp_34"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/iv_room_msg_mark"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_room_msg_mark"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/ic_room_msg"
+            android:contentDescription="@null" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/iv_room_send_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_34"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:src="@mipmap/ic_room_send_msg" />
+
+</LinearLayout>

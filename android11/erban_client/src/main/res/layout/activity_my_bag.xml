@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/title_flt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@color/color_FF81A4" />
+
+        <com.hncxco.library_ui.widget.AppToolBar
+            android:id="@+id/toolbar"
+            style="@style/AppToolBar_transparent_style"
+            app:leftImgRes="@mipmap/ic_back_black_arrow"
+            app:title="背包" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_flt"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rb_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="18dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/car_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_shop_rb_tab"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="座驾"
+                android:textSize="@dimen/text_size_17" />
+
+
+            <RadioButton
+                android:id="@+id/headwear_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_shop_rb_tab"
+                android:button="@null"
+                android:gravity="center"
+                android:text="头饰"
+                android:textSize="@dimen/text_size_17" />
+
+        </RadioGroup>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_shop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-5dp" />
+    </LinearLayout>
+
+    <com.opensource.svgaplayer.SVGAImageView
+        android:id="@+id/svga_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:autoPlay="true" />
+
+</RelativeLayout>

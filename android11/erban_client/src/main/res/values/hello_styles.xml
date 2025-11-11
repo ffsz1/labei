@@ -1,0 +1,33 @@
+<resources>
+    <!-- just defines top layer "Animation" -->
+
+
+    <style name="DialogAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_push_up</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_push_down</item>
+    </style>
+
+    <style name="Dialog_Fullscreen">
+
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.7</item>
+    </style>
+
+    <style name="popup_dialog_text" parent="android:Widget.TextView">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+</resources>

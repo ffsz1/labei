@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.vslk.lbgx.room.gift.anim.GiftFrameLayout
+            android:id="@+id/gift_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp" />
+
+
+        <com.vslk.lbgx.room.gift.anim.GiftFrameLayout
+            android:id="@+id/gift_layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gift_layout_1" />
+
+        <View
+            android:id="@+id/svga_imageview_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_transparent_50"
+            android:visibility="gone" />
+
+        <com.opensource.svgaplayer.SVGAImageView
+            android:id="@+id/svga_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:autoPlay="true" />
+
+    </RelativeLayout>
+</LinearLayout>

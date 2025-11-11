@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rly"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_80"
+    android:background="@drawable/bg_common_touch_while">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dp_15"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_default_avatar" />
+
+
+    <com.hncxco.library_ui.widget.DrawableTextView
+        android:id="@+id/attention_img"
+        android:layout_width="@dimen/dp_54"
+        android:layout_height="@dimen/dp_20"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:d_radius="@dimen/dp_12"
+        app:selectState="True" />
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imageView"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_toStartOf="@id/attention_img"
+        android:layout_toEndOf="@id/imageView"
+        android:orientation="horizontal">
+
+        <com.vslk.lbgx.ui.widget.MarqueeTextView
+            android:id="@+id/mt_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_14"
+            tools:text="这是一个很长的标题长" />
+
+        <ImageView
+            android:id="@+id/iv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_2"
+            android:background="@drawable/icon_man" />
+
+        <com.vslk.lbgx.ui.widget.LevelView
+            android:id="@+id/level_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toEndOf="@+id/imageView"
+        android:text="ID:123456789123456"
+        android:textColor="@color/color_grey_999999"
+        android:textSize="11sp" />
+
+
+    <include
+        android:id="@+id/view_line"
+        layout="@layout/layout_common_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_half"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_15" />
+
+
+</RelativeLayout>
