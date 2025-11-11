@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.ActivityRankMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.main.vo.activity.RankActVo" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <id column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="nick" property="nick" jdbcType="BIGINT" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="BIGINT" />
+  </resultMap>
+
+
+  <select id="queryRichActRank" resultMap="BaseResultMap" >
+    SELECT
+      gsr.uid as uid,
+      SUM(gsr.total_gold_num) as total
+    FROM
+      gift_send_record gsr
+    WHERE
+      1=1
+    <if test="uids != null" >
+      AND uid IN
+      <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="giftIds != null" >
+      AND gift_id IN
+      <foreach item="item" index="index" collection="giftIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+      and gsr.create_time BETWEEN #{startTime} and #{endTime}
+      GROUP BY gsr.uid
+      ORDER BY total DESC
+      LIMIT 0,#{size}
+  </select>
+
+
+  <select id="queryStarActRank" resultMap="BaseResultMap" >
+    SELECT
+    gsr.recive_uid as uid,
+    SUM(gsr.total_gold_num) as total
+    FROM
+    gift_send_record gsr
+    WHERE
+    1=1
+    <if test="uids != null" >
+      AND recive_uid IN
+      <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="giftIds != null" >
+      AND gift_id IN
+      <foreach item="item" index="index" collection="giftIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    and gsr.create_time BETWEEN #{startTime} and #{endTime}
+    GROUP BY gsr.recive_uid
+    ORDER BY total DESC
+    LIMIT 0,#{size}
+  </select>
+
+
+  <select id="queryRoomActRank" resultMap="BaseResultMap" >
+    SELECT
+    gsr.room_uid as uid,
+    SUM(gsr.total_gold_num) as total
+    FROM
+    gift_send_record gsr
+    WHERE
+    1=1
+    <if test="uids != null" >
+      AND room_uid IN
+      <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="giftIds != null" >
+      AND gift_id IN
+      <foreach item="item" index="index" collection="giftIds" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    and gsr.create_time BETWEEN #{startTime} and #{endTime}
+    GROUP BY gsr.room_uid
+    ORDER BY total DESC
+    LIMIT 0,#{size}
+  </select>
+
+
+</mapper>

@@ -1,0 +1,227 @@
+<style>
+    .content .form-group {
+        margin-right: 2rem;
+    }
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label">拉贝号:</label>
+                            <input type="text" name="erbanNo" id="erbanNo" placeholder="拉贝号">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">机器人:</label>
+                            <select class="btn btn-default dropdown-toggle" id="type" name="type"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">有</option>
+                                <option value="2">没有</option>
+                            </select>
+                        </div>
+                        <label class="control-label">
+                            <a href="javascript:;" id="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> 查询</a>
+                        </label>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="excelModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalsLabel">添加机器人</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="excelForm">
+                    <div class="form-group">
+                        <label for="num" class="col-sm-3 control-label">数量:</label>
+                        <div class="col-sm-8">
+                            <input type="hidden" id="erbanNos" name="erbanNos"/>
+                            <input type="text" id="num" class="form-control  validate[required]" name="file">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveRobot">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    type: isNaN(parseInt($("#type").val())) ? null : parseInt($("#type").val()),
+                    erbanNo: $('#erbanNo').val(),
+                };
+                return param;
+            },
+            uniqueId: 'uid',
+            toolbar: '#toolbar',
+            url: '/admin/robot/getAll',
+            responseHandler: function (res) {
+                if (res.total > 0) {
+                    return {
+                        "total": res.total, // 总页数
+                        "rows": res.rows.list   // 数据
+                    };
+                } else {
+                    $("#tipMsg").text("查询不到相应数据");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            },
+            columns: [
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 200},
+                {field: 'uid', title: 'uid', align: 'center', valign: 'middle', visible: false},
+                {field: 'title', title: '标题', align: 'center', valign: 'middle', width: 350},
+                {
+                    field: 'isPermitRoom',
+                    title: '是否牌照房',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 200,
+                    formatter: function (val) {
+                        switch (val) {
+                            case 1:
+                                return '是';
+                            case 2:
+                                return '否';
+                            case 3:
+                                return '审核牌照';
+                        }
+                    }
+                },
+                {
+                    field: 'canShow',
+                    title: '展示状态',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 250,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '展示';
+                        } else {
+                            return '不展示';
+                        }
+                    }
+                },
+                {field: 'robotNum', title: '机器人数量', align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'erbanNo',
+                    title: '操作',
+                    align: 'center',
+                    width: 400,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        let str = "<button class='btn btn-sm btn-warning opt-add' data-id=" + val + " style='margin: 0 4px 0 0;'><i class=\"glyphicon glyphicon-plus\"></i> 添加</button>";
+                        str += "<button class='btn btn-sm btn-danger opt-del' data-id=" + val + "><i class=\"glyphicon glyphicon-remove\"></i> 删除</button>";
+                        return str;
+                    }
+                }
+
+            ]
+        })
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        })
+        $('#table').on('click', '.opt-add', function () {
+            const erbanNo = $(this).data('id');
+            if (erbanNo == 'undefined' || !erbanNo) {
+                return;
+            }
+            $("#erbanNos").val(erbanNo);
+            $("#excelModal").modal('show');
+        });
+        $("#saveRobot").click(function () {
+            const erbanNo = $("#erbanNos").val();
+            const num = $("#num").val();
+            if ($("#userForm").validationEngine('validate')) {
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/robot/add',
+                    data: {
+                        erbanNo: erbanNo,
+                        num: num
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 200) {
+                            $("#tipMsg").text("添加成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                            $("#excelModal").modal('hide');
+                        } else {
+                            $("#tipMsg").text("添加失败，错误：" + res.message);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+        $('#table').on('click', '.opt-del', function () {
+            const erbanNo = $(this).data('id');
+            if (erbanNo == 'undefined' || !erbanNo) {
+                return;
+            }
+
+            $.ajax({
+                type: 'get',
+                url: '/admin/robot/del',
+                data: {
+                    erbanNo: erbanNo
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        $("#tipMsg").text("删除成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("删除失败，错误：" + res.message);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+    })
+</script>

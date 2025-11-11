@@ -1,0 +1,577 @@
+<style>
+    #removeBadge {
+        margin-left: 10px;
+    }
+
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+
+    .modal-body, .modal-body .form-group {
+        overflow: hidden;
+    }
+
+    .modal-body .form-inline {
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+
+    .modal-body #addImgUrl {
+        cursor: pointer;
+    }
+
+    .modal-body #addUploadFile {
+        display: none;
+    }
+
+    .modal-body .btn {
+        display: block;
+        width: 200px;
+        margin-top: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label">拉贝号:</label>
+                            <input type="text" name="erbanNo" id="erbanNo" placeholder="拉贝号">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">状态:</label>
+                            <select class="btn btn-default dropdown-toggle" id="type" name="type"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">显示</option>
+                                <option value="0">不显示</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">牌照:</label>
+                            <select class="btn btn-default dropdown-toggle" id="isPermit" name="isPermitRoom"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">牌照</option>
+                                <option value="3">审核牌照</option>
+                                <option value="2">无</option>
+                            </select>
+                        </div>
+                        <label class="control-label">
+                            <a href="javascript:;" id="btnSearch" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-search"></i> 查询
+                            </a>
+                        </label>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="editModalLabel">修改房间信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="editRoom" class="form-horizontal">
+                    <input type="hidden" name="uid" id="uid">
+                    <div class="form-group">
+                        <label for="tag" class="col-sm-4 control-label">标签:</label>
+                        <div class="col-sm-8">
+                            <select name="tag" id="tag" class="btn btn-default dropdown-toggle"></select>
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <label class="col-sm-4 control-label">标题:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="title" name="title" class="form-control"
+                                   aria-describedby="basic-addon1"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">角标图:</label>
+                        <div class="col-sm-8">
+                            <img src="/static/AdminLTE/img/add.png" id="addImgUrl" width="200" alt="badge">
+                            <input type="file" id="addUploadFile" name="uploadBadge"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="uploadBtn">上传</button>
+                            <input type="hidden" id="badge" name="badge" class="form-control"/>
+                            <a href="javascript:void(0)" id="removeBadge">下角标</a>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">-->
+                    <!--<label class="col-sm-3 control-label">房间背景图:</label>-->
+                    <!--<div class="col-sm-8">-->
+                    <!--<img src="" id="addBackPic" style="width:60px;height:90px" alt="">-->
+                    <!--<input type="file" id="addBackground" name="uploadBackground" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">-->
+                    <!--<button class="btn btn-success" type="button" id="uploadBtn2">上传</button>-->
+                    <!--<input type="hidden" id="backPic" name="backPic" class="form-control"/>-->
+                    <!--<a href="javascript:void(0)" id="removeBackground">去除背景</a>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">分成比例(%):</label>
+                        <div class="col-sm-8">
+                            <input type="number" id="rewardMoney" name="rewardMoney" class="form-control"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">是否牌照房:</label>
+                        <div class="col-sm-8">
+                            <select class="btn btn-default dropdown-toggle" id="isPermitRoom" name="isPermitRoom"
+                                    data-btn-class="btn-warning">
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                                <option value="3">审核牌照</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">房间音质级别:</label>
+                        <div class="col-sm-8">
+                            <select class="btn btn-default dropdown-toggle" id="audioLevel" name="audioLevel"
+                                    data-btn-class="btn-warning">
+                                <option value="0">默认</option>
+                                <option value="1">低</option>
+                                <option value="2">中</option>
+                                <option value="3">高</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">魅力值开关:</label>
+                        <div class="col-sm-8">
+                            <select class="btn btn-default dropdown-toggle" id="charmOpen" name="charmOpen"
+                                    data-btn-class="btn-warning">
+                                <option value="0">隐藏</option>
+                                <option value="1">显示</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">表情包设置:</label>
+                        <div class="col-sm-8">
+                            <select class="btn btn-default dropdown-toggle" id="faceType" name="faceType"
+                                    data-btn-class="btn-warning">
+                                <option value="0">普通组</option>
+                                <option value="1">娱乐组</option>
+                                <option value="2">特殊表情包</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        getRoomTag();
+
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    type: isNaN(parseInt($("#type").val())) ? null : parseInt($("#type").val()),
+                    erbanNo: $('#erbanNo').val(),
+                    isPermitRoom: isNaN(parseInt($("#isPermit").val())) ? null : parseInt($("#isPermit").val()),
+                };
+                return param;
+            },
+            uniqueId: 'room.uid',
+            toolbar: '#toolbar',
+            url: '/admin/roomAdmin/getAll',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+            columns: [
+                {field: 'room.uid', title: 'uid', align: 'center', valign: 'middle', visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 100},
+                {field: 'room.title', title: '标题', align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'room.avatar',
+                    title: '房间头像',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 100,
+                    formatter: function (val, row, index) {
+                        return "<img src='" + val + "' width='40' height='40'>";
+                    }
+                },
+                {field: 'room.roomTag', title: '房间标签', align: 'center', valign: 'middle', width: 100},
+                {
+                    field: 'room.badge',
+                    title: '角标',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 100,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            return "<img src='" + val + "' width='60' height='20'>";
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'room.type',
+                    title: '房间类型',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 100,
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '相亲房';
+                            case 2:
+                                return '轻聊房';
+                            case 3:
+                                return '语音房';
+                        }
+                    }
+                },
+                {
+                    field: 'room.isPermitRoom',
+                    title: '是否牌照房',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 100,
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '是';
+                            case 2:
+                                return '否';
+                            case 3:
+                                return '审核牌照';
+                        }
+                    }
+                },
+                {
+                    field: 'room.rewardMoney', title: '分成比例', align: 'center', valign: 'middle', width: 100,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            return val / 100.00;
+                        }
+                    }
+                },
+                {
+                    field: 'room.createTime',
+                    title: '创建时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'room.canShow',
+                    title: '展示状态',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 100,
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '展示';
+                        } else {
+                            return '不展示';
+                        }
+                    }
+                },
+                {
+                    field: 'room.charmOpen',
+                    title: '魅力值开关',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 100,
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '显示';
+                        } else {
+                            return '隐藏';
+                        }
+                    }
+                },
+                {
+                    field: 'room.faceType',
+                    title: '表情包类型',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 100,
+                    formatter: function (val, row, index) {
+                        if (val == 0 || val == null) {
+                            return '普通组';
+                        } else if (val == 1) {
+                            return '娱乐组';
+                        } else if (val == 2) {
+                            return '特殊标签包';
+                        }
+                    }
+                },
+                {
+                    field: 'room.uid',
+                    title: '操作',
+                    align: 'center',
+                    width: 250,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        const room = JSON.stringify(row.room);
+                        const key = val;
+                        const canShow = row.room.canShow;
+                        let str = "<button class='btn btn-sm btn-success opt-edit' style='margin: 0 4px 4px 0;'><span hidden='hidden' id='opt-edit-value'>" + room + "</span><i class=\"glyphicon glyphicon-edit\"></i> 编辑</button>";
+                        if (canShow) {
+                            str += "<button class='btn btn-sm btn-warning opt-show' data-id=" + key + " style='margin: 0 4px 4px 0;'><i class=\"glyphicon glyphicon-eye-close\"></i> 不显示</button>";
+                        } else {
+                            str += "<button class='btn btn-sm btn-success opt-show' data-id=" + key + " style='margin: 0 4px 4px 0;'><i class=\"glyphicon glyphicon-eye-open\"></i> 显示</button>";
+                        }
+                        str += "<button class='btn btn-sm btn-success opt-initQueue' data-id=" + key + " style='margin-bottom: 4px;'>初始化队列</button>";
+                        return str;
+                    }
+                }
+
+            ]
+        });
+
+        $('#table').on('click', '.opt-edit', function () {
+            cleanModal();
+            const roomStr = $(this).children('#opt-edit-value').text();
+            const room = eval('(' + roomStr + ')');
+            if (uid == 'undefined' || !uid) {
+                return;
+            }
+
+            $('#uid').val(room.uid);
+            if (room.tagId) {
+                $('#tag').val(room.tagId);
+            } else {
+                $('#tag').val(8);
+            }
+
+            $('#title').val(room.title);
+            if (room.badge) {
+                $('#badge').val(room.badge);
+                $('#addImgUrl').attr('src', room.badge);
+            }
+            if (room.backPic) {
+                $('#backPic').val(room.backPic);
+                $('#addBackPic').attr('src', room.backPic);
+            }
+            if (room.faceType) {
+                $("#faceType").val(room.faceType);
+            } else {
+                $("#faceType").val(0);
+            }
+            $('#isPermitRoom').val(room.isPermitRoom);
+            $('#rewardMoney').val(room.rewardMoney);
+            $('#audioLevel').val(room.audioLevel);
+            $("#charmOpen").val(room.charmOpen);
+            $('#editModal').modal('show');
+        });
+
+        $('#table').on('click', '.opt-show', function () {
+            const uid = $(this).data('id');
+            if (uid == 'undefined' || !uid) {
+                return;
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '/admin/roomAdmin/changeRoomStatus',
+                data: {
+                    uid: uid
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        $("#tipMsg").text("修改状态成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("修改失败，错误码：" + res.code);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#table").on("click", ".opt-initQueue", function () {
+            const uid = $(this).data('id');
+            if (uid) {
+                $.get("/admin/roomAdmin/initQueue?uid=" + uid, function (data) {
+                    if (data.code == 200) {
+                        $("#tipMsg").text("初始化队列成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("初始化失败：" + data.code);
+                        $("#tipModal").modal('show');
+                    }
+                });
+            }
+        });
+
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        });
+
+        $('#addImgUrl').click(function () {
+            $('#addUploadFile').click();
+        });
+
+        $('#uploadBtn').on('click', function () {
+            const options = {
+                type: 'post',
+                url: '/admin/roomAdmin/headBadge.action',
+                dataType: 'json',
+                success: function (json) {
+                    if (json.path) {
+                        $('#badge').val(json.path);
+                        $('#addImgUrl').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            };
+            $("#editRoom").ajaxSubmit(options);
+        });
+
+        $('#uploadBtn2').on('click', function () {
+            const options = {
+                type: 'post',
+                url: '/admin/roomAdmin/headBackground.action',
+                dataType: 'json',
+                success: function (json) {
+                    if (json.path) {
+                        $('#backPic').val(json.path);
+                        $('#addBackPic').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            };
+            $("#editRoom").ajaxSubmit(options);
+        });
+
+        $('#save').on('click', function () {
+            if ($('#editRoom').validationEngine('validate')) {
+                $.ajax({
+                    type: 'post',
+                    url: '/admin/roomAdmin/saveRoom',
+                    dataType: 'json',
+                    data: {
+                        uid: $('#uid').val(),
+                        tagId: $('#tag').val(),
+                        badge: $('#badge').val(),
+                        title: $('#title').val(),
+                        // backPic: $('#backPic').val(),
+                        faceType: $("#faceType").val(),
+                        isPermitRoom: $("#isPermitRoom").val(),
+                        rewardMoney: $("#rewardMoney").val(),
+                        audioLevel: $("#audioLevel").val(),
+                        charmOpen: $("#charmOpen").val()
+                    },
+                    success: function (res) {
+                        if (res.code == 200) {
+                            $("#editModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+
+        $('#removeBadge').on('click', function () {
+            $('#addImgUrl').attr('src', '/static/AdminLTE/img/add.png');
+            $('#addUploadFile').val('');
+            $('#badge').val('');
+        });
+
+        $('#removeBackground').on('click', function () {
+            $('#addBackPic').attr('src', '');
+            $('#backPic').val('');
+            $('#addBackground').val('');
+        });
+
+        function cleanModal() {
+            $('#uid').val('');
+            $('#tag').val('');
+            $('#badge').val('');
+            $('#addUploadFile').val('');
+            $('#addImgUrl').attr('src', '/static/AdminLTE/img/add.png');
+            $('#addBackPic').attr('src', '');
+            $('#backPic').val('');
+            $('#addBackground').val('');
+            $('#isPermitRoom').val('');
+            $('#rewardMoney').val('');
+            $("#audioLevel").val('');
+            $("#tagId").val('')
+        }
+
+        function getRoomTag() {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/roomAdmin/getRoomTags',
+                dataType: 'json',
+                success: function (res) {
+                    const data = res.data;
+                    const $select = $('#editModal #tag');
+                    for (let i = 0; i < data.length; i++) {
+                        const $option = $('<option />');
+                        $option.html(data[i].name);
+                        $option.attr('value', data[i].id);
+                        $select.append($option);
+                    }
+                    // $select.append($('<option value="">其他</option>'));
+                }
+            });
+        }
+    });
+</script>

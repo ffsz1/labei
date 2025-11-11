@@ -1,0 +1,290 @@
+<style>
+    table.table-fixed-head .table-fixed-head-thead {
+        border-bottom: 1px solid #dddddd;
+        border-top: 1px solid #dddddd;
+        background: #fff;
+    }
+
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="control-label">拉贝号:</label>
+                        <input type="text" name="erbanNo" id="erbanNo" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">统计时间:</label>
+                        <input type="text" id="reportStartDate" type="date" name="reportStartDate"
+                               class="form-control validate[required]">
+                        <label style="margin: 0 1rem">-</label>
+                        <input type="text" id="reportEndDate" type="date" name="reportEndDate"
+                               class="form-control validate[required]">
+                    </div>
+                    <div class="form-group">
+                        <button onclick="getYesterday()" class="btn btn-danger" type="button"
+                                style="margin-right: 10px">
+                            <i class="glyphicon glyphicon-calendar"></i> 昨天
+                        </button>
+                        <button id="add" class="btn btn-warning" style="margin-right: 10px">
+                            <i class="glyphicon glyphicon glyphicon-plus"></i> 增加白名单
+                        </button>
+                        <button id="exportExcel" class="btn btn-success" style="margin-right: 10px">
+                            <i class="glyphicon glyphicon glyphicon-download-alt"></i> 导出Excel
+                        </button>
+                    </div>
+                </form>
+                <div id="table"></div>
+                <div id="toolbar" style="display: flex">
+                    <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 0;">
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">总人数：</span>
+                            <span style="color: red" id="userNum">0</span>
+                            <span>人</span>
+                        </li>
+
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">总投入(金币)：</span>
+                            <span style="color: red" id="totalInputNum">0</span>
+                            <span></span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">总产出(金币)：</span>
+                            <span style="color: red" id="totalOutputNum"></span>
+                            <span></span>
+                        </li>
+
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">平均回报率：</span>
+                            <span style="color: red" id="averageRate">0</span>
+                            <span></span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">全服数量：</span>
+                            <span style="color: red" id="isFullNum">0</span>
+                            <span></span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">添加白名单</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addRecomForm">
+                    <div class="form-group">
+                        <label for="addUid" class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="addUid" id="addUid" class="validate[required] form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="addBtn" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // 设置时间初始值
+    $("#reportStartDate").val(getCurrentDate());
+    $("#reportEndDate").val(getCurrentDate());
+
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: '200'},
+                {field: 'nick', title: '昵称', align: 'center', valign: 'middle', width: '200'},
+                {field: 'inputNum', title: '投入(金币）', align: 'center', valign: 'middle', width: '200'},
+                {field: 'outputNum', title: '产出(金币）', align: 'center', valign: 'middle', width: '200'},
+                {field: 'rate', title: '回报率', align: 'center', valign: 'middle', width: '200'},
+                {
+                    field: 'createTime', title: '时间', align: 'center', width: '300',
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    valign: 'middle',
+                    width: '300',
+                    formatter: function (val, row) {
+                        const content = "<button class='btn btn-danger opt-del' data-id=" + row.uid + "><i class='glyphicon glyphicon-remove'></i> 删除</button>";
+                        return content;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber,
+                    os: $("#os").val(),
+                    gender: $("#gender").val(),
+                    reportStartDate: $("#reportStartDate").val(),
+                    reportEndDate: $("#reportEndDate").val(),
+                    erbanNo: $("#erbanNo").val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/treasureBoxReport/getWhitelistList.action',
+            method: 'GET',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    clear();
+                    $("#userNum").text(res.data.list[0].userNum);
+                    $("#totalInputNum").text(res.data.list[0].totalInputNum);
+                    $("#totalOutputNum").text(res.data.list[0].totalOutputNum);
+                    $("#averageRate").text(res.data.list[0].averageRate);
+                    $("#isFullNum").text(res.data.list[0].num);
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list,
+                    };
+                } else {
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+        });
+    });
+
+    $('#reportStartDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    $('#reportEndDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    $('#add').on('click', function () {
+        $('#addModal').modal('show');
+    });
+
+    $('#addSave').on('click', function () {
+        if ($('#addRecomForm').validationEngine('validate')) {
+            $.ajax({
+                type: 'post',
+                url: '/admin/treasureBoxReport/add',
+                data: {
+                    erbanNo: $('#addUid').val()
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        $('#addModal').modal('hide');
+                        $("#tipMsg").text("增加成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("增加失败，提示：" + res.message);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        }
+    });
+
+    $('#table').on('click', '.opt-del', function () {
+        const recommendId = $(this).data('id');
+        $.ajax({
+            type: 'post',
+            url: '/admin/treasureBoxReport/del',
+            data: {"id": recommendId},
+            dataType: 'json',
+            success: function (res) {
+                if (res.code == 200) {
+                    $("#tipMsg").text("删除成功");
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#table");
+                } else {
+                    $("#tipMsg").text("删除失败，错误码：" + res.code);
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    });
+
+    // 导出到Excel
+    $('#exportExcel').click(function () {
+        const param = $("form").serialize();
+        const url = "/admin/treasureBoxReport/exportWhitelist?" + param;
+        window.location.href = url;
+    });
+
+    function getLastDate() {
+        const date = new Date();
+        date.setDate(date.getDate() - 6);
+        return date.format("yyyy-MM-dd");
+    }
+
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+
+    function clear() {
+        $("#userNum").text('');
+        $("#totalInputNum").text('');
+        $("#totalOutputNum").text('');
+    }
+
+    function getYesterday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#reportStartDate").val(today.format("yyyy-MM-dd"));
+        $("#reportEndDate").val(today.format("yyyy-MM-dd"));
+        $('#table').bootstrapTable('refresh');
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

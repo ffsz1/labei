@@ -1,0 +1,102 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="itemTitle"></h1>
+        </section>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">拉贝号:</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="erbanNo" name="erbanNo" class="form-control" placeholder="邀请人" aria-describedby="basic-addon1">
+                    </div>
+                    <label  class="col-sm-2 control-label">红包提现金额(元):</label>
+                    <div class="col-sm-2">
+                        <div class="col-sm-1">
+                            <select class="btn btn-default dropdown-toggle" id="packetId" name="packetId" data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary" id="btnAssociate">提现</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <div style="color:red;width: 100%;margin-left: 88px;">（官方手动红包提现，因涉及到money，请谨慎操作；如非管理员，请不要操作！）</div>
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<!-- .content -->
+<script>
+    var isEdit = false;
+    $(function () {
+        $("#btnAssociate").click(function () {
+            $.ajax({
+                type: "post",
+                url: "/admin/withdraw/redPacketWithDraw.action",
+                data: $('form').serialize(),
+                success: function (json) {
+                    if(json.code == 200) {
+                        $("#tipMsg").text("提现成功,此拉贝号剩余金额："+json.data.packetNum);
+                        $("#tipModal").modal('show');
+                        $('#btnScan').click();
+                    } else {
+                        $("#tipMsg").text("关联失败，errorCode: " + json.message);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function(json) {
+                    $("#tipMsg").text("关联失败，网络出错");
+                    $("#tipModal").modal('show');
+                }
+            });
+
+        });
+    });
+
+    /*获取所有标签*/
+    $(function () {
+        $.ajax({
+            url: "/admin/withdraw/redPacketWithDrawProdList.action",
+            processData: false,
+            success: function (res) {
+                if (res.code == 200) {
+                    $.each(res.data, function (i, redPacketProd) {
+                        $("#packetId").append("<option value=\"" + redPacketProd.packetId + "\">" + redPacketProd.packetNum + "</option>");
+                    })
+                }
+            }
+        });
+    })
+
+
+</script>

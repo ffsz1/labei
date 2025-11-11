@@ -1,0 +1,198 @@
+<style>
+    .bar1,.bar2{
+        margin-bottom: 10px;
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    input,select{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    #btnSearch{
+        margin-left: 36px;
+    }
+    .record{
+        margin-top: 10px;
+    }
+    .record .title{
+        font-size:16px;
+    }
+
+
+</style>
+
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+
+            <section class="content">
+                <div id="table"></div>
+                <form id="openForm" class="form-horizontal">
+                <div class="col-sm-8">
+                    <label for="erbanNum" class="col-sm-4 control-label">拉贝号:</label>
+                    <div class="col-sm-3">
+                        <span><input type="text" class="form-control validate[required]" name="erbanNum" id="erbanNum" ></span>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <label for="nobleType" class="col-sm-4 control-label">贵族类型:</label>
+                    <div class="col-sm-6">
+                        <select name="nobleType" id="nobleType" class="col-sm-3">
+                        </select>
+                    </div>
+                </div>
+                </form>
+                <div class="modal-footer">
+                <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+                <button id="btnOpen" class="btn btn-sm btn-primary">开通</button>
+                <button id="btnRenew" class="btn btn-sm btn-primary">续费</button>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        setSelectOption();
+    })
+
+
+    /*查询刷新*/
+    $('#btnSearch').on('click', function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: '10%'},
+                {field: 'phone', title: '手机', align: 'center', valign: 'middle', width: '10%'},
+                {field: 'nick', title: '昵称', align: 'center', valign: 'middle', width: '10%'}
+        ],
+            type: "get",
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    erbanNo:$('#erbanNum').val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/nobleAdmin/getUser.action',
+            dataType: 'json',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        })
+
+    })
+
+
+    //开通
+    $('#btnOpen').on('click', function () {
+        if ($('#openForm').validationEngine('validate')) {
+            $.ajax({
+                type: "post",
+                url: "/admin/nobleAdmin/openNoble.action",
+                data: {
+                    erbanNo: $("#erbanNum").val(),
+                    nobleId: $("#nobleType").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 1) {
+                        $("#tipMsg").text("开通成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else if (data == 2) {
+                        $("#tipMsg").text("开通失败,该用户已开通此等级贵族");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    }else if (data == 4) {
+                        $("#tipMsg").text("开通失败,该账户余额不足");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    }
+                    else {
+                        $("#tipMsg").text("开通失败，错误码：" + data);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    })
+
+    //续费
+    $('#btnRenew').on('click', function () {
+        if ($('#openForm').validationEngine('validate')) {
+            $.ajax({
+                type: "post",
+                url: "/admin/nobleAdmin/renewNoble.action",
+                data: {
+                    erbanNo: $("#erbanNum").val(),
+                    nobleId: $("#nobleType").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 1) {
+                        $('#addSendMessage').modal('hide');
+                        $("#tipMsg").text("续费成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("续费失败，错误码：" + data);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    })
+
+    /*下载数据*/
+    function setSelectOption() {
+            $.ajax({
+                type: "get",
+                url: '/admin/nobleAdmin/getNobleRight.action',
+                dataType: 'json',
+                success: function (res) {
+                    var data = res;
+                    makeOption(data);
+                }
+            })
+        function makeOption(data) {
+            var str = '';
+            for(var i = 0;i < data.length;i++){
+                str += '<option value="'+data[i].id+'">' + data[i].name + '</option>';
+            }
+            $('#nobleType').html(str);
+        }
+    }
+
+
+
+</script>
+
+

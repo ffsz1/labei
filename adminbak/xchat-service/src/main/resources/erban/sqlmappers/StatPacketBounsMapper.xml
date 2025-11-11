@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatPacketBounsMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatPacketBouns" >
+    <result column="bouns_id" property="bounsId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="charge_record_id" property="chargeRecordId" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="BIGINT" />
+    <result column="packet_num" property="packetNum" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bouns_id, uid, charge_record_id, amount, packet_num, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatPacketBounsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_packet_bouns
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <insert id="insert" parameterType="com.erban.main.model.StatPacketBouns" >
+    insert into stat_packet_bouns (bouns_id, uid, charge_record_id, 
+      amount, packet_num, create_time
+      )
+    values (#{bounsId,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{chargeRecordId,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=BIGINT}, #{packetNum,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatPacketBouns" >
+    insert into stat_packet_bouns
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bounsId != null" >
+        bouns_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="chargeRecordId != null" >
+        charge_record_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="packetNum != null" >
+        packet_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bounsId != null" >
+        #{bounsId,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="chargeRecordId != null" >
+        #{chargeRecordId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="packetNum != null" >
+        #{packetNum,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

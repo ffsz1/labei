@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatOrderServMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatOrderServ" >
+    <id column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="prod_id" property="prodId" jdbcType="BIGINT" />
+    <result column="chat_time" property="chatTime" jdbcType="BIGINT" />
+    <result column="chat_num" property="chatNum" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, uid, prod_id, chat_time, chat_num, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatOrderServExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_order_serv
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_order_serv
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stat_order_serv
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.StatOrderServ" >
+    insert into stat_order_serv (order_id, uid, prod_id, 
+      chat_time, chat_num, create_time
+      )
+    values (#{orderId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{prodId,jdbcType=BIGINT}, 
+      #{chatTime,jdbcType=BIGINT}, #{chatNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatOrderServ" >
+    insert into stat_order_serv
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="prodId != null" >
+        prod_id,
+      </if>
+      <if test="chatTime != null" >
+        chat_time,
+      </if>
+      <if test="chatNum != null" >
+        chat_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="prodId != null" >
+        #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="chatTime != null" >
+        #{chatTime,jdbcType=BIGINT},
+      </if>
+      <if test="chatNum != null" >
+        #{chatNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.StatOrderServ" >
+    update stat_order_serv
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="prodId != null" >
+        prod_id = #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="chatTime != null" >
+        chat_time = #{chatTime,jdbcType=BIGINT},
+      </if>
+      <if test="chatNum != null" >
+        chat_num = #{chatNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.StatOrderServ" >
+    update stat_order_serv
+    set uid = #{uid,jdbcType=BIGINT},
+      prod_id = #{prodId,jdbcType=BIGINT},
+      chat_time = #{chatTime,jdbcType=BIGINT},
+      chat_num = #{chatNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+</mapper>

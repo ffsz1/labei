@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="css/index.css">
+    <title>微信支付</title>
+</head>
+
+<body>
+    <div class="num">
+        <input type="text" placeholder="请输入手机号或者拉贝号" id="num">
+    </div>
+    <ul class="gold">
+    </ul>
+    <div class="mask"></div>
+    <div class="layer">
+        <div class="desc_confirm" id="desc_confirm"></div>
+        <div class="btn_group">
+            <span class="cancel" id="cancel">取消</span>
+            <span class="confirm" id="confirm">确认</span>
+        </div>
+    </div>
+    <div class="loading-box">
+        <div>
+            <img src="image/loading.gif">
+        </div>
+    </div>
+</body>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="../lib/zepto.min.js"></script>
+<script src="js/index.js"></script>
+</html>

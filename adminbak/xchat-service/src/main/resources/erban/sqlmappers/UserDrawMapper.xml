@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserDrawMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.UserDraw" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="left_draw_num" property="leftDrawNum" jdbcType="INTEGER" />
+    <result column="total_draw_num" property="totalDrawNum" jdbcType="INTEGER" />
+    <result column="total_win_draw_num" property="totalWinDrawNum" jdbcType="INTEGER" />
+    <result column="is_first_share" property="isFirstShare" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, left_draw_num, total_draw_num, total_win_draw_num, is_first_share, create_time, 
+    update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.UserDrawExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_draw
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_draw
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_draw
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.UserDrawExample" >
+    delete from user_draw
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.UserDraw" >
+    insert into user_draw (uid, left_draw_num, total_draw_num, 
+      total_win_draw_num, is_first_share, create_time, 
+      update_time)
+    values (#{uid,jdbcType=BIGINT}, #{leftDrawNum,jdbcType=INTEGER}, #{totalDrawNum,jdbcType=INTEGER}, 
+      #{totalWinDrawNum,jdbcType=INTEGER}, #{isFirstShare,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.UserDraw" >
+    insert into user_draw
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="leftDrawNum != null" >
+        left_draw_num,
+      </if>
+      <if test="totalDrawNum != null" >
+        total_draw_num,
+      </if>
+      <if test="totalWinDrawNum != null" >
+        total_win_draw_num,
+      </if>
+      <if test="isFirstShare != null" >
+        is_first_share,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="leftDrawNum != null" >
+        #{leftDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalDrawNum != null" >
+        #{totalDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalWinDrawNum != null" >
+        #{totalWinDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="isFirstShare != null" >
+        #{isFirstShare,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.UserDrawExample" resultType="java.lang.Integer" >
+    select count(*) from user_draw
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_draw
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.leftDrawNum != null" >
+        left_draw_num = #{record.leftDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalDrawNum != null" >
+        total_draw_num = #{record.totalDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalWinDrawNum != null" >
+        total_win_draw_num = #{record.totalWinDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.isFirstShare != null" >
+        is_first_share = #{record.isFirstShare,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_draw
+    set uid = #{record.uid,jdbcType=BIGINT},
+      left_draw_num = #{record.leftDrawNum,jdbcType=INTEGER},
+      total_draw_num = #{record.totalDrawNum,jdbcType=INTEGER},
+      total_win_draw_num = #{record.totalWinDrawNum,jdbcType=INTEGER},
+      is_first_share = #{record.isFirstShare,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.UserDraw" >
+    update user_draw
+    <set >
+      <if test="leftDrawNum != null" >
+        left_draw_num = #{leftDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalDrawNum != null" >
+        total_draw_num = #{totalDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalWinDrawNum != null" >
+        total_win_draw_num = #{totalWinDrawNum,jdbcType=INTEGER},
+      </if>
+      <if test="isFirstShare != null" >
+        is_first_share = #{isFirstShare,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.UserDraw" >
+    update user_draw
+    set left_draw_num = #{leftDrawNum,jdbcType=INTEGER},
+      total_draw_num = #{totalDrawNum,jdbcType=INTEGER},
+      total_win_draw_num = #{totalWinDrawNum,jdbcType=INTEGER},
+      is_first_share = #{isFirstShare,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

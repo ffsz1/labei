@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.AdminPermMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.AdminMenuVo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="parentStr" property="parentstr" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="showOrder" property="showorder" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectAllMenuByAdminId" resultMap="BaseResultMap">
+    select id, parentId, name, path, icon, status, showOrder, createTime, description, (
+      select name from admin_menu t2 where t1.parentId = t2.id
+    ) as parentStr
+    from admin_menu t1
+    where id in (
+      select menu_id from admin_ref_role_menu where role_id in (
+        select role_id from admin_ref_user_role where admin_id = #{0}
+      )
+    ) and status = 1
+  </select>
+</mapper>

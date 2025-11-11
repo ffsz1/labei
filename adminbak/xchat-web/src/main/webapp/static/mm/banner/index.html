@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>主播琳儿推荐拉贝语音</title>
+    <script>
+        var layout_width = 750;
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= layout_width) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #video {
+            width: 100%;
+            height: auto;
+        }
+
+        video::-webkit-media-controls-enclosure {
+            overflow: hidden;
+        }
+
+        video::-webkit-media-controls-panel {
+            width: calc(100% + 30px);
+        }
+    </style>
+</head>
+
+<body>
+    <video id="video" src="index.mp4" controls="true">
+    </video>
+    <script src="../lib/common.js"></script>
+    <script>
+        var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+            return typeof obj;
+        } : function (obj) {
+            return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ?
+                "symbol" : typeof obj;
+        };
+        var share = {
+            title: '会上瘾的拉贝语音！', // 分享标题
+            link: window.location.href, // 分享链接
+            imgUrl: allUrl() + '/home/images/logo.png',
+            desc: '拉贝语音交友速配处CP，你想要的我们都有。' // 分享描述
+        };
+
+        function shareInfo() {
+            var _url = allUrl() + '/mm/download/download.html';
+            var info = {
+                title: '会上瘾的拉贝语音！', // 分享标题
+                showUrl: _url,
+                imgUrl: allUrl() + '/home/images/logo.png',
+                desc: '拉贝语音交友速配处CP，你想要的我们都有。' // 分享描述
+            };
+            return JSON.stringify(info);
+        }
+        var browser = checkVersion();
+        var info = {};
+        if (browser.app) {
+            if (browser.ios) {
+                var getMessage = function getMessage(key, value) {
+                    info[key] = value;
+                };
+                window.webkit.messageHandlers.getUid.postMessage(null);
+            } else if (browser.android) {
+                if (androidJsObj && (typeof androidJsObj === 'undefined' ? 'undefined' : _typeof(androidJsObj)) ===
+                    'object') {
+                    info.uid = parseInt(window.androidJsObj.getUid());
+                    try {
+                        window.androidJsObj.showShareButton(true)
+                    } catch (err) {
+
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

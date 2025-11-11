@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserReportRecordMapper" >
+
+  <insert id="insert" parameterType="com.erban.main.model.UserReportRecord">
+      INSERT INTO user_report_record (
+          uid, report_uid, device_id, phone_no, ip, create_date, report_type, type
+      ) VALUES (
+          #{uid}, #{reportUid}, #{deviceId}, #{phoneNo}, #{ip}, #{createDate}, #{reportType}, #{type}
+      )
+  </insert>
+    
+    <select id="selectRoomIdByList"  resultType="com.erban.main.model.dto.UserReportRecordDTO">
+        SELECT u.uid, u.erban_no as erbanNo , u.nick, COUNT(1) as frequency, (COUNT(1) * 20) as totalGoldNum , DATE_FORMAT(r.create_time,'%Y-%m-%d %H:%i:%s') as date
+        from user_draw_gift_record r
+        INNER JOIN room rm on r.room_id = rm.room_id
+        INNER JOIN users u on r.uid = u.uid
+        INNER JOIN gift g on g.gift_id = r.gift_id
+        where rm.uid = #{roomId} and r.create_time &gt;=#{beginDate} and r.create_time &lt;= #{endDate}
+        GROUP BY uid , DATE_FORMAT(r.create_time,'%Y-%m-%d')
+        ORDER BY r.create_time desc, r.uid desc limit #{page},#{size}
+    </select>
+
+
+
+    <select id="selectRoomId"  resultType="com.erban.main.model.dto.UserReportRecordDTO">
+        SELECT (COUNT(1) * 20) as totalGoldNum , COUNT(1) as frequency , DATE_FORMAT(r.create_time,'%Y-%m-%d') as createTime
+        from user_draw_gift_record r
+        INNER JOIN room rm on r.room_id = rm.room_id
+        INNER JOIN users u on r.uid = u.uid
+        INNER JOIN gift g on g.gift_id = r.gift_id
+        where rm.uid = #{roomId}
+        GROUP BY DATE_FORMAT(r.create_time,'%Y-%m-%d')
+        ORDER BY r.create_time desc, r.uid desc
+    </select>
+
+</mapper>

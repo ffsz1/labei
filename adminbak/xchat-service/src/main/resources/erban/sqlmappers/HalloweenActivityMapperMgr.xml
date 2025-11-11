@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.HalloweenActivityMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.main.vo.HalloweenActRankVo" >
+    <id column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="nick" property="nick" jdbcType="BIGINT" />
+    <result column="avatar" property="avatar" jdbcType="TIMESTAMP" />
+    <result column="total_count" property="totalCount" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+  <select id="queryRicherHalloweenActRank" resultMap="BaseResultMap" >
+    SELECT
+      u.nick,
+      u.erban_no,
+      u.avatar,
+      SUM(gsr.gift_num * gift.gold_price) total_count
+    FROM
+      gift_send_record gsr,
+      users u,
+      gift gift
+    WHERE gsr.uid = u.uid
+      AND gift.gift_id = gsr.gift_id
+      AND gift.gift_id IN(1039,1040,1041)
+      and gsr.create_time BETWEEN '2017-11-11 00:00:00' and '2017-11-16 00:00:00'
+      GROUP BY gsr.uid
+      ORDER BY total_count DESC
+      LIMIT 0,10
+  </select>
+
+  <select id="queryMyRicherHalloweenGoldNum" resultMap="BaseResultMap" >
+  SELECT
+    SUM(gsr.gift_num * gift.gold_price) total_count
+  FROM
+    gift_send_record gsr,
+    users u,
+    gift gift
+  WHERE gsr.uid = u.uid
+  AND gift.gift_id = gsr.gift_id
+  AND gift.gift_id IN(1039,1040,1041)
+  and u.uid=#{uid,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="queryMineRicherHalloweenActRank" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+
+    SELECT  COUNT(1) seq_no  FROM (SELECT
+      u.nick,
+      u.erban_no,
+      u.avatar,
+      SUM(gsr.gift_num * gift.gold_price) total_count
+    FROM
+      gift_send_record gsr,
+      users u,
+      gift gift
+    WHERE gsr.uid = u.uid
+      AND gift.gift_id = gsr.gift_id
+      AND gift.gift_id IN(1039,1040,1041)
+      GROUP BY gsr.uid
+    ) a
+    WHERE a.total_count>=#{totalCount,jdbcType=BIGINT}
+  </select>
+
+
+
+  <select id="queryStarHalloweenActRank" resultMap="BaseResultMap" >
+    SELECT
+      u.nick,
+      u.erban_no,
+      u.avatar,
+      SUM(gsr.gift_num * gift.gold_price) total_count
+    FROM
+      gift_send_record gsr,
+      users u,
+      gift gift
+    WHERE gsr.recive_uid = u.uid
+      AND gift.gift_id = gsr.gift_id
+      AND gift.gift_id IN(1039,1040,1041)
+      AND gsr.create_time BETWEEN '2017-11-11 00:00:00' and '2017-11-16 00:00:00'
+      GROUP BY gsr.recive_uid
+      ORDER BY total_count DESC
+      LIMIT 0,10
+  </select>
+
+
+  <select id="queryMyStarHalloweenGoldNum" resultMap="BaseResultMap" >
+   SELECT
+    SUM(gsr.gift_num * gift.gold_price) total_count
+    FROM
+    gift_send_record gsr,
+    users u,
+    gift gift
+    WHERE gsr.recive_uid = u.uid
+    AND gift.gift_id = gsr.gift_id
+    AND gift.gift_id IN(1039,1040,1041)
+    and u.uid=#{uid,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="queryMineStarHalloweenActRank" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+      SELECT COUNT(1) seqNo FROM (SELECT
+        u.uid,
+        u.nick,
+        u.avatar,
+        SUM(gsr.gift_num * gift.gold_price) total_count
+      FROM
+        gift_send_record gsr,
+        users u,
+        gift gift
+      WHERE gsr.recive_uid = u.uid
+        AND gift.gift_id = gsr.gift_id
+        AND gift.gift_id IN(1039,1040,1041)
+        GROUP BY gsr.recive_uid
+      ) a
+      WHERE a.total_count>=#{totalCount,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryRoomHalloweenActRank" resultMap="BaseResultMap" >
+    SELECT
+    u.nick,
+    u.erban_no,
+    u.avatar,
+    SUM(gsr.gift_num * gift.gold_price) total_count
+    FROM
+    gift_send_record gsr,
+    users u,
+    gift gift
+    WHERE gsr.room_uid = u.uid
+    AND gift.gift_id = gsr.gift_id
+    AND gift.gift_id IN(1039,1040,1041)
+    AND gsr.create_time BETWEEN '2017-11-11 00:00:00' and '2017-11-16 00:00:00'
+    GROUP BY gsr.room_uid
+    ORDER BY total_count DESC
+    LIMIT 0,10
+  </select>
+
+
+  <select id="queryMyRoomHalloweenGoldNum" resultMap="BaseResultMap" >
+    SELECT
+    SUM(gsr.gift_num * gift.gold_price) total_count
+    FROM
+    gift_send_record gsr,
+    users u,
+    gift gift
+    WHERE gsr.room_uid = u.uid
+    AND gift.gift_id = gsr.gift_id
+    AND gift.gift_id IN(1039,1040,1041)
+    AND gsr.create_time BETWEEN '2017-11-11 00:00:00' and '2017-11-16 00:00:00'
+    and u.uid=#{uid,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="queryMineRoomHalloweenActRank" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+    SELECT COUNT(1) seqNo FROM (SELECT
+    u.uid,
+    u.nick,
+    u.avatar,
+    SUM(gsr.gift_num * gift.gold_price) total_count
+    FROM
+    gift_send_record gsr,
+    users u,
+    gift gift
+    WHERE gsr.room_uid = u.uid
+    AND gift.gift_id = gsr.gift_id
+    AND gift.gift_id IN(1039,1040,1041)
+    AND gsr.create_time BETWEEN '2017-11-11 00:00:00' and '2017-11-16 00:00:00'
+    GROUP BY gsr.room_uid
+    ) a
+    WHERE a.total_count>=#{totalCount,jdbcType=BIGINT}
+  </select>
+
+
+
+
+</mapper>

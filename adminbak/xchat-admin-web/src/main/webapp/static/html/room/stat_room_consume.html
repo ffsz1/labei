@@ -1,0 +1,305 @@
+<style>
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--content-->
+                <div id="userRoomList"></div>
+                <div id="toolbar">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label for="erbanNo" class="control-label">房主的拉贝号:</label>
+                            <input type="number" class="form-control validate[required]" placeholder="房主的拉贝号"
+                                   id="erbanNo">
+                        </div>
+                        <div class="form-group">
+                            <button id="btnSearch" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-search"></i> 查询
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <button id="roomList" class="btn btn-success">
+                                <i class="glyphicon glyphicon-edit"></i> 房间管理
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<!-- .content -->
+<div class="modal fade" id="roomListModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">房间管理</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label for="erbanNo-e" class="control-label">房主拉贝号:</label>
+                        <input id="erbanNo-e" class="form-control" placeholder="房主拉贝号"/>
+                    </div>
+                    <div class="form-group">
+                        <button id="searchRoom" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i> 查询
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <button id="addRoom" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 添加
+                        </button>
+                    </div>
+                </div>
+                <div id="roomListM"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- .content -->
+<div class="modal fade" id="addRoomModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">添加房间</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <label class="control-label">拉贝号:</label>
+                    <div class="form-group">
+                        <input class="form-control" name="" id="roomErbanNo" placeholder="房主拉贝号"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveRoom">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const cols = [
+        {field: 'roomUid', title: '房主UID', align: 'center', width: '3%'},
+        {field: 'title', title: '房间标题', align: 'center', width: '3%'},
+        {field: 'erbanNo', title: '拉贝号', align: 'center', width: '3%'}
+    ];
+
+    for (let i = 0; i < 30; i++) {
+        const col = {};
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        col.field = "day" + (i + 1);
+        col.title = (date.format("MM-dd"));
+        col.align = 'center'
+        col.width = '3%';
+        cols.push(col);
+    }
+
+    $(function () {
+        $('#userRoomList').bootstrapTable('destroy');
+        $('#userRoomList').bootstrapTable({
+            columns: [
+                cols
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 100,
+            pagination: true,
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    erbanNo: $("#erbanNo").val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/room/statRoomConsume/listAll.acction',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    return {
+                        "total": res.data.total,//总页数
+                        "rows": res.data.rows  //数据
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",//总页数
+                        "rows": []  //数据
+                    };
+                }
+            },
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+
+        $("#roomList").on("click", function () {
+            $("#roomListModal").modal('show');
+            loadRoomList();
+        });
+
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#userRoomList');
+        });
+
+        $("#addRoom").on("click", function () {
+            $("#addRoomModal").modal("show");
+        });
+
+        $("#saveRoom").on("click", function () {
+            const erbanNo = $("#roomErbanNo").val();
+            if (erbanNo) {
+                const param = {
+                    erbanNo: erbanNo
+                };
+
+                $.post("/room/statRoomConsume/addRoom", param, function (data) {
+                    $("#tipModal").css("z-index", 9999999);
+                    if (data.code == 200) {
+                        $("#addRoomModal").modal('hide');
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#roomListM");
+                    } else {
+                        $("#tipMsg").text("保存失败:" + data.message);
+                        $("#tipModal").modal('show');
+                    }
+                });
+            }
+        });
+
+        $("#roomListM").on("click", ".opt-delete", function () {
+            const uid = $(this).attr("data-id");
+            if (uid) {
+                const param = {
+                    roomUid: uid
+                };
+
+                $.post("/room/statRoomConsume/delRoom", param, function (data) {
+                    $("#tipModal").css("z-index", 9999999);
+                    if (data.code == 200) {
+                        $("#addRoomModal").modal('hide');
+                        $("#tipMsg").text("删除成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#roomListM");
+                    } else {
+                        $("#tipMsg").text("删除失败:" + data.message);
+                        $("#tipModal").modal('show');
+                    }
+                });
+            }
+        });
+
+        $("#searchRoom").on("click", function () {
+            loadRoomList();
+        });
+    });
+
+    // 加载房间列表
+    function loadRoomList() {
+        $("#roomListM").bootstrapTable('destroy');
+        $('#roomListM').bootstrapTable({
+            columns: [
+                {field: 'uid', title: '房主UID', align: 'center', width: '400'},
+                {field: 'title', title: '房间标题', align: 'center', width: '400'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '400'},
+                {
+                    field: 'uid', title: '操作', align: 'center', width: '400',
+                    formatter: function (val, row) {
+                        const del = '<button class="btn btn-sm btn-error opt-delete" data-id=' + row.uid + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i>删除</button>';
+                        return del;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    erbanNo: $("#erbanNo-e").val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '',
+            url: '/room/statRoomConsume/listRoom',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

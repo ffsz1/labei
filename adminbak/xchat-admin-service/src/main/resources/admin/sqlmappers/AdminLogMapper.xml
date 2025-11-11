@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.AdminLogMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.model.AdminLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="opt_uid" property="optUid" jdbcType="INTEGER" />
+    <result column="opt_class" property="optClass" jdbcType="VARCHAR" />
+    <result column="opt_method" property="optMethod" jdbcType="VARCHAR" />
+    <result column="opt_mess" property="optMess" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="tmpint" property="tmpint" jdbcType="INTEGER" />
+    <result column="tmpstr" property="tmpstr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, opt_uid, opt_class, opt_method, opt_mess, create_time, tmpint, tmpstr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.admin.main.model.AdminLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from admin_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from admin_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.admin.main.model.AdminLogExample" >
+    delete from admin_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.admin.main.model.AdminLog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into admin_log (opt_uid, opt_class, opt_method, 
+      opt_mess, create_time, tmpint, 
+      tmpstr)
+    values (#{optUid,jdbcType=INTEGER}, #{optClass,jdbcType=VARCHAR}, #{optMethod,jdbcType=VARCHAR}, 
+      #{optMess,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{tmpint,jdbcType=INTEGER}, 
+      #{tmpstr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.admin.main.model.AdminLog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into admin_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="optUid != null" >
+        opt_uid,
+      </if>
+      <if test="optClass != null" >
+        opt_class,
+      </if>
+      <if test="optMethod != null" >
+        opt_method,
+      </if>
+      <if test="optMess != null" >
+        opt_mess,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="tmpint != null" >
+        tmpint,
+      </if>
+      <if test="tmpstr != null" >
+        tmpstr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="optUid != null" >
+        #{optUid,jdbcType=INTEGER},
+      </if>
+      <if test="optClass != null" >
+        #{optClass,jdbcType=VARCHAR},
+      </if>
+      <if test="optMethod != null" >
+        #{optMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="optMess != null" >
+        #{optMess,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tmpint != null" >
+        #{tmpint,jdbcType=INTEGER},
+      </if>
+      <if test="tmpstr != null" >
+        #{tmpstr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.admin.main.model.AdminLogExample" resultType="java.lang.Integer" >
+    select count(*) from admin_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update admin_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.optUid != null" >
+        opt_uid = #{record.optUid,jdbcType=INTEGER},
+      </if>
+      <if test="record.optClass != null" >
+        opt_class = #{record.optClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optMethod != null" >
+        opt_method = #{record.optMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optMess != null" >
+        opt_mess = #{record.optMess,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tmpint != null" >
+        tmpint = #{record.tmpint,jdbcType=INTEGER},
+      </if>
+      <if test="record.tmpstr != null" >
+        tmpstr = #{record.tmpstr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update admin_log
+    set id = #{record.id,jdbcType=BIGINT},
+      opt_uid = #{record.optUid,jdbcType=INTEGER},
+      opt_class = #{record.optClass,jdbcType=VARCHAR},
+      opt_method = #{record.optMethod,jdbcType=VARCHAR},
+      opt_mess = #{record.optMess,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      tmpint = #{record.tmpint,jdbcType=INTEGER},
+      tmpstr = #{record.tmpstr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.admin.main.model.AdminLog" >
+    update admin_log
+    <set >
+      <if test="optUid != null" >
+        opt_uid = #{optUid,jdbcType=INTEGER},
+      </if>
+      <if test="optClass != null" >
+        opt_class = #{optClass,jdbcType=VARCHAR},
+      </if>
+      <if test="optMethod != null" >
+        opt_method = #{optMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="optMess != null" >
+        opt_mess = #{optMess,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tmpint != null" >
+        tmpint = #{tmpint,jdbcType=INTEGER},
+      </if>
+      <if test="tmpstr != null" >
+        tmpstr = #{tmpstr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.admin.main.model.AdminLog" >
+    update admin_log
+    set opt_uid = #{optUid,jdbcType=INTEGER},
+      opt_class = #{optClass,jdbcType=VARCHAR},
+      opt_method = #{optMethod,jdbcType=VARCHAR},
+      opt_mess = #{optMess,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      tmpint = #{tmpint,jdbcType=INTEGER},
+      tmpstr = #{tmpstr,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

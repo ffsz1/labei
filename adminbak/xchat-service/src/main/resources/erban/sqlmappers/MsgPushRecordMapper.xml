@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.MsgPushRecordMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.MsgPushRecord">
+        <id column="record_id" property="recordId" jdbcType="INTEGER"/>
+        <result column="from_accid" property="fromAccid" jdbcType="BIGINT"/>
+        <result column="to_obj_type" property="toObjType" jdbcType="TINYINT"/>
+        <result column="msg_type" property="msgType" jdbcType="TINYINT"/>
+        <result column="to_accids" property="toAccids" jdbcType="VARCHAR"/>
+        <result column="to_erban_nos" property="toErbanNos" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="web_url" property="webUrl" jdbcType="VARCHAR"/>
+        <result column="pic_url" property="picUrl" jdbcType="VARCHAR"/>
+        <result column="skip_type" property="skipType" jdbcType="TINYINT"/>
+        <result column="skip_uri" property="skipUri" jdbcType="VARCHAR"/>
+        <result column="msg_desc" property="msgDesc" jdbcType="VARCHAR"/>
+        <result column="admin_id" property="adminId" jdbcType="VARCHAR"/>
+        <result column="crate_time" property="crateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        record_id, from_accid, to_obj_type, msg_type, to_accids, to_erban_nos, title, web_url,
+        pic_url, skip_type, skip_uri, msg_desc, admin_id, crate_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.MsgPushRecordExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from msg_push_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from msg_push_record
+        where record_id = #{recordId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from msg_push_record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.MsgPushRecordExample">
+        delete from msg_push_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.MsgPushRecord">
+        <selectKey resultType="java.lang.Integer" keyProperty="recordId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into msg_push_record (from_accid, to_obj_type, msg_type,
+        to_accids, to_erban_nos, title,
+        web_url, pic_url, skip_type,
+        skip_uri, msg_desc, admin_id,
+        crate_time)
+        values (#{fromAccid,jdbcType=BIGINT}, #{toObjType,jdbcType=TINYINT}, #{msgType,jdbcType=TINYINT},
+        #{toAccids,jdbcType=VARCHAR}, #{toErbanNos,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+        #{webUrl,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, #{skipType,jdbcType=TINYINT},
+        #{skipUri,jdbcType=VARCHAR}, #{msgDesc,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR},
+        #{crateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.MsgPushRecord">
+        <selectKey resultType="java.lang.Integer" keyProperty="recordId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into msg_push_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fromAccid != null">
+                from_accid,
+            </if>
+            <if test="toObjType != null">
+                to_obj_type,
+            </if>
+            <if test="msgType != null">
+                msg_type,
+            </if>
+            <if test="toAccids != null">
+                to_accids,
+            </if>
+            <if test="toErbanNos != null">
+                to_erban_nos,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="webUrl != null">
+                web_url,
+            </if>
+            <if test="picUrl != null">
+                pic_url,
+            </if>
+            <if test="skipType != null">
+                skip_type,
+            </if>
+            <if test="skipUri != null">
+                skip_uri,
+            </if>
+            <if test="msgDesc != null">
+                msg_desc,
+            </if>
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="crateTime != null">
+                crate_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fromAccid != null">
+                #{fromAccid,jdbcType=BIGINT},
+            </if>
+            <if test="toObjType != null">
+                #{toObjType,jdbcType=TINYINT},
+            </if>
+            <if test="msgType != null">
+                #{msgType,jdbcType=TINYINT},
+            </if>
+            <if test="toAccids != null">
+                #{toAccids,jdbcType=VARCHAR},
+            </if>
+            <if test="toErbanNos != null">
+                #{toErbanNos,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="webUrl != null">
+                #{webUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="skipType != null">
+                #{skipType,jdbcType=TINYINT},
+            </if>
+            <if test="skipUri != null">
+                #{skipUri,jdbcType=VARCHAR},
+            </if>
+            <if test="msgDesc != null">
+                #{msgDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                #{adminId,jdbcType=VARCHAR},
+            </if>
+            <if test="crateTime != null">
+                #{crateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.MsgPushRecordExample"
+            resultType="java.lang.Integer">
+        select count(*) from msg_push_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update msg_push_record
+        <set>
+            <if test="record.recordId != null">
+                record_id = #{record.recordId,jdbcType=INTEGER},
+            </if>
+            <if test="record.fromAccid != null">
+                from_accid = #{record.fromAccid,jdbcType=BIGINT},
+            </if>
+            <if test="record.toObjType != null">
+                to_obj_type = #{record.toObjType,jdbcType=TINYINT},
+            </if>
+            <if test="record.msgType != null">
+                msg_type = #{record.msgType,jdbcType=TINYINT},
+            </if>
+            <if test="record.toAccids != null">
+                to_accids = #{record.toAccids,jdbcType=VARCHAR},
+            </if>
+            <if test="record.toErbanNos != null">
+                to_erban_nos = #{record.toErbanNos,jdbcType=VARCHAR},
+            </if>
+            <if test="record.title != null">
+                title = #{record.title,jdbcType=VARCHAR},
+            </if>
+            <if test="record.webUrl != null">
+                web_url = #{record.webUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.picUrl != null">
+                pic_url = #{record.picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.skipType != null">
+                skip_type = #{record.skipType,jdbcType=TINYINT},
+            </if>
+            <if test="record.skipUri != null">
+                skip_uri = #{record.skipUri,jdbcType=VARCHAR},
+            </if>
+            <if test="record.msgDesc != null">
+                msg_desc = #{record.msgDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="record.adminId != null">
+                admin_id = #{record.adminId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.crateTime != null">
+                crate_time = #{record.crateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update msg_push_record
+        set record_id = #{record.recordId,jdbcType=INTEGER},
+        from_accid = #{record.fromAccid,jdbcType=BIGINT},
+        to_obj_type = #{record.toObjType,jdbcType=TINYINT},
+        msg_type = #{record.msgType,jdbcType=TINYINT},
+        to_accids = #{record.toAccids,jdbcType=VARCHAR},
+        to_erban_nos = #{record.toErbanNos,jdbcType=VARCHAR},
+        title = #{record.title,jdbcType=VARCHAR},
+        web_url = #{record.webUrl,jdbcType=VARCHAR},
+        pic_url = #{record.picUrl,jdbcType=VARCHAR},
+        skip_type = #{record.skipType,jdbcType=TINYINT},
+        skip_uri = #{record.skipUri,jdbcType=VARCHAR},
+        msg_desc = #{record.msgDesc,jdbcType=VARCHAR},
+        admin_id = #{record.adminId,jdbcType=VARCHAR},
+        crate_time = #{record.crateTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.MsgPushRecord">
+        update msg_push_record
+        <set>
+            <if test="fromAccid != null">
+                from_accid = #{fromAccid,jdbcType=BIGINT},
+            </if>
+            <if test="toObjType != null">
+                to_obj_type = #{toObjType,jdbcType=TINYINT},
+            </if>
+            <if test="msgType != null">
+                msg_type = #{msgType,jdbcType=TINYINT},
+            </if>
+            <if test="toAccids != null">
+                to_accids = #{toAccids,jdbcType=VARCHAR},
+            </if>
+            <if test="toErbanNos != null">
+                to_erban_nos = #{toErbanNos,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="webUrl != null">
+                web_url = #{webUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="picUrl != null">
+                pic_url = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="skipType != null">
+                skip_type = #{skipType,jdbcType=TINYINT},
+            </if>
+            <if test="skipUri != null">
+                skip_uri = #{skipUri,jdbcType=VARCHAR},
+            </if>
+            <if test="msgDesc != null">
+                msg_desc = #{msgDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="adminId != null">
+                admin_id = #{adminId,jdbcType=VARCHAR},
+            </if>
+            <if test="crateTime != null">
+                crate_time = #{crateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where record_id = #{recordId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.MsgPushRecord">
+    update msg_push_record
+    set from_accid = #{fromAccid,jdbcType=BIGINT},
+      to_obj_type = #{toObjType,jdbcType=TINYINT},
+      msg_type = #{msgType,jdbcType=TINYINT},
+      to_accids = #{toAccids,jdbcType=VARCHAR},
+      to_erban_nos = #{toErbanNos,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      web_url = #{webUrl,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      skip_type = #{skipType,jdbcType=TINYINT},
+      skip_uri = #{skipUri,jdbcType=VARCHAR},
+      msg_desc = #{msgDesc,jdbcType=VARCHAR},
+      admin_id = #{adminId,jdbcType=VARCHAR},
+      crate_time = #{crateTime,jdbcType=TIMESTAMP}
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+</mapper>

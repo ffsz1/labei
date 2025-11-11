@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erban.main.mybatismapper.ExpressWallMapper">
+
+    <resultMap id="expressWallMap" type="com.erban.main.vo.ExpressWallVo">
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.erban.main.model.ExpressWall" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO express_wall (
+        send_uid,
+        receive_uid,
+        gift_id,
+        create_time,
+        message,
+        total_gold,
+        gift_num
+      ) VALUES (
+        #{sendUid},
+        #{receiveUid},
+        #{giftId},
+        #{createTime},
+        #{message},
+        #{totalGold},
+        #{giftNum}
+      );
+    </insert>
+
+    <sql id="expressVoCol">
+        ew.id as id,
+        su.nick as sendNick,
+        su.uid as sendUid,
+        su.avatar as sendAvatar,
+        ru.nick as receiveNick,
+        ru.uid as receiveUid,
+        ru.avatar as receiveAvatar,
+        g.pic_url as picUrl,
+        g.gift_name as giftName,
+        ew.total_gold as giftGold,
+        ew.create_time as create_time,
+        ew.message as expressMessage,
+        ew.gift_num as giftNum
+    </sql>
+
+    <select id="getByTop" resultMap="expressWallMap">
+        SELECT
+            <include refid="expressVoCol"/>
+        FROM
+            express_wall ew
+        LEFT JOIN users su ON su.uid = ew.send_uid
+        LEFT JOIN users ru ON ru.uid = ew.receive_uid
+        LEFT JOIN gift g ON g.gift_id = ew.gift_id
+        WHERE DATE(ew.create_time) = #{date}
+        ORDER BY
+            ew.total_gold DESC, ew.create_time DESC;
+    </select>
+
+    <select id="getById" resultMap="expressWallMap">
+        SELECT
+            <include refid="expressVoCol"/>
+        FROM
+            express_wall ew
+        LEFT JOIN users su ON su.uid = ew.send_uid
+        LEFT JOIN users ru ON ru.uid = ew.receive_uid
+        LEFT JOIN gift g ON g.gift_id = ew.gift_id
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByPage" resultMap="expressWallMap">
+        SELECT
+          <include refid="expressVoCol"/>
+        FROM
+            express_wall ew
+        LEFT JOIN users su ON su.uid = ew.send_uid
+        LEFT JOIN users ru ON ru.uid = ew.receive_uid
+        LEFT JOIN gift g ON g.gift_id = ew.gift_id
+        ORDER BY
+	        ew.create_time DESC
+        LIMIT #{0}, #{1};
+    </select>
+</mapper>

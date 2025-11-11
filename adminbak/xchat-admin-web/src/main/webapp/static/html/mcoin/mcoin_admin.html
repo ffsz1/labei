@@ -1,0 +1,510 @@
+<style>
+
+    .btn{
+        margin: 0 4px;
+    }
+    #uploadBtn,#addUploadBtn{
+        margin-top: 4px;
+    }
+
+</style>
+<section class="content">
+<div class="box box-primary">
+    <div class="box-body">
+        <section class="content-header">
+            <h1 id="itemTitle"></h1>
+        </section>
+        <section class="content">
+            <div id="table"></div>
+            <div id="toolbar">
+                奖品类型: <select name="itemType" id="itemTypes" class="">
+                            <option value="0">--全部--</option>
+                            <option value="1">靓号</option>
+                            <option value="2">座驾</option>
+                            <option value="3">头饰</option>
+                        </select>
+                状态: <select name="issueStatus" id="issueStatus" class="">
+                        <option value="0">--全部--</option>
+                        <option value="1">进行中</option>
+                        <option value="2">未开始</option>
+                        <option value="3">已开奖</option>
+                     </select>
+                <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+                <button id="add" class="btn btn-default">
+                    <i class="glyphicon glyphicon-plus"></i>增加
+                </button>
+            </div>
+        </section>
+    </div>
+</div>
+</section>
+
+<div class="modal fade" id="bannerModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="modalLabel">编辑萌币竞猜</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="bannerForm">
+
+                    <div class="form-group">
+                        <label for="addName" class="col-sm-3 control-label">名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="itemName" id="name" readonly="readonly">
+                            <input type="hidden" id="itemId" name="id">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">奖品图片:</label>
+                        <div class="col-sm-8">
+                            <img src="" id="imgUrl" style="width:250px;height:90px;" alt="">
+                            <input type="file" id="uploadFile" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="uploadBtn">上传</button>
+                            <input type="hidden" id="issueUrl" name="issueUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">奖品类型:</label>
+                        <select name="itemType" id="updateItemType" class="col-sm-2">
+                            <option value="1">靓号</option>
+                            <option value="2">座驾</option>
+                            <option value="3">头饰</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="drawNum" class="col-sm-3 control-label">抽奖人次:</label>
+                        <div class="col-sm-3">
+                            <input type="number" id="drawNum" name="drawNum" class="form-control validate[required]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemId" class="col-sm-3 control-label">奖品Id:</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="editItemId" name="itemId" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemIssueStatus" class="col-sm-3 control-label">激活设置:</label>
+                        <select name="issueStatus" id="itemIssueStatus" class="col-sm-2">
+                            <option value="2">激活</option>
+                            <option value="1">不激活</option>
+                        </select>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addBannerModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">新增萌币竞猜</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addBannerForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="addName" class="col-sm-3 control-label">名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="itemName" id="addName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">奖品图片:</label>
+                        <div class="col-sm-8">
+                            <img src="" id="addImgUrl" style="width:250px;height:90px;" alt="">
+                            <input type="file" id="addUploadFile" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="addUploadBtn">上传</button>
+                            <input type="hidden" id="addIssueUrl" name="issueUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">奖品类型:</label>
+                        <select name="itemType" id="addSkipUrlSort" class="col-sm-2">
+                            <option value="1">靓号</option>
+                            <option value="2">座驾</option>
+                            <option value="3">头饰</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="addSeqNo" class="col-sm-3 control-label">排序设置:</label>
+                        <div class="col-sm-3">
+                            <input type="number" id="addSeqNo" name="seq" class="form-control validate[required]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="addDrawNum" class="col-sm-3 control-label">抽奖人次:</label>
+                        <div class="col-sm-3">
+                            <input type="number" id="addDrawNum" name="drawNum" class="form-control validate[required]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemId" class="col-sm-3 control-label">奖品Id:</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="addItemId" name="itemId" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="addBannerStatus" class="col-sm-3 control-label">激活设置:</label>
+                        <select name="issueStatus" id="addBannerStatus" class="col-sm-2">
+                            <option value="2">激活</option>
+                            <option value="1">不激活</option>
+                        </select>
+                    </div>
+                </form>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="addStartDate" class="col-sm-3 control-label">起始时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="addStartDate" type="date" name="createTime" class="form-control validate[required]">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var isEdit = false;
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns:[{
+                field:'id',title:'抽奖期号',align:'center',valign:'middle',width:'10%',formatter: function (val,row,index) {
+                    return "第" + val + "期";
+                }
+            }, {
+                field:'itemName',title:'名称',align:'center',valign:'middle',width:'10%'
+            }, {
+                field:'issueUrl',
+                title:'奖品图',
+                align:'center',
+                width:'10%',
+                formatter: function (val,row,index) {
+                    return "<img src='"+val+"' width='60' height='30'>";
+                }
+            }, {
+                field:'itemType',title:'奖品类型',align:'center',valign:'middle',width:'10%',
+                formatter: function (val,row,index) {
+                    switch (val){
+                        case 1:
+                            return '靓号';
+                            break;
+                        case 2:
+                            return '座驾';
+                            break;
+                        case 3:
+                            return '头饰';
+                            break;
+                    }
+                }
+            }, {
+                    field:'issueStatus',
+                    title:'状态',
+                    align:'center',
+                    width:'10%',
+                    valign:'middle',
+                    formatter: function (val,row,index) {
+                        console.log(val);
+                        switch(val){
+                            case 2:
+                                return '正在启用';
+                                break;
+                            case 1:
+                                return '未激活';
+                                break;
+                            default:
+                                return "已结束";
+                                break;
+                        }
+                    }
+                }, {
+                    field:'status',
+                    title:'竞猜状态',
+                    align:'center',
+                    width:'10%',
+                    valign:'middle',
+                    formatter: function (val,row,index) {
+                        switch(val){
+                            case 1:
+                                return '进行中';
+                                break;
+                            case 2:
+                                return '已开奖';
+                                break;
+                            case 4:
+                                return '已开奖';
+                                break;
+                            default:
+                                return '未开始';
+                                break;
+                        }
+                    }
+                },
+                {field:'drawNum',title:'抽奖人次',align:'center',valign:'middle',width:'20%'},
+                {field:'itemId',title:'奖品id',align:'center',valign:'middle',width:'20%'},
+                {
+                    field:'startTime',
+                    title:'活动开始时间',
+                    align:'center',
+                    width:'10%',
+                    valign:'middle',
+                    formatter: function (val,row,index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {field:'uid',title:'中奖id',align:'center',valign:'middle',width:'20%'},
+                {
+                    field:'tmp',
+                    title:'操作',
+                    align:'center',
+                    width:'10%',
+                    valign:'middle',
+                    formatter:function (val,row,index) {
+                        var key = row.id;
+                        return "<button class='btn btn-sm btn-success opt-edit' data-id="+ key +">编辑</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    itemType: parseInt($('#itemTypes').val()),
+                    issueStatus: parseInt($("#issueStatus").val())
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/mcoin/getList.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        })
+        $('#btnSearch').on('click',function () {
+            TableHelper.doRefresh('#table');
+        })
+        $('#table').on('click','.opt-edit',function () {
+            var id = parseInt($(this).data('id'));
+            isEdit = true;
+            $.ajax({
+                type: 'post',
+                url: '/admin/mcoin/getOne.action',
+                data: {'itemId':id},
+                dataType: 'json',
+                success: function (json) {
+                    if(json.entity){
+                        $('#name').val(json.entity.itemName);
+                        $('#imgUrl').attr('src',json.entity.issueUrl);
+                        $('#issueUrl').val(json.entity.issueUrl);
+                        $('#updateItemType').val(json.entity.itemType);
+                        $('#drawNum').val(json.entity.drawNum);
+                        $("#itemIssueStatus").val(json.entity.issueStatus);
+                        $("#itemId").val(json.entity.id);
+                        $('#editItemId').val(json.entity.itemId);
+                        $('#bannerModal').modal('show');
+                    }else{
+                        $("#tipMsg").text("获取信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+        $('#save').on('click',function () {
+            if($('#bannerForm').validationEngine('validate')){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/mcoin/update.action",
+                    data: $('#bannerForm').serialize(),
+                    dataType: 'json',
+                    success: function (json) {
+                        if(json.result == 1){
+                            $("#bannerModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        }else{
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        })
+        $('#addSave').on('click',function () {
+            if($('#addBannerForm').validationEngine('validate')){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/mcoin/save.action?&startTimeString="+$('#addStartDate').val()+"&endTimeString="+$('#addEndDate').val(),
+                    data: $('#addBannerForm').serialize(),
+                    dataType: 'json',
+                    success: function (json) {
+                        console.log(json);
+                        if(json.result == 1){
+                            $('#addBannerModal').modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        }else{
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        })
+//        $('#bannerModal').on('hidden.bs.modal',function () {
+////            TableHelper.doRefresh("#table");
+//            $('#bannerForm').data('bootstrapValidator').destroy();
+//            $('#bannerForm').data('bootstrapValidator', null);
+//            $('#bannerTimeForm').data('bootstrapValidator').destroy();
+//            $('#bannerTimeForm').data('bootstrapValidator', null);
+//
+//        })
+        var picker1 = $("#endDate").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        })
+
+        var picker2 = $('#addStartDate').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        })
+
+        var picker3 = $('#addEndDate').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        })
+        picker3.on('changeDate', function () {
+            var date = $('#addEndDate').datetimepicker('getDate');
+            console.log(date);
+            picker2.datetimepicker('setEndDate',date);
+        });
+        picker2.on('changeDate', function () {
+            var date = $('#addStartDate').datetimepicker('getDate');
+            picker3.datetimepicker('setStartDate',date);
+        });
+        $('#uploadBtn').on('click',function () {
+            var options = {
+                type: 'post',
+                url: '/admin/banner/headimg.action',
+                dataType: 'json',
+                success: function (json) {
+                    if(json.path){
+                        $('#issueUrl').val(json.path);
+                        $('#imgUrl').attr("src", json.path);
+                        console.log(json.path);
+                    }else{
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            }
+            $("#bannerForm").ajaxSubmit(options);
+        })
+        $('#addUploadBtn').on('click',function () {
+            var options = {
+                type: 'post',
+                url: '/admin/banner/headimg.action',
+                dataType: 'json',
+                success: function (json) {
+                    if(json.path){
+                        $('#addIssueUrl').val(json.path);
+                        $('#addImgUrl').attr('src',json.path);
+                        console.log(json.path);
+                    }else{
+                        $('#tipMsg').text(json.msg);
+                        $('#tipModal').modal('show');
+                    }
+                }
+            }
+            $('#addBannerForm').ajaxSubmit(options);
+        })
+        $('#add').on('click',function () {
+            isEdit = false;
+            $('#addBannerForm')[0].reset();
+            $('#addImgUrl').attr('src','');
+            $('#addBannerPic').val('');
+            $('#addBannerModal').modal('show');
+        })
+        $('#table').on('mouseenter','img',function (e) {
+            console.log($(this),e.clientX);
+            var src = $(this).attr('src');
+            $('#imgMask img').attr('src',src);
+            $('#imgMask').show();
+            $('#imgMask').css({
+                top: e.clientY + 20,
+                left: e.clientX + 20
+            })
+        })
+        $('#table').on('mouseleave','img',function (e) {
+            console.log('移出');
+            $('#imgMask').hide();
+        })
+
+
+//        $('#table').on('click','.opt-del',function () {
+//            var key = parseInt($(this).attr('data-id'));
+//            console.log(key,typeof key);
+//            $.ajax({
+//                type: 'post',
+//                url: '/admin/banner/delBannerList.action',
+//                data: {'bannerId':key},
+//                dataType: 'json',
+//                success: function(json){
+//                    if(json.result == 1){
+//                        $("#tipMsg").text("删除成功");
+//                        $("#tipModal").modal('show');
+//                        TableHelper.doRefresh("#table");
+//                    }else{
+//                        $("#tipMsg").text("删除失败，错误码：" + json.result);
+//                        $("#tipModal").modal('show');
+//                    }
+//                }
+//
+//            })
+//
+//        })
+    })
+</script>

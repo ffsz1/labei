@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+  <title>房间流水</title>
+  <link rel="icon" href="https://www.47huyu.cn/static/home/images/bitbug_favicon.ico">
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      height: 100%;
+      background: #efefef;
+      text-align: center;
+    }
+
+    .background {
+      width: 100%;
+      height: 100%;
+      background: -webkit-linear-gradient(#49a3ff, #c3e1ff);
+      /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(#49a3ff, #c3e1ff);
+      /* Opera 11.1 - 12.0 */
+      background: -moz-linear-gradient(#49a3ff, #c3e1ff);
+      /* Firefox 3.6 - 15 */
+      background: linear-gradient(#49a3ff, #c3e1ff);
+      /* 标准的语法 */
+    }
+
+    .theme {
+      padding: 20px 0px 20px 0px;
+      font-size: 0.8em;
+      color: #ffffff;
+      line-height: 150%;
+    }
+
+    .theme span {
+      font-size: 1.05em;
+    }
+
+    .tips {
+      padding: 10px 40px 40px 40px;
+      color: #5e448a;
+      font-size: 0.42em;
+      text-align: left;
+      line-height: 180%;
+    }
+
+    .content {
+      margin: 0 auto;
+      width: 160px;
+      height: 160px;
+      background-color: #ffffff;
+      color: #5e448a;
+      -moz-border-radius: 150px;
+      -webkit-border-radius: 150px;
+      border-radius: 150px;
+      text-align: center;
+    }
+
+    .content div {
+      padding-top: 52px;
+      font-size: 8.4em;
+    }
+
+    #money {
+      font-size: 2.1em;
+    }
+
+    .null {
+      font-size: 1.26em;
+      color: #cccccc;
+      height: 100%;
+      margin-top: 250px;
+    }
+
+    .list {
+      padding-top: 65px;
+    }
+
+    .list dl {
+      margin: 0px;
+      padding: 20px;
+      background: url('images/left.png') no-repeat right 20px center #ffffff;
+      color: #cccccc;
+      font-size: 1.4em;
+      border-bottom: 1px solid #efefef;
+    }
+
+    .list dt {
+      margin: 0px;
+      padding: 0px;
+      float: left;
+      padding-right: 20px;
+      width: 60px;
+      border-right: 1px solid #efefef;
+      text-align: center;
+    }
+
+    .list dd {
+      margin: 0px;
+      padding: 0px;
+      margin-left: 110px;
+      text-align: left;
+      line-height: 90%;
+    }
+
+    .list2 {
+      background: #ffffff;
+    }
+
+    .list2 ul {
+      margin: 0px;
+      padding: 0px;
+      list-style: none;
+    }
+
+    .list2 li {
+      margin: 0px 0px 1px 0px;
+      padding: 30px 20px 30px 20px;
+      background: url(../icon_arrow.png) no-repeat right 20px center;
+      list-style: none;
+      overflow: auto;
+      border-bottom: 1px solid #efefef;
+      text-align: left;
+      font-size: 0.84em;
+    }
+
+
+    .list3 dl {
+      margin: 0px;
+      padding: 20px;
+      background: #ffffff;
+      color: #cccccc;
+      font-size: 1.4em;
+      border-bottom: 1px solid #efefef;
+    }
+
+    .list3 dt {
+      margin: 0px;
+      padding: 0px;
+      float: left;
+      padding-right: 20px;
+      width: 60px;
+      border-right: 1px solid #efefef;
+      text-align: center;
+    }
+
+    .list3 dt img {
+      height: 60px;
+      margin-top: -10px;
+    }
+
+    .list3 dd {
+      margin: 0px;
+      padding: 0px;
+      margin-left: 110px;
+      text-align: left;
+      line-height: 90%;
+    }
+
+    .list3 dd .time {
+      float: right;
+      font-size: 0.35em;
+    }
+
+    .title {
+      font-size: 1.4em;
+      color: #333333;
+    }
+
+    .notice {
+      color: #cccccc;
+      font-size: 0.35em;
+    }
+
+    .money {
+      color: #333333 !important
+    }
+
+    .date {
+      padding-top: 11px;
+    }
+
+    .date2 {
+      padding-top: 0px;
+      line-height: 90%;
+    }
+
+    .date3 {
+      padding-top: 4px;
+    }
+
+    .sum {
+      background: #f5f5f5 !important
+    }
+
+    a {
+      color: #333333;
+      text-decoration: none;
+    }
+
+    .ad {
+      width: 100%;
+      height: 60px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+    }
+
+    .ad>div {
+      width: 100%;
+      height: 100%;        
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #87ceeb;
+      color: #fff;
+    }
+  </style>
+  <script src="../lib/zepto.min.js"></script>
+  <script src="../lib/common.js"></script>
+  <script src="js/index.js"></script>
+</head>
+
+<body>
+  <div class="ad">
+    <div>
+      <!-- <p>点击查看热门新秀排行 ></p> -->
+    </div>
+  </div>
+  <div class="list">
+
+  </div>
+  <div style="display:none">
+    <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+  </div>
+</body>
+
+</html>

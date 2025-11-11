@@ -1,0 +1,70 @@
+.title {
+	display: block;
+	position: relative;
+	height: 44px;
+	line-height: 44px;
+	padding-left: 15px;
+	font-size: 15px;
+	color: #666;
+	background: #F5F5F5;
+}
+.title:before {
+	display: inline-block;
+  width: 2px;
+  height: 12px;
+  margin-right: 5px;
+  content: " ";
+  background: #fed700;
+  vertical-align: middle;
+}
+.title img {
+	position: absolute;
+	right: 12px;
+	top: 12px;	
+}
+.title a {
+	display: inline-block;
+}
+.desc {
+	padding: 15px;
+	line-height: 23px;
+	font-size: 14px;
+	color: #333;
+}
+.withdraw {
+	position: relative;
+	padding: 15px 18px;
+	line-height: 20px;
+	font-size: 15px;
+	color: #333333;
+}
+.withdraw:before {
+	display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  border-top: 5px solid #f5f5f5;
+  content: " ";
+}
+.contact {
+	font-size: 15px;
+	font-weight: 700;
+	color: #19c3fb;
+}
+
+.protocol {
+  padding: 15px 16px;
+}
+.protocol h1 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight:bold;
+  font-size: 15px;
+  color: #333;
+}
+.protocol p {
+  line-height: 20px;
+  font-size: 14px;
+  color: #333;
+}

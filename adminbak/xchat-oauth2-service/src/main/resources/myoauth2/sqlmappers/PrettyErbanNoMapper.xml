@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xchat.oauth2.service.infrastructure.myaccountmybatis.PrettyErbanNoMapper" >
+  <resultMap id="BaseResultMap" type="com.xchat.oauth2.service.model.PrettyErbanNo" >
+    <id column="pretty_id" property="prettyId" jdbcType="INTEGER" />
+    <result column="pretty_erban_no" property="prettyErbanNo" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="use_for" property="useFor" jdbcType="TINYINT" />
+    <result column="user_uid" property="userUid" jdbcType="BIGINT" />
+    <result column="user_erban_no" property="userErbanNo" jdbcType="BIGINT" />
+    <result column="pretty_desc" property="prettyDesc" jdbcType="VARCHAR" />
+    <result column="start_valid_time" property="startValidTime" jdbcType="TIMESTAMP" />
+    <result column="end_valid_time" property="endValidTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pretty_id, pretty_erban_no, status, use_for, user_uid, user_erban_no, pretty_desc, 
+    start_valid_time, end_valid_time, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xchat.oauth2.service.model.PrettyErbanNoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from pretty_erban_no
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pretty_erban_no
+    where pretty_id = #{prettyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pretty_erban_no
+    where pretty_id = #{prettyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xchat.oauth2.service.model.PrettyErbanNoExample" >
+    delete from pretty_erban_no
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xchat.oauth2.service.model.PrettyErbanNo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="prettyId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pretty_erban_no (pretty_erban_no, status, use_for, 
+      user_uid, user_erban_no, pretty_desc, 
+      start_valid_time, end_valid_time, create_time
+      )
+    values (#{prettyErbanNo,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, #{useFor,jdbcType=TINYINT}, 
+      #{userUid,jdbcType=BIGINT}, #{userErbanNo,jdbcType=BIGINT}, #{prettyDesc,jdbcType=VARCHAR}, 
+      #{startValidTime,jdbcType=TIMESTAMP}, #{endValidTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xchat.oauth2.service.model.PrettyErbanNo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="prettyId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pretty_erban_no
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="prettyErbanNo != null" >
+        pretty_erban_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="useFor != null" >
+        use_for,
+      </if>
+      <if test="userUid != null" >
+        user_uid,
+      </if>
+      <if test="userErbanNo != null" >
+        user_erban_no,
+      </if>
+      <if test="prettyDesc != null" >
+        pretty_desc,
+      </if>
+      <if test="startValidTime != null" >
+        start_valid_time,
+      </if>
+      <if test="endValidTime != null" >
+        end_valid_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="prettyErbanNo != null" >
+        #{prettyErbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="useFor != null" >
+        #{useFor,jdbcType=TINYINT},
+      </if>
+      <if test="userUid != null" >
+        #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="userErbanNo != null" >
+        #{userErbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="prettyDesc != null" >
+        #{prettyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="startValidTime != null" >
+        #{startValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endValidTime != null" >
+        #{endValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xchat.oauth2.service.model.PrettyErbanNoExample" resultType="java.lang.Integer" >
+    select count(*) from pretty_erban_no
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pretty_erban_no
+    <set >
+      <if test="record.prettyId != null" >
+        pretty_id = #{record.prettyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.prettyErbanNo != null" >
+        pretty_erban_no = #{record.prettyErbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.useFor != null" >
+        use_for = #{record.useFor,jdbcType=TINYINT},
+      </if>
+      <if test="record.userUid != null" >
+        user_uid = #{record.userUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userErbanNo != null" >
+        user_erban_no = #{record.userErbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.prettyDesc != null" >
+        pretty_desc = #{record.prettyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startValidTime != null" >
+        start_valid_time = #{record.startValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endValidTime != null" >
+        end_valid_time = #{record.endValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pretty_erban_no
+    set pretty_id = #{record.prettyId,jdbcType=INTEGER},
+      pretty_erban_no = #{record.prettyErbanNo,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=TINYINT},
+      use_for = #{record.useFor,jdbcType=TINYINT},
+      user_uid = #{record.userUid,jdbcType=BIGINT},
+      user_erban_no = #{record.userErbanNo,jdbcType=BIGINT},
+      pretty_desc = #{record.prettyDesc,jdbcType=VARCHAR},
+      start_valid_time = #{record.startValidTime,jdbcType=TIMESTAMP},
+      end_valid_time = #{record.endValidTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xchat.oauth2.service.model.PrettyErbanNo" >
+    update pretty_erban_no
+    <set >
+      <if test="prettyErbanNo != null" >
+        pretty_erban_no = #{prettyErbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="useFor != null" >
+        use_for = #{useFor,jdbcType=TINYINT},
+      </if>
+      <if test="userUid != null" >
+        user_uid = #{userUid,jdbcType=BIGINT},
+      </if>
+      <if test="userErbanNo != null" >
+        user_erban_no = #{userErbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="prettyDesc != null" >
+        pretty_desc = #{prettyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="startValidTime != null" >
+        start_valid_time = #{startValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endValidTime != null" >
+        end_valid_time = #{endValidTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pretty_id = #{prettyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xchat.oauth2.service.model.PrettyErbanNo" >
+    update pretty_erban_no
+    set pretty_erban_no = #{prettyErbanNo,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      use_for = #{useFor,jdbcType=TINYINT},
+      user_uid = #{userUid,jdbcType=BIGINT},
+      user_erban_no = #{userErbanNo,jdbcType=BIGINT},
+      pretty_desc = #{prettyDesc,jdbcType=VARCHAR},
+      start_valid_time = #{startValidTime,jdbcType=TIMESTAMP},
+      end_valid_time = #{endValidTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where pretty_id = #{prettyId,jdbcType=INTEGER}
+  </update>
+</mapper>

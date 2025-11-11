@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.FamilyJoinMapper" >
+
+    <insert id="save" parameterType="com.erban.admin.main.model.FamilyJoin" useGeneratedKeys="true" keyProperty="id">
+         INSERT INTO family_join(team_id,uid,role_status,create_time)
+        VALUES (#{teamId},#{uid},#{roleStatus},#{createTime})
+    </insert>
+
+    <update id="updateByFamilyApplyJoinRecord">
+          UPDATE family_apply_join_record
+          SET status = #{checkStatus}
+          where team_id = #{teamId} and uid = #{uid}
+    </update>
+
+
+    <select id="selectByUid" resultType="com.erban.admin.main.model.FamilyJoin">
+        select id,team_id as teamId,uid,role_status as roleStatus,create_time as createTime
+        from family_join
+        where uid = #{uid}
+    </select>
+
+    <delete id="deleteByTeamId">
+         delete from family_join where team_id = #{teamId}
+    </delete>
+
+
+    <select id="selectTeamIdByFamilyJoinList" resultType="java.lang.Long">
+        select uid from family_join where team_id = #{teamId}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.RedeemCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.RedeemCode" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="BIGINT" />
+    <result column="use_uid" property="useUid" jdbcType="BIGINT" />
+    <result column="use_ip" property="useIp" jdbcType="VARCHAR" />
+    <result column="use_imei" property="useImei" jdbcType="VARCHAR" />
+    <result column="use_status" property="useStatus" jdbcType="INTEGER" />
+    <result column="use_time" property="useTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    code, amount, use_uid, use_ip, use_imei, use_status, use_time, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.RedeemCodeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from redeem_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from redeem_code
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from redeem_code
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.RedeemCodeExample" >
+    delete from redeem_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.RedeemCode" >
+    insert into redeem_code (code, amount, use_uid, 
+      use_ip, use_imei, use_status, 
+      use_time, create_time)
+    values (#{code,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{useUid,jdbcType=BIGINT}, 
+      #{useIp,jdbcType=VARCHAR}, #{useImei,jdbcType=VARCHAR}, #{useStatus,jdbcType=INTEGER}, 
+      #{useTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.RedeemCode" >
+    insert into redeem_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="useUid != null" >
+        use_uid,
+      </if>
+      <if test="useIp != null" >
+        use_ip,
+      </if>
+      <if test="useImei != null" >
+        use_imei,
+      </if>
+      <if test="useStatus != null" >
+        use_status,
+      </if>
+      <if test="useTime != null" >
+        use_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="useUid != null" >
+        #{useUid,jdbcType=BIGINT},
+      </if>
+      <if test="useIp != null" >
+        #{useIp,jdbcType=VARCHAR},
+      </if>
+      <if test="useImei != null" >
+        #{useImei,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null" >
+        #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.RedeemCodeExample" resultType="java.lang.Integer" >
+    select count(*) from redeem_code
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update redeem_code
+    <set >
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.useUid != null" >
+        use_uid = #{record.useUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.useIp != null" >
+        use_ip = #{record.useIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useImei != null" >
+        use_imei = #{record.useImei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useStatus != null" >
+        use_status = #{record.useStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.useTime != null" >
+        use_time = #{record.useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update redeem_code
+    set code = #{record.code,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=BIGINT},
+      use_uid = #{record.useUid,jdbcType=BIGINT},
+      use_ip = #{record.useIp,jdbcType=VARCHAR},
+      use_imei = #{record.useImei,jdbcType=VARCHAR},
+      use_status = #{record.useStatus,jdbcType=INTEGER},
+      use_time = #{record.useTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.RedeemCode" >
+    update redeem_code
+    <set >
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="useUid != null" >
+        use_uid = #{useUid,jdbcType=BIGINT},
+      </if>
+      <if test="useIp != null" >
+        use_ip = #{useIp,jdbcType=VARCHAR},
+      </if>
+      <if test="useImei != null" >
+        use_imei = #{useImei,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null" >
+        use_status = #{useStatus,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null" >
+        use_time = #{useTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.RedeemCode" >
+    update redeem_code
+    set amount = #{amount,jdbcType=BIGINT},
+      use_uid = #{useUid,jdbcType=BIGINT},
+      use_ip = #{useIp,jdbcType=VARCHAR},
+      use_imei = #{useImei,jdbcType=VARCHAR},
+      use_status = #{useStatus,jdbcType=INTEGER},
+      use_time = #{useTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>

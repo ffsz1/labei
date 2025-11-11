@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-4.2.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+
+    <task:executor id="executor" pool-size="8" />
+    <task:scheduler id="myscheduler" pool-size="8" />
+    <task:annotation-driven executor="executor"  scheduler="myscheduler"/>
+    <context:component-scan base-package="com.erban.main.service, com.erban.web.task" ></context:component-scan>
+
+    <!-- 1.创建JobDetail -->
+    <!--关闭异常房间-->
+    <bean id="jobDetail_1"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.CheckRoomExceptionJob"/>
+    </bean>
+    <!--刷新房间在线人数-->
+    <bean id="jobDetail_2"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.erban.main.service.job.RefreshPersonJob"/>
+    </bean>
+    <!--处理过期竞拍单-->
+    <bean id="jobDetail_3"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.erban.main.service.job.OrderTimeoutJob"/>
+    </bean>
+    <!--处理超时充值订单-->
+    <bean id="jobDetail_4"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.RechargeTimeOutJob"/>
+    </bean>
+    <!--定时清除房间周榜数据-->
+    <bean id="jobDetail_5"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.RefreshWeekListJob"/>
+    </bean>
+    <!--统计房间人气-->
+    <bean id="jobDetail_6"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.StaticRoomDataJob"/>
+    </bean>
+    <!--统计房间、拍卖、礼物数据-->
+    <bean id="jobDetail_7"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.RefreshCountJob"/>
+    </bean>
+    <!--统计主播开播时长-->
+    <bean id="jobDetail_8"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.StatRoomLiveDataJob"/>
+    </bean>
+    <!--统计用户停留房间时长-->
+    <bean id="jobDetail_9"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.StatUserStandTimeJob"/>
+    </bean>
+    <!--统计分享首充-->
+    <bean id="jobDetail_10"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.StatShareChargeJob"/>
+    </bean>
+    <!--统计密聊过期任务-->
+    <bean id="jobDetail_11"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.ChannelTimeOutJob"/>
+    </bean>
+
+    <!--添加房间机器人废弃-->
+    <bean id="jobDetail_13"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.AddRobotToRoomJob2"/>
+    </bean>
+
+    <bean id="refreshRobotJob"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.RefreshRobotJob"/>
+    </bean>
+
+    <bean id="clockJob"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.ClockJob"/>
+    </bean>
+
+    <bean id="fullGiftWallJob"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.FullGiftWallJob"/>
+    </bean>
+
+    <bean id="aprilFoolsDayActivityJob"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.AprilFoolsDayActivityJob"/>
+    </bean>
+
+    <bean id="giftCarJob"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.GiftCarJob"/>
+    </bean>
+
+    <bean id="activityHtmlJob"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass"
+                  value="com.erban.main.service.job.ActivityHtmlJob"/>
+    </bean>
+
+
+    <!-- 2.创建Trigger -->
+    <bean id="cronTrigger_1"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_1"/>
+        <!-- cron表达式 -->
+        <!-- 每5分钟执行检查房间一次  0 */5 * * * ? -->
+        <property name="cronExpression" value="0 */5 * * * ?"/>
+    </bean>
+    <bean id="cronTrigger_2"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_2"/>
+        <!-- cron表达式 -->
+        <!-- 每2分钟执行查询人数一次 -->
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+    </bean>
+    <bean id="cronTrigger_3"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_3"/>
+        <!-- cron表达式 -->
+        <!-- 每隔一小时执行一次订单过时  0 0 */1 * * ?-->
+        <property name="cronExpression" value="0 0 */1 * * ?"/>
+    </bean>
+    <bean id="cronTrigger_4"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_4"/>
+        <!-- cron表达式 -->
+        <!-- 每隔10分钟执行一次充值超时 -->
+        <property name="cronExpression" value="0 */10 * * * ?"/>
+    </bean>
+    <bean id="cronTrigger_5"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_5"/>
+        <!-- cron表达式 -->
+        <!-- 每个星期天5点清除一次周榜数据 0 0 5 ? * 1 -->
+        <property name="cronExpression" value="0 0 5 ? * 1"/>
+    </bean>
+    <bean id="cronTrigger_6"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_6"/>
+        <!-- cron表达式 -->
+        <!-- 每天6.30统计房间进入人数，人气值，开播时长。 0 30 23 * * ? -->
+        <property name="cronExpression" value="0 30 6 * * ?"/>
+    </bean>
+
+    <bean id="cronTrigger_7"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_7"/>
+        <!-- cron表达式 -->
+        <!-- 每晚12点统计数据。 -->
+        <property name="cronExpression" value="0 0 0 * * ? "/>
+        <!--<property name="cronExpression" value="0 */1 * * * ?"/>-->
+    </bean>
+    <bean id="cronTrigger_8"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_8"/>
+        <!-- cron表达式 -->
+        <!-- 每天6.00统计房间开播时长。0 0 6 * * ?? -->
+        <property name="cronExpression" value="0 0 6 * * ?"/>
+    </bean>
+    <bean id="cronTrigger_9"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_9"/>
+        <!-- cron表达式 -->
+        <!-- 每天5.30统计房间人气数据。0 0 8 * * ?? -->
+        <property name="cronExpression" value="0 30 5 * * ?"/>
+    </bean>
+    <bean id="cronTrigger_10"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_10"/>
+        <!-- cron表达式 -->
+        <!-- 每天11.30统计分享人带领人数注册以及首冲人数数据。0 30 10 * * ? -->
+        <property name="cronExpression" value="0 30 7 * * ?"/>
+    </bean>
+    <bean id="cronTrigger_11"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_11"/>
+        <!-- cron表达式 -->
+        <!-- 每一小时执行一次密聊超时发送自定义消息。0 30 10 * * ? -->
+        <property name="cronExpression" value="0 0 */1 * * ?"/>
+    </bean>
+
+    <bean id="cronTrigger_13"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="jobDetail_13"/>
+        <!-- cron表达式 -->
+        <!-- 每两分钟进行一次加减机器人操作 0 */2 * * * ? -->
+        <property name="cronExpression" value="0 */1 * * * ?"/>
+    </bean>
+
+    <!--协议房机器人定时刷新数据-->
+    <bean id="refreshRobotJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="refreshRobotJob"/>
+        <property name="cronExpression" value="0 0 */10 * * ?"/>
+    </bean>
+
+    <!--打卡计算结果-->
+    <bean id="clockJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="clockJob"/>
+        <property name="cronExpression" value="0 5 20 * * ?"/>
+    </bean>
+
+    <!--刷新积满礼物墙的人-->
+    <bean id="fullGiftWallTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="fullGiftWallJob"/>
+        <property name="cronExpression" value="0 */30 * * * ? "/>
+    </bean>
+
+    <!--刷新愚人节排行榜-->
+    <bean id="aprilFoolsDayActivityTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="aprilFoolsDayActivityJob"/>
+        <property name="cronExpression" value="0 */2 * * * ?"/>
+    </bean>
+
+    <!--每天刷新座驾时间-->
+    <bean id="giftCarTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="giftCarJob"/>
+        <property name="cronExpression" value="0 0 0 * * ?"/>
+    </bean>
+
+    <!--刷新活动排行榜-->
+    <bean id="activityHtmlTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 指定jobDetail -->
+        <property name="jobDetail" ref="activityHtmlJob"/>
+        <property name="cronExpression" value="0 */2 * * * ?"/>
+    </bean>
+
+
+    <!-- 3.创建Scheduler -->
+    <bean id="scheduler"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!-- 配置所有的触发器 -->
+        <property name="jobFactory" ref="jobFactory"/>
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger_1"/>
+                <ref bean="cronTrigger_2"/>
+                <ref bean="cronTrigger_5"/>
+                <ref bean="refreshRobotJobTrigger"/>
+                <ref bean="clockJobTrigger"/>
+                <ref bean="activityHtmlTrigger"/>
+                <ref bean="giftCarTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

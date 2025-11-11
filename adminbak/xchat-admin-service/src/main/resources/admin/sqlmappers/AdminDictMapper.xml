@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.AdminDictMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.model.AdminDict" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <id column="dictkey" property="dictkey" jdbcType="VARCHAR" />
+    <result column="dictval" property="dictval" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="showOrder" property="showorder" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    code, dictkey, dictval, status, showOrder, createTime, description
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.admin.main.model.AdminDictExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from admin_dict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.erban.admin.main.model.AdminDictKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_dict
+    where code = #{code,jdbcType=VARCHAR}
+      and dictkey = #{dictkey,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.erban.admin.main.model.AdminDictKey" >
+    delete from admin_dict
+    where code = #{code,jdbcType=VARCHAR}
+      and dictkey = #{dictkey,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.admin.main.model.AdminDictExample" >
+    delete from admin_dict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.admin.main.model.AdminDict" >
+    insert into admin_dict (code, dictkey, dictval, 
+      status, showOrder, createTime, 
+      description)
+    values (#{code,jdbcType=VARCHAR}, #{dictkey,jdbcType=VARCHAR}, #{dictval,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{showorder,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.admin.main.model.AdminDict" >
+    insert into admin_dict
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="dictkey != null" >
+        dictkey,
+      </if>
+      <if test="dictval != null" >
+        dictval,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="showorder != null" >
+        showOrder,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="dictkey != null" >
+        #{dictkey,jdbcType=VARCHAR},
+      </if>
+      <if test="dictval != null" >
+        #{dictval,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="showorder != null" >
+        #{showorder,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.admin.main.model.AdminDictExample" resultType="java.lang.Integer" >
+    select count(*) from admin_dict
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update admin_dict
+    <set >
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictkey != null" >
+        dictkey = #{record.dictkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictval != null" >
+        dictval = #{record.dictval,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.showorder != null" >
+        showOrder = #{record.showorder,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update admin_dict
+    set code = #{record.code,jdbcType=VARCHAR},
+      dictkey = #{record.dictkey,jdbcType=VARCHAR},
+      dictval = #{record.dictval,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=BIT},
+      showOrder = #{record.showorder,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      description = #{record.description,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.admin.main.model.AdminDict" >
+    update admin_dict
+    <set >
+      <if test="dictval != null" >
+        dictval = #{dictval,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="showorder != null" >
+        showOrder = #{showorder,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+      and dictkey = #{dictkey,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.admin.main.model.AdminDict" >
+    update admin_dict
+    set dictval = #{dictval,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      showOrder = #{showorder,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR}
+    where code = #{code,jdbcType=VARCHAR}
+      and dictkey = #{dictkey,jdbcType=VARCHAR}
+  </update>
+</mapper>

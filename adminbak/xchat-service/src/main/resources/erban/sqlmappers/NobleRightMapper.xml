@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.NobleRightMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.NobleRight" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="open_gold" property="openGold" jdbcType="BIGINT" />
+    <result column="renew_gold" property="renewGold" jdbcType="BIGINT" />
+    <result column="open_return" property="openReturn" jdbcType="BIGINT" />
+    <result column="renew_return" property="renewReturn" jdbcType="BIGINT" />
+    <result column="screen_medal" property="screenMedal" jdbcType="TINYINT" />
+    <result column="room_medal" property="roomMedal" jdbcType="TINYINT" />
+    <result column="user_medal" property="userMedal" jdbcType="TINYINT" />
+    <result column="user_page" property="userPage" jdbcType="TINYINT" />
+    <result column="open_effect" property="openEffect" jdbcType="TINYINT" />
+    <result column="open_notice" property="openNotice" jdbcType="TINYINT" />
+    <result column="noble_gift" property="nobleGift" jdbcType="TINYINT" />
+    <result column="special_face" property="specialFace" jdbcType="TINYINT" />
+    <result column="enter_notice" property="enterNotice" jdbcType="TINYINT" />
+    <result column="room_background" property="roomBackground" jdbcType="TINYINT" />
+    <result column="mic_decorate" property="micDecorate" jdbcType="TINYINT" />
+    <result column="mic_halo" property="micHalo" jdbcType="TINYINT" />
+    <result column="chat_bubble" property="chatBubble" jdbcType="TINYINT" />
+    <result column="enter_hide" property="enterHide" jdbcType="TINYINT" />
+    <result column="rank_hide" property="rankHide" jdbcType="TINYINT" />
+    <result column="special_service" property="specialService" jdbcType="TINYINT" />
+    <result column="good_num" property="goodNum" jdbcType="TINYINT" />
+    <result column="prevent" property="prevent" jdbcType="TINYINT" />
+    <result column="recom_room" property="recomRoom" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="tmpstr" property="tmpstr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, open_gold, renew_gold, open_return, renew_return, screen_medal, room_medal, 
+    user_medal, user_page, open_effect, open_notice, noble_gift, special_face, enter_notice, 
+    room_background, mic_decorate, mic_halo, chat_bubble, enter_hide, rank_hide, special_service, 
+    good_num, prevent, recom_room, status, tmpstr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.NobleRightExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from noble_right
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from noble_right
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from noble_right
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.NobleRightExample" >
+    delete from noble_right
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.NobleRight" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into noble_right (name, open_gold, renew_gold, 
+      open_return, renew_return, screen_medal, 
+      room_medal, user_medal, user_page, 
+      open_effect, open_notice, noble_gift, 
+      special_face, enter_notice, room_background, 
+      mic_decorate, mic_halo, chat_bubble, 
+      enter_hide, rank_hide, special_service, 
+      good_num, prevent, recom_room, 
+      status, tmpstr)
+    values (#{name,jdbcType=VARCHAR}, #{openGold,jdbcType=BIGINT}, #{renewGold,jdbcType=BIGINT}, 
+      #{openReturn,jdbcType=BIGINT}, #{renewReturn,jdbcType=BIGINT}, #{screenMedal,jdbcType=TINYINT}, 
+      #{roomMedal,jdbcType=TINYINT}, #{userMedal,jdbcType=TINYINT}, #{userPage,jdbcType=TINYINT}, 
+      #{openEffect,jdbcType=TINYINT}, #{openNotice,jdbcType=TINYINT}, #{nobleGift,jdbcType=TINYINT}, 
+      #{specialFace,jdbcType=TINYINT}, #{enterNotice,jdbcType=TINYINT}, #{roomBackground,jdbcType=TINYINT}, 
+      #{micDecorate,jdbcType=TINYINT}, #{micHalo,jdbcType=TINYINT}, #{chatBubble,jdbcType=TINYINT}, 
+      #{enterHide,jdbcType=TINYINT}, #{rankHide,jdbcType=TINYINT}, #{specialService,jdbcType=TINYINT}, 
+      #{goodNum,jdbcType=TINYINT}, #{prevent,jdbcType=TINYINT}, #{recomRoom,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{tmpstr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.NobleRight" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into noble_right
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="openGold != null" >
+        open_gold,
+      </if>
+      <if test="renewGold != null" >
+        renew_gold,
+      </if>
+      <if test="openReturn != null" >
+        open_return,
+      </if>
+      <if test="renewReturn != null" >
+        renew_return,
+      </if>
+      <if test="screenMedal != null" >
+        screen_medal,
+      </if>
+      <if test="roomMedal != null" >
+        room_medal,
+      </if>
+      <if test="userMedal != null" >
+        user_medal,
+      </if>
+      <if test="userPage != null" >
+        user_page,
+      </if>
+      <if test="openEffect != null" >
+        open_effect,
+      </if>
+      <if test="openNotice != null" >
+        open_notice,
+      </if>
+      <if test="nobleGift != null" >
+        noble_gift,
+      </if>
+      <if test="specialFace != null" >
+        special_face,
+      </if>
+      <if test="enterNotice != null" >
+        enter_notice,
+      </if>
+      <if test="roomBackground != null" >
+        room_background,
+      </if>
+      <if test="micDecorate != null" >
+        mic_decorate,
+      </if>
+      <if test="micHalo != null" >
+        mic_halo,
+      </if>
+      <if test="chatBubble != null" >
+        chat_bubble,
+      </if>
+      <if test="enterHide != null" >
+        enter_hide,
+      </if>
+      <if test="rankHide != null" >
+        rank_hide,
+      </if>
+      <if test="specialService != null" >
+        special_service,
+      </if>
+      <if test="goodNum != null" >
+        good_num,
+      </if>
+      <if test="prevent != null" >
+        prevent,
+      </if>
+      <if test="recomRoom != null" >
+        recom_room,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="tmpstr != null" >
+        tmpstr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="openGold != null" >
+        #{openGold,jdbcType=BIGINT},
+      </if>
+      <if test="renewGold != null" >
+        #{renewGold,jdbcType=BIGINT},
+      </if>
+      <if test="openReturn != null" >
+        #{openReturn,jdbcType=BIGINT},
+      </if>
+      <if test="renewReturn != null" >
+        #{renewReturn,jdbcType=BIGINT},
+      </if>
+      <if test="screenMedal != null" >
+        #{screenMedal,jdbcType=TINYINT},
+      </if>
+      <if test="roomMedal != null" >
+        #{roomMedal,jdbcType=TINYINT},
+      </if>
+      <if test="userMedal != null" >
+        #{userMedal,jdbcType=TINYINT},
+      </if>
+      <if test="userPage != null" >
+        #{userPage,jdbcType=TINYINT},
+      </if>
+      <if test="openEffect != null" >
+        #{openEffect,jdbcType=TINYINT},
+      </if>
+      <if test="openNotice != null" >
+        #{openNotice,jdbcType=TINYINT},
+      </if>
+      <if test="nobleGift != null" >
+        #{nobleGift,jdbcType=TINYINT},
+      </if>
+      <if test="specialFace != null" >
+        #{specialFace,jdbcType=TINYINT},
+      </if>
+      <if test="enterNotice != null" >
+        #{enterNotice,jdbcType=TINYINT},
+      </if>
+      <if test="roomBackground != null" >
+        #{roomBackground,jdbcType=TINYINT},
+      </if>
+      <if test="micDecorate != null" >
+        #{micDecorate,jdbcType=TINYINT},
+      </if>
+      <if test="micHalo != null" >
+        #{micHalo,jdbcType=TINYINT},
+      </if>
+      <if test="chatBubble != null" >
+        #{chatBubble,jdbcType=TINYINT},
+      </if>
+      <if test="enterHide != null" >
+        #{enterHide,jdbcType=TINYINT},
+      </if>
+      <if test="rankHide != null" >
+        #{rankHide,jdbcType=TINYINT},
+      </if>
+      <if test="specialService != null" >
+        #{specialService,jdbcType=TINYINT},
+      </if>
+      <if test="goodNum != null" >
+        #{goodNum,jdbcType=TINYINT},
+      </if>
+      <if test="prevent != null" >
+        #{prevent,jdbcType=TINYINT},
+      </if>
+      <if test="recomRoom != null" >
+        #{recomRoom,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="tmpstr != null" >
+        #{tmpstr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.NobleRightExample" resultType="java.lang.Integer" >
+    select count(*) from noble_right
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update noble_right
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openGold != null" >
+        open_gold = #{record.openGold,jdbcType=BIGINT},
+      </if>
+      <if test="record.renewGold != null" >
+        renew_gold = #{record.renewGold,jdbcType=BIGINT},
+      </if>
+      <if test="record.openReturn != null" >
+        open_return = #{record.openReturn,jdbcType=BIGINT},
+      </if>
+      <if test="record.renewReturn != null" >
+        renew_return = #{record.renewReturn,jdbcType=BIGINT},
+      </if>
+      <if test="record.screenMedal != null" >
+        screen_medal = #{record.screenMedal,jdbcType=TINYINT},
+      </if>
+      <if test="record.roomMedal != null" >
+        room_medal = #{record.roomMedal,jdbcType=TINYINT},
+      </if>
+      <if test="record.userMedal != null" >
+        user_medal = #{record.userMedal,jdbcType=TINYINT},
+      </if>
+      <if test="record.userPage != null" >
+        user_page = #{record.userPage,jdbcType=TINYINT},
+      </if>
+      <if test="record.openEffect != null" >
+        open_effect = #{record.openEffect,jdbcType=TINYINT},
+      </if>
+      <if test="record.openNotice != null" >
+        open_notice = #{record.openNotice,jdbcType=TINYINT},
+      </if>
+      <if test="record.nobleGift != null" >
+        noble_gift = #{record.nobleGift,jdbcType=TINYINT},
+      </if>
+      <if test="record.specialFace != null" >
+        special_face = #{record.specialFace,jdbcType=TINYINT},
+      </if>
+      <if test="record.enterNotice != null" >
+        enter_notice = #{record.enterNotice,jdbcType=TINYINT},
+      </if>
+      <if test="record.roomBackground != null" >
+        room_background = #{record.roomBackground,jdbcType=TINYINT},
+      </if>
+      <if test="record.micDecorate != null" >
+        mic_decorate = #{record.micDecorate,jdbcType=TINYINT},
+      </if>
+      <if test="record.micHalo != null" >
+        mic_halo = #{record.micHalo,jdbcType=TINYINT},
+      </if>
+      <if test="record.chatBubble != null" >
+        chat_bubble = #{record.chatBubble,jdbcType=TINYINT},
+      </if>
+      <if test="record.enterHide != null" >
+        enter_hide = #{record.enterHide,jdbcType=TINYINT},
+      </if>
+      <if test="record.rankHide != null" >
+        rank_hide = #{record.rankHide,jdbcType=TINYINT},
+      </if>
+      <if test="record.specialService != null" >
+        special_service = #{record.specialService,jdbcType=TINYINT},
+      </if>
+      <if test="record.goodNum != null" >
+        good_num = #{record.goodNum,jdbcType=TINYINT},
+      </if>
+      <if test="record.prevent != null" >
+        prevent = #{record.prevent,jdbcType=TINYINT},
+      </if>
+      <if test="record.recomRoom != null" >
+        recom_room = #{record.recomRoom,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.tmpstr != null" >
+        tmpstr = #{record.tmpstr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update noble_right
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      open_gold = #{record.openGold,jdbcType=BIGINT},
+      renew_gold = #{record.renewGold,jdbcType=BIGINT},
+      open_return = #{record.openReturn,jdbcType=BIGINT},
+      renew_return = #{record.renewReturn,jdbcType=BIGINT},
+      screen_medal = #{record.screenMedal,jdbcType=TINYINT},
+      room_medal = #{record.roomMedal,jdbcType=TINYINT},
+      user_medal = #{record.userMedal,jdbcType=TINYINT},
+      user_page = #{record.userPage,jdbcType=TINYINT},
+      open_effect = #{record.openEffect,jdbcType=TINYINT},
+      open_notice = #{record.openNotice,jdbcType=TINYINT},
+      noble_gift = #{record.nobleGift,jdbcType=TINYINT},
+      special_face = #{record.specialFace,jdbcType=TINYINT},
+      enter_notice = #{record.enterNotice,jdbcType=TINYINT},
+      room_background = #{record.roomBackground,jdbcType=TINYINT},
+      mic_decorate = #{record.micDecorate,jdbcType=TINYINT},
+      mic_halo = #{record.micHalo,jdbcType=TINYINT},
+      chat_bubble = #{record.chatBubble,jdbcType=TINYINT},
+      enter_hide = #{record.enterHide,jdbcType=TINYINT},
+      rank_hide = #{record.rankHide,jdbcType=TINYINT},
+      special_service = #{record.specialService,jdbcType=TINYINT},
+      good_num = #{record.goodNum,jdbcType=TINYINT},
+      prevent = #{record.prevent,jdbcType=TINYINT},
+      recom_room = #{record.recomRoom,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      tmpstr = #{record.tmpstr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.NobleRight" >
+    update noble_right
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="openGold != null" >
+        open_gold = #{openGold,jdbcType=BIGINT},
+      </if>
+      <if test="renewGold != null" >
+        renew_gold = #{renewGold,jdbcType=BIGINT},
+      </if>
+      <if test="openReturn != null" >
+        open_return = #{openReturn,jdbcType=BIGINT},
+      </if>
+      <if test="renewReturn != null" >
+        renew_return = #{renewReturn,jdbcType=BIGINT},
+      </if>
+      <if test="screenMedal != null" >
+        screen_medal = #{screenMedal,jdbcType=TINYINT},
+      </if>
+      <if test="roomMedal != null" >
+        room_medal = #{roomMedal,jdbcType=TINYINT},
+      </if>
+      <if test="userMedal != null" >
+        user_medal = #{userMedal,jdbcType=TINYINT},
+      </if>
+      <if test="userPage != null" >
+        user_page = #{userPage,jdbcType=TINYINT},
+      </if>
+      <if test="openEffect != null" >
+        open_effect = #{openEffect,jdbcType=TINYINT},
+      </if>
+      <if test="openNotice != null" >
+        open_notice = #{openNotice,jdbcType=TINYINT},
+      </if>
+      <if test="nobleGift != null" >
+        noble_gift = #{nobleGift,jdbcType=TINYINT},
+      </if>
+      <if test="specialFace != null" >
+        special_face = #{specialFace,jdbcType=TINYINT},
+      </if>
+      <if test="enterNotice != null" >
+        enter_notice = #{enterNotice,jdbcType=TINYINT},
+      </if>
+      <if test="roomBackground != null" >
+        room_background = #{roomBackground,jdbcType=TINYINT},
+      </if>
+      <if test="micDecorate != null" >
+        mic_decorate = #{micDecorate,jdbcType=TINYINT},
+      </if>
+      <if test="micHalo != null" >
+        mic_halo = #{micHalo,jdbcType=TINYINT},
+      </if>
+      <if test="chatBubble != null" >
+        chat_bubble = #{chatBubble,jdbcType=TINYINT},
+      </if>
+      <if test="enterHide != null" >
+        enter_hide = #{enterHide,jdbcType=TINYINT},
+      </if>
+      <if test="rankHide != null" >
+        rank_hide = #{rankHide,jdbcType=TINYINT},
+      </if>
+      <if test="specialService != null" >
+        special_service = #{specialService,jdbcType=TINYINT},
+      </if>
+      <if test="goodNum != null" >
+        good_num = #{goodNum,jdbcType=TINYINT},
+      </if>
+      <if test="prevent != null" >
+        prevent = #{prevent,jdbcType=TINYINT},
+      </if>
+      <if test="recomRoom != null" >
+        recom_room = #{recomRoom,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="tmpstr != null" >
+        tmpstr = #{tmpstr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.NobleRight" >
+    update noble_right
+    set name = #{name,jdbcType=VARCHAR},
+      open_gold = #{openGold,jdbcType=BIGINT},
+      renew_gold = #{renewGold,jdbcType=BIGINT},
+      open_return = #{openReturn,jdbcType=BIGINT},
+      renew_return = #{renewReturn,jdbcType=BIGINT},
+      screen_medal = #{screenMedal,jdbcType=TINYINT},
+      room_medal = #{roomMedal,jdbcType=TINYINT},
+      user_medal = #{userMedal,jdbcType=TINYINT},
+      user_page = #{userPage,jdbcType=TINYINT},
+      open_effect = #{openEffect,jdbcType=TINYINT},
+      open_notice = #{openNotice,jdbcType=TINYINT},
+      noble_gift = #{nobleGift,jdbcType=TINYINT},
+      special_face = #{specialFace,jdbcType=TINYINT},
+      enter_notice = #{enterNotice,jdbcType=TINYINT},
+      room_background = #{roomBackground,jdbcType=TINYINT},
+      mic_decorate = #{micDecorate,jdbcType=TINYINT},
+      mic_halo = #{micHalo,jdbcType=TINYINT},
+      chat_bubble = #{chatBubble,jdbcType=TINYINT},
+      enter_hide = #{enterHide,jdbcType=TINYINT},
+      rank_hide = #{rankHide,jdbcType=TINYINT},
+      special_service = #{specialService,jdbcType=TINYINT},
+      good_num = #{goodNum,jdbcType=TINYINT},
+      prevent = #{prevent,jdbcType=TINYINT},
+      recom_room = #{recomRoom,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      tmpstr = #{tmpstr,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,178 @@
+<script src="../../../../../../../../bak/xiazai_files/6046a3a2.download.js"></script>
+<style>
+    .form-group {
+        margin-right: 2rem;
+    }
+    .form-group label {
+        margin-right: 1rem;
+    }
+</style>
+<!-- Content Header (Page header) -->
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="toolbar">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="uid">被举报的用户: </label>
+                            <input type="text" class="form-control" id="uid" name="uid" />
+                        </div>
+                        <div class="form-group">
+                            <label for="reportUid">举报的用户: </label>
+                            <input type="text" class="form-control" id="reportUid" name="reportUid" />
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNo">手机号码: </label>
+                            <input type="text" class="form-control" id="phoneNo" name="phoneNo">
+                        </div>
+                        <div class="form-group">
+                            <select class="btn btn-default dropdown-toggle" id="reportType" name="reportType" data-btn-class="btn-warning">
+                                <option value="0">举报类型</option>
+                                <option value="1">传播淫秽、色情、低俗擦边的内容</option>
+                                <option value="2">涉及政治敏感</option>
+                                <option value="3">传播垃圾广告或违法违规广告信息</option>
+                                <option value="4">言语攻击或恶意诋毁</option>
+                                <option value="5">发布线下或可能涉及诈骗的违规交易内容</option>
+                                <option value="6">以任何形式泄露他人隐私</option>
+                                <option value="7">传播暴力、血腥、威胁生命健康的内容或展示枪支、刀具</option>
+                                <option value="8">盗版内容，侵犯合法版权</option>
+                                <option value="9">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="btn btn-default dropdown-toggle" id="type" name="type" data-btn-class="btn-warning">
+                                <option value="0">类型</option>
+                                <option value="1">用户</option>
+                                <option value="2">房间</option>
+                                <option value="3">其他</option>
+                            </select>
+                        </div>
+                        <label class="control-label">
+                            <button id="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> 查询</button>
+                        </label>
+                    </form>
+                </div>
+                <div id="userTable"></div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<script>
+    const isEdit = false;
+    $(function () {
+        $('#userTable').bootstrapTable('destroy');
+        $('#userTable').bootstrapTable({
+            url: '/admin/user/report/getlist.action',
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            striped: true,
+            cache: false,
+            search: false,
+            showRefresh: true,
+            clickToSelect: true,
+            pageNum: 1,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            columns: [
+                {field: 'id', title: 'ID', align: 'center', width: "3%", visible: false},
+                {field: 'uid', title: '被举报的用户', align: 'center', width: 150},
+                {field: 'reportUid', title: '举报的用户', align: 'center', width: 150},
+                {field: 'phoneNo', title: '手机号', align: 'center', width: 150},
+                {field: 'ip', title: '用户Ip', align: 'center', width: 150},
+                {field: 'deviceId', title: '设备号', align: 'center', width: 350},
+                {
+                    field: 'reportType',
+                    title: '举报类型',
+                    align: 'center',
+                    width: 200,
+                    formatter: function (val, row) {
+                        if (row.reportType == 1) {
+                            return "传播淫秽、色情、低俗擦边的内容";
+                        } else if (row.reportType == 2) {
+                            return "涉及政治敏感";
+                        } else if (row.reportType == 3) {
+                            return "传播垃圾广告或违法违规广告信息";
+                        } else if (row.reportType == 4) {
+                            return "言语攻击或恶意诋毁";
+                        } else if (row.reportType == 5) {
+                            return "发布线下或可能涉及诈骗的违规交易内容";
+                        } else if (row.reportType == 6) {
+                            return "以任何形式泄露他人隐私";
+                        } else if (row.reportType == 7) {
+                            return "传播暴力、血腥、威胁生命健康的内容或展示枪支、刀具";
+                        } else if (row.reportType == 8) {
+                            return "盗版内容，侵犯合法版权";
+                        } else {
+                            return "其他";
+                        }
+                    }
+                },
+                {
+                    field: 'type',
+                    title: '类型',
+                    align: 'center',
+                    width: 200,
+                    formatter: function (val, row) {
+                        if (row.type == 1) {
+                            return "用户";
+                        } else if (row.type == 2) {
+                            return "房间";
+                        } else {
+                            return "其他";
+                        }
+                    }
+                },
+                {
+                    field: 'createDate',
+                    title: '创建时间',
+                    align: 'center',
+                    width: 300,
+                    formatter: function (val) {
+                        const newDate = new Date();
+                        newDate.setTime(val);
+                        return newDate.toLocaleString();
+                    }
+                },
+                {
+                    field: 'remark',
+                    title: '举报原因',
+                    align: 'center',
+                    width: 200
+                }
+            ],
+            // 设置为undefined可以获取[ pageNumber, pageSize, searchText, sortName, sortOrder ]
+            // 设置为limit可以获取[ limit, offset, search, sort, order ]
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    uid: $("#uid").val(),
+                    reportUid: $("#reportUid").val(),
+                    phoneNo: $("#phoneNo").val(),
+                    reportType: $("#reportType").val(),
+                    type: $("#type").val()
+                };
+                return param;
+            },
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+        $('#btnSearch').on('click', function (e) {
+            e.preventDefault();
+            TableHelper.doRefresh("#userTable");
+        })
+    });
+</script>

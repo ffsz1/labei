@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.BillRecordMapperExpand">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.BillRecord">
+        <id column="bill_id" property="billId" jdbcType="VARCHAR"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="target_uid" property="targetUid" jdbcType="BIGINT"/>
+        <result column="bill_status" property="billStatus" jdbcType="TINYINT"/>
+        <result column="obj_id" property="objId" jdbcType="VARCHAR"/>
+        <result column="obj_type" property="objType" jdbcType="TINYINT"/>
+        <result column="gift_id" property="giftId" jdbcType="INTEGER"/>
+        <result column="gift_num" property="giftNum" jdbcType="INTEGER"/>
+        <result column="diamond_num" property="diamondNum" jdbcType="DOUBLE"/>
+        <result column="gold_num" property="goldNum" jdbcType="BIGINT"/>
+        <result column="money" property="money" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap2" type="com.erban.main.vo.BillRecordExpandVo">
+        <id column="bill_id" property="billId" jdbcType="VARCHAR"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="target_uid" property="targetUid" jdbcType="BIGINT"/>
+        <result column="bill_status" property="billStatus" jdbcType="TINYINT"/>
+        <result column="obj_id" property="objId" jdbcType="VARCHAR"/>
+        <result column="obj_type" property="objType" jdbcType="TINYINT"/>
+        <result column="gift_id" property="giftId" jdbcType="INTEGER"/>
+        <result column="gift_num" property="giftNum" jdbcType="INTEGER"/>
+        <result column="diamond_num" property="diamondNum" jdbcType="DOUBLE"/>
+        <result column="gold_num" property="goldNum" jdbcType="BIGINT"/>
+        <result column="money" property="money" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+
+        <result column="srcNick" property="srcNick" jdbcType="VARCHAR"/>
+        <result column="srcAvatar" property="srcAvatar" jdbcType="VARCHAR"/>
+        <result column="targetNick" property="targetNick" jdbcType="VARCHAR"/>
+        <result column="targetAvatar" property="targetAvatar" jdbcType="VARCHAR"/>
+        <result column="giftPict" property="giftPict" jdbcType="VARCHAR"/>
+        <result column="giftName" property="giftName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getGiftSumByGift" resultType="long">
+    select COUNT(bill_id) FROM bill_record
+  </select>
+
+    <!--所有直播间送出礼物-->
+    <select id="getGiftTypeSumByRoom" resultType="long">
+    SELECT COUNT(obj_type) FROM bill_record where obj_type=6 GROUP BY obj_type
+    </select>
+
+    <!--查找表中所有的UID（不重复）的总数-->
+    <select id="getUserNum" resultType="long">
+    select COUNT(auct_uid) from bill_record GROUP BY auct_uid
+    </select>
+
+    <select id="getRecordAllList" resultMap="BaseResultMap">
+        select * from bill_record  where uid = #{0} and obj_type = #{3} order by create_time desc limit #{1},#{2}
+    </select>
+
+    <select id="getRecordAllListByOrder" resultMap="BaseResultMap">
+        select * from bill_record  where uid = #{0} and obj_type in (#{3},#{4}) order by create_time desc limit #{1},#{2}
+    </select>
+
+    <select id="getRecordCount" resultType="int">
+    select count(bill_id) from bill_record where uid = #{0} and obj_type = #{1}
+    </select>
+
+    <select id="getRecordCountByOrder" resultType="int">
+        select count(bill_id) from bill_record where uid = #{0} and obj_type in (#{1},#{2})
+    </select>
+
+    <select id="getRecordCountByDate" resultType="int">
+        select count(bill_id) from bill_record where uid = #{0} and create_time BETWEEN #{1} and #{2} and obj_type = #{3}
+    </select>
+
+    <select id="getRecordCountByOrderDate" resultType="int">
+        select count(bill_id) from bill_record where uid = #{0} and create_time BETWEEN #{1} and #{2} and obj_type in (#{3},#{4})
+    </select>
+
+    <select id="getRecordByDateList" resultMap="BaseResultMap">
+        select * from bill_record where uid = #{0} and create_time BETWEEN #{1} and #{2} and obj_type = #{5} order by create_time desc limit #{3},#{4}
+    </select>
+
+    <select id="getRecordByDateListByOrder" resultMap="BaseResultMap">
+        select * from bill_record where uid = #{0} and create_time BETWEEN #{1} and #{2} and obj_type in (#{5},#{6}) order by create_time desc limit #{3},#{4}
+    </select>
+
+    <select id="getRecordByStatusAndDate" resultMap="BaseResultMap2">
+        select *
+        ,(select t2.nick from users t2 where t2.uid=t1.uid) as srcNick
+        ,(select t3.avatar from users t3 where t3.uid=t1.uid) as srcAvatar
+        ,(select t4.nick from users t4 where t4.uid=t1.target_uid) as targetNick
+        ,(select t5.avatar from users t5 where t5.uid=t1.target_uid) as targetAvatar
+         from bill_record t1 force index(key1) where uid=#{uid} and  #{date}>create_time and obj_type in
+        <foreach item="item" index="index" collection="status" open="(" separator="," close=")">
+        #{item}
+        </foreach>
+      order by create_time desc limit #{skip},#{size}
+    </select>
+
+    <select id="getRecordByStatusAndDate2" resultMap="BaseResultMap2">
+        select *
+        ,(select t2.nick from users t2 where t2.uid=t1.uid) as srcNick
+        ,(select t3.avatar from users t3 where t3.uid=t1.uid) as srcAvatar
+        ,(select t4.nick from users t4 where t4.uid=t1.target_uid) as targetNick
+        ,(select t5.avatar from users t5 where t5.uid=t1.target_uid) as targetAvatar
+        ,(select t6.gift_name from gift t6 where t6.gift_id=t1.gift_id) as giftName
+        ,(select t7.pic_url from gift t7 where t7.gift_id=t1.gift_id) as giftPict
+        from bill_record t1 force index(key1) where uid=#{uid} and  #{date}>create_time and obj_type in
+        <foreach item="item" index="index" collection="status" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+         order by create_time desc limit #{skip},#{size}
+    </select>
+    <select id="sumDiamondWithDraw" resultType="com.erban.main.model.BillRecord" parameterType="java.util.List">
+      SELECT uid, sum(money) as money FROM bill_record WHERE obj_type='2' AND uid IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY uid
+    </select>
+</mapper>

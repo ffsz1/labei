@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <script type="text/javascript">
+        var FS = {};
+        (function (win, FS) {
+            var doc = win.document;
+            var docEl = doc.documentElement;
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+            var dpr = 1;
+            var scale = 1;
+            var fontBase = 16;
+
+            if (window.devicePixelRatio >= 2) {
+                scale *= 0.5;
+                dpr *= 2;
+            }
+
+            docEl.setAttribute('data-dpr', dpr);
+            metaEl.setAttribute('content', 'initial-scale=' + scale + ', width=device-width, maximum-scale=' +
+                scale +
+                ', user-scalable=no');
+
+            function refreshRem() {
+                var width = docEl.getBoundingClientRect().width;
+                var rem = width / 10;
+                docEl.style.fontSize = rem + 'px';
+                FS.rem = rem;
+            }
+
+            var tid = null;
+            win.addEventListener('resize', function () {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }, false);
+
+            if (doc.readyState === 'complete') {
+                doc.body.style.fontSize = fontBase * dpr + 'px';
+            } else {
+                doc.addEventListener('DOMContentLoaded', function (e) {
+                    doc.body.style.fontSize = fontBase * dpr + 'px';
+                }, false);
+            }
+
+            refreshRem();
+
+            FS.dpr = dpr;
+            FS.rem2px = function (d) {
+                var val = parseFloat(d) * FS.rem;
+                if (typeof d === 'string' && d.match(/rem$/)) {
+                    val += 'px';
+                }
+                return val;
+            }
+            FS.px2rem = function (d) {
+                var val = parseFloat(d) / FS.rem;
+                if (typeof d === 'string' && d.match(/px$/)) {
+                    val += 'rem';
+                }
+                return val;
+            }
+        })(window, FS);
+    </script>
+    <title>拉贝语音 妙不可言！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content>img {
+            width: 10rem;
+            height: 17.787rem;
+        }
+
+        .download {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .download>div {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 1.34rem;
+        }
+
+        .download>div>span:nth-child(2) {
+            color: #fff;
+            background-color: #8452f8;
+            font-size: 0.4rem;
+            text-align: center;
+            line-height: 1.34rem;
+            width: 2.51rem;
+        }
+
+        .download-left {
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #fff;
+            font-size: 0.33rem;
+            width: 8rem;
+        }
+
+        .download-left img {
+            width: 2.054rem;
+            height: 0.854rem;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .download-left>span:nth-child(1) {
+            width: 2.67rem;
+            height: 0.907rem;
+            border-right: 0.02rem solid #6f6f6f;
+        }
+
+        .download-left>span:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            padding-left: 0.2rem;
+        }
+        #into{
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <img src="images/download1.png">
+        <img src="images/download2.png">
+        <img src="images/download3.png">
+        <img src="images/download4.png">
+        <div class="download">
+            <div>
+                <span class="download-left">
+                    <span>
+                        <img src="images/download-logo.png">
+                    </span>
+                    <span>
+                        <p>同城语音速配交友处CP</p>
+                        <p>你想要的这里都有</p>
+                    </span>
+                </span>
+                <span id="linked"></span>
+            </div>
+        </div>
+    </div>
+    <div style="display:none">
+        <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+    </div>
+    <script type="text/javascript" src="../lib/zepto.min.js"></script>
+    <script src="../lib/linkedme.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="js/download.js"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xchat.oauth2.service.infrastructure.myaccountmybatis.AccountBlockMapper" >
+  <resultMap id="BaseResultMap" type="com.xchat.oauth2.service.model.AccountBlock" >
+    <id column="block_id" property="blockId" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+    <result column="block_type" property="blockType" jdbcType="TINYINT" />
+    <result column="block_ip" property="blockIp" jdbcType="VARCHAR" />
+    <result column="block_status" property="blockStatus" jdbcType="TINYINT" />
+    <result column="block_minute" property="blockMinute" jdbcType="INTEGER" />
+    <result column="block_start_time" property="blockStartTime" jdbcType="TIMESTAMP" />
+    <result column="block_end_time" property="blockEndTime" jdbcType="TIMESTAMP" />
+    <result column="block_desc" property="blockDesc" jdbcType="VARCHAR" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    block_id, uid, erban_no, phone, device_id, block_type, block_ip, block_status, block_minute, 
+    block_start_time, block_end_time, block_desc, admin_id, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xchat.oauth2.service.model.AccountBlockExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from account_block
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_block
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from account_block
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xchat.oauth2.service.model.AccountBlockExample" >
+    delete from account_block
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xchat.oauth2.service.model.AccountBlock" >
+    <selectKey resultType="java.lang.Integer" keyProperty="blockId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_block (uid, erban_no, phone, 
+      device_id, block_type, block_ip, 
+      block_status, block_minute, block_start_time, 
+      block_end_time, block_desc, admin_id, 
+      create_time)
+    values (#{uid,jdbcType=BIGINT}, #{erbanNo,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, 
+      #{deviceId,jdbcType=VARCHAR}, #{blockType,jdbcType=TINYINT}, #{blockIp,jdbcType=VARCHAR}, 
+      #{blockStatus,jdbcType=TINYINT}, #{blockMinute,jdbcType=INTEGER}, #{blockStartTime,jdbcType=TIMESTAMP}, 
+      #{blockEndTime,jdbcType=TIMESTAMP}, #{blockDesc,jdbcType=VARCHAR}, #{adminId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xchat.oauth2.service.model.AccountBlock" >
+    <selectKey resultType="java.lang.Integer" keyProperty="blockId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_block
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="erbanNo != null" >
+        erban_no,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="blockType != null" >
+        block_type,
+      </if>
+      <if test="blockIp != null" >
+        block_ip,
+      </if>
+      <if test="blockStatus != null" >
+        block_status,
+      </if>
+      <if test="blockMinute != null" >
+        block_minute,
+      </if>
+      <if test="blockStartTime != null" >
+        block_start_time,
+      </if>
+      <if test="blockEndTime != null" >
+        block_end_time,
+      </if>
+      <if test="blockDesc != null" >
+        block_desc,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null" >
+        #{erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="blockType != null" >
+        #{blockType,jdbcType=TINYINT},
+      </if>
+      <if test="blockIp != null" >
+        #{blockIp,jdbcType=VARCHAR},
+      </if>
+      <if test="blockStatus != null" >
+        #{blockStatus,jdbcType=TINYINT},
+      </if>
+      <if test="blockMinute != null" >
+        #{blockMinute,jdbcType=INTEGER},
+      </if>
+      <if test="blockStartTime != null" >
+        #{blockStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blockEndTime != null" >
+        #{blockEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blockDesc != null" >
+        #{blockDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xchat.oauth2.service.model.AccountBlockExample" resultType="java.lang.Integer" >
+    select count(*) from account_block
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update account_block
+    <set >
+      <if test="record.blockId != null" >
+        block_id = #{record.blockId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.erbanNo != null" >
+        erban_no = #{record.erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceId != null" >
+        device_id = #{record.deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blockType != null" >
+        block_type = #{record.blockType,jdbcType=TINYINT},
+      </if>
+      <if test="record.blockIp != null" >
+        block_ip = #{record.blockIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blockStatus != null" >
+        block_status = #{record.blockStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.blockMinute != null" >
+        block_minute = #{record.blockMinute,jdbcType=INTEGER},
+      </if>
+      <if test="record.blockStartTime != null" >
+        block_start_time = #{record.blockStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.blockEndTime != null" >
+        block_end_time = #{record.blockEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.blockDesc != null" >
+        block_desc = #{record.blockDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminId != null" >
+        admin_id = #{record.adminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update account_block
+    set block_id = #{record.blockId,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=BIGINT},
+      erban_no = #{record.erbanNo,jdbcType=BIGINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      device_id = #{record.deviceId,jdbcType=VARCHAR},
+      block_type = #{record.blockType,jdbcType=TINYINT},
+      block_ip = #{record.blockIp,jdbcType=VARCHAR},
+      block_status = #{record.blockStatus,jdbcType=TINYINT},
+      block_minute = #{record.blockMinute,jdbcType=INTEGER},
+      block_start_time = #{record.blockStartTime,jdbcType=TIMESTAMP},
+      block_end_time = #{record.blockEndTime,jdbcType=TIMESTAMP},
+      block_desc = #{record.blockDesc,jdbcType=VARCHAR},
+      admin_id = #{record.adminId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xchat.oauth2.service.model.AccountBlock" >
+    update account_block
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null" >
+        erban_no = #{erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="blockType != null" >
+        block_type = #{blockType,jdbcType=TINYINT},
+      </if>
+      <if test="blockIp != null" >
+        block_ip = #{blockIp,jdbcType=VARCHAR},
+      </if>
+      <if test="blockStatus != null" >
+        block_status = #{blockStatus,jdbcType=TINYINT},
+      </if>
+      <if test="blockMinute != null" >
+        block_minute = #{blockMinute,jdbcType=INTEGER},
+      </if>
+      <if test="blockStartTime != null" >
+        block_start_time = #{blockStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blockEndTime != null" >
+        block_end_time = #{blockEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blockDesc != null" >
+        block_desc = #{blockDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xchat.oauth2.service.model.AccountBlock" >
+    update account_block
+    set uid = #{uid,jdbcType=BIGINT},
+      erban_no = #{erbanNo,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      block_type = #{blockType,jdbcType=TINYINT},
+      block_ip = #{blockIp,jdbcType=VARCHAR},
+      block_status = #{blockStatus,jdbcType=TINYINT},
+      block_minute = #{blockMinute,jdbcType=INTEGER},
+      block_start_time = #{blockStartTime,jdbcType=TIMESTAMP},
+      block_end_time = #{blockEndTime,jdbcType=TIMESTAMP},
+      block_desc = #{blockDesc,jdbcType=VARCHAR},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </update>
+</mapper>

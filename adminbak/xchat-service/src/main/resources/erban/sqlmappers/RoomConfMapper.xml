@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.RoomConfMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.RoomConf" >
+    <id column="room_uid" property="roomUid" jdbcType="BIGINT" />
+    <result column="room_type" property="roomType" jdbcType="BIT" />
+    <result column="draw_type" property="drawType" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="charm_enable" property="charmEnable" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    room_uid, room_type, draw_type, create_time, update_time, charm_enable
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.RoomConfExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from room_conf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from room_conf
+    where room_uid = #{roomUid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from room_conf
+    where room_uid = #{roomUid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.RoomConfExample" >
+    delete from room_conf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.RoomConf" >
+    insert into room_conf (room_uid, room_type, draw_type, 
+      create_time, update_time, charm_enable
+      )
+    values (#{roomUid,jdbcType=BIGINT}, #{roomType,jdbcType=BIT}, #{drawType,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{charmEnable,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.RoomConf" >
+    insert into room_conf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomUid != null" >
+        room_uid,
+      </if>
+      <if test="roomType != null" >
+        room_type,
+      </if>
+      <if test="drawType != null" >
+        draw_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="charmEnable != null" >
+        charm_enable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomUid != null" >
+        #{roomUid,jdbcType=BIGINT},
+      </if>
+      <if test="roomType != null" >
+        #{roomType,jdbcType=BIT},
+      </if>
+      <if test="drawType != null" >
+        #{drawType,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="charmEnable != null" >
+        #{charmEnable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.RoomConfExample" resultType="java.lang.Integer" >
+    select count(*) from room_conf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update room_conf
+    <set >
+      <if test="record.roomUid != null" >
+        room_uid = #{record.roomUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomType != null" >
+        room_type = #{record.roomType,jdbcType=BIT},
+      </if>
+      <if test="record.drawType != null" >
+        draw_type = #{record.drawType,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.charmEnable != null" >
+        charm_enable = #{record.charmEnable,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update room_conf
+    set room_uid = #{record.roomUid,jdbcType=BIGINT},
+      room_type = #{record.roomType,jdbcType=BIT},
+      draw_type = #{record.drawType,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      charm_enable = #{record.charmEnable,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.RoomConf" >
+    update room_conf
+    <set >
+      <if test="roomType != null" >
+        room_type = #{roomType,jdbcType=BIT},
+      </if>
+      <if test="drawType != null" >
+        draw_type = #{drawType,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="charmEnable != null" >
+        charm_enable = #{charmEnable,jdbcType=BIT},
+      </if>
+    </set>
+    where room_uid = #{roomUid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.RoomConf" >
+    update room_conf
+    set room_type = #{roomType,jdbcType=BIT},
+      draw_type = #{drawType,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      charm_enable = #{charmEnable,jdbcType=BIT}
+    where room_uid = #{roomUid,jdbcType=BIGINT}
+  </update>
+
+
+  <insert id="insertOrUpdateSelective" parameterType="com.erban.main.model.RoomConf">
+    <trim prefix="INSERT INTO room_conf (" suffix=")" suffixOverrides=",">
+      <if test="roomUid != null">room_uid,</if>
+      <if test="roomType != null">room_type,</if>
+      <if test="drawType != null">draw_type,</if>
+      <if test="charmEnable != null">charm_enable,</if>
+      create_time,
+      update_time
+
+    </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+      <if test="roomUid != null">#{roomUid,jdbcType=BIGINT},</if>
+      <if test="roomType != null">#{roomType},</if>
+      <if test="drawType != null">#{drawType},</if>
+      <if test="charmEnable != null">#{charmEnable},</if>
+      NOW(),
+      NOW()
+    </trim>
+    <trim prefix="ON DUPLICATE KEY UPDATE" suffixOverrides=",">
+      <if test="roomType != null">room_type = #{roomType},</if>
+      <if test="drawType != null">draw_type = #{drawType},</if>
+      <if test="charmEnable != null">charm_enable = #{charmEnable},</if>
+      update_time = NOW()
+    </trim>
+  </insert>
+
+  <select id="listRoomConf" resultType="com.erban.main.dto.RoomConfListDTO">
+    <if test="searchText != null">
+      <bind name="key" value="searchText + '%'"/>
+    </if>
+    <![CDATA[
+        SELECT
+            rc.room_uid AS roomUid,
+            r.room_id AS roomId,
+            r.title AS title,
+            rc.room_type AS roomType,
+            rc.draw_type AS drawType,
+            rc.charm_enable AS charmEnable
+        FROM
+            room_conf rc
+        INNER JOIN
+            room r
+        ON
+            rc.room_uid = r.uid
+        ]]>
+    <where>
+      <if test="searchText != null and searchText != ''">
+        r.room_id = #{key}
+      </if>
+    </where>
+    ORDER BY rc.create_time
+  </select>
+</mapper>

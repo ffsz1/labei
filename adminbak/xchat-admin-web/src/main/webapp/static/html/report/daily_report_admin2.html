@@ -1,0 +1,88 @@
+<style>
+    .bar1, .bar2 {
+        margin-bottom: 10px;
+    }
+
+    label.col-sm-1 {
+        padding: 0;
+        line-height: 30px;
+        text-align: right;
+        /*padding-right: 4px;*/
+    }
+
+    label.col-sm-1 {
+        padding: 0;
+        line-height: 30px;
+        text-align: right;
+        /*padding-right: 4px;*/
+    }
+
+    input, select {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    #btnSearch {
+        margin-left: 36px;
+    }
+
+    .record {
+        margin-top: 10px;
+    }
+
+    .record .title {
+        font-size: 16px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar"></div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'str1', title: '时间', align: 'center', valign: 'middle', width: '400'},
+                {field: 'str42', title: '官方赠送金币', align: 'center', valign: 'middle', width: '400'},
+                {field: 'str43', title: '活动奖励金币', align: 'center', valign: 'middle', width: '400'},
+                {field: 'str44', title: '公款充值金币', align: 'center', valign: 'middle', width: '400'}
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/dailyReport/list.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+    });
+</script>
+
+

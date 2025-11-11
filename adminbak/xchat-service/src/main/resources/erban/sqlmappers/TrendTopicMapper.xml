@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.TrendTopicMapper" >
+
+    <resultMap id="BaseResultMap" type="com.erban.main.model.TrendTopic" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <id column="uid" property="uid" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="themeid" property="themeid" jdbcType="BIGINT" />
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="commentnum" property="commentnum" jdbcType="INTEGER" />
+        <result column="visitnum" property="visitnum" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="voice_url" property="voiceUrl" jdbcType="VARCHAR" />
+        <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+        <result column="praisenum" property="praisenum" jdbcType="INTEGER" />
+        <result column="permission_type" property="permissionType" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="theme_name" property="themeName" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.erban.main.model.TrendTopic" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <id column="uid" property="uid" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="themeid" property="themeid" jdbcType="BIGINT" />
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="commentnum" property="commentnum" jdbcType="INTEGER" />
+        <result column="visitnum" property="visitnum" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="voice_url" property="voiceUrl" jdbcType="VARCHAR" />
+        <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+        <result column="praisenum" property="praisenum" jdbcType="INTEGER" />
+        <result column="permission_type" property="permissionType" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="theme_name" property="themeName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, uid,name, themeid,erban_no,nick,gender,commentnum, visitnum, state, remarks,voice_url,picture_url,praisenum,permission_type,create_time, update_time
+  </sql>
+    <sql id="Base_Column_List2" >
+    trend_topic.id,
+    trend_topic.uid,
+    trend_topic.name,
+    trend_topic.themeid,
+    users.erban_no,
+    users.nick,
+    users.gender,
+    trend_topic.commentnum,
+    trend_topic.visitnum,
+    trend_topic.state,
+    trend_topic.remarks,
+    trend_topic.voice_url,
+    trend_topic.picture_url,
+    trend_topic.praisenum,
+    trend_topic.permission_type,
+    trend_topic.create_time,
+    trend_topic.update_time,
+    theme.name as theme_name
+  </sql>
+    <select id="getAllByCheck" resultMap="BaseResultMap2">
+        select <include refid="Base_Column_List2"/>
+        from trend_topic join users on trend_topic.uid=users.uid
+        left join theme on trend_topic.themeid=theme.id
+        <where>
+            <if test="uid != null">
+                AND trend_topic.uid = #{uid}
+            </if>
+            <if test="state != null">
+                AND trend_topic.state = #{state}
+            </if>
+            <if test="startDate != null and startDate != ''  and endDate != null and endDate != ''">
+                AND trend_topic.update_time between #{startDate} and #{endDate}
+            </if>
+        </where>
+        order by trend_topic.update_time
+    </select>
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from trend_topic
+        where id=#{id}
+    </select>
+    <update id="updateState">
+        update trend_topic set state=#{state} where id=#{id}
+    </update>
+
+</mapper>

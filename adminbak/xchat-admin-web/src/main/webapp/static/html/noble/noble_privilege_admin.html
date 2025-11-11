@@ -1,0 +1,230 @@
+<style>
+    .bar1,.bar2{
+        margin-bottom: 10px;
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    input,select{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    #btnSearch{
+        margin-left: 36px;
+    }
+    .record{
+        margin-top: 10px;
+    }
+    .record .title{
+        font-size:16px;
+    }
+
+</style>
+
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">消息类型:<select name="msgType" id="msgType" class="input-m">
+                    <option value="1">拉贝助手</option>
+                    <option value="2">App</option>
+                </select>
+                    <label for="erbanNum" class="col-sm-2 control-label">拉贝号:</label>
+                    <div class="col-sm-3">
+                        <span><input type="text" class="form-control validate[required]" name="erbanNo" id="erbanNum" ></span>
+                    </div>
+                    <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+                    <button id="add" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i>增加
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="addSendMessage" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">新增消息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addMsgForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="erbanNo" class="col-sm-3 control-label">拉贝号：</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control validate[required]" name="erbanNo" id="erbanNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="msgType" class="col-sm-3 control-label">消息类型：</label>
+                        <div class="col-sm-8">
+                            <select name="msgTypeList" id="messageType" class="col-sm-3">
+                                <option value="1">拉贝助手</option>
+                                <option value="2">App</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="msgDesc" class="col-sm-3 control-label">消息内容：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="msgDesc" id="msgDesc">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'msgId', title: 'id', align: 'center', valign: 'middle', width: '0%'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: '10%'},
+                {field: 'msgContext', title: '内容', align: 'center', valign: 'middle', width: '10%'},
+                {
+                    field: 'msgType',
+                    title: '消息类型',
+                    align: 'center',
+                    width: '10%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '拉贝助手';
+                                break;
+                            case 2:
+                                return 'APP';
+                                break;
+                        }
+                    }
+                },
+                {field: 'adminId', title: '管理员', align: 'center', width: '10%', valign: 'middle'},
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: 'center',
+                    width: '10%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                }
+                /*,{
+                 field: 'tmp',
+                 title: '操作',
+                 align: 'center',
+                 width: '20%',
+                 valign: 'middle',
+                 formatter: function (val, row, index) {
+                 var key = row.blockId;
+                 return "<button class='btn btn-sm btn-success opt-release'  data-id=" + key + ">解封</button>&nbsp;&nbsp;"+
+                 "<button class='btn btn-sm btn-success opt-edit'  data-id=" + key + " >编辑</button>";
+                 }
+                 }*/
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber,
+                    type: $('#type').val(),
+                    erbanNo:$('#erbanNum').val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/msgAdmin/list.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        })
+    })
+
+    /*查询刷新*/
+    $('#btnSearch').on('click', function () {
+        TableHelper.doRefresh('#table');
+    })
+
+
+
+    /*保存*/
+    $('#addSave').on('click', function () {
+        if ($('#addMsgForm').validationEngine('validate')) {
+            $.ajax({
+                type: "post",
+                url: "/admin/messageAdmin/saveMessage.action",
+                data: {
+                    erbanNo: $("#erbanNo").val(),
+                    msgDesc: $("#msgDesc").val(),
+                    msgType: $("#msgType").val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 1) {
+                        $('#addSendMessage').modal('hide');
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("保存失败，错误码：" + data);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    })
+
+    //增加
+    $('#add').on('click', function () {
+        $('#addMsgForm')[0].reset();
+        $('#addSendMessage').modal('show');
+
+    })
+
+
+</script>
+
+

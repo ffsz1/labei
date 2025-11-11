@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.OfficialDiamondRecordMapper">
+    <resultMap id="BaseResultMap" type="com.erban.admin.main.model.OfficialDiamondRecord">
+        <id column="record_id" property="recordId" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="diamond_num" property="diamondNum" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="admin_id " property="adminId" jdbcType="INTEGER"/>
+        <result column="remark " property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        record_id, uid, diamond_num, type, create_time, admin_id, remark
+    </sql>
+
+    <select id="selectByParam" parameterType="com.erban.admin.main.vo.GiveDiamondRecordParam"
+            resultType="com.erban.admin.main.vo.GiveDiamondRecordDTO">
+        SELECT
+            o.record_id as recordId,
+            o.diamond_num as diamondNum,
+            o.type,
+            o.uid,
+            o.create_time as createTime,
+            o.admin_id as adminId,
+            u.nick,
+            u.erban_no as erbanNo,
+            u.phone,
+            u.avatar,
+            au.username as adminName,
+            o.remark
+        FROM
+            official_diamond_record o
+        LEFT JOIN users u ON o.uid = u.uid
+        LEFT JOIN admin_user au ON au.id = o.admin_Id
+        <include refid="record_sql"/>
+        ORDER BY o.create_time DESC
+    </select>
+    <select id="sumByParam" parameterType="com.erban.admin.main.vo.GiveDiamondRecordParam" resultType="Long">
+        SELECT SUM(o.diamond_num)
+        FROM official_diamond_record o
+        LEFT JOIN users u ON o.uid = u.uid
+        LEFT JOIN admin_user au ON au.id = o.admin_Id
+        <include refid="record_sql"/>
+    </select>
+    <sql id="record_sql">
+        <where>
+            <if test="begin != null">
+                AND o.create_time &gt;= #{begin}
+            </if>
+            <if test="end != null">
+                AND o.create_time &lt;= #{end}
+            </if>
+            <if test="erbanNo != null and erbanNo != ''">
+                AND u.erban_no = #{erbanNo}
+            </if>
+            <if test="type != null">
+                AND o.type = #{type}
+            </if>
+            <if test="adminName != null and adminName != ''">
+                AND au.username = #{adminName}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="com.erban.admin.main.model.OfficialDiamondRecord">
+        <selectKey resultType="java.lang.Integer" keyProperty="recordId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into official_diamond_record (uid, diamond_num, `type`, create_time, admin_id, remark)
+        values (#{uid,jdbcType=BIGINT}, #{diamondNum,jdbcType=BIGINT}, #{type,jdbcType=TINYINT},
+        #{createTime,jdbcType=TIMESTAMP}, #{adminId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+    </insert>
+
+</mapper>

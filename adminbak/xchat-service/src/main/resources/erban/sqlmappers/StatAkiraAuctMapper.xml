@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatAkiraAuctMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatAkiraAuct" >
+    <id column="akira_auct_id" property="akiraAuctId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="total_auct_money" property="totalAuctMoney" jdbcType="INTEGER" />
+    <result column="total_auct_count" property="totalAuctCount" jdbcType="INTEGER" />
+    <result column="stat_date" property="statDate" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    akira_auct_id, uid, total_auct_money, total_auct_count, stat_date, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatAkiraAuctExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_akira_auct
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_akira_auct
+    where akira_auct_id = #{akiraAuctId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stat_akira_auct
+    where akira_auct_id = #{akiraAuctId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.StatAkiraAuct" >
+    insert into stat_akira_auct (akira_auct_id, uid, total_auct_money, 
+      total_auct_count, stat_date, create_time
+      )
+    values (#{akiraAuctId,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{totalAuctMoney,jdbcType=INTEGER}, 
+      #{totalAuctCount,jdbcType=INTEGER}, #{statDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatAkiraAuct" >
+    insert into stat_akira_auct
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="akiraAuctId != null" >
+        akira_auct_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="totalAuctMoney != null" >
+        total_auct_money,
+      </if>
+      <if test="totalAuctCount != null" >
+        total_auct_count,
+      </if>
+      <if test="statDate != null" >
+        stat_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="akiraAuctId != null" >
+        #{akiraAuctId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="totalAuctMoney != null" >
+        #{totalAuctMoney,jdbcType=INTEGER},
+      </if>
+      <if test="totalAuctCount != null" >
+        #{totalAuctCount,jdbcType=INTEGER},
+      </if>
+      <if test="statDate != null" >
+        #{statDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.StatAkiraAuct" >
+    update stat_akira_auct
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="totalAuctMoney != null" >
+        total_auct_money = #{totalAuctMoney,jdbcType=INTEGER},
+      </if>
+      <if test="totalAuctCount != null" >
+        total_auct_count = #{totalAuctCount,jdbcType=INTEGER},
+      </if>
+      <if test="statDate != null" >
+        stat_date = #{statDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where akira_auct_id = #{akiraAuctId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.StatAkiraAuct" >
+    update stat_akira_auct
+    set uid = #{uid,jdbcType=BIGINT},
+      total_auct_money = #{totalAuctMoney,jdbcType=INTEGER},
+      total_auct_count = #{totalAuctCount,jdbcType=INTEGER},
+      stat_date = #{statDate,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where akira_auct_id = #{akiraAuctId,jdbcType=BIGINT}
+  </update>
+</mapper>

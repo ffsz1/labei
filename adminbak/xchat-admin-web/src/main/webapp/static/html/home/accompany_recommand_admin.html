@@ -1,0 +1,392 @@
+<style>
+    .btn{
+        margin: 0 4px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="erbanNo" id="erbanNo" placeholder="拉贝号">
+                        </div>
+                        <label class="col-sm-7 control-label">
+                            <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+                        </label>
+                        <button id="add" class="btn btn-default">
+                            <i class="glyphicon glyphicon-plus"></i>增加
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="recommandModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="modalLabel">热门推荐详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="recomForm">
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-3 control-label">修改次序:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="seqNo" name="seqNo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="recommId" name="id">
+                    </div>
+                </form>
+                <form class="form-horizontal" id="recomFormTime">
+                    <div class="form-group">
+                        <label for="startDate" class="col-sm-3 control-label">起始时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="startDate" name="startValidTime" class="validate[required] form-control" required="required">
+                        </div>
+                    </div>                    <div class="form-group">
+                        <label for="endDate" class="col-sm-3 control-label">结束时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="endDate" name="endValidTime" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">添加陪玩推荐</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addRecomForm">
+                    <div class="form-group">
+                        <label for="addUid" class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="addUid" id="addUid" class="validate[required] form-control">
+                        </div>
+                    </div>
+                    <!--<div class="form-group">-->
+                        <!--<label for="addSeqNo" class="col-sm-3 control-label">排列序号:</label>-->
+                        <!--<div class="col-sm-8">-->
+                            <!--<input type="hidden" name="addSeqNo" id="addSeqNo" value="0" class="validate[required] form-control">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <input type="hidden" name="addSeqNo" id="addSeqNo" value="0" class="validate[required] form-control">
+                    <div class="form-group">
+                        <label for="addStartTime" class="col-sm-3 control-label">开始时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="startValidTime" id="addStartTime" class="validate[required] form-control" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addEndTime" class="col-sm-3 control-label">结束时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="endValidTime" id="addEndTime" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="addBtn" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns:[
+                {field:'id',title:'推荐ID',align:'center',valign:'middle',width:'5%'},
+                {field:'erbanNo',title:'拉贝号',align:'center',valign:'middle',width:'5%'},
+                {field:'type',title:'类型',align:'center',valign:'middle',width:'5%', formatter:function(val,row, index){
+                        if(val == 0){
+                            return '购买形式';
+                        } else if(val == 1){
+                            return '后台设置';
+                        }else if(val == 2){
+                            return '刷流水形式'
+                        }else if(val == 3){
+                            return '活人达到形式'
+                        }
+                    }},
+                {field:'uid',title:'uid',align:'center',valign:'middle',width:'10%'},
+                {field:'nick',title:'昵称',align:'center',valign:'middle',width:'10%'},
+                {field:'seqNo',title:'排序',align:'center',valign:'middle',width:'5%'},
+                {field:'isDisplay',title:'显示/隐藏',align:'center',valign:'middle',width:'5%', formatter:function(val,row, index){
+                        if(val == 0){
+                            return '隐藏';
+                        } else {
+                            return '显示';
+                        }
+                    }},
+                {field:'startTime',title:'开始时间',align:'center',valign:'middle',width:'10%',
+                    formatter: function (val,row,index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd hh:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {field:'endTime',title:'结束时间',align:'center',valign:'middle',width:'10%',
+                    formatter: function (val,row,index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd hh:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {field:'createTime',title:'创建时间',align:'center',valign:'middle',width:'10%',
+                    formatter: function (val,row,index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd hh:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field:'tmp',
+                    title:'操作',
+                    align:'center',
+                    valign:'middle',
+                    width:'15%',
+                    formatter: function (val,row,index) {
+                        var key = row.id;
+                        var content = "";
+                        if(row.isDisplay == 1){
+                            content += "<button class='btn btn-sm btn-success opt-setting' data-id="+ key +">隐藏</button>";
+                        }else{
+                            content += "<button class='btn btn-sm btn-success opt-setting' data-id="+ key +">显示</button>";
+                        }
+                        content += "<button class='btn btn-sm btn-success opt-edit' data-id="+ key +">编辑</button><button class='btn btn-sm btn-danger opt-del' data-id="+ key +">删除</button>";
+                        return content;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    erbanNo: $('#erbanNo').val(),
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/accompay/list.action',
+            responseHandler: function(res) {
+                if (res.total > 0) {
+                    return {
+                        "total": res.total,//总页数
+                        "rows": res.rows.list  //数据
+                    };
+                } else {
+                    $("#tipMsg").text("查询不到相应数据");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",//总页数
+                        "rows": []  //数据
+                    };
+                }
+            },
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        })
+        $('#table').on('click','.opt-edit',function () {
+            var id = $(this).data('id');
+            console.log(id);
+                $.ajax({
+                    type: 'post',
+                    url: '/admin/accompay/getOneRecomm',
+                    data: {'id': id},
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 200) {
+                            var data = res.data;
+                            var startTime = data.startTime ? new Date(data.startTime).format('yyyy-MM-dd hh:mm:ss') : '';
+                            var endTime = data.endTime ? new Date(data.endTime).format('yyyy-MM-dd hh:mm:ss') : '';
+                            $('#seqNo').val(data.seqNo);
+                            $('#startDate').val(startTime);
+                            $('#endDate').val(endTime);
+                            $('#recommId').val(data.id);
+                            $('#recommandModal').modal('show');
+                        } else {
+                            $("#tipMsg").text("获取信息出错");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+        });
+        $('#table').on('click','.opt-del',function () {
+            var recommId = $(this).data('id');
+            $.ajax({
+                type: 'post',
+                url:'/admin/accompay/del',
+                data:{"id":recommId},
+                dataType: 'json',
+                success:function (res) {
+                    if(res.code == 200){
+                        $("#tipMsg").text("删除成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    }else{
+                        $("#tipMsg").text("删除失败，错误码：" + res.code);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        });
+
+        $('#table').on('click','.opt-setting',function () {
+            var id = $(this).data('id');
+            $.ajax({
+                type:'post',
+                url:'/admin/accompay/setting',
+                data:{'id':id},
+                dataType: 'json',
+                success: function (res) {
+                    if(res.code == 200){
+                        $("#tipMsg").text("设置成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    }else{
+                        $("#tipMsg").text("设置失败，错误码：" + res.code);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+
+        var picker1 = $('#startDate').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        })
+        picker1.on('changeDate', function () {
+            var date = $('#startDate').datetimepicker('getDate');
+            picker2.datetimepicker('setStartDate',date);
+        });
+        var picker2 = $('#endDate').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        })
+        picker2.on('changeDate', function () {
+            var date = $('#endDate').datetimepicker('getDate');
+            picker1.datetimepicker('setEndDate',date);
+        });
+        $('#btnSearch').on('click',function () {
+            TableHelper.doRefresh('#table');
+        })
+        $('#save').on('click',function () {
+            if($('#recomForm').validationEngine('validate')){
+                $.ajax({
+                    type: 'post',
+                    url: '/admin/accompay/updateRecomm',
+                    data:{
+                        startTimeString: $('#startDate').val(),
+                        endTimeString: $('#endDate').val(),
+                        id: $('#recommId').val(),
+                        seqNo: $('#seqNo').val()
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        if(res.code == 200){
+                            $('#recommandModal').modal('hide');
+                            $("#tipMsg").text("修改成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        }else{
+                            $("#tipMsg").text("修改失败，错误码：" + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        })
+
+        $('#addSave').on('click',function () {
+            if($('#addRecomForm').validationEngine('validate')){
+                $.ajax({
+                    type: 'post',
+                    url: '/admin/accompay/add',
+                    data: {
+                        startTimeString: $('#addStartTime').val(),
+                        endTimeString: $('#addEndTime').val(),
+                        erbanNo: $('#addUid').val(),
+                        seqNo: $('#addSeqNo').val()
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        if(res.code == 200){
+                            $('#addModal').modal('hide');
+                            $("#tipMsg").text("增加成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        }else{
+                            $("#tipMsg").text("增加失败，错误码：" + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        })
+        $('#add').on('click',function () {
+            $('#addModal').modal('show');
+        })
+        var picker3 = $('#addStartTime').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        })
+        picker3.on('changeDate', function () {
+            var date = $('#addStartTime').datetimepicker('getDate');
+            picker4.datetimepicker('setStartDate',date);
+        });
+        var picker4 = $('#addEndTime').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        })
+        picker4.on('changeDate', function () {
+            var date = $('#addEndTime').datetimepicker('getDate');
+            picker3.datetimepicker('setEndDate',date);
+        });
+    })
+</script>

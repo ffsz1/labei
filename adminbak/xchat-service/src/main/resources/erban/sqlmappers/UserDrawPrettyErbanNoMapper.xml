@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserDrawPrettyErbanNoMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.UserDrawPrettyErbanNo">
+        <id column="pretty_erban_no" property="prettyErbanNo" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="use_status" property="useStatus" jdbcType="TINYINT"/>
+        <result column="use_erban_no" property="useErbanNo" jdbcType="BIGINT"/>
+        <result column="seq" property="seq" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        pretty_erban_no, `type`, use_status, use_erban_no, seq, create_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.erban.main.model.UserDrawPrettyErbanNoExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from user_draw_pretty_erban_no
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from user_draw_pretty_erban_no
+        where pretty_erban_no = #{prettyErbanNo,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from user_draw_pretty_erban_no where pretty_erban_no = #{prettyErbanNo,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.UserDrawPrettyErbanNoExample">
+        delete from user_draw_pretty_erban_no
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.UserDrawPrettyErbanNo">
+        insert into user_draw_pretty_erban_no (pretty_erban_no, type, use_status, use_erban_no, seq, create_time)
+        values (#{prettyErbanNo,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, #{useStatus,jdbcType=TINYINT},
+                #{useErbanNo,jdbcType=BIGINT}, #{seq,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.UserDrawPrettyErbanNo">
+        insert into user_draw_pretty_erban_no
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="prettyErbanNo != null">
+                pretty_erban_no,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="useStatus != null">
+                use_status,
+            </if>
+            <if test="useErbanNo != null">
+                use_erban_no,
+            </if>
+            <if test="seq != null">
+                seq,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="prettyErbanNo != null">
+                #{prettyErbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="useStatus != null">
+                #{useStatus,jdbcType=TINYINT},
+            </if>
+            <if test="useErbanNo != null">
+                #{useErbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="seq != null">
+                #{seq,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.UserDrawPrettyErbanNoExample"
+            resultType="java.lang.Integer">
+        select count(*) from user_draw_pretty_erban_no
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user_draw_pretty_erban_no
+        <set>
+            <if test="record.prettyErbanNo != null">
+                pretty_erban_no = #{record.prettyErbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=TINYINT},
+            </if>
+            <if test="record.useStatus != null">
+                use_status = #{record.useStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.useErbanNo != null">
+                use_erban_no = #{record.useErbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="record.seq != null">
+                seq = #{record.seq,jdbcType=TINYINT},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user_draw_pretty_erban_no
+        set pretty_erban_no = #{record.prettyErbanNo,jdbcType=BIGINT},
+            `type` = #{record.type,jdbcType=TINYINT},
+            use_status = #{record.useStatus,jdbcType=TINYINT},
+            use_erban_no = #{record.useErbanNo,jdbcType=BIGINT},
+            seq = #{record.seq,jdbcType=TINYINT},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.UserDrawPrettyErbanNo">
+        update user_draw_pretty_erban_no
+        <set>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="useStatus != null">
+                use_status = #{useStatus,jdbcType=TINYINT},
+            </if>
+            <if test="useErbanNo != null">
+                use_erban_no = #{useErbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="seq != null">
+                seq = #{seq,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pretty_erban_no = #{prettyErbanNo,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.UserDrawPrettyErbanNo">
+      update user_draw_pretty_erban_no
+      set `type` = #{type,jdbcType=TINYINT},
+          use_status = #{useStatus,jdbcType=TINYINT},
+          use_erban_no = #{useErbanNo,jdbcType=BIGINT},
+          seq = #{seq,jdbcType=TINYINT},
+          create_time = #{createTime,jdbcType=TIMESTAMP}
+      where pretty_erban_no = #{prettyErbanNo,jdbcType=BIGINT}
+    </update>
+    <resultMap id="SelectByQueryMap" type="com.erban.main.vo.admin.UserPrettyNoVo">
+        <result column="pretty_erban_no" property="prettyErbanNo" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="use_status" property="useStatus" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="seq" property="seq" jdbcType="TINYINT"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="has_pretty_erban_no" property="hasPrettyErbanNo" jdbcType="BIT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectByQuery" resultMap="SelectByQueryMap"
+            parameterType="com.erban.main.param.admin.PrettyErbanNoParam">
+        SELECT p.pretty_erban_no as pretty_erban_no, p.type as type, p.use_status as use_status, p.create_time as create_time,
+                p.use_erban_no as erban_no, u.uid as uid, u.has_pretty_erban_no as has_pretty_erban_no, u.nick as nick, p.seq
+        FROM user_draw_pretty_erban_no p
+        LEFT JOIN users u ON p.pretty_erban_no = u.erban_no
+        <where>
+            <if test="prettyErbanNo != null">
+                p.pretty_erban_no = #{prettyErbanNo}
+            </if>
+            <if test="beginDate != null">
+                AND p.create_time &gt;= #{beginDate}
+            </if>
+            <if test="endDate != null">
+                AND p.create_time &lt;= #{endDate}
+            </if>
+            <if test="status != null">
+                AND p.use_status = #{status}
+            </if>
+            <if test="type != null">
+                AND p.type = #{type}
+            </if>
+        </where>
+        order by p.use_status asc, p.seq asc, p.create_time asc
+    </select>
+</mapper>

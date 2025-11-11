@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.AppActivityMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.AppActivity">
+        <id column="act_id" property="actId" jdbcType="INTEGER"/>
+        <result column="act_name" property="actName" jdbcType="VARCHAR"/>
+        <result column="act_status" property="actStatus" jdbcType="TINYINT"/>
+        <result column="act_alert_version" property="actAlertVersion" jdbcType="VARCHAR"/>
+        <result column="alert_win" property="alertWin" jdbcType="BIT"/>
+        <result column="alert_win_pic" property="alertWinPic" jdbcType="VARCHAR"/>
+        <result column="alert_win_loc" property="alertWinLoc" jdbcType="TINYINT"/>
+        <result column="skip_type" property="skipType" jdbcType="TINYINT"/>
+        <result column="skip_url" property="skipUrl" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        act_id, act_name, act_status, act_alert_version, alert_win, alert_win_pic, alert_win_loc,
+        skip_type, skip_url, create_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.AppActivityExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'false' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from app_activity
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from app_activity
+        where act_id = #{actId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from app_activity where act_id = #{actId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.AppActivity">
+        <selectKey resultType="java.lang.Integer" keyProperty="actId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into app_activity (act_name, act_status, act_alert_version,
+                                  alert_win, alert_win_pic, alert_win_loc,
+                                  skip_type, skip_url, create_time)
+        values (#{actName,jdbcType=VARCHAR}, #{actStatus,jdbcType=TINYINT}, #{actAlertVersion,jdbcType=VARCHAR},
+                #{alertWin,jdbcType=BIT}, #{alertWinPic,jdbcType=VARCHAR}, #{alertWinLoc,jdbcType=TINYINT},
+                #{skipType,jdbcType=TINYINT}, #{skipUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.AppActivity">
+        <selectKey resultType="java.lang.Integer" keyProperty="actId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into app_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="actName != null">
+                act_name,
+            </if>
+            <if test="actStatus != null">
+                act_status,
+            </if>
+            <if test="actAlertVersion != null">
+                act_alert_version,
+            </if>
+            <if test="alertWin != null">
+                alert_win,
+            </if>
+            <if test="alertWinPic != null">
+                alert_win_pic,
+            </if>
+            <if test="alertWinLoc != null">
+                alert_win_loc,
+            </if>
+            <if test="skipType != null">
+                skip_type,
+            </if>
+            <if test="skipUrl != null">
+                skip_url,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="actName != null">
+                #{actName,jdbcType=VARCHAR},
+            </if>
+            <if test="actStatus != null">
+                #{actStatus,jdbcType=TINYINT},
+            </if>
+            <if test="actAlertVersion != null">
+                #{actAlertVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="alertWin != null">
+                #{alertWin,jdbcType=BIT},
+            </if>
+            <if test="alertWinPic != null">
+                #{alertWinPic,jdbcType=VARCHAR},
+            </if>
+            <if test="alertWinLoc != null">
+                #{alertWinLoc,jdbcType=TINYINT},
+            </if>
+            <if test="skipType != null">
+                #{skipType,jdbcType=TINYINT},
+            </if>
+            <if test="skipUrl != null">
+                #{skipUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.AppActivity">
+        update app_activity
+        <set>
+            <if test="actName != null">
+                act_name = #{actName,jdbcType=VARCHAR},
+            </if>
+            <if test="actStatus != null">
+                act_status = #{actStatus,jdbcType=TINYINT},
+            </if>
+            <if test="actAlertVersion != null">
+                act_alert_version = #{actAlertVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="alertWin != null">
+                alert_win = #{alertWin,jdbcType=BIT},
+            </if>
+            <if test="alertWinPic != null">
+                alert_win_pic = #{alertWinPic,jdbcType=VARCHAR},
+            </if>
+            <if test="alertWinLoc != null">
+                alert_win_loc = #{alertWinLoc,jdbcType=TINYINT},
+            </if>
+            <if test="skipType != null">
+                skip_type = #{skipType,jdbcType=TINYINT},
+            </if>
+            <if test="skipUrl != null">
+                skip_url = #{skipUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where act_id = #{actId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.AppActivity">
+        update app_activity
+        set act_name = #{actName,jdbcType=VARCHAR},
+            act_status = #{actStatus,jdbcType=TINYINT},
+            act_alert_version = #{actAlertVersion,jdbcType=VARCHAR},
+            alert_win = #{alertWin,jdbcType=BIT},
+            alert_win_pic = #{alertWinPic,jdbcType=VARCHAR},
+            alert_win_loc = #{alertWinLoc,jdbcType=TINYINT},
+            skip_type = #{skipType,jdbcType=TINYINT},
+            skip_url = #{skipUrl,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where act_id = #{actId,jdbcType=INTEGER}
+    </update>
+    <resultMap id="ActivityResultMap" type="com.erban.main.model.ActivityHtml">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="activity_id" property="activityId" jdbcType="VARCHAR"/>
+        <result column="activity_name" property="activityName" jdbcType="VARCHAR"/>
+        <result column="activity_image" property="activityImage" jdbcType="VARCHAR"/>
+        <result column="activity_status" property="activityStatus" jdbcType="VARCHAR"/>
+        <result column="activity_share_image" property="activityShareImage" jdbcType="VARCHAR"/>
+        <result column="activity_share_title" property="activityShareTitle" jdbcType="VARCHAR"/>
+        <result column="activity_share_content" property="activityShareContent" jdbcType="VARCHAR"/>
+        <result column="activity_link" property="activityLink" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="admin_id" property="adminId" jdbcType="BIGINT"/>
+    </resultMap>
+    <select id="queryActivityHtml" resultMap="ActivityResultMap">
+        select id, activity_id, activity_name, activity_image, activity_status, activity_share_image, activity_share_title,
+        activity_share_content, activity_link, create_time, update_time, admin_id
+        from activity_html
+        <where>
+            <if test="activityId != null and activityId != ''">
+                and activity_id = #{activityId}
+            </if>
+            <if test="activityName != null and activityName != ''">
+                and activity_name = #{activityName}
+            </if>
+        </where>
+    </select>
+    <insert id="insertActivityShare" parameterType="com.erban.main.model.ActivityHtml">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into activity_html
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">
+                activity_id,
+            </if>
+            <if test="activityName != null">
+                activity_name,
+            </if>
+            <if test="activityImage != null">
+                activity_image,
+            </if>
+            <if test="activityShareImage != null">
+                activity_share_image,
+            </if>
+            <if test="activityShareTitle != null">
+                activity_share_title,
+            </if>
+            <if test="activityShareContent != null">
+                activity_share_content,
+            </if>
+            <if test="activityLink != null">
+                activity_link,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="adminId != null">
+                admin_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityId != null">
+                #{activityId,jdbcType=VARCHAR},
+            </if>
+            <if test="activityName != null">
+                #{activityName,jdbcType=VARCHAR},
+            </if>
+            <if test="activityImage != null">
+                #{activityImage,jdbcType=VARCHAR},
+            </if>
+            <if test="activityShareImage != null">
+                #{activityShareImage,jdbcType=VARCHAR},
+            </if>
+            <if test="activityShareTitle != null">
+                #{activityShareTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="activityShareContent != null">
+                #{activityShareContent,jdbcType=VARCHAR},
+            </if>
+            <if test="activityLink != null">
+                #{activityLink,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="adminId != null">
+                #{adminId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateActivityShare" parameterType="com.erban.main.model.ActivityHtml">
+        update activity_html
+        <set>
+            <if test="activityId != null">
+                activity_id = #{activityId,jdbcType=VARCHAR},
+            </if>
+            <if test="activityName != null">
+                activity_name = #{activityName,jdbcType=VARCHAR},
+            </if>
+            <if test="activityImage != null">
+                activity_image = #{activityImage,jdbcType=VARCHAR},
+            </if>
+            <if test="activityShareImage != null">
+                activity_share_image = #{activityShareImage,jdbcType=VARCHAR},
+            </if>
+            <if test="activityShareTitle != null">
+                activity_share_title = #{activityShareTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="activityShareContent != null">
+                activity_share_content = #{activityShareContent,jdbcType=VARCHAR},
+            </if>
+            <if test="activityLink != null">
+                activity_link = #{activityLink,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="adminId != null">
+                admin_id = #{adminId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

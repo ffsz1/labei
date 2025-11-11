@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.NobleResMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.NobleRes" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="noble_id" property="nobleId" jdbcType="INTEGER" />
+    <result column="noble_name" property="nobleName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="preview" property="preview" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="res_type" property="resType" jdbcType="TINYINT" />
+    <result column="is_dyn" property="isDyn" jdbcType="TINYINT" />
+    <result column="is_def" property="isDef" jdbcType="TINYINT" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="tmpstr" property="tmpstr" jdbcType="VARCHAR" />
+    <result column="tmpint" property="tmpint" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, noble_id, noble_name, name, value, preview, status, res_type, is_dyn, is_def, 
+    seq, create_time, tmpstr, tmpint
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.NobleResExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from noble_res
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from noble_res
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from noble_res
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.NobleResExample" >
+    delete from noble_res
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.NobleRes" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into noble_res (noble_id, noble_name, name, 
+      value, preview, status, 
+      res_type, is_dyn, is_def, 
+      seq, create_time, tmpstr, 
+      tmpint)
+    values (#{nobleId,jdbcType=INTEGER}, #{nobleName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{value,jdbcType=VARCHAR}, #{preview,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{resType,jdbcType=TINYINT}, #{isDyn,jdbcType=TINYINT}, #{isDef,jdbcType=TINYINT}, 
+      #{seq,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{tmpstr,jdbcType=VARCHAR}, 
+      #{tmpint,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.NobleRes" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into noble_res
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nobleId != null" >
+        noble_id,
+      </if>
+      <if test="nobleName != null" >
+        noble_name,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="preview != null" >
+        preview,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="resType != null" >
+        res_type,
+      </if>
+      <if test="isDyn != null" >
+        is_dyn,
+      </if>
+      <if test="isDef != null" >
+        is_def,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="tmpstr != null" >
+        tmpstr,
+      </if>
+      <if test="tmpint != null" >
+        tmpint,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nobleId != null" >
+        #{nobleId,jdbcType=INTEGER},
+      </if>
+      <if test="nobleName != null" >
+        #{nobleName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="preview != null" >
+        #{preview,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="resType != null" >
+        #{resType,jdbcType=TINYINT},
+      </if>
+      <if test="isDyn != null" >
+        #{isDyn,jdbcType=TINYINT},
+      </if>
+      <if test="isDef != null" >
+        #{isDef,jdbcType=TINYINT},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tmpstr != null" >
+        #{tmpstr,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpint != null" >
+        #{tmpint,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.NobleResExample" resultType="java.lang.Integer" >
+    select count(*) from noble_res
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update noble_res
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.nobleId != null" >
+        noble_id = #{record.nobleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nobleName != null" >
+        noble_name = #{record.nobleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value != null" >
+        value = #{record.value,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preview != null" >
+        preview = #{record.preview,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.resType != null" >
+        res_type = #{record.resType,jdbcType=TINYINT},
+      </if>
+      <if test="record.isDyn != null" >
+        is_dyn = #{record.isDyn,jdbcType=TINYINT},
+      </if>
+      <if test="record.isDef != null" >
+        is_def = #{record.isDef,jdbcType=TINYINT},
+      </if>
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tmpstr != null" >
+        tmpstr = #{record.tmpstr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tmpint != null" >
+        tmpint = #{record.tmpint,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update noble_res
+    set id = #{record.id,jdbcType=INTEGER},
+      noble_id = #{record.nobleId,jdbcType=INTEGER},
+      noble_name = #{record.nobleName,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      value = #{record.value,jdbcType=VARCHAR},
+      preview = #{record.preview,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      res_type = #{record.resType,jdbcType=TINYINT},
+      is_dyn = #{record.isDyn,jdbcType=TINYINT},
+      is_def = #{record.isDef,jdbcType=TINYINT},
+      seq = #{record.seq,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      tmpstr = #{record.tmpstr,jdbcType=VARCHAR},
+      tmpint = #{record.tmpint,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.NobleRes" >
+    update noble_res
+    <set >
+      <if test="nobleId != null" >
+        noble_id = #{nobleId,jdbcType=INTEGER},
+      </if>
+      <if test="nobleName != null" >
+        noble_name = #{nobleName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="preview != null" >
+        preview = #{preview,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="resType != null" >
+        res_type = #{resType,jdbcType=TINYINT},
+      </if>
+      <if test="isDyn != null" >
+        is_dyn = #{isDyn,jdbcType=TINYINT},
+      </if>
+      <if test="isDef != null" >
+        is_def = #{isDef,jdbcType=TINYINT},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tmpstr != null" >
+        tmpstr = #{tmpstr,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpint != null" >
+        tmpint = #{tmpint,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.NobleRes" >
+    update noble_res
+    set noble_id = #{nobleId,jdbcType=INTEGER},
+      noble_name = #{nobleName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      preview = #{preview,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      res_type = #{resType,jdbcType=TINYINT},
+      is_dyn = #{isDyn,jdbcType=TINYINT},
+      is_def = #{isDef,jdbcType=TINYINT},
+      seq = #{seq,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      tmpstr = #{tmpstr,jdbcType=VARCHAR},
+      tmpint = #{tmpint,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

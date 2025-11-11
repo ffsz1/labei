@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserGiftWallMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.UserGiftWall" >
+    <id column="gift_wall_id" property="giftWallId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="gift_id" property="giftId" jdbcType="INTEGER" />
+    <result column="recive_count" property="reciveCount" jdbcType="INTEGER" />
+    <result column="gift_name" property="giftName" jdbcType="VARCHAR" />
+    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <update id="updateGiftWallCount" parameterType="com.erban.main.model.UserGiftWall">
+    update user_gift_wall set recive_count =recive_count+#{reciveCount,jdbcType=INTEGER}
+    where  uid = #{uid,jdbcType=BIGINT}
+    and    gift_id = #{giftId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="getUserWallListByUidOrderByCount"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+    SELECT
+      wall.uid,
+      gift.gift_id,
+      gift.gift_name,
+      gift.pic_url,
+      wall.recive_count
+    FROM
+      user_gift_wall wall
+      RIGHT JOIN gift gift
+        ON wall.gift_id = gift.gift_id
+    WHERE wall.uid = #{uid,jdbcType=BIGINT}
+    ORDER BY wall.recive_count DESC
+  </select>
+  <select id="getUserWallListByUidOrderByGoldPrice"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+    SELECT
+    wall.uid,
+    gift.gift_id,
+    gift.gift_name,
+    gift.pic_url,
+    wall.recive_count
+    FROM
+    user_gift_wall wall
+    RIGHT JOIN gift gift
+    ON wall.gift_id = gift.gift_id
+    WHERE wall.uid = #{uid,jdbcType=BIGINT}
+    ORDER BY gift.gold_price DESC
+  </select>
+</mapper>

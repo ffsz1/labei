@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.GiftSendRecordMapperExpand" >
+
+  <resultMap id="BaseResultMap" type="com.erban.main.model.GiftSendRecord" >
+    <id column="send_record_id" property="sendRecordId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="recive_uid" property="reciveUid" jdbcType="BIGINT" />
+    <result column="send_env" property="sendEnv" jdbcType="TINYINT" />
+    <result column="room_uid" property="roomUid" jdbcType="BIGINT" />
+    <result column="room_type" property="roomType" jdbcType="TINYINT" />
+    <result column="gift_id" property="giftId" jdbcType="INTEGER" />
+    <result column="gift_num" property="giftNum" jdbcType="INTEGER" />
+    <result column="total_gold_num" property="totalGoldNum" jdbcType="BIGINT" />
+    <result column="total_diamond_num" property="totalDiamondNum" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="GiftSendRecordVoMap" type="com.erban.main.model.GiftSendRecordVo">
+    <result column="gift_id" property="giftId" jdbcType="INTEGER"/>
+    <result column="COUNT(gift_id)" property="sendCount" jdbcType="INTEGER"/>
+  </resultMap>
+
+  <resultMap id="TotalDiamondMap" type="com.erban.main.model.GiftSendRecordVo2">
+    <result column="recive_uid" property="uid" jdbcType="BIGINT" />
+    <result column="total_diamond_num" property="totalDiamondNum" jdbcType="DOUBLE" />
+  </resultMap>
+  <select id="getGiftSendRecordVoList" resultMap="GiftSendRecordVoMap">
+
+    select gift_id,COUNT(gift_id) from gift_send_record GROUP BY gift_id
+
+  </select>
+
+  <select id="getGiftRecordOfToayBySendUid" resultMap="BaseResultMap">
+    select * from gift_send_record where uid=#{0} and to_days(create_time)=to_days(now()) group by uid
+  </select>
+
+  <select id="getTotalDiamondListByDate" resultMap="TotalDiamondMap">
+    SELECT recive_uid,SUM(total_diamond_num) total_diamond_num FROM  gift_send_record WHERE create_time BETWEEN #{0} AND #{1} GROUP BY recive_uid
+  </select>
+
+  <resultMap id="TotalGoldNum" type="com.erban.main.model.GiftSendRecordVo3">
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="total_gold_num" property="totalGoldNum" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="getTotalGoldNumByUid" resultMap="TotalGoldNum">
+    SELECT uid,SUM(total_gold_num) total_gold_num FROM  gift_send_record WHERE uid=#{0}
+  </select>
+  <select id="getTotalGoldNumByReceiveUid" resultMap="TotalGoldNum">
+    SELECT recive_uid as uid ,SUM(total_gold_num) total_gold_num FROM  gift_send_record WHERE recive_uid=#{0}
+  </select>
+  <select id="getTotalGoldNumByUidList" resultMap="TotalGoldNum">
+    SELECT uid,SUM(total_gold_num) total_gold_num FROM  gift_send_record GROUP BY uid
+  </select>
+  <select id="getTotalGoldNumByReceiveUidList" resultMap="TotalGoldNum">
+    SELECT recive_uid as uid ,SUM(total_gold_num) total_gold_num FROM  gift_send_record GROUP BY recive_uid;
+  </select>
+
+  <resultMap id="QueryResultMap" type="com.erban.main.vo.admin.StatRoomFlowVo" >
+    <result column="room_uid" property="uid" jdbcType="VARCHAR" />
+    <result column="total_gold_num" property="totalGoldNum" jdbcType="BIGINT" />
+    <result column="total_gold" property="totalGold" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR" />
+    <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR" />
+    <result column="reward_money" property="bounsPersent" jdbcType="BIGINT" />
+    <result column="bouns" property="bouns" jdbcType="BIGINT" />
+    <result column="is_permit_room" property="isPermitRoom" jdbcType="TINYINT"/>
+    <result column="occupation" property="occupation" jdbcType="DOUBLE"/>
+    <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+    <result column="cardholder" property="cardholder" jdbcType="VARCHAR" />
+    <result column="guild_name" property="guildName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="statQuery">
+    1=1
+    <if test="erbanNo!=null">
+      AND u.erban_no=#{erbanNo}
+    </if>
+    <if test="beginDate!=null">
+      AND g.create_time &gt;= #{beginDate}
+    </if>
+    <if test="endDate!=null">
+      AND g.create_time &lt;= #{endDate}
+    </if>
+    <if test="roomType!=null">
+      AND r.is_permit_room=#{roomType}
+    </if>
+    <if test="roomTag!=null">
+      AND r.tag_id=#{roomTag}
+    </if>
+  </sql>
+
+  <select id="statRoomFlow" resultMap="QueryResultMap" parameterType="com.erban.main.param.admin.RoomFlowParam">
+    SELECT
+    COUNT(DISTINCT g.send_uid) AS countUsers,
+    COUNT(DISTINCT g.send_uid,
+    if(
+    <if test="beginDate != null">
+      u2.create_time &gt;= #{beginDate}
+    </if>
+    <if test="endDate != null">
+      <if test="beginDate != null">AND</if>
+      u2.create_time &lt;= #{endDate}
+    </if>
+    , TRUE, NULL)
+    ) AS countNewUsers,
+    g.uid as room_uid ,
+    SUM(g.sum_gold) as totalGoldNum,
+    u.erban_no as erban_no,
+    u.nick as nick,
+    u.phone as phone,
+    u.alipay_account as alipay_account,
+    u.alipay_account_name as alipay_account_name,
+    r.room_id AS roomId,
+    r.room_tag as roomTag,
+    r.is_permit_room as is_permit_room,
+    ifnull(r.reward_money,0) AS reward_money,
+    if(uc.occupation_ratio is null,0,ROUND(uc.occupation_ratio*SUM(g.sum_gold)/100,2)) as occupation,
+    uc.bank_card as bankCard,
+    uc.cardholder as cardholder
+    ,gd.name as guild_name 
+    FROM one_day_room_send_sum g
+    INNER JOIN users u ON g.uid = u.uid
+    INNER JOIN room r ON r.uid = g.uid
+    LEFT JOIN user_configure uc ON g.uid = uc.uid
+    LEFT JOIN users u2 ON g.send_uid = u2.uid
+    
+    LEFT JOIN guild_hall h on h.room_id=r.room_id
+    LEFT JOIN guild gd on gd.id=h.guild_id
+    <where>
+      <include refid="statQuery"></include>
+      <if test="guildId!=null">
+	      AND h.guild_id=#{guildId}
+	  </if>
+    </where>
+    GROUP BY g.uid
+    <if test="orderByClauser != null">
+      ORDER BY ${orderByClauser}
+    </if>
+  </select>
+  <!--<select id="statRoomFlow" resultMap="QueryResultMap" parameterType="com.erban.main.param.admin.RoomFlowParam">-->
+    <!--SELECT-->
+    <!--g.uid as room_uid ,SUM(g.sum_gold) as total_gold_num,-->
+    <!--u.erban_no as erban_no,u.nick as nick,u.phone as phone,u.alipay_account as alipay_account,u.alipay_account_name as alipay_account_name,-->
+    <!--r.is_permit_room as is_permit_room, ifnull(r.reward_money,0) AS reward_money,if(uc.occupation_ratio is null,0,ROUND(uc.occupation_ratio*SUM(g.sum_gold)/100,2)) as occupation,uc.bank_card as bankCard,uc.cardholder as cardholder-->
+    <!--FROM one_day_room_recv_sum g-->
+    <!--INNER JOIN users u ON g.uid=u.uid-->
+    <!--INNER JOIN room r ON r.uid=g.uid-->
+    <!--LEFT JOIN user_configure uc on g.uid = uc.uid-->
+    <!--<where>-->
+     <!--<include refid="statQuery"></include>-->
+    <!--</where>-->
+    <!--GROUP BY g.uid-->
+    <!--ORDER BY total_gold_num DESC-->
+  <!--</select>-->
+
+  <select id="sumRoomFlow" resultMap="BaseResultMap"  parameterType="java.util.List">
+    SELECT room_uid,sum(total_gold_num) as total_gold_num FROM gift_send_record
+    WHERE room_uid IN
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    GROUP BY room_uid
+  </select>
+
+  <resultMap id="RoomFlowGroupByMap" type="com.erban.main.model.GiftSendRecordVo3" >
+    <result column="create_time" property="date" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="INTEGER" />
+    <result column="total_gold_num" property="totalGoldNum" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="getRoomFlowGroupBy" resultMap="RoomFlowGroupByMap"  parameterType="java.lang.Long">
+    SELECT date_format(create_time,'%Y-%m-%d') as create_time,sum(sum_gold) as total_gold_num FROM one_day_room_send_sum
+    WHERE uid=#{0}
+    GROUP BY create_time
+    ORDER BY create_time DESC
+  </select>
+
+  <resultMap id="RoomFlowDetailMap" type="com.erban.main.model.GiftSendRecordVo4" >
+    <result column="send_nick" property="sendNick" jdbcType="VARCHAR" />
+    <result column="receive_nick" property="receiveNick" jdbcType="VARCHAR" />
+    <result column="gift_name" property="giftName" jdbcType="VARCHAR" />
+    <result column="pic_url" property="giftUrl" jdbcType="VARCHAR" />
+    <result column="gift_num" property="giftNum" jdbcType="BIGINT" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="total_gold_num" property="totalGoldNum" jdbcType="BIGINT" />
+  </resultMap>
+  <select id="getRoomFlowDetail" resultMap="RoomFlowDetailMap" >
+   SELECT u1.nick as send_nick,u2.nick as receive_nick,g.total_gold_num as total_gold_num, g.gift_num as gift_num,f.gift_name as gift_name,f.pic_url as pic_url,date_format(g.create_time,'%H:%i') as time
+   FROM gift_send_record g LEFT JOIN users u1 ON g.uid =u1.uid
+                           LEFT JOIN users u2 ON u2.uid=recive_uid
+                           LEFT JOIN gift f ON f.gift_id=g.gift_id
+   WHERE g.create_time &gt;=#{0} and g.create_time &lt;= #{1} and g.room_uid=#{2}
+   ORDER BY g.create_time ASC;
+  </select>
+
+
+  <select id="sumByTowWeeks" resultType="com.erban.main.model.RoomFlowWeekVo">
+    SELECT
+    SUM(
+    IF (
+    YEARWEEK(g.create_time) = YEARWEEK(now()) - 2,
+    g.sum_gold,
+    0
+    )
+    ) secondWeek,
+    SUM(
+    IF (
+    YEARWEEK(g.create_time) = YEARWEEK(now()) - 1,
+    g.sum_gold,
+    0
+    )
+    ) firstWeek,
+    g.uid
+    FROM
+    one_day_room_send_sum g
+    LEFT JOIN room r ON r.uid = g.uid
+    <where>
+      <if test="beginDate != null">
+        AND g.create_time &gt;= #{beginDate}
+      </if>
+      <if test="rooms != null">
+        AND g.uid IN
+        <foreach collection="rooms" index="index" item="item" open="(" separator="," close=")">
+          #{item.uid}
+        </foreach>
+      </if>
+    </where>
+    GROUP BY g.uid
+  </select>
+
+  <select id="countGoldPrice" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT
+      `gold_count`
+    FROM
+      `user_draw_gift_room_day`
+    WHERE
+      `room_id` = #{roomId}
+    AND
+      `create_date` >= CURRENT_DATE();
+  </select>
+
+  <select id="roomFlow" resultType="com.erban.main.dto.RoomFlowEchartsDTO" parameterType="com.erban.main.dto.RoomFlowEchartsParam">
+    <!-- 根据时间统计房间流水 -->
+    SELECT
+    <if test="classType  == 1">
+      DATE_FORMAT(odr.create_time, '%Y%m%d') period,
+    </if>
+    <if test="classType  == 2">
+      DATE_FORMAT(odr.create_time, '%Y%u') period,
+    </if>
+    <if test="classType  == 3">
+      DATE_FORMAT(odr.create_time, '%Y%m') period,
+    </if>
+    <if test="classType  == 4">
+      DATE_FORMAT(odr.create_time, '%Y') period,
+    </if>
+    SUM(odr.sum_gold) totalGold,
+    odr.uid as uid,
+    u.nick,
+    u.erban_no as erbanNo
+    FROM
+    one_day_room_recv_sum odr
+    LEFT JOIN users u ON odr.uid = u.uid
+    <where>
+      <if test="beginDate != null">
+        AND DATE(odr.create_time) &gt;= #{beginDate}
+      </if>
+      <if test="endDate != null">
+        AND DATE(odr.create_time) &lt;= #{endDate}
+      </if>
+      <if test="uid != null">
+        AND odr.uid = #{uid}
+      </if>
+      <if test="uidList != null">
+        AND odr.uid IN
+        <foreach collection="uidList" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+    GROUP BY
+    period, odr.uid
+    <if test="minNum != null">
+      HAVING totalGold &gt;= #{minNum}
+    </if>
+    ORDER BY period ASC, odr.uid ASC
+  </select>
+
+  <select id="countStatRoomTotalFlow" parameterType="java.lang.Long" resultType="java.lang.Long">
+    select ifnull(sum(bgd.gift_num * g.gold_price),0)
+    from bill_gift_draw bgd
+    inner join gift g on bgd.gift_id = g.gift_id
+    where bgd.uid = #{uid}
+  </select>
+
+</mapper>

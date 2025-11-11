@@ -1,0 +1,513 @@
+<style>
+    .btn {
+        margin: 0 4px;
+    }
+
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+
+    .modal-dialog {
+        width: 1000px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content">
+                <form class="form-inline" id="form">
+                    <div class="form-group">
+                        <label class="control-label">拉贝号:</label>
+                        <input type="text" name="erbanNo" id="erbanNo" placeholder="拉贝号">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">显示位置:</label>
+                        <select name="viewType" id="searchViewType" class="btn btn-default dropdown-toggle">
+                            <option value="">请选择</option>
+                            <option value="1">首页推荐</option>
+                        </select>
+                    </div>
+                    <label class="control-label">
+                        <a href="javascript:;" id="btnSearch" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i> 查询
+                        </a>
+                    </label>
+                    <div class="form-group">
+                        <span>首页推荐规则: <span id="people">0%</span>人数+<span id="giftFlow">0%</span>礼物流水+<span id="backFlow">0%</span>背包礼物流水</span>
+                        <a href="javascript:;" id="btnModify" class="btn btn-success">
+                            <i class="glyphicon glyphicon-edit"></i> 修改
+                        </a>
+                    </div>
+                </form>
+                <div id="toolbar">
+                    <button id="add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                </div>
+                <div id="table"></div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalsLabel">修改热门首页规则</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline" id="editForm">
+                    <div class="form-group">
+                        <input type="text" id="peopleCount" class="form-control  validate[required]" name="people">
+                        <label for="peopleCount" class="control-label">% 人数 + </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="giftCount" class="form-control  validate[required]" name="gift">
+                        <label for="giftCount" class="control-label">% 礼物流水 + </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="backCount" class="form-control validate[required]" name="back" readonly>
+                        <label for="backCount" class="control-label">% 背包礼物流水</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="confirm">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="recommandModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="modalLabel">热门推荐详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="recomForm">
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-3 control-label">修改次序:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="seqNo" name="seqNo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="viewType" class="col-sm-3 control-label">显示位置:</label>
+                        <div class="col-sm-8">
+                            <select name="viewType" id="viewType" class="form-control">
+                                <option value="1">首页推荐</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="recommId" name="recommId">
+                    </div>
+                </form>
+                <form class="form-horizontal" id="recomFormTime">
+                    <div class="form-group">
+                        <label for="startDate" class="col-sm-3 control-label">起始时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="startDate" name="startValidTime" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate" class="col-sm-3 control-label">结束时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="endDate" name="endValidTime" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">添加热门推荐</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addRecomForm">
+                    <div class="form-group">
+                        <label for="addUid" class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="addUid" id="addUid" class="validate[required] form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addSeqNo" class="col-sm-3 control-label">排列序号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="addSeqNo" id="addSeqNo" class="validate[required] form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addViewType" class="col-sm-3 control-label">显示位置:</label>
+                        <div class="col-sm-8">
+                            <select name="viewType" id="addViewType" class="form-control">
+                                <option value="1">首页推荐</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addStartTime" class="col-sm-3 control-label">开始时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="startValidTime" id="addStartTime"
+                                   class="validate[required] form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addEndTime" class="col-sm-3 control-label">结束时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="endValidTime" id="addEndTime"
+                                   class="validate[required] form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="addBtn" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        const picker4 = $('#addEndTime').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        });
+        const picker2 = $('#endDate').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        });
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'recommId', title: '推荐ID', align: 'center', valign: 'middle', width: 150},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 150},
+                {
+                    field: 'isPurse',
+                    title: '是否购买',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '购买';
+                        } else {
+                            return '非购买';
+                        }
+                    }
+                },
+                {field: 'title', title: '房间标题', align: 'center', valign: 'middle', width: 250},
+                {
+                    field: 'isPermitRoom',
+                    title: '是否牌照',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '是';
+                        } else if (val == 3) {
+                            return '审核';
+                        } else {
+                            return '不是';
+                        }
+                    }
+                },
+                {field: 'seqNo', title: '排序', align: 'center', valign: 'middle', width: 150},
+                {
+                    field: 'viewType', title: '显示位置', align: 'center', valign: 'middle', width: 150,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return "首页推荐";
+                        } else {
+                            return "-";
+                        }
+                    }
+                },
+                {
+                    field: 'startValidTime', title: '开始时间', align: 'center', valign: 'middle', width: 200,
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'endValidTime', title: '结束时间', align: 'center', valign: 'middle', width: 200,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'createTime', title: '创建时间', align: 'center', valign: 'middle', width: 200,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 300,
+                    formatter: function (val, row, index) {
+                        const key = row.recommId;
+                        return "<button class='btn btn-sm btn-success opt-edit' data-id=" + key + "><i class='glyphicon glyphicon-edit'></i> 编辑</button>" +
+                                "<button class='btn btn-sm btn-danger opt-del' data-id=" + key + "><i class='glyphicon glyphicon-remove'></i> 删除</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    erbanNo: $('#erbanNo').val(),
+                    viewType: $("#searchViewType").val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/homerecomm/hot/voList.action',
+            responseHandler: function (res) {
+                if (res.total > 0) {
+                    return {
+                        "total": res.total,
+                        "rows": res.rows.list
+                    };
+                } else {
+                    $("#tipMsg").text("查询不到相应数据");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        })
+        $('#table').on('click', '.opt-edit', function () {
+            const id = $(this).data('id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/homerecomm/hot/getOneRecomm',
+                data: {'recommId': id},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        const data = res.data;
+                        const startTime = data.startValidTime ? new Date(data.startValidTime).format('yyyy-MM-dd HH:mm:ss') : '';
+                        const endTime = data.endValidTime ? new Date(data.endValidTime).format('yyyy-MM-dd HH:mm:ss') : '';
+                        $('#seqNo').val(data.seqNo);
+                        $('#startDate').val(startTime);
+                        $('#endDate').val(endTime);
+                        $('#recommId').val(data.recommId);
+                        $("#viewType").val(data.viewType);
+                        $('#recommandModal').modal('show');
+                    } else {
+                        $("#tipMsg").text("获取信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        });
+        $.get('/admin/homerecomm/get', function (response) {
+            if (response.code === 200) {
+                $('#people').text(response.data.peopleCount + '%');
+                $('#giftFlow').text(response.data.giftFlow + '%');
+                $('#backFlow').text(response.data.backGiftFlow + '%');
+            } else {
+                $("#tipMsg").text("获取首页推荐规则失败, 错误码: " + response.code);
+                $("#tipModal").modal('show');
+            }
+        });
+        $("#peopleCount").bind('input propertychange', function() {
+            if ($('#giftCount').val() != '') {
+                $('#backCount').val(100 - $("#peopleCount").val() - $('#giftCount').val());
+            }
+        });
+        $("#giftCount").bind('input propertychange', function() {
+            if ($('#peopleCount').val() != '') {
+                $('#backCount').val(100 - $("#peopleCount").val() - $('#giftCount').val());
+            }
+        });
+        $('#btnModify').click(function() {
+            $("#peopleCount").val('');
+            $("#peopleCount").attr("placeholder", $('#people').text());
+            $('#giftCount').val('');
+            $("#giftCount").attr("placeholder", $('#giftFlow').text());
+            $('#backCount').val('');
+            $("#backCount").attr("placeholder", $('#backFlow').text());
+            $("#editModal").modal('show');
+        });
+        $('#confirm').click(function() {
+            $.ajax({
+                type: 'get',
+                url: '/admin/homerecomm/save',
+                data: $('#editForm').serialize(),
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                        $("#editModal").modal('hide');
+                    } else {
+                        $("#tipMsg").text("保存失败, 错误码: " + res.code);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        });
+        $('#table').on('click', '.opt-del', function () {
+            const recommId = $(this).data('id');
+            $.ajax({
+                type: 'post',
+                url: '/admin/homerecomm/hot/del',
+                data: {"recommId": recommId},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        $("#tipMsg").text("删除成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("删除失败，错误码：" + res.code);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        });
+        const picker1 = $('#startDate').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        });
+        picker1.on('changeDate', function () {
+            const date = $('#startDate').datetimepicker('getDate');
+            picker2.datetimepicker('setStartDate', date);
+        });
+        picker2.on('changeDate', function () {
+            const date = $('#endDate').datetimepicker('getDate');
+            picker1.datetimepicker('setEndDate', date);
+        });
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        });
+        $('#save').on('click', function () {
+            if ($('#recomForm').validationEngine('validate')) {
+                $.ajax({
+                    type: 'post',
+                    url: '/admin/homerecomm/hot/updateRecomm',
+                    data: {
+                        startTimeString: $('#startDate').val(),
+                        endTimeString: $('#endDate').val(),
+                        recommId: $('#recommId').val(),
+                        seqNo: $('#seqNo').val(),
+                        viewType: $("#viewType").val()
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 200) {
+                            $('#recommandModal').modal('hide');
+                            $("#tipMsg").text("修改成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("修改失败，错误码：" + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+        $('#addSave').on('click', function () {
+            if ($('#addRecomForm').validationEngine('validate')) {
+                $.ajax({
+                    type: 'post',
+                    url: '/admin/homerecomm/hot/add',
+                    data: {
+                        startTimeString: $('#addStartTime').val(),
+                        endTimeString: $('#addEndTime').val(),
+                        erbanNo: $('#addUid').val(),
+                        seqNo: $('#addSeqNo').val(),
+                        viewType: $("#addViewType").val()
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 200) {
+                            $('#addModal').modal('hide');
+                            $("#tipMsg").text("增加成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("增加失败，错误码：" + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+        $('#add').on('click', function () {
+            $('#addModal').modal('show');
+        });
+        const picker3 = $('#addStartTime').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        });
+        picker3.on('changeDate', function () {
+            const date = $('#addStartTime').datetimepicker('getDate');
+            picker4.datetimepicker('setStartDate', date);
+        });
+        picker4.on('changeDate', function () {
+            const date = $('#addEndTime').datetimepicker('getDate');
+            picker3.datetimepicker('setEndDate', date);
+        });
+    })
+</script>

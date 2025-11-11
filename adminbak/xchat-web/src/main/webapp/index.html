@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>拉贝</title>
+    <script>
+        var layout_width = 750;
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= layout_width) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <link rel="icon" href="mm/index/images/bitbug_favicon.ico">
+    <link rel="stylesheet" href="mm/lib/reset.css">
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .bg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn-area {
+            position: absolute;
+            top: 5.3rem;
+            left: 3.8rem;
+        }
+
+        .btn-area>div {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .btn-area>div>span {
+            height: 2.15rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            width: 2.97rem;
+            height: 0.96rem;
+        }
+
+        .links {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+        .links>div {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.22rem;
+            color: #fff;
+        }
+
+        .links>div>p {
+            line-height: 1.5;
+        }
+
+        a {
+            font-size: 0.3rem;
+            color: #333;
+            position: absolute;
+            right: 5rem;
+            top: 0.35rem;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="mm/index/images/bg.png" class="bg">
+    <a href="https://www.47huyu.cn/mm/index/aboutUs.html" target="_blank">关于我们</a>
+    <div class="btn-area">
+        <div>
+            <span>
+                <img src="/home/images/ios.png" class="btn" onclick="download('iOS')">
+                <img src="/home/images/android.png" class="btn" onclick="download('Android')">  
+            </span>
+        </div>
+    </div>
+    <div class="links">
+        <div>
+            <p>Copyright © 2017-2018 www.47huyu.cn All Rights Reserved版权所有</p>
+            <p>粤ICP备17076348号-1 粤网文〔2017〕5728-1347号 </p>
+            <p>深圳互乐科技有限公司</p>
+        </div>
+    </div>
+</body>
+<script>
+    download = function (type) {
+        switch (type) {
+            case 'Android':
+                location.href = 'https://www.47huyu.cn/mm/download/download.html';
+                break;
+            case 'iOS':
+                location.href = 'https://www.47huyu.cn/mm/download/download.html';
+                break;
+            default:
+                break;
+        }
+    }
+</script>
+</html>

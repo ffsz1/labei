@@ -1,0 +1,247 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">菜单信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="menuForm">
+                    <input type="hidden" name="id" id="id"/>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">名称:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="name" id="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="path" class="col-sm-2 control-label">路径:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="path" id="path">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="icon" class="col-sm-2 control-label">图标:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="icon" id="icon">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="showorder" class="col-sm-2 control-label">排序:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="showorder" id="showorder"
+                                   value="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="status" class="col-sm-2 control-label">状态:</label>
+                        <div class="col-sm-10">
+                            <select name="status" id="status" data-btn-class="btn-warning">
+                                <option value="1">有效</option>
+                                <option value="0">无效</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentId" class="col-sm-2 control-label">父级:</label>
+                        <div class="col-sm-10">
+                            <select name="parentid" id="parentId" data-btn-class="btn-warning">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">描述:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="description" id="description"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let isEdit = false;
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {field: 'id', title: 'ID', align: 'center', width: '5%', visible: false},
+                {field: 'name', title: '名字', align: 'center', width: 150},
+                {field: 'parentid', title: '父ID', align: 'center', visible: false},
+                {field: 'parentstr', title: '父级', align: 'center', width: 150},
+                {field: 'path', title: '路径', width: 350},
+                {field: 'icon', title: '图标', width: 250},
+                {field: 'showorder', title: '排序', align: 'center', width: 100},
+                {
+                    field: 'status', title: '状态', align: 'center', width: 100, formatter: function (val, row, index) {
+                        if (val == true) {
+                            return '有效';
+                        }
+                        return '无效';
+                    }
+                },
+                {
+                    field: 'createtime',
+                    title: '创建时间',
+                    align: 'center',
+                    width: 250,
+                    formatter: function (val, row, index) {
+                        const newDate = new Date();
+                        newDate.setTime(val);
+                        return newDate.toLocaleString();
+                    }
+                },
+                {
+                    field: 'id', title: '操作', align: 'center', width: 250, formatter: function (val) {
+                        return "<button class='btn btn-sm btn-success opt-edit' data-id=" + val + ">编辑</button>&nbsp;&nbsp;" +
+                            "<button class='btn btn-sm btn-danger opt-del' data-id=" + val + ">删除</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [1, 10, 20, 30, 50],
+            search: true,
+            sidePagination: "server", //表示服务端请求
+            // 设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: '/admin/menu/getlist.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+        // 构建下拉组合框
+        ComboboxHelper.build(null, '#status');
+        ComboboxHelper.build('/admin/menu/getparentlist.action', '#parentId', "0");
+        $("#menuForm").validationEngine();
+        $("#add").click(function () {
+            // 打开编辑弹窗
+            $("#menuModal").modal('show');
+            isEdit = false;
+            $("#menuForm")[0].reset();
+            $("#id").val(0);
+        });
+        $("#table").on("click", '.opt-edit', function () {
+            console.log("btnEdit");
+            isEdit = true;
+            const id = $(this).attr("data-id");
+            $.ajax({
+                type: "post",
+                url: "/admin/menu/getone.action",
+                data: {id: id},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#id").val(json.entity.id);
+                        $("#name").val(json.entity.name);
+                        $("#path").val(json.entity.path);
+                        $("#icon").val(json.entity.icon);
+                        $("#showOrder").val(json.entity.showorder);
+                        $("#description").val(json.entity.description);
+                        ComboboxHelper.setDef("#parentId", json.entity.parentid);
+                        ComboboxHelper.setDef("#status", json.entity.status ? "1" : "0");
+                        // 打开编辑弹窗
+                        $("#menuModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("获取菜单信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+        $("#table").on("click", '.opt-del', function () {
+            const id = $(this).attr('data-id');
+            $.ajax({
+                type: 'post',
+                url: "/admin/menu/del.action",
+                data: {'id': id},
+                dataType: "json",
+                success: function (json) {
+                    if (json.result == 1) {
+                        $("#tipMsg").text("删除成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("删除失败，错误码：" + json.result);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+        $("#cancel").click(function () {
+            TableHelper.unCheckAll("#table");
+        });
+        $("#save").click(function () {
+            if ($("#menuForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/menu/save.action?isEdit=" + isEdit,
+                    data: $('#menuForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#menuModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            };
+        });
+    });
+</script>

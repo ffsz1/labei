@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.HomeRoomFlowPeriodMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.beanmap.HomeRoomFlowPeriod" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="seq_no" property="seqNo" jdbcType="INTEGER" />
+    <result column="flow_sum_total" property="flowSumTotal" jdbcType="BIGINT" />
+    <result column="online_num" property="onlineNum" jdbcType="BIGINT" />
+  </resultMap>
+
+  <select id="getHotHomePermitRoomList" resultMap="BaseResultMap">
+     SELECT
+       room.uid,period.flow_sum_total,room.online_num
+    FROM
+      stat_room_ctrb_sum_period period
+    RIGHT JOIN  room room
+      ON room.uid = period.uid
+      WHERE room.is_permit_room=1
+      AND (room.room_pwd IS NULL OR room.room_pwd='')
+      and room.online_num>0
+    ORDER BY period.flow_sum_total DESC
+  </select>
+
+  <select id="getHomeHotManualRecommList" resultMap="BaseResultMap">
+    SELECT
+      room.uid,
+      room.online_num,
+      recomm.seq_no
+    FROM
+      home_hot_manual_recomm recomm,
+      room room
+    WHERE recomm.uid = room.uid
+      AND room.valid = TRUE
+      AND now() BETWEEN recomm.start_valid_time AND recomm.end_valid_time
+    GROUP BY room.uid
+    ORDER BY recomm.seq_no desc,
+	(select SUM(g.total_gold_num) from gift_send_record g where g.room_uid = room.uid and g.create_time >= date_sub(sysdate(),interval 2 minute)) desc,
+    recomm.recomm_id ASC
+  </select>
+
+
+  <select id="getGameHomeRoomPeriodList" resultMap="BaseResultMap" parameterType="com.erban.main.model.beanmap.HomeRoomFlowPeriod" >
+    SELECT
+      room.uid,period.flow_sum_total,room.online_num
+    FROM
+      stat_room_ctrb_sum_period period
+    RIGHT JOIN  room room
+    ON room.uid = period.uid
+    WHERE room.valid = TRUE
+    AND room.type=3
+    AND (room.room_pwd IS NULL OR room.room_pwd='')
+    and room.online_num>0
+    ORDER BY  period.flow_sum_total DESC,room.online_num DESC
+  </select>
+
+  <!--<select id="getGameHomeRoomPeriodListOthers" resultMap="BaseResultMap" parameterType="com.erban.main.model.beanmap.HomeRoomFlowPeriod" >-->
+    <!--SELECT-->
+      <!--room.uid,period.flow_sum_total-->
+    <!--FROM-->
+      <!--stat_room_ctrb_sum_period period-->
+    <!--RIGHT JOIN  room room-->
+    <!--ON room.uid = period.uid-->
+    <!--WHERE room.valid = TRUE-->
+    <!--AND room.type=3-->
+    <!--AND (room.is_permit_room IS NULL OR room.is_permit_room =2)-->
+    <!--AND (room.room_pwd IS NULL OR room.room_pwd='')-->
+    <!--ORDER BY  period.flow_sum_total DESC,room.update_time DESC-->
+    <!--LIMIT 0,150-->
+  <!--</select>-->
+
+
+
+
+  <select id="getRadioHomeRoomPrriodList" resultMap="BaseResultMap" parameterType="com.erban.main.model.beanmap.HomeRoomFlowPeriod" >
+    SELECT
+    room.uid,period.flow_sum_total,room.online_num
+    FROM
+    stat_room_ctrb_sum_period period
+    RIGHT JOIN  room room
+    ON room.uid = period.uid
+    WHERE room.valid = TRUE
+    AND room.type in(1,2)
+    AND (room.room_pwd IS NULL OR room.room_pwd='')
+    and room.online_num>0
+    ORDER BY period.flow_sum_total DESC
+    LIMIT 0,50
+
+  </select>
+
+
+  <!--<select id="getHotHomeRoomForRecomOneTwoList" resultMap="BaseResultMap" parameterType="com.erban.main.model.beanmap.HomeRoomFlowPeriod" >-->
+    <!--SELECT-->
+      <!--room.*,-->
+      <!--st.flow_sum_total-->
+    <!--FROM-->
+      <!--stat_room_ctrb_sum_period st,-->
+      <!--room room-->
+    <!--WHERE st.uid = room.uid-->
+      <!--AND room.valid = TRUE-->
+      <!--AND (room.room_pwd IS NULL OR room.room_pwd='')-->
+    <!--ORDER BY st.flow_sum_total DESC-->
+    <!--LIMIT 0, 2-->
+  <!--</select>-->
+
+  <!--<select id="getHotHomeRoomForRecomThirdForthList" resultMap="BaseResultMap" parameterType="java.util.List">-->
+    <!--SELECT-->
+    <!--room.*,-->
+    <!--st.flow_sum_total-->
+    <!--FROM-->
+    <!--stat_room_ctrb_sum_total st,-->
+    <!--room room-->
+    <!--WHERE st.uid = room.uid-->
+    <!--AND room.valid = TRUE-->
+    <!--AND (room.room_pwd IS NULL OR room.room_pwd='')-->
+    <!--AND room.uid not in-->
+    <!--<foreach collection="list" index="index" item="item" open="(" separator="," close=")">-->
+           <!--#{item}-->
+    <!--</foreach>-->
+    <!--ORDER BY st.flow_sum_total DESC-->
+    <!--LIMIT 0, 2-->
+  <!--</select>-->
+
+  <!--<select id="getHotHomeRoomForRadioList" resultMap="BaseResultMap" parameterType="java.util.List" >-->
+    <!--SELECT-->
+    <!--room.*,-->
+    <!--st.flow_sum_total-->
+    <!--FROM-->
+    <!--stat_room_ctrb_sum_total st,-->
+    <!--room room-->
+    <!--WHERE st.uid = room.uid-->
+    <!--AND room.valid = TRUE-->
+    <!--AND room.type IN (1,2)-->
+    <!--AND (room.room_pwd IS NULL OR room.room_pwd='')-->
+    <!--AND room.uid not in-->
+    <!--<foreach collection="list" index="index" item="item" open="(" separator="," close=")">-->
+      <!--#{item}-->
+    <!--</foreach>-->
+    <!--ORDER BY st.flow_sum_total DESC-->
+    <!--LIMIT 0, 4-->
+<!--</select>-->
+
+  <!--<select id="getHotHomeRoomForGameList" resultMap="BaseResultMap" parameterType="com.erban.main.model.beanmap.HomeRoomFlowPeriod" >-->
+    <!--SELECT-->
+    <!--room.*,-->
+    <!--st.flow_sum_total-->
+    <!--FROM-->
+    <!--stat_room_ctrb_sum_total st,-->
+    <!--room room-->
+    <!--WHERE st.uid = room.uid-->
+    <!--AND room.valid = TRUE-->
+    <!--AND room.type = 3-->
+    <!--AND (room.room_pwd IS NULL OR room.room_pwd='')-->
+    <!--AND room.uid not in-->
+    <!--<foreach collection="list" index="index" item="item" open="(" separator="," close=")">-->
+      <!--#{item}-->
+    <!--</foreach>-->
+    <!--ORDER BY st.flow_sum_total DESC-->
+    <!--LIMIT 0, 4-->
+  <!--</select>-->
+
+
+  <!--<select id="getGameHomeRoomList" resultMap="BaseResultMap" parameterType="com.erban.main.model.beanmap.HomeRoomFlowPeriod" >-->
+      <!--SELECT-->
+        <!--room.*,-->
+        <!--st.flow_sum_total-->
+      <!--FROM-->
+        <!--stat_room_ctrb_sum_total st-->
+        <!--RIGHT JOIN room room-->
+          <!--ON st.uid = room.uid-->
+      <!--WHERE room.valid = TRUE-->
+        <!--AND room.type = 3-->
+        <!--AND (room.room_pwd IS NULL OR room.room_pwd='')-->
+      <!--ORDER BY st.flow_sum_total DESC-->
+      <!--LIMIT 0, 50-->
+  <!--</select>-->
+
+  <!--<select id="getRadioHomeRoomList" resultMap="BaseResultMap" parameterType="com.erban.main.model.beanmap.HomeRoomFlowPeriod" >-->
+      <!--SELECT-->
+        <!--room.*,-->
+        <!--st.flow_sum_total-->
+      <!--FROM-->
+        <!--stat_room_ctrb_sum_total st-->
+        <!--RIGHT JOIN room room-->
+          <!--ON st.uid = room.uid-->
+      <!--WHERE room.valid = TRUE-->
+        <!--AND room.type IN (1,2)-->
+        <!--AND (room.room_pwd IS NULL OR room.room_pwd='')-->
+      <!--ORDER BY st.flow_sum_total DESC-->
+      <!--LIMIT 0, 50-->
+  <!--</select>-->
+
+</mapper>

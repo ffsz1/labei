@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserRealNameMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.UserRealName">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="id_card_no" property="idCardNo" jdbcType="VARCHAR"/>
+        <result column="id_card_front" property="idCardFront" jdbcType="VARCHAR"/>
+        <result column="id_card_opposite" property="idCardOpposite" jdbcType="VARCHAR"/>
+        <result column="id_card_handheld" property="idCardHandheld" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="audit_status" property="auditStatus" jdbcType="BIT"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="admin_id" property="adminId" jdbcType="INTEGER"/>
+        <result column="is_first" property="isFirst" jdbcType="BIT"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        uid, real_name, id_card_no, id_card_front, id_card_opposite, id_card_handheld, phone,
+        audit_status, create_date, update_date, admin_id, is_first, remark
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.UserRealNameExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from user_real_name
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from user_real_name
+        where uid = #{uid,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from user_real_name where uid = #{uid,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.UserRealNameExample">
+        delete from user_real_name
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.UserRealName">
+        insert into user_real_name (uid, real_name, id_card_no,
+                    id_card_front, id_card_opposite, id_card_handheld,
+                    phone, audit_status, create_date,
+                    update_date, admin_id, is_first)
+        values (#{uid,jdbcType=BIGINT}, #{realName,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR},
+                #{idCardFront,jdbcType=VARCHAR}, #{idCardOpposite,jdbcType=VARCHAR}, #{idCardHandheld,jdbcType=VARCHAR},
+                #{phone,jdbcType=VARCHAR}, #{auditStatus,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP},
+                #{updateDate,jdbcType=TIMESTAMP}, #{adminId,jdbcType=INTEGER}, #{isFirst,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.UserRealName">
+        insert into user_real_name
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="idCardNo != null">
+                id_card_no,
+            </if>
+            <if test="idCardFront != null">
+                id_card_front,
+            </if>
+            <if test="idCardOpposite != null">
+                id_card_opposite,
+            </if>
+            <if test="idCardHandheld != null">
+                id_card_handheld,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="auditStatus != null">
+                audit_status,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="adminId != null">
+                admin_id,
+            </if>
+            <if test="isFirst != null">
+                is_first,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardNo != null">
+                #{idCardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardFront != null">
+                #{idCardFront,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardOpposite != null">
+                #{idCardOpposite,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardHandheld != null">
+                #{idCardHandheld,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="auditStatus != null">
+                #{auditStatus,jdbcType=BIT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="adminId != null">
+                #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="isFirst != null">
+                #{isFirst,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.UserRealNameExample" resultType="java.lang.Integer">
+        select count(*) from user_real_name
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user_real_name
+        <set>
+            <if test="record.uid != null">
+                uid = #{record.uid,jdbcType=BIGINT},
+            </if>
+            <if test="record.realName != null">
+                real_name = #{record.realName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.idCardNo != null">
+                id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.idCardFront != null">
+                id_card_front = #{record.idCardFront,jdbcType=VARCHAR},
+            </if>
+            <if test="record.idCardOpposite != null">
+                id_card_opposite = #{record.idCardOpposite,jdbcType=VARCHAR},
+            </if>
+            <if test="record.idCardHandheld != null">
+                id_card_handheld = #{record.idCardHandheld,jdbcType=VARCHAR},
+            </if>
+            <if test="record.phone != null">
+                phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.auditStatus != null">
+                audit_status = #{record.auditStatus,jdbcType=BIT},
+            </if>
+            <if test="record.createDate != null">
+                create_date = #{record.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateDate != null">
+                update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.adminId != null">
+                admin_id = #{record.adminId,jdbcType=INTEGER},
+            </if>
+            <if test="record.isFirst != null">
+                is_first = #{record.isFirst,jdbcType=BIT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user_real_name
+        set uid = #{record.uid,jdbcType=BIGINT},
+            real_name = #{record.realName,jdbcType=VARCHAR},
+            id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+            id_card_front = #{record.idCardFront,jdbcType=VARCHAR},
+            id_card_opposite = #{record.idCardOpposite,jdbcType=VARCHAR},
+            id_card_handheld = #{record.idCardHandheld,jdbcType=VARCHAR},
+            phone = #{record.phone,jdbcType=VARCHAR},
+            audit_status = #{record.auditStatus,jdbcType=BIT},
+            create_date = #{record.createDate,jdbcType=TIMESTAMP},
+            update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+            admin_id = #{record.adminId,jdbcType=INTEGER},
+            is_first = #{record.isFirst,jdbcType=BIT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.UserRealName">
+        update user_real_name
+        <set>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardNo != null">
+                id_card_no = #{idCardNo,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardFront != null">
+                id_card_front = #{idCardFront,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardOpposite != null">
+                id_card_opposite = #{idCardOpposite,jdbcType=VARCHAR},
+            </if>
+            <if test="idCardHandheld != null">
+                id_card_handheld = #{idCardHandheld,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus,jdbcType=BIT},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="adminId != null">
+                admin_id = #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="isFirst != null">
+                is_first = #{isFirst,jdbcType=BIT},
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.UserRealName">
+        update user_real_name
+        set real_name = #{realName,jdbcType=VARCHAR},
+            id_card_no = #{idCardNo,jdbcType=VARCHAR},
+            id_card_front = #{idCardFront,jdbcType=VARCHAR},
+            id_card_opposite = #{idCardOpposite,jdbcType=VARCHAR},
+            id_card_handheld = #{idCardHandheld,jdbcType=VARCHAR},
+            phone = #{phone,jdbcType=VARCHAR},
+            audit_status = #{auditStatus,jdbcType=BIT},
+            create_date = #{createDate,jdbcType=TIMESTAMP},
+            update_date = #{updateDate,jdbcType=TIMESTAMP},
+            admin_id = #{adminId,jdbcType=INTEGER},
+            is_first = #{isFirst,jdbcType=BIT},
+            remark = #{remark,jdbcType=VARCHAR}
+        where uid = #{uid,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,400 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--查询输入框-->
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">拉贝号:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="erbanNo" name="erbanNo" class="form-control"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                        <label class="col-sm-1 control-label">金币:</label>
+                        <!-- <div class="col-sm-1">
+                            <div class="col-sm-1">
+                                <select class="btn btn-default dropdown-toggle" id="chargeProdId" name="chargeProdId"
+                                        data-btn-class="btn-warning">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-2">
+                            <input type="text" id="min" type="date" placeholder="输入最小值（包含）" name="beginDate"
+                                   value="" class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="max" type="date" placeholder="输入最大值（包含）" name="endDate" value=""
+                                   class="form-control validate[required]">
+                        </div>
+                        <label class="col-sm-1 control-label">类型:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-block btn-default dropdown-toggle" id="type" name="type"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1" selected="selected">金币充值</option>
+                                <option value="2">钻石兑金币</option>
+                                <option value="3">公款充值</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">支付状态:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-block btn-default dropdown-toggle" id="status" name="status"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">未支付</option>
+                                <option value="2" selected="selected">已支付</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="addStartDate" type="date" placeholder="开始时间" name="beginDate"
+                                   value="" class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="addEndDate" type="date" placeholder="结束时间" name="endDate" value=""
+                                   class="form-control validate[required]">
+                        </div>
+                        <label class="col-sm-1 control-label">性别:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-block btn-default dropdown-toggle" id="gender" name="gender"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                                <option value="0">其他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">平台:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-block btn-default dropdown-toggle" id="os" name="os"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="android">android</option>
+                                <option value="iOS">iOS</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">支付渠道:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-block btn-default dropdown-toggle" id="channel" name="channel"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="alipay">支付宝</option>
+                                <option value="wx">微信</option>
+                                <option value="alipay_wap">支付宝H5</option>
+                                <option value="wx_wap">微信H5</option>
+                                <option value="wx_pub">微信公众号支付</option>
+                                <option value="WEIXIN_APP">汇聚微信APP</option>
+                                <option value="WEIXIN_APP2">汇聚微信APP+</option>
+                                <option value="ALIPAY_H5">汇聚支付宝H5支付</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button onclick="getYesterday()" class="btn btn-danger" type="button"
+                                    style="margin-right: 10px">
+                                <i class="glyphicon glyphicon-calendar"></i> 昨天
+                            </button>
+                            <button id="exportExcel" class="btn btn-success">
+                                <i class="glyphicon glyphicon glyphicon-download-alt"></i> 导出Excel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!--content-->
+                <div id="chargeRecordTable"></div>
+                <div id="toolbar">
+                    <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 0;">
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">充值人数：</span>
+                            <span style="color: red" id="userNum">0</span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">男 ：</span>
+                            <span style="color: red" id="male">0</span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">女：</span>
+                            <span style="color: red" id="female">0</span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">其他：</span>
+                            <span style="color: red" id="other">0</span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">金额（RMB）：</span>
+                            <span style="color: red" id="totalAmount">0</span>
+                            <span>元</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+    const isEdit = false;
+    const picker3 = $('#addStartDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    const picker2 = $('#addEndDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    // 设置时间初始值
+    $("#addStartDate").val(getCurrentDate());
+    $("#addEndDate").val(getCurrentDate());
+
+    $(function () {
+        $('#chargeRecordTable').bootstrapTable('destroy');
+        $('#chargeRecordTable').bootstrapTable({
+            columns: [
+                {field: 'chargeRecordId', title: '订单ID', align: 'center', width: '8%', visible: false},
+                {field: 'pingxxChargeId', title: 'ping++单号', align: 'center', width: 250},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: 200},
+                {field: 'nick', title: '昵称', align: 'center', width: 200},
+                {field: 'phone', title: '电话', align: 'center', width: 200},
+                {field: 'os', title: '平台', align: 'center', width: 200},
+                {
+                    field: 'gender', title: '性别', align: 'center', width: 150, formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '男';
+                        } else if (val == 2) {
+                            return '女';
+                        } else {
+                            return '其他';
+                        }
+                    }
+                },
+                {field: 'clientIp', title: '用户IP', align: 'center', width: 250},
+                {field: 'totalGold', title: '金币数量', align: 'center', width: 150},
+                {
+                    field: 'chargeDesc',
+                    title: '产品描述',
+                    align: 'center',
+                    width: 250,
+                    formatter: function (val, row, index) {
+                        if (val != null) {
+                            return val;
+                        } else if (row.subject != null) {
+                            return row.subject;
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'amount',
+                    title: '金额(元)',
+                    align: 'center',
+                    width: 200,
+                    formatter: function (val, row, index) {
+                        return val / 100;
+                    }
+                },
+                {
+                    field: 'channel',
+                    title: '支付渠道',
+                    align: 'center',
+                    width: 200,
+                    formatter: function (val, row, index) {
+                        if (val == "wx") {
+                            return "微信";
+                        } else if (val == "alipay") {
+                            return "支付宝";
+                        } else if (val == "exchange") {
+                            return "exchange";
+                        } else if (val == "company") {
+                            return "company";
+                        } else if (val == "alipay_wap") {
+                            return "支付宝H5";
+                        } else if (val == "wx_wap") {
+                            return "微信H5";
+                        } else if (val == "wx_pub") {
+                            return "微信公众号支付";
+                        }
+                    }
+                },
+                {
+                    field: 'chargeStatus',
+                    title: '支付状态',
+                    align: 'center',
+                    width: 200,
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return "<span style=\"color:grey;\">未支付</span>";
+                        } else if (val == 2) {
+                            return "<span style=\"color:red;\">已支付</span>";
+                        } else if (val == 3) {
+                            return "<span style=\"color:yellow;\">支付异常</span>";
+                        } else if (val == 4) {
+                            return "<span style=\"color:green;\">支付超时</span>";
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'createTime', title: '购买时间', align: 'center', width: 250,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'updateTime', title: '回调时间', align: 'center', width: 250,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    erbanNo: isNaN(parseInt($("#erbanNo").val())) ? null : parseInt($("#erbanNo").val()),
+                    beginDate: $("#addStartDate").val(),
+                    endDate: $("#addEndDate").val(),
+                    // chargeProdId: $("#chargeProdId").val(),
+                    minValue: $("#min").val(),
+                    maxValue: $("#max").val(),
+                    status: isNaN(parseInt($("#status").val())) ? null : parseInt($("#status").val()),
+                    type: parseInt($("#type").val()),
+                    channel: $("#channel").val(),
+                    os: $("#os").val(),
+                    gender: isNaN(parseInt($("#gender").val())) ? null : parseInt($("#gender").val())
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/charge/list.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    clear();
+                    $("#userNum").text(res.data.list[0].userNum);
+                    $("#male").text(res.data.list[0].male);
+                    $("#female").text(res.data.list[0].female);
+                    $("#other").text(res.data.list[0].other);
+                    $("#totalAmount").text(res.data.list[0].totalAmount / 100);
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            }
+        });
+    });
+
+    $(function () {
+        $.ajax({
+            url: "/admin/charge/chargeProdList.action",
+            processData: false,
+            success: function (res) {
+                if (res.code == 200) {
+                    $.each(res.data, function (i, chargeProd) {
+                        $("#chargeProdId").append("<option value=\"" + chargeProd.chargeProdId + "\">" + chargeProd.prodName + "</option>");
+                    })
+                }
+            }
+        });
+    });
+
+    $('#exportExcel').click(function () {
+        const param = $("form").serialize();
+        const url = "/admin/charge/chargeRecordExport?" + param;
+        window.location.href = url;
+    });
+
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    };
+
+    function getYesterday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#addStartDate").val(today.format("yyyy-MM-dd"));
+        $("#addEndDate").val(today.format("yyyy-MM-dd"));
+        $('#chargeRecordTable').bootstrapTable('refresh');
+    };
+
+    function clear() {
+        $("#userNum").text('');
+        $("#male").text('');
+        $("#female").text('');
+        $("#totalAmount").text('');
+        $("#other").text('');
+    };
+</script>
+<script src="/static/js/admin/style.js"></script>

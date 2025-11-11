@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd"
+           default-lazy-init="true">
+	
+	<bean id="smsThriftServerConfigProvider" class="com.yy.ent.mobile.pool.thrift.StaticThriftServerConfigProvider">
+		<constructor-arg name="serverAddresses" value="115.238.170.51:30303" />
+	</bean>
+	
+	<bean id="smsThriftPoolConfig" class="com.yy.ent.mobile.pool.thrift.ThriftClientPoolConfig">
+        <property name="maxTotal" value="300" />
+        <property name="maxIdle" value="300" />
+        <property name="minIdle" value="100" />
+        <property name="maxWaitMillis" value="5000" />
+        <property name="testOnBorrow" value="true" />
+        <property name="testOnReturn" value="true" />
+        <!--<property name="blockWhenExhausted" value="true" />-->
+	</bean>
+	
+	<bean id="smsThriftClientPoolFactory" class="com.yy.ent.mobile.pool.thrift.ThriftClientPoolFactory">
+        <constructor-arg name="thriftClientFactoryClazzName" value="com.xchat.oauth2.service.sms.thrift.MsgOper_Service$Client$Factory"/>
+        <constructor-arg name="thriftServerConfigProvider" ref="smsThriftServerConfigProvider" />
+        <constructor-arg name="timeout" value="0"/>
+	</bean>
+	
+	<bean id="smsThriftClientManager" class="com.yy.ent.mobile.pool.thrift.ThriftClientManager">
+		<constructor-arg name="thriftClientPoolFactory" ref="smsThriftClientPoolFactory"/>
+        <constructor-arg name="thriftClientPoolConfig" ref="smsThriftPoolConfig"/>
+	</bean>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.xchat.oauth2.service.gateway" />
+</beans>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatRoomCtrbSumPeriodMapperMgr" >
+
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatRoomFlowOnlinePeriod" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="room_pwd" property="roomPwd" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="tag_id" property="tagId" jdbcType="INTEGER" />
+    <result column="tag_pict" property="tagPict" jdbcType="VARCHAR" />
+    <result column="room_tag" property="roomTag" jdbcType="VARCHAR" />
+    <result column="badge" property="badge" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="room_desc" property="roomDesc" jdbcType="VARCHAR" />
+    <result column="back_pic" property="backPic" jdbcType="VARCHAR" />
+    <result column="operator_status" property="operatorStatus" jdbcType="TINYINT" />
+    <result column="official_room" property="officialRoom" jdbcType="TINYINT" />
+    <result column="is_permit_room" property="isPermitRoom" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="recom_seq" property="recomSeq" jdbcType="BIGINT" />
+    <result column="online_num" property="onlineNum" jdbcType="INTEGER" />
+    <result column="flow_sum_total" property="flowSumTotal" jdbcType="BIGINT" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+  </resultMap>
+
+  <insert id="genPriodDataHalfHour" parameterType="com.erban.main.model.StatRoomCtrbSumPeriod" >
+  INSERT INTO stat_room_ctrb_sum_period(uid,flow_sum_total,create_time)
+  SELECT
+      re.room_uid AS room_uid,
+      SUM(re.total_gold_num) sum_gold,
+      NOW()
+    FROM
+       gift_send_record re
+       WHERE
+    re.create_time > DATE_SUB(NOW(),INTERVAL  10 MINUTE)
+    AND re.room_uid IS NOT NULL
+    GROUP BY re.room_uid
+    ORDER BY sum_gold DESC
+  </insert>
+
+  <insert id="genRoomFlowOnlinePeriod" >
+    INSERT INTO stat_room_flow_online_period (uid, room_id, room_pwd,operator_status,
+      title, tag_id, tag_pict,room_tag, badge, room_desc, back_pic,valid,avatar,nick,gender,
+      official_room, is_permit_room, type,recom_seq, online_num, flow_sum_total,score)
+    SELECT
+    rt.uid,rt.room_id,rt.room_pwd,rt.operator_status,rt.title,rt.tag_id, rt.tag_pict,rt.room_tag
+    ,if(rt.badge = '',null,rt.badge),rt.room_desc,rt.back_pic,rt.valid
+    ,(select ut3.avatar from users ut3 where rt.uid=ut3.uid)
+    ,(select ut.nick from users ut where rt.uid=ut.uid)
+    ,(select ut2.gender from users ut2 where rt.uid=ut2.uid)
+    ,rt.official_room,rt.is_permit_room,rt.type,rt.recom_seq, coalesce(rt.online_num,0), coalesce(st.flow_sum_total,0),
+    (coalesce(60*st.flow_sum_total/#{0},0) + 40*rt.online_num/#{1})
+    FROM
+    stat_room_ctrb_sum_period st
+    RIGHT JOIN  room rt
+    ON rt.uid = st.uid
+    WHERE  rt.valid=1
+    AND rt.online_num>0
+    AND rt.can_show=1
+    AND (rt.room_pwd IS NULL OR rt.room_pwd='')
+
+  </insert>
+
+
+  <select id="selectTotalOnline" resultType="long">
+    select sum(online_num) from room;
+  </select>
+
+
+  <select id="selectTotalFlow" resultType="long">
+    select sum(flow_sum_total) from stat_room_ctrb_sum_period;
+  </select>
+
+  <select id="selectRoomFlowOnlinePeriod" resultMap="BaseResultMap">
+    select * from stat_room_flow_online_period where 1=1
+    <if test="recomUids != null" >
+    AND uid NOT IN
+    <foreach item="item" index="index" collection="recomUids" open="(" separator="," close=")">
+    #{item}
+    </foreach>
+    </if>
+    <if test="tagIds != null" >
+      AND tag_id IN
+      <foreach item="item1" index="index" collection="tagIds" open="(" separator="," close=")">
+        #{item1}
+      </foreach>
+    </if>
+    <if test="isPermitRoom != null" >
+      AND is_permit_room IN
+      <foreach item="item2" index="index" collection="isPermitRoom" open="(" separator="," close=")">
+        #{item2}
+      </foreach>
+    </if>
+    AND is_permit_room>0
+    AND online_num>0
+    AND valid=1
+    ORDER BY recom_seq DESC,score DESC LIMIT #{skip}, #{size}
+  </select>
+
+  <select id="getRoomForFirstCharge" resultMap="BaseResultMap">
+    select * from stat_room_flow_online_period where 1=1
+    <if test="recomUids != null" >
+      AND uid NOT IN
+      <foreach item="item" index="index" collection="recomUids" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    AND is_permit_room in (2, 3)
+    AND online_num>0
+    AND valid=1
+    ORDER BY recom_seq DESC, is_permit_room+if(online_num>=2,0,1) ASC,score DESC LIMIT #{skip}, #{size}
+  </select>
+
+  <select id="getGreenHome" resultMap="BaseResultMap">
+    <!--select s.*
+    from user_configure uc
+    INNER JOIN stat_room_flow_online_period s on uc.uid = s.uid
+    where uc.green_recom = 1
+    <if test="recomUids != null" >
+      AND s.uid NOT IN
+      <foreach item="item" index="index" collection="recomUids" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    AND s.online_num>0
+    AND s.valid=1
+    ORDER BY s.recom_seq DESC,s.score DESC LIMIT #{skip}, #{size}-->
+
+    SELECT
+      rt.uid as uid,
+      rt.room_id as room_uid,
+      rt.room_pwd as room_pwd,
+      rt.operator_status as operator_status,
+      rt.title as title,
+      rt.tag_id as tag_id,
+      rt.tag_pict as tag_pict,
+      rt.room_tag as room_tag,
+      IF ( rt.badge = '', NULL, rt.badge ) as badge,
+      rt.room_desc as room_desc,
+      rt.back_pic as back_pic,
+      rt.valid as valid,
+      u.avatar as avatar,
+      u.nick as nick,
+      u.gender as gender,
+      rt.official_room as official_room,
+      rt.is_permit_room as is_permit_room,
+      rt.type as type,
+      rt.recom_seq as recom_seq,
+      COALESCE ( rt.online_num, 0 ) as online_num
+    FROM
+      user_configure uc
+    LEFT JOIN room rt ON rt.uid = uc.uid
+    LEFT JOIN users u ON u.uid = uc.uid
+    WHERE
+      uc.green_recom = 1
+      <if test="recomUids != null">
+        AND u.uid NOT IN
+        <foreach item="item" index="index" collection="recomUids" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    AND ( rt.room_pwd IS NULL OR rt.room_pwd = '' )
+    AND rt.valid = 1
+    ORDER BY rt.recom_seq DESC LIMIT #{skip}, #{size}
+
+  </select>
+
+</mapper>

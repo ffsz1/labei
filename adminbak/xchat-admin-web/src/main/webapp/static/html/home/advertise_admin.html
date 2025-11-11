@@ -1,0 +1,370 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="advertise-add" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i>增加
+                    </button>
+
+                    <button id="advertise-multiDel" class="btn btn-default">
+                        <i class="glyphicon glyphicon-wrench"></i>批量删除
+                    </button>
+                </div>
+            </section><!-- .content -->
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="advertiseModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">广告信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="advertiseForm">
+                    <input type="hidden" name="advId" id="advId"/>
+                        <div class="form-group">
+                            <label for="advName" class="col-sm-2 control-label">广告名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control validate[required]" name="advName" id="advName">
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">广告图标:</label>
+                        <div class="col-sm-10">
+                            <img src="" id="advIconImage" style="width:250px;height:90px;" alt="">
+                            <input type="file" id="iconUploadFile" name="file" accept="application/x-ico">
+                            <button class="btn btn-success" type="button" id="iconUploadBtn">上传</button>
+                            <input type="hidden" id="advIcon" name="advIcon" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="col-sm-2 control-label">状态</label>
+                            <div class="col-sm-3">
+                                <label class="radio-inline"><input type="radio" name="advStatus" value="1" checked>有效</label>
+                                <label class="radio-inline"><input type="radio" name="advStatus" value="2">无效</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="skipType" class="col-sm-2 control-label">跳转类型</label>
+                            <div class="col-sm-10">
+                                <select name="skipType" id="skipType" data-btn-class="btn-warning">
+                                    <option value="1">App页面</option>
+                                    <option value="2">聊天室</option>
+                                    <option value="3">H5页面</option>
+                                </select>
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <label for="skipUri" class="col-sm-2 control-label">跳转地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="skipUri" id="skipUri">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-2 control-label">排序</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="seqNo" id="seqNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label for="startTime" class="col-sm-2 control-label">开始时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="startTime" type="date" name="startTime" class="form-control validate[required]">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endTime" class="col-sm-2 control-label">结束时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="endTime" type="date" name="endTime" class="form-control validate[required]">
+                            </div>
+                        </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    ComboboxHelper.build(null,'#skipType');
+    var startTimePicker = $('#startTime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        startDate: new Date()
+    })
+    var endTimePicker = $('#endTime').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        startDate: new Date()
+    })
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {field: 'advId', title: 'id', align: 'center', width: '5%'},
+                {field: 'advName', title: '广告名称', align: 'center', width: '5%'},
+                {field: 'skipType', title: '跳转类型', align: 'center', width: '8%', formatter:function(val,row,index){
+                        if(val == 1) {
+                            return 'App页面';
+                        } else if(val == 2){
+                            return '聊天室';
+                        } else if(val == 3){
+                            return 'H5页面';
+                        }
+                    }
+                },
+                {field: 'advStatus', title: '状态', align: 'center', width: '5%', formatter:function(val,row,index){
+                        if(val == 1) {
+                            return '有效';
+                        } else if(val == 2){
+                            return '无效';
+                        }
+                    }
+                },
+                {field: 'seqNo', title: '排序', align: 'center', width: '5%'},
+                {field: 'startTime', title: '开始时间', align: 'center', width: '15%', formatter:function(val,row,index){
+                        var newDate = new Date();
+                        newDate.setTime(val);
+                        return newDate.toLocaleString();
+                    }
+                },
+                {field: 'endTime', title: '结束时间', align: 'center', width: '15%', formatter:function(val,row,index){
+                        var newDate = new Date();
+                        newDate.setTime(val);
+                        return newDate.toLocaleString();
+                    }
+                },
+                {field: 'createTime', title: '创建时间', align: 'center', width: '15%', formatter:function(val,row,index){
+                        var newDate = new Date();
+                        newDate.setTime(val);
+                        return newDate.toLocaleString();
+                    }
+                },
+                {field: 'advId', title: '操作', align: 'center', width: '20%', formatter: function(val, row, index){
+                        return '<button class="btn btn-sm btn-success opt-edit" data-id=' + val + '>' +
+                                '<i class="glyphicon glyphicon-edit"></i>编辑</button>' +
+                                '&nbsp;&nbsp;<button class="btn btn-sm btn-danger opt-remove" data-id=' + val +
+                                '><i class="glyphicon glyphicon-remove"></i>删除</button>';
+                    }}
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [1, 10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: '/admin/advertise/getList.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+        $("#table").on("click", '.opt-remove', function () {
+            var id = $(this).attr("data-id");
+            if(id == 'undefined')
+            {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if (confirm("你确认删除该记录吗?" +
+                    "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/advertise/del.action",
+                    data: {'ids': JSON.stringify([id])},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#advertise-add").click(function(){
+            // 打开编辑弹窗
+            $("#advertiseModal").modal('show');
+            $("#advertiseForm")[0].reset();
+            $("#advId").val('');
+
+            $('#advIconImage').attr("src", '');
+            $("#advIcon").val('');
+            ComboboxHelper.setDef("#skipType", '1');
+
+        });
+
+        $("#advertise-multiDel").click(function(){
+            var rows = $("#table").bootstrapTable("getSelections");
+            if(rows.length == 0)
+            {
+                alert("请先选择要删除的记录");
+                return;
+            }
+            console.log("rows: " + rows.length);
+            var idArr = [];
+            for(var i=0;i<rows.length;i++)
+            {
+                idArr.push(rows[i]['advId']);
+            }
+            console.log(idArr);
+
+            if (confirm("你确认批量删除该记录吗?" +
+                    "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/advertise/del.action",
+                    data: {'ids': JSON.stringify(idArr)},
+                    dataType: "json",
+                    success: function (json) {
+                        if(json.success == 'true')
+                        {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#cancel").click(function(){
+            TableHelper.unCheckAll("#table");
+        });
+
+        $("#table").on("click", '.opt-edit', function () {
+            console.log("btnEdit");
+            var id = $(this).attr("data-id");
+            $.ajax({
+                type: "get",
+                url: "/admin/advertise/get.action",
+                data: {id: id},
+                dataType: "json",
+                success: function (json) {
+                    if(json.entity){
+                        var startTime = new Date(json.entity.startTime).format("yyyy-MM-dd HH:mm:ss");
+                        var endTime = new Date(json.entity.endTime).format("yyyy-MM-dd HH:mm:ss");
+                        $("#advId").val(json.entity.advId);
+                        $("#advName").val(json.entity.advName);
+                        ComboboxHelper.setDef("#skipType", json.entity.skipType);
+                        $("#skipUri").val(json.entity.skipUri);
+                        $("#startTime").val(startTime);
+                        $("#endTime").val(endTime);
+                        $("#seqNo").val(json.entity.seqNo);
+                        $("#advIcon").val(json.entity.advIcon);
+                        $("#advIconImage").attr('src', json.entity.advIcon);
+
+                        if(json.entity.advStatus == 1){
+                            $("input:radio[name='advStatus']")[0].checked=true;
+                        }else {
+                            $("input:radio[name='advStatus']")[1].checked=true;
+                        }
+
+                        // 打开编辑弹窗
+                        $("#advertiseModal").modal('show');
+                    }else{
+                        $("#tipMsg").text("获取菜单信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $('#iconUploadBtn').on('click',function () {
+            $.ajaxFileUpload({
+                fileElementId: 'iconUploadFile',    //需要上传的文件域的ID，即<input type="file">的ID。
+                url: '/admin/file/upload', //后台方法的路径
+                type: 'post',   //当要提交自定义参数时，这个参数要设置成post
+                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。
+                secureuri: false,   //是否启用安全提交，默认为false。
+                async : true,   //是否是异步
+                success: function(json) {   //提交成功后自动执行的处理函数，参数data就是服务器返回的数据。
+                    if(json.path){
+                        $('#advIcon').val(json.path);
+                        $('#advIconImage').attr("src", json.path);
+                        console.log(json.path);
+                    }else{
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function(data, status, e) {  //提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        })
+
+        $("#save").click(function(){
+            if($("#advertiseForm").validationEngine('validate')){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/advertise/save.action",
+                    data: $('#advertiseForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if(json.success == 'true'){
+                            $("#advertiseModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        }else{
+                            $("#tipMsg").text("保存失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            };
+        });
+    });
+
+</script>

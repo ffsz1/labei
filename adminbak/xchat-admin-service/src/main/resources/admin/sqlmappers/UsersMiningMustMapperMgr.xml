@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.UsersMiningMustMgr" >
+    <select id="selectByParam" resultType="com.erban.admin.main.dto.UsersMiningMustDTO">
+        select umm.uid, umm.id, umm.create_time as createTime, u.erban_no as erbanNo, u.nick, umm.status,
+        g.gift_id as giftId, g.gift_name as giftName, umm.input_gold as inputGold, umm.output_gold as outputGold, umm.rate, umm.admin_id as adminId
+        from users_mining_must umm
+        inner join users u on umm.uid = u.uid
+        left join gift g on g.gift_id = umm.gift_id
+        <where>
+            1 = 1
+            <if test="erbanNo!=null">
+                AND u.erban_no=#{erbanNo}
+            </if>
+            <if test="startDateStr!=null and endDateStr != null">
+                AND umm.create_time between #{startDateStr} and #{endDateStr}
+            </if>
+        </where>
+        order by umm.create_time desc
+    </select>
+    <select id="selectGiftName" resultType="java.lang.String" parameterType="java.lang.Integer">
+        SELECT g.gift_name AS giftName FROM gift g WHERE g.gift_id = #{giftId}
+    </select>
+</mapper>

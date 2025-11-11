@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.GuildHallMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.model.GuildHallMember" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hall_id" property="hallId" jdbcType="BIGINT" />
+    <result column="guild_id" property="guildId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+    <result column="member_type" property="memberType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, hall_id, guild_id, uid, create_time, update_time, is_del, member_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.admin.main.model.GuildHallMemberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from guild_hall_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from guild_hall_member
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from guild_hall_member
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.admin.main.model.GuildHallMemberExample" >
+    delete from guild_hall_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.admin.main.model.GuildHallMember" >
+    insert into guild_hall_member (id, hall_id, guild_id, 
+      uid, create_time, update_time,is_del,member_type
+      )
+    values (#{id,jdbcType=BIGINT}, #{hallId,jdbcType=BIGINT}, #{guildId,jdbcType=BIGINT}, 
+      #{uid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{isDel,jdbcType=BIT}, #{memberType,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.admin.main.model.GuildHallMember" >
+    insert into guild_hall_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hallId != null" >
+        hall_id,
+      </if>
+      <if test="guildId != null" >
+        guild_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="memberType != null" >
+        member_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hallId != null" >
+        #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="guildId != null" >
+        #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="memberType != null" >
+        #{memberType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.admin.main.model.GuildHallMemberExample" resultType="java.lang.Integer" >
+    select count(*) from guild_hall_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update guild_hall_member
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.hallId != null" >
+        hall_id = #{record.hallId,jdbcType=BIGINT},
+      </if>
+      <if test="record.guildId != null" >
+        guild_id = #{record.guildId,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+      <if test="record.memberType != null" >
+        member_type = #{record.memberType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update guild_hall_member
+    set id = #{record.id,jdbcType=BIGINT},
+      hall_id = #{record.hallId,jdbcType=BIGINT},
+      guild_id = #{record.guildId,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT},
+      member_type = #{record.memberType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.admin.main.model.GuildHallMember" >
+    update guild_hall_member
+    <set >
+      <if test="hallId != null" >
+        hall_id = #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="guildId != null" >
+        guild_id = #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+      <if test="memberType != null" >
+        member_type = #{memberType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.admin.main.model.GuildHallMember" >
+    update guild_hall_member
+    set hall_id = #{hallId,jdbcType=BIGINT},
+      guild_id = #{guildId,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT},
+      member_type = #{memberType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="isDelMemberByGuildId"  parameterType="java.lang.Long" >
+    update guild_hall_member set is_del =1 where guild_id = #{guildId} and is_del=0
+  </update>
+  <update id="isDelMemberByHallId"  parameterType="java.lang.Long" >
+    update guild_hall_member set is_del =1 where hall_id = #{hallId} and is_del=0
+  </update>
+  <update id="isDelMemberById"  parameterType="java.lang.Long" >
+    update guild_hall_member set is_del =1 where id = #{id} and is_del=0
+  </update>
+  
+  <select id="findGuildMember" resultMap="BaseResultMap"  >
+    select m.id as id, m.hall_id as hallId, m.guild_id as guildId, m.uid as uid, m.create_time as createTime, m.update_time as updateTime,
+     m.is_del as isDel, m.member_type as memberType,r.title as roomName,u.gender as gender,u.nick as nick,u.erban_no as erbanNo
+    from guild_hall_member m
+    left join guild_hall h on m.hall_id=h.id and m.guild_id=h.guild_id and h.is_del=0 
+    left join guild g on g.id=h.guild_id and g.is_del=0
+    left join room r on h.room_id=r.room_id
+    left join users u on m.uid=u.uid
+    where m.guild_id = #{guildId} and m.is_del=0 and m.uid!=g.president_uid  and m.uid!=r.uid
+    order by m.create_time desc
+  </select>
+  
+  <select id="findHallMember" resultMap="BaseResultMap"  >
+    select m.id as id, m.hall_id as hallId, m.guild_id as guildId, m.uid as uid, m.create_time as createTime, m.update_time as updateTime,
+     m.is_del as isDel, m.member_type as memberType,r.title as roomName,u.gender as gender,u.nick as nick,u.erban_no as erbanNo
+    from guild_hall_member m
+    left join guild_hall h on m.hall_id=h.id and m.guild_id=h.guild_id and h.is_del=0
+    left join guild g on g.id=h.guild_id and g.is_del=0 
+    left join room r on h.room_id=r.room_id
+    left join users u on m.uid=u.uid
+    where m.guild_id = #{guildId} and m.hall_id = #{hallId} and m.is_del=0 and m.uid!=g.president_uid and m.uid!=r.uid
+    order by m.create_time desc
+  </select>
+</mapper>

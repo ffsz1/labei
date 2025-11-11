@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserGiftBonusPerDayMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.UserGiftBonusPerDay" >
+    <id column="bonus_id" property="bonusId" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="cur_diamond_num" property="curDiamondNum" jdbcType="DOUBLE" />
+    <result column="forecast_diamond_num" property="forecastDiamondNum" jdbcType="DOUBLE" />
+    <result column="bonus_diamond_num" property="bonusDiamondNum" jdbcType="DOUBLE" />
+    <result column="today_has_finish_bonus" property="todayHasFinishBonus" jdbcType="BIT" />
+    <result column="stat_date" property="statDate" jdbcType="DATE" />
+    <result column="bonus_finish_date" property="bonusFinishDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bonus_id, uid, cur_diamond_num, forecast_diamond_num, bonus_diamond_num, today_has_finish_bonus, 
+    stat_date, bonus_finish_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.UserGiftBonusPerDayExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_gift_bonus_per_day
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_gift_bonus_per_day
+    where bonus_id = #{bonusId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_gift_bonus_per_day
+    where bonus_id = #{bonusId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.UserGiftBonusPerDayExample" >
+    delete from user_gift_bonus_per_day
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.UserGiftBonusPerDay" >
+    <selectKey resultType="java.lang.Integer" keyProperty="bonusId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_gift_bonus_per_day (uid, cur_diamond_num, forecast_diamond_num, 
+      bonus_diamond_num, today_has_finish_bonus, stat_date, 
+      bonus_finish_date)
+    values (#{uid,jdbcType=BIGINT}, #{curDiamondNum,jdbcType=DOUBLE}, #{forecastDiamondNum,jdbcType=DOUBLE}, 
+      #{bonusDiamondNum,jdbcType=DOUBLE}, #{todayHasFinishBonus,jdbcType=BIT}, #{statDate,jdbcType=DATE}, 
+      #{bonusFinishDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.UserGiftBonusPerDay" >
+    <selectKey resultType="java.lang.Integer" keyProperty="bonusId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_gift_bonus_per_day
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="curDiamondNum != null" >
+        cur_diamond_num,
+      </if>
+      <if test="forecastDiamondNum != null" >
+        forecast_diamond_num,
+      </if>
+      <if test="bonusDiamondNum != null" >
+        bonus_diamond_num,
+      </if>
+      <if test="todayHasFinishBonus != null" >
+        today_has_finish_bonus,
+      </if>
+      <if test="statDate != null" >
+        stat_date,
+      </if>
+      <if test="bonusFinishDate != null" >
+        bonus_finish_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="curDiamondNum != null" >
+        #{curDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="forecastDiamondNum != null" >
+        #{forecastDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="bonusDiamondNum != null" >
+        #{bonusDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="todayHasFinishBonus != null" >
+        #{todayHasFinishBonus,jdbcType=BIT},
+      </if>
+      <if test="statDate != null" >
+        #{statDate,jdbcType=DATE},
+      </if>
+      <if test="bonusFinishDate != null" >
+        #{bonusFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.UserGiftBonusPerDayExample" resultType="java.lang.Integer" >
+    select count(*) from user_gift_bonus_per_day
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_gift_bonus_per_day
+    <set >
+      <if test="record.bonusId != null" >
+        bonus_id = #{record.bonusId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.curDiamondNum != null" >
+        cur_diamond_num = #{record.curDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.forecastDiamondNum != null" >
+        forecast_diamond_num = #{record.forecastDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bonusDiamondNum != null" >
+        bonus_diamond_num = #{record.bonusDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.todayHasFinishBonus != null" >
+        today_has_finish_bonus = #{record.todayHasFinishBonus,jdbcType=BIT},
+      </if>
+      <if test="record.statDate != null" >
+        stat_date = #{record.statDate,jdbcType=DATE},
+      </if>
+      <if test="record.bonusFinishDate != null" >
+        bonus_finish_date = #{record.bonusFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_gift_bonus_per_day
+    set bonus_id = #{record.bonusId,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=BIGINT},
+      cur_diamond_num = #{record.curDiamondNum,jdbcType=DOUBLE},
+      forecast_diamond_num = #{record.forecastDiamondNum,jdbcType=DOUBLE},
+      bonus_diamond_num = #{record.bonusDiamondNum,jdbcType=DOUBLE},
+      today_has_finish_bonus = #{record.todayHasFinishBonus,jdbcType=BIT},
+      stat_date = #{record.statDate,jdbcType=DATE},
+      bonus_finish_date = #{record.bonusFinishDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.UserGiftBonusPerDay" >
+    update user_gift_bonus_per_day
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="curDiamondNum != null" >
+        cur_diamond_num = #{curDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="forecastDiamondNum != null" >
+        forecast_diamond_num = #{forecastDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="bonusDiamondNum != null" >
+        bonus_diamond_num = #{bonusDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="todayHasFinishBonus != null" >
+        today_has_finish_bonus = #{todayHasFinishBonus,jdbcType=BIT},
+      </if>
+      <if test="statDate != null" >
+        stat_date = #{statDate,jdbcType=DATE},
+      </if>
+      <if test="bonusFinishDate != null" >
+        bonus_finish_date = #{bonusFinishDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where bonus_id = #{bonusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.UserGiftBonusPerDay" >
+    update user_gift_bonus_per_day
+    set uid = #{uid,jdbcType=BIGINT},
+      cur_diamond_num = #{curDiamondNum,jdbcType=DOUBLE},
+      forecast_diamond_num = #{forecastDiamondNum,jdbcType=DOUBLE},
+      bonus_diamond_num = #{bonusDiamondNum,jdbcType=DOUBLE},
+      today_has_finish_bonus = #{todayHasFinishBonus,jdbcType=BIT},
+      stat_date = #{statDate,jdbcType=DATE},
+      bonus_finish_date = #{bonusFinishDate,jdbcType=TIMESTAMP}
+    where bonus_id = #{bonusId,jdbcType=INTEGER}
+  </update>
+</mapper>

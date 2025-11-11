@@ -1,0 +1,376 @@
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar" style="width: 100%">
+                    <button id="rcmd-add" class="btn btn-primary control-label">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                    <label style="margin-left: 2rem">推荐总开关：</label>
+                    <input type="radio" name="rcmdOption" value="true"> 开启
+                    <input type="radio" name="rcmdOption" value="false" checked> 关闭
+                </div>
+            </section><!-- .content -->
+        </div>
+    </div>
+</section>5
+<div class="modal fade" id="rcmdModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">新用户推荐规则</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="rcmdForm">
+                    <input type="hidden" name="rcmdId" id="rcmdId"/>
+                    <div class="form-group">
+                        <label for="minOnline" class="col-sm-3 control-label">房间最低人数：</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control validate[required]" name="minOnline"
+                                   id="minOnline">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate" class="col-sm-3 control-label">开始时间：</label>
+                        <div class="col-sm-8">
+                            <input type="text" type="date" class="form-control validate[required]" name="startDate"
+                                   id="startDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate" class="col-sm-3 control-label">结束时间：</label>
+                        <div class="col-sm-8">
+                            <input type="text" type="date" class="form-control validate[required]" name="endDate"
+                                   id="endDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <label class="radio-inline">
+                                <input type="radio" name="rcmdType" value="1" checked>房间类型推送
+                            </label>
+                        </label>
+                        <div class="col-sm-8">
+                            <input name="rcmdRoomTags" type="checkbox" value="1"/> 开黑&nbsp;&nbsp;
+                            <input name="rcmdRoomTags" type="checkbox" value="2"/> 男神&nbsp;&nbsp;
+                            <input name="rcmdRoomTags" type="checkbox" value="3"/> 女神&nbsp;&nbsp;
+                            <input name="rcmdRoomTags" type="checkbox" value="4"/> 听歌&nbsp;&nbsp;
+                            <input name="rcmdRoomTags" type="checkbox" value="5"/> 陪玩<br>
+                            <input name="rcmdRoomTags" type="checkbox" value="6"/> 电台&nbsp;&nbsp;
+                            <input name="rcmdRoomTags" type="checkbox" value="7"/> 娱乐&nbsp;&nbsp;
+                            <input name="rcmdRoomTags" type="checkbox" value="8"/> 闲聊&nbsp;&nbsp;
+                            <input name="rcmdRoomTags" type="checkbox" value="9"/> 新秀&nbsp;&nbsp;
+                            <input name="rcmdRoomTags" type="checkbox" value="10"/> 二次元
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rcmdRooms" class="col-sm-3 control-label">
+                            <label class="radio-inline">
+                                <input type="radio" name="rcmdType" value="2">指定房间推送
+                            </label>
+                        </label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" style="height: 200px;resize: none" name="rcmdRooms"
+                                      id="rcmdRooms" placeholder="多个房主UID用@分隔"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        getOption();
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {
+                    field: 'rcmdType',
+                    title: '推荐类型',
+                    align: 'center',
+                    width: '300',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return "推荐房间类型";
+                        } else if (val == 2) {
+                            return "推荐房间ID";
+                        }
+                        return "未定义类型：" + val
+                    }
+                },
+                {field: 'minOnline', title: '最低在线人数', align: 'center', width: '300'},
+                {
+                    field: 'startDate',
+                    title: '开始时间',
+                    align: 'center',
+                    width: '300',
+                    formatter: function (val, row, index) {
+                        console.log(new Date(val))
+                        return new Date(val).format("yyyy-MM-dd HH:mm:ss");
+                    }
+                },
+                {
+                    field: 'endDate',
+                    title: '结束时间',
+                    align: 'center',
+                    width: '300',
+                    formatter: function (val, row, index) {
+                        return new Date(val).format("yyyy-MM-dd HH:mm:ss");
+                    }
+                },
+                {
+                    field: 'rcmdId', title: '操作', align: 'center', width: '350', formatter: function (val, row, index) {
+                        return '<button class="btn btn-success opt-edit" data-id=' + val + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i> 编辑</button>' +
+                            '&nbsp;&nbsp;<button class="btn btn-danger opt-remove" data-id=' + val +
+                            '><i class="glyphicon glyphicon-remove"></i> 删除</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                return {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize
+                };
+            },
+            toolbar: '#toolbar',
+            url: '/admin/room/rcmd/list.action',
+            onLoadSuccess: function (e) {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+        $("#table").on("click", '.opt-remove', function () {
+            const id = $(this).attr("data-id");
+            if (id == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if (confirm("你确认删除该记录吗?删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/room/rcmd/delete.action",
+                    data: {'rcmdId': id},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#rcmd-add").click(function () {
+            // 打开编辑弹窗
+            $("#rcmdForm")[0].reset();
+            $("#rcmdId").val("");
+            $("#rcmdModal").modal('show');
+        });
+
+        $("#gift-refresh").click(function () {
+            $("#table").bootstrapTable('refresh', {url: '/admin/room/rcmd/list.action'});
+            getOption();
+        });
+
+        $("#cancel").click(function () {
+            TableHelper.unCheckAll("#table");
+        });
+
+        $("#table").on("click", '.opt-edit', function () {
+            const rcmdId = $(this).attr("data-id");
+            $.ajax({
+                type: "get",
+                url: "/admin/room/rcmd/get.action",
+                data: {rcmdId: rcmdId},
+                dataType: "json",
+                success: function (json) {
+                    let i;
+                    $("#rcmdForm")[0].reset();
+                    $("#rcmdId").val(json.data.rcmdId);
+                    $("#minOnline").val(json.data.minOnline);
+                    $("#startDate").val(json.data.startDate);
+                    $("#endDate").val(json.data.endDate);
+                    $("#rcmdRooms").val(json.data.rcmdRooms);
+                    // 选中对应的radio
+                    const rcmdTypes = document.getElementsByName("rcmdType");
+                    for (i = 0; i < rcmdTypes.length; i++) {
+                        if (rcmdTypes[i].value == json.data.rcmdType) {
+                            rcmdTypes[i].checked = true;
+                        }
+                    }
+
+                    if (json.data.rcmdRoomTags) {
+                        const rcmdRoomTags = document.getElementsByName("rcmdRoomTags");
+                        for (i = 0; i < rcmdRoomTags.length; i++) {
+                            for (var j = 0; j < json.data.rcmdRoomTags.length; j++) {
+                                if (json.data.rcmdRoomTags[j] == rcmdRoomTags[i].value) {
+                                    rcmdRoomTags[i].checked = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    // rcmdRoomTags 选中对应的CheckBox
+                    $("#rcmdModal").modal('show');
+                }
+            });
+        });
+
+        // 初始化
+        $('#startDate').datetimepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd hh:ii:00',
+            autoclose: true,
+            startDate: new Date(),
+            minView: 0
+        });
+
+        $('#endDate').datetimepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd hh:ii:00',
+            autoclose: true,
+            startDate: new Date(),
+            minView: 0
+        });
+
+        $("#save").click(function () {
+            if ($("#rcmdForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/room/rcmd/save.action",
+                    data: $('#rcmdForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#rcmdForm").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败：" + json.message);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("input[name='rcmdOption']").on('change', function () {
+            let confirmMsg;
+            if (this.value == "true") {
+                confirmMsg = "你确认开启线上新用户房间推荐?";
+            } else {
+                confirmMsg = "你确认关闭线上新用户房间推荐?";
+            }
+
+            if (!confirm(confirmMsg)) {
+                for (var i = 0; i < $("input[name='rcmdOption']").length; i++) {
+                    if ($("input[name='rcmdOption']")[i].value != this.value) {
+                        $("input[name='rcmdOption']")[i].checked = true;
+                    } else {
+                        $("input[name='rcmdOption']")[i].checked = false;
+                    }
+                }
+                return;
+            }
+
+            const isOpen = this.value;
+            $.ajax({
+                type: 'post',
+                url: "/admin/room/rcmd/updateOption.action",
+                data: {'isOpen': this.value},
+                dataType: "json",
+                success: function (json) {
+                    if (json.code == 200) {
+                        $("#tipMsg").text(isOpen == "true" ? "推荐已经开启" : "推荐已经关闭");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("操作失败");
+                        $("#tipModal").modal('show');
+                        for (var i = 0; i < $("input[name='rcmdOption']").length; i++) {
+                            if ($("input[name='rcmdOption']")[i].value != isOpen) {
+                                $("input[name='rcmdOption']")[i].checked = true;
+                            } else {
+                                $("input[name='rcmdOption']")[i].checked = false;
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    });
+
+    function getOption() {
+        $.ajax({
+            type: 'get',
+            url: "/admin/room/rcmd/getOption.action",
+            dataType: "json",
+            success: function (json) {
+                if (json.code != 200) {
+                    return;
+                }
+
+                for (let i = 0; i < $("input[name='rcmdOption']").length; i++) {
+                    if ($("input[name='rcmdOption']")[i].value == json.data) {
+                        $("input[name='rcmdOption']")[i].checked = true;
+                    } else {
+                        $("input[name='rcmdOption']")[i].checked = false;
+                    }
+                }
+            }
+        });
+    }
+</script>

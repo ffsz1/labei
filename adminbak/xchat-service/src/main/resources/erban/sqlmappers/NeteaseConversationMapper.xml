@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.NeteaseConversationMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.NeteaseConversation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="conv_type" property="convType" jdbcType="VARCHAR" />
+    <result column="to_str" property="toStr" jdbcType="VARCHAR" />
+    <result column="from_account" property="fromAccount" jdbcType="VARCHAR" />
+    <result column="from_client_type" property="fromClientType" jdbcType="VARCHAR" />
+    <result column="from_device_id" property="fromDeviceId" jdbcType="VARCHAR" />
+    <result column="from_nick" property="fromNick" jdbcType="VARCHAR" />
+    <result column="msg_timestamp" property="msgTimestamp" jdbcType="VARCHAR" />
+    <result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+    <result column="body" property="body" jdbcType="VARCHAR" />
+    <result column="attach" property="attach" jdbcType="VARCHAR" />
+    <result column="msgid_client" property="msgidClient" jdbcType="VARCHAR" />
+    <result column="msgid_server" property="msgidServer" jdbcType="VARCHAR" />
+    <result column="resend_flag" property="resendFlag" jdbcType="VARCHAR" />
+    <result column="custom_safe_flag" property="customSafeFlag" jdbcType="VARCHAR" />
+    <result column="custom_apns_text" property="customApnsText" jdbcType="VARCHAR" />
+    <result column="t_members" property="tMembers" jdbcType="VARCHAR" />
+    <result column="ext" property="ext" jdbcType="VARCHAR" />
+    <result column="antispam" property="antispam" jdbcType="VARCHAR" />
+    <result column="yidun_res" property="yidunRes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, conv_type, to_str, from_account, from_client_type, from_device_id, from_nick, 
+    msg_timestamp, msg_type, body, attach, msgid_client, msgid_server, resend_flag, custom_safe_flag, 
+    custom_apns_text, t_members, ext, antispam, yidun_res
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.NeteaseConversationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from netease_conversation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from netease_conversation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from netease_conversation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.NeteaseConversationExample" >
+    delete from netease_conversation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.NeteaseConversation" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into netease_conversation (conv_type, to_str, from_account, 
+      from_client_type, from_device_id, from_nick, 
+      msg_timestamp, msg_type, body, 
+      attach, msgid_client, msgid_server, 
+      resend_flag, custom_safe_flag, custom_apns_text, 
+      t_members, ext, antispam, 
+      yidun_res)
+    values (#{convType,jdbcType=VARCHAR}, #{toStr,jdbcType=VARCHAR}, #{fromAccount,jdbcType=VARCHAR}, 
+      #{fromClientType,jdbcType=VARCHAR}, #{fromDeviceId,jdbcType=VARCHAR}, #{fromNick,jdbcType=VARCHAR}, 
+      #{msgTimestamp,jdbcType=VARCHAR}, #{msgType,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, 
+      #{attach,jdbcType=VARCHAR}, #{msgidClient,jdbcType=VARCHAR}, #{msgidServer,jdbcType=VARCHAR}, 
+      #{resendFlag,jdbcType=VARCHAR}, #{customSafeFlag,jdbcType=VARCHAR}, #{customApnsText,jdbcType=VARCHAR}, 
+      #{tMembers,jdbcType=VARCHAR}, #{ext,jdbcType=VARCHAR}, #{antispam,jdbcType=VARCHAR}, 
+      #{yidunRes,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.NeteaseConversation" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into netease_conversation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="convType != null" >
+        conv_type,
+      </if>
+      <if test="toStr != null" >
+        to_str,
+      </if>
+      <if test="fromAccount != null" >
+        from_account,
+      </if>
+      <if test="fromClientType != null" >
+        from_client_type,
+      </if>
+      <if test="fromDeviceId != null" >
+        from_device_id,
+      </if>
+      <if test="fromNick != null" >
+        from_nick,
+      </if>
+      <if test="msgTimestamp != null" >
+        msg_timestamp,
+      </if>
+      <if test="msgType != null" >
+        msg_type,
+      </if>
+      <if test="body != null" >
+        body,
+      </if>
+      <if test="attach != null" >
+        attach,
+      </if>
+      <if test="msgidClient != null" >
+        msgid_client,
+      </if>
+      <if test="msgidServer != null" >
+        msgid_server,
+      </if>
+      <if test="resendFlag != null" >
+        resend_flag,
+      </if>
+      <if test="customSafeFlag != null" >
+        custom_safe_flag,
+      </if>
+      <if test="customApnsText != null" >
+        custom_apns_text,
+      </if>
+      <if test="tMembers != null" >
+        t_members,
+      </if>
+      <if test="ext != null" >
+        ext,
+      </if>
+      <if test="antispam != null" >
+        antispam,
+      </if>
+      <if test="yidunRes != null" >
+        yidun_res,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="convType != null" >
+        #{convType,jdbcType=VARCHAR},
+      </if>
+      <if test="toStr != null" >
+        #{toStr,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAccount != null" >
+        #{fromAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="fromClientType != null" >
+        #{fromClientType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromDeviceId != null" >
+        #{fromDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="fromNick != null" >
+        #{fromNick,jdbcType=VARCHAR},
+      </if>
+      <if test="msgTimestamp != null" >
+        #{msgTimestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="msgidClient != null" >
+        #{msgidClient,jdbcType=VARCHAR},
+      </if>
+      <if test="msgidServer != null" >
+        #{msgidServer,jdbcType=VARCHAR},
+      </if>
+      <if test="resendFlag != null" >
+        #{resendFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="customSafeFlag != null" >
+        #{customSafeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="customApnsText != null" >
+        #{customApnsText,jdbcType=VARCHAR},
+      </if>
+      <if test="tMembers != null" >
+        #{tMembers,jdbcType=VARCHAR},
+      </if>
+      <if test="ext != null" >
+        #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="antispam != null" >
+        #{antispam,jdbcType=VARCHAR},
+      </if>
+      <if test="yidunRes != null" >
+        #{yidunRes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.NeteaseConversationExample" resultType="java.lang.Integer" >
+    select count(*) from netease_conversation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update netease_conversation
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.convType != null" >
+        conv_type = #{record.convType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toStr != null" >
+        to_str = #{record.toStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromAccount != null" >
+        from_account = #{record.fromAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromClientType != null" >
+        from_client_type = #{record.fromClientType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromDeviceId != null" >
+        from_device_id = #{record.fromDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromNick != null" >
+        from_nick = #{record.fromNick,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgTimestamp != null" >
+        msg_timestamp = #{record.msgTimestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgType != null" >
+        msg_type = #{record.msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.body != null" >
+        body = #{record.body,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attach != null" >
+        attach = #{record.attach,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgidClient != null" >
+        msgid_client = #{record.msgidClient,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgidServer != null" >
+        msgid_server = #{record.msgidServer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resendFlag != null" >
+        resend_flag = #{record.resendFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customSafeFlag != null" >
+        custom_safe_flag = #{record.customSafeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customApnsText != null" >
+        custom_apns_text = #{record.customApnsText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tMembers != null" >
+        t_members = #{record.tMembers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext != null" >
+        ext = #{record.ext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.antispam != null" >
+        antispam = #{record.antispam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yidunRes != null" >
+        yidun_res = #{record.yidunRes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update netease_conversation
+    set id = #{record.id,jdbcType=INTEGER},
+      conv_type = #{record.convType,jdbcType=VARCHAR},
+      to_str = #{record.toStr,jdbcType=VARCHAR},
+      from_account = #{record.fromAccount,jdbcType=VARCHAR},
+      from_client_type = #{record.fromClientType,jdbcType=VARCHAR},
+      from_device_id = #{record.fromDeviceId,jdbcType=VARCHAR},
+      from_nick = #{record.fromNick,jdbcType=VARCHAR},
+      msg_timestamp = #{record.msgTimestamp,jdbcType=VARCHAR},
+      msg_type = #{record.msgType,jdbcType=VARCHAR},
+      body = #{record.body,jdbcType=VARCHAR},
+      attach = #{record.attach,jdbcType=VARCHAR},
+      msgid_client = #{record.msgidClient,jdbcType=VARCHAR},
+      msgid_server = #{record.msgidServer,jdbcType=VARCHAR},
+      resend_flag = #{record.resendFlag,jdbcType=VARCHAR},
+      custom_safe_flag = #{record.customSafeFlag,jdbcType=VARCHAR},
+      custom_apns_text = #{record.customApnsText,jdbcType=VARCHAR},
+      t_members = #{record.tMembers,jdbcType=VARCHAR},
+      ext = #{record.ext,jdbcType=VARCHAR},
+      antispam = #{record.antispam,jdbcType=VARCHAR},
+      yidun_res = #{record.yidunRes,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.NeteaseConversation" >
+    update netease_conversation
+    <set >
+      <if test="convType != null" >
+        conv_type = #{convType,jdbcType=VARCHAR},
+      </if>
+      <if test="toStr != null" >
+        to_str = #{toStr,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAccount != null" >
+        from_account = #{fromAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="fromClientType != null" >
+        from_client_type = #{fromClientType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromDeviceId != null" >
+        from_device_id = #{fromDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="fromNick != null" >
+        from_nick = #{fromNick,jdbcType=VARCHAR},
+      </if>
+      <if test="msgTimestamp != null" >
+        msg_timestamp = #{msgTimestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        body = #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="msgidClient != null" >
+        msgid_client = #{msgidClient,jdbcType=VARCHAR},
+      </if>
+      <if test="msgidServer != null" >
+        msgid_server = #{msgidServer,jdbcType=VARCHAR},
+      </if>
+      <if test="resendFlag != null" >
+        resend_flag = #{resendFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="customSafeFlag != null" >
+        custom_safe_flag = #{customSafeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="customApnsText != null" >
+        custom_apns_text = #{customApnsText,jdbcType=VARCHAR},
+      </if>
+      <if test="tMembers != null" >
+        t_members = #{tMembers,jdbcType=VARCHAR},
+      </if>
+      <if test="ext != null" >
+        ext = #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="antispam != null" >
+        antispam = #{antispam,jdbcType=VARCHAR},
+      </if>
+      <if test="yidunRes != null" >
+        yidun_res = #{yidunRes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.NeteaseConversation" >
+    update netease_conversation
+    set conv_type = #{convType,jdbcType=VARCHAR},
+      to_str = #{toStr,jdbcType=VARCHAR},
+      from_account = #{fromAccount,jdbcType=VARCHAR},
+      from_client_type = #{fromClientType,jdbcType=VARCHAR},
+      from_device_id = #{fromDeviceId,jdbcType=VARCHAR},
+      from_nick = #{fromNick,jdbcType=VARCHAR},
+      msg_timestamp = #{msgTimestamp,jdbcType=VARCHAR},
+      msg_type = #{msgType,jdbcType=VARCHAR},
+      body = #{body,jdbcType=VARCHAR},
+      attach = #{attach,jdbcType=VARCHAR},
+      msgid_client = #{msgidClient,jdbcType=VARCHAR},
+      msgid_server = #{msgidServer,jdbcType=VARCHAR},
+      resend_flag = #{resendFlag,jdbcType=VARCHAR},
+      custom_safe_flag = #{customSafeFlag,jdbcType=VARCHAR},
+      custom_apns_text = #{customApnsText,jdbcType=VARCHAR},
+      t_members = #{tMembers,jdbcType=VARCHAR},
+      ext = #{ext,jdbcType=VARCHAR},
+      antispam = #{antispam,jdbcType=VARCHAR},
+      yidun_res = #{yidunRes,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

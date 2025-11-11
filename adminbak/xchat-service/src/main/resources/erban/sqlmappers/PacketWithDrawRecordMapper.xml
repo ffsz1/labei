@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.PacketWithDrawRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.PacketWithDrawRecord" >
+    <id column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="packet_prod_cash_id" property="packetProdCashId" jdbcType="INTEGER" />
+    <result column="packet_num" property="packetNum" jdbcType="DOUBLE" />
+    <result column="record_status" property="recordStatus" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+    <result column="bank_card_name" property="bankCardName" jdbcType="VARCHAR" />
+    <result column="open_bank_code" property="openBankCode" jdbcType="VARCHAR" />
+    <result column="real_tran_type" property="realTranType" jdbcType="BIT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    record_id, uid, packet_prod_cash_id, packet_num, record_status, create_time, bank_card, 
+    bank_card_name, open_bank_code, real_tran_type, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.PacketWithDrawRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from packet_withdraw_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from packet_withdraw_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from packet_withdraw_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.PacketWithDrawRecordExample" >
+    delete from packet_withdraw_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.PacketWithDrawRecord" >
+    insert into packet_withdraw_record (record_id, uid, packet_prod_cash_id, 
+      packet_num, record_status, create_time, 
+      bank_card, bank_card_name, open_bank_code, 
+      real_tran_type, update_time,tran_type)
+    values (#{recordId,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{packetProdCashId,jdbcType=INTEGER}, 
+      #{packetNum,jdbcType=DOUBLE}, #{recordStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{bankCard,jdbcType=VARCHAR}, #{bankCardName,jdbcType=VARCHAR}, #{openBankCode,jdbcType=VARCHAR}, 
+      #{realTranType,jdbcType=BIT}, #{updateTime,jdbcType=TIMESTAMP},#{tranType,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.PacketWithDrawRecord" >
+    insert into packet_withdraw_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        record_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="packetProdCashId != null" >
+        packet_prod_cash_id,
+      </if>
+      <if test="packetNum != null" >
+        packet_num,
+      </if>
+      <if test="recordStatus != null" >
+        record_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="bankCard != null" >
+        bank_card,
+      </if>
+      <if test="bankCardName != null" >
+        bank_card_name,
+      </if>
+      <if test="openBankCode != null" >
+        open_bank_code,
+      </if>
+      <if test="realTranType != null" >
+        real_tran_type,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="tranType != null">
+        tran_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="packetProdCashId != null" >
+        #{packetProdCashId,jdbcType=INTEGER},
+      </if>
+      <if test="packetNum != null" >
+        #{packetNum,jdbcType=DOUBLE},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bankCard != null" >
+        #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardName != null" >
+        #{bankCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="openBankCode != null" >
+        #{openBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="realTranType != null" >
+        #{realTranType,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="tranType != null" >
+        #{tranType,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.PacketWithDrawRecordExample" resultType="java.lang.Integer" >
+    select count(*) from packet_withdraw_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update packet_withdraw_record
+    <set >
+      <if test="record.recordId != null" >
+        record_id = #{record.recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.packetProdCashId != null" >
+        packet_prod_cash_id = #{record.packetProdCashId,jdbcType=INTEGER},
+      </if>
+      <if test="record.packetNum != null" >
+        packet_num = #{record.packetNum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.recordStatus != null" >
+        record_status = #{record.recordStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bankCard != null" >
+        bank_card = #{record.bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankCardName != null" >
+        bank_card_name = #{record.bankCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openBankCode != null" >
+        open_bank_code = #{record.openBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realTranType != null" >
+        real_tran_type = #{record.realTranType,jdbcType=BIT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tranType != null" >
+        tran_type = #{record.tranType,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update packet_withdraw_record
+    set record_id = #{record.recordId,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=BIGINT},
+      packet_prod_cash_id = #{record.packetProdCashId,jdbcType=INTEGER},
+      packet_num = #{record.packetNum,jdbcType=DOUBLE},
+      record_status = #{record.recordStatus,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      bank_card = #{record.bankCard,jdbcType=VARCHAR},
+      bank_card_name = #{record.bankCardName,jdbcType=VARCHAR},
+      open_bank_code = #{record.openBankCode,jdbcType=VARCHAR},
+      real_tran_type = #{record.realTranType,jdbcType=BIT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+     tran_type = #{record.tranType,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.PacketWithDrawRecord" >
+    update packet_withdraw_record
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="packetProdCashId != null" >
+        packet_prod_cash_id = #{packetProdCashId,jdbcType=INTEGER},
+      </if>
+      <if test="packetNum != null" >
+        packet_num = #{packetNum,jdbcType=DOUBLE},
+      </if>
+      <if test="recordStatus != null" >
+        record_status = #{recordStatus,jdbcType=TINYINT},
+      </if>
+      <if test="bankCard != null" >
+        bank_card = #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardName != null" >
+        bank_card_name = #{bankCardName,jdbcType=VARCHAR},
+      </if>
+      <if test="openBankCode != null" >
+        open_bank_code = #{openBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="realTranType != null" >
+        real_tran_type = #{realTranType,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tranType != null" >
+        tran_type = #{tranType,jdbcType=BIT},
+      </if>
+      <if test="merchantOrderNo != null" >
+        merchant_order_no = #{merchantOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="pingxxId != null" >
+        pingxx_id = #{pingxxId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.PacketWithDrawRecord" >
+    update packet_withdraw_record
+    set uid = #{uid,jdbcType=BIGINT},
+      packet_prod_cash_id = #{packetProdCashId,jdbcType=INTEGER},
+      packet_num = #{packetNum,jdbcType=DOUBLE},
+      record_status = #{recordStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      bank_card = #{bankCard,jdbcType=VARCHAR},
+      bank_card_name = #{bankCardName,jdbcType=VARCHAR},
+      open_bank_code = #{openBankCode,jdbcType=VARCHAR},
+      real_tran_type = #{realTranType,jdbcType=BIT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      tran_type = #{tranType,jdbcType=BIT}
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+
+  <resultMap id="QueryResultMap" type="com.erban.main.vo.admin.PacketWithdrawRecordVo" >
+    <id column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="packet_num" property="packetNum" jdbcType="DOUBLE" />
+    <result column="record_status" property="recordStatus" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR" />
+    <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR" />
+    <result column="wxOpenId" property="wxOpenId"/>
+    <result column="cardNumber" property="cardNumber"/>
+    <result column="cardName" property="cardName"/>
+    <result column="openBankCode" property="openBankCode"/>
+    <result column="withdrawStatus" property="withdrawStatus"/>
+    <result column="realTranType" property="realTranType"/>
+    <result column="tranType" property="tranType"/>
+    <result column="merchantOrderNo" property="merchantOrderNo"/>
+  </resultMap>
+
+
+  <select id="selectByQuery" resultMap="QueryResultMap" parameterType="com.erban.main.param.admin.WithDrawParam" >
+    select ur.record_id as record_id, ur.packet_num as packet_num, ur.record_status as record_status, ur.create_time as create_time,
+    u.uid as uid ,u.erban_no as erban_no,u.nick as nick,u.phone as phone ,u.alipay_account as alipay_account,u.alipay_account_name as alipay_account_name,
+    ur.bank_card as cardNumber,ur.bank_card_name as cardName,ur.open_bank_code as openBankCode,u.withdraw_status as withdrawStatus,a.weixin_openid as wxOpenId,
+    ur.real_tran_type as realTranType,ur.tran_type as tranType,ur.merchant_order_no as merchantOrderNo,ur.admin_id as adminId,ur.pingxx_id as pingxxId
+    from packet_withdraw_record ur
+    INNER JOIN users u ON ur.uid=u.uid
+    INNER JOIN account a ON u.uid = a.uid
+    <where>
+      <if test="erbanNo!=null">
+        u.erban_no=#{erbanNo}
+      </if>
+      <if test="beginDate!=null">
+        AND ur.create_time &gt;= #{beginDate}
+      </if>
+      <if test="endDate!=null">
+        AND ur.create_time &lt;= #{endDate}
+      </if>
+      <if test="status!=null">
+        AND ur.record_status=#{status}
+      </if>
+      <if test="tranType!=null">
+        AND ur.tran_type=#{tranType}
+      </if>
+      <if test="realTranType!=null">
+        AND ur.real_tran_type=#{realTranType}
+      </if>
+      <if test="withdrawStatus!=null">
+        AND u.withdraw_status=#{withdrawStatus}
+      </if>
+    </where>
+    ORDER BY ur.create_time DESC
+  </select>
+
+  <select id="selectByIds" resultMap="QueryResultMap" parameterType="java.util.List" >
+    select ur.record_id as record_id, ur.packet_num as packet_num, ur.record_status as record_status, ur.create_time as create_time,
+    u.uid as uid ,u.erban_no as erban_no,u.nick as nick,u.phone as phone ,u.alipay_account as alipay_account,u.alipay_account_name as alipay_account_name,
+    ubc.bank_card as cardNumber,ubc.bank_card_name as cardName,ubc.open_bank_code as openBankCode,u.withdraw_status as withdrawStatus,a.weixin_openid as wxOpenId
+    from packet_withdraw_record ur
+    INNER JOIN users u ON ur.uid=u.uid
+    INNER JOIN account a ON u.uid = a.uid
+    left join user_bank_card ubc on ur.uid = ubc.uid and ubc.is_use = 1
+    WHERE ur.record_status !=2 and u.withdraw_status = 0 and ur.record_id IN
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="selectById" resultType="com.erban.main.vo.admin.PacketWithdrawRecordVo">
+    select ur.record_id as record_id, ur.packet_num as packet_num, ur.record_status as record_status, ur.create_time as create_time,
+    u.uid as uid ,u.erban_no as erban_no,u.nick as nick,u.phone as phone ,u.alipay_account as alipay_account,u.alipay_account_name as alipay_account_name,
+    ur.bank_card as cardNumber,ur.bank_card_name as cardName,ur.open_bank_code as openBankCode,u.withdraw_status as withdrawStatus,a.weixin_openid as wxOpenId
+    from packet_withdraw_record ur
+    INNER JOIN users u ON ur.uid=u.uid
+    INNER JOIN account a ON u.uid = a.uid
+    WHERE ur.record_status !=2 and u.withdraw_status = 0 and ur.record_id = #{recordId}
+  </select>
+
+
+  <select id="selectByMerchantOrderNo" resultType="com.erban.main.model.PacketWithDrawRecord">
+    select ur.record_id as record_id, ur.packet_num as packet_num, ur.record_status as record_status, ur.create_time as create_time,ur.bank_card as cardNumber,ur.bank_card_name as cardName,ur.open_bank_code as openBankCode
+    from packet_withdraw_record ur
+    WHERE ur.merchant_order_no = #{merchantOrderNo}
+  </select>
+  <select id="selectByCount" resultType="com.erban.main.vo.admin.PacketWithdrawRecordVo">
+      select COUNT(DISTINCT ur.uid) as userNum , sum(ur.packet_num) as money
+      from packet_withdraw_record ur
+      inner join users us on ur.uid = us.uid
+    <where>
+      <if test="erbanNo!=null">
+          AND us.erban_no=#{erbanNo}
+      </if>
+      <if test="beginDate!=null">
+        AND ur.create_time &gt;= #{beginDate}
+      </if>
+      <if test="endDate!=null">
+        AND ur.create_time &lt;= #{endDate}
+      </if>
+      <if test="status!=null">
+        AND ur.record_status=#{status}
+      </if>
+      <if test="tranType!=null">
+        AND ur.tran_type=#{tranType}
+      </if>
+      <if test="realTranType!=null">
+        AND ur.real_tran_type=#{realTranType}
+      </if>
+      <if test="withdrawStatus!=null">
+        AND us.withdraw_status=#{withdrawStatus}
+      </if>
+    </where>
+  </select>
+</mapper>

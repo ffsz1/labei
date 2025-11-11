@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.UserRoomTaskDAO" >
+
+    <select id="countUserConsumeByRoom" resultType="com.erban.admin.main.dto.UserConsumeDTO">
+        SELECT
+            gsr.uid AS uid,
+            gsr.room_uid as  roomUid,
+            min( gsr.create_time ) AS minDate,
+            max( gsr.create_time ) as maxDate,
+            COUNT( gsr.uid ) as  totalNum,
+            sum( g.`gold_price` * gsr.`gift_num` ) totalGold
+        FROM
+          gift_send_record gsr
+        LEFT JOIN `gift` g ON g.`gift_id` = gsr.`gift_id`
+        WHERE
+          room_uid = #{roomUid}
+        AND gsr.create_time BETWEEN #{beginDate} AND #{endDate}
+        GROUP BY
+          gsr.uid
+        ORDER BY
+          totalGold DESC;
+    </select>
+</mapper>

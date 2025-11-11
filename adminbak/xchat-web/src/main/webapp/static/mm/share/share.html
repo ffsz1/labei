@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <script type="text/javascript">
+        var FS = {};
+        (function (win, FS) {
+            var doc = win.document;
+            var docEl = doc.documentElement;
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+            var dpr = 1;
+            var scale = 1;
+            var fontBase = 16;
+
+            if (window.devicePixelRatio >= 2) {
+                scale *= 0.5;
+                dpr *= 2;
+            }
+
+            docEl.setAttribute('data-dpr', dpr);
+            metaEl.setAttribute('content', 'initial-scale=' + scale + ', width=device-width, maximum-scale=' +
+                scale +
+                ', user-scalable=no');
+
+            function refreshRem() {
+                var width = docEl.getBoundingClientRect().width;
+                var rem = width / 10;
+                docEl.style.fontSize = rem + 'px';
+                FS.rem = rem;
+            }
+
+            var tid = null;
+            win.addEventListener('resize', function () {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }, false);
+
+            if (doc.readyState === 'complete') {
+                doc.body.style.fontSize = fontBase * dpr + 'px';
+            } else {
+                doc.addEventListener('DOMContentLoaded', function (e) {
+                    doc.body.style.fontSize = fontBase * dpr + 'px';
+                }, false);
+            }
+
+            refreshRem();
+
+            FS.dpr = dpr;
+            FS.rem2px = function (d) {
+                var val = parseFloat(d) * FS.rem;
+                if (typeof d === 'string' && d.match(/rem$/)) {
+                    val += 'px';
+                }
+                return val;
+            }
+            FS.px2rem = function (d) {
+                var val = parseFloat(d) / FS.rem;
+                if (typeof d === 'string' && d.match(/px$/)) {
+                    val += 'rem';
+                }
+                return val;
+            }
+        })(window, FS);
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            width: 100%;
+            height: 100%;
+            background: url('images/share.png');
+            background-size: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        .content>div:nth-child(1) img {
+            width: 2.43rem;
+            height: 2.43rem;
+            border-radius: 50%;
+            background-color: #fff;
+            margin-top: 3.56rem;
+        }
+
+        .title>p:nth-last-child(2) {
+            font-size: 0.4rem;
+        }
+
+        .title>p:nth-last-child(1) {
+            font-size: 0.35rem;
+        }
+
+        .tip {
+            margin-top: 5rem;
+        }
+
+        .tip>p:nth-last-child(2) {
+            font-size: 0.5rem;
+        }
+
+        .tip>p:nth-last-child(1) {
+            font-size: 0.37rem;
+        }
+
+        #into {
+            width: 6.33rem;
+            height: 1.17rem;
+            border-radius: 0.15rem;
+            color: #fff;
+            background-color: #00C2FF;
+            font-size: 0.4rem;
+            margin-top: 0.76rem;
+            border: 0;
+            line-height: 1.17rem;
+            display: block;
+            text-decoration: none;
+        }
+    </style>
+    <title>拉贝语音 妙不可言！</title>
+</head>
+<script type="text/javascript" src="../lib/zepto.min.js"></script>
+<script src="../lib/linkedme.min.js"></script>
+<script src="../lib/common.js"></script>
+
+<body>
+    <div class="content">
+    </div>
+    <div style="display:none">
+        <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+    </div>
+</body>
+<script>
+    $('body').hide()
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+    } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ?
+            "symbol" : typeof obj;
+    };
+    var share = {
+        title: '拉贝语音，你想要的我们都有！', // 分享标题
+        link: window.location.href, // 分享链接
+        imgUrl: allUrl() + '/home/images/logo.png',
+        desc: '拉贝语音交友速配处CP，你想要的我们都有。' // 分享描述
+    };
+
+    function shareInfo() {
+        var _url = allUrl() + '/mm/download/download.html';
+        var info = {
+            title: '拉贝语音，你想要的我们都有！', // 分享标题
+            showUrl: _url,
+            imgUrl: allUrl() + '/home/images/logo.png',
+            desc: '拉贝语音交友速配处CP，你想要的我们都有。' // 分享描述
+        };
+        return JSON.stringify(info);
+    }
+    var _url = location.search;
+    var theRequest = new Object();
+    if (_url.indexOf('?') != -1) {
+        var str = _url.substr(1);
+        strs = str.split('&');
+        for (var i in strs) {
+            theRequest[strs[i].split('=')[0]] = decodeURI(strs[i].split('=')[1]);
+        }
+    }
+    var browser = checkVersion();
+    setTimeout(function () {
+        $.ajax({
+            type: 'GET',
+            url: allUrl() + '/user/get',
+            data: {
+                uid: theRequest.uid
+            },
+            asyc: true,
+            success: function (res) {
+                if (res.code = 200) {
+                    $('.content').html('<div class="title"><img src="' + res.data.avatar +
+                        '"><p id="room">' + res.data.nick + '</p><p id="uid">ID\uFF1A' + res.data
+                        .erbanNo +
+                        '</p></div><div class="tip"><p>拉贝语音</p><p>妙不可言</p></div><div id="linked"></div>'
+                    );
+                    if (browser.weixin && browser.android) {
+                        location.href =
+                            'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx73ed064cb1d49c27&redirect_uri=https%3A%2F%2Fwww.47huyu.cn%2Fwx%2Fpub%2Flogin/' +
+                            theRequest.shareUid + '/' + theRequest.uid +
+                            '&response_type=code&scope=snsapi_userinfo&state=%2fmm%2flive%2findex.html%3fshareUid%3d' +
+                            theRequest.shareUid + '%26uid%3d' + theRequest.uid +
+                            '%26connect_redirect=1#wechat_redirect'
+                    } else {
+                        $('body').show()
+                        linkedme.init("51b55040e052e44c1cde9fd9519693be", {
+                            type: "live"
+                        }, null);
+                        var data = {};
+                        data.type = "live"; //表示现在使用线上模式,如果填写"test", 表示测试模式.【可选】
+                        data.params = '{"roomuid":"' + theRequest.shareUid + '","uid":"' +
+                            theRequest.uid +
+                            '","type":"' + 2 + '"}'
+                        linkedme.link(data, function (err, response) {
+                            if (err) {} else {
+                                $('#linked').html('<a id="into" class="linkedme" href="' +
+                                    response.url + '">\u8FDB\u5165\u623F\u95F4</a>');
+                            }
+                        }, false);
+                    }
+                }
+            }
+        });
+    }, 50);
+</script>
+
+</html>

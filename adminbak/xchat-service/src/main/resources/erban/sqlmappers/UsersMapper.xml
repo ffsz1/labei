@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UsersMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.Users">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="has_pretty_erban_no" property="hasPrettyErbanNo" jdbcType="BIT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="DATE"/>
+        <result column="star" property="star" jdbcType="TINYINT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="signture" property="signture" jdbcType="VARCHAR"/>
+        <result column="user_voice" property="userVoice" jdbcType="VARCHAR"/>
+        <result column="voice_dura" property="voiceDura" jdbcType="INTEGER"/>
+        <result column="follow_num" property="followNum" jdbcType="INTEGER"/>
+        <result column="fans_num" property="fansNum" jdbcType="INTEGER"/>
+        <result column="def_user" property="defUser" jdbcType="TINYINT"/>
+        <result column="fortune" property="fortune" jdbcType="BIGINT"/>
+        <result column="channel_type" property="channelType" jdbcType="TINYINT"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="region" property="region" jdbcType="VARCHAR"/>
+        <result column="user_desc" property="userDesc" jdbcType="VARCHAR"/>
+        <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR"/>
+        <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="wx_pub_fans_openid" property="wxPubFansOpenid" jdbcType="VARCHAR"/>
+        <result column="wx_pub_fans_gender" property="wxPubFansGender" jdbcType="TINYINT"/>
+        <result column="room_uid" property="roomUid" jdbcType="BIGINT"/>
+        <result column="share_uid" property="shareUid" jdbcType="BIGINT"/>
+        <result column="share_channel" property="shareChannel" jdbcType="TINYINT"/>
+        <result column="wx_openId" property="wxOpenid" jdbcType="VARCHAR"/>
+        <result column="os" property="os" jdbcType="VARCHAR"/>
+        <result column="osVersion" property="osversion" jdbcType="VARCHAR"/>
+        <result column="app" property="app" jdbcType="VARCHAR"/>
+        <result column="imei" property="imei" jdbcType="VARCHAR"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="linkedme_channel" property="linkedmeChannel" jdbcType="VARCHAR"/>
+        <result column="isp_type" property="ispType" jdbcType="VARCHAR"/>
+        <result column="net_type" property="netType" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="noble_id" property="nobleId" jdbcType="INTEGER"/>
+        <result column="noble_name" property="nobleName" jdbcType="VARCHAR"/>
+        <result column="withdraw_status" property="withdrawStatus" jdbcType="TINYINT"/>
+    </resultMap>
+    <resultMap id="simpleUserMap" type="com.erban.main.vo.SimpleUserVo">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="DATE"/>
+        <result column="star" property="star" jdbcType="TINYINT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="signture" property="signture" jdbcType="VARCHAR"/>
+        <result column="user_voice" property="userVoice" jdbcType="VARCHAR"/>
+        <result column="follow_num" property="followNum" jdbcType="INTEGER"/>
+        <result column="fans_num" property="fansNum" jdbcType="INTEGER"/>
+        <result column="fortune" property="fortune" jdbcType="BIGINT"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        uid, erban_no, has_pretty_erban_no, phone, birth, star, nick, email, signture, user_voice,
+        voice_dura, follow_num, fans_num, def_user, fortune, channel_type, last_login_time,
+        last_login_ip, gender, avatar, region, user_desc, alipay_account, alipay_account_name,
+        create_time, update_time, wx_pub_fans_openid, wx_pub_fans_gender, room_uid, share_uid,
+        share_channel, wx_openId, os, osVersion, app, imei, channel, linkedme_channel, isp_type,
+        net_type, model, device_id, app_version, noble_id, noble_name, withdraw_status
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.UsersExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from users
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from users
+        where uid = #{uid,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from users where uid = #{uid,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.UsersExample">
+        delete from users
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.Users">
+    insert into users (uid, erban_no, has_pretty_erban_no, 
+      phone, birth, star, nick, 
+      email, signture, user_voice, 
+      voice_dura, follow_num, fans_num, 
+      def_user, fortune, channel_type, 
+      last_login_time, last_login_ip, gender, 
+      avatar, region, user_desc, 
+      alipay_account, alipay_account_name, create_time, 
+      update_time, wx_pub_fans_openid, wx_pub_fans_gender, 
+      room_uid, share_uid, share_channel, 
+      wx_openId, os, osVersion, 
+      app, imei, channel, 
+      linkedme_channel, isp_type, net_type, 
+      model, device_id, app_version, 
+      noble_id, noble_name, withdraw_status
+      )
+    values (#{uid,jdbcType=BIGINT}, #{erbanNo,jdbcType=BIGINT}, #{hasPrettyErbanNo,jdbcType=BIT}, 
+      #{phone,jdbcType=VARCHAR}, #{birth,jdbcType=DATE}, #{star,jdbcType=TINYINT}, #{nick,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{signture,jdbcType=VARCHAR}, #{userVoice,jdbcType=VARCHAR}, 
+      #{voiceDura,jdbcType=INTEGER}, #{followNum,jdbcType=INTEGER}, #{fansNum,jdbcType=INTEGER}, 
+      #{defUser,jdbcType=TINYINT}, #{fortune,jdbcType=BIGINT}, #{channelType,jdbcType=TINYINT}, 
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
+      #{avatar,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{userDesc,jdbcType=VARCHAR}, 
+      #{alipayAccount,jdbcType=VARCHAR}, #{alipayAccountName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{wxPubFansOpenid,jdbcType=VARCHAR}, #{wxPubFansGender,jdbcType=TINYINT}, 
+      #{roomUid,jdbcType=BIGINT}, #{shareUid,jdbcType=BIGINT}, #{shareChannel,jdbcType=TINYINT}, 
+      #{wxOpenid,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{osversion,jdbcType=VARCHAR}, 
+      #{app,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, 
+      #{linkedmeChannel,jdbcType=VARCHAR}, #{ispType,jdbcType=VARCHAR}, #{netType,jdbcType=VARCHAR}, 
+      #{model,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{appVersion,jdbcType=VARCHAR}, 
+      #{nobleId,jdbcType=INTEGER}, #{nobleName,jdbcType=VARCHAR}, #{withdrawStatus,jdbcType=TINYINT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.Users">
+        insert into users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="erbanNo != null">
+                erban_no,
+            </if>
+            <if test="hasPrettyErbanNo != null">
+                has_pretty_erban_no,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="birth != null">
+                birth,
+            </if>
+            <if test="star != null">
+                star,
+            </if>
+            <if test="nick != null">
+                nick,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="signture != null">
+                signture,
+            </if>
+            <if test="userVoice != null">
+                user_voice,
+            </if>
+            <if test="voiceDura != null">
+                voice_dura,
+            </if>
+            <if test="followNum != null">
+                follow_num,
+            </if>
+            <if test="fansNum != null">
+                fans_num,
+            </if>
+            <if test="defUser != null">
+                def_user,
+            </if>
+            <if test="fortune != null">
+                fortune,
+            </if>
+            <if test="channelType != null">
+                channel_type,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="region != null">
+                region,
+            </if>
+            <if test="userDesc != null">
+                user_desc,
+            </if>
+            <if test="alipayAccount != null">
+                alipay_account,
+            </if>
+            <if test="alipayAccountName != null">
+                alipay_account_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="wxPubFansOpenid != null">
+                wx_pub_fans_openid,
+            </if>
+            <if test="wxPubFansGender != null">
+                wx_pub_fans_gender,
+            </if>
+            <if test="roomUid != null">
+                room_uid,
+            </if>
+            <if test="shareUid != null">
+                share_uid,
+            </if>
+            <if test="shareChannel != null">
+                share_channel,
+            </if>
+            <if test="wxOpenid != null">
+                wx_openId,
+            </if>
+            <if test="os != null">
+                os,
+            </if>
+            <if test="osversion != null">
+                osVersion,
+            </if>
+            <if test="app != null">
+                app,
+            </if>
+            <if test="imei != null">
+                imei,
+            </if>
+            <if test="channel != null">
+                channel,
+            </if>
+            <if test="linkedmeChannel != null">
+                linkedme_channel,
+            </if>
+            <if test="ispType != null">
+                isp_type,
+            </if>
+            <if test="netType != null">
+                net_type,
+            </if>
+            <if test="model != null">
+                model,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="appVersion != null">
+                app_version,
+            </if>
+            <if test="nobleId != null">
+                noble_id,
+            </if>
+            <if test="nobleName != null">
+                noble_name,
+            </if>
+            <if test="withdrawStatus != null">
+                withdraw_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="erbanNo != null">
+                #{erbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="hasPrettyErbanNo != null">
+                #{hasPrettyErbanNo,jdbcType=BIT},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="birth != null">
+                #{birth,jdbcType=DATE},
+            </if>
+            <if test="star != null">
+                #{star,jdbcType=TINYINT},
+            </if>
+            <if test="nick != null">
+                #{nick,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="signture != null">
+                #{signture,jdbcType=VARCHAR},
+            </if>
+            <if test="userVoice != null">
+                #{userVoice,jdbcType=VARCHAR},
+            </if>
+            <if test="voiceDura != null">
+                #{voiceDura,jdbcType=INTEGER},
+            </if>
+            <if test="followNum != null">
+                #{followNum,jdbcType=INTEGER},
+            </if>
+            <if test="fansNum != null">
+                #{fansNum,jdbcType=INTEGER},
+            </if>
+            <if test="defUser != null">
+                #{defUser,jdbcType=TINYINT},
+            </if>
+            <if test="fortune != null">
+                #{fortune,jdbcType=BIGINT},
+            </if>
+            <if test="channelType != null">
+                #{channelType,jdbcType=TINYINT},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginIp != null">
+                #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=TINYINT},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="userDesc != null">
+                #{userDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="alipayAccount != null">
+                #{alipayAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="alipayAccountName != null">
+                #{alipayAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wxPubFansOpenid != null">
+                #{wxPubFansOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="wxPubFansGender != null">
+                #{wxPubFansGender,jdbcType=TINYINT},
+            </if>
+            <if test="roomUid != null">
+                #{roomUid,jdbcType=BIGINT},
+            </if>
+            <if test="shareUid != null">
+                #{shareUid,jdbcType=BIGINT},
+            </if>
+            <if test="shareChannel != null">
+                #{shareChannel,jdbcType=TINYINT},
+            </if>
+            <if test="wxOpenid != null">
+                #{wxOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="os != null">
+                #{os,jdbcType=VARCHAR},
+            </if>
+            <if test="osversion != null">
+                #{osversion,jdbcType=VARCHAR},
+            </if>
+            <if test="app != null">
+                #{app,jdbcType=VARCHAR},
+            </if>
+            <if test="imei != null">
+                #{imei,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="linkedmeChannel != null">
+                #{linkedmeChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="ispType != null">
+                #{ispType,jdbcType=VARCHAR},
+            </if>
+            <if test="netType != null">
+                #{netType,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="nobleId != null">
+                #{nobleId,jdbcType=INTEGER},
+            </if>
+            <if test="nobleName != null">
+                #{nobleName,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawStatus != null">
+                #{withdrawStatus,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.UsersExample" resultType="java.lang.Integer">
+        select count(*) from users
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update users
+        <set>
+            <if test="record.uid != null">
+                uid = #{record.uid,jdbcType=BIGINT},
+            </if>
+            <if test="record.erbanNo != null">
+                erban_no = #{record.erbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="record.hasPrettyErbanNo != null">
+                has_pretty_erban_no = #{record.hasPrettyErbanNo,jdbcType=BIT},
+            </if>
+            <if test="record.phone != null">
+                phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birth != null">
+                birth = #{record.birth,jdbcType=DATE},
+            </if>
+            <if test="record.star != null">
+                star = #{record.star,jdbcType=TINYINT},
+            </if>
+            <if test="record.nick != null">
+                nick = #{record.nick,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.signture != null">
+                signture = #{record.signture,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userVoice != null">
+                user_voice = #{record.userVoice,jdbcType=VARCHAR},
+            </if>
+            <if test="record.voiceDura != null">
+                voice_dura = #{record.voiceDura,jdbcType=INTEGER},
+            </if>
+            <if test="record.followNum != null">
+                follow_num = #{record.followNum,jdbcType=INTEGER},
+            </if>
+            <if test="record.fansNum != null">
+                fans_num = #{record.fansNum,jdbcType=INTEGER},
+            </if>
+            <if test="record.defUser != null">
+                def_user = #{record.defUser,jdbcType=TINYINT},
+            </if>
+            <if test="record.fortune != null">
+                fortune = #{record.fortune,jdbcType=BIGINT},
+            </if>
+            <if test="record.channelType != null">
+                channel_type = #{record.channelType,jdbcType=TINYINT},
+            </if>
+            <if test="record.lastLoginTime != null">
+                last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.lastLoginIp != null">
+                last_login_ip = #{record.lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="record.gender != null">
+                gender = #{record.gender,jdbcType=TINYINT},
+            </if>
+            <if test="record.avatar != null">
+                avatar = #{record.avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="record.region != null">
+                region = #{record.region,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userDesc != null">
+                user_desc = #{record.userDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="record.alipayAccount != null">
+                alipay_account = #{record.alipayAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="record.alipayAccountName != null">
+                alipay_account_name = #{record.alipayAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.wxPubFansOpenid != null">
+                wx_pub_fans_openid = #{record.wxPubFansOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.wxPubFansGender != null">
+                wx_pub_fans_gender = #{record.wxPubFansGender,jdbcType=TINYINT},
+            </if>
+            <if test="record.roomUid != null">
+                room_uid = #{record.roomUid,jdbcType=BIGINT},
+            </if>
+            <if test="record.shareUid != null">
+                share_uid = #{record.shareUid,jdbcType=BIGINT},
+            </if>
+            <if test="record.shareChannel != null">
+                share_channel = #{record.shareChannel,jdbcType=TINYINT},
+            </if>
+            <if test="record.wxOpenid != null">
+                wx_openId = #{record.wxOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.os != null">
+                os = #{record.os,jdbcType=VARCHAR},
+            </if>
+            <if test="record.osversion != null">
+                osVersion = #{record.osversion,jdbcType=VARCHAR},
+            </if>
+            <if test="record.app != null">
+                app = #{record.app,jdbcType=VARCHAR},
+            </if>
+            <if test="record.imei != null">
+                imei = #{record.imei,jdbcType=VARCHAR},
+            </if>
+            <if test="record.channel != null">
+                channel = #{record.channel,jdbcType=VARCHAR},
+            </if>
+            <if test="record.linkedmeChannel != null">
+                linkedme_channel = #{record.linkedmeChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ispType != null">
+                isp_type = #{record.ispType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.netType != null">
+                net_type = #{record.netType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.model != null">
+                model = #{record.model,jdbcType=VARCHAR},
+            </if>
+            <if test="record.deviceId != null">
+                device_id = #{record.deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.appVersion != null">
+                app_version = #{record.appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="record.nobleId != null">
+                noble_id = #{record.nobleId,jdbcType=INTEGER},
+            </if>
+            <if test="record.nobleName != null">
+                noble_name = #{record.nobleName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.withdrawStatus != null">
+                withdraw_status = #{record.withdrawStatus,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update users
+        set uid = #{record.uid,jdbcType=BIGINT},
+        erban_no = #{record.erbanNo,jdbcType=BIGINT},
+        has_pretty_erban_no = #{record.hasPrettyErbanNo,jdbcType=BIT},
+        phone = #{record.phone,jdbcType=VARCHAR},
+        birth = #{record.birth,jdbcType=DATE},
+        star = #{record.star,jdbcType=TINYINT},
+        nick = #{record.nick,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        signture = #{record.signture,jdbcType=VARCHAR},
+        user_voice = #{record.userVoice,jdbcType=VARCHAR},
+        voice_dura = #{record.voiceDura,jdbcType=INTEGER},
+        follow_num = #{record.followNum,jdbcType=INTEGER},
+        fans_num = #{record.fansNum,jdbcType=INTEGER},
+        def_user = #{record.defUser,jdbcType=TINYINT},
+        fortune = #{record.fortune,jdbcType=BIGINT},
+        channel_type = #{record.channelType,jdbcType=TINYINT},
+        last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+        last_login_ip = #{record.lastLoginIp,jdbcType=VARCHAR},
+        gender = #{record.gender,jdbcType=TINYINT},
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+        region = #{record.region,jdbcType=VARCHAR},
+        user_desc = #{record.userDesc,jdbcType=VARCHAR},
+        alipay_account = #{record.alipayAccount,jdbcType=VARCHAR},
+        alipay_account_name = #{record.alipayAccountName,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        wx_pub_fans_openid = #{record.wxPubFansOpenid,jdbcType=VARCHAR},
+        wx_pub_fans_gender = #{record.wxPubFansGender,jdbcType=TINYINT},
+        room_uid = #{record.roomUid,jdbcType=BIGINT},
+        share_uid = #{record.shareUid,jdbcType=BIGINT},
+        share_channel = #{record.shareChannel,jdbcType=TINYINT},
+        wx_openId = #{record.wxOpenid,jdbcType=VARCHAR},
+        os = #{record.os,jdbcType=VARCHAR},
+        osVersion = #{record.osversion,jdbcType=VARCHAR},
+        app = #{record.app,jdbcType=VARCHAR},
+        imei = #{record.imei,jdbcType=VARCHAR},
+        channel = #{record.channel,jdbcType=VARCHAR},
+        linkedme_channel = #{record.linkedmeChannel,jdbcType=VARCHAR},
+        isp_type = #{record.ispType,jdbcType=VARCHAR},
+        net_type = #{record.netType,jdbcType=VARCHAR},
+        model = #{record.model,jdbcType=VARCHAR},
+        device_id = #{record.deviceId,jdbcType=VARCHAR},
+        app_version = #{record.appVersion,jdbcType=VARCHAR},
+        noble_id = #{record.nobleId,jdbcType=INTEGER},
+        noble_name = #{record.nobleName,jdbcType=VARCHAR},
+        withdraw_status = #{record.withdrawStatus,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Users">
+        update users
+        <set>
+            <if test="erbanNo != null">
+                erban_no = #{erbanNo,jdbcType=BIGINT},
+            </if>
+            <if test="hasPrettyErbanNo != null">
+                has_pretty_erban_no = #{hasPrettyErbanNo,jdbcType=BIT},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="birth != null">
+                birth = #{birth,jdbcType=DATE},
+            </if>
+            <if test="star != null">
+                star = #{star,jdbcType=TINYINT},
+            </if>
+            <if test="nick != null">
+                nick = #{nick,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="signture != null">
+                signture = #{signture,jdbcType=VARCHAR},
+            </if>
+            <if test="userVoice != null">
+                user_voice = #{userVoice,jdbcType=VARCHAR},
+            </if>
+            <if test="voiceDura != null">
+                voice_dura = #{voiceDura,jdbcType=INTEGER},
+            </if>
+            <if test="followNum != null">
+                follow_num = #{followNum,jdbcType=INTEGER},
+            </if>
+            <if test="fansNum != null">
+                fans_num = #{fansNum,jdbcType=INTEGER},
+            </if>
+            <if test="defUser != null">
+                def_user = #{defUser,jdbcType=TINYINT},
+            </if>
+            <if test="fortune != null">
+                fortune = #{fortune,jdbcType=BIGINT},
+            </if>
+            <if test="channelType != null">
+                channel_type = #{channelType,jdbcType=TINYINT},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=TINYINT},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="userDesc != null">
+                user_desc = #{userDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="alipayAccount != null">
+                alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="alipayAccountName != null">
+                alipay_account_name = #{alipayAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="wxPubFansOpenid != null">
+                wx_pub_fans_openid = #{wxPubFansOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="wxPubFansGender != null">
+                wx_pub_fans_gender = #{wxPubFansGender,jdbcType=TINYINT},
+            </if>
+            <if test="roomUid != null">
+                room_uid = #{roomUid,jdbcType=BIGINT},
+            </if>
+            <if test="shareUid != null">
+                share_uid = #{shareUid,jdbcType=BIGINT},
+            </if>
+            <if test="shareChannel != null">
+                share_channel = #{shareChannel,jdbcType=TINYINT},
+            </if>
+            <if test="wxOpenid != null">
+                wx_openId = #{wxOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="os != null">
+                os = #{os,jdbcType=VARCHAR},
+            </if>
+            <if test="osversion != null">
+                osVersion = #{osversion,jdbcType=VARCHAR},
+            </if>
+            <if test="app != null">
+                app = #{app,jdbcType=VARCHAR},
+            </if>
+            <if test="imei != null">
+                imei = #{imei,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                channel = #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="linkedmeChannel != null">
+                linkedme_channel = #{linkedmeChannel,jdbcType=VARCHAR},
+            </if>
+            <if test="ispType != null">
+                isp_type = #{ispType,jdbcType=VARCHAR},
+            </if>
+            <if test="netType != null">
+                net_type = #{netType,jdbcType=VARCHAR},
+            </if>
+            <if test="model != null">
+                model = #{model,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersion != null">
+                app_version = #{appVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="nobleId != null">
+                noble_id = #{nobleId,jdbcType=INTEGER},
+            </if>
+            <if test="nobleName != null">
+                noble_name = #{nobleName,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawStatus != null">
+                withdraw_status = #{withdrawStatus,jdbcType=TINYINT},
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Users">
+    update users
+    set erban_no = #{erbanNo,jdbcType=BIGINT},
+      has_pretty_erban_no = #{hasPrettyErbanNo,jdbcType=BIT},
+      phone = #{phone,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=DATE},
+      star = #{star,jdbcType=TINYINT},
+      nick = #{nick,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      signture = #{signture,jdbcType=VARCHAR},
+      user_voice = #{userVoice,jdbcType=VARCHAR},
+      voice_dura = #{voiceDura,jdbcType=INTEGER},
+      follow_num = #{followNum,jdbcType=INTEGER},
+      fans_num = #{fansNum,jdbcType=INTEGER},
+      def_user = #{defUser,jdbcType=TINYINT},
+      fortune = #{fortune,jdbcType=BIGINT},
+      channel_type = #{channelType,jdbcType=TINYINT},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      user_desc = #{userDesc,jdbcType=VARCHAR},
+      alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+      alipay_account_name = #{alipayAccountName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      wx_pub_fans_openid = #{wxPubFansOpenid,jdbcType=VARCHAR},
+      wx_pub_fans_gender = #{wxPubFansGender,jdbcType=TINYINT},
+      room_uid = #{roomUid,jdbcType=BIGINT},
+      share_uid = #{shareUid,jdbcType=BIGINT},
+      share_channel = #{shareChannel,jdbcType=TINYINT},
+      wx_openId = #{wxOpenid,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      osVersion = #{osversion,jdbcType=VARCHAR},
+      app = #{app,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      linkedme_channel = #{linkedmeChannel,jdbcType=VARCHAR},
+      isp_type = #{ispType,jdbcType=VARCHAR},
+      net_type = #{netType,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      noble_id = #{nobleId,jdbcType=INTEGER},
+      noble_name = #{nobleName,jdbcType=VARCHAR},
+      withdraw_status = #{withdrawStatus,jdbcType=TINYINT}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectNewUser" resultMap="simpleUserMap" parameterType="com.erban.main.vo.NewUserParam">
+        <!-- 查询新注册的用户,过滤被封的账号,过滤自己 -->
+        select
+        u.uid,
+        u.erban_no,
+        u.phone,
+        u.birth,
+        u.star,
+        u.nick,
+        u.email,
+        u.signture,
+        u.user_voice,
+        u.follow_num,
+        u.fans_num,
+        u.fortune,
+        u.gender,
+        u.avatar,
+        DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(u.birth)), '%Y')+0 AS age
+        from users u
+
+        <where>
+            u.def_user = 1
+            AND date_sub(curdate(), INTERVAL 7 DAY) &lt;= date(u.create_time)
+            AND NOT EXISTS (
+            <!-- 查询出被封禁的账号, uid 不能为NULL -->
+            SELECT DISTINCT
+            (a.uid)
+            FROM
+            account_block a
+            WHERE
+            u.uid = a.uid
+            AND a.block_status = 1
+            AND a.block_end_time > NOW()
+            )
+            <if test="gender != null">
+                AND u.gender = #{gender}
+            </if>
+            <if test="uid != null">
+                AND u.uid != #{uid}
+            </if>
+        </where>
+        ORDER BY u.create_time DESC
+        limit #{pageNum}, #{pageSize};
+    </select>
+
+
+    <resultMap id="UsersDtoResultMap" type="com.erban.main.dto.UsersDTO">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="has_pretty_erban_no" property="hasPrettyErbanNo" jdbcType="BIT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="DATE"/>
+        <result column="star" property="star" jdbcType="TINYINT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="signture" property="signture" jdbcType="VARCHAR"/>
+        <result column="user_voice" property="userVoice" jdbcType="VARCHAR"/>
+        <result column="voice_dura" property="voiceDura" jdbcType="INTEGER"/>
+        <result column="follow_num" property="followNum" jdbcType="INTEGER"/>
+        <result column="fans_num" property="fansNum" jdbcType="INTEGER"/>
+        <result column="def_user" property="defUser" jdbcType="TINYINT"/>
+        <result column="fortune" property="fortune" jdbcType="BIGINT"/>
+        <result column="channel_type" property="channelType" jdbcType="TINYINT"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="region" property="region" jdbcType="VARCHAR"/>
+        <result column="user_desc" property="userDesc" jdbcType="VARCHAR"/>
+        <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR"/>
+        <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="wx_pub_fans_openid" property="wxPubFansOpenid" jdbcType="VARCHAR"/>
+        <result column="wx_pub_fans_gender" property="wxPubFansGender" jdbcType="TINYINT"/>
+        <result column="room_uid" property="roomUid" jdbcType="BIGINT"/>
+        <result column="share_uid" property="shareUid" jdbcType="BIGINT"/>
+        <result column="share_channel" property="shareChannel" jdbcType="TINYINT"/>
+        <result column="wx_openId" property="wxOpenid" jdbcType="VARCHAR"/>
+        <result column="os" property="os" jdbcType="VARCHAR"/>
+        <result column="osVersion" property="osversion" jdbcType="VARCHAR"/>
+        <result column="app" property="app" jdbcType="VARCHAR"/>
+        <result column="imei" property="imei" jdbcType="VARCHAR"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="linkedme_channel" property="linkedmeChannel" jdbcType="VARCHAR"/>
+        <result column="isp_type" property="ispType" jdbcType="VARCHAR"/>
+        <result column="net_type" property="netType" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="noble_id" property="nobleId" jdbcType="INTEGER"/>
+        <result column="noble_name" property="nobleName" jdbcType="VARCHAR"/>
+        <result column="withdraw_status" property="withdrawStatus" jdbcType="TINYINT"/>
+        <result column="accompany_type" property="accompanyType" jdbcType="VARCHAR"/>
+        <result column="height" property="height" jdbcType="VARCHAR"/>
+        <result column="weight" property="weight" jdbcType="VARCHAR"/>
+        <result column="default_tag" property="defaultTag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getUser" parameterType="java.lang.Long" resultMap="UsersDtoResultMap">
+        <![CDATA[
+
+
+            SELECT
+              uid,
+              erban_no,
+              has_pretty_erban_no,
+              phone,
+              birth,
+              star,
+              nick,
+              email,
+              signture,
+              user_voice,
+              voice_dura,
+              follow_num,
+              fans_num,
+              def_user,
+              fortune,
+              channel_type,
+              last_login_time,
+              last_login_ip,
+              gender,
+              avatar,
+              region,
+              user_desc,
+              alipay_account,
+              alipay_account_name,
+              create_time,
+              update_time,
+              wx_pub_fans_openid,
+              wx_pub_fans_gender,
+              room_uid,
+              share_uid,
+              share_channel,
+              wx_openId,
+              os,
+              osVersion,
+              app,
+              imei,
+              channel,
+              linkedme_channel,
+              isp_type,
+              net_type,
+              model,
+              device_id,
+              app_version,
+              noble_id,
+              noble_name,
+              withdraw_status,
+              accompany_type,
+              height,
+              weight,
+              default_tag
+            FROM
+              `users`
+            WHERE
+              `uid` = #{uid,jdbcType=BIGINT}
+
+
+        ]]>
+    </select>
+
+    <update id="updateByDefaultTag">
+    update users set default_tag = 1 where uid = #{uid}
+  </update>
+
+
+</mapper>

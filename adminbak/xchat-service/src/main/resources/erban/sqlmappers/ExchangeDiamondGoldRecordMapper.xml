@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.ExchangeDiamondGoldRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.ExchangeDiamondGoldRecord" >
+    <id column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="ex_diamond_num" property="exDiamondNum" jdbcType="DOUBLE" />
+    <result column="ex_gold_num" property="exGoldNum" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    record_id, uid, ex_diamond_num, ex_gold_num, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.ExchangeDiamondGoldRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from exchange_diamond_gold_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from exchange_diamond_gold_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from exchange_diamond_gold_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.ExchangeDiamondGoldRecord" >
+    insert into exchange_diamond_gold_record (record_id, uid, ex_diamond_num, 
+      ex_gold_num, create_time)
+    values (#{recordId,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{exDiamondNum,jdbcType=DOUBLE}, 
+      #{exGoldNum,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.ExchangeDiamondGoldRecord" >
+    insert into exchange_diamond_gold_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        record_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="exDiamondNum != null" >
+        ex_diamond_num,
+      </if>
+      <if test="exGoldNum != null" >
+        ex_gold_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="exDiamondNum != null" >
+        #{exDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="exGoldNum != null" >
+        #{exGoldNum,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.ExchangeDiamondGoldRecord" >
+    update exchange_diamond_gold_record
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="exDiamondNum != null" >
+        ex_diamond_num = #{exDiamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="exGoldNum != null" >
+        ex_gold_num = #{exGoldNum,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.ExchangeDiamondGoldRecord" >
+    update exchange_diamond_gold_record
+    set uid = #{uid,jdbcType=BIGINT},
+      ex_diamond_num = #{exDiamondNum,jdbcType=DOUBLE},
+      ex_gold_num = #{exGoldNum,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="sumExechangeDiamond" resultMap="BaseResultMap" parameterType="java.util.List">
+    SELECT uid, sum(ex_diamond_num) as ex_diamond_num FROM exchange_diamond_gold_record
+    WHERE uid IN
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    GROUP BY uid
+  </select>
+
+  <resultMap id="SelectByQueryMap" type="com.erban.main.vo.admin.ExchangeDiamondVo">
+    <result column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="ex_diamond_num" property="exDiamondNum" jdbcType="DOUBLE" />
+    <result column="ex_gold_num" property="exGoldNum" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR" />
+    <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByQuery" resultMap="SelectByQueryMap" parameterType="com.erban.main.param.admin.ChargeRecordParam">
+    SELECT e.record_id as record_id, e.uid as uid, e.ex_diamond_num as ex_diamond_num, e.ex_gold_num as ex_gold_num, e.create_time as create_time,
+          u.nick as nick ,u.erban_no as erban_no,u.phone as phone ,u.alipay_account as alipay_account,u.alipay_account_name as alipay_account_name
+    FROM exchange_diamond_gold_record e LEFT JOIN users u ON e.uid=u.uid
+    WHERE u.def_user!='3'
+    <if test="erbanNo!=null">
+      AND u.erban_no=#{erbanNo}
+    </if>
+    <if test="beginDate!=null">
+      AND e.create_time &gt;= #{beginDate}
+    </if>
+    <if test="endDate!=null">
+      AND e.create_time &lt;= #{endDate}
+    </if>
+    order by e.create_time desc
+  </select>
+</mapper>

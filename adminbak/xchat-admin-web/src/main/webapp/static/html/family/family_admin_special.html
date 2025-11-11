@@ -1,0 +1,407 @@
+<style>
+    #removeBadge{
+        margin-left: 10px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">时间:</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="beginDate" type="date" placeholder="开始时间" name="beginDate" value="" class="date form-control validate[required]">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" id="endDate" type="date" placeholder="结束时间" name="endDate" value="" class="date form-control validate[required]">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">状态:</label>
+                        <div class="col-sm-4">
+                            <select class="btn btn-default dropdown-toggle" id="type" name="type"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">审核通过</option>
+                                <option value="2">审核不通过</option>
+                                <option value="0">审核中</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label class="col-sm-1 control-label">
+                        <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+                    </label>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">家族信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="giftForm">
+                    <input type="hidden" name="giftId" id="giftId"/>
+                    <div class="form-group">
+                        <label for="familyId" class="col-sm-2 control-label">家族ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="familyId" id="familyId">
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" id="id" value="">
+                    <div class="form-group">
+                        <label for="familyName" class="col-sm-2 control-label">家族名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="familyName" id="familyName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">家族logo:</label>
+                        <div class="col-sm-10">
+                            <img src="" id="picImage" style="width:250px;height:200px;" alt="">
+                            <input type="file" id="picUploadFile" name="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svga">
+                            <button class="btn btn-success" type="button" id="picUploadBtn">上传</button>
+                            <input type="hidden" id="familyLogo" name="familyLogo" class="form-control"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        $('#beginDate').datetimepicker({
+            language:"zh-CN",
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            minView: "month"
+        })
+        $('#endDate').datetimepicker({
+            language:"zh-CN",
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            minView: "month"
+        })
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: true,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    type: isNaN(parseInt($("#type").val()))?null:parseInt($("#type").val()),
+                    searchText: params.searchText,
+                    startTime:$("#beginDate").val(),
+                    endTime: $("#endDate").val()
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: '/admin/family/getall',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+            columns:[
+                {field: 'familyId', title: '家族ID', align: 'center', width:'10%'},
+                {
+                    field:'familyLogo',
+                    title:'logo',
+                    align:'center',
+                    valign:'middle',
+                    width:'5%',
+                    formatter: function (val,row,index) {
+                        return "<img src='"+val+"' width='40' height='40'>";
+                    }
+                },
+                {field: 'familyName', title: '家族名字', align: 'center', width: '10%'},
+                {field: 'nike', title: '创建人昵称', align: 'center', width: '10%'},
+                {field: 'erbanNo', title: '创建人拉贝号', align: 'center', width: '10%'},
+                {field: 'uid', title: '创建人Uid', align: 'center', width: '10%'},
+                {field: 'status', title: '审核状态', align: 'center', width: '5%', formatter:function(val,row, index){
+                        if(val == 0){
+                            return '审核中';
+                        } else if(val == 1){
+                            return '审核成功'
+                        }else{
+                            return '审核失败'
+                        }
+                    }},
+                {field: 'display', title: '显示/隐藏', align: 'center', width: '5%', formatter:function(val,row, index){
+                        if(val == 1){
+                            return '显示';
+                        } else {
+                            return '隐藏'
+                        }
+                    }},
+                {field: 'verification', title: '加入验证', align: 'center', width: '5%', formatter:function(val,row, index){
+                        if(val == 1){
+                            return '是';
+                        } else {
+                            return '否'
+                        }
+                    }},
+                {field: 'hall', title: '手上厅', align: 'center', width: '10%'},
+                {field: 'createTime', title: '申请时间', align: 'center', width: '10%',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd");
+                        } else {
+                            return '-';
+                        }
+
+                    }},
+                {field: 'giftId', title: '操作', align: 'center', width: '15%', formatter: function(val, row, index){
+                        var content = '';
+                        content += '<button class="btn btn-sm btn-success opt-edit" data-id=' + row.id + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i>编辑</button>' ;
+                        if(row.status == 0){
+                            content +=    '&nbsp;&nbsp;<button class="btn btn-sm btn-primary opt-checkSuccess" data-id=' + row.id +
+                                '>审核通过</button>' ;
+                            content +=     '&nbsp;&nbsp;<button class="btn btn-sm btn-primary opt-checkFailure" data-id=' + row.id +
+                                '>审核不通过</button>' ;
+                        }
+                        if(row.display == 1){
+                            content += '&nbsp;&nbsp;<button class="btn btn-sm btn-primary opt-show" data-id=' + row.id +
+                            '>隐藏</button>' ;
+                        }else{
+                            content += '&nbsp;&nbsp;<button class="btn btn-sm btn-primary opt-show" data-id=' + row.id +
+                            '>显示</button>' ;
+                        }
+                        content += '<button class="btn btn-sm btn-success opt-disband" data-id=' + row.id + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i>解散家族</button>' ;
+                        return content;
+
+                    }}
+            ]
+        });;
+
+        $('#btnSearch').on('click',function () {
+            TableHelper.doRefresh('#table');
+        });
+
+
+        $('#table').on('click','.opt-show',function () {
+            var teamId = $(this).data('id');
+            if(teamId == 'undefined' || !teamId){
+                return;
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '/admin/family/changeDisplaysStatus',
+                data:{
+                    teamId: teamId
+                },
+                dataType: 'json',
+                success:function (res) {
+                    if(res.code == 200){
+                        $("#tipMsg").text("修改成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    }else{
+                        $("#tipMsg").text("修改失败，错误码：" + res.code);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        });
+
+
+        $("#table").on("click", '.opt-checkSuccess', function () {
+            var teamId = $(this).data('id');
+            if(teamId == 'undefined' || !teamId){
+                return;
+            }
+            if (confirm("你确认审核通过该记录吗?")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/family/checkSuccess.action",
+                    data: {'teamId': teamId},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#tipMsg").text("审核成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("审核失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#table").on("click", '.opt-checkFailure', function () {
+            var teamId = $(this).data('id');
+            if(teamId == 'undefined' || !teamId){
+                return;
+            }
+            if (confirm("你确认要审核不通过该记录吗?")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/family/checkFailure.action",
+                    data: {'teamId': teamId},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#tipMsg").text("审核不通过成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("审核不通过失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+
+        $('#picUploadBtn').on('click',function () {
+            $.ajaxFileUpload({
+                fileElementId: 'picUploadFile',    //需要上传的文件域的ID，即<input type="file">的ID。
+                url: '/admin/file/upload', //后台方法的路径
+                type: 'post',   //当要提交自定义参数时，这个参数要设置成post
+                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。
+                secureuri: false,   //是否启用安全提交，默认为false。
+                async : true,   //是否是异步
+                success: function(json) {   //提交成功后自动执行的处理函数，参数data就是服务器返回的数据。
+                    if(json.path){
+                        $('#familyLogo').val(json.path);
+                        $('#picImage').attr("src", json.path);
+                        console.log(json.path);
+                    }else{
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function(data, status, e) {  //提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        });
+
+        $("#table").on("click", '.opt-edit', function () {
+            var teamId = $(this).data('id');
+            $.ajax({
+                type: "get",
+                url: "/admin/family/get.action",
+                data: {id: teamId},
+                dataType: "json",
+                success: function (json) {
+                    if(json.entity){
+                        $("#familyId").val(json.entity.familyId);
+                        $("#familyName").val(json.entity.familyName);
+                        // 设置礼物图片
+                        $('#familyLogo').val(json.entity.familyLogo);
+                        $('#id').val(json.entity.id);
+                        $('#picImage').attr("src", json.entity.familyLogo);
+                        // 打开编辑弹窗
+                        $("#giftModal").modal('show');
+                    }else{
+                        $("#tipMsg").text("获取信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#save").click(function(){
+            if($("#giftForm").validationEngine('validate')){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/family/save.action",
+                    data: $('#giftForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if(json.success == 'true'){
+                            $("#giftModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        }else{
+                            $("#giftModal").modal('hide');
+                            $("#tipMsg").text("保存失败." + json.msg);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+
+        $("#table").on("click", '.opt-disband', function () {
+            var teamId = $(this).data('id');
+            if(teamId == 'undefined' || !teamId){
+                return;
+            }
+            if (confirm("你确认要解散该家族吗?")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/family/disband.action",
+                    data: {'teamId': teamId},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#tipMsg").text("解散成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("解散失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+    })
+</script>

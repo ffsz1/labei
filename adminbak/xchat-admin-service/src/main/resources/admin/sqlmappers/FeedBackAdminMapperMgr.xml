@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.FeedBackaAdminMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.FeedbackVo" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="feedback_desc" property="feedbackDesc" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="Map" >
+    select fb.uid, u.erban_no, fb.feedback_desc, fb.img_url, fb.contact, fb.create_time
+    from feedback fb
+    INNER JOIN users u on fb.uid = u.uid
+    where 1 = 1
+    <if test="erbanNo!=null">
+      AND u.erban_no=#{erbanNo}
+    </if>
+    <if test="beginDate!=null">
+      AND fb.create_time &gt;= #{beginDate}
+    </if>
+    <if test="endDate!=null">
+      AND fb.create_time &lt;= #{endDate}
+    </if>
+    ORDER BY fb.create_time desc
+  </select>
+
+</mapper>

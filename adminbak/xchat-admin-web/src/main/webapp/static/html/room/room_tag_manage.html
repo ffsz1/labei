@@ -1,0 +1,282 @@
+<style>
+    .modal-body #tagImage {
+        cursor: pointer;
+    }
+    .modal-body #pictureUploadFile {
+        display: none;
+    }
+    .modal-body .btn {
+        display: block;
+        width: 200px;
+        margin-top: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 新增标签
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="roomTagModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title" id="roomTagModalLabel">添加/更新房间标签</h4>
+            </div>
+            <div class="modal-body">
+                <form id="roomTag" class="form-horizontal">
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">标签名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="name" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">标签图片:</label>
+                        <div class="col-sm-8">
+                            <img src="/static/AdminLTE/img/add.png" id="tagImage" width="200" alt="tagImage">
+                            <input type="file" id="pictureUploadFile" name="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="pictureUploadBtn">上传</button>
+                            <input type="hidden" id="imgUrl" name="imgUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">排序:</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control validate[required]" id="sortNo" name="sortNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">tmpint:</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control validate[required]" id="tmpint" name="tmpint">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">子类:</label>
+                        <div class="col-sm-8">
+                            <input type="number" placeholder="多个子类请用逗号分隔, 如: 2, 8" class="form-control validate[required]" id="children" name="children">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">是否有效:</label>
+                        <div class="col-sm-8">
+                            <div class="radio">
+                                <label><input type="radio" value="1" name="status" checked>有效</label>
+                                <label><input type="radio" value="0" name="status">无效</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            // 设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber
+                };
+                return param;
+            },
+            uniqueId: 'room.uid',
+            toolbar: '#toolbar',
+            url: '/admin/roomtag/getRoomTagList',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            },
+            columns: [
+                {field: 'id', title: '标签ID', align: 'center', valign: 'middle', width: '5%', visible: false},
+                {field: 'name', title: '标签名称', align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'pict', title: '标签图片', align: 'center', valign: 'middle', width: 200,
+                    formatter: function (val) {
+                        return "<img src='" + val + "' alt='tag_image' width='90'>";
+                    }
+                },
+                {field: 'seq', title: '排序序号', align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'type', title: '标签类型', align: 'center', valign: 'middle', width: 200,
+                    formatter: function (val) {
+                        if (val == '1') {
+                            return '普通';
+                        } else {
+                            return '其他';
+                        }
+                    }
+                },
+                {
+                    field: 'status', title: '标签状态', align: 'center', valign: 'middle', width: 200,
+                    formatter: function (val) {
+                        if (val == '1') {
+                            return '有效';
+                        } else if (val == '0') {
+                            return '无效';
+                        }
+                    }
+                },
+                {
+                    field: 'istop', title: '是否在首页顶部', align: 'center', valign: 'middle', width: 200,
+                    formatter: function (val) {
+                        if (val == '1') {
+                            return '是';
+                        } else if (val == '0') {
+                            return '否';
+                        }
+                    }
+                },
+                {field: 'tmpint', title: 'tmpint', align: 'center', valign: 'middle', width: 200},
+                {field: 'children', title: '子类', align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'id', title: '操作', align: 'center', valign: 'middle', width: 350,
+                    formatter: function (val) {
+                        let buttonGroup = "<button class='btn btn-sm btn-warning opt-edit' data-id='" + val + "'>" +
+                            "<span hidden='hidden' id='opt-edit-value'></span>编辑</button>&nbsp;";
+                        buttonGroup += "<button class='btn btn-sm btn-danger opt-delete' data-id='" + val + "'>" +
+                            "<span hidden='hidden' id='opt-edit-value'></span>删除</button>";
+                        return buttonGroup;
+                    }
+                }
+            ]
+        });
+        $("#add").on("click", function () {
+            $("#roomTagModal").modal("show");
+            $("#id").val("");
+            $("#roomTag")[0].reset();
+            $(":radio[name='status'][value='1']").attr("checked", "true");
+        });
+        $('#table').on('click', '.opt-edit', function () {
+            const id = $(this).data('id');
+            if (id) {
+                $("#roomTagModal").modal('show');
+                $.get("/admin/roomtag/getone", {tagId: id}, function (data) {
+                    if (data.code == 200) {
+                        const val = data.data.status ? 1 : 0;
+                        $("#id").val(data.data.id);
+                        $("#name").val(data.data.name);
+                        $("#tagImage").attr("src", data.data.pict);
+                        $("#imgUrl").val(data.data.pict);
+                        $(":radio").prop("checked", false);
+                        $(":radio[name='status'][value='" + val + "']").prop("checked", true);
+                        console.log(":radio[name='status'][value='" + val + "']");
+                        $("#sortNo").val(data.data.seq);
+                        $("#tmpint").val(data.data.tmpint);
+                        $("#children").val(data.data.children);
+                    }
+                })
+            }
+        });
+        $("#table").on("click", ".opt-delete", function () {
+            const id = $(this).data('id');
+            if (id) {
+                if (!confirm("删除后将无法找回, 确定要删除吗?")) {
+                    return;
+                }
+
+                $.get("/admin/roomtag/del", {tagId: id}, function (data) {
+                    if (data.code == 200) {
+                        $("#tipMsg").text("删除成功");
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text(data.message);
+                    }
+                    $("#tipModal").modal('show');
+                })
+            }
+        });
+        $("#save").on("click", function () {
+            $("#save").attr("disabled", true);
+            if (!$("#roomTag").validationEngine('validate')) {
+                $("#save").removeAttr("disabled");
+                return;
+            }
+
+            const isEdit = $("#id").val() == '' ? false : true;
+            const params = {
+                id: $("#id").val(),
+                name: $("#name").val(),
+                pict: $("#imgUrl").val(),
+                seq: $("#sortNo").val(),
+                tmpint: $("#tmpint").val(),
+                children: $("#children").val(),
+                status: $('input:radio[name=status]:checked').val(),
+                isEdit: isEdit,
+            };
+
+            $.post("/admin/roomtag/save", params, function (data) {
+                if (data.code == 1) {
+                    $("#tipMsg").text("保存成功");
+                    $("#roomTagModal").modal('hide');
+                    $("#save").removeAttr("disabled");
+                    TableHelper.doRefresh("#table");
+                } else {
+                    $("#tipMsg").text(data.message);
+                }
+                $("#tipModal").modal('show');
+            })
+        });
+        $('#tagImage').click(function () {
+            $('#pictureUploadFile').click();
+        })
+        $('#pictureUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'pictureUploadFile', // 需要上传的文件域的ID，即<input type="file">的ID。
+                url: '/admin/file/upload',
+                type: 'post',
+                dataType: 'json',
+                secureuri: false,   // 是否启用安全提交，默认为false。
+                async: false,
+                success: function (json) {
+                    if (json.path) {
+                        $('#imgUrl').val(json.path);
+                        $('#tagImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) {
+                    console.error(e);
+                }
+            });
+        })
+    });
+</script>

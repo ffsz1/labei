@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.GiveGiftcarMapperMgr">
+    <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.GiveGiftcarVo">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="car_id" property="carId" jdbcType="VARCHAR"/>
+        <result column="car_name" property="carName" jdbcType="VARCHAR"/>
+        <result column="gold_price" property="goldPrice" jdbcType="INTEGER"/>
+        <result column="car_date" property="carDate" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.erban.admin.main.vo.RoomRobotGroupParam">
+        select u.uid, u.erban_no as erbanNo, CONCAT(u.uid,',',gc.car_id) as carId, gc.car_name as carName, gc.gold_price
+        as goldPrice, ifnull(gcpr.car_date,0) as carDate
+        from users u
+        LEFT JOIN gift_car gc on 1 = 1
+        LEFT JOIN gift_car_purse_record gcpr on u.uid = gcpr.uid and gc.car_id = gcpr.car_id
+        where def_user = 1
+        <if test="erbanNo!=null">
+            AND u.erban_no=#{erbanNo}
+        </if>
+        ORDER BY u.uid, gc.car_id
+    </select>
+    <select id="selectRecord" resultType="com.erban.admin.main.dto.GiftCarRecordDTO">
+        select record_id recordId, gcgr.uid, erban_no erbanNo, gcgr.car_id carId, car_name carName, car_date carDate, `type`, gcgr.create_time createTime
+        from gift_car_get_record gcgr
+        left join users u on gcgr.uid = u.uid
+        left join gift_car gc on gc.car_id = gcgr.car_id
+        <where>
+            <if test="uids.size() > 0">
+            and gcgr.uid in
+                <foreach collection="uids" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+                and gcgr.create_time between #{startDate} and #{endDate}
+            </if>
+            and `type` = 2
+        </where>
+        order by gcgr.create_time desc
+    </select>
+</mapper>

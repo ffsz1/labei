@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserQuestionnaireAnswerStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.UserQuestionnaireAnswerStatistics" >
+    <id column="type" property="type" jdbcType="INTEGER" />
+    <id column="question" property="question" jdbcType="INTEGER" />
+    <id column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="answer_num" property="answerNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    type, question, answer, answer_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatisticsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_questionnaire_answer_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatisticsKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_questionnaire_answer_statistics
+    where type = #{type,jdbcType=INTEGER}
+      and question = #{question,jdbcType=INTEGER}
+      and answer = #{answer,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatisticsKey" >
+    delete from user_questionnaire_answer_statistics
+    where type = #{type,jdbcType=INTEGER}
+      and question = #{question,jdbcType=INTEGER}
+      and answer = #{answer,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatisticsExample" >
+    delete from user_questionnaire_answer_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatistics" >
+    insert into user_questionnaire_answer_statistics (type, question, answer, 
+      answer_num)
+    values (#{type,jdbcType=INTEGER}, #{question,jdbcType=INTEGER}, #{answer,jdbcType=VARCHAR}, 
+      #{answerNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatistics" >
+    insert into user_questionnaire_answer_statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="answerNum != null" >
+        answer_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="answerNum != null" >
+        #{answerNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatisticsExample" resultType="java.lang.Integer" >
+    select count(*) from user_questionnaire_answer_statistics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_questionnaire_answer_statistics
+    <set >
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.question != null" >
+        question = #{record.question,jdbcType=INTEGER},
+      </if>
+      <if test="record.answer != null" >
+        answer = #{record.answer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerNum != null" >
+        answer_num = #{record.answerNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_questionnaire_answer_statistics
+    set type = #{record.type,jdbcType=INTEGER},
+      question = #{record.question,jdbcType=INTEGER},
+      answer = #{record.answer,jdbcType=VARCHAR},
+      answer_num = #{record.answerNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatistics" >
+    update user_questionnaire_answer_statistics
+    <set >
+      <if test="answerNum != null" >
+        answer_num = #{answerNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where type = #{type,jdbcType=INTEGER}
+      and question = #{question,jdbcType=INTEGER}
+      and answer = #{answer,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.UserQuestionnaireAnswerStatistics" >
+    update user_questionnaire_answer_statistics
+    set answer_num = #{answerNum,jdbcType=INTEGER}
+    where type = #{type,jdbcType=INTEGER}
+      and question = #{question,jdbcType=INTEGER}
+      and answer = #{answer,jdbcType=VARCHAR}
+  </update>
+</mapper>

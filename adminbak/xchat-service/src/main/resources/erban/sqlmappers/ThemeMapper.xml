@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.ThemeMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.Theme" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="picture_url" property="pictureUrl" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, state, remarks,picture_url,num,create_time,update_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from theme
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from theme
+    <where>
+    <if test="state!=null and state!=''">
+      theme.state=#{state}
+    </if>
+    </where>
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from theme
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByIdWithRelative">
+    delete theme,trend_topic,comment,reply
+    from theme join trend_topic on theme.id=trend_topic.themeid
+    join comment on trend_topic.id=comment.topicid
+    join reply on comment.id=reply.commentid
+    where theme.id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.erban.main.model.Theme" >
+    insert into theme (id, name, state,
+      remarks,picture_url,num,create_time,update_time)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR}, #{pictureUrl},#{num},#{createTime},#{updateTime})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.Theme" >
+    <trim prefix="insert into theme (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="pictureUrl != null" >
+        picture_url,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+        <if test="updateTime != null" >
+            update_time,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime},
+      </if>
+    </trim>
+  </insert>
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Theme" >
+    update theme
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureUrl != null" >
+        picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num},
+      </if>
+      <if test="createTime!= null" >
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime!= null" >
+        update_time = #{updateTime},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Theme" >
+    update theme
+    set name = #{name,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      picture_url = #{pictureUrl,jdbcType=VARCHAR},
+      num = #{num},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

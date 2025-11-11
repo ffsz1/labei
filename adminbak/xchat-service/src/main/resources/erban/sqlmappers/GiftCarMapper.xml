@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.GiftCarMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.GiftCar">
+        <id column="car_id" property="carId" jdbcType="INTEGER"/>
+        <result column="car_name" property="carName" jdbcType="VARCHAR"/>
+        <result column="gold_price" property="goldPrice" jdbcType="BIGINT"/>
+        <result column="seq_no" property="seqNo" jdbcType="INTEGER"/>
+        <result column="car_status" property="carStatus" jdbcType="TINYINT"/>
+        <result column="pic_url" property="picUrl" jdbcType="VARCHAR"/>
+        <result column="has_gif_pic" property="hasGifPic" jdbcType="BIT"/>
+        <result column="gif_url" property="gifUrl" jdbcType="VARCHAR"/>
+        <result column="has_vgg_pic" property="hasVggPic" jdbcType="BIT"/>
+        <result column="vgg_url" property="vggUrl" jdbcType="VARCHAR"/>
+        <result column="is_time_limit" property="isTimeLimit" jdbcType="BIT"/>
+        <result column="effective_time" property="effectiveTime" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="allow_purse" property="allowPurse" jdbcType="TINYINT"/>
+        <result column="left_level" property="leftLevel" jdbcType="INTEGER"/>
+        <result column="mark_pic" property="markPic" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+            <if test="likeName != null and likeName != ''">
+                AND car_name LIKE CONCAT('%', #{likeName}, "%")
+            </if>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        car_id, car_name, gold_price, seq_no, car_status, pic_url, has_gif_pic, gif_url,
+        has_vgg_pic, vgg_url, is_time_limit, effective_time, create_time, allow_purse, left_level, mark_pic
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.GiftCarExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from gift_car
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from gift_car
+        where car_id = #{carId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from gift_car where car_id = #{carId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.GiftCarExample">
+        delete from gift_car
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.GiftCar">
+        insert into gift_car (car_id, car_name, gold_price,
+                    seq_no, car_status, pic_url,
+                    has_gif_pic, gif_url, has_vgg_pic,
+                    vgg_url, is_time_limit, effective_time,
+                    create_time, allow_purse, left_level,
+                    mark_pic)
+        values (#{carId,jdbcType=INTEGER}, #{carName,jdbcType=VARCHAR}, #{goldPrice,jdbcType=BIGINT},
+                #{seqNo,jdbcType=INTEGER}, #{carStatus,jdbcType=TINYINT}, #{picUrl,jdbcType=VARCHAR},
+                #{hasGifPic,jdbcType=BIT}, #{gifUrl,jdbcType=VARCHAR}, #{hasVggPic,jdbcType=BIT},
+                #{vggUrl,jdbcType=VARCHAR}, #{isTimeLimit,jdbcType=BIT}, #{effectiveTime,jdbcType=BIGINT},
+                #{createTime,jdbcType=TIMESTAMP}, #{allowPurse,jdbcType=TINYINT}, #{leftLevel,jdbcType=INTEGER},
+                #{markPic,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.GiftCar">
+        insert into gift_car
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="carId != null">
+                car_id,
+            </if>
+            <if test="carName != null">
+                car_name,
+            </if>
+            <if test="goldPrice != null">
+                gold_price,
+            </if>
+            <if test="seqNo != null">
+                seq_no,
+            </if>
+            <if test="carStatus != null">
+                car_status,
+            </if>
+            <if test="picUrl != null">
+                pic_url,
+            </if>
+            <if test="hasGifPic != null">
+                has_gif_pic,
+            </if>
+            <if test="gifUrl != null">
+                gif_url,
+            </if>
+            <if test="hasVggPic != null">
+                has_vgg_pic,
+            </if>
+            <if test="vggUrl != null">
+                vgg_url,
+            </if>
+            <if test="isTimeLimit != null">
+                is_time_limit,
+            </if>
+            <if test="effectiveTime != null">
+                effective_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="allowPurse != null">
+                allow_purse,
+            </if>
+            <if test="leftLevel != null">
+                left_level,
+            </if>
+            <if test="markPic != null">
+                mark_pic,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="carId != null">
+                #{carId,jdbcType=INTEGER},
+            </if>
+            <if test="carName != null">
+                #{carName,jdbcType=VARCHAR},
+            </if>
+            <if test="goldPrice != null">
+                #{goldPrice,jdbcType=BIGINT},
+            </if>
+            <if test="seqNo != null">
+                #{seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="carStatus != null">
+                #{carStatus,jdbcType=TINYINT},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="hasGifPic != null">
+                #{hasGifPic,jdbcType=BIT},
+            </if>
+            <if test="gifUrl != null">
+                #{gifUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="hasVggPic != null">
+                #{hasVggPic,jdbcType=BIT},
+            </if>
+            <if test="vggUrl != null">
+                #{vggUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isTimeLimit != null">
+                #{isTimeLimit,jdbcType=BIT},
+            </if>
+            <if test="effectiveTime != null">
+                #{effectiveTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="allowPurse != null">
+                #{allowPurse,jdbcType=TINYINT},
+            </if>
+            <if test="leftLevel != null">
+                #{leftLevel,jdbcType=INTEGER},
+            </if>
+            <if test="markPic != null">
+                #{markPic,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.GiftCarExample" resultType="java.lang.Integer">
+        select count(*) from gift_car
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+  <update id="updateByExampleSelective" parameterType="map">
+        update gift_car
+        <set>
+            <if test="record.carId != null">
+                car_id = #{record.carId,jdbcType=INTEGER},
+            </if>
+            <if test="record.carName != null">
+                car_name = #{record.carName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goldPrice != null">
+                gold_price = #{record.goldPrice,jdbcType=BIGINT},
+            </if>
+            <if test="record.seqNo != null">
+                seq_no = #{record.seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="record.carStatus != null">
+                car_status = #{record.carStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.picUrl != null">
+                pic_url = #{record.picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.hasGifPic != null">
+                has_gif_pic = #{record.hasGifPic,jdbcType=BIT},
+            </if>
+            <if test="record.gifUrl != null">
+                gif_url = #{record.gifUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.hasVggPic != null">
+                has_vgg_pic = #{record.hasVggPic,jdbcType=BIT},
+            </if>
+            <if test="record.vggUrl != null">
+                vgg_url = #{record.vggUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.isTimeLimit != null">
+                is_time_limit = #{record.isTimeLimit,jdbcType=BIT},
+            </if>
+            <if test="record.effectiveTime != null">
+                effective_time = #{record.effectiveTime,jdbcType=BIGINT},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.allowPurse != null">
+                allow_purse = #{record.allowPurse,jdbcType=TINYINT},
+            </if>
+            <if test="record.leftLevel != null">
+                left_level = #{record.leftLevel,jdbcType=INTEGER},
+            </if>
+            <if test="record.markPic != null">
+                mark_pic = #{record.markPic,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update gift_car
+        set car_id = #{record.carId,jdbcType=INTEGER},
+            car_name = #{record.carName,jdbcType=VARCHAR},
+            gold_price = #{record.goldPrice,jdbcType=BIGINT},
+            seq_no = #{record.seqNo,jdbcType=INTEGER},
+            car_status = #{record.carStatus,jdbcType=TINYINT},
+            pic_url = #{record.picUrl,jdbcType=VARCHAR},
+            has_gif_pic = #{record.hasGifPic,jdbcType=BIT},
+            gif_url = #{record.gifUrl,jdbcType=VARCHAR},
+            has_vgg_pic = #{record.hasVggPic,jdbcType=BIT},
+            vgg_url = #{record.vggUrl,jdbcType=VARCHAR},
+            is_time_limit = #{record.isTimeLimit,jdbcType=BIT},
+            effective_time = #{record.effectiveTime,jdbcType=BIGINT},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            allow_purse = #{record.allowPurse,jdbcType=TINYINT},
+            left_level = #{record.leftLevel,jdbcType=INTEGER},
+            mark_pic = #{record.markPic,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.GiftCar">
+        update gift_car
+        <set>
+            <if test="carName != null">
+                car_name = #{carName,jdbcType=VARCHAR},
+            </if>
+            <if test="goldPrice != null">
+                gold_price = #{goldPrice,jdbcType=BIGINT},
+            </if>
+            <if test="seqNo != null">
+                seq_no = #{seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="carStatus != null">
+                car_status = #{carStatus,jdbcType=TINYINT},
+            </if>
+            <if test="picUrl != null">
+                pic_url = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="hasGifPic != null">
+                has_gif_pic = #{hasGifPic,jdbcType=BIT},
+            </if>
+            <if test="gifUrl != null">
+                gif_url = #{gifUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="hasVggPic != null">
+                has_vgg_pic = #{hasVggPic,jdbcType=BIT},
+            </if>
+            <if test="vggUrl != null">
+                vgg_url = #{vggUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isTimeLimit != null">
+                is_time_limit = #{isTimeLimit,jdbcType=BIT},
+            </if>
+            <if test="effectiveTime != null">
+                effective_time = #{effectiveTime,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="allowPurse != null">
+                allow_purse = #{allowPurse,jdbcType=TINYINT},
+            </if>
+            <if test="leftLevel != null">
+                left_level = #{leftLevel,jdbcType=INTEGER},
+            </if>
+            <if test="markPic != null">
+                mark_pic = #{markPic,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where car_id = #{carId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.GiftCar">
+        update gift_car
+        set car_name = #{carName,jdbcType=VARCHAR},
+            gold_price = #{goldPrice,jdbcType=BIGINT},
+            seq_no = #{seqNo,jdbcType=INTEGER},
+            car_status = #{carStatus,jdbcType=TINYINT},
+            pic_url = #{picUrl,jdbcType=VARCHAR},
+            has_gif_pic = #{hasGifPic,jdbcType=BIT},
+            gif_url = #{gifUrl,jdbcType=VARCHAR},
+            has_vgg_pic = #{hasVggPic,jdbcType=BIT},
+            vgg_url = #{vggUrl,jdbcType=VARCHAR},
+            is_time_limit = #{isTimeLimit,jdbcType=BIT},
+            effective_time = #{effectiveTime,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            allow_purse = #{allowPurse,jdbcType=TINYINT},
+            left_level = #{leftLevel,jdbcType=INTEGER},
+            mark_pic = #{markPic,jdbcType=VARCHAR}
+        where car_id = #{carId,jdbcType=INTEGER}
+    </update>
+</mapper>

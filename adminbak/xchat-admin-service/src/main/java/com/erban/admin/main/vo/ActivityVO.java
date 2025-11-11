@@ -1,0 +1,146 @@
+package com.erban.admin.main.vo;
+
+import java.util.Date;
+
+/**
+ * 活动页VO
+ */
+public class ActivityVO {
+    private Long id;
+
+    private String activityId;
+
+    private String activityName;
+
+    private String activityImage;
+
+    private Boolean activityStatus;
+
+    private String activityShareImage;
+
+    private String activityShareTitle;
+
+    private String activityShareContent;
+
+    private String activityLink;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private String adminName;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(String activityId) {
+        this.activityId = activityId;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public String getActivityImage() {
+        return activityImage;
+    }
+
+    public void setActivityImage(String activityImage) {
+        this.activityImage = activityImage;
+    }
+
+    public Boolean getActivityStatus() {
+        return activityStatus;
+    }
+
+    public void setActivityStatus(Boolean activityStatus) {
+        this.activityStatus = activityStatus;
+    }
+
+    public String getActivityShareImage() {
+        return activityShareImage;
+    }
+
+    public void setActivityShareImage(String activityShareImage) {
+        this.activityShareImage = activityShareImage;
+    }
+
+    public String getActivityShareTitle() {
+        return activityShareTitle;
+    }
+
+    public void setActivityShareTitle(String activityShareTitle) {
+        this.activityShareTitle = activityShareTitle;
+    }
+
+    public String getActivityShareContent() {
+        return activityShareContent;
+    }
+
+    public void setActivityShareContent(String activityShareContent) {
+        this.activityShareContent = activityShareContent;
+    }
+
+    public String getActivityLink() {
+        return activityLink;
+    }
+
+    public void setActivityLink(String activityLink) {
+        this.activityLink = activityLink;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    @Override
+    public String toString() {
+        return "ActivityVO{" +
+                "id=" + id +
+                ", activityId=" + activityId +
+                ", activityName='" + activityName + '\'' +
+                ", activityImage='" + activityImage + '\'' +
+                ", activityStatus=" + activityStatus +
+                ", activityShareImage='" + activityShareImage + '\'' +
+                ", activityShareTitle='" + activityShareTitle + '\'' +
+                ", activityShareContent='" + activityShareContent + '\'' +
+                ", activityLink='" + activityLink + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", adminName='" + adminName + '\'' +
+                '}';
+    }
+}

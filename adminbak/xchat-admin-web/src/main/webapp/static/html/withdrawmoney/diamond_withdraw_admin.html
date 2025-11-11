@@ -1,0 +1,532 @@
+<style>
+    #withDrawTable {
+        width: 220%;
+        max-width: unset;
+    }
+</style>
+<!-- Content Header (Page header) -->
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--查询输入框-->
+                <form class="form-horizontal">
+                    <div class="row" style="margin-bottom: 2rem">
+                        <label class="col-sm-1 control-label">拉贝号:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="erbanNo" name="erbanNo" class="form-control"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                        <label class="col-sm-1 control-label">提现状态:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" name="status" id="status"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">提现中</option>
+                                <option value="2">已提现</option>
+                                <option value="3">失败</option>
+                                <option value="4">冻结</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">账号提现状态:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" name="withdrawStatus"
+                                    id="withdrawStatus" data-btn-class="btn-warning">
+                                <option value="0">正常</option>
+                                <option value="1">冻结</option>
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">提现方式:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" id="tranType" name="tranType"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">微信</option>
+                                <option value="2">支付宝</option>
+                                <option value="3">银行卡</option>
+                                <option value="4">汇聚</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-1 control-label">时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="beginDate" name="beginDate" type="date" placeholder="开始时间"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="endDate" name="endDate" type="date" placeholder="结束时间"
+                                   class="form-control validate[required]">
+                        </div>
+                        <label class="col-sm-1 control-label">真实方式:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" id="realTranType" name="realTranType"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">微信</option>
+                                <option value="2">支付宝</option>
+                                <option value="3">银行卡</option>
+                                <option value="4">汇聚</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">性别:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" id="gender" name="gender"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                                <option value="0">其他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button onclick="getYesterday()" class="btn btn-danger" type="button"
+                                    style="margin-right: 10px">
+                                <i class="glyphicon glyphicon-calendar"></i> 昨天
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!--content-->
+                <div id="withDrawTable"></div>
+                <div id="toolbar" style="display: flex">
+                    <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 0;">
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">提现人数：</span>
+                            <span style="color: red" id="userNum"></span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">男 ：</span>
+                            <span style="color: red" id="male"></span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">女：</span>
+                            <span style="color: red" id="female"></span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">其他：</span>
+                            <span style="color: red" id="other"></span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">金额（RMB）：</span>
+                            <span style="color: red" id="totalAmount"></span>
+                            <span>元</span>
+                        </li>
+                    </ul>
+                    <div>
+                        <button id="diamon-multiFrozen" class="btn btn-warning">
+                            <i class="glyphicon glyphicon glyphicon-remove-sign"></i> 批量冻结单笔
+                        </button>
+                        <button id="diamon-multiUnFrozen" class="btn btn-info">
+                            <i class="glyphicon glyphicon glyphicon-ok-sign"></i> 批量解冻单笔
+                        </button>
+                        <button id="exportExcel" class="btn btn-success">
+                            <i class="glyphicon glyphicon glyphicon-download-alt"></i> 导出Excel
+                        </button>
+                        <button id="btnSearch" class="btn btn-primary">
+                            <i class="glyphicon glyphicon glyphicon-search"></i> 查询
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+    // 设置时间初始值
+    $("#beginDate").val(getCurrentDate());
+    $("#endDate").val(getCurrentDate());
+
+    $(function () {
+        $('#withDrawTable').bootstrapTable('destroy');
+        $('#withDrawTable').bootstrapTable({
+            columns: [
+                {field: 'checkbox', title: 'ID', align: 'center', checkbox: true},
+                {field: 'billId', title: '账单Id', align: 'center', width: '150'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '150'},
+                {field: 'nick', title: '昵称', align: 'center', width: '150'},
+                {
+                    field: 'gender', title: '性别', align: 'center', width: '150',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '男';
+                        } else if (val == 2) {
+                            return '女';
+                        } else {
+                            return '其他';
+                        }
+                    }
+                },
+                {field: 'phone', title: '手机号码', align: 'center', width: '150'},
+                {
+                    field: 'tranType', title: '提现方式', align: 'center', width: '120',
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '钻石提现';
+                        } else if (val == 2) {
+                            return '红包提现';
+                        }
+                    }
+                },
+                {
+                    field: 'realTranType', title: '真实方式', align: 'center', width: '120',
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '微信提现';
+                        } else if (val == 2) {
+                            return '支付宝提现';
+                        } else if (val == 3) {
+                            return '银行卡提现';
+                        } else if (val == 4) {
+                            return '汇聚';
+                        } else {
+                            return '';
+                        }
+                    }
+                },
+                {field: 'alipayAccount', title: '支付宝', align: 'center', width: '150'},
+                {field: 'alipayAccountName', title: '真实姓名', align: 'center', width: '120'},
+                {field: 'cardNumber', title: '银行卡号', align: 'center', width: '200'},
+                {field: 'cardName', title: '银行卡名字', align: 'center', width: '120'},
+                {field: 'wxOpenId', title: '微信openid', align: 'center', width: '200'},
+                {field: 'applyWithdrawalAccount', title: '申请提现账号', align: 'center', width: '150'},
+                {field: 'applyWithdrawalName', title: '申请提现姓名', align: 'center', width: '150'},
+                {field: 'realTransferAccount', title: '真实转账账号', align: 'center', width: '150'},
+                {field: 'realTransferName', title: '真实转账姓名', align: 'center', width: '150'},
+                {field: 'cost', title: '钻石数量', align: 'center', width: '150'},
+                {field: 'money', title: '提现金额', align: 'center', width: '150'},
+                {
+                    field: 'billStatus', title: '提现状态', align: 'center', width: '150',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '提现中';
+                        } else if (val == 2) {
+                            return '提现完成';
+                        } else if (val == 3) {
+                            return '提现异常';
+                        } else if (val == 4) {
+                            return '提现冻结';
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'withdrawStatus', title: '账号提现状态', align: 'center', width: '150',
+                    formatter: function (val, row, index) {
+                        if (val == 0) {
+                            return '正常';
+                        } else if (val == 1) {
+                            return '冻结';
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'createTime', title: '创建时间', align: 'center', width: '200',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'pingxxId', title: 'ping++单号', align: 'center', width: '200'},
+                {field: 'adminName', title: '转账操作人', align: 'center', width: '150'},
+                {
+                    field: 'billId', title: '操作', align: 'center', width: '250',
+                    formatter: function (val, row, index) {
+                        const key = val;
+                        let str = "";
+                        if (row.withdrawStatus == 0) {
+                            str += "<button class='btn btn-warning opt-frozen' data-id=" + row.uid + ">冻结用户</button>";
+                        } else {
+                            str += "<button class='btn btn-info opt-unfrozen' data-id=" + row.uid + ">解冻用户</button>";
+                        }
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            sortStable: true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    erbanNo: parseInt($('#erbanNo').val()),
+                    gender: parseInt($('#gender').val()),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val(),
+                    status: parseInt($('#status').val()),
+                    withdrawStatus: parseInt($('#withdrawStatus').val()),
+                    tranType: parseInt($('#tranType').val()),
+                    realTranType: parseInt($('#realTranType').val())
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/withdraw/diamondWithDrawlist.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            }
+        });
+    });
+
+    // 导出到Excel
+    $('#exportExcel').click(function () {
+        const param = $("form").serialize() + '&type=1';
+        const url = "/admin/withdraw/withDrawExport?" + param;
+        window.location.href = url;
+    });
+
+    // 批量冻结单笔
+    $("#diamon-multiFrozen").click(function () {
+        const rows = $("#withDrawTable").bootstrapTable("getSelections");
+        if (rows.length == 0) {
+            alert("请先选择要冻结的单");
+            return;
+        };
+
+        const idArr = [];
+        for (let i = 0; i < rows.length; i++) {
+            idArr.push(rows[i]['billId']);
+        }
+
+        if (confirm("你确认批量冻结吗?")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/multiFrozen.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: "json",
+                success: function (json) {
+                    debugger
+                    if (json.code == 200) {
+                        $("#tipMsg").text("冻结成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 2.5 * 1000)
+                }
+            });
+        }
+    });
+
+    // 批量解冻单笔
+    $("#diamon-multiUnFrozen").click(function () {
+        const rows = $("#withDrawTable").bootstrapTable("getSelections");
+        if (rows.length == 0) {
+            alert("请先选择要解冻的单");
+            return;
+        }
+
+        const idArr = [];
+        for (var i = 0; i < rows.length; i++) {
+            idArr.push(rows[i]['billId']);
+        }
+
+        if (confirm("你确认批量解冻吗?")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/multiUnFrozen.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: "json",
+                success: function (json) {
+                    debugger
+                    if (json.code == 200) {
+                        $("#tipMsg").text("解冻成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 2.5 * 1000)
+                }
+            });
+        }
+    });
+
+    // 冻结
+    $('#withDrawTable').on('click', '.opt-frozen', function () {
+        const id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+
+        $.ajax({
+            type: 'get',
+            url: "/admin/withdraw/frozen.action",
+            data: {'uid': id},
+            dataType: 'json',
+            success: function (json) {
+                if (json.code == 200) {
+                    $("#tipMsg").text("成功");
+                    $("#tipModal").modal('show');
+                } else {
+                    $("#tipMsg").text(json.message + "[" + json.code + "]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        });
+    });
+
+    // 解冻
+    $('#withDrawTable').on('click', '.opt-unfrozen', function () {
+        const id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+
+        $.ajax({
+            type: 'get',
+            url: "/admin/withdraw/unfrozen.action",
+            data: {'uid': id},
+            dataType: 'json',
+            success: function (json) {
+                if (json.code == 200) {
+                    $("#tipMsg").text("成功");
+                    $("#tipModal").modal('show');
+                } else {
+                    $("#tipMsg").text(json.message + "[" + json.code + "]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    });
+
+    // 查询刷新
+    $('#btnSearch').on('click', function () {
+        TableHelper.doRefresh('#withDrawTable');
+    });
+
+    // 查询刷新汇总信息
+    $('#btnSearch').on('click', function () {
+        $.ajax({
+            type: 'post',
+            url: "/admin/withdraw/diamondWithDrawCount.action",
+            data: {
+                'erbanNo': $('#erbanNo').val(),
+                'gender': $('#gender').val(),
+                'beginDate': $('#beginDate').val(),
+                'endDate': $('#endDate').val(),
+                'status': $('#status').val(),
+                'withdrawStatus': $('#withdrawStatus').val()
+            },
+            dataType: 'json',
+            success: function (json) {
+                if (json.code == 200) {
+                    clear();
+                    $("#userNum").text(json.data.userNum);
+                    $("#male").text(json.data.male);
+                    $("#female").text(json.data.female);
+                    $("#other").text(json.data.other);
+                    $("#totalAmount").text(json.data.sumMoney);
+                } else {
+                    $("#tipMsg").text(json.message + "[" + json.code + "]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    })
+
+    // 初始化
+    const picker3 = $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    const picker2 = $('#endDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    // 获取当天时间
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    };
+
+    // 获取昨天时间
+    function getYesterday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#beginDate").val(today.format("yyyy-MM-dd"));
+        $("#endDate").val(today.format("yyyy-MM-dd"));
+        $('#btnSearch').click();
+    };
+
+    function clear() {
+        $("#userNum").text('');
+        $("#male").text('');
+        $("#female").text('');
+        $("#totalAmount").text('');
+        $("#other").text('')
+    };
+</script>
+<script src="/static/js/admin/style.js"></script>

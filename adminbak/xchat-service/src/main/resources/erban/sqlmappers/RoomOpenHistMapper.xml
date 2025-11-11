@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.RoomOpenHistMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.RoomOpenHist" >
+    <id column="hist_id" property="histId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="meeting_name" property="meetingName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="reward_money" property="rewardMoney" jdbcType="BIGINT" />
+    <result column="serv_dura" property="servDura" jdbcType="INTEGER" />
+    <result column="close_type" property="closeType" jdbcType="TINYINT" />
+    <result column="open_time" property="openTime" jdbcType="TIMESTAMP" />
+    <result column="close_time" property="closeTime" jdbcType="TIMESTAMP" />
+    <result column="dura" property="dura" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    hist_id, uid, room_id, meeting_name, type, reward_money, serv_dura, close_type, open_time, 
+    close_time, dura
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.RoomOpenHistExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from room_open_hist
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from room_open_hist
+    where hist_id = #{histId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from room_open_hist
+    where hist_id = #{histId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.RoomOpenHist" >
+    insert into room_open_hist (hist_id, uid, room_id, 
+      meeting_name, type, reward_money, 
+      serv_dura, close_type, open_time, 
+      close_time, dura)
+    values (#{histId,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{roomId,jdbcType=BIGINT}, 
+      #{meetingName,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{rewardMoney,jdbcType=BIGINT}, 
+      #{servDura,jdbcType=INTEGER}, #{closeType,jdbcType=TINYINT}, #{openTime,jdbcType=TIMESTAMP}, 
+      #{closeTime,jdbcType=TIMESTAMP}, #{dura,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.RoomOpenHist" >
+    insert into room_open_hist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="histId != null" >
+        hist_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="meetingName != null" >
+        meeting_name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="rewardMoney != null" >
+        reward_money,
+      </if>
+      <if test="servDura != null" >
+        serv_dura,
+      </if>
+      <if test="closeType != null" >
+        close_type,
+      </if>
+      <if test="openTime != null" >
+        open_time,
+      </if>
+      <if test="closeTime != null" >
+        close_time,
+      </if>
+      <if test="dura != null" >
+        dura,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="histId != null" >
+        #{histId,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="meetingName != null" >
+        #{meetingName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="rewardMoney != null" >
+        #{rewardMoney,jdbcType=BIGINT},
+      </if>
+      <if test="servDura != null" >
+        #{servDura,jdbcType=INTEGER},
+      </if>
+      <if test="closeType != null" >
+        #{closeType,jdbcType=TINYINT},
+      </if>
+      <if test="openTime != null" >
+        #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dura != null" >
+        #{dura,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.RoomOpenHist" >
+    update room_open_hist
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="meetingName != null" >
+        meeting_name = #{meetingName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="rewardMoney != null" >
+        reward_money = #{rewardMoney,jdbcType=BIGINT},
+      </if>
+      <if test="servDura != null" >
+        serv_dura = #{servDura,jdbcType=INTEGER},
+      </if>
+      <if test="closeType != null" >
+        close_type = #{closeType,jdbcType=TINYINT},
+      </if>
+      <if test="openTime != null" >
+        open_time = #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null" >
+        close_time = #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dura != null" >
+        dura = #{dura,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where hist_id = #{histId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.RoomOpenHist" >
+    update room_open_hist
+    set uid = #{uid,jdbcType=BIGINT},
+      room_id = #{roomId,jdbcType=BIGINT},
+      meeting_name = #{meetingName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      reward_money = #{rewardMoney,jdbcType=BIGINT},
+      serv_dura = #{servDura,jdbcType=INTEGER},
+      close_type = #{closeType,jdbcType=TINYINT},
+      open_time = #{openTime,jdbcType=TIMESTAMP},
+      close_time = #{closeTime,jdbcType=TIMESTAMP},
+      dura = #{dura,jdbcType=DOUBLE}
+    where hist_id = #{histId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,353 @@
+<style>
+    .btn {
+        width: 100%;
+    }
+
+    #userTable {
+        width: 180%;
+        max-width: unset;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--查询输入框-->
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">拉贝号:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="erbanNo" name="erbanNo" class="form-control"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                        <label class="col-sm-1 control-label">手机:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="phone" name="phone" class="form-control"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                        <label class="col-sm-1 control-label">平台:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-2">
+                                <select class="btn btn-default dropdown-toggle" name="os" id="os"
+                                        data-btn-class="btn-warning">
+                                    <option value="">全部</option>
+                                    <option value="android">Android</option>
+                                    <option value="iOS">iOS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">注册类型:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-1">
+                                <select class="btn btn-default dropdown-toggle" name="registerType" id="registerType"
+                                        data-btn-class="btn-warning" style="width: unset">
+                                    <option value="">全部</option>
+                                    <option value="1">手机注册</option>
+                                    <option value="2">微信注册</option>
+                                    <option value="3">QQ注册</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <button onclick="exportTable()" class="btn btn-success" type="button"
+                                    style="margin-right: 10px; width: unset">
+                                <i class="glyphicon glyphicon-save-file"></i> 导出
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">下载渠道:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-2">
+                                <select class="btn btn-default dropdown-toggle" name="channel" id="channel"
+                                        data-btn-class="btn-warning">
+                                    <option value="">全部</option>
+                                    <option value="official">Official</option>
+                                    <option value="appstore">AppStore</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">性别:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-2">
+                                <select class="btn btn-default dropdown-toggle" name="gender" id="gender"
+                                        data-btn-class="btn-warning">
+                                    <option value="">全部</option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                    <option value="0">其他</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="addStartDate" type="date" name="beginDate"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="addEndDate" type="date" name="endDate"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div>
+                            <button onclick="getYesterday()" class="btn btn-danger" type="button"
+                                    style="margin-right: 10px; width: unset">
+                                <i class="glyphicon glyphicon-calendar"></i> 昨天
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- content -->
+                <ul style="list-style: none;display: flex;flex-direction: row;margin-bottom: -33px;padding-left: 0;">
+                    <li class="col-sm-3" style="margin-left: 12px;">
+                        <span style="color: red;font-weight: bold;" class="col-sm-4">统计:</span>
+                        <span class="col-sm-8">
+                            <span id="totalNum">0</span>
+                            <span>人</span>
+                        </span>
+                    </li>
+                    <li class="col-sm-3" style="margin-left: 12px;">
+                        <span style="color: red;font-weight: bold;" class="col-sm-4">男:</span>
+                        <span class="col-sm-8">
+                            <span id="maleNum">0</span>
+                            <span>人</span>
+                        </span>
+                    </li>
+                    <li class="col-sm-3" style="margin-left: 12px;">
+                        <span style="color: red;font-weight: bold;" class="col-sm-4">女:</span>
+                        <span class="col-sm-8">
+                            <span id="femaleNum">0</span>
+                            <span>人</span>
+                        </span>
+                    </li>
+                    <li class="col-sm-3" style="margin-left: 12px;">
+                        <span style="color: red;font-weight: bold;" class="col-sm-4">其他:</span>
+                        <span class="col-sm-8">
+                            <span id="other">0</span>
+                            <span>人</span>
+                        </span>
+                    </li>
+                </ul>
+                <div id="userTable"></div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+    let page = 0;
+    let size = 0;
+    let total = 0;
+    //设置时间初始值
+    $("#addStartDate").val(getCurrentDate());
+    $("#addEndDate").val(getCurrentDate());
+    $(function () {
+        $('#userTable').bootstrapTable('destroy');
+        $('#userTable').bootstrapTable({
+            columns: [
+                {field: 'uid', title: 'UID', align: 'center', width: '3%', visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: 150},
+                {field: 'nick', title: '用户昵称', align: 'center', width: 150},
+                {
+                    field: 'hasPrettyErbanNo', title: '是否为靓号', align: 'center', width: 100,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            return "是";
+                        } else {
+                            return "否";
+                        }
+                    }
+                },
+                {
+                    field: 'gender', title: '性别', align: 'center', width: 100, formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return "男";
+                        } else if (val == 2) {
+                            return "女";
+                        } else if (val == 0) {
+                            return '其他'
+                        }
+                    }
+                },
+                {
+                    field: 'birth', title: '生日', align: 'center', width: 150,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'phone', title: '手机号码', align: 'center', width: 150},
+                {
+                    field: 'avatar',
+                    title: '头像',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        return "<img src='" + val + "' width='70'>";
+                    }
+                },
+                {field: 'alipayAccount', title: '支付宝账号', align: 'center', width: 150},
+                {field: 'alipayAccountName', title: '支付宝账号姓名', align: 'center', width: 150},
+                {field: 'registerIp', title: '注册IP', align: 'center', width: 120},
+                {
+                    field: 'signTime', title: '注册时间', align: 'center', width: 250,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'weixinOpenid', title: '微信注册', align: 'center', width: 150},
+                {field: 'qqOpenid', title: 'QQ注册', align: 'center', width: 150},
+                {field: 'channel', title: '下载渠道', align: 'center', width: 150},
+                {field: 'appVersion', title: 'APP版本', align: 'center', width: 120},
+                {field: 'model', title: '设备', align: 'center', width: 120},
+                {field: 'deviceId', title: '设备ID', align: 'center', width: 250},
+                {field: 'os', title: '系统', align: 'center', width: 150},
+                {field: 'osversion', title: '系统版本', align: 'center', width: 120},
+                {
+                    field: 'lastLoginTime', title: '最近登录时间', align: 'center', width: 250,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    erbanNo: $("#erbanNo").val(),
+                    phone: $("#phone").val(),
+                    os: $("#os").val(),
+                    registerType: parseInt($("#registerType").val()),
+                    channel: $("#channel").val(),
+                    gender: parseInt($("#gender").val()),
+                    beginDate: $("#addStartDate").val(),
+                    endDate: $("#addEndDate").val(),
+                };
+                page = params.pageNumber;
+                size = params.pageSize;
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/account/list.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    clear()
+                    $("#totalNum").text(res.data.total);
+                    $("#maleNum").text(res.data.list[0].maleNum);
+                    $("#femaleNum").text(res.data.list[0].femaleNum);
+                    $("#other").text(res.data.list[0].other);
+                    total = res.data.total;
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list,
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            }
+        });
+    });
+    const picker3 = $('#addStartDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+    const picker2 = $('#addEndDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+
+    function getYesterday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#addStartDate").val(today.format("yyyy-MM-dd"));
+        $("#addEndDate").val(today.format("yyyy-MM-dd"));
+        $('#userTable').bootstrapTable('refresh');
+    }
+
+    function clear() {
+        $("#totalNum").text('');
+        $("#maleNum").text('');
+        $("#femaleNum").text('');
+        $("#other").text('');
+    }
+
+    function exportTable() {
+        if (total > 1000) {
+            $("#tipMsg").text("导出条数不得大于1000条");
+            $("#tipModal").modal('show');
+            return;
+        }
+
+        const params = $(".form-horizontal").serialize();
+        console.log(params)
+        const url = `/admin/account/exportExcel?${params}`;
+        window.location.href = url;
+    };
+</script>
+<script src="/static/js/admin/style.js"></script>

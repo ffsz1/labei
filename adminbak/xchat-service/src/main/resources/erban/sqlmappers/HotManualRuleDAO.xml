@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.dao.HotManualRuleDAO" >
+
+  <select id="listByParam" resultType="com.erban.main.model.dto.HotManualRuleDTO" parameterType="com.erban.main.mybatismapper.query.HotManualRuleQuery">
+    SELECT
+        a.id as id,
+        a.uid as uid,
+        a.start_date as startDate,
+        a.end_date as endDate,
+        a.week_days as weekDays,
+        a.create_date as createDate,
+        a.status as status,
+        a.seq_no as seqNo,
+        a.view_type as viewType,
+        u.erban_no as erbanNo,
+        r.is_permit_room as isPermitRoom,
+        r.title as title
+    FROM hot_manual_rule a
+    INNER JOIN users u ON u.uid = a.uid
+    INNER JOIN room r ON r.uid = a.uid
+    <where>
+      <if test="erbanNo != null">
+        AND u.erban_no = #{erbanNo}
+      </if>
+      <if test="weekDay != null and weekDay != ''">
+         AND a.week_days LIKE CONCAT('%', #{weekDay}, '%')
+      </if>
+      <if test="viewType != null">
+          AND view_type = #{viewType}
+      </if>
+    </where>
+      ORDER BY a.create_date DESC
+  </select>
+
+    <sql id="baseCol">
+            a.id as id,
+            a.start_date as startDate,
+            a.end_date as endDate,
+            a.week_days as weekDays,
+            a.create_date as createDate,
+            a.status as status,
+            a.uid as uid,
+            a.seq_no as seqNo,
+            a.view_type as viewType
+    </sql>
+
+    <select id="getById" resultType="com.erban.main.model.dto.HotManualRuleDTO" >
+        SELECT
+            <include refid="baseCol"/>
+            ,
+            u.erban_no as erbanNo
+        FROM
+            hot_manual_rule a
+        INNER JOIN users u ON u.uid = a.uid
+        WHERE
+            id = #{id}
+
+    </select>
+
+    <select id="listByToday" resultType="com.erban.main.model.domain.HotManualRuleDO" parameterType="com.erban.main.mybatismapper.query.HotManualRuleQuery">
+        SELECT
+            <include refid="baseCol"/>
+        FROM
+            hot_manual_rule a
+        WHERE
+            a.week_days LIKE concat('%', #{weekDay}, '%')
+        AND a.status = '1'
+    </select>
+</mapper>

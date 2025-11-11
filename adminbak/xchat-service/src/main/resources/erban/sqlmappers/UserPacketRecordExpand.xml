@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserPacketRecordExpand">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.UserPacketRecord">
+        <id column="packet_id" property="packetId" jdbcType="VARCHAR"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="packet_num" property="packetNum" jdbcType="DOUBLE"/>
+        <result column="src_uid" property="srcUid" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="obj_id" property="objId" jdbcType="VARCHAR"/>
+        <result column="has_unpack" property="hasUnpack" jdbcType="BIT"/>
+        <result column="packet_status" property="packetStatus" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="getRecordCountByDate" resultType="int">
+        select count(packet_id) from user_packet_record where uid= #{0} and create_time BETWEEN #{1} and #{2}
+    </select>
+
+    <select id="getRecordCount" resultType="int">
+        select count(packet_id) from user_packet_record where uid= #{0}
+    </select>
+
+    <select id="getRecordByDateList" resultMap="BaseResultMap">
+        select * from user_packet_record where uid = #{0} and create_time BETWEEN #{1} and #{2} order by create_time desc limit #{3},#{4}
+    </select>
+
+    <select id="getRecordAllList" resultMap="BaseResultMap">
+        select * from user_packet_record where uid = #{0}  order by create_time desc limit #{1},#{2}
+    </select>
+
+    <select id="getRecordByDate" resultMap="BaseResultMap">
+        select * from user_packet_record where uid=#{0} and  #{1}>create_time and type!=5 order by create_time desc limit #{2},#{3}
+    </select>
+
+
+    <select id="getDepositRecordByDate" resultMap="BaseResultMap">
+        select * from user_packet_record where uid=#{0} and  #{1}>create_time and type=5 order by create_time desc limit #{2},#{3}
+    </select>
+</mapper>

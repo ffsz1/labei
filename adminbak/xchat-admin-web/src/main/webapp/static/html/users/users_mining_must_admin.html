@@ -1,0 +1,145 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 id="itemTitle"></h1>
+        </section>
+        <!-- .content -->
+        <section class="content">
+            <div id="table"></div>
+            <div class="row">
+                <form class="form-horizontal col-sm-6" id="infoForm">
+                    <div class="form-group">
+                        <label for="ernos" class="col-sm-2 control-label">拉贝号:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control validate[required]" name="ernos"  id="ernos" style="height:150px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ernos" class="col-sm-2 control-label">giftId:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control validate[required]" name="giftId" id="giftId">
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal col-sm-6" id="goldForm">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                        <button type="button" class="btn btn-primary" id="btnScan">查看用户</button>
+                        <button type="button" class="btn btn-primary" id="btnGive">确认开启</button>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- ./row -->
+        </section>
+        </div>
+    </div>
+    <div class="box box-primary">
+        <div class="box-body">
+            <table class="table table-bordered">
+                <thead><tr>
+                    <th style="width: 50px">头像</th>
+                    <th style="width:200px;">拉贝号</th>
+                    <th style="width:300px;">昵称</th>
+                    <th style="width:300px;">giftId</th>
+                    <th style="width:300px;">礼物名称</th>
+                    <th>金币</th>
+                </tr></thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<script>
+    var isEdit = false;
+    $(function () {
+        $("#goldForm").validationEngine();
+
+        $('#btnScan').click(function(){
+            if(!$('#ernos').val()){
+                $("#tipMsg").text("请输入拉贝号");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if(!$('#giftId').val()){
+                $("#tipMsg").text("请输入礼物Id");
+                $("#tipModal").modal('show');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/admin/miningmust/userinfo.action",
+                data: {"ernos":$("#ernos").val(),"giftId":$("#giftId").val()},
+                dataType: "json",
+                success: function (json) {
+                    if(json.code == 200) {
+                        var str = '';
+                        for(var i=0; i < json.data.length; i++) {
+                            var bean = json.data[i];
+                            str += "<tr>\n" +
+                                "                <th style=\"width: 100px\"><img src='"+bean.avatar+"' width='50'/></th>\n" +
+                                "                <th style='width:200px;'>" + bean.erbanNo + "</th>\n" +
+                                "                <th style='width:300px;'>" + bean.nick + "</th>\n" +
+                                "                <th style='width:300px;'>" + bean.giftId + "</th>\n" +
+                                "                <th style='width:300px;'>" + bean.giftName + "</th>\n" +
+                                "                <th>" + bean.goldNum + "</th>\n" +
+                                "            </tr>";
+                        }
+                        $('#tbody').html(str);
+                    }else{
+                        $("#tipMsg").text(json.message);
+                        $("#tipModal").modal('show');
+                        return;
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $("#tipMsg").text("不存在!");
+                    $("#tipModal").modal('show');
+                }
+            })
+        });
+
+        $("#btnGive").click(function () {
+            isEdit = true;
+            var ernos = $("#ernos").val();
+            var giftId = $("#giftId").val();
+            if(!$('#ernos').val()){
+                $("#tipMsg").text("请输入拉贝号");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if(!$('#giftId').val()){
+                $("#tipMsg").text("请输入礼物Id");
+                $("#tipModal").modal('show');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/admin/miningmust/add",
+                data:{'erbanNo':ernos,"giftId":giftId},
+                dataType: "json",
+                success: function (json) {
+                    if(json.code == 200) {
+                        $("#tipMsg").text("增加成功");
+                        $("#tipModal").modal('show');
+                        $('#btnScan').click();
+                    } else {
+                        $("#tipMsg").text("增加出错，errorCode: " + json.message);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function(json) {
+                    $("#tipMsg").text("增加出错，网络出错");
+                    $("#tipModal").modal('show');
+                }
+            });
+
+        });
+
+    });
+
+</script>

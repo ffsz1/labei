@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.UserRoomConsumeConfDAO" >
+
+    <insert id="insert">
+        INSERT INTO user_room_consume_conf (room_uid, create_date) VALUES (#{roomUid}, now())
+    </insert>
+
+    <select id="getByUid" resultType="long">
+        SELECT room_uid FROM user_room_consume_conf WHERE room_uid = #{roomUid}
+    </select>
+
+    <select id="listRoomUid" resultType="long">
+        SELECT room_uid FROM user_room_consume_conf
+    </select>
+
+    <select id="listRoom" resultType="com.erban.admin.main.dto.UserRoomDTO">
+        SELECT
+            r.uid AS uid,
+            r.room_id AS roomId,
+            r.tag_id AS tagId,
+            r.room_tag AS roomTag,
+            r.title AS title,
+            r.type AS type,
+            u.erban_no AS erbanNo,
+            u.nick AS nick
+        FROM
+            user_room_consume_conf ur
+            LEFT JOIN room r ON r.uid = ur.room_uid
+            LEFT JOIN users u ON u.uid = r.uid
+        <where>
+            <if test="erbanNo != null">
+                AND u.erban_no = #{erbanNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="count" resultType="long">
+        select count(*) from user_room_consume_conf
+    </select>
+
+    <delete id="delete">
+        delete from user_room_consume_conf WHERE room_uid = #{roomUid}
+    </delete>
+</mapper>

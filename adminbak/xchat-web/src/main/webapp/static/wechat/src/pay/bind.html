@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <link rel="stylesheet" href="../common/style/reset.css">
+  <link rel="stylesheet" href="style/bind.css">
+  <title>领取金币</title>
+</head>
+<body>
+	<div class="wrapper">
+		<img class="bg" src="image/bind_bg.png">
+		<div class="get-wrapper">
+		  <input type="text" placeholder="请输入手机号/拉贝号" id="num">
+		  <div id="get" class="get"></div>
+		</div>
+	</div>
+
+	<div class="info-wrapper">
+	  <div class="info">
+	  	请你确认拉贝账号
+	  	<div class="name">迪迪小公主（拉贝号：533703）</div>
+	  </div>
+	  <!-- <div class="info">
+	  	该手机号未被绑定<br/>请先到APP绑定
+	  </div> -->	  
+	  <div id="confirm" class="confirm"></div>
+	  <div class="close-info"></div>
+	</div>
+
+	<div class="result-wrapper">
+		  <div class="result">
+				<!-- <strong>恭喜！</strong>
+		  	您已经领取成功了<br/>可到【我的钱包】查看 -->
+		  </div>
+	    <!-- <div class="result">
+	  		<strong>SORRY！</strong>
+	    	您已经领过金币喔<br/>可到【我的钱包】查看
+	    </div>
+ -->		  <div class="close-result"></div>
+	</div>
+
+	<div class="mask"></div>
+
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="js/bind.js"></script>
+</html>

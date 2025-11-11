@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <link rel="stylesheet" href="../common/style/reset.css">
+  <link rel="stylesheet" href="style/pay.css">
+  <title>微信支付</title>
+</head>
+<body>
+  <div class="num">
+    <input type="text" placeholder="请输入手机号或者拉贝号" id="num">
+  </div>
+  <ul class="gold">
+    <!-- <li class="border-1px charge" _charge="3">
+      <span class="amount">10金币</span>
+      <span id="price_1" class="price">￥1</span>
+    </li>
+    <li class="border-1px charge"  _charge="9">
+      <span class="amount">9980金币</span>
+      <span class="desc">赠送1000金币</span>
+      <span id="price_998" class="price">￥998</span>
+    </li> -->
+  </ul>
+
+  <!--遮罩层-->
+  <div class="mask"></div>
+  <div class="layer">
+    <div class="desc_confirm" id="desc_confirm"></div>
+    <div class="btn_group">
+      <span class="cancel" id="cancel">取消</span>
+      <span class="confirm" id="confirm">确认</span>
+    </div>
+  </div>
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<!-- <script src="./js/vconsole.min.js"></script> -->
+<script src="js/pay.js"></script>
+</html>

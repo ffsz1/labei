@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatRoomAuctMapperExpand" >
+
+  <!--批量插入List-->
+  <insert id="insertList"  parameterType="java.util.List" >
+    insert into stat_room_auct (room_auct_id, uid, total_auct_money,
+    total_auct_count, stat_date, create_time
+    )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+     (#{item.roomAuctId,jdbcType=BIGINT}, #{item.uid,jdbcType=BIGINT}, #{item.totalAuctMoney,jdbcType=INTEGER},
+      #{item.totalAuctCount,jdbcType=INTEGER}, #{item.statDate,jdbcType=DATE}, #{item.createTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+
+
+</mapper>

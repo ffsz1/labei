@@ -1,0 +1,384 @@
+<style>
+    #removeBadge {
+        margin-left: 10px;
+    }
+
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+
+    .modal-body, .modal-body .form-group {
+        overflow: hidden;
+    }
+
+    .modal-body .form-inline {
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+
+    .modal-body #addImgUrl {
+        cursor: pointer;
+    }
+
+    .modal-body #addUploadFile {
+        display: none;
+    }
+
+    .modal-body .btn {
+        display: block;
+        width: 200px;
+        margin-top: 1rem;
+    }
+
+    textarea {
+        resize: unset;
+        height: 100px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="activityId" class="control-label">活动ID:</label>
+                            <input type="text" class="form-control" name="activityId" id="activityId"
+                                   placeholder="请输入活动ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="activityName" class="control-label">活动名称:</label>
+                            <input type="text" class="form-control" name="activityName" id="activityName"
+                                   placeholder="请输入活动名称">
+                        </div>
+                        <a href="javascript:;" id="btnAdd" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 添加
+                        </a>
+                        <a href="javascript:;" id="btnSearch" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i> 查询
+                        </a>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">活动信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form" class="form-horizontal">
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-4 control-label">活动名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="name" name="name" class="form-control"
+                                   aria-describedby="basic-addon1"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">活动图片:</label>
+                        <div class="col-sm-8">
+                            <img src="/static/AdminLTE/img/add.png" id="addActivityImage" width="130" alt="badge">
+                            <input type="file" id="uploadActivityFile" name="file"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" style="display: none">
+                            <button class="btn btn-success" type="button" id="uploadActivityBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="activityImageUrl" name="activityImageUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">分享缩略图:</label>
+                        <div class="col-sm-8">
+                            <img src="/static/AdminLTE/img/add.png" id="addShareImage" width="75" alt="badge">
+                            <input type="file" id="uploadShareFile" name="file"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" style="display: none">
+                            <button class="btn btn-success" type="button" id="uploadShareBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="shareImageUrl" name="shareImageUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title" class="col-sm-4 control-label">分享标题:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="title" name="title" class="form-control"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shareContent" class="col-sm-4 control-label">分享文案:</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control validate[required]" name="shareContent" id="shareContent"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="glyphicon glyphicon-remove"></i> 关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="save">
+                    <i class="glyphicon glyphicon-save"></i> 保存
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        let modify = true;
+
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'id', title: 'ID', align: 'center', valign: 'middle', visible: false},
+                {field: 'activityId', title: '活动ID', align: 'center', valign: 'middle', width: 150},
+                {field: 'activityName', title: '活动名称', align: 'center', valign: 'middle', width: 150},
+                {
+                    field: 'activityImage',
+                    title: '活动图片',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val) {
+                        return "<img src='" + val + "' width='75'>";
+                    }
+                },
+                {
+                    field: 'activityShareImage',
+                    title: '分享缩略图',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val) {
+                        return "<img src='" + val + "' width='75'>";
+                    }
+                },
+                {field: 'activityShareTitle', title: '分享标题', align: 'center', valign: 'middle', width: 150},
+                {field: 'activityShareContent', title: '分享文案', align: 'center', valign: 'middle', width: 250},
+                {
+                    field: 'activityLink',
+                    title: '链接',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 250,
+                    formatter: function (val) {
+                        if (val) {
+                            return `<a href='${val}'>${val}</a>`;
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'adminName', title: '操作人', align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'createTime',
+                    title: '操作时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 200,
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'id',
+                    title: '操作',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val, row) {
+                        return `<button class='btn btn-success opt-edit' data-id="${val}" data-uniqueid="${row.activityId}">
+                                    <i class="glyphicon glyphicon-edit"></i> 编辑
+                                </button>`;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    activityId: $('#activityId').val(),
+                    activityName: $("#activityName").val(),
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/appActivity/getAll',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            },
+        });
+
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        });
+
+        $('#btnAdd').on('click', function () {
+            cleanModal();
+            modify = false;
+            $('#modal').modal('show');
+        });
+
+        $('#table').on('click', '.opt-edit', function () {
+            const id = $(this).data().uniqueid;
+            modify = true;
+            cleanModal();
+            $.ajax({
+                type: 'get',
+                url: '/admin/appActivity/getAll',
+                dataType: 'json',
+                data: {
+                    pageSize: 10,
+                    pageNumber: 1,
+                    activityId: id,
+                    activityName: ""
+                },
+                success: function (res) {
+                    if (res.rows.length > 0) {
+                        $('#id').val(res.rows[0].id);
+                        $('#name').val(res.rows[0].activityName);
+                        $('#addActivityImage').attr('src', res.rows[0].activityImage);
+                        $('#activityImageUrl').val(res.rows[0].activityImage);
+                        $('#addShareImage').attr('src', res.rows[0].activityShareImage);
+                        $('#shareImageUrl').val(res.rows[0].activityShareImage);
+                        $('#title').val(res.rows[0].activityShareTitle);
+                        $('#shareContent').val(res.rows[0].activityShareContent);
+                        $('#modal').modal('show');
+                    }
+                }
+            });
+        });
+
+        $('#addActivityImage').click(function () {
+            $('#uploadActivityFile').click();
+        });
+
+        $('#addShareImage').click(function () {
+            $('#uploadShareFile').click();
+        });
+
+        $('#uploadActivityBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'uploadActivityFile', // 需要上传的文件域的ID，即<input type="file">的ID。
+                url: '/admin/file/upload', // 后台方法的路径
+                type: 'post', // 当要提交自定义参数时，这个参数要设置成post
+                dataType: 'json', // 服务器返回的数据类型: 可以为xml,script,json,html. 如果不填写, jQuery会自动判断
+                secureuri: false, // 是否启用安全提交，默认为false。
+                async: false, // 是否是异步
+                success: function (json) { // 提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。
+                    if (json.path) {
+                        $('#activityImageUrl').val(json.path);
+                        $('#addActivityImage').attr("src", json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) { // 提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        });
+
+        $('#uploadShareBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'uploadShareFile', // 需要上传的文件域的ID，即<input type="file">的ID。
+                url: '/admin/file/upload', // 后台方法的路径
+                type: 'post', // 当要提交自定义参数时，这个参数要设置成post
+                dataType: 'json', // 服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。
+                secureuri: false, // 是否启用安全提交，默认为false。
+                async: false, // 是否是异步
+                success: function (json) { // 提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。
+                    if (json.path) {
+                        $('#shareImageUrl').val(json.path);
+                        $('#addShareImage').attr("src", json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) { // 提交失败自动执行的处理函数。
+                    console.log(data)
+                    console.error(e);
+                }
+            });
+        });
+
+        $('#save').on('click', function () {
+            if ($('#form').validationEngine('validate')) {
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/appActivity/addOrModify',
+                    dataType: 'json',
+                    data: {
+                        id: $('#id').val(),
+                        activityName: $('#name').val(),
+                        activityImage: $('#activityImageUrl').val(),
+                        activityShareImage: $('#shareImageUrl').val(),
+                        activityShareTitle: $("#title").val(),
+                        activityShareContent: $("#shareContent").val(),
+                        modify: modify
+                    },
+                    success: function (res) {
+                        if (res.result == true) {
+                            $("#modal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败, 错误码: " + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        // 清理模态框表单内容
+        function cleanModal() {
+            $('#id').val('');
+            $('#name').val('');
+            $('#addActivityImage').attr('src', '/static/AdminLTE/img/add.png');
+            $('#addShareImage').attr('src', '/static/AdminLTE/img/add.png');
+            $('#title').val('');
+            $('#shareContent').val('');
+        }
+    });
+</script>

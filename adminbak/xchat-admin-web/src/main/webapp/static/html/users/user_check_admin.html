@@ -1,0 +1,670 @@
+<style>
+    .pull-left {
+        width: 100%;
+    }
+
+    #toolbar textarea {
+        overflow: hidden;
+        resize: none;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 4px;
+        height: 100px;
+        line-height: 20px;
+    }
+
+    #detailModal .part {
+        align-items: center;
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        height: calc(70px + 2rem);
+        text-indent: 3rem;
+        font-weight: 600;
+        border: 1px solid #f4f4f4;
+        padding: 1rem;
+    }
+
+    #table {
+        width: 150%;
+        max-width: unset;
+    }
+
+    .fixed-height {
+        height: 968px !important;
+    }
+
+    #removePhone, #editPhone {
+        display: block;
+        text-align: left;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table" class="table table-bordered" data-toggle="table" data-height="968"></div>
+                <div id="toolbar">
+                    <div class="form-group">
+                        <textarea name="erbanNoList" id="erbanNoList" placeholder="请输入拉贝号，多个拉贝号请用逗号隔开"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="uidList" id="uidList" placeholder="请输入uid，多个uid请用逗号隔开"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2" style="padding-left: 0px">
+                            <select id="gender" class="form-control" data-btn-class="btn-warning">
+                                <option value="">--请选择用户性别--</option>
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select id="defType" class="form-control" data-btn-class="btn-warning">
+                                <option value="">--请选择账号类型--</option>
+                                <option value="1">普通账号</option>
+                                <option value="2">官方账号</option>
+                                <option value="3">机器账号</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="startDate" type="date" placeholder="创建开始时间" value=""
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="endDate" type="date" placeholder="创建结束时间" value=""
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <select id="hasCharge" class="form-control" data-btn-class="btn-warning">
+                                <option value="">--是否有过充值--</option>
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="btnSearch" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-search"></i> 查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="modalLabel">用户详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="detail">
+                    <div class="part form-group">
+                        <div class="erbanNo">拉贝号: <span></span></div>
+                        <div class="nick">昵称: <span></span></div>
+                        <!-- <div class="uid">UID: <span></span></div> -->
+                        <div class="avatar">头像：<img src="" alt="" width="70px" height="70px" style="border-radius: 50%">
+                        </div>
+                    </div>
+                    <div class="part form-group">
+                        <div class="gender">性别: <span></span></div>
+                        <div class="phone">手机号码: <span></span></div>
+                        <div class="birth">出生日期: <span></span></div>
+                        <!-- <div class="email">电子邮箱: <span></span></div> -->
+                    </div>
+                    <div class="part form-group">
+                        <!-- <div class="sign">签名: <span></span></div> -->
+                        <div class="userDesc">个性签名: <span></span></div>
+                        <div class="followNum">关注数: <span></span></div>
+                        <div class="fansNum">粉丝数: <span></span></div>
+                    </div>
+                    <div class="part form-group">
+                        <div class="goldNum">金币数: <span></span></div>
+                        <div class="diamondNum">钻石数: <span></span></div>
+                        <div class="fortune">财富值: <span></span></div>
+                        <!-- <div class="depositNum">押金数: <span></span></div> -->
+                    </div>
+                    <!-- <div class="part form-group">
+                        <div class="defUser">账号类型: <span></span></div>
+                    </div> -->
+                    <div class="part form-group" style="grid-template-columns: 33% 67%">
+                        <div class="alipayAccount">支付宝账号: <span></span></div>
+                        <div class="alipayAccountName">支付宝账户名: <span></span></div>
+                    </div>
+                    <div class="part form-group">
+                        <div class="ispType">运营商: <span></span></div>
+                        <div class="netType">网络类型: <span></span></div>
+                        <div class="channelType">下载渠道类型: <span></span></div>
+                    </div>
+                    <div class="part form-group">
+                        <div class="model">手机型号: <span></span></div>
+                        <div class="deviceID">设备号: <span></span></div>
+                        <div class="appVersion">注册时版本号: <span></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title" id="addModalLabel">编辑用户信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="editUser" class="form-horizontal">
+                    <input type="hidden" name="uid" id="editUid">
+                    <div class="form-group">
+                        <label for="editNick" class="col-sm-3 control-label">昵称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="nick" id="editNick">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGender" class="col-sm-3 control-label">性别:</label>
+                        <div class="col-sm-8">
+                            <select name="gender" id="editGender" class="col-sm-2">
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone" class="col-sm-3 control-label">手机:</label>
+                        <div class="col-sm-2 control-label">
+                            <p id="editPhone"></p>
+                            <a href="javascript:void(0)" id="removePhone">解绑</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户头像图:</label>
+                        <div class="col-sm-8">
+                            <img src="" id="addImgUrl" style="width:70px;height:70px;" alt="">
+                            <input type="file" id="addUploadFile" name="uploadFile"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="editUploadBtn">上传</button>
+                            <input type="hidden" id="editAvatar" name="avatar" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editErbanNo" class="col-sm-3 control-label">拉贝号</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="erbanNo" id="editErbanNo" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDefType" class="col-sm-3 control-label">账号类型</label>
+                        <div class="col-sm-8">
+                            <select id="editDefType" class="form-control" data-btn-class="btn-warning">
+                                <option value="1">普通账号</option>
+                                <option value="2">官方账号</option>
+                                <option value="3">机器账号</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="editSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#startDate').datetimepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            endDate: new Date(),
+            minView: "month"
+        });
+
+        $('#endDate').datetimepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            endDate: new Date(),
+            minView: "month"
+        });
+
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    erbanNoList: $('#erbanNoList').val(),
+                    uidList: $('#uidList').val(),
+                    gender: $('#gender').val(),
+                    hasCharge: $('#hasCharge').val(),
+                    defType: $("#defType").val(),
+                    startDate: $('#startDate').val(),
+                    endDate: $('#endDate').val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/userCheckAdmin/getUserList.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            },
+            columns: [
+                {field: 'uid', title: '用户UID', align: 'center', valign: 'middle', visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 150},
+                {
+                    field: 'avatar',
+                    title: '头像',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 200,
+                    formatter: function (val, row, index) {
+                        return "<img src='" + val + "' width='70'>";
+                    }
+                },
+                {field: 'nick', title: '用户昵称', align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'birth',
+                    title: '出生日期',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 250,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'gender',
+                    title: '性别',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 120,
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '男';
+                        } else {
+                            return '女';
+                        }
+                    }
+                },
+                {field: 'phone', title: '手机号码', align: 'center', valign: 'middle', width: 200},
+                {field: 'defUser', title: '账号类型', align: 'center', valign: 'middle', width: 200,
+                    formatter: function (val, row, index) {
+                        if (val==1) {
+                            return '普通账号';
+                        } else if(val==2){
+                            return '官方账号';
+                        }else if(val==3){
+                            return '机器账号';
+                        }
+                    }},
+                {
+                    field: 'firstCharge', title: '是否充值', align: 'center', valign: 'middle', width: 120,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            return '是';
+                        } else {
+                            return '否';
+                        }
+                    }
+                },
+                {field: 'diamondNum', title: '钻石数量', align: 'center', valign: 'middle', width: 200},
+                {field: 'goldNum', title: '金币数量', align: 'center', valign: 'middle', width: 200},
+                {field: 'levelExperience', title: '财富等级', align: 'center', valign: 'middle', width: 150},
+                {field: 'levelCharm', title: '魅力等级', align: 'center', valign: 'middle', width: 150},
+                // {field: 'alipayAccount', title: '支付宝账号', align: 'center', valign: 'middle', width: 200},
+                // {field: 'alipayAccountName', title: '支付宝账户名', align: 'center', valign: 'middle', width: 200},
+                // {
+                //     field: 'defUser',
+                //     title: '账号类型',
+                //     align: 'center',
+                //     valign: 'middle',
+                //     width: 150,
+                //     formatter: function (val, row, index) {
+                //         switch (val) {
+                //             case 1:
+                //                 return '普通账号';
+                //             case 2:
+                //                 return '官方账号';
+                //             case 3:
+                //                 return '机器账号';
+                //         }
+                //     }
+                // },
+                {
+                    field: 'createTime',
+                    title: '注册时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 250,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'lastLoginTime',
+                    title: '最近登录时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 250,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'appVersion', title: '注册时版本号', align: 'center', valign: 'middle', width: 150},
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    width: 450,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        const key = row.uid;
+                        return "<button class='btn btn-sm btn-success opt-edit' data-id=" + key + " style='margin-right: .5rem'><i class='glyphicon glyphicon-edit'></i> 编辑</button>" +
+                            "<button class='btn btn-sm btn-info opt-detail' data-id=" + key + " style='margin-right: .5rem'><i class='glyphicon glyphicon-th-list'></i> 明细</button>" +
+                            "<button class='btn btn-sm btn-danger opt-block' data-id=" + key + " style='margin-right: .5rem'><i class='glyphicon glyphicon-remove-sign'></i> 一键封禁</button>" +
+                            "<button class='btn btn-sm btn-warning opt-out' data-id=" + key + "><i class='glyphicon glyphicon-off'></i> 强制下线</button>";
+                    }
+                }
+            ]
+        });
+
+        $('#btnSearch').on('click', function () {
+            $('#table').bootstrapTable('refresh', {url: '/admin/userCheckAdmin/getUserList.action'});
+        });
+
+        $("#table").on('click', '.opt-block', function () {
+            const uid = $(this).data('id');
+            $.ajax({
+                url: '/admin/blockAll',
+                type: 'post',
+                data: {uid: uid},
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 1) {
+                        // 成功
+                        $("#tipMsg").text("一键封禁成功！");
+                        $("#tipModal").modal('show');
+                    } else if (data == 2) {
+                        $("#tipMsg").text("账号信息错误");
+                        $("#tipModal").modal('show');
+                    } else if (data == 3) {
+                        $("#tipMsg").text("该账号已经被封禁");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("一键封禁失败！");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#table").on('click', '.opt-out', function () {
+            const uid = $(this).data('id');
+            $.ajax({
+                url: '/admin/userCheckAdmin/out',
+                type: 'get',
+                data: {uid: uid},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code == 200) {
+                        // 成功
+                        $("#tipMsg").text("成功！");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("失败！" + data.message);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $('#table').on('click', '.opt-detail', function () {
+            console.log($(this).data('id'));
+            clearDetailModal();
+            $.ajax({
+                url: '/admin/userCheckAdmin/getOne',
+                type: 'post',
+                data: {
+                    uid: $(this).data('id')
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        const purse = res.data.userPurseVo;
+                        const users = res.data.users;
+                        if (users) {
+                            $('.nick span').html(users.nick);
+                            $('.erbanNo span').html(users.erbanNo);
+                            $('.uid span').html(users.uid);
+                            if (users.gender == 1) {
+                                $('.gender span').html('男');
+                            } else {
+                                $('.gender span').html('女');
+                            }
+                            $('.avatar img').attr('src', users.avatar);
+                            $('.phone span').html(users.phone);
+                            const birthDate = users.birth ? new Date(users.birth).format('yyyy-MM-dd') : '';
+                            $('.birth span').html(birthDate);
+                            $('.email span').html(users.email);
+
+                            $('.sign span').html(users.signture ? users.signture : '-');
+                            $('.userVoice span').html(users.userVoice ? users.userVoice : '-');
+
+                            $('.userDesc span').html(users.userDesc ? users.userDesc : '-');
+
+                            $('.goldNum span').html(purse.goldNum);
+                            $('.diamondNum span').html(purse.diamondNum);
+                            $('.depositNum span').html(purse.depositNum);
+
+                            $('.followNum span').html(users.followNum);
+                            $('.fansNum span').html(users.fansNum);
+                            switch (users.defUser) {
+                                case 1:
+                                    $('.defUser span').html('普通账号');
+                                case 2:
+                                    $('.defUser span').html('官方账号');
+                                case 3:
+                                    $('.defUser span').html('机器账号');
+                            }
+
+                            $('.fortune span').html(users.fortune);
+                            $('.channelType span').html(users.channel);
+
+                            $('.alipayAccount span').html(users.alipayAccount ? users.alipayAccount : '-');
+                            $('.alipayAccountName span').html(users.alipayAccountName ? users.alipayAccountName : '-');
+
+                            let ispType = `未知${users.ispType}`;
+                            if (users.ispType = 1) {
+                                ispType = '中国移动';
+                            } else if (users.ispType = 2) {
+                                ispType = '中国联通';
+                            } else if (users.ispType = 3) {
+                                ispType = '世纪电信';
+                            }
+
+                            let netType = '未知'
+                            if (users.netType == 2) {
+                                netType = 'WI-FI';
+                            } else if (users.netType == 1) {
+                                // users.netType == 1 可能为2G/3G/4G, 暂且为4G
+                                netType = '4G网络';
+                            }
+
+                            $('.ispType span').html(ispType);
+                            $('.netType span').html(netType);
+                            $('.model span').html(users.model);
+
+                            $('.deviceID span').html(users.deviceId);
+                            $('.appVersion span').html(users.appVersion);
+                            $('#detailModal').modal('show');
+                        } else {
+                            $("#tipMsg").text("不存在用户详细信息，原因：该用户资料未补全");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                }
+            })
+        });
+
+        function clearDetailModal() {
+            $('#detailModal span').html('');
+        };
+
+        $('#table').on('click', '.opt-edit', function () {
+            $.ajax({
+                url: '/admin/userCheckAdmin/getOne',
+                type: 'post',
+                data: {
+                    uid: $(this).data('id')
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        const users = res.data.users;
+                        const account = res.data.account;
+                        const nick = users ? users.nick : '';
+                        const avatar = users ? users.avatar : '';
+                        const gender = users ? users.gender : 1;
+                        const defType = users ? users.defUser : 1;
+                        $('#editNick').val(nick);
+                        $('#editErbanNo').val(account.erbanNo);
+                        $('#editPhone').html(account.phone);
+                        $('#addImgUrl').attr('src', avatar);
+                        $('#editAvatar').val(avatar);
+                        $('#editPhone').html(account.phone);
+                        $('#editGender').val(gender);
+                        $('#editUid').val(account.uid);
+
+                        $('#editDefType').val(defType);
+                    }
+                    $('#editModal').modal('show');
+                }
+            })
+        });
+
+        $('#removePhone').on('click', function () {
+            $.ajax({
+                type: "post",
+                url: "/admin/userCheckAdmin/removePhone.action",
+                data: {
+                    uid: $('#editUid').val(),
+                    phone: $('#editErbanNo').val()
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.code == 200) {
+                        $("#tipMsg").text("解绑成功");
+                        $("#tipModal").modal('show');
+                        $('#editPhone').html(res.data.phone);
+                    } else {
+                        $("#tipMsg").text("解绑失败");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        });
+
+        $('#editSave').on('click', function () {
+            if ($('#editUser').validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/userCheckAdmin/saveUsers.action",
+                    data: {
+                        nick: $('#editNick').val(),
+                        gender: $('#editGender').val(),
+                        avatar: $('#editAvatar').val(),
+                        erBanNo: $('#editErbanNo').val(),
+                        uid: $('#editUid').val(),
+                        phone: $('#editPhone').html(),
+                        defType: $('#editDefType').val()
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 200) {
+                            // $('#erbanNoList').val('');
+                            $("#editModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else if (res.code == 1600) {
+                            $("#tipMsg").text("保存失败，错误码：" + res.code + "，无法寻找用户资料，请确认该用户资料是否补全或存在");
+                            $("#tipModal").modal('show');
+                        } else if (res.code == 999) {
+                            $("#tipMsg").text("保存失败，错误码：" + res.code + "，该拉贝号已被占用");
+                            $("#tipModal").modal('show');
+                        } else if (res.code == 4002) {
+                            $("#tipMsg").text("保存失败，错误码：" + res.code + "，该手机号已被占用");
+                            $("#tipModal").modal('show');
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+
+        $('#editUploadBtn').on('click', function () {
+            const options = {
+                type: 'post',
+                url: '/admin/banner/headimg.action',
+                dataType: 'json',
+                success: function (json) {
+                    if (json.path) {
+                        $('#editAvatar').val(json.path);
+                        $('#addImgUrl').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            };
+            $("#editUser").ajaxSubmit(options);
+        });
+    })
+</script>

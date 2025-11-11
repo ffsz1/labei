@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <script type="text/javascript">
+        var FS = {};
+        (function (win, FS) {
+            var doc = win.document;
+            var docEl = doc.documentElement;
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+            var dpr = 1;
+            var scale = 1;
+            var fontBase = 16;
+
+            if (window.devicePixelRatio >= 2) {
+                scale *= 0.5;
+                dpr *= 2;
+            }
+
+            docEl.setAttribute('data-dpr', dpr);
+            metaEl.setAttribute('content', 'initial-scale=' + scale + ', width=device-width, maximum-scale=' +
+                scale +
+                ', user-scalable=no');
+
+            function refreshRem() {
+                var width = docEl.getBoundingClientRect().width;
+                var rem = width / 10;
+                docEl.style.fontSize = rem + 'px';
+                FS.rem = rem;
+            }
+
+            var tid = null;
+            win.addEventListener('resize', function () {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }, false);
+
+            if (doc.readyState === 'complete') {
+                doc.body.style.fontSize = fontBase * dpr + 'px';
+            } else {
+                doc.addEventListener('DOMContentLoaded', function (e) {
+                    doc.body.style.fontSize = fontBase * dpr + 'px';
+                }, false);
+            }
+
+            refreshRem();
+
+            FS.dpr = dpr;
+            FS.rem2px = function (d) {
+                var val = parseFloat(d) * FS.rem;
+                if (typeof d === 'string' && d.match(/rem$/)) {
+                    val += 'px';
+                }
+                return val;
+            }
+            FS.px2rem = function (d) {
+                var val = parseFloat(d) / FS.rem;
+                if (typeof d === 'string' && d.match(/px$/)) {
+                    val += 'rem';
+                }
+                return val;
+            }
+        })(window, FS);
+    </script>
+    <title>联系官方</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 0.5rem;
+        }
+
+        p {
+            font-size: 0.4rem;
+            color: #1a1a1a;
+        }
+
+        .title {
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;欢迎来到这里，为了营造友好和谐有趣的拉贝社区，如果你有什么问题可以直接联系我们。</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以下是我们官方联系方式，您反馈的问题会以火箭的速度为您解决。</p>
+    <br>
+    <p class="title">拉贝相关问题反馈以及合作事宜</p>
+    <p>官方QQ群：779795138</p>
+    <br>
+    <p class="title">小拉贝官方客服</p>
+    <p>微信客服：密码yuyin8</p>
+    <div style="display:none">
+        <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+    </div>
+</body>
+</html>

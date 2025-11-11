@@ -1,0 +1,762 @@
+<style>
+    #skipType, #status {
+        margin-right: 10px;
+    }
+
+    .btn {
+        margin: 0 4px;
+    }
+
+    #uploadBtn, #addUploadBtn {
+        margin-top: 4px;
+    }
+
+    #skipUrlSort, #bannerStatus, #addSkipUrlSort, #addBannerStatus {
+        height: 34px;
+    }
+
+    .attention {
+        line-height: 30px;
+        display: inline-block;
+        margin-top: 4px;
+        color: red;
+    }
+
+    #imgMask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 450px;
+        height: 150px;
+        padding: 4px;
+        background: #fff;
+        z-index: 999;
+        display: none;
+    }
+
+    #imgMask img {
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+    }
+
+    #toolbar select {
+        margin-right: 2rem;
+    }
+
+    #toolbar label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <form id="form" class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label">跳转类型: </label>
+                            <select name="skipType" id="skipType" class="form-control">
+                                <option value="0">--全部--</option>
+                                <option value="1">APP页面</option>
+                                <option value="2">聊天室</option>
+                                <option value="3">H5页面</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">状态: </label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="0">--全部--</option>
+                                <option value="1">启用中</option>
+                                <option value="2">未启用</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">显示位置: </label>
+                            <select name="viewType" id="searchViewType" class="form-control">
+                                <option value="0">全部</option>
+                                <option value="1">首页顶部</option>
+                                <!-- <option value="2">发现页顶部</option>-->
+                                <option value="3">连麦互动</option>
+                                <option value="4">交友扩列</option>
+                            </select>
+                        </div>
+                        <a href="javascript:;" id="add" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 增加
+                        </a>
+                        <a href="javascript:;" id="btnSearch" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i> 查询
+                        </a>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="bannerModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="modalLabel">Banner信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="bannerForm">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-3 control-label">Banner名字:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control validate[required]" name="bannerName" id="name">
+                            <input type="hidden" id="bannerId" name="bannerId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Banner图:</label>
+                        <div class="col-sm-9">
+                            <img src="" id="imgUrl" style="width: 250px;" alt="">
+                            <input type="file" id="uploadFile" name="uploadFile"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="uploadBtn">上传</button>
+                            <span class="attention">注意:图片尺寸请注意在750*250,选择图片后请点击上传按钮</span>
+                            <input type="hidden" id="bannerPic" name="bannerPic"
+                                   class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">跳转链接:</label>
+                        <div class="col-sm-3">
+                            <select name="skipType" id="skipUrlSort" class="form-control">
+                                <option value="1">App页面</option>
+                                <option value="2">聊天室</option>
+                                <option value="3">H5页面</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <div class="input-group-addon">http://</div>
+                                <input type="text" class="form-control validate[required]" name="skipUri" placeholder="H5页面的跳转路径请填写该页面的完整路径, 如: 充值活动(http://www.haijiaoxingqiu.cn/front/activity/firstCharge.html)"
+                                       id="skipUrlContent">
+                            </div>
+                        </div>
+                        <p class="attention" style="padding-left: 17rem">APP页面的跳转路径请填写该页面名称的拼音, 如: 活动中心(huodongzhongxin)</p>
+                        <p class="attention" style="padding-left: 17rem">H5页面的跳转路径请填写该页面的完整路径, 如: 充值活动(http://www.haijiaoxingqiu.cn/front/activity/firstCharge.html)</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-3 control-label">排序设置:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="seqNo" name="seqNo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bannerStatus" class="col-sm-3 control-label">激活设置:</label>
+                        <div class="col-sm-9">
+                            <select name="bannerStatus" id="bannerStatus" class="form-control">
+                                <option value="1">激活</option>
+                                <option value="2">不激活</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="osType" class="col-sm-3 control-label">平台:</label>
+                        <div class="col-sm-9">
+                            <select name="osType" id="osType" class="form-control">
+                                <option value="0">全部</option>
+                                <option value="1">Android</option>
+                                <option value="2">IOS</option>
+                                <option value="3">拉贝星球</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label class="col-sm-3 control-label">标签:</label>
+                        <div class="col-sm-9 tagCheckbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="addShowTag" id="addShowTag" value="0"> 热门
+                            </label>
+                        </div>
+                    </div>
+                     -->
+                    <div class="form-group">
+                        <label for="isNewUser" class="col-sm-3 control-label">新用户:</label>
+                        <div class="col-sm-9">
+                            <select name="isNewUser" id="isNewUser" class="form-control">
+                                <option value="0">全部</option>
+                                <option value="1">是</option>
+                                <option value="2">不是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="viewType" class="col-sm-3 control-label">显示位置:</label>
+                        <div class="col-sm-9">
+                            <select name="viewType" id="viewType" class="form-control">
+                                <option value="1">首页顶部</option>
+                                <!-- <option value="2">发现页顶部</option> -->
+                                <option value="3">连麦互动</option>
+                                <option value="4">交友扩列</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal" id="bannerTimeForm">
+                    <!-- <div class="form-group startDateGroup">
+                        <label for="addStartDate" class="col-sm-3 control-label">开始时间:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="addStartDate" type="date" name="startTime" class="form-control">
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <label for="endDate" class="col-sm-3 control-label">结束时间:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="endDate" type="date" name="endTime" class="form-control">
+                            <input type="hidden" id="startDate" type="date" name="startTime" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addBannerModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">新增Banner</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addBannerForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="addName" class="col-sm-3 control-label">Banner名字:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control validate[required]" name="bannerName" id="addName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Banner图:</label>
+                        <div class="col-sm-9">
+                            <img src="" id="addImgUrl" style="width: 250px;" alt="">
+                            <input type="file" id="addUploadFile" name="uploadFile"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="addUploadBtn">上传</button>
+                            <input type="hidden" id="addBannerPic" name="bannerPic"
+                                   class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">跳转链接:</label>
+                        <div class="col-sm-3">
+                            <select name="skipType" id="addSkipUrlSort" class="form-control">
+                                <option value="1">App页面</option>
+                                <option value="2">聊天室</option>
+                                <option value="3">H5页面</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <div class="input-group-addon">http://</div>
+                                <input type="text" class="form-control validate[required]" name="skipUri" name="skipUri" placeholder="H5页面的跳转路径请填写该页面的完整路径, 如: 充值活动(http://www.haijiaoxingqiu.cn/front/activity/firstCharge.html)"
+                                       id="addSkipUrlContent">
+                            </div>
+                        </div>
+                        <p class="attention" style="padding-left: 17rem">APP页面的跳转路径请填写该页面名称的拼音, 如: 活动中心(huodongzhongxin)</p>
+                        <p class="attention" style="padding-left: 17rem">H5页面的跳转路径请填写该页面的完整路径, 如: 充值活动(http://www.haijiaoxingqiu.cn/front/activity/firstCharge.html)</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-3 control-label">排序设置:</label>
+                        <div class="col-sm-9">
+                            <input type="number" id="addSeqNo" name="seqNo" class="form-control validate[required]">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bannerStatus" class="col-sm-3 control-label">激活设置:</label>
+                        <div class="col-sm-9">
+                            <select name="bannerStatus" id="addBannerStatus" class="form-control">
+                                <option value="1">启用</option>
+                                <option value="2">不启用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="osType" class="col-sm-3 control-label">平台:</label>
+                        <div class="col-sm-9">
+                            <select name="osType" id="addOsType" class="form-control">
+                                <option value="0">全部</option>
+                                <option value="1">Android</option>
+                                <option value="2">IOS</option>
+                                <option value="3">拉贝星球</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label class="col-sm-3 control-label">标签:</label>
+                        <div class="col-sm-9 tagCheckbox">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="addShowTag" id="addShowTag1" value="0"> 热门
+                            </label>
+                        </div>
+                    </div>
+                     -->
+                    <div class="form-group">
+                        <label for="isNewUser" class="col-sm-3 control-label">新用户:</label>
+                        <div class="col-sm-9">
+                            <select name="isNewUser" id="addIsNewUser" class="form-control">
+                                <option value="0">全部</option>
+                                <option value="1">是</option>
+                                <option value="2">不是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addViewType" class="col-sm-3 control-label">显示位置:</label>
+                        <div class="col-sm-9">
+                            <select name="viewType" id="addViewType" class="form-control">
+                                <option value="1">首页顶部</option>
+                                <!-- <option value="2">发现页顶部</option> -->
+                                <option value="3">连麦互动</option>
+                                <option value="4">交友扩列</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="addStartDate" class="col-sm-3 control-label">起始时间:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="addStartDate" type="date" name="startTime"
+                                   class="form-control validate[required]">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addEndDate" class="col-sm-3 control-label">结束时间:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="addEndDate" type="date" name="endTime"
+                                   class="form-control validate[required]">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="imgMask"><img src="" alt=""></div>
+<script>
+    $(function () {
+        let isEdit = false;
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'bannerId', title: 'bannerID', align: 'center', valign: 'middle', width: '10%', visible: false},
+                {field: 'bannerName', title: '名称', align: 'center', valign: 'middle', width: 150},
+                {
+                    field: 'bannerPic',
+                    title: 'Banner图',
+                    align: 'center',
+                    width: 200,
+                    formatter: function (val) {
+                        return "<img src='" + val + "' width='75'>";
+                    }
+                },
+                {
+                    field: 'skipType', title: '跳转类型', align: 'center', valign: 'middle', width: 150,
+                    formatter: function (val) {
+                        switch (val) {
+                            case 1:
+                                return 'App页面';
+                            case 2:
+                                return '聊天室';
+                            case 3:
+                                return 'H5页面';
+                        }
+                    }
+                },
+                {
+                    field: 'seqNo',
+                    title: 'Banner排序',
+                    align: 'center',
+                    width: 150,
+                    valign: 'middle'
+                },
+                {
+                    field: 'bannerStatus',
+                    title: '状态',
+                    align: 'center',
+                    width: 120,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        switch (val) {
+                            case 1:
+                                return '启用中';
+                            case 2:
+                                return '未启用';
+                        }
+                    }
+                },
+                {
+                    field: 'osType',
+                    title: '平台',
+                    align: 'center',
+                    width: 120,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        switch (val) {
+                            case 0:
+                                return '全部';
+                            case 1:
+                                return 'Android';
+                            case 2:
+                                return 'IOS';
+                            case 3:
+                                return '拉贝星球';
+                        }
+                    }
+                },
+                {
+                    field: 'isNewUser',
+                    title: '新用户',
+                    align: 'center',
+                    width: 120,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        switch (val) {
+                            case 0:
+                                return '全部';
+                            case 1:
+                                return '是';
+                            case 2:
+                                return '不是';
+                        }
+                    }
+                },
+                {
+                    field: 'viewType',
+                    title: '显示位置',
+                    align: 'center',
+                    width: 150,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        switch (val) {
+                            case 1:
+                                return '首页顶部';
+                            case 2:
+                                return '发现页顶部';
+                            case 3:
+                                return '连麦互动';
+                            case 4:
+                                return '交友扩列';
+                            default:
+                            	return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'startTime',
+                    title: '开始时间',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'endTime',
+                    title: '结束时间',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        const key = row.bannerId;
+                        return "<button class='btn btn-sm btn-success opt-edit' data-id=" + key + "><i class='glyphicon glyphicon-edit'></i> 编辑</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    bannerStatus: parseInt($('#status').val()),
+                    skipType: parseInt($('#skipType').val()),
+                    viewType: $("#searchViewType").val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/banner/getBannerList.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        })
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        })
+        $('#table').on('click', '.opt-edit', function () {
+            $('#bannerForm .tagCheckbox input[type="checkbox"]').each(function() {
+                $(this).prop('checked', false);
+            });
+
+            const id = parseInt($(this).data('id'));
+            isEdit = true;
+            $.ajax({
+                type: 'post',
+                url: '/admin/banner/getOneBanner.action',
+                data: {'bannerId': id},
+                dataType: 'json',
+                success: function (json) {
+                    if (json.entity) {
+                        // var status = json.entity.bannerStatus?'true':'false';
+                        const date = json.entity.endTime ? new Date(json.entity.endTime).format("yyyy-MM-dd HH:mm:ss") : '';
+                        const startDate = new Date(json.entity.startTime).format("yyyy-MM-dd HH:mm:ss");
+                        $('#name').val(json.entity.bannerName);
+                        $('#imgUrl').attr('src', json.entity.bannerPic);
+                        $('#bannerPic').val(json.entity.bannerPic);
+                        $('#skipUrlSort').val(json.entity.skipType);
+                        $('#skipUrlContent').val(json.entity.skipUri.replace("http://", ""));
+                        $('#seqNo').val(json.entity.seqNo);
+                        $('#bannerStatus').val(json.entity.bannerStatus);
+                        $('#osType').val(json.entity.osType);
+                        $('#isNewUser').val(json.entity.isNewUser);
+                        $('#endDate').val(date);
+                        $('#bannerId').val(json.entity.bannerId);
+                        $('#startDate').val(startDate);
+                        $('#viewType').val(json.entity.viewType);
+                        $('#bannerModal').modal('show');
+
+                        /*if (json.entity.addShowTag) {
+                            const tagList = json.entity.addShowTag.split(',');
+                            $('#bannerForm .tagCheckbox input[type="checkbox"]').each(function() {
+                                console.log($(this).val());
+                                for (let i = 0; i < tagList.length; i++) {
+                                    if (tagList[i] == $(this).val()) {
+                                        $(this).prop('checked', true);
+                                    }
+                                }
+                            });
+                        }*/
+
+                        picker1.datetimepicker('setStartDate', startDate);
+                    } else {
+                        $("#tipMsg").text("获取信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+        $('#save').on('click', function () {
+            console.log($('#bannerForm').serialize());
+            if ($('#bannerForm').validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/banner/save.action?isEdit=" + isEdit + "&endTimeString=" + $('#endDate').val(),
+                    data: $('#bannerForm').serialize(),
+                    dataType: 'json',
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#bannerModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+        $('#addSave').on('click', function () {
+            console.log($('#addBannerForm').serialize());
+            if ($('#addBannerForm').validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/banner/save.action?isEdit=" + isEdit + "&startTimeString=" + $('#addStartDate').val() + "&endTimeString=" + $('#addEndDate').val(),
+                    data: $('#addBannerForm').serialize(),
+                    dataType: 'json',
+                    success: function (json) {
+                        console.log(json);
+                        if (json.result == 1) {
+                            $('#addBannerModal').modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        })
+        // $('#bannerModal').on('hidden.bs.modal',function () {
+        //    TableHelper.doRefresh("#table");
+        //    $('#bannerForm').data('bootstrapValidator').destroy();
+        //    $('#bannerForm').data('bootstrapValidator', null);
+        //    $('#bannerTimeForm').data('bootstrapValidator').destroy();
+        //    $('#bannerTimeForm').data('bootstrapValidator', null);
+        // })
+        const picker1 = $("#endDate").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true,
+            pickerPosition: "top-right"
+        });
+        const picker2 = $('#addStartDate').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true
+        });
+        const picker3 = $('#addEndDate').datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true,
+            pickerPosition: "top-right"
+        });
+        picker3.on('changeDate', function () {
+            const date = $('#addEndDate').datetimepicker('getDate');
+            picker2.datetimepicker('setEndDate', date);
+        });
+        picker2.on('changeDate', function () {
+            const date = $('#addStartDate').datetimepicker('getDate');
+            picker3.datetimepicker('setStartDate', date);
+        });
+        $('#uploadBtn').on('click', function () {
+            console.log('wewawa');
+            const options = {
+                type: 'post',
+                url: '/admin/banner/headimg.action',
+                dataType: 'json',
+                success: function (json) {
+                    if (json.path) {
+                        $('#bannerPic').val(json.path);
+                        $('#imgUrl').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            }
+            $("#bannerForm").ajaxSubmit(options);
+        });
+        $('#addUploadBtn').on('click', function () {
+            const options = {
+                type: 'post',
+                url: '/admin/banner/headimg.action',
+                dataType: 'json',
+                success: function (json) {
+                    if (json.path) {
+                        $('#addBannerPic').val(json.path);
+                        $('#addImgUrl').attr('src', json.path);
+                        console.log(json.path);
+                    } else {
+                        $('#tipMsg').text(json.msg);
+                        $('#tipModal').modal('show');
+                    }
+                }
+            }
+            $('#addBannerForm').ajaxSubmit(options);
+        })
+        $('#add').on('click', function () {
+            isEdit = false;
+            $('#addBannerForm')[0].reset();
+            $('#addImgUrl').attr('src', '');
+            $('#addBannerPic').val('');
+            $('#addBannerModal').modal('show');
+        })
+        $('#table').on('mouseenter', 'img', function (e) {
+            console.log($(this), e.clientX);
+            const src = $(this).attr('src');
+            $('#imgMask img').attr('src', src);
+            $('#imgMask').show();
+            $('#imgMask').css({
+                top: e.clientY + 20,
+                left: e.clientX + 20
+            })
+        });
+        $('#table').on('mouseleave', 'img', function (e) {
+            console.log('移出');
+            $('#imgMask').hide();
+        });
+        // $('#table').on('click', '.opt-del', function () {
+        //     var key = parseInt($(this).attr('data-id'));
+        //     console.log(key, typeof key);
+        //     $.ajax({
+        //         type: 'post',
+        //         url: '/admin/banner/delBannerList.action',
+        //         data: {'bannerId': key},
+        //         dataType: 'json',
+        //         success: function (json) {
+        //             if (json.result == 1) {
+        //                 $("#tipMsg").text("删除成功");
+        //                 $("#tipModal").modal('show');
+        //                 TableHelper.doRefresh("#table");
+        //             } else {
+        //                 $("#tipMsg").text("删除失败，错误码：" + json.result);
+        //                 $("#tipModal").modal('show');
+        //             }
+        //         }
+        //
+        //     })
+        // })
+       /* $.ajax({
+            type: 'GET',
+            url: '/admin/roomAdmin/getRoomTags',
+            dataType: 'json',
+            success: function (res) {
+                const data = res.data;
+                const $checkbox = $('.tagCheckbox');
+                for (let i = 0; i < data.length; i++) {
+                    let html = `<label class="checkbox-inline">
+                                    <input type="checkbox" name="addShowTag" id="addShowTag${data[i].id}" value="${data[i].id}"> ${data[i].name}
+                                </label>`;
+                    $checkbox.append(html);
+                }
+            }
+        });
+       */
+    })
+</script>

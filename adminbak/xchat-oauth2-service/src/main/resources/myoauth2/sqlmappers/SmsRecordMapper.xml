@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xchat.oauth2.service.infrastructure.myaccountmybatis.SmsRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.xchat.oauth2.service.model.SmsRecord" >
+    <id column="sms_record_id" property="smsRecordId" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+    <result column="os" property="os" jdbcType="VARCHAR" />
+    <result column="osVersion" property="osversion" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="app_version" property="appVersion" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="sms_code" property="smsCode" jdbcType="VARCHAR" />
+    <result column="sms_type" property="smsType" jdbcType="TINYINT" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sms_record_id, phone, device_id, imei, os, osVersion, channel, app_version, model, 
+    sms_code, sms_type, ip, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xchat.oauth2.service.model.SmsRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from sms_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sms_record
+    where sms_record_id = #{smsRecordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sms_record
+    where sms_record_id = #{smsRecordId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xchat.oauth2.service.model.SmsRecordExample" >
+    delete from sms_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xchat.oauth2.service.model.SmsRecord" >
+    insert into sms_record (sms_record_id, phone, device_id, 
+      imei, os, osVersion, 
+      channel, app_version, model, 
+      sms_code, sms_type, ip, 
+      create_time)
+    values (#{smsRecordId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, 
+      #{imei,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{osversion,jdbcType=VARCHAR}, 
+      #{channel,jdbcType=VARCHAR}, #{appVersion,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
+      #{smsCode,jdbcType=VARCHAR}, #{smsType,jdbcType=TINYINT}, #{ip,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xchat.oauth2.service.model.SmsRecord" >
+    insert into sms_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smsRecordId != null" >
+        sms_record_id,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="imei != null" >
+        imei,
+      </if>
+      <if test="os != null" >
+        os,
+      </if>
+      <if test="osversion != null" >
+        osVersion,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="appVersion != null" >
+        app_version,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="smsCode != null" >
+        sms_code,
+      </if>
+      <if test="smsType != null" >
+        sms_type,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smsRecordId != null" >
+        #{smsRecordId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="osversion != null" >
+        #{osversion,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null" >
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCode != null" >
+        #{smsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smsType != null" >
+        #{smsType,jdbcType=TINYINT},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xchat.oauth2.service.model.SmsRecord" >
+    update sms_record
+    <set >
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="osversion != null" >
+        osVersion = #{osversion,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null" >
+        app_version = #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCode != null" >
+        sms_code = #{smsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smsType != null" >
+        sms_type = #{smsType,jdbcType=TINYINT},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sms_record_id = #{smsRecordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xchat.oauth2.service.model.SmsRecord" >
+    update sms_record
+    set phone = #{phone,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      osVersion = #{osversion,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      sms_code = #{smsCode,jdbcType=VARCHAR},
+      sms_type = #{smsType,jdbcType=TINYINT},
+      ip = #{ip,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sms_record_id = #{smsRecordId,jdbcType=BIGINT}
+  </update>
+</mapper>

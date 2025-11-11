@@ -1,0 +1,179 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1 id="itemTitle"></h1>
+</section>
+<!-- .content -->
+<section class="content">
+    <div id="userTable"></div>
+    <div id="toolbar">
+        <button id="add" class="btn btn-default">
+            <i class="glyphicon glyphicon-plus"></i>增加
+        </button>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">IOS审核白名单</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="userForm">
+                    <input type="hidden" name="id" id="id"/>
+                    <input type="hidden" name="optUid" id="optUid"/>
+                    <div class="form-group">
+                        <label for="erbanNo" class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control  validate[required]" name="uid" id="erbanNo">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var isEdit = false;
+    $(function () {
+        $('#userTable').bootstrapTable('destroy');
+        $('#userTable').bootstrapTable({
+            columns: [
+                {field: 'id', title: 'ID', align: 'center', width: '3%'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '8%'},
+                {field: 'nick', title: '昵称', align: 'center', width: '5%'},
+                {field: 'uid', title: 'UID', align: 'center', width: '5%'},
+                {field: 'createTime', title: '创建时间', align: 'center', width: '10%',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd");
+                        } else {
+                            return '-';
+                        }
+
+                    }},
+                {
+                    field: 'id',
+                    title: '操作',
+                    align: 'center',
+                    width: '25%',
+                    formatter: function (val, row, index) {
+                        return '&nbsp;&nbsp;<button class="btn btn-sm btn-danger opt-remove" data-id=' + row.id + ' data-erban='+row.erbanNo+'><i class="glyphicon glyphicon-remove"></i>删除</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: true,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/review/whitelist/getlist.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+        $("#userTable").on("click", '.opt-remove', function () {
+            var id = $(this).attr("data-id");
+            var erbanNo = $(this).attr("data-erban");
+            if (confirm("你确认删除【" + erbanNo + "】吗?" +
+                            "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/review/whitelist/del.action",
+                    data: {'id': id},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#userTable");
+                        } else {
+                            $("#tipMsg").text("删除失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+
+        $('#add').click(function () {
+            $("#userForm")[0].reset();
+            $("#id").val(0);
+            $("#optUid").val(0);
+            $("#userModal").modal('show');
+        });
+
+        $('#save').click(function () {
+            if ($("#userForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/review/whitelist/save.action",
+                    data: $('#userForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#userModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#userTable");
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

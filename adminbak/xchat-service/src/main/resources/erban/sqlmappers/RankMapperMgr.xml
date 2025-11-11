@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.RankMapperMgr">
+    <resultMap id="BaseResultMap" type="com.erban.main.vo.RankVo">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <id column="total_num" property="totalNum" jdbcType="BIGINT"/>
+    </resultMap>
+
+
+    <select id="getAllStarRankList" resultMap="BaseResultMap" parameterType="com.erban.main.param.RankParam">
+        SELECT
+        recv_uid uid,
+        SUM(sum_gold) total_num
+        FROM
+        one_day_room_recv_sum
+        where (create_time BETWEEN #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP})
+        <if test="uid != null">
+            and recv_uid=#{uid,jdbcType=BIGINT},
+        </if>
+        <if test="uid == null">
+            GROUP BY recv_uid
+        </if>
+        ORDER BY total_num DESC
+        LIMIT 0, 100
+    </select>
+
+    <select id="getNobelRankList" resultMap="BaseResultMap" parameterType="com.erban.main.param.RankParam">
+        SELECT
+        send_uid uid,
+        SUM(sum_gold) total_num
+        FROM
+        one_day_room_send_sum
+        where (create_time BETWEEN #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP})
+        <if test="uid != null">
+            and send_uid=#{uid,jdbcType=BIGINT},
+        </if>
+        <if test="uid == null">
+            GROUP BY send_uid
+        </if>
+        ORDER BY total_num DESC
+        LIMIT 0, 100
+    </select>
+
+    <select id="getAllRoomRankList" resultMap="BaseResultMap" parameterType="com.erban.main.param.RankParam">
+        SELECT
+        uid,
+        SUM(sum_gold) total_num
+        FROM
+        one_day_room_send_sum
+        where (create_time BETWEEN #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}) and uid != 0
+        <if test="uid != null">
+            and uid=#{uid,jdbcType=BIGINT},
+        </if>
+        <if test="uid == null">
+            GROUP BY uid
+        </if>
+        ORDER BY total_num DESC
+        LIMIT 0, 100
+    </select>
+
+
+</mapper>

@@ -1,0 +1,1200 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="add" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i>增加
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="editModalLabel">修改审核渠道信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="channelForm" class="form-horizontal">
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">渠道名:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="channel" name="channel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">投放审核:</label>
+                        <div class="col-sm-8">
+                            <label><input type="radio" value="1" name="auditOption" checked> 开</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" value="0" name="auditOption"> 关</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">审核版本:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="auditVersion" name="auditVersion">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">审核等级:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="leftLevel" name="leftLevel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">开始时间:</label>
+                        <div class="col-sm-8">
+                            <input id="beginDate" name="beginDate" type="text" placeholder="开始时间" autocomplete="off" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">结束时间:</label>
+                        <div class="col-sm-8">
+                            <input id="endDate" name="endDate" type="text" placeholder="结束时间" autocomplete="off" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addRoomModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addRoomModalLabel">添加房间</h4>
+            </div>
+            <div class="modal-body">
+                <form id="channelRoom" class="form-horizontal">
+                    <input type="hidden" name="id" id="channelId">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">渠道名:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" readonly="readonly" id="channelName" name="channel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">房主UID:</label>
+                        <div class="col-sm-8">
+                            <textarea type="text" class="form-control validate[required]" id="uids" name="channel"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveRoom">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addIconModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addIconModalLabel">添加ICON</h4>
+            </div>
+            <div class="modal-body">
+                <form id="channelIcon" class="form-horizontal">
+                    <input type="hidden" name="id" id="channelIconId">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">渠道名:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" readonly="readonly" id="channelIconName" name="channel"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">IconId:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="iconId" name="iconId"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveIcon">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addBannerModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addBannerModalLabel">添加Banner</h4>
+            </div>
+            <div class="modal-body">
+                <form id="channelBanner" class="form-horizontal">
+                    <input type="hidden" name="id" id="channelBannerId">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">渠道名:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" readonly="readonly" id="channelBannerName" name="channel"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">BannerId:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="bannerId" name="bannerId"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveBanner">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- .content -->
+<div class="modal fade" id="detailModel" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document" style="width: 75%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="channelTitle">审核渠道列表</h4>
+                <input id="channel_id" value="" hidden="hidden"/>
+            </div>
+            <div id="detailTable"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addUsersModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addUsersModalLabel">添加用户</h4>
+            </div>
+            <div class="modal-body">
+                <form id="channelUsers" class="form-horizontal">
+                    <input type="hidden" name="id" id="channelUsersId">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">渠道名:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" readonly="readonly" id="channelUsersName" name="channel"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="erbanNo" name="erbanNo"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveUsers">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addIpModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addIpModalLabel">添加Ip</h4>
+            </div>
+            <div class="modal-body">
+                <form id="channelIp" class="form-horizontal">
+                    <input type="hidden" name="id" id="channelIpId">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">渠道名:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" readonly="readonly" id="channelIpName" name="channel"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">ip:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="ip" name="ip"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveIp">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 5,
+            pagination: true,
+            pageList: [5, 10, 15, 25],
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/channel/list',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+            columns:[
+                {field: 'channel', title: '渠道号', align: 'center', valign: 'middle', width: '5%'},
+                {field: 'auditOption', title: '投放审核', align: 'center', valign: 'middle', width: '5%',
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '开';
+                        } else {
+                            return '关';
+                        }
+                    }
+                },
+                {field: 'leftLevel', title: '投放审核等级', align: 'center', valign: 'middle', width: '5%'},
+                {field: 'auditVersion', title: '投放审核版本', align: 'center', valign: 'middle', width: '5%'},
+                {field: 'beginTime', title:'审核开始时间', align:'center', valign:'middle', width:'10%',
+                    formatter:function (val,row,index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'endTime', title:'结束时间', align:'center', valign:'middle', width:'10%',
+                    formatter:function (val,row,index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'createTime', title:'创建时间', align:'center', valign:'middle', width:'10%',
+                    formatter:function (val,row,index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'id', title:'操作', align:'center', width:'12%', valign:'middle',
+                    formatter:function (val,row,index) {
+                        var str = "<button class='btn btn-sm btn-success opt-edit' data-id='"+ val +"'>" +
+                            "<span hidden='hidden'></span>编辑</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-addRoom' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>添加房间</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-listRoom' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>查看房间</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-danger opt-delete' data-id='"+ val +"'>" +
+                            "<span hidden='hidden'></span>删除</button>";
+                        str += "<br/><button class='btn btn-sm btn-success opt-addIcon' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>添加ICON</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-listIcon' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>查看ICON</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-addBanner' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>添加Banner</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-listBanner' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>查看Banner</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-addUsers' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>添加用户</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-listUsers' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>查看用户</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-addIp' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>添加IP</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-success opt-listIp' data-id='"+ val +"' data-name='"+ row.channel +"'>" +
+                            "<span hidden='hidden'></span>查看IP</button>&nbsp;";
+                        return str;
+                    }
+                }
+            ]
+        })
+        $("#add").on("click", function() {
+            $("#editModal").modal("show");
+            $("#id").val("");
+            $("#channelForm")[0].reset();
+        });
+
+        $('#table').on('click', '.opt-edit', function () {
+            var id = $(this).data('id');
+            if (id) {
+                $("#editModal").modal('show');
+                $.get("/admin/channel/get/" + id, function (data) {
+                    if (data.code == 200) {
+                        $("#id").val(data.data.id);
+                        $("#channel").val(data.data.channel);
+                        $("#auditVersion").val(data.data.auditVersion);
+                        $("#leftLevel").val(data.data.leftLevel);
+
+                        $("input[name='auditOption'][value="+ data.data.auditOption +"]").prop("checked", "checked");
+                        var date = new Date(data.data.beginTime);
+                        $("#beginDate").val(date.format("yyyy-MM-dd HH:mm:ss"));
+                        date = new Date(data.data.endTime);
+                        $("#endDate").val(date.format("yyyy-MM-dd HH:mm:ss"));
+                    }
+                })
+            }
+        });
+        
+        $("#table").on("click", ".opt-delete", function () {
+            var id = $(this).data('id');
+            if (id) {
+                if (!confirm("删除后将无法找回, 确定要删除吗?")) {
+                    return;
+                }
+                $.get("/admin/channel/delete/" + id, function (data) {
+                    if (data.code == 200) {
+                        $("#tipMsg").text("删除成功");
+                    } else {
+                        $("#tipMsg").text(data.message);
+                    }
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#table");
+                })
+            }
+        });
+
+        $("#table").on("click", ".opt-addRoom", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channelName").val(data.name);
+                $("#channelId").val(data.id);
+                $("#uids").val("");
+                $("#addRoomModal").modal("show");
+            }
+        });
+        
+        $("#table").on("click", ".opt-listRoom", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channel_id").val(data.id);
+                listChannelRoom(data.id);
+            }
+        });
+
+        $("#table").on("click", ".opt-listIcon", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channel_id").val(data.id);
+                listChannelICON(data.id);
+            }
+        });
+
+        $("#table").on("click", ".opt-listBanner", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channel_id").val(data.id);
+                listChannelBanner(data.id);
+            }
+        });
+
+        $("#table").on("click", ".opt-listUsers", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channel_id").val(data.id);
+                listChannelUsers(data.id);
+            }
+        });
+
+        $("#table").on("click", ".opt-listIp", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channel_id").val(data.id);
+                listChannelIp(data.id);
+            }
+        });
+        
+        $("#detailTable").on("click", ".opt-delete_room", function () {
+            var roomUid = $(this).data("id");
+            if (roomUid) {
+                if(confirm("确定要删除吗?")) {
+                    var param = {
+                        channelId: $("#channel_id").val(),
+                        roomUid: roomUid
+                    };
+                    $.post("/admin/channel/delRoom", param, function (data) {
+                        if (data.code == 200) {
+                            $("#tipMsg").text("删除成功");
+                        } else {
+                            $("#tipMsg").text(data.message);
+                        }
+                        TableHelper.doRefresh("#detailTable");
+                    })
+                }
+            }
+        });
+
+        $("#saveRoom").on("click", function () {
+            $("#saveRoom").attr("disabled", true);
+            var param = {
+                id : $("#channelId").val(),
+                uids : $("#uids").val()
+            }
+            $.post("/admin/channel/addRoom", param, function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("保存成功");
+                    $("#addRoomModal").modal('hide');
+                } else {
+                    $("#tipMsg").text(data.message);
+                }
+                $("#saveRoom").removeAttr("disabled");
+                $("#tipModal").modal('show');
+            })
+        });
+        
+        $("#save").on("click", function () {
+            $("#save").attr("disabled", true);
+            if(!$("#channelForm").validationEngine('validate')){
+                return;
+            }
+            var param = {
+                id: $("#id").val(),
+                channel: $("#channel").val(),
+                auditOption: $("input[name='auditOption']:checked").val(),
+                leftLevel: $("#leftLevel").val(),
+                auditVersion: $("#auditVersion").val(),
+                beginTime: $("#beginDate").val(),
+                endTime: $("#endDate").val()
+            };
+            $.post("/admin/channel/save", param, function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("保存成功");
+                    $("#editModal").modal('hide');
+                    TableHelper.doRefresh("#table");
+                    $("#save").removeAttr("disabled");
+                } else {
+                    $("#tipMsg").text(data.message);
+                }
+                $("#tipModal").modal('show');
+            })
+        });
+
+        /**
+         * 增加icon
+         */
+        $("#table").on("click", ".opt-addIcon", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channelIconName").val(data.name);
+                $("#channelIconId").val(data.id);
+                $("#addIconModal").modal("show");
+                $("#iconId").val('')
+            }
+        });
+
+        /**
+         * 增加banner
+         */
+        $("#table").on("click", ".opt-addBanner", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channelBannerName").val(data.name);
+                $("#channelBannerId").val(data.id);
+                $("#addBannerModal").modal("show");
+                $("#bannerId").val('')
+            }
+        });
+
+        /**
+         * 增加用户
+         */
+        $("#table").on("click", ".opt-addUsers", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channelUsersName").val(data.name);
+                $("#channelUsersId").val(data.id);
+                $("#addUsersModal").modal("show");
+                $("#erbanNo").val('')
+            }
+        });
+
+        /**
+         * 增加ip
+         */
+        $("#table").on("click", ".opt-addIp", function () {
+            var data = $(this).data();
+            if (data.id) {
+                $("#channelIpName").val(data.name);
+                $("#channelIpId").val(data.id);
+                $("#addIpModal").modal("show");
+                $("#ip").val('')
+            }
+        });
+
+        $("#saveIcon").on("click", function () {
+            $("#saveIcon").attr("disabled", true);
+            var param = {
+                id : $("#channelIconId").val(),
+                iconId : $("#iconId").val()
+            };
+            $.post("/admin/channel/addIcon", param, function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("保存成功");
+                    $("#addIconModal").modal('hide');
+                } else {
+                    $("#tipMsg").text(data.message);
+                }
+                $("#tipModal").modal('show');
+                $("#saveIcon").removeAttr("disabled");
+            })
+        });
+
+        $("#saveBanner").on("click", function () {
+            $("#saveBanner").attr("disabled", true);
+            var param = {
+                id : $("#channelBannerId").val(),
+                bannerId : $("#bannerId").val()
+            }
+            $.post("/admin/channel/addBanner", param, function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("保存成功");
+                    $("#addBannerModal").modal('hide');
+                } else {
+                    $("#tipMsg").text(data.message);
+                }
+                $("#tipModal").modal('show');
+                $("#saveBanner").removeAttr("disabled");
+            })
+        });
+
+        $("#saveUsers").on("click", function () {
+            $("#saveUsers").attr("disabled", true);
+            var param = {
+                id : $("#channelUsersId").val(),
+                erbanNo : $("#erbanNo").val()
+            };
+            $.post("/admin/channel/addUsers", param, function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("保存成功");
+                    $("#addUsersModal").modal('hide');
+                } else {
+                    $("#tipMsg").text(data.message);
+                }
+                $("#tipModal").modal('show');
+                $("#saveUsers").removeAttr("disabled");
+            })
+        });
+
+        $("#saveIp").on("click", function () {
+            $("#saveIp").attr("disabled", true);
+            var param = {
+                id : $("#channelIpId").val(),
+                ip : $("#ip").val()
+            };
+            $.post("/admin/channel/addIp", param, function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("保存成功");
+                    $("#addIpModal").modal('hide');
+                } else {
+                    $("#tipMsg").text(data.message);
+                }
+                $("#tipModal").modal('show');
+                $("#saveIp").removeAttr("disabled");
+            })
+        });
+
+        $("#detailTable").on("click", ".opt-delete_icon", function () {
+            var iconId = $(this).data("id");
+            if (iconId) {
+                if(confirm("确定要删除吗?")) {
+                    var param = {
+                        channelId: $("#channel_id").val(),
+                        iconId: iconId
+                    };
+                    $.post("/admin/channel/delIcon", param, function (data) {
+                        if (data.code == 200) {
+                            $("#tipMsg").text("删除成功");
+                        } else {
+                            $("#tipMsg").text(data.message);
+                        }
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#detailTable");
+                    })
+                }
+            }
+        });
+
+        $("#detailTable").on("click", ".opt-delete_banner", function () {
+            var bannerId = $(this).data("id");
+            if (bannerId) {
+                if(confirm("确定要删除吗?")) {
+                    var param = {
+                        channelId: $("#channel_id").val(),
+                        bannerId: bannerId
+                    };
+                    $.post("/admin/channel/delBanner", param, function (data) {
+                        if (data.code == 200) {
+                            $("#tipMsg").text("删除成功");
+                        } else {
+                            $("#tipMsg").text(data.message);
+                        }
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#detailTable");
+                    })
+                }
+            }
+        });
+
+        $("#detailTable").on("click", ".opt-delete_users", function () {
+            var uid = $(this).data("id");
+            if (uid) {
+                if(confirm("确定要删除吗?")) {
+                    var param = {
+                        channelId: $("#channel_id").val(),
+                        uid: uid
+                    };
+                    $.post("/admin/channel/delUsers", param, function (data) {
+                        if (data.code == 200) {
+                            $("#tipMsg").text("删除成功");
+                        } else {
+                            $("#tipMsg").text(data.message);
+                        }
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#detailTable");
+                    })
+                }
+            }
+        });
+
+        $("#detailTable").on("click", ".opt-delete_ip", function () {
+            var ip = $(this).data("id");
+            if (ip) {
+                if(confirm("确定要删除吗?")) {
+                    var param = {
+                        channelId: $("#channel_id").val(),
+                        ip: ip
+                    };
+                    $.post("/admin/channel/delIp", param, function (data) {
+                        if (data.code == 200) {
+                            $("#tipMsg").text("删除成功");
+                        } else {
+                            $("#tipMsg").text(data.message);
+                        }
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#detailTable");
+                    })
+                }
+            }
+        });
+
+    });
+
+    /**
+     * 根据渠道ID 查询房间列表
+     * @param id
+     */
+    function listChannelRoom(id) {
+        $('#detailTable').bootstrapTable('destroy');
+        $('#detailTable').bootstrapTable({
+            columns: [
+                {field: 'uid', title: 'UID', align: 'center', width: '3%'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '3%'},
+                {field: 'title', title: '房间标题', align: 'center', width: '3%'},
+                {field: 'roomTag', title: '房间标签', align: 'center', width: '3%'},
+                {field: 'type', title: '房间类型', align: 'center', width: '3%', 
+                    formatter: function (val) {
+                        switch (val){
+                            case 1:
+                                return '竞拍房';
+                                break;
+                            case 2:
+                                return '轻聊房';
+                                break;
+                            case 3:
+                                return '轰趴房';
+                                break;
+                        }
+                    }
+                },
+                {field: 'avatar', title: '房间头像', align: 'center', width: '3%',
+                    formatter: function (val,row,index) {
+                        return "<img src='"+val+"' width='60' height='30'>";
+                    }
+                },
+                {field: 'uid', title: '操作', align: 'center', width: '3%',
+                    formatter: function (val,row,index){
+                    var str = "";
+                    str += "<button class='btn btn-sm btn-danger opt-delete_room' data-id='"+ val +"'>" +
+                        "<span hidden='hidden'></span>删除</button>";
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            // showRefresh: true,
+            sortStable:true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [2, 10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    id : id
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            // toolbar: '#toolbar',
+            url: '/admin/channel/listRoom',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+        });
+        $("#detailModel").modal('show');
+        $("#channelTitle").text("渠道审核房间列表");
+    }
+
+    /**
+     * 根据渠道ID 查询ICON列表
+     * @param id
+     */
+    function listChannelICON(id) {
+        $('#detailTable').bootstrapTable('destroy');
+        $('#detailTable').bootstrapTable({
+            columns: [
+                {field: 'iconId', title: 'iconId', align: 'center', width: '3%'},
+                {field: 'name', title: '名称', align: 'center', width: '3%'},
+                {field: 'skipType', title: '类型', align: 'center', width: '3%',
+                    formatter: function (val) {
+                        switch (val){
+                            case 1:
+                                return '跳app页面';
+                                break;
+                            case 2:
+                                return '跳聊天室';
+                                break;
+                            case 3:
+                                return '跳h5页面';
+                                break;
+                        }
+                    }
+                },
+                {field: 'pic', title: '图片', align: 'center', width: '3%',
+                    formatter: function (val,row,index) {
+                        return "<img src='"+val+"' width='60' height='30'>";
+                    }
+                },
+                {field: 'tmp', title: '操作', align: 'center', width: '3%',
+                    formatter: function (val,row,index){
+                        var iconId = row.iconId;
+                        var str = "";
+                        str += "<button class='btn btn-sm btn-danger opt-delete_icon' data-id='"+ iconId +"'>" +
+                            "<span hidden='hidden'></span>删除</button>";
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            // showRefresh: true,
+            sortStable:true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [2, 10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    id : id
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            // toolbar: '#toolbar',
+            url: '/admin/channel/listIcon',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+        });
+        $("#detailModel").modal('show');
+        $("#channelTitle").text("渠道审核ICON列表");
+    }
+
+    /**
+     * 根据渠道ID 查询房间列表
+     * @param id
+     */
+    function listChannelBanner(id) {
+        $('#detailTable').bootstrapTable('destroy');
+        $('#detailTable').bootstrapTable({
+            columns: [
+                {field: 'bannerId', title: 'bannerId', align: 'center', width: '3%'},
+                {field: 'bannerName', title: '名称', align: 'center', width: '3%'},
+                {
+                    field:'bannerPic',
+                    title:'banner图',
+                    align:'center',
+                    width:'10%',
+                    formatter: function (val,row,index) {
+                        return "<img src='"+val+"' width='60' height='30'>";
+                    }
+                },
+                {
+                    field:'skipType',title:'跳转类型',align:'center',valign:'middle',width:'10%',
+                    formatter: function (val,row,index) {
+                        switch (val){
+                            case 1:
+                                return 'App页面';
+                                break;
+                            case 2:
+                                return '聊天室';
+                                break;
+                            case 3:
+                                return 'H5页面';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field:'seqNo',
+                    title:'banner排序',
+                    align:'center',
+                    width:'8%',
+                    valign:'middle'
+//                    formatter: function (val,row,index) {
+//                        return val+1;
+//                    }
+                },
+                {
+                    field:'bannerStatus',
+                    title:'状态',
+                    align:'center',
+                    width:'10%',
+                    valign:'middle',
+                    formatter: function (val,row,index) {
+                        console.log(val);
+                        switch(val){
+                            case 1:
+                                return '正在启用';
+                                break;
+                            case 2:
+                                return '未激活';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field:'osType',
+                    title:'平台',
+                    align:'center',
+                    width:'5%',
+                    valign:'middle',
+                    formatter: function (val,row,index) {
+                        console.log(val);
+                        switch(val){
+                            case 0:
+                                return '全部';
+                                break;
+                            case 1:
+                                return '安卓';
+                                break;
+                            case 2:
+                                return 'ios';
+                                break;
+                            case 3:
+                                return '拉贝星球';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field:'isNewUser',
+                    title:'新用户',
+                    align:'center',
+                    width:'5%',
+                    valign:'middle',
+                    formatter: function (val,row,index) {
+                        console.log(val);
+                        switch(val){
+                            case 0:
+                                return '全部';
+                                break;
+                            case 1:
+                                return '是';
+                                break;
+                            case 2:
+                                return '不是';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field:'viewType',
+                    title:'显示位置',
+                    align:'center',
+                    width:'5%',
+                    valign:'middle',
+                    formatter: function (val,row,index) {
+                        console.log(val);
+                        switch(val){
+                            case 1:
+                                return '首页顶部';
+                                break;
+                            case 2:
+                                return '节目预告';
+                                break;
+                            case 3:
+                                return '首页中间';
+                                break
+                            case 5:
+                                return '陪玩推荐';
+                                break
+                        }
+                    }
+                },
+                {field: 'tmp', title: '操作', align: 'center', width: '3%',
+                    formatter: function (val,row,index){
+                        var bannerId = row.bannerId;
+                        var str = "";
+                        str += "<button class='btn btn-sm btn-danger opt-delete_banner' data-id='"+ bannerId +"'>" +
+                            "<span hidden='hidden'></span>删除</button>";
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            // showRefresh: true,
+            sortStable:true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [2, 10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    id : id
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            // toolbar: '#toolbar',
+            url: '/admin/channel/listBanner',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+        });
+        $("#detailModel").modal('show');
+        $("#channelTitle").text("渠道审核Banner列表");
+    }
+
+    /**
+     * 根据渠道ID 查询用户列表
+     * @param id
+     */
+    function listChannelUsers(id) {
+        $('#detailTable').bootstrapTable('destroy');
+        $('#detailTable').bootstrapTable({
+            columns: [
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '3%'},
+                {field: 'uid', title: 'uid', align: 'center', width: '3%'},
+                {field: 'nick', title: '昵称', align: 'center', width: '3%'},
+                {field: 'avatar', title: '头像', align: 'center', width: '3%',
+                    formatter: function (val,row,index) {
+                        return "<img src='"+val+"' width='60' height='30'>";
+                    }
+                },
+                {field: 'tmp', title: '操作', align: 'center', width: '3%',
+                    formatter: function (val,row,index){
+                        var uid = row.uid;
+                        var str = "";
+                        str += "<button class='btn btn-sm btn-danger opt-delete_users' data-id='"+ uid +"'>" +
+                            "<span hidden='hidden'></span>删除</button>";
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            // showRefresh: true,
+            sortStable:true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [2, 10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    id : id
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            // toolbar: '#toolbar',
+            url: '/admin/channel/listUsers',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+        });
+        $("#detailModel").modal('show');
+        $("#channelTitle").text("渠道审核用户列表");
+    }
+
+
+    /**
+     * 根据渠道ID 查询用户列表
+     * @param id
+     */
+    function listChannelIp(id) {
+        $('#detailTable').bootstrapTable('destroy');
+        $('#detailTable').bootstrapTable({
+            columns: [
+                {field: 'ip', title: 'Ip', align: 'center', width: '3%'},
+                {field: 'country', title: '国家', align: 'center', width: '3%'},
+                {field: 'area', title: '区域', align: 'center', width: '3%'},
+                {field: 'region', title: '省份', align: 'center', width: '3%'},
+                {field: 'city', title: '城市', align: 'center', width: '3%'},
+                {field: 'isp', title: '互联网服务提供商', align: 'center', width: '3%'},
+                {field: 'tmp', title: '操作', align: 'center', width: '3%',
+                    formatter: function (val,row,index){
+                        var ip = row.ip;
+                        var str = "";
+                        str += "<button class='btn btn-sm btn-danger opt-delete_ip' data-id='"+ ip +"'>" +
+                            "<span hidden='hidden'></span>删除</button>";
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            // showRefresh: true,
+            sortStable:true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [2, 10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    id : id
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            // toolbar: '#toolbar',
+            url: '/admin/channel/listIp',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+        });
+        $("#detailModel").modal('show');
+        $("#channelTitle").text("渠道审核Ip列表");
+    }
+
+    var picker3 = $('#beginDate').datetimepicker({
+        language:"zh-CN",
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        minView: "0",
+        startDate: new Date()
+    }).on('changeDate', function () {
+        var date = $('#beginDate').datetimepicker('getDate');
+        picker2.datetimepicker('setStartDate',date);
+    });
+
+    var picker2 = $('#endDate').datetimepicker({
+        language:"zh-CN",
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        minView: "0"
+    }).on('changeDate', function () {
+        var date = $('#endDate').datetimepicker('getDate');
+        picker3.datetimepicker('setEndDate',date);
+    });
+</script>

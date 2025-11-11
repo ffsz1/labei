@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.AuctionCurMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.AuctionCur" >
+    <id column="auct_id" property="auctId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="auct_uid" property="auctUid" jdbcType="BIGINT" />
+    <result column="auct_money" property="auctMoney" jdbcType="BIGINT" />
+    <result column="serv_dura" property="servDura" jdbcType="INTEGER" />
+    <result column="min_raise_money" property="minRaiseMoney" jdbcType="BIGINT" />
+    <result column="cur_max_uid" property="curMaxUid" jdbcType="BIGINT" />
+    <result column="cur_max_money" property="curMaxMoney" jdbcType="BIGINT" />
+    <result column="auct_desc" property="auctDesc" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="cur_status" property="curStatus" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="deal_time" property="dealTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    auct_id, uid, auct_uid, auct_money, serv_dura, min_raise_money, cur_max_uid, cur_max_money, 
+    auct_desc, room_id, cur_status, create_time, deal_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.AuctionCurExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from auction_cur
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from auction_cur
+    where auct_id = #{auctId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from auction_cur
+    where auct_id = #{auctId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.AuctionCur" >
+    insert into auction_cur (auct_id, uid, auct_uid, 
+      auct_money, serv_dura, min_raise_money, 
+      cur_max_uid, cur_max_money, auct_desc, 
+      room_id, cur_status, create_time, 
+      deal_time)
+    values (#{auctId,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{auctUid,jdbcType=BIGINT}, 
+      #{auctMoney,jdbcType=BIGINT}, #{servDura,jdbcType=INTEGER}, #{minRaiseMoney,jdbcType=BIGINT}, 
+      #{curMaxUid,jdbcType=BIGINT}, #{curMaxMoney,jdbcType=BIGINT}, #{auctDesc,jdbcType=VARCHAR}, 
+      #{roomId,jdbcType=BIGINT}, #{curStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{dealTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.AuctionCur" >
+    insert into auction_cur
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="auctId != null" >
+        auct_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="auctUid != null" >
+        auct_uid,
+      </if>
+      <if test="auctMoney != null" >
+        auct_money,
+      </if>
+      <if test="servDura != null" >
+        serv_dura,
+      </if>
+      <if test="minRaiseMoney != null" >
+        min_raise_money,
+      </if>
+      <if test="curMaxUid != null" >
+        cur_max_uid,
+      </if>
+      <if test="curMaxMoney != null" >
+        cur_max_money,
+      </if>
+      <if test="auctDesc != null" >
+        auct_desc,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="curStatus != null" >
+        cur_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="dealTime != null" >
+        deal_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="auctId != null" >
+        #{auctId,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="auctUid != null" >
+        #{auctUid,jdbcType=BIGINT},
+      </if>
+      <if test="auctMoney != null" >
+        #{auctMoney,jdbcType=BIGINT},
+      </if>
+      <if test="servDura != null" >
+        #{servDura,jdbcType=INTEGER},
+      </if>
+      <if test="minRaiseMoney != null" >
+        #{minRaiseMoney,jdbcType=BIGINT},
+      </if>
+      <if test="curMaxUid != null" >
+        #{curMaxUid,jdbcType=BIGINT},
+      </if>
+      <if test="curMaxMoney != null" >
+        #{curMaxMoney,jdbcType=BIGINT},
+      </if>
+      <if test="auctDesc != null" >
+        #{auctDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="curStatus != null" >
+        #{curStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealTime != null" >
+        #{dealTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.AuctionCur" >
+    update auction_cur
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="auctUid != null" >
+        auct_uid = #{auctUid,jdbcType=BIGINT},
+      </if>
+      <if test="auctMoney != null" >
+        auct_money = #{auctMoney,jdbcType=BIGINT},
+      </if>
+      <if test="servDura != null" >
+        serv_dura = #{servDura,jdbcType=INTEGER},
+      </if>
+      <if test="minRaiseMoney != null" >
+        min_raise_money = #{minRaiseMoney,jdbcType=BIGINT},
+      </if>
+      <if test="curMaxUid != null" >
+        cur_max_uid = #{curMaxUid,jdbcType=BIGINT},
+      </if>
+      <if test="curMaxMoney != null" >
+        cur_max_money = #{curMaxMoney,jdbcType=BIGINT},
+      </if>
+      <if test="auctDesc != null" >
+        auct_desc = #{auctDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="curStatus != null" >
+        cur_status = #{curStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealTime != null" >
+        deal_time = #{dealTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where auct_id = #{auctId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.AuctionCur" >
+    update auction_cur
+    set uid = #{uid,jdbcType=BIGINT},
+      auct_uid = #{auctUid,jdbcType=BIGINT},
+      auct_money = #{auctMoney,jdbcType=BIGINT},
+      serv_dura = #{servDura,jdbcType=INTEGER},
+      min_raise_money = #{minRaiseMoney,jdbcType=BIGINT},
+      cur_max_uid = #{curMaxUid,jdbcType=BIGINT},
+      cur_max_money = #{curMaxMoney,jdbcType=BIGINT},
+      auct_desc = #{auctDesc,jdbcType=VARCHAR},
+      room_id = #{roomId,jdbcType=BIGINT},
+      cur_status = #{curStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      deal_time = #{dealTime,jdbcType=TIMESTAMP}
+    where auct_id = #{auctId,jdbcType=VARCHAR}
+  </update>
+</mapper>

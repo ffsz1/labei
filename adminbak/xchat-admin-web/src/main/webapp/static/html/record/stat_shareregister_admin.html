@@ -1,0 +1,265 @@
+<style>
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--查询输入框-->
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="control-label">拉贝号:</label>
+                        <input type="number" id="erbanNo" name="erbanNo" class="form-control"
+                               aria-describedby="basic-addon1">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">时间:</label>
+                        <input type="text" id="beginDate" name="beginDate" type="date" placeholder="开始时间"
+                               class="form-control validate[required]">
+                        <label style="margin: 0 1rem">-</label>
+                        <input type="text" id="endDate" name="endDate" type="date" placeholder="结束时间"
+                               class="form-control validate[required]">
+                    </div>
+                    <div class="form-group">
+                        <button onclick="getYestaday()" type="button" class="btn btn-danger"
+                                style="margin-right: 10px">
+                            <i class="glyphicon glyphicon-calendar"></i> 昨天
+                        </button>
+                    </div>
+                </form>
+                <div id="roomFlowTable"></div>
+                <div id="toolbar" style="display: flex">
+                    <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 0;">
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">邀请人数：</span>
+                            <span style="color: red" id="shareNum">0</span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">被邀请人数：</span>
+                            <span style="color: red" id="registerNum">0</span>
+                            <span>人</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<!-- .content -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document" style="width: 75%">
+        <div class="modal-content">
+            <div id="registerDetailTable"></div>
+        </div>
+    </div>
+</div>
+<script>
+    // 设置时间初始值
+    $("#beginDate").val(getCurrentDate());
+    $("#endDate").val(getCurrentDate());
+
+    $(function () {
+        $('#roomFlowTable').bootstrapTable('destroy');
+        $('#roomFlowTable').bootstrapTable({
+            columns: [
+                {field: 'erbanNo', title: '邀请人', align: 'center', width: '180'},
+                {field: 'nick', title: '昵称', align: 'center', width: '180'},
+                {field: 'phone', title: '手机号码', align: 'center', width: '180'},
+                {field: 'registerNum', title: '邀请人数', align: 'center', width: '150'},
+                {field: 'lowerRegisterNum', title: '下下级人数', align: 'center', width: '150'},
+                {field: 'totalBouns', title: '分成（元）', align: 'center', width: '180'},
+                {field: 'alipayAccount', title: '支付宝账号', align: 'center', width: '180'},
+                {field: 'alipayAccountName', title: '姓名', align: 'center', width: '180'},
+                {
+                    field: 'uid',
+                    title: '操作',
+                    align: 'center',
+                    width: '200',
+                    formatter: function (val, row, index) {
+                        return '<a href="#" onclick="getRegisterDetail($(this).data(\'id\'))" id="registerDetail"  data-id=' + val + '>邀请明细</a><br/>'
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    erbanNo: parseInt($('#erbanNo').val()),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val(),
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/shareRegister/statShareRegister.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    clear();
+                    $("#shareNum").text(res.data.list[0].sumSharer);
+                    $("#registerNum").text(res.data.list[0].sumRegister);
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            }
+        });
+    });
+
+    // 导出到Excel
+    $('#exportExcel').click(function () {
+        console.log()
+        const param = $("form").serialize() + '&type=1';
+        const url = "/admin/roomFlow/roomFlowExport?" + param;
+        window.location.href = url;
+    });
+
+    // 初始化
+    $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    $('#endDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+
+    function getYestaday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#beginDate").val(today.format("yyyy-MM-dd"));
+        $("#endDate").val(today.format("yyyy-MM-dd"));
+    }
+
+    function getRegisterDetail(val) {
+        $('#registerDetailTable').bootstrapTable('destroy');
+        $('#registerDetailTable').bootstrapTable({
+            columns: [
+                {field: 'erbanNo', title: '被邀请人', align: 'center', width: '120'},
+                {field: 'nick', title: '昵称', align: 'center', width: '150'},
+                {field: 'phone', title: '手机号码', align: 'center', width: '150'},
+                {field: 'weixinOpenid', title: '微信 OpenId', align: 'center', width: '200'},
+                {field: 'qqOpenid', title: 'QQ OpenId', align: 'center', width: '200'},
+                {field: 'os', title: '系统', align: 'center', width: '120'},
+                {field: 'osversion', title: '系统版本', align: 'center', width: '120'},
+                {field: 'model', title: '设备', align: 'center', width: '150'},
+                {field: 'deviceId', title: '设备号', align: 'center', width: '200'},
+                {field: 'channel', title: '渠道', align: 'center', width: '120'},
+                {field: 'appVersion', title: 'APP版本', align: 'center', width: '120'},
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            sortStable: true,
+            pageSize: 100,
+            pagination: true,
+            pageList: [100, 150],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    uid: parseInt(val),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val(),
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            url: '/admin/shareRegister/registerList.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    console.log(res.data)
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            }
+        });
+        $("#detailModal").modal("show")
+    }
+
+    function clear() {
+        $("#shareNum").text('');
+        $("#registerNum").text('');
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

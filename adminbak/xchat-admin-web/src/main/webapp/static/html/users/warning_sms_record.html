@@ -1,0 +1,98 @@
+<section class="content-header">
+    <h1 id="itemTitle"></h1>
+</section>
+<!-- .content -->
+<section class="content">
+    <div id="roleTable"></div>
+    <div id="toolbar">
+        <button id="exportExcel" class="btn btn-default">
+            <i class="glyphicon glyphicon-save-file"></i>导出Excel
+        </button>
+    </div>
+</section>
+
+
+<script>
+    var isEdit = false;
+    $(function () {
+        $('#roleTable').bootstrapTable('destroy');
+        $('#roleTable').bootstrapTable({
+            columns: [
+                {field: 'recordId', title: '编号', align: 'center', width: '10%',valign: 'middle'},
+                {field: 'uid', title: 'uid', align: 'center', width: '10%',valign: 'middle'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '15%',valign: 'middle'},
+                {field: 'nick', title: '昵称', align: 'center', width: '15%',valign: 'middle'},
+                {
+                    field: 'warningType',
+                    title: '预警类型',
+                    align: 'center',
+                    width: '15%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (row.warningType) {
+                            case 1:
+                                return "送礼物金额";
+                                break;
+                            case 2:
+                                return '充值金额';
+                                break;
+                            case 3:
+                                return '充值次数';
+                                break;
+                        }
+                    }
+                },
+                {field: 'warningValue', title: '预警值', align: 'center', width: '10%',valign: 'middle'},
+                {
+                    field: 'createTime',
+                    title: '记录时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: '25%',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd hh:mm");
+                        } else {
+                            return '-';
+                        }
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: true,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/warning/sms/getall.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+        $("#exportExcel").click(function () {
+            window.location.href = "/admin/warning/sms/exportExcel";
+        });
+
+    });
+
+</script>

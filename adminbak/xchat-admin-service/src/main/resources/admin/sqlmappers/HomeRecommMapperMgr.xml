@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.HomeRecommMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.HomeHotManualRecommVo" >
+    <id column="recomm_id" property="recommId" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="seq_no" property="seqNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="start_valid_time" property="startValidTime" jdbcType="INTEGER" />
+    <result column="end_valid_time" property="endValidTime" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="INTEGER" />
+    <result column="is_purse" property="isPurse" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="INTEGER" />
+    <result column="is_permit_room" property="isPermitRoom" jdbcType="INTEGER" />
+    <result column="view_type" property="viewType" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="Map" >
+    select h.*, r.title, r.is_permit_room, u.erban_no, if((select COUNT(1) from user_purse_hot_room_record ur where ur.erban_no = u.erban_no and ur.start_time = h.start_valid_time and ur.end_time = h.end_valid_time)>0, 1, 0) as isPurse
+    from home_hot_manual_recomm h
+    INNER JOIN room r on h.uid = r.uid
+    INNER JOIN users u on r.uid = u.uid
+    <where>
+      1=1
+      <if test="erbanNo!=null">
+        AND u.erban_no=#{erbanNo}
+      </if>
+      <if test="viewType != null">
+        AND view_type = #{viewType}
+      </if>
+    </where>
+    order by h.start_valid_time desc
+  </select>
+
+</mapper>

@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.BannerMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.Banner">
+        <id column="banner_id" property="bannerId" jdbcType="INTEGER"/>
+        <result column="banner_name" property="bannerName" jdbcType="VARCHAR"/>
+        <result column="banner_pic" property="bannerPic" jdbcType="VARCHAR"/>
+        <result column="skip_type" property="skipType" jdbcType="TINYINT"/>
+        <result column="skip_uri" property="skipUri" jdbcType="VARCHAR"/>
+        <result column="seq_no" property="seqNo" jdbcType="INTEGER"/>
+        <result column="os_type" property="osType" jdbcType="TINYINT"/>
+        <result column="is_new_user" property="isNewUser" jdbcType="TINYINT"/>
+        <result column="app_type" property="appType" jdbcType="TINYINT"/>
+        <result column="banner_status" property="bannerStatus" jdbcType="TINYINT"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="create_tiem" property="createTiem" jdbcType="TIMESTAMP"/>
+        <result column="view_type" property="viewType" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        banner_id, banner_name, banner_pic, skip_type, skip_uri, seq_no, os_type, is_new_user,
+        app_type, banner_status, start_time, end_time, create_tiem, view_type, banner_show_parent as addShowTag
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.BannerExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from banner
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from banner
+        where banner_id = #{bannerId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from banner where banner_id = #{bannerId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.BannerExample">
+        delete from banner
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.Banner">
+        insert into banner (banner_id, banner_name, banner_pic,
+                            skip_type, skip_uri, seq_no,
+                            os_type, is_new_user, app_type,
+                            banner_status, start_time, end_time,
+                            create_tiem, view_type)
+        values (#{bannerId,jdbcType=INTEGER}, #{bannerName,jdbcType=VARCHAR}, #{bannerPic,jdbcType=VARCHAR},
+                #{skipType,jdbcType=TINYINT}, #{skipUri,jdbcType=VARCHAR}, #{seqNo,jdbcType=INTEGER},
+                #{osType,jdbcType=TINYINT}, #{isNewUser,jdbcType=TINYINT}, #{appType,jdbcType=TINYINT},
+                #{bannerStatus,jdbcType=TINYINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+                #{createTiem,jdbcType=TIMESTAMP}, #{viewType,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.Banner">
+        insert into banner
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bannerId != null">
+                banner_id,
+            </if>
+            <if test="bannerName != null">
+                banner_name,
+            </if>
+            <if test="bannerPic != null">
+                banner_pic,
+            </if>
+            <if test="skipType != null">
+                skip_type,
+            </if>
+            <if test="skipUri != null">
+                skip_uri,
+            </if>
+            <if test="seqNo != null">
+                seq_no,
+            </if>
+            <if test="osType != null">
+                os_type,
+            </if>
+            <if test="isNewUser != null">
+                is_new_user,
+            </if>
+            <if test="appType != null">
+                app_type,
+            </if>
+            <if test="bannerStatus != null">
+                banner_status,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTiem != null">
+                create_tiem,
+            </if>
+            <if test="viewType != null">
+                view_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bannerId != null">
+                #{bannerId,jdbcType=INTEGER},
+            </if>
+            <if test="bannerName != null">
+                #{bannerName,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerPic != null">
+                #{bannerPic,jdbcType=VARCHAR},
+            </if>
+            <if test="skipType != null">
+                #{skipType,jdbcType=TINYINT},
+            </if>
+            <if test="skipUri != null">
+                #{skipUri,jdbcType=VARCHAR},
+            </if>
+            <if test="seqNo != null">
+                #{seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="osType != null">
+                #{osType,jdbcType=TINYINT},
+            </if>
+            <if test="isNewUser != null">
+                #{isNewUser,jdbcType=TINYINT},
+            </if>
+            <if test="appType != null">
+                #{appType,jdbcType=TINYINT},
+            </if>
+            <if test="bannerStatus != null">
+                #{bannerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTiem != null">
+                #{createTiem,jdbcType=TIMESTAMP},
+            </if>
+            <if test="viewType != null">
+                #{viewType,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.BannerExample" resultType="java.lang.Integer">
+        select count(*) from banner
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update banner
+        <set>
+            <if test="record.bannerId != null">
+                banner_id = #{record.bannerId,jdbcType=INTEGER},
+            </if>
+            <if test="record.bannerName != null">
+                banner_name = #{record.bannerName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.bannerPic != null">
+                banner_pic = #{record.bannerPic,jdbcType=VARCHAR},
+            </if>
+            <if test="record.skipType != null">
+                skip_type = #{record.skipType,jdbcType=TINYINT},
+            </if>
+            <if test="record.skipUri != null">
+                skip_uri = #{record.skipUri,jdbcType=VARCHAR},
+            </if>
+            <if test="record.seqNo != null">
+                seq_no = #{record.seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="record.osType != null">
+                os_type = #{record.osType,jdbcType=TINYINT},
+            </if>
+            <if test="record.isNewUser != null">
+                is_new_user = #{record.isNewUser,jdbcType=TINYINT},
+            </if>
+            <if test="record.appType != null">
+                app_type = #{record.appType,jdbcType=TINYINT},
+            </if>
+            <if test="record.bannerStatus != null">
+                banner_status = #{record.bannerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.startTime != null">
+                start_time = #{record.startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.endTime != null">
+                end_time = #{record.endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createTiem != null">
+                create_tiem = #{record.createTiem,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.viewType != null">
+                view_type = #{record.viewType,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update banner
+        set banner_id = #{record.bannerId,jdbcType=INTEGER},
+        banner_name = #{record.bannerName,jdbcType=VARCHAR},
+        banner_pic = #{record.bannerPic,jdbcType=VARCHAR},
+        skip_type = #{record.skipType,jdbcType=TINYINT},
+        skip_uri = #{record.skipUri,jdbcType=VARCHAR},
+        seq_no = #{record.seqNo,jdbcType=INTEGER},
+        os_type = #{record.osType,jdbcType=TINYINT},
+        is_new_user = #{record.isNewUser,jdbcType=TINYINT},
+        app_type = #{record.appType,jdbcType=TINYINT},
+        banner_status = #{record.bannerStatus,jdbcType=TINYINT},
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+        create_tiem = #{record.createTiem,jdbcType=TIMESTAMP},
+        view_type = #{record.viewType,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Banner">
+        update banner
+        <set>
+            <if test="bannerName != null">
+                banner_name = #{bannerName,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerPic != null">
+                banner_pic = #{bannerPic,jdbcType=VARCHAR},
+            </if>
+            <if test="skipType != null">
+                skip_type = #{skipType,jdbcType=TINYINT},
+            </if>
+            <if test="skipUri != null">
+                skip_uri = #{skipUri,jdbcType=VARCHAR},
+            </if>
+            <if test="seqNo != null">
+                seq_no = #{seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="osType != null">
+                os_type = #{osType,jdbcType=TINYINT},
+            </if>
+            <if test="isNewUser != null">
+                is_new_user = #{isNewUser,jdbcType=TINYINT},
+            </if>
+            <if test="appType != null">
+                app_type = #{appType,jdbcType=TINYINT},
+            </if>
+            <if test="bannerStatus != null">
+                banner_status = #{bannerStatus,jdbcType=TINYINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTiem != null">
+                create_tiem = #{createTiem,jdbcType=TIMESTAMP},
+            </if>
+            <if test="viewType != null">
+                view_type = #{viewType,jdbcType=TINYINT},
+            </if>
+            <if test="addShowTag != null">
+                banner_show_parent = #{addShowTag,jdbcType=TINYINT},
+            </if>
+        </set>
+        where banner_id = #{bannerId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Banner">
+        update banner
+        set banner_name = #{bannerName,jdbcType=VARCHAR},
+            banner_pic = #{bannerPic,jdbcType=VARCHAR},
+            skip_type = #{skipType,jdbcType=TINYINT},
+            skip_uri = #{skipUri,jdbcType=VARCHAR},
+            seq_no = #{seqNo,jdbcType=INTEGER},
+            os_type = #{osType,jdbcType=TINYINT},
+            is_new_user = #{isNewUser,jdbcType=TINYINT},
+            app_type = #{appType,jdbcType=TINYINT},
+            banner_status = #{bannerStatus,jdbcType=TINYINT},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            create_tiem = #{createTiem,jdbcType=TIMESTAMP},
+            view_type = #{viewType,jdbcType=TINYINT},
+            banner_show_parent = #{addShowTag,jdbcType=TINYINT}
+        where banner_id = #{bannerId,jdbcType=INTEGER}
+    </update>
+</mapper>

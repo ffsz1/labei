@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.AdvertiseMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.Advertise" >
+    <id column="adv_id" property="advId" jdbcType="INTEGER" />
+    <result column="adv_name" property="advName" jdbcType="VARCHAR" />
+    <result column="adv_icon" property="advIcon" jdbcType="VARCHAR" />
+    <result column="skip_type" property="skipType" jdbcType="TINYINT" />
+    <result column="skip_uri" property="skipUri" jdbcType="VARCHAR" />
+    <result column="seq_no" property="seqNo" jdbcType="INTEGER" />
+    <result column="adv_status" property="advStatus" jdbcType="TINYINT" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    adv_id, adv_name, adv_icon, skip_type, skip_uri, seq_no, adv_status, start_time, 
+    end_time, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.AdvertiseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from advertise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from advertise
+    where adv_id = #{advId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from advertise
+    where adv_id = #{advId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.AdvertiseExample" >
+    delete from advertise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.Advertise" >
+    <selectKey resultType="java.lang.Integer" keyProperty="advId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into advertise (adv_name, adv_icon,
+      skip_type, skip_uri, seq_no, 
+      adv_status, start_time, end_time, 
+      create_time)
+    values (#{advName,jdbcType=VARCHAR}, #{advIcon,jdbcType=VARCHAR},
+      #{skipType,jdbcType=TINYINT}, #{skipUri,jdbcType=VARCHAR}, #{seqNo,jdbcType=INTEGER}, 
+      #{advStatus,jdbcType=TINYINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.Advertise" >
+    <selectKey resultType="java.lang.Integer" keyProperty="advId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into advertise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="advName != null" >
+        adv_name,
+      </if>
+      <if test="advIcon != null" >
+        adv_icon,
+      </if>
+      <if test="skipType != null" >
+        skip_type,
+      </if>
+      <if test="skipUri != null" >
+        skip_uri,
+      </if>
+      <if test="seqNo != null" >
+        seq_no,
+      </if>
+      <if test="advStatus != null" >
+        adv_status,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="advName != null" >
+        #{advName,jdbcType=VARCHAR},
+      </if>
+      <if test="advIcon != null" >
+        #{advIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="skipType != null" >
+        #{skipType,jdbcType=TINYINT},
+      </if>
+      <if test="skipUri != null" >
+        #{skipUri,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="advStatus != null" >
+        #{advStatus,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.AdvertiseExample" resultType="java.lang.Integer" >
+    select count(*) from advertise
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update advertise
+    <set >
+      <if test="record.advId != null" >
+        adv_id = #{record.advId,jdbcType=INTEGER},
+      </if>
+      <if test="record.advName != null" >
+        adv_name = #{record.advName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advIcon != null" >
+        adv_icon = #{record.advIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skipType != null" >
+        skip_type = #{record.skipType,jdbcType=TINYINT},
+      </if>
+      <if test="record.skipUri != null" >
+        skip_uri = #{record.skipUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seqNo != null" >
+        seq_no = #{record.seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.advStatus != null" >
+        adv_status = #{record.advStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update advertise
+    set adv_id = #{record.advId,jdbcType=INTEGER},
+      adv_name = #{record.advName,jdbcType=VARCHAR},
+      adv_icon = #{record.advIcon,jdbcType=VARCHAR},
+      skip_type = #{record.skipType,jdbcType=TINYINT},
+      skip_uri = #{record.skipUri,jdbcType=VARCHAR},
+      seq_no = #{record.seqNo,jdbcType=INTEGER},
+      adv_status = #{record.advStatus,jdbcType=TINYINT},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Advertise" >
+    update advertise
+    <set >
+      <if test="advName != null" >
+        adv_name = #{advName,jdbcType=VARCHAR},
+      </if>
+      <if test="advIcon != null" >
+        adv_icon = #{advIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="skipType != null" >
+        skip_type = #{skipType,jdbcType=TINYINT},
+      </if>
+      <if test="skipUri != null" >
+        skip_uri = #{skipUri,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNo != null" >
+        seq_no = #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="advStatus != null" >
+        adv_status = #{advStatus,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where adv_id = #{advId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Advertise" >
+    update advertise
+    set adv_name = #{advName,jdbcType=VARCHAR},
+      adv_icon = #{advIcon,jdbcType=VARCHAR},
+      skip_type = #{skipType,jdbcType=TINYINT},
+      skip_uri = #{skipUri,jdbcType=VARCHAR},
+      seq_no = #{seqNo,jdbcType=INTEGER},
+      adv_status = #{advStatus,jdbcType=TINYINT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where adv_id = #{advId,jdbcType=INTEGER}
+  </update>
+</mapper>

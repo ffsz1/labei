@@ -1,0 +1,941 @@
+<style>
+    #withDrawTable {
+        width: 150%;
+        max-width: unset;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--查询输入框-->
+                <form class="form-horizontal">
+                    <div class="row" style="margin-bottom: 1rem">
+                        <label class="col-sm-1 control-label">拉贝号:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="erbanNo" name="erbanNo" class="form-control" placeholder="erbanNo"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                        <label class="col-sm-1 control-label">提现状态:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" name="status" id="status"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">提现中</option>
+                                <option value="2">已提现</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">账号提现状态:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default dropdown-toggle" name="withdrawStatus"
+                                    id="withdrawStatus" data-btn-class="btn-warning">
+                                <option value="0">正常</option>
+                                <option value="1">冻结</option>
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">提现方式:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" id="tranType" name="tranType"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">微信</option>
+                                <option value="2">支付宝</option>
+                                <option value="3">银行卡</option>
+                                <option value="4">汇聚</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-1 control-label">真实方式:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" id="realTranType" name="realTranType"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">微信</option>
+                                <option value="2">支付宝</option>
+                                <option value="3">银行卡</option>
+                                <option value="4">汇聚</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="beginDate" name="beginDate" type="date" placeholder="开始时间"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="endDate" name="endDate" type="date" placeholder="结束时间"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-3">
+                            <button onclick="getYesterday()" class="btn btn-danger" type="button"
+                                    style="margin-right: 10px">
+                                <i class="glyphicon glyphicon-calendar"></i> 昨天
+                            </button>
+                            <button id="btnSearch" class="btn btn-primary">
+                                <i class="glyphicon glyphicon glyphicon-search"></i> 查询
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div id="withDrawTable"></div>
+                <div id="toolbar" style="display: flex">
+                    <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 0; margin-bottom: 0">
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">提现人数：</span>
+                            <span style="color: red" id="userNum">0</span>
+                            <span>人</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">金额（RMB）：</span>
+                            <span style="color: red" id="totalAmount">0</span>
+                            <span>元</span>
+                        </li>
+                    </ul>
+                    <div>
+                        <!-- <button id="multiTransfer" class="btn btn-warning" >
+                            <i class="glyphicon glyphicon glyphicon-wrench"></i> 批量转账
+                        </button> -->
+                        <button id="diamon-multiTransferByWx" class="btn btn-success">
+                            <i class="glyphicon glyphicon glyphicon-piggy-bank"></i> 批量微信转账
+                        </button>
+                        <button id="diamon-multiTransferByAlipay" class="btn btn-info">
+                            <i class="glyphicon glyphicon glyphicon-piggy-bank"></i> 批量支付宝转账
+                        </button>
+                        <button id="diamon-multiTransferByCar" class="btn btn-danger">
+                            <i class="glyphicon glyphicon glyphicon-yen"></i> 批量银行卡转账
+                        </button>
+                        <!-- <button id="diamon-multiFrozen" class="btn btn-warning" >
+                            <i class="glyphicon glyphicon glyphicon-wrench"></i> 批量冻结单笔
+                        </button> -->
+                        <!-- <button id="diamon-multiUnFrozen" class="btn btn-warning" >
+                            <i class="glyphicon glyphicon glyphicon-wrench"></i> 批量解冻单笔
+                        </button> -->
+                        <button id="join-multiTransferByCar" class="btn btn-warning" style="background-color: #FF8C00;">
+                            <i class="glyphicon glyphicon glyphicon-yen"></i> 批量汇聚
+                        </button>
+                        <button id="exportExcel" class="btn btn-success">
+                            <i class="glyphicon glyphicon glyphicon-download-alt"></i> 导出Excel
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="roomListModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">银行卡列表</h4>
+            </div>
+            <div class="modal-body">
+                <div id="roomListM"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    //设置时间初始值
+    $("#beginDate").val(getCurrentDate())
+    $("#endDate").val(getCurrentDate())
+
+    $(function () {
+        $('#withDrawTable').bootstrapTable('destroy');
+        $('#withDrawTable').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {field: 'recordId', title: 'ID', align: 'center', width: '3%', visible: false},
+                {field: 'merchantOrderNo', title: '汇聚商户号', align: 'center', width: '150'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '120'},
+                {field: 'nick', title: '昵称', align: 'center', width: '150'},
+                {field: 'phone', title: '手机号码', align: 'center', width: '120'},
+                {field: 'wxOpenId', title: '微信 OpenId', align: 'center', width: '200'},
+                {field: 'alipayAccount', title: '支付宝', align: 'center', width: '120'},
+                {field: 'alipayAccountName', title: '真实姓名', align: 'center', width: '120'},
+                {field: 'cardNumber', title: '银行卡号', align: 'center', width: '150'},
+                {field: 'cardName', title: '银行卡名字', align: 'center', width: '120'},
+                {field: 'openBankCode', title: '所属银行', align: 'center', width: '120'},
+                {field: 'packetNum', title: '提现金额', align: 'center', width: '120'},
+                {
+                    field: 'recordStatus', title: '提现状态', align: 'center', width: '120',
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '提现中';
+                        } else if (val == 2) {
+                            return '已提现';
+                        } else if (val == 3) {
+                            return '提现异常';
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    field: 'withdrawStatus', title: '账号提现状态', align: 'center', width: '120',
+                    formatter: function (val) {
+                        if (val == 0) {
+                            return '正常';
+                        } else if (val == 1) {
+                            return '冻结';
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'realTranType', title: '真实方式', align: 'center', width: '120',
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '微信';
+                        } else if (val == 2) {
+                            return '支付宝';
+                        } else if (val == 3) {
+                            return '银行卡';
+                        } else if (val == 4) {
+                            return '汇聚';
+                        } else {
+                            return '';
+                        }
+                    }
+                },
+                {
+                    field: 'createTime', title: '创建时间', align: 'center', width: '200',
+                    formatter: function (val) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'pingxxId', title: 'ping++单号', align: 'center', width: '200'},
+                {field: 'adminName', title: '转账操作人', align: 'center', width: '150'},
+                {
+                    field: 'recordId', title: '操作', align: 'center', width: '250',
+                    formatter: function (val, row) {
+                        const key = val;
+                        let str = "";
+                        if (row.withdrawStatus == 0) {
+                            str += "<button class='btn btn-sm btn-warning opt-frozen' data-id=" + row.uid + ">冻结用户</button>";
+                            if (row.recordStatus == 1) {
+                                // str += "<button class='btn btn-sm btn-warning opt-transfer' data-id="+ key +">转账</button>";
+                                str += "<button class='btn btn-success opt-transferByWx' data-id=" + key + ">微信转账</button>";
+                                str += "<button class='btn btn-info opt-transferByAlipay' data-id=" + key + ">支付宝转账</button>";
+                                str += "<button class='btn btn-danger opt-transferByCar' data-id=" + key + " data-uid-id=" + row.uid + " data-recordId-id=" + key + ">银行卡转账</button>";
+                                str += "<button class='btn btn-warning joinpay-transferByCar' style='background-color: #FF8C00' data-id=" + key + " data-uid-id=" + row.uid + " data-recordId-id=" + key + ">汇聚</button>";
+                            } else if (row.recordStatus == 3) {
+                                // str += "<button class='btn btn-sm btn-danger opt-transferByManual' data-id="+ key +">再次转账</button>";
+                                str += "<button class='btn btn-success opt-transferByWx' data-id=" + key + ">再次微信转账</button>";
+                                str += "<button class='btn btn-info opt-transferByAlipay' data-id=" + key + ">再次支付宝转账</button>";
+                                str += "<button class='btn btn-danger opt-transferByCar' data-id=" + key + " data-uid-id=" + row.uid + " data-recordId-id=" + key + ">再次银行卡转账</button>";
+                                str += "<button class='btn btn-warning joinpay-transferByCar' style='background-color: #FF8C00' data-id=" + key + " data-uid-id=" + row.uid + " data-recordId-id=" + key + ">汇聚</button>";
+                            }
+                        } else {
+                            str += "<button class='btn btn-success opt-unfrozen' data-id=" + row.uid + ">解冻用户</button>";
+                        }
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            sortStable: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    erbanNo: parseInt($('#erbanNo').val()),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val(),
+                    status: parseInt($('#status').val()),
+                    withdrawStatus: parseInt($('#withdrawStatus').val()),
+                    tranType: parseInt($('#tranType').val()),
+                    realTranType: parseInt($('#realTranType').val())
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/withdraw/redPacketWithDrawlist.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            }
+        });
+    });
+
+    // 查询刷新
+    $('#btnSearch').on('click', function () {
+        TableHelper.doRefresh('#withDrawTable');
+    });
+
+    // 查询刷新汇总信息
+    $('#btnSearch').on('click', function () {
+        $.ajax({
+            type: 'post',
+            url: "/admin/withdraw/redPacketWithDrawCount.action",
+            data: {
+                'erbanNo': $('#erbanNo').val(),
+                'beginDate': $('#beginDate').val(),
+                'endDate': $('#endDate').val(),
+                'status': $('#status').val(),
+                'withdrawStatus': $('#withdrawStatus').val(),
+                'realTranType': $('#tranType').val(),
+                'tranType': $('#realTranType').val()
+            },
+            dataType: 'json',
+            success: function (json) {
+                if (json.code == 200) {
+                    clear();
+                    $("#userNum").text(json.data.userNum);
+                    $("#totalAmount").text(json.data.money);
+                } else {
+                    $("#tipMsg").text(json.message + "[" + json.code + "]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    });
+
+    // 导出到Excel
+    $('#exportExcel').click(function () {
+        const param = $("form").serialize() + '&type=2';
+        const url = "/admin/withdraw/withDrawExport?" + param;
+        window.location.href = url;
+    });
+
+    // 批量转账
+    $("#multiTransfer").click(function () {
+        const rows = $("#withDrawTable").bootstrapTable("getSelections");
+        if (rows.length == 0) {
+            alert("请先选择要转账的用户");
+            return;
+        }
+
+        const idArr = [];
+        for (let i = 0; i < rows.length; i++) {
+            idArr.push(rows[i]['recordId']);
+        }
+
+        if (confirm("你确认批量转账吗?" +
+            "\r\n转账后账户金额会划拨到用户支付宝，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/redPacketTransfer.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: "json",
+                success: function (json) {
+                    debugger
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 2.5 * 1000)
+                }
+            });
+        }
+    });
+
+    // 单笔转账
+    $('#withDrawTable').on('click', '.opt-transfer,.opt-transferByManual', function () {
+        const id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+
+        const idArr = [];
+        idArr.push(id);
+
+        if (confirm("你确认给此用户转账吗?" +
+            "\r\n转账后账户金额会划拨到用户支付宝，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/redPacketTransfer.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: 'json',
+                success: function (json) {
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 1 * 1000);
+                }
+            })
+        }
+    });
+
+    // 冻结
+    $('#withDrawTable').on('click', '.opt-frozen', function () {
+        const id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+
+        $.ajax({
+            type: 'get',
+            url: "/admin/withdraw/frozen.action",
+            data: {'uid': id},
+            dataType: 'json',
+            success: function (json) {
+                if (json.code == 200) {
+                    $("#tipMsg").text("成功");
+                    $("#tipModal").modal('show');
+                    $('#withDrawTable').bootstrapTable('refresh');
+                } else {
+                    $("#tipMsg").text(json.message + "[" + json.code + "]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        });
+    });
+
+    // 解冻
+    $('#withDrawTable').on('click', '.opt-unfrozen', function () {
+        const id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+
+        $.ajax({
+            type: 'get',
+            url: "/admin/withdraw/unfrozen.action",
+            data: {'uid': id},
+            dataType: 'json',
+            success: function (json) {
+                if (json.code == 200) {
+                    $("#tipMsg").text("成功");
+                    $("#tipModal").modal('show');
+                    $('#withDrawTable').bootstrapTable('refresh');
+                } else {
+                    $("#tipMsg").text(json.message + "[" + json.code + "]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        });
+    });
+
+    /*批量转账*/
+    $("#diamon-multiTransferByWx").click(function () {
+        var rows = $("#withDrawTable").bootstrapTable("getSelections");
+        if (rows.length == 0) {
+            alert("请先选择要转账的用户");
+            return;
+        }
+        var idArr = [];
+        for (var i = 0; i < rows.length; i++) {
+            idArr.push(rows[i]['recordId']);
+        }
+
+        if (confirm("你确认批量转账吗?" +
+            "\r\n转账后账户金额会划拨到用户微信，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/transfeRedPacketByWx.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: "json",
+                success: function (json) {
+                    debugger
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 2.5 * 1000)
+                }
+            });
+        }
+    });
+
+    $("#diamon-multiTransferByAlipay").click(function () {
+        const rows = $("#withDrawTable").bootstrapTable("getSelections");
+        if (rows.length == 0) {
+            alert("请先选择要转账的用户");
+            return;
+        }
+
+        const idArr = [];
+        for (var i = 0; i < rows.length; i++) {
+            idArr.push(rows[i]['recordId']);
+        }
+
+        if (confirm("你确认批量转账吗?" +
+            "\r\n转账后账户金额会划拨到用户支付宝，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/transferRedPacketByAlipay.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: "json",
+                success: function (json) {
+                    debugger
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 2.5 * 1000)
+                }
+            });
+        }
+    });
+
+    $("#diamon-multiTransferByCar").click(function () {
+        var rows = $("#withDrawTable").bootstrapTable("getSelections");
+        if (rows.length == 0) {
+            alert("请先选择要转账的用户");
+            return;
+        }
+        var idArr = [];
+        for (var i = 0; i < rows.length; i++) {
+            idArr.push(rows[i]['recordId']);
+        }
+
+        if (confirm("你确认批量转账吗?" +
+            "\r\n转账后账户金额会划拨到用户银行卡，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/transferRedPacketByCar.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: "json",
+                success: function (json) {
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 2.5 * 1000)
+                }
+            });
+        }
+    });
+
+    /*单笔转账*/
+    $('#withDrawTable').on('click', '.opt-transferByWx', function () {
+        var id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+        var idArr = [];
+        idArr.push(id);
+
+        if (confirm("你确认给此用户转账吗?" +
+            "\r\n转账后账户金额会划拨到用户微信，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/transfeRedPacketByWx.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: 'json',
+                success: function (json) {
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 1 * 1000);
+                }
+            })
+        }
+    })
+
+    $('#withDrawTable').on('click', '.opt-transferByAlipay', function () {
+        var id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+        var idArr = [];
+        idArr.push(id);
+
+        if (confirm("你确认给此用户转账吗?" +
+            "\r\n转账后账户金额会划拨到用户支付宝，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/transferRedPacketByAlipay.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: 'json',
+                success: function (json) {
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 1 * 1000);
+                }
+            })
+        }
+    })
+
+    $('#withDrawTable').on('click', '.opt-transferByCar', function () {
+        var id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+        var uid = $(this).attr("data-uid-id");
+        var recordId = $(this).attr("data-recordId-id");
+        $.ajax({
+            type: "get",
+            url: "/admin/withdraw/getBankCount.action",
+            data: {uid: uid},
+            dataType: "json",
+            success: function (json) {
+                var idArr = [];
+                idArr.push(id);
+                if (json.data > 1) {
+                    $("#roomListModal").modal('show');
+                    loadRoomList(uid, recordId);
+                } else {
+                    if (confirm("你确认给此用户转账吗?" +
+                        "\r\n转账后账户金额会划拨到用户银行卡，请谨慎操作！")) {
+                        $.ajax({
+                            type: 'post',
+                            url: "/admin/withdraw/transferRedPacketByCar.action",
+                            data: {'ids': JSON.stringify(idArr)},
+                            dataType: 'json',
+                            success: function (json) {
+                                if (json.code == 200) {
+                                    $("#tipMsg").text("转账成功");
+                                    $("#tipModal").modal('show');
+                                } else {
+                                    $("#tipMsg").text(json.message + "[" + json.code + "]");
+                                    $("#tipModal").modal('show');
+                                }
+                                window.setTimeout(function () {
+                                    $('#withDrawTable').bootstrapTable('refresh');
+                                }, 1 * 1000);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    });
+
+    $("#join-multiTransferByCar").click(function () {
+        var rows = $("#withDrawTable").bootstrapTable("getSelections");
+        if (rows.length == 0) {
+            alert("请先选择要转账的用户");
+            return;
+        }
+        var idArr = [];
+        for (var i = 0; i < rows.length; i++) {
+            idArr.push(rows[i]['recordId']);
+        }
+
+        if (confirm("你确认批量转账吗?" +
+            "\r\n转账后账户金额会通过汇聚划拨到用户银行卡，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/joinpay/joinRedPacketTransferByCar.action",
+                data: {'ids': JSON.stringify(idArr)},
+                dataType: "json",
+                success: function (json) {
+                    debugger
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账完成" + json.data);
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 2.5 * 1000)
+                }
+            });
+        }
+    });
+
+    $('#withDrawTable').on('click', '.joinpay-transferByCar', function () {
+        var id = $(this).data('id');
+        if (id == 'undefined' || !id) {
+            return;
+        }
+        var uid = $(this).attr("data-uid-id");
+        var recordId = $(this).attr("data-recordId-id");
+        $.ajax({
+            type: "get",
+            url: "/admin/withdraw/getBankCount.action",
+            data: {uid: uid},
+            dataType: "json",
+            success: function (json) {
+                var idArr = [];
+                idArr.push(id);
+                if (json.data > 1) {
+                    $("#roomListModal").modal('show');
+                    loadRoomList(uid, recordId);
+                } else {
+                    if (confirm("你确认给此用户转账吗?" +
+                        "\r\n转账后账户金额会通过汇聚划拨到用户银行卡，请谨慎操作！")) {
+                        $.ajax({
+                            type: 'post',
+                            url: "/admin/withdraw/joinpay/joinRedPacketTransferByCar.action",
+                            data: {'ids': JSON.stringify(idArr)},
+                            dataType: 'json',
+                            success: function (json) {
+                                if (json.code == 200) {
+                                    $("#tipMsg").text("转账完成" + json.data);
+                                    $("#tipModal").modal('show');
+                                } else {
+                                    $("#tipMsg").text(json.message + "[" + json.code + "]");
+                                    $("#tipModal").modal('show');
+                                }
+                                window.setTimeout(function () {
+                                    $('#withDrawTable').bootstrapTable('refresh');
+                                }, 1 * 1000);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    });
+
+
+    $('#roomListM').on('click', '.opt-card-edit', function () {
+        var cardNumber = $(this).attr("data-cardNumber");
+        var recordId = $(this).attr("data-recordId-id");
+        var openBankCode = $(this).attr("data-openBankCode");
+        var cardName = $(this).attr("data-cardName");
+        if (confirm("你确认给此用户转账吗?" +
+            "\r\n转账后账户金额会划拨到用户银行卡，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/transferRedPacketByCard.action",
+                data: {
+                    'recordId': recordId,
+                    'cardNumber': cardNumber,
+                    'openBankCode': openBankCode,
+                    'cardName': cardName
+                },
+                dataType: 'json',
+                success: function (json) {
+                    $("#roomListModal").modal('hide');
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }
+                }
+            });
+        }
+    });
+
+    $('#roomListM').on('click', '.opt-card-joinpay', function () {
+        var cardNumber = $(this).attr("data-cardNumber");
+        var recordId = $(this).attr("data-recordId-id");
+        var openBankCode = $(this).attr("data-openBankCode");
+        var cardName = $(this).attr("data-cardName");
+        if (confirm("你确认给此用户转账吗?" +
+            "\r\n转账后账户金额会通过汇聚划拨到用户银行卡，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/joinpay/joinRedPacketTransferByCard",
+                data: {
+                    'recordId': recordId,
+                    'cardNumber': cardNumber,
+                    'openBankCode': openBankCode,
+                    'cardName': cardName
+                },
+                dataType: 'json',
+                success: function (json) {
+                    $("#roomListModal").modal('hide');
+                    if (json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    } else {
+                        $("#tipMsg").text(json.message + "[" + json.code + "]");
+                        $("#tipModal").modal('show');
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }
+                }
+            });
+        }
+    });
+
+    /*初始化*/
+    $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    })
+
+    $('#endDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+
+    function getYesterday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#beginDate").val(today.format("yyyy-MM-dd"));
+        $("#endDate").val(today.format("yyyy-MM-dd"));
+    }
+
+    // 加载房间列表
+    function loadRoomList(uid, recordId) {
+        $("#roomListM").bootstrapTable('destroy');
+        $('#roomListM').bootstrapTable({
+            columns: [
+                {field: 'cardNumber', title: '银行卡号', align: 'center', width: '400'},
+                {field: 'openBankCode', title: '所属银行', align: 'center', width: '400'},
+                {field: 'cardName', title: '账户姓名', align: 'center', width: '400'},
+                {
+                    field: 'id', title: '操作', align: 'center', width: '400',
+                    formatter: function (val, row, index) {
+                        return '<button class="btn btn-success opt-card-edit" data-recordId-id=' + recordId + ' data-cardName=' + row.cardName + ' data-openBankCode=' + row.openBankCode + ' data-cardNumber=' + row.cardNumber + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i>转账</button>' +
+                            '<button class="btn btn-primary opt-card-joinpay" data-recordId-id=' + recordId + ' data-cardName=' + row.cardName + ' data-openBankCode=' + row.openBankCode + ' data-cardNumber=' + row.cardNumber + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i>汇聚</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            sortStable: true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    uid: uid
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '',
+            url: '/admin/withdraw/listBankCard.action',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.rows
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+    }
+
+    function clear() {
+        $("#userNum").text('');
+        $("#totalAmount").text('');
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

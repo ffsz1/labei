@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <title>幸运大抽奖</title>
+  <script>
+    var layout_width = 750;
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          if (clientWidth >= layout_width) {
+            docEl.style.fontSize = '100px';
+          } else {
+            docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+          }
+        };
+
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+  <link rel="stylesheet" href="../lib/reset.css">
+  <link rel="stylesheet" href="../lib/swiper/swiper-4.1.6.min.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+  <div class="container">
+    <img src="images/header.png">
+    <img src="images/rule.png" onclick="showRule()">
+    <div class="swiper-container">
+      <div class="swiper-wrapper" id="list-item">
+
+      </div>
+    </div>
+    <div class="turnable">
+      <img src="images/turnable-bg.png">
+      <img src="images/turnable1.png" class="turnable1">
+      <img src="images/turnable2.png" class="turnable2">
+      <img src="images/turnable.png" class="turnble-content">
+      <img src="images/arrow.png" onclick="arrow()" class="arrow">
+    </div>
+    <div class="leftDrawNum">
+      <p>共有</p>
+      <p id="leftDrawNum-text">0次</p>
+      <p>抽奖机会</p>
+    </div>
+    <img src="images/shareButton.png" class="share-button" onclick="toCharge()">
+  </div>
+  <div class="mask" id="lose">
+    <div class="lose">
+      <img src="images/lose.png">
+      <img src="images/clo.png" class="clo">
+    </div>
+  </div>
+  <div class="mask" id="prize">
+    <div class="prize">
+      <div>
+        <p>恭喜你抽中</p>
+        <p class="prize-name"></p>
+      </div>
+      <img src="images/clo.png" class="clo">
+    </div>
+  </div>
+  <div class="rule-tips">
+    <div class="rule">
+      <p>规则简介</p>
+      <ul class="rule-text">
+        <li>
+          <p>·</p>
+          <p>每充值一次就能获得一次抽奖机会</p>
+        </li>
+        <li class="FFFF00">
+          <p class="FFFF00">·</p>
+          <p>单次充值金额越大，中大奖概率越大</p>
+        </li>
+        <li>
+          <p>·</p>
+          <p>苹果用户需要通过优惠充值通道充值，获得抽奖机会</p>
+        </li>
+        <li>
+          <p>·</p>
+          <p>发现异常刷量行为，将不发放奖品及收回奖品并追究法律责任</p>
+        </li>
+      </ul>
+      <img src="images/clo.png" class="clo">
+    </div>
+  </div>
+  <div class="no-chance">
+  </div>
+  <div style="display:none">
+    <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+</div>
+  <script src="../lib/zepto.min.js"></script>
+  <script src="../lib/swiper/swiper-4.1.6.min.js"></script>
+  <script src="../lib/common.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

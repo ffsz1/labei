@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.McoinDrawIssueMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.McoinDrawIssue">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="issue_url" property="issueUrl" jdbcType="VARCHAR"/>
+        <result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+        <result column="item_type" property="itemType" jdbcType="INTEGER"/>
+        <result column="item_id" property="itemId" jdbcType="INTEGER"/>
+        <result column="draw_num" property="drawNum" jdbcType="INTEGER"/>
+        <result column="price" property="price" jdbcType="INTEGER"/>
+        <result column="issue_status" property="issueStatus" jdbcType="INTEGER"/>
+        <result column="seq" property="seq" jdbcType="TINYINT"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, issue_url, item_name, item_type, item_id, draw_num, price, issue_status, seq, 
+    start_time, end_time, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.McoinDrawIssueExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mcoin_draw_issue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from mcoin_draw_issue
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from mcoin_draw_issue
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.McoinDrawIssueExample" >
+    delete from mcoin_draw_issue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.McoinDrawIssue" >
+    insert into mcoin_draw_issue (id, issue_url, item_name, 
+      item_type, item_id, draw_num, 
+      price, issue_status, seq, 
+      start_time, end_time, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{issueUrl,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
+      #{itemType,jdbcType=BIT}, #{itemId,jdbcType=INTEGER}, #{drawNum,jdbcType=INTEGER}, 
+      #{price,jdbcType=INTEGER}, #{issueStatus,jdbcType=BIT}, #{seq,jdbcType=TINYINT}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.McoinDrawIssue" >
+    insert into mcoin_draw_issue
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="issueUrl != null" >
+        issue_url,
+      </if>
+      <if test="itemName != null" >
+        item_name,
+      </if>
+      <if test="itemType != null" >
+        item_type,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="drawNum != null" >
+        draw_num,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="issueStatus != null" >
+        issue_status,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="issueUrl != null" >
+        #{issueUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=BIT},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="drawNum != null" >
+        #{drawNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="issueStatus != null" >
+        #{issueStatus,jdbcType=BIT},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.McoinDrawIssueExample" resultType="java.lang.Integer" >
+    select count(*) from mcoin_draw_issue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mcoin_draw_issue
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.issueUrl != null" >
+        issue_url = #{record.issueUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemName != null" >
+        item_name = #{record.itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemType != null" >
+        item_type = #{record.itemType,jdbcType=BIT},
+      </if>
+      <if test="record.itemId != null" >
+        item_id = #{record.itemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.drawNum != null" >
+        draw_num = #{record.drawNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=INTEGER},
+      </if>
+      <if test="record.issueStatus != null" >
+        issue_status = #{record.issueStatus,jdbcType=BIT},
+      </if>
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=TINYINT},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mcoin_draw_issue
+    set id = #{record.id,jdbcType=BIGINT},
+      issue_url = #{record.issueUrl,jdbcType=VARCHAR},
+      item_name = #{record.itemName,jdbcType=VARCHAR},
+      item_type = #{record.itemType,jdbcType=BIT},
+      item_id = #{record.itemId,jdbcType=INTEGER},
+      draw_num = #{record.drawNum,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=INTEGER},
+      issue_status = #{record.issueStatus,jdbcType=BIT},
+      seq = #{record.seq,jdbcType=TINYINT},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.McoinDrawIssue" >
+    update mcoin_draw_issue
+    <set >
+      <if test="issueUrl != null" >
+        issue_url = #{issueUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        item_type = #{itemType,jdbcType=BIT},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="drawNum != null" >
+        draw_num = #{drawNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="issueStatus != null" >
+        issue_status = #{issueStatus,jdbcType=BIT},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.McoinDrawIssue" >
+    update mcoin_draw_issue
+    set issue_url = #{issueUrl,jdbcType=VARCHAR},
+      item_name = #{itemName,jdbcType=VARCHAR},
+      item_type = #{itemType,jdbcType=BIT},
+      item_id = #{itemId,jdbcType=INTEGER},
+      draw_num = #{drawNum,jdbcType=INTEGER},
+      price = #{price,jdbcType=INTEGER},
+      issue_status = #{issueStatus,jdbcType=BIT},
+      seq = #{seq,jdbcType=TINYINT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <select id="findMcoinDrawIssue" resultType="com.erban.main.model.dto.McoinDrawIssueDTO">
+        <![CDATA[
+        select
+          mdi.id, mdi.issue_url, mdi.item_name, mdi.item_type, mdi.item_id, mdi.draw_num, mdi.price, mdi.issue_status, mdi.seq,
+          mdi.start_time, mdi.end_time, mdi.create_time, mdi.update_time,mdp.uid
+        from
+          mcoin_draw_issue mdi
+        left join
+          mcoin_draw_prize mdp on mdi.id = mdp.issue_id
+        ]]>
+        <where>
+            <if test="itemType != 0">
+                and mdi.item_type = #{itemType}
+            </if>
+            <if test="issueStatus == 1">
+                and mdi.start_time  <![CDATA[ < ]]> NOW() and mdi.issue_status = 2
+            </if>
+            <if test="issueStatus == 2">
+                and mdi.start_time <![CDATA[>]]> NOW()
+            </if>
+            <if test="issueStatus == 3">
+                and mdp.uid != null
+            </if>
+        </where>
+        order by mdi.create_time desc
+    </select>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+    <bean id="vulgarSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="whistleBssDataSource"/>
+        <property name="mapperLocations" value="classpath*:/vulgar/mappers/**/*.xml"/>
+    </bean>
+
+    <bean id="vulgarRepository" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.yy.ent.whistle.module.vulgar.domain.VulgarRepository" />
+        <property name="sqlSessionFactory" ref="vulgarSqlSessionFactory" />
+    </bean>
+
+    <bean id="vulgarCensor" class="com.yy.ent.whistle.module.vulgar.VulgarCensor">
+        <constructor-arg name="vulgarRepository" ref="vulgarRepository"/>
+    </bean>
+
+</beans>

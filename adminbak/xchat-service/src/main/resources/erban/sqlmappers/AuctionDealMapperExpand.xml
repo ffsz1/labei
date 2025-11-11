@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.AuctionDealMapperExpand" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.AuctionDeal" >
+    <id column="auct_id" property="auctId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="auct_uid" property="auctUid" jdbcType="BIGINT" />
+    <result column="auct_money" property="auctMoney" jdbcType="BIGINT" />
+    <result column="serv_dura" property="servDura" jdbcType="INTEGER" />
+    <result column="min_raise_money" property="minRaiseMoney" jdbcType="BIGINT" />
+    <result column="deal_money" property="dealMoney" jdbcType="BIGINT" />
+    <result column="deal_uid" property="dealUid" jdbcType="BIGINT" />
+    <result column="auct_desc" property="auctDesc" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="cur_status" property="curStatus" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="deal_time" property="dealTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+<!--获取拍卖订单列表-->
+<select id="getAuctList" resultMap="BaseResultMap">
+
+  select *FROM auction_deal
+
+</select>
+<!--获取声优UID及其总拍卖金额和次数-->
+  <resultMap id="StatAkiraAuctMap" type="com.erban.main.model.StatAkiraAuctVo" >
+    <!--<id column="akira_auct_id" property="akiraAuctId" jdbcType="BIGINT" />-->
+    <result column="auct_uid" property="auct_uid" jdbcType="BIGINT" />
+    <result column="COUNT(auct_uid)" property="totalAuctCount" jdbcType="INTEGER" />
+    <result column="SUM(deal_money)" property="totalAuctMoney" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="StatRoomAuctMap" type="com.erban.main.model.StatRoomAuctVo" >
+    <!--<id column="akira_auct_id" property="akiraAuctId" jdbcType="BIGINT" />-->
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="COUNT(uid)" property="total_auct_count" jdbcType="INTEGER" />
+    <result column="SUM(deal_money)" property="total_auct_money" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="getAkiraAucts" resultMap="StatAkiraAuctMap">
+  select auct_uid,COUNT(auct_uid),SUM(deal_money) FROM auction_deal GROUP BY auct_uid
+</select>
+
+  <select id="getRoomAucts" resultMap="StatRoomAuctMap">
+    select uid,COUNT(uid),SUM(deal_money) FROM auction_deal GROUP BY uid
+  </select>
+</mapper>

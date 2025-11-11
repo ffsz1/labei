@@ -1,0 +1,300 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="sysConfModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">添加周星礼物预告</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="sysConfForm">
+                    <div class="form-group">
+                        <label for="giftId" class="col-sm-2 control-label">礼物Id</label>
+                        <div class="col-sm-10">
+                            <!-- <input type="text" class="form-control validate[required]" name="giftId" id="giftId"> -->
+                            <select class="btn btn-default dropdown-toggle" name="giftId" id="giftId"
+                                    data-btn-class="btn-warning"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="seq" class="col-sm-2 control-label">排序</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="seq" id="seq">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editConfigModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">编辑周星礼物预告</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="editForm">
+
+                    <div class="form-group">
+                        <label for="giftId" class="col-sm-2 control-label">礼物Id</label>
+                        <div class="col-sm-10">
+                            <select class="btn btn-default dropdown-toggle" name="giftId" id="editGiftId"
+                                    data-btn-class="btn-warning"></select>
+                            <!-- <input type="text" class="form-control validate[required]" name="giftId" id="editGiftId">-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="seq" class="col-sm-2 control-label">排序</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="seq" id="editSeq">
+                        </div>
+                    </div>
+                    <input type="hidden" id="editId" name="id" value="">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="update">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let isEdit = false;
+    $(function () {
+        getGiftList();
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'id', title: 'ID', align: 'center', valign: 'middle', width: '10%', visible: false},
+                {field: 'giftId', title: '礼物ID', align: 'center', valign: 'middle', width: '200'},
+                {field: 'giftName', title: '礼物名称', align: 'center', valign: 'middle', width: '200'},
+                {field: 'seq', title: '排序', align: 'center', valign: 'middle', width: '200'},
+                {
+                    field: 'status',
+                    title: '状态',
+                    align: 'center',
+                    valign: 'middle',
+                    width: '200',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '有效';
+                        } else if (val == 2) {
+                            return '无效';
+                        }
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: '300',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd hh:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'adminName', title: '操作人', align: 'center', valign: 'middle', width: '200'},
+                {
+                    field: 'id', title: '操作', align: 'center', width: '300', formatter: function (val, row, index) {
+                        return '<button class="btn btn-success opt-edit" data-id=' + row.id + ' style="margin-right: 1rem">' +
+                            '<i class="glyphicon glyphicon-edit"></i> 编辑</button>' +
+                            '<button class="btn btn-danger opt-remove" data-id=' + row.id +
+                            '><i class="glyphicon glyphicon-remove"></i> 删除</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: '/admin/week/star/gift/notice/getList.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+        $("#table").on("click", '.opt-remove', function () {
+            const id = $(this).attr("data-id");
+            if (id == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if (confirm("你确认删除该记录吗?" +
+                "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/week/star/gift/notice/delete.action",
+                    data: {'id': id},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#add").click(function () {
+            // 打开编辑弹窗
+            isEdit = false;
+            $("#sysConfModal").modal('show');
+            $("#sysConfForm")[0].reset();
+        });
+
+
+        $("#table").on("click", '.opt-edit', function () {
+            isEdit = true;
+            const id = $(this).attr("data-id");
+            $.ajax({
+                type: "get",
+                url: "/admin/week/star/gift/notice/get.action",
+                data: {id: id},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#editGiftId").val(json.entity.giftId);
+                        $("#editSeq").val(json.entity.seq);
+                        $("#editId").val(json.entity.id);
+                        // 打开编辑弹窗
+                        $("#editConfigModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("获取菜单信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#save").click(function () {
+            if ($("#sysConfForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/week/star/gift/notice/save.action?isEdit=" + isEdit,
+                    data: $('#sysConfForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#sysConfModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败:" + json.msg);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+            ;
+        });
+
+        $("#update").click(function () {
+            isEdit = true;
+            if ($("#editForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/week/star/gift/notice/save.action?isEdit=" + isEdit,
+                    data: $('#editForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#editConfigModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#editConfigModal").modal('hide');
+                            $("#tipMsg").text("保存失败:" + json.msg);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        function getGiftList() {
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: '/admin/week/star/gift/getNormalGifts',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.data.length > 0) {
+                        let _html = "";
+                        for (let i = 0; i < data.data.length; i++) {
+                            _html += "<option value=" + data.data[i].giftId + ">" + data.data[i].giftName + "</option>";
+                        }
+                        $("#giftId").html(_html);
+                        $("#editGiftId").html(_html);
+                    }
+                }
+            });
+        }
+    });
+</script>

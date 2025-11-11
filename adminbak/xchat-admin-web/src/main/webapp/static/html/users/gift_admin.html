@@ -1,0 +1,133 @@
+<style>
+    .bar1,.bar2{
+        margin-bottom: 10px;
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    input,select{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    #btnSearch{
+        margin-left: 36px;
+    }
+    .record{
+        margin-top: 10px;
+    }
+    .record .title{
+        font-size:16px;
+    }
+    table{
+        width:50%;
+        display:none;
+        margin-top: 10px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="toolbar">
+                    <div class="bar1 col-sm-12">
+                        <label for="uid" class="col-sm-1">赠送人Uid: </label><input type="number" class="input-sm col-sm-2" id="uid">
+                        <label for="targetuid" class="col-sm-1">被赠送人Uid: </label><input type="number" class="input-sm col-sm-2" id="targetuid">
+                        <label for="roomuid" class="col-sm-1">房间roomUid: </label><input type="number" class="input-sm col-sm-2" id="roomuid">
+                    </div>
+                    <div class="bar2 col-sm-12">
+                        <label for="giftNum" class="col-sm-1">礼物数:</label><input type="number" class="input-sm col-sm-2" id="giftNum">
+                        <label for="gift" class="col-sm-1">赠送礼物类型:</label><select name="gift" id="gift" class="input-m col-sm-2">
+                                  </select>
+                    </div>
+                    <button id="btnSearch" class="btn btn-sm btn-primary">赠送</button>
+                </div>
+                <div class="record">
+                    <div class="title">操作记录</div>
+                    <table class="recordTable">
+                        <thead>
+                            <tr>
+                                <th>受赠人uid</th>
+                                <th>受赠人金币</th>
+                                <th>受赠人钻石</th>
+                                <th>操作时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        setSelectOption();
+        $('#btnSearch').on('click',function () {
+            var searchObj = {
+                uid: $('#uid').val(),
+                targetUid: $('#targetuid').val(),
+                roomUid: $('#roomuid').val(),
+                giftId: $('#gift').val(),
+                giftNum: $('#giftNum').val()
+            }
+            $.ajax({
+                type: 'post',
+                url: '/admin/gift/repairdiamond',
+                data: searchObj,
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                    if(res.code == 200){
+                        $("#tipMsg").text("赠送成功");
+                        $("#tipModal").modal('show');
+                        $('.recordTable').show();
+                        var $tbody = $('.recordTable tbody');
+                        var $tr = $('<tr />');
+                        var str = '<td>'+res.data.uid+'</td><td>'+res.data.goldNum+'</td><td>'+res.data.diamondNum+'</td><td>'+new Date(res.data.updateTime).format('yyyy-MM-dd hh:mm:ss')+'</td>';
+                        $tr.html(str);
+                        $tbody.append($tr);
+
+
+                    }else{
+                        $("#tipMsg").text("参数错误");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+    })
+    function setSelectOption() {
+        $.ajax({
+            type: 'post',
+            url: '/admin/gift/getall',
+            dataType: 'json',
+            success: function (res) {
+                if(res.code == 200){
+                    var data = res.data;
+                    makeOption(data);
+                }
+            }
+        })
+        function makeOption(data) {
+            var str = '';
+            for(var i = 0;i < data.length;i++){
+                str += '<option value="'+data[i].giftId+'">' + data[i].giftName + '</option>';
+            }
+            $('#gift').html(str);
+        }
+    }
+</script>

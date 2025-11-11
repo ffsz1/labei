@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+    <script type="text/javascript">
+        var FS = {};
+        (function (win, FS) {
+            var doc = win.document;
+            var docEl = doc.documentElement;
+            var metaEl = doc.querySelector('meta[name="viewport"]');
+            var dpr = 1;
+            var scale = 1;
+            var fontBase = 16;
+
+            if (window.devicePixelRatio >= 2) {
+                scale *= 0.5;
+                dpr *= 2;
+            }
+
+            docEl.setAttribute('data-dpr', dpr);
+            metaEl.setAttribute('content', 'initial-scale=' + scale + ', width=device-width, maximum-scale=' +
+                scale +
+                ', user-scalable=no');
+
+            function refreshRem() {
+                var width = docEl.getBoundingClientRect().width;
+                var rem = width / 10;
+                docEl.style.fontSize = rem + 'px';
+                FS.rem = rem;
+            }
+
+            var tid = null;
+            win.addEventListener('resize', function () {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }, false);
+
+            if (doc.readyState === 'complete') {
+                doc.body.style.fontSize = fontBase * dpr + 'px';
+            } else {
+                doc.addEventListener('DOMContentLoaded', function (e) {
+                    doc.body.style.fontSize = fontBase * dpr + 'px';
+                }, false);
+            }
+
+            refreshRem();
+
+            FS.dpr = dpr;
+            FS.rem2px = function (d) {
+                var val = parseFloat(d) * FS.rem;
+                if (typeof d === 'string' && d.match(/rem$/)) {
+                    val += 'px';
+                }
+                return val;
+            }
+            FS.px2rem = function (d) {
+                var val = parseFloat(d) / FS.rem;
+                if (typeof d === 'string' && d.match(/px$/)) {
+                    val += 'rem';
+                }
+                return val;
+            }
+        })(window, FS);
+    </script>
+    <title>邀请大作战</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 0.5rem;
+        }
+
+        p {
+            font-size: 0.4rem;
+            color: #1a1a1a;
+        }
+
+        .title {
+            font-weight: bolder;
+        }
+        .ipt{
+            color: #ff1515;
+        }
+    </style>
+</head>
+<body>
+<p class="title">1.新人奖励</p>        
+<p>第一次进入拉贝语音世界的宝宝们，就能领取<span class="ipt">新人奖励大礼包哦。</span></p>
+<p>详情：在打开拉贝APP的时候，是不是收到了拉贝派发的新人奖励大礼包了呢，是不是感觉有点惊喜呢。但是你是不是找不到你的奖励礼包去向了呢。来，拉贝带你去找出来。可以直接下拉文字栏框点击“发现”，然后打开“分享/邀请有奖”可以看到咯！</p>
+<p class="title">2.分享奖励</p>      
+<p>每天第一次分享直播间或者拉贝APP内其他分享页面，同样也可以得到一个<span class="ipt">分享奖励大礼包</span>哦！拉贝悄悄告诉你哦，听说当天你碰到越多分享页面，并且分享出去的话，第二天拿到的分享奖励会更多哦。</p>
+<p class="title">3.邀请奖励</p>     
+<p>每当有新的宝宝通过你的分享链接或者页面（直播间或者app内任何一个分享页）点击下载注册来到拉贝语音，那么你就可以得到一个拉贝送出的<span class="ipt">邀请奖励大礼包</span>呢。还有哦，告诉你个秘密，如果你邀请越多新的用户，那么你就会有越多的邀请奖励大礼包。</p>
+<p class="title">4.分成奖励</p>    
+<p>拉贝告诉你哦，你邀请过来的新用户宝宝，当他们充值的时候，你都能拿到他们充值数额的<span class="ipt">2%提成</span>，这个是拉贝官方的奖励呢。举个简单的例子：当你邀请的新用户宝宝这个月一共充值了十五万，那么你这个月就能得到拉贝官方奖励的7500奖励哦，是不是很刺激，这种裙带关系，能直接卷起拉贝的裙子了。加油哦</p>
+<p class="title">5.活动规则</p>    
+<p>拉贝在此告诉大家怎么玩转拉贝语音奖励礼包，以下是获取奖励大礼包的活动规则，拉贝语音在特别提醒您在参与奖励大礼包活动之前，请认真阅读以下规则内容，请谨记，因为这个是为了确保大家都能玩转拉贝语音奖励大礼包的重要消息呢。</p>
+<p>1.	在您邀请过来拉贝语音的宝宝，一定是未注册过拉贝语音客户端的新用户</p>    。
+<p>2.	活动期间，用户参与“奖励大礼包”活动，分享页面并且成功邀请新用户注册登录拉贝语音，即可得到“奖励大礼包”。</p>
+<p> 3.	若在活动期间，您与拉贝语音之间发生有关于“奖励大礼包”的任何纠纷或争议，首先应该联系拉贝官方友好妥善解决，若协商过程意见不统一，您可以将纠纷或者争议向拉贝语音所在地所在管辖区有管辖权的人民法院提出诉讼。</p>
+<p> 4.	活动有效期内，如出现违规行为（涉嫌作弊，充值后恶意退款，刷单拉人头等违规行为）拉贝语音官方有权取消活动资格，冻结分成奖励。情节严重者将进行封号处罚，并冻结其账户权限。</p>
+<p> 5.	对于活动规则存在任何疑问，欢迎您联系拉贝语音微信客服，有效解决。</p>
+<p>6.	在不违反中华人民共和国法律和相关法规的前提下，活动最终解释权归拉贝语音所有。</p>
+<div style="display:none">
+    <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+</div>
+</body>
+</html>

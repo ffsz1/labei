@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.WXPushMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.WXPush" >
+    <id column="wx_push_id" property="wxPushId" jdbcType="VARCHAR" />
+    <result column="article_count" property="articleCount" jdbcType="VARCHAR" />
+    <result column="is_push" property="isPush" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="pub_time" property="pubTime" jdbcType="TIMESTAMP" />
+    <result column="msg_id" property="msgId" jdbcType="VARCHAR" />
+    <result column="is_focus_push" property="isFocusPush" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    wx_push_id, article_count, is_push, create_time, pub_time, msg_id, is_focus_push
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.WXPushExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from wx_pub_push
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from wx_pub_push
+    where wx_push_id = #{wxPushId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_pub_push
+    where wx_push_id = #{wxPushId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.WXPush" >
+    insert into wx_pub_push (wx_push_id, article_count, is_push,
+    create_time, pub_time, msg_id,
+    is_focus_push)
+    values (#{wxPushId,jdbcType=VARCHAR}, #{articleCount,jdbcType=VARCHAR}, #{isPush,jdbcType=BIT},
+    #{createTime,jdbcType=TIMESTAMP}, #{pubTime,jdbcType=TIMESTAMP}, #{msgId,jdbcType=VARCHAR},
+    #{isFocusPush,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.WXPush" >
+    insert into wx_pub_push
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wxPushId != null" >
+        wx_push_id,
+      </if>
+      <if test="articleCount != null" >
+        article_count,
+      </if>
+      <if test="isPush != null" >
+        is_push,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="pubTime != null" >
+        pub_time,
+      </if>
+      <if test="msgId != null" >
+        msg_id,
+      </if>
+      <if test="isFocusPush != null" >
+        is_focus_push,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wxPushId != null" >
+        #{wxPushId,jdbcType=VARCHAR},
+      </if>
+      <if test="articleCount != null" >
+        #{articleCount,jdbcType=VARCHAR},
+      </if>
+      <if test="isPush != null" >
+        #{isPush,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pubTime != null" >
+        #{pubTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgId != null" >
+        #{msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFocusPush != null" >
+        #{isFocusPush,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.WXPush" >
+    update wx_pub_push
+    <set >
+      <if test="articleCount != null" >
+        article_count = #{articleCount,jdbcType=VARCHAR},
+      </if>
+      <if test="isPush != null" >
+        is_push = #{isPush,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pubTime != null" >
+        pub_time = #{pubTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgId != null" >
+        msg_id = #{msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFocusPush != null" >
+        is_focus_push = #{isFocusPush,jdbcType=BIT},
+      </if>
+    </set>
+    where wx_push_id = #{wxPushId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.WXPush" >
+    update wx_pub_push
+    set article_count = #{articleCount,jdbcType=VARCHAR},
+      is_push = #{isPush,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      pub_time = #{pubTime,jdbcType=TIMESTAMP},
+      msg_id = #{msgId,jdbcType=VARCHAR},
+      is_focus_push = #{isFocusPush,jdbcType=BIT}
+    where wx_push_id = #{wxPushId,jdbcType=VARCHAR}
+  </update>
+</mapper>

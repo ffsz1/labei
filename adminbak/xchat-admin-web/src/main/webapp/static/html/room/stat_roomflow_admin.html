@@ -1,0 +1,407 @@
+<style>
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+
+    #roomFlow {
+        width: 170%;
+        max-width: unset;
+    }
+</style>
+<script src="/static/js/admin/echarts.common.min.js"></script>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--查询输入框-->
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="control-label">拉贝号:</label>
+                        <input type="number" id="erbanNo" name="erbanNo" class="form-control"
+                               aria-describedby="basic-addon1">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">房间类型:</label>
+                        <select class="btn btn-default dropdown-toggle" id="roomType" name="roomType"
+                                data-btn-class="btn-warning">
+                            <option value="">全部</option>
+                            <option value="1">牌照</option>
+                            <option value="3">审核牌照</option>
+                            <option value="2">无</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">时间:</label>
+                        <input type="text" id="beginDate" name="beginDate" type="date" placeholder="开始时间"
+                               class="form-control validate[required]">
+                        <label style="margin: 0 .5rem">-</label>
+                        <input type="text" id="endDate" name="endDate" type="date" placeholder="结束时间"
+                               class="form-control validate[required]">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">房间标签:</label>
+                        <select class="btn btn-default dropdown-toggle" id="roomTag" name="roomTag"
+                                data-btn-class="btn-warning">
+                            <option value="">全部</option>
+                            <option value="1">开黑</option>
+                            <option value="2">男神</option>
+                            <option value="3">女神</option>
+                            <option value="4">遇见</option>
+                            <option value="5">陪玩</option>
+                            <option value="6">电台</option>
+                            <option value="7">娱乐</option>
+                            <option value="8">交友</option>
+                            <option value="9">新秀</option>
+                            <option value="10">二次元</option>
+                            <option value="11">音乐</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">公会:</label>
+                        <select class="btn btn-default dropdown-toggle" id="guildId" name="guildId"
+                                data-btn-class="btn-warning">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button onclick="getYestaday()" type="button" class="btn btn-danger" style="margin-right: 10px">
+                            <i class="glyphicon glyphicon-calendar"></i> 昨天
+                        </button>
+                        <!-- <button onclick="getlastWeek()" type="button" class="btn btn-primary" style="margin-right: 10px">
+                            <i class="glyphicon glyphicon-calendar"></i> 上周
+                        </button> -->
+                        <button id="exportExcel" type="button" class="btn btn-success">
+                            <i class="glyphicon glyphicon glyphicon-download-alt"></i> 导出Excel
+                        </button>
+                    </div>
+                    <!--<div>-->
+                    <!--<label class="col-sm-1 control-label">分组:</label>-->
+                    <!--<div class="col-sm-2">-->
+                    <!--<select class="btn btn-default dropdown-toggle" id="groupCondition" name="groupCondition" data-btn-class="btn-warning">-->
+                    <!--<option value="date_format(g.create_time,'%Y-%m-%d %H')">小时</option>-->
+                    <!--<option value="date_format(g.create_time,'%Y-%m-%d')" selected="selected">天</option>-->
+                    <!--<option value="date_format(g.create_time,'%Y-%u')">周</option>-->
+                    <!--<option value="date_format(g.create_time,'%Y-%m')">月</option>-->
+                    <!--</select>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </form>
+                <!--content-->
+                <div id="roomFlow"></div>
+                <div id="toolbar" style="display: flex">
+                    <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 0;">
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">总流水：</span>
+                            <span style="color: red" id="sumTotalGold">0</span>
+                            <span>元</span>
+                        </li>
+                        <li style="margin-right: 20px;">
+                            <span style="font-weight: bold;">总分成：</span>
+                            <span style="color: red" id="sumTotalBonus">0</span>
+                            <span>元</span>
+                        </li>
+                    </ul>
+                    <!-- <button id="excelFiles" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon glyphicon-download-alt"></i> Excel列表
+                    </button> -->
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="filesModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">报表列表</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group" id="filesList"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="roomFlowModal" tabindex="-1" role="dialog" aria-labelledby="roomFlowModal">
+    <div class="modal-dialog" style="width: 70%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">房间流水</h4>
+            </div>
+            <div class="modal-body">
+                <br/>
+                <div id="roomFlowEchart" style="width: 1200px; height: 600px; margin: auto;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const isEdit = false;
+    // 设置时间初始值
+    $("#beginDate").val(getCurrentDate());
+    $("#endDate").val(getCurrentDate());
+
+    $(function () {
+        $('#roomFlow').bootstrapTable('destroy');
+        $('#roomFlow').bootstrapTable({
+            columns: [
+                {field: 'erbanNo', title: '房间ID', align: 'center', width: '5', widthUnit: '%'},
+                {field: 'nick', title: '房主昵称', align: 'center', width: '5', widthUnit: '%'},
+                {field: 'phone', title: '电话', align: 'center', width: '5', widthUnit: '%'},
+                {
+                    field: 'isPermitRoom', title: '房间类型', align: 'center', width: '3', widthUnit: '%',
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '牌照';
+                        } else if (val == 2) {
+                            return '无'
+                        } else if (val == 3) {
+                            return '审核牌照'
+                        }
+                    }
+                },
+                {field: "roomTag", title: "房间标签", align: "center", width: "3", widthUnit: '%'},
+                {field: "guildName", title: "所属公会", align: "center", width: "7", widthUnit: '%'},
+                {field: 'roomFlowLink', title: "流水明细链接", align: 'center', width: '10', widthUnit: '%'},
+                {field: 'total', title: '流水(金币)', align: 'center', width: '5', widthUnit: '%'},
+                {field: 'countUsers', title: '消费人数(总)', align: 'center', width: '5', widthUnit: '%'},
+                {field: 'countNewUsers', title: '消费人数(新用户)', align: 'center', width: '5', widthUnit: '%'},
+                {
+                    field: 'proportion', title: '周流水(环比)', align: 'center', width: '3', widthUnit: '%',
+                    formatter: function (val) {
+                        if (val) {
+                            return (val * 100) + "%";
+                        } else {
+                            return "";
+                        }
+                    }
+                },
+                {
+                    field: 'bounsPersent', title: '分成比例(%)', align: 'center', width: '3', widthUnit: '%',
+                    formatter: function (val) {
+                        if (val) {
+                            return val;
+                        } else {
+                            return '0'
+                        }
+                    }
+                },
+                {
+                    field: 'bouns', title: '分成(元)', align: 'center', width: '3', widthUnit: '%',
+                    formatter: function (val) {
+                        if (val) {
+                            return Math.round(val)
+                        }
+                    }
+                },
+                {field: 'alipayAccount', title: '支付宝账号', align: 'center', width: '5', widthUnit: '%'},
+                {field: 'alipayAccountName', title: '姓名', align: 'center', width: '5', widthUnit: '%'},
+                {field: 'occupation', title: '渠道', align: 'center', width: '5', widthUnit: '%'},
+                {field: 'bankCard', title: '银行卡', align: 'center', width: '7', widthUnit: '%'},
+                {field: 'cardholder', title: '持卡人', align: 'center', width: '5', widthUnit: '%'},
+                {
+                    field: 'tmp', title: '操作', align: 'center', width: '20', widthUnit: '%', valign: 'middle',
+                    formatter: function (val, row) {
+                        return "<button class='btn btn-sm btn-success opt-echart' onclick='showRoomEchart(" + row.uid + ")' data-uid=" + row.uid + ">房间流水图</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    erbanNo: parseInt($('#erbanNo').val()),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val(),
+                    groupCondition: $("#groupCondition").val(),
+                    roomType: parseInt($("#roomType").val()),
+                    roomTag: $("#roomTag").val(),
+                    guildId: $("#guildId").val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/roomFlow/list.action',
+            method: 'post',
+            responseHandler: function (res) {
+                clear();
+                if (res.code == 200) {
+                    $("#sumTotalGold").text(Math.round(res.data.rows[0].totalGold) | 0);
+                    $("#sumTotalBonus").text(Math.round(res.data.rows[0].totalBouns) | 0);
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.rows
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            }
+        });
+    });
+
+    $(function () {
+        $("#excelFiles").on("click", function () {
+            $.get("/admin/roomFlow/files", function (data) {
+                if (data.code == 200) {
+                    const _ul = $("#filesList");
+                    _ul.empty();
+                    if (data.data) {
+                        for (var i = 0; i < data.data.length; i++) {
+                            var _f = data.data[i];
+                            _ul.append('<li class="list-group-item" data-url="' + _f + '"><a href="http://39.105.187.28/excel/' + _f + '">' + _f + '</a></li>')
+                        }
+                    }
+                    $("#filesModal").modal('show');
+                } else {
+                    $("#tipMsg").text(data.message + "[" + data.code + "]");
+                    $("#tipModal").modal('show');
+                }
+            });
+        });
+
+        // 公会下拉列表
+        $('#guildId').html("<option value=''>全部</option>");
+        $.ajax({
+            type: "get",
+            url: "/admin/guild/getGuildAll.action",
+            dataType: 'json',
+            success: function (json) {
+                if (json.code == 200) {
+                    $.each(json.data, function (key, value) {
+                        $("#guildId").append("<option value='" + value.id + "'>" + value.name + "</option>");
+                    });
+                }
+            }
+        });
+    });
+
+    // 导出到Excel
+    $('#exportExcel').click(function () {
+        const param = $("form").serialize();
+        const url = "/admin/roomFlow/roomFlowExport?" + param;
+        window.location.href = url;
+    });
+
+    // 初始化
+    $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    $('#endDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+
+    function getYestaday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#beginDate").val(today.format("yyyy-MM-dd"));
+        $("#endDate").val(today.format("yyyy-MM-dd"));
+    }
+
+    function clear() {
+        $("#sumTotalGold").text(0);
+        $("#sumTotalBonus").text(0);
+    }
+
+    const myChart = echarts.init(document.getElementById('roomFlowEchart'));
+
+    function showRoomEchart(uid) {
+        const param = {
+            uid: uid
+        };
+
+        $.post("/admin/roomFlow/getRoomFlow", param, function (data) {
+            if (data.code == 200) {
+                const option = {
+                    title: {
+                        text: data.data.name
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: data.data.xAxis
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: data.data.data,
+                        type: 'line'
+                    }]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+            $("#roomFlowModal").modal('show');
+        });
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

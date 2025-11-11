@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.McoinMissionMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.McoinMission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mission_name" property="missionName" jdbcType="VARCHAR" />
+    <result column="mcoin_amount" property="mcoinAmount" jdbcType="INTEGER" />
+    <result column="freebies_id" property="freebiesId" jdbcType="INTEGER" />
+    <result column="freebies_type" property="freebiesType" jdbcType="BIT" />
+    <result column="complete_pic_url" property="completePicUrl" jdbcType="VARCHAR" />
+    <result column="incomplete_pic_url" property="incompletePicUrl" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="TINYINT" />
+    <result column="android_scheme" property="androidScheme" jdbcType="VARCHAR" />
+    <result column="ios_scheme" property="iosScheme" jdbcType="VARCHAR" />
+    <result column="mission_type" property="missionType" jdbcType="BIT" />
+    <result column="mission_scope" property="missionScope" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, mission_name, mcoin_amount, freebies_id, freebies_type, complete_pic_url, incomplete_pic_url, 
+    seq, android_scheme, ios_scheme, mission_type, mission_scope
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.McoinMissionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mcoin_mission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mcoin_mission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mcoin_mission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.McoinMissionExample" >
+    delete from mcoin_mission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.McoinMission" >
+    insert into mcoin_mission (id, mission_name, mcoin_amount, 
+      freebies_id, freebies_type, complete_pic_url, 
+      incomplete_pic_url, seq, android_scheme, 
+      ios_scheme, mission_type, mission_scope
+      )
+    values (#{id,jdbcType=INTEGER}, #{missionName,jdbcType=VARCHAR}, #{mcoinAmount,jdbcType=INTEGER}, 
+      #{freebiesId,jdbcType=INTEGER}, #{freebiesType,jdbcType=BIT}, #{completePicUrl,jdbcType=VARCHAR}, 
+      #{incompletePicUrl,jdbcType=VARCHAR}, #{seq,jdbcType=TINYINT}, #{androidScheme,jdbcType=VARCHAR}, 
+      #{iosScheme,jdbcType=VARCHAR}, #{missionType,jdbcType=BIT}, #{missionScope,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.McoinMission" >
+    insert into mcoin_mission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="missionName != null" >
+        mission_name,
+      </if>
+      <if test="mcoinAmount != null" >
+        mcoin_amount,
+      </if>
+      <if test="freebiesId != null" >
+        freebies_id,
+      </if>
+      <if test="freebiesType != null" >
+        freebies_type,
+      </if>
+      <if test="completePicUrl != null" >
+        complete_pic_url,
+      </if>
+      <if test="incompletePicUrl != null" >
+        incomplete_pic_url,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="androidScheme != null" >
+        android_scheme,
+      </if>
+      <if test="iosScheme != null" >
+        ios_scheme,
+      </if>
+      <if test="missionType != null" >
+        mission_type,
+      </if>
+      <if test="missionScope != null" >
+        mission_scope,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="missionName != null" >
+        #{missionName,jdbcType=VARCHAR},
+      </if>
+      <if test="mcoinAmount != null" >
+        #{mcoinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="freebiesId != null" >
+        #{freebiesId,jdbcType=INTEGER},
+      </if>
+      <if test="freebiesType != null" >
+        #{freebiesType,jdbcType=BIT},
+      </if>
+      <if test="completePicUrl != null" >
+        #{completePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="incompletePicUrl != null" >
+        #{incompletePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=TINYINT},
+      </if>
+      <if test="androidScheme != null" >
+        #{androidScheme,jdbcType=VARCHAR},
+      </if>
+      <if test="iosScheme != null" >
+        #{iosScheme,jdbcType=VARCHAR},
+      </if>
+      <if test="missionType != null" >
+        #{missionType,jdbcType=BIT},
+      </if>
+      <if test="missionScope != null" >
+        #{missionScope,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.McoinMissionExample" resultType="java.lang.Integer" >
+    select count(*) from mcoin_mission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mcoin_mission
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.missionName != null" >
+        mission_name = #{record.missionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mcoinAmount != null" >
+        mcoin_amount = #{record.mcoinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.freebiesId != null" >
+        freebies_id = #{record.freebiesId,jdbcType=INTEGER},
+      </if>
+      <if test="record.freebiesType != null" >
+        freebies_type = #{record.freebiesType,jdbcType=BIT},
+      </if>
+      <if test="record.completePicUrl != null" >
+        complete_pic_url = #{record.completePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.incompletePicUrl != null" >
+        incomplete_pic_url = #{record.incompletePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=TINYINT},
+      </if>
+      <if test="record.androidScheme != null" >
+        android_scheme = #{record.androidScheme,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iosScheme != null" >
+        ios_scheme = #{record.iosScheme,jdbcType=VARCHAR},
+      </if>
+      <if test="record.missionType != null" >
+        mission_type = #{record.missionType,jdbcType=BIT},
+      </if>
+      <if test="record.missionScope != null" >
+        mission_scope = #{record.missionScope,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mcoin_mission
+    set id = #{record.id,jdbcType=INTEGER},
+      mission_name = #{record.missionName,jdbcType=VARCHAR},
+      mcoin_amount = #{record.mcoinAmount,jdbcType=INTEGER},
+      freebies_id = #{record.freebiesId,jdbcType=INTEGER},
+      freebies_type = #{record.freebiesType,jdbcType=BIT},
+      complete_pic_url = #{record.completePicUrl,jdbcType=VARCHAR},
+      incomplete_pic_url = #{record.incompletePicUrl,jdbcType=VARCHAR},
+      seq = #{record.seq,jdbcType=TINYINT},
+      android_scheme = #{record.androidScheme,jdbcType=VARCHAR},
+      ios_scheme = #{record.iosScheme,jdbcType=VARCHAR},
+      mission_type = #{record.missionType,jdbcType=BIT},
+      mission_scope = #{record.missionScope,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.McoinMission" >
+    update mcoin_mission
+    <set >
+      <if test="missionName != null" >
+        mission_name = #{missionName,jdbcType=VARCHAR},
+      </if>
+      <if test="mcoinAmount != null" >
+        mcoin_amount = #{mcoinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="freebiesId != null" >
+        freebies_id = #{freebiesId,jdbcType=INTEGER},
+      </if>
+      <if test="freebiesType != null" >
+        freebies_type = #{freebiesType,jdbcType=BIT},
+      </if>
+      <if test="completePicUrl != null" >
+        complete_pic_url = #{completePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="incompletePicUrl != null" >
+        incomplete_pic_url = #{incompletePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=TINYINT},
+      </if>
+      <if test="androidScheme != null" >
+        android_scheme = #{androidScheme,jdbcType=VARCHAR},
+      </if>
+      <if test="iosScheme != null" >
+        ios_scheme = #{iosScheme,jdbcType=VARCHAR},
+      </if>
+      <if test="missionType != null" >
+        mission_type = #{missionType,jdbcType=BIT},
+      </if>
+      <if test="missionScope != null" >
+        mission_scope = #{missionScope,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.McoinMission" >
+    update mcoin_mission
+    set mission_name = #{missionName,jdbcType=VARCHAR},
+      mcoin_amount = #{mcoinAmount,jdbcType=INTEGER},
+      freebies_id = #{freebiesId,jdbcType=INTEGER},
+      freebies_type = #{freebiesType,jdbcType=BIT},
+      complete_pic_url = #{completePicUrl,jdbcType=VARCHAR},
+      incomplete_pic_url = #{incompletePicUrl,jdbcType=VARCHAR},
+      seq = #{seq,jdbcType=TINYINT},
+      android_scheme = #{androidScheme,jdbcType=VARCHAR},
+      ios_scheme = #{iosScheme,jdbcType=VARCHAR},
+      mission_type = #{missionType,jdbcType=BIT},
+      mission_scope = #{missionScope,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

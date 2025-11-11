@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.FaceMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.Face" >
+    <id column="face_id" property="faceId" jdbcType="INTEGER" />
+    <result column="face_name" property="faceName" jdbcType="VARCHAR" />
+    <result column="face_parent_id" property="faceParentId" jdbcType="INTEGER" />
+    <result column="face_pic_url" property="facePicUrl" jdbcType="VARCHAR" />
+    <result column="has_gif_url" property="hasGifUrl" jdbcType="BIT" />
+    <result column="face_gif_url" property="faceGifUrl" jdbcType="VARCHAR" />
+    <result column="seq_no" property="seqNo" jdbcType="INTEGER" />
+    <result column="face_status" property="faceStatus" jdbcType="TINYINT" />
+    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="face_value" property="faceValue" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    face_id, face_name, face_parent_id, face_pic_url, has_gif_url, face_gif_url, seq_no, 
+    face_status, is_show, face_value, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.FaceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from face
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from face
+    where face_id = #{faceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from face
+    where face_id = #{faceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.Face" >
+    insert into face (face_id, face_name, face_parent_id, 
+      face_pic_url, has_gif_url, face_gif_url, 
+      seq_no, face_status, is_show, 
+      face_value, create_time)
+    values (#{faceId,jdbcType=INTEGER}, #{faceName,jdbcType=VARCHAR}, #{faceParentId,jdbcType=INTEGER}, 
+      #{facePicUrl,jdbcType=VARCHAR}, #{hasGifUrl,jdbcType=BIT}, #{faceGifUrl,jdbcType=VARCHAR}, 
+      #{seqNo,jdbcType=INTEGER}, #{faceStatus,jdbcType=TINYINT}, #{isShow,jdbcType=BIT}, 
+      #{faceValue,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.Face" >
+    insert into face
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="faceId != null" >
+        face_id,
+      </if>
+      <if test="faceName != null" >
+        face_name,
+      </if>
+      <if test="faceParentId != null" >
+        face_parent_id,
+      </if>
+      <if test="facePicUrl != null" >
+        face_pic_url,
+      </if>
+      <if test="hasGifUrl != null" >
+        has_gif_url,
+      </if>
+      <if test="faceGifUrl != null" >
+        face_gif_url,
+      </if>
+      <if test="seqNo != null" >
+        seq_no,
+      </if>
+      <if test="faceStatus != null" >
+        face_status,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="faceValue != null" >
+        face_value,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="faceId != null" >
+        #{faceId,jdbcType=INTEGER},
+      </if>
+      <if test="faceName != null" >
+        #{faceName,jdbcType=VARCHAR},
+      </if>
+      <if test="faceParentId != null" >
+        #{faceParentId,jdbcType=INTEGER},
+      </if>
+      <if test="facePicUrl != null" >
+        #{facePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="hasGifUrl != null" >
+        #{hasGifUrl,jdbcType=BIT},
+      </if>
+      <if test="faceGifUrl != null" >
+        #{faceGifUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="faceStatus != null" >
+        #{faceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=BIT},
+      </if>
+      <if test="faceValue != null" >
+        #{faceValue,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Face" >
+    update face
+    <set >
+      <if test="faceName != null" >
+        face_name = #{faceName,jdbcType=VARCHAR},
+      </if>
+      <if test="faceParentId != null" >
+        face_parent_id = #{faceParentId,jdbcType=INTEGER},
+      </if>
+      <if test="facePicUrl != null" >
+        face_pic_url = #{facePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="hasGifUrl != null" >
+        has_gif_url = #{hasGifUrl,jdbcType=BIT},
+      </if>
+      <if test="faceGifUrl != null" >
+        face_gif_url = #{faceGifUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNo != null" >
+        seq_no = #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="faceStatus != null" >
+        face_status = #{faceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+      <if test="faceValue != null" >
+        face_value = #{faceValue,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where face_id = #{faceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Face" >
+    update face
+    set face_name = #{faceName,jdbcType=VARCHAR},
+      face_parent_id = #{faceParentId,jdbcType=INTEGER},
+      face_pic_url = #{facePicUrl,jdbcType=VARCHAR},
+      has_gif_url = #{hasGifUrl,jdbcType=BIT},
+      face_gif_url = #{faceGifUrl,jdbcType=VARCHAR},
+      seq_no = #{seqNo,jdbcType=INTEGER},
+      face_status = #{faceStatus,jdbcType=TINYINT},
+      is_show = #{isShow,jdbcType=BIT},
+      face_value = #{faceValue,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where face_id = #{faceId,jdbcType=INTEGER}
+  </update>
+</mapper>

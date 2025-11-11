@@ -1,0 +1,428 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1 id="itemTitle"></h1>
+</section>
+<!-- .content -->
+<section class="content">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-1 control-label">渠道:</label>
+            <div class="col-sm-2">
+                <input type="text" name="queryChannel" id="queryChannel" placeholder="渠道">
+            </div>
+            <label class="col-sm-1 control-label">组别:</label>
+            <div class="dropdown">
+                <div class="col-sm-2">
+                    <select class="btn btn-default dropdown-toggle" name="queryGroupId" id="queryGroupId" data-btn-class="btn-warning">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="toolbar">
+        <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+        <button id="add" class="btn btn-default">
+            <i class="glyphicon glyphicon-plus"></i>添加
+        </button>
+        <button id="addGroup" class="btn btn-default">
+            <i class="glyphicon glyphicon-plus"></i>添加分组
+        </button>
+    </div>
+    <div id="roleTable"></div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="groupModel" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="">添加渠道分组</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="groupForm">
+                    <div class="form-group">
+                        <label for="groupName" class="col-sm-3 control-label">分组名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control  validate[required]" name="groupName" id="groupName">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveGroup">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- .content -->
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">首页显示渠道</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="roleForm">
+                    <div class="form-group">
+                        <label for="channel" class="col-sm-3 control-label">渠道:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control  validate[required]" name="channel" id="channel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="homeDefault" class="col-sm-3 control-label">首页默认大小:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control  validate[required]" name="homeDefault" id="homeDefault" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="isNews" class="col-sm-3 control-label">新老用户:</label>
+                        <div class="col-sm-8">
+                            <select name="isNews" id="isNews" class="col-sm-4">
+                                <option value="0">全部</option>
+                                <option value="1">新用户</option>
+                                <option value="2">旧用户</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="col-sm-3 control-label">是否对外:</label>
+                        <div class="col-sm-8">
+                            <select name="type" id="type" class="col-sm-4">
+                                <option value="1">否</option>
+                                <option value="2">是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupId" class="col-sm-3 control-label">组别:</label>
+                        <div class="col-sm-8">
+                            <select name="groupId" id="groupId" class="col-sm-4">
+                                <option value="">没有</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" id="homeChannel">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="excelModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalsLabel">导入excel</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="excelForm">
+                    <div class="form-group">
+                        <label for="file" class="col-sm-3 control-label">文件:</label>
+                        <div class="col-sm-8">
+                            <input type="file" id="file" class="form-control  validate[required]" name="file">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveExcel">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var isEdit = false;
+    $(function () {
+        $('#roleTable').bootstrapTable('destroy');
+        $('#roleTable').bootstrapTable({
+            columns: [
+                {field: 'id', title: '编号', align: 'center', width: '5%'},
+                {field: 'channel', title: '渠道', align: 'center', width: '10%'},
+                {field: 'groupName', title: '分组名称', align: 'center', width: '10%'},
+                {field: 'channelUrl', title: '渠道分享链接', align: 'center', width: '30%'},
+                {field: 'homeDefault', title: '首页默认页面', align: 'center', width: '5%'},
+                {field: 'outputLink', title: '媒介链接', align: 'center', width: '30%'},
+                {
+                    field: 'isNews',
+                    title: '新老用户',
+                    align: 'center',
+                    width: '5%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 0:
+                                return "全部";
+                                break;
+                            case 1:
+                                return '新用户';
+                                break;
+                            case 2:
+                                return '老用户';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field: 'type',
+                    title: '是否对外',
+                    align: 'center',
+                    width: '5%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '否';
+                                break;
+                            case 2:
+                                return '是';
+                                break;
+                        }
+                    }
+                },
+                {field: 'groupId', title: '组别', align: 'center', width: '5%'},
+                {
+                    field: 'id',
+                    title: '操作',
+                    align: 'center',
+                    width: '45%',
+                    formatter: function (val, row, index) {
+                        return "<button class='btn btn-sm btn-success opt-edit' data-id="+ row.id +">编辑</button><button class='btn btn-sm btn-danger opt-del' data-id="+ row.id +">删除</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    channel: $("#queryChannel").val(),
+                    groupId: $("#queryGroupId").val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/home/channel/getall.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+
+        $("#roleTable").on("click", '.opt-edit', function () {
+            var id = $(this).attr("data-id");
+            isEdit = true;
+            $.ajax({
+                type: "post",
+                url: "/admin/home/channel/getOne.action",
+                data: {id: id},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#homeChannel").val(json.entity.id);
+                        $("#channel").val(json.entity.channel);
+                        $("#homeDefault").val(json.entity.homeDefault);
+                        $("#isNews").val(json.entity.isNews);
+                        $("#groupId").val(json.entity.groupId);
+                        $("#roleModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("获取信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#addGroup").on("click", function () {
+            $("#groupModel").modal("show");
+            $("#groupName").val("");
+        })
+
+        $("#saveGroup").on("click", function () {
+            var name = $("#groupName").val();
+            if (name) {
+                $.post("/admin/home/channel/addGroup?name=" + name, function (data) {
+                    if (data.code == 200) {
+                        getGroupIdList();
+                        $("#groupModel").modal('hide');
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("保存失败:" + data.message);
+                        $("#tipModal").modal('show');
+                    }
+                })
+            }
+        })
+
+        $('#add').click(function () {
+            isEdit = false;
+            $("#roleForm")[0].reset();
+            $("#id").val(0);
+            $("#roleModal").modal('show');
+        });
+
+        $('#save').click(function () {
+            if ($("#roleForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/home/channel/save.action?isEdit=" + isEdit,
+                    data: $('#roleForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#roleModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#roleTable");
+                        } else {
+                            $("#tipMsg").text("保存失败: " + "该数据已存在");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#download").click(function () {
+            window.location.href = "/admin/home/channel/download";
+        });
+        
+        $("#importExcel").click(function () {
+            $("#excelForm")[0].reset();
+            $("#excelModal").modal('show');
+        });
+
+        $("#roleTable").on("click", '.opt-del', function () {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                type: 'post',
+                url:'/admin/home/channel/del',
+                data:{"id":id},
+                dataType: 'json',
+                success:function (res) {
+                    if(res.code == 200){
+                        $("#tipMsg").text("删除成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    }else{
+                        $("#tipMsg").text("删除失败，错误码：" + res.code);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        });
+
+        $("#saveExcel").click(function () {
+            var formData = new FormData();
+            formData.append("file", document.getElementById("file").files[0]);
+            $.ajax({
+                type: "post",
+                url: "/admin/home/channel/importExcel.action",
+                dataType: "json",
+                data: formData,
+                /**
+                 *必须false才会自动加上正确的Content-Type
+                 */
+                contentType: false,
+                /**
+                 * 必须false才会避开jQuery对 formdata 的默认处理
+                 * XMLHttpRequest会对 formdata 进行正确的处理
+                 */
+                processData: false,
+                success: function (json) {
+                    if (json.result == 1) {
+                        $("#excelModal").modal('hide');
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#roleTable");
+                    } else {
+                        $("#tipMsg").text("保存失败: " + "该数据已存在");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        })
+
+        $("#btnSearch").click(function () {
+            TableHelper.doRefresh("#roleTable");
+
+        });
+
+        var _initRoomTagFlag = 0;
+        getGroupIdList();
+        function getGroupIdList(){
+            // 加载分类选项
+            $.ajax({
+                type: 'GET',
+                async : false,
+                url:'/admin/home/channel/groupList',
+                dataType:'json',
+                success:function (data) {
+                    if (data.code == 200) {
+                        _initRoomTagFlag = _initRoomTagFlag + 1;
+                        var _html = "<option value=''>没有</option>";
+                        for(var i = 0; i < data.data.length; i ++) {
+                            _html += "<option value=" + data.data[i].groupId + ">" + data.data[i].groupName + "</option>";
+                        }
+                        $("#groupId").html(_html);
+                        $("#queryGroupId").html(_html);
+                    }
+                }
+            })
+        }
+
+    });
+
+</script>

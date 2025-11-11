@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.WithDrawPacketCashProdMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.WithDrawPacketCashProd" >
+    <id column="packet_prod_cash_id" property="packetProdCashId" jdbcType="INTEGER" />
+    <result column="packet_num" property="packetNum" jdbcType="DOUBLE" />
+    <result column="prod_stauts" property="prodStauts" jdbcType="TINYINT" />
+    <result column="seq_no" property="seqNo" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    packet_prod_cash_id, packet_num, prod_stauts, seq_no, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.WithDrawPacketCashProdExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from withdraw_packet_cash_prod
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from withdraw_packet_cash_prod
+    where packet_prod_cash_id = #{packetProdCashId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from withdraw_packet_cash_prod
+    where packet_prod_cash_id = #{packetProdCashId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.WithDrawPacketCashProd" >
+    insert into withdraw_packet_cash_prod (packet_prod_cash_id, packet_num, prod_stauts, 
+      seq_no, create_time)
+    values (#{packetProdCashId,jdbcType=INTEGER}, #{packetNum,jdbcType=DOUBLE}, #{prodStauts,jdbcType=TINYINT}, 
+      #{seqNo,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.WithDrawPacketCashProd" >
+    insert into withdraw_packet_cash_prod
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="packetProdCashId != null" >
+        packet_prod_cash_id,
+      </if>
+      <if test="packetNum != null" >
+        packet_num,
+      </if>
+      <if test="prodStauts != null" >
+        prod_stauts,
+      </if>
+      <if test="seqNo != null" >
+        seq_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="packetProdCashId != null" >
+        #{packetProdCashId,jdbcType=INTEGER},
+      </if>
+      <if test="packetNum != null" >
+        #{packetNum,jdbcType=DOUBLE},
+      </if>
+      <if test="prodStauts != null" >
+        #{prodStauts,jdbcType=TINYINT},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.WithDrawPacketCashProd" >
+    update withdraw_packet_cash_prod
+    <set >
+      <if test="packetNum != null" >
+        packet_num = #{packetNum,jdbcType=DOUBLE},
+      </if>
+      <if test="prodStauts != null" >
+        prod_stauts = #{prodStauts,jdbcType=TINYINT},
+      </if>
+      <if test="seqNo != null" >
+        seq_no = #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where packet_prod_cash_id = #{packetProdCashId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.WithDrawPacketCashProd" >
+    update withdraw_packet_cash_prod
+    set packet_num = #{packetNum,jdbcType=DOUBLE},
+      prod_stauts = #{prodStauts,jdbcType=TINYINT},
+      seq_no = #{seqNo,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where packet_prod_cash_id = #{packetProdCashId,jdbcType=INTEGER}
+  </update>
+</mapper>

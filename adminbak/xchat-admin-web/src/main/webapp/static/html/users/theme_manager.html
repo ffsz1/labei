@@ -1,0 +1,377 @@
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="theme-add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+
+                    <select name="condition_type" id="condition_type" data-btn-class="btn btn-warning">
+                        <option value="" selected="selected">全部</option>
+                        <option value="1">启用</option>
+                        <option value="0">不启用</option>
+                    </select>
+                    <button id="theme-refresh" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i> 查询
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+<!--编辑添加窗口-->
+<div class="modal fade" id="themeModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">话题信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="themeForm">
+                    <input type="hidden" name="id" id="Id"/>
+                    <div class="form-group">
+                        <label for="themeName" class="col-sm-2 control-label">话题名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="name" id="themeName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remarks" class="col-sm-2 control-label">说明</label>
+                        <div class="col-sm-10">
+                            <textarea  class="form-control validate[required]" name="remarks" id="remarks" rows="3"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">话题状态</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="state" value="1"
+                                                               checked>启用</label>
+                            <label class="radio-inline"><input type="radio" name="state" value="0">不启用</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">话题图片:</label>
+                        <div class="col-sm-10">
+                            <img src="" id="picImage" style="width: 150px;" alt="pictureUrl">
+                            <input type="file" id="picUploadFile" name="file"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga">
+                            <button class="btn btn-success" type="button" id="picUploadBtn">上传</button>
+                            <input type="hidden" id="picUrl" name="pictureUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../../static/js/ajaxfileupload.js"></script>
+
+<script>
+/*    ComboboxHelper.build(null, '#giftType');*/
+    ComboboxHelper.build(null, '#condition_type');
+/*    ComboboxHelper.build(null, '#nobleId');*/
+    $(function () {
+
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {field: 'id', title: '话题Id', align: 'center', width: 100},
+                {field: 'name', title: '话题名称', align: 'center', width: 130},
+                {
+                    field: 'state',
+                    title: '话题状态',
+                    align: 'center',
+                    width: 100,
+                    formatter: function (val) {
+                        if (val == "1") {
+                            return '启用';
+                        } else if(val=='0'){
+                            return '不启用';
+                        }
+                    }
+                },
+                {
+                    field: 'pictureUrl', title: '图片', align: 'center', width: 200, formatter: function (val) {
+                        return "<img src='" + val + "' width='70'>";
+                    }
+                },
+                {field: 'remarks', title: '话题内容', align: 'center', width: 200},
+                {field: 'num', title: '参与量', align: 'center', width: 80},
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd hh:mm");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'updateTime',
+                    title: '修改时间',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd hh:mm");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },{
+                    field: 'id', title: '操作', align: 'center', width: 250, formatter: function (val, row, index) {
+                        return '<button class="btn btn-sm btn-success opt-edit" data-id=' + val + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i>编辑</button>' +
+                            '&nbsp;&nbsp;<button class="btn btn-sm btn-danger opt-remove" data-id=' + val +
+                            '><i class="glyphicon glyphicon-remove"></i>删除</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [1, 10, 20, 30, 50],
+            search: true,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: '/admin/theme/getList.action?state=' + ComboboxHelper.getSelected("#condition_type"),
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+/*删除*/
+        $("#table").on("click", '.opt-remove', function () {
+            var id = $(this).attr("data-id");
+            if (id == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if (confirm("你确认删除该记录吗?" +
+                "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/theme/del.action",
+                    data: {'ids': JSON.stringify([id])},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+/*添加*/
+        $("#theme-add").click(function () {
+            // 打开编辑弹窗
+            $("#themeModal").modal('show');
+            $("#themeForm")[0].reset();
+
+            $('#picUrl').val('');
+            $('#picImage').attr("src", '');
+
+
+
+            $("#Id").val('');
+            $("#themeName").attr('readonly', false);
+            $("#remarks").attr('readonly', false);
+        });
+ /*刷新*/
+        $("#theme-refresh").click(function () {
+            $("#table").bootstrapTable('refresh', {url: '/admin/theme/getList.action?state=' + ComboboxHelper.getSelected("#condition_type")});
+        })
+/*多个删除*/
+        $("#theme-multiDel").click(function () {
+            var rows = $("#table").bootstrapTable("getSelections");
+            if (rows.length == 0) {
+                alert("请先选择要删除的记录");
+                return;
+            }
+            var idArr = [];
+            for (var i = 0; i < rows.length; i++) {
+                idArr.push(rows[i]['id']);
+            }
+            console.log(idArr);
+
+            if (confirm("你确认批量删除该记录吗?" +
+                "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/theme/del.action",
+                    data: {'ids': JSON.stringify(idArr)},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+/*文件上传*/
+        $('#picUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'picUploadFile',    //需要上传的文件域的ID，即<input type="file">的ID。
+                url: '/admin/file/upload', //后台方法的路径
+                type: 'post',   //当要提交自定义参数时，这个参数要设置成post
+                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。
+                secureuri: false,   //是否启用安全提交，默认为false。
+                async: false,   //是否是异步
+                success: function (json) {   //提交成功后自动执行的处理函数，参数data就是服务器返回的数据。
+                    if (json.path) {
+                        $('#picUrl').val(json.path);
+                        $('#picImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) {  //提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        })
+
+
+/*取消*/
+        $("#cancel").click(function () {
+            TableHelper.unCheckAll("#table");
+        });
+/*参数处理*/
+        function parseNum(val) {
+            if (val == undefined || val == 'false' || val == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+/*编辑*/
+        $("#table").on("click", '.opt-edit', function () {
+            console.log("btnEdit");
+            var id = $(this).attr("data-id");
+            $.ajax({
+                type: "get",
+                url: "/admin/theme/get.action",
+                data: {id: id},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#Id").val(json.entity.id);
+
+                        $("#themeName").val(json.entity.name);
+                        $("#remarks").val(json.entity.remarks);
+
+
+                        if (json.entity.state == "1") {
+                            $("input:radio[name='state']")[0].checked = true;
+                        } else {
+                            $("input:radio[name='state']")[1].checked = true;
+                        }
+
+                        // 设置图片
+                        $('#picUrl').val(json.entity.pictureUrl);
+                        $('#picImage').attr("src", json.entity.pictureUrl);
+
+                        // 打开编辑弹窗
+                        $("#themeModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("获取菜单信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+/*保存*/
+        $("#save").click(function () {
+            if ($("#themeForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/theme/save.action",
+                    data: $('#themeForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#themeModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败." + json.msg);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            };
+        });
+    });
+</script>

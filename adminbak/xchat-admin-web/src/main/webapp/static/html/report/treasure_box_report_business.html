@@ -1,0 +1,406 @@
+<style>
+    table.table-fixed-head .table-fixed-head-thead {
+        border-bottom: 1px solid #dddddd;
+        border-top: 1px solid #dddddd;
+        background: #fff;
+    }
+
+    .form-inline {
+        display: flex;
+    }
+
+    #form .control-label {
+        margin-right: 1rem;
+    }
+
+    .autoFresh {
+        margin-left: 1rem;
+        display: inline-block;
+    }
+
+    #auto_refresh {
+        width: 34px;
+        height: 34px;
+        margin: 0;
+        vertical-align: middle;
+    }
+
+    .autoFresh label {
+        vertical-align: middle;
+        margin-left: 10px;
+    }
+
+    .info-list {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .bootstrap-table .fixed-table-container .fixed-table-body {
+        height: unset;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <form class="form-inline" id="form">
+                    <div class="form-group" style="width: 10%">
+                        <label class="control-label">平台:</label>
+                        <select class="btn btn-info dropdown-toggle" name="os" id="os" data-btn-class="btn-warning">
+                            <option value="">全部</option>
+                            <option value="android">android</option>
+                            <option value="iOS">iOS</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="width: 10%">
+                        <label class="control-label">性别:</label>
+                        <select class="btn btn-primary dropdown dropdown-toggle" name="gender" id="gender"
+                                data-btn-class="btn-warning">
+                            <option value="">全部</option>
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                            <option value="0">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="width: 15%">
+                        <label for="order" class="control-label">投产比排序:</label>
+                        <select class="btn btn-success dropdown dropdown-toggle" name="order" id="order"
+                                data-btn-class="btn-warning">
+                            <option value="">请选择</option>
+                            <option value="asc">升序</option>
+                            <option value="desc">降序</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="width: 40%">
+                        <label class="control-label">报表时间:</label>
+                        <input type="text" id="reportStartDate" type="date" name="reportStartDate"
+                               class="form-control validate[required]"/>
+                        <span>&nbsp;&nbsp;—&nbsp;&nbsp;</span>
+                        <input type="text" id="reportEndDate" type="date" name="reportEndDate"
+                               class="form-control validate[required]"/>
+                    </div>
+                    <div class="form-group" style="width: 20%">
+                        <label class="control-label">拉贝号:</label>
+                        <!-- <input type="text" id="erbanNo" type="text" name="erbanNo"
+                               class="form-control validate[required]"/> -->
+                        <textarea class="form-control" name="erbanNos" id="erbanNos" style="height: 120px; resize: none; width: 80%;"
+                                  placeholder='拉贝号（多个拉贝号回车分隔）'></textarea>
+                    </div>
+                </form>
+                <div class="info-list">
+                    <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 30px; justify-content: space-between">
+                        <!-- <li style="margin-right: 20px;">-->
+                        <!-- <span style="font-weight: bold;">总拉贝次数：</span>-->
+                        <!-- <span style="color: red" id="totalDrawNum"></span>-->
+                        <!-- </li>-->
+                        <li>
+                            <span style="font-weight: bold;">总投入：</span>
+                            <span style="color: red" id="totalGold">0</span>
+                            <span>金币</span>
+                        </li>
+                        <li>
+                            <span style="font-weight: bold;">总产出：</span>
+                            <span style="color: red" id="outputGold">0</span>
+                            <span>金币</span>
+                        </li>
+                        <li>
+                            <span style="font-weight: bold;">产出比：</span>
+                            <span style="color: red" id="outputRatio">0</span>
+                            <span></span>
+                        </li>
+                        <li>
+                            <span style="font-weight: bold;">参与人数：</span>
+                            <span style="color: red" id="userNum">0</span>
+                        </li>
+                        <li>
+                            <span style="font-weight: bold;">全服数量：</span>
+                            <span style="color: red" id="giftNum"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="exportExcel" class="btn btn-success">
+                        <i class="glyphicon glyphicon glyphicon-download-alt"></i> 导出Excel
+                    </button>
+                    <!-- <button id="push" class="btn btn-primary">
+                        <i class="glyphicon glyphicon glyphicon-share"></i> 去投放
+                    </button> -->
+                    <div class="autoFresh">
+                        <input id="auto_refresh" class="auto_refresh" type="checkbox" onclick="autoRefresh(this)"/>
+                        <label>自动刷新(10s)</label>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">活动奖励</h4>
+            </div>
+            <div class="modal-body">
+                <div id="activityTable"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="addBtn" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let erbanNo = "";
+    let nick = "";
+
+    // 自动刷新方法
+    function autoRefresh(e) {
+        if (e.checked) {
+            window._t_auto = setInterval(function () {
+                $("button[name='refresh']").click()
+            }, 10000);
+        } else {
+            clearInterval(window._t_auto);
+        }
+    };
+
+    // 设置时间初始值
+    $("#reportStartDate").val(getCurrentDate() + " 00:00:00");
+    $("#reportEndDate").val(getCurrentDate() + " 23:59:59");
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'uid', title: 'UID', align: 'center', valign: 'middle', width: 350, visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 350},
+                {field: 'nick', title: '昵称', align: 'center', valign: 'middle', width: 350},
+                {
+                    field: 'createTime', title: '日期', align: 'center', valign: 'middle', width: 350,
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'inputNum', title: '投入(金币)', align: 'center', valign: 'middle', width: 350},
+                {field: 'outputNum', title: '产出(金币)', align: 'center', valign: 'middle', width: 350},
+                {field: 'rate', title: '投入产出比', align: 'center', valign: 'middle', width: 350, sortable: true},
+                // {
+                //     field: 'erbanNo',
+                //     title: '操作',
+                //     align: 'center',
+                //     valign: 'middle',
+                //     width: 350,
+                //     formatter: function (val, row) {
+                //         return `<button class='btn btn-primary opt-go' data-erbanNo="${row.erbanNo}" data-nick="${row.nick}">活动奖励</button>`;
+                //     }
+                // }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber,
+                    os: $("#os").val(),
+                    gender: $("#gender").val(),
+                    order: $('#order').val(),
+                    reportStartDate: $("#reportStartDate").val(),
+                    reportEndDate: $("#reportEndDate").val(),
+                    // erbanNo: $("#erbanNo").val(),
+                    erbanNos: $("#erbanNos").val(),
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/treasureBoxReport/list.action?giftType=3',
+            method: 'GET',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    // $("#totalDrawNum").text(Math.round(data.data.totalGold));
+                    $("#totalGold").text(res.data.list[0].totalInputNum);
+                    $("#outputGold").text(res.data.list[0].totalOutputNum);
+                    $("#giftNum").text(res.data.list[0].fullNum);
+                    $("#userNum").text(res.data.list[0].userNum);
+                    $("#outputRatio").text(res.data.list[0].averageRate);
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list,
+                    };
+                } else {
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+        });
+
+        $('#activityTable').bootstrapTable('destroy');
+        $('#activityTable').bootstrapTable({
+            columns: [
+                {field: 'giftId', title: '礼物ID', align: 'center', valign: 'middle', width: 350, visible: false},
+                {field: 'giftName', title: '礼物名称', align: 'center', valign: 'middle', width: 400},
+                {field: 'goldPrice', title: '礼物金币', align: 'center', valign: 'middle', width: 400},
+                {
+                    field: 'inputNum',
+                    title: '投放数量',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 400,
+                    formatter: function () {
+                        return '<a href="#" id="inputNum" data-type="number" data-title="投放数量">1</a>';
+                    }
+                },
+                {
+                    field: 'giftId',
+                    title: '操作',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 400,
+                    formatter: function (val, row) {
+                        return `<button class='btn btn-primary opt-push' data-giftId="${row.giftId}" data-giftName="${row.giftName}">奖励</button>`;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            sortStable: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#activityToolbar',
+            url: '/admin/gift/getHighPriceGift.action?giftType=3',
+            method: 'GET',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    return {
+                        "total": res.data.length,
+                        "rows": res.data
+                    };
+                } else {
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+        });
+        $('#inputNum').editable();
+    });
+
+    $('#reportStartDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        minView: "hour",
+        todayHighlight: true
+    });
+
+    $('#reportEndDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        minView: "hour",
+        todayHighlight: true
+    });
+
+    // $("#push").on('click', function () {
+    //     erbanNo = $("#erbanNo").val();
+    //     if (erbanNo == '') {
+    //         $("#tipMsg").text("请输入拉贝号");
+    //         $("#tipModal").modal('show');
+    //         return;
+    //     }
+    //     // 打开编辑弹窗
+    //     $("#addModal").modal('show');
+    // });
+
+    $("#table").on('click', '.opt-go', function () {
+        erbanNo = $(this).attr("data-erbanNo");
+        nick = $(this).attr("data-nick");
+        // 打开编辑弹窗
+        $("#addModal").modal('show');
+    });
+
+    $("#activityTable").on("click", '.opt-push', function () {
+        const giftId = $(this).attr("data-giftId");
+        const giftName = $(this).attr("data-giftName");
+        if (giftId == 'undefined') {
+            $("#tipMsg").text("giftId有误!");
+            $("#tipModal").modal('show');
+            return;
+        }
+
+        if (confirm(`确定给${nick}奖励1个${giftName}吗?`)) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/miningmust/add",
+                data: {
+                    'erbanNo': erbanNo,
+                    "giftId": giftId
+                },
+                dataType: "json",
+                success: function (json) {
+                    if (json.code == 200) {
+                        $("#tipMsg").text("奖励成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("奖励失败，errorCode: " + json.message);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (json) {
+                    $("#tipMsg").text("奖励失败，网络出错");
+                    $("#tipModal").modal('show');
+                }
+            });
+        }
+    });
+
+    // 导出到Excel
+    $('#exportExcel').click(function () {
+        const param = $("#form").serialize();
+        const url = "/admin/treasureBoxReport/export?" + param + "&giftType=3";
+        window.location.href = url;
+    });
+
+    // 获取当前时间, 格式为: yyyy-MM-dd
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

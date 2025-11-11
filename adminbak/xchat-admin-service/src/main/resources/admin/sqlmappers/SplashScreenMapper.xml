@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.SplashScreenMapper">
+    <resultMap id="BaseResultMap" type="com.erban.admin.main.dto.SplashScreenDTO">
+        <id column="pic_id" property="picId" jdbcType="INTEGER"/>
+        <result column="pic_name" property="picName" jdbcType="VARCHAR"/>
+        <result column="user_type" property="userType" jdbcType="TINYINT"/>
+        <result column="pic_status" property="picStatus" jdbcType="TINYINT"/>
+        <result column="pic_image" property="picImage" jdbcType="VARCHAR"/>
+        <result column="pic_url" property="picUrl" jdbcType="VARCHAR"/>
+        <result column="pic_type" property="picType" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <insert id="insertSplashScreen">
+        <selectKey resultType="java.lang.Integer" keyProperty="picId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into app_start_pic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="picName != null">
+                pic_name,
+            </if>
+            <if test="picStatus != null">
+                pic_status,
+            </if>
+            <if test="picImage != null">
+                pic_image,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="picType != null">
+                pic_type,
+            </if>
+            <if test="picUrl != null">
+                pic_url,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="startDate != null">
+                start_time,
+            </if>
+            <if test="endDate != null">
+                end_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="picName != null">
+                #{picName,jdbcType=VARCHAR},
+            </if>
+            <if test="picStatus != null">
+                #{picStatus,jdbcType=TINYINT},
+            </if>
+            <if test="picImage != null">
+                #{picImage,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=TINYINT},
+            </if>
+            <if test="picType != null">
+                #{picType,jdbcType=TINYINT},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateSplashScreen">
+        update app_start_pic
+        <set>
+            <if test="picName != null">
+                pic_name = #{picName,jdbcType=VARCHAR},
+            </if>
+            <if test="picStatus != null">
+                pic_status = #{picStatus,jdbcType=TINYINT},
+            </if>
+            <if test="picImage != null">
+                pic_image = #{picImage,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=TINYINT},
+            </if>
+            <if test="picType != null">
+                pic_type = #{picType,jdbcType=TINYINT},
+            </if>
+            <if test="picUrl != null">
+                pic_url = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="startDate != null">
+                start_time = #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                end_time = #{endDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pic_id = #{picId,jdbcType=INTEGER}
+    </update>
+    <select id="queryByCondition" resultMap="BaseResultMap">
+        select pic_id, pic_name, user_type, pic_status, pic_image, pic_url, pic_type, create_time, start_time, end_time
+        from app_start_pic
+        <where>
+            <if test="type != null and type != ''">
+                and pic_type = #{type}
+            </if>
+            <if test="status != null and status != ''">
+                and pic_status = #{status}
+            </if>
+            <if test="userType != null and userType != ''">
+                and user_type = #{userType}
+            </if>
+        </where>
+    </select>
+    <select id="queryByID" resultMap="BaseResultMap">
+        select pic_id, pic_name, user_type, pic_status, pic_image, pic_url, pic_type, create_time, start_time, end_time
+        from app_start_pic
+        where pic_id = #{id}
+    </select>
+</mapper>

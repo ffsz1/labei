@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.NobleResMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.NobleRes" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="noble_id" property="nobleId" jdbcType="INTEGER" />
+    <result column="noble_name" property="nobleName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="preview" property="preview" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="res_type" property="resType" jdbcType="TINYINT" />
+    <result column="is_dyn" property="isDyn" jdbcType="TINYINT" />
+    <result column="is_def" property="isDef" jdbcType="TINYINT" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="tmpstr" property="tmpstr" jdbcType="VARCHAR" />
+    <result column="tmpint" property="tmpint" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="selectResList" resultMap="BaseResultMap">
+    select * from noble_res where res_type=#{0} and id not in (#{1}) order by seq desc limit #{2},#{3}
+  </select>
+</mapper>

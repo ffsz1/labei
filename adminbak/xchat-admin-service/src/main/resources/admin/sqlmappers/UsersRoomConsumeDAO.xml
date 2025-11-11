@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.UserRoomConsumeDAO" >
+
+    <select id="countUserConsume" resultType="com.erban.admin.main.dto.UserRoomConsumeDTO">
+        SELECT
+            count( ur.uid ) AS userNum,
+            ur.room_uid AS roomUid,
+            r.title AS title,
+            u.erban_no AS erbanNo,
+            u.nick AS nick,
+            DATE_FORMAT( ur.first_date, '%Y-%m-%d' ) AS firstDate,
+            GROUP_CONCAT( ur.uid ) AS  uids
+        FROM
+            user_room_consume ur
+        LEFT JOIN room r ON r.uid = ur.room_uid
+        LEFT JOIN users u ON u.uid = r.uid
+        WHERE
+            ur.first_date BETWEEN #{beginDate} AND #{endDate}
+            <if test="roomUid != null">
+                AND ur.room_uid = #{roomUid}
+            </if>
+        GROUP BY
+            roomUid,
+            firstDate;
+    </select>
+
+    <insert id="saveConsume">
+        INSERT INTO user_room_consume (
+          room_uid, uid, first_date, last_date, total_gold, total_num, update_date
+        ) VALUES (
+          #{roomUid}, #{uid}, #{firstDate}, #{lastDate}, #{totalGold}, #{totalNum}, #{updateDate}
+        )
+        <trim prefix="ON DUPLICATE KEY UPDATE" suffixOverrides=",">
+            <if test="lastDate != null">
+                last_date = #{lastDate},
+            </if>
+            <if test="totalGold != null">
+                total_gold = total_gold + #{totalGold},
+            </if>
+            <if test="totalGold != null">
+                total_num = total_num + #{totalNum},
+            </if>
+        </trim>
+    </insert>
+</mapper>

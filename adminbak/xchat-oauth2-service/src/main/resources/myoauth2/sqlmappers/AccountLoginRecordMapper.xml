@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xchat.oauth2.service.infrastructure.myaccountmybatis.AccountLoginRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.xchat.oauth2.service.model.AccountLoginRecord" >
+    <id column="record_id" property="recordId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="login_type" property="loginType" jdbcType="TINYINT" />
+    <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+    <result column="weixin_openid" property="weixinOpenid" jdbcType="VARCHAR" />
+    <result column="qq_openid" property="qqOpenid" jdbcType="VARCHAR" />
+    <result column="os" property="os" jdbcType="VARCHAR" />
+    <result column="osVersion" property="osversion" jdbcType="VARCHAR" />
+    <result column="app" property="app" jdbcType="VARCHAR" />
+    <result column="imei" property="imei" jdbcType="VARCHAR" />
+    <result column="isp_type" property="ispType" jdbcType="VARCHAR" />
+    <result column="net_type" property="netType" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+    <result column="app_version" property="appVersion" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    record_id, uid, erban_no, phone, login_type, login_ip, weixin_openid, qq_openid, 
+    os, osVersion, app, imei, isp_type, net_type, model, device_id, app_version, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xchat.oauth2.service.model.AccountLoginRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from account_login_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_login_record
+    where record_id = #{recordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from account_login_record
+    where record_id = #{recordId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xchat.oauth2.service.model.AccountLoginRecordExample" >
+    delete from account_login_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xchat.oauth2.service.model.AccountLoginRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="recordId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_login_record (uid, erban_no, phone, 
+      login_type, login_ip, weixin_openid, 
+      qq_openid, os, osVersion, 
+      app, imei, isp_type, 
+      net_type, model, device_id, 
+      app_version, create_time)
+    values (#{uid,jdbcType=BIGINT}, #{erbanNo,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, 
+      #{loginType,jdbcType=TINYINT}, #{loginIp,jdbcType=VARCHAR}, #{weixinOpenid,jdbcType=VARCHAR}, 
+      #{qqOpenid,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{osversion,jdbcType=VARCHAR}, 
+      #{app,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{ispType,jdbcType=VARCHAR}, 
+      #{netType,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, 
+      #{appVersion,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xchat.oauth2.service.model.AccountLoginRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="recordId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_login_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="erbanNo != null" >
+        erban_no,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="loginType != null" >
+        login_type,
+      </if>
+      <if test="loginIp != null" >
+        login_ip,
+      </if>
+      <if test="weixinOpenid != null" >
+        weixin_openid,
+      </if>
+      <if test="qqOpenid != null" >
+        qq_openid,
+      </if>
+      <if test="os != null" >
+        os,
+      </if>
+      <if test="osversion != null" >
+        osVersion,
+      </if>
+      <if test="app != null" >
+        app,
+      </if>
+      <if test="imei != null" >
+        imei,
+      </if>
+      <if test="ispType != null" >
+        isp_type,
+      </if>
+      <if test="netType != null" >
+        net_type,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="appVersion != null" >
+        app_version,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null" >
+        #{erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginType != null" >
+        #{loginType,jdbcType=TINYINT},
+      </if>
+      <if test="loginIp != null" >
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinOpenid != null" >
+        #{weixinOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="qqOpenid != null" >
+        #{qqOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="osversion != null" >
+        #{osversion,jdbcType=VARCHAR},
+      </if>
+      <if test="app != null" >
+        #{app,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="ispType != null" >
+        #{ispType,jdbcType=VARCHAR},
+      </if>
+      <if test="netType != null" >
+        #{netType,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null" >
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xchat.oauth2.service.model.AccountLoginRecordExample" resultType="java.lang.Integer" >
+    select count(*) from account_login_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update account_login_record
+    <set >
+      <if test="record.recordId != null" >
+        record_id = #{record.recordId,jdbcType=BIGINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.erbanNo != null" >
+        erban_no = #{record.erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginType != null" >
+        login_type = #{record.loginType,jdbcType=TINYINT},
+      </if>
+      <if test="record.loginIp != null" >
+        login_ip = #{record.loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinOpenid != null" >
+        weixin_openid = #{record.weixinOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqOpenid != null" >
+        qq_openid = #{record.qqOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.os != null" >
+        os = #{record.os,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osversion != null" >
+        osVersion = #{record.osversion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.app != null" >
+        app = #{record.app,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imei != null" >
+        imei = #{record.imei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ispType != null" >
+        isp_type = #{record.ispType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.netType != null" >
+        net_type = #{record.netType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.model != null" >
+        model = #{record.model,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceId != null" >
+        device_id = #{record.deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appVersion != null" >
+        app_version = #{record.appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update account_login_record
+    set record_id = #{record.recordId,jdbcType=BIGINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      erban_no = #{record.erbanNo,jdbcType=BIGINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      login_type = #{record.loginType,jdbcType=TINYINT},
+      login_ip = #{record.loginIp,jdbcType=VARCHAR},
+      weixin_openid = #{record.weixinOpenid,jdbcType=VARCHAR},
+      qq_openid = #{record.qqOpenid,jdbcType=VARCHAR},
+      os = #{record.os,jdbcType=VARCHAR},
+      osVersion = #{record.osversion,jdbcType=VARCHAR},
+      app = #{record.app,jdbcType=VARCHAR},
+      imei = #{record.imei,jdbcType=VARCHAR},
+      isp_type = #{record.ispType,jdbcType=VARCHAR},
+      net_type = #{record.netType,jdbcType=VARCHAR},
+      model = #{record.model,jdbcType=VARCHAR},
+      device_id = #{record.deviceId,jdbcType=VARCHAR},
+      app_version = #{record.appVersion,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xchat.oauth2.service.model.AccountLoginRecord" >
+    update account_login_record
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null" >
+        erban_no = #{erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginType != null" >
+        login_type = #{loginType,jdbcType=TINYINT},
+      </if>
+      <if test="loginIp != null" >
+        login_ip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinOpenid != null" >
+        weixin_openid = #{weixinOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="qqOpenid != null" >
+        qq_openid = #{qqOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="osversion != null" >
+        osVersion = #{osversion,jdbcType=VARCHAR},
+      </if>
+      <if test="app != null" >
+        app = #{app,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null" >
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="ispType != null" >
+        isp_type = #{ispType,jdbcType=VARCHAR},
+      </if>
+      <if test="netType != null" >
+        net_type = #{netType,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null" >
+        app_version = #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xchat.oauth2.service.model.AccountLoginRecord" >
+    update account_login_record
+    set uid = #{uid,jdbcType=BIGINT},
+      erban_no = #{erbanNo,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      login_type = #{loginType,jdbcType=TINYINT},
+      login_ip = #{loginIp,jdbcType=VARCHAR},
+      weixin_openid = #{weixinOpenid,jdbcType=VARCHAR},
+      qq_openid = #{qqOpenid,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      osVersion = #{osversion,jdbcType=VARCHAR},
+      app = #{app,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR},
+      isp_type = #{ispType,jdbcType=VARCHAR},
+      net_type = #{netType,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where record_id = #{recordId,jdbcType=BIGINT}
+  </update>
+  <select id="getLatestLogin" resultMap="BaseResultMap" parameterType="java.util.List">
+    SELECT uid, max(create_time) as create_time FROM account_login_record
+    WHERE uid IN
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    GROUP BY uid
+  </select>
+</mapper>

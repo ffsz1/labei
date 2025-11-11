@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.TestPurseMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.model.TestPurse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="mysql_gold" property="mysqlGold" jdbcType="BIGINT" />
+    <result column="cache_gold" property="cacheGold" jdbcType="BIGINT" />
+    <result column="mysql_diamond" property="mysqlDiamond" jdbcType="DOUBLE" />
+    <result column="cache_diamond" property="cacheDiamond" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uid, erban_no, nick, mysql_gold, cache_gold, mysql_diamond, cache_diamond, create_time, 
+    version
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.admin.main.model.TestPurseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from test_purse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_purse
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from test_purse
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.admin.main.model.TestPurseExample" >
+    delete from test_purse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.admin.main.model.TestPurse" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into test_purse (uid, erban_no, nick, 
+      mysql_gold, cache_gold, mysql_diamond, 
+      cache_diamond, create_time, version
+      )
+    values (#{uid,jdbcType=BIGINT}, #{erbanNo,jdbcType=BIGINT}, #{nick,jdbcType=VARCHAR}, 
+      #{mysqlGold,jdbcType=BIGINT}, #{cacheGold,jdbcType=BIGINT}, #{mysqlDiamond,jdbcType=DOUBLE}, 
+      #{cacheDiamond,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{version,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.admin.main.model.TestPurse" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into test_purse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="erbanNo != null" >
+        erban_no,
+      </if>
+      <if test="nick != null" >
+        nick,
+      </if>
+      <if test="mysqlGold != null" >
+        mysql_gold,
+      </if>
+      <if test="cacheGold != null" >
+        cache_gold,
+      </if>
+      <if test="mysqlDiamond != null" >
+        mysql_diamond,
+      </if>
+      <if test="cacheDiamond != null" >
+        cache_diamond,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null" >
+        #{erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="nick != null" >
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="mysqlGold != null" >
+        #{mysqlGold,jdbcType=BIGINT},
+      </if>
+      <if test="cacheGold != null" >
+        #{cacheGold,jdbcType=BIGINT},
+      </if>
+      <if test="mysqlDiamond != null" >
+        #{mysqlDiamond,jdbcType=DOUBLE},
+      </if>
+      <if test="cacheDiamond != null" >
+        #{cacheDiamond,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.admin.main.model.TestPurseExample" resultType="java.lang.Integer" >
+    select count(*) from test_purse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update test_purse
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.erbanNo != null" >
+        erban_no = #{record.erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.nick != null" >
+        nick = #{record.nick,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mysqlGold != null" >
+        mysql_gold = #{record.mysqlGold,jdbcType=BIGINT},
+      </if>
+      <if test="record.cacheGold != null" >
+        cache_gold = #{record.cacheGold,jdbcType=BIGINT},
+      </if>
+      <if test="record.mysqlDiamond != null" >
+        mysql_diamond = #{record.mysqlDiamond,jdbcType=DOUBLE},
+      </if>
+      <if test="record.cacheDiamond != null" >
+        cache_diamond = #{record.cacheDiamond,jdbcType=DOUBLE},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update test_purse
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=BIGINT},
+      erban_no = #{record.erbanNo,jdbcType=BIGINT},
+      nick = #{record.nick,jdbcType=VARCHAR},
+      mysql_gold = #{record.mysqlGold,jdbcType=BIGINT},
+      cache_gold = #{record.cacheGold,jdbcType=BIGINT},
+      mysql_diamond = #{record.mysqlDiamond,jdbcType=DOUBLE},
+      cache_diamond = #{record.cacheDiamond,jdbcType=DOUBLE},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      version = #{record.version,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.admin.main.model.TestPurse" >
+    update test_purse
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null" >
+        erban_no = #{erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="mysqlGold != null" >
+        mysql_gold = #{mysqlGold,jdbcType=BIGINT},
+      </if>
+      <if test="cacheGold != null" >
+        cache_gold = #{cacheGold,jdbcType=BIGINT},
+      </if>
+      <if test="mysqlDiamond != null" >
+        mysql_diamond = #{mysqlDiamond,jdbcType=DOUBLE},
+      </if>
+      <if test="cacheDiamond != null" >
+        cache_diamond = #{cacheDiamond,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.admin.main.model.TestPurse" >
+    update test_purse
+    set uid = #{uid,jdbcType=BIGINT},
+      erban_no = #{erbanNo,jdbcType=BIGINT},
+      nick = #{nick,jdbcType=VARCHAR},
+      mysql_gold = #{mysqlGold,jdbcType=BIGINT},
+      cache_gold = #{cacheGold,jdbcType=BIGINT},
+      mysql_diamond = #{mysqlDiamond,jdbcType=DOUBLE},
+      cache_diamond = #{cacheDiamond,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

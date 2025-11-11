@@ -1,0 +1,604 @@
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+<style>
+    #condition_type-tog {
+        height: 34px;
+    }
+
+    .canvas {
+        display: none;
+        width: 150px;
+        height: 150px;
+        background: #f4f4f4;
+        margin-bottom: 1rem;
+    }
+
+    #vggUploadBtn, #picUploadBtn {
+        display: block;
+        width: 150px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="gift-add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                    <button id="gift-multiDel" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign"></i> 批量删除
+                    </button>
+                    <select name="condition_type" id="condition_type" data-btn-class="btn-warning">
+                        <option value="0" selected="selected">全部</option>
+                        <option value="1">有效</option>
+                        <option value="2">无效</option>
+                    </select>
+                    <button id="gift-refresh" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-wrench"></i> 查询
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">头饰信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="giftForm">
+                    <input type="hidden" name="headwearId" id="headwearId"/>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">头饰类型</label>
+                        <div class="col-sm-5">
+                            <label class="radio-inline"><input type="radio" name="allowPurse" value="1"
+                                                               checked>商城头饰</label>
+                            <label class="radio-inline"><input type="radio" name="allowPurse" value="0">活动头饰</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="leftLevel" class="col-sm-2 control-label">等级要求</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control validate[required]" name="leftLevel" id="leftLevel"
+                                   placeholder="*设置达到该等级的用户有效">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="headwearName" class="col-sm-2 control-label">头饰名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="headwearName"
+                                   id="headwearName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="goldPrice" class="col-sm-2 control-label">头饰金币</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control validate[required]" name="goldPrice"
+                                   id="goldPrice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">头饰状态</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="headwearStatus" value="1"
+                                                               checked>有效</label>
+                            <label class="radio-inline"><input type="radio" name="headwearStatus" value="2">无效</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">vgg特效</label>
+                            <div class="col-sm-3">
+                                <label class="radio-inline"><input type="radio" name="hasVggPic" value="0"
+                                                                   checked>否</label>
+                                <label class="radio-inline"><input type="radio" name="hasVggPic" value="1">是</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">头饰图片:</label>
+                        <div class="col-sm-10">
+                            <img src="/static/AdminLTE/img/add.png" id="picImage" style="width: 150px; margin-bottom: 1rem; background-color: #f4f4f4" alt="giftImage">
+                            <input type="file" id="picUploadFile" name="file" style="display: none"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga,image/*">
+                            <button class="btn btn-success" type="button" id="picUploadBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="picUrl" name="picUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">VGG图片:</label>
+                        <div class="col-sm-10">
+                            <div class="canvas" id="vggCanvas"></div>
+                            <img src="/static/AdminLTE/img/add.png" id="vggImage" style="width: 150px; margin-bottom: 1rem;" alt="vggImage">
+                            <input type="file" id="vggUploadFile" name="file" style="display: none"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga,image/*">
+                            <button class="btn btn-success" type="button" id="vggUploadBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="vggUrl" name="vggUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">角标图片:</label>
+                        <div class="col-sm-10">
+                            <img src="/static/AdminLTE/img/add.png" id="markImage" style="width: 50px;" alt="">
+                            <input type="file" id="markPicFile" name="file"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga">
+                            <button class="btn btn-success" type="button" id="markPicBtn">上传</button>
+                            <button class="btn btn-danger" type="button" id="delPicBtn">删除</button>
+                            <input type="hidden" id="markPic" name="markPic" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-2 control-label">排序</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control validate[required]" name="seqNo" id="seqNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="effectiveTime" class="col-sm-2 control-label">有效期(天)</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="effectiveTime" id="effectiveTime">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    ComboboxHelper.build(null, '#giftType');
+    ComboboxHelper.build(null, '#condition_type');
+    ComboboxHelper.build(null, '#nobleId');
+
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {field: 'headwearId', title: '头饰Id', align: 'center', width: '10%', visible: false},
+                {field: 'headwearName', title: '头饰名称', align: 'center', width: 200},
+                {
+                    field: 'allowPurse', title: '头饰类型', align: 'center', width: 150,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return "商城头饰"
+                        } else {
+                            return "活动头饰"
+                        }
+                    }
+                },
+                {field: 'leftLevel', title: '等级限制', align: 'center', width: 150},
+                {
+                    field: 'headwearStatus',
+                    title: '头饰状态',
+                    align: 'center',
+                    width: '10%',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '有效';
+                        } else {
+                            return '无效';
+                        }
+                    }
+                },
+                {field: 'goldPrice', title: '头饰金币', align: 'center', width: 150},
+                {
+                    field: 'hasVggPic',
+                    title: 'vgg特效',
+                    align: 'center',
+                    width: '5%',
+                    formatter: function (val, row, index) {
+                        if (val == true) {
+                            return '有';
+                        } else {
+                            return '无'
+                        }
+                    }
+                },
+                {
+                    field: 'isTimeLimit',
+                    title: '限时头饰',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        if (val == true) {
+                            return '是';
+                        } else {
+                            return '否'
+                        }
+                    }
+                },
+                {field: 'effectiveTime', title: '时长(天)', align: 'center', width: 150},
+                {field: 'seqNo', title: '排序', align: 'center', width: 150},
+                {
+                    field: 'createTime', title: '创建时间', align: 'center', width: 200,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const newDate = new Date();
+                            newDate.setTime(val);
+                            return newDate.toLocaleString();
+                            // const date = new Date(val);
+                            // return date.format("yyyy-MM-dd hh:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'headwearId',
+                    title: '操作',
+                    align: 'center',
+                    width: 300,
+                    formatter: function (val, row, index) {
+                        return '<button class="btn btn-sm btn-success opt-edit" data-id=' + val + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i> 编辑</button>' +
+                            '&nbsp;&nbsp;<button class="btn btn-sm btn-danger opt-remove" data-id=' + val +
+                            '><i class="glyphicon glyphicon-remove"></i> 删除</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [1, 10, 20, 30, 50],
+            search: true,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: '/admin/headwear/getList.action?type=' + ComboboxHelper.getSelected("#condition_type"),
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+
+        $("#table").on("click", '.opt-remove', function () {
+            const id = $(this).attr("data-id");
+            if (id == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+
+            if (confirm("你确认删除该记录吗?" +
+                "\r\n删除后再也不能找回, 请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/headwear/del.action",
+                    data: {'ids': JSON.stringify([id])},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#gift-add").click(function () {
+            // 打开编辑弹窗
+            $("#giftModal").modal('show');
+            $("#giftForm")[0].reset();
+
+            $('#picUrl').val('');
+            $('#picImage').attr("src", '/static/AdminLTE/img/add.png');
+            $('#vggUrl').val('');
+            $('#vggImage').attr("src", '/static/AdminLTE/img/add.png');
+            $('#vggImage').css('display', 'block');
+            $('#vggCanvas').css('display', 'none').html("");
+            $("#seqNo").val('');
+            $("#leftLevel").val('');
+            $("#markPic").val('');
+            $('#markImage').attr("src", '/static/AdminLTE/img/add.png');
+
+            $("#headwearId").val('');
+            $("#headwearName").attr('readonly', false);
+            $("#goldPrice").attr('readonly', false);
+
+            $("#nobleId").btComboBox('disable');
+            ComboboxHelper.setDef("#nobleId", '0');
+
+            ComboboxHelper.setDef("#giftType", '2');
+        });
+
+        $("#nobleId").on('change', function () {
+            if (ComboboxHelper.getSelected("#nobleId") != 0) {
+                const nobleName = $("#nobleId").btComboBox('selectedOption')[1];
+                $("#nobleName").val(nobleName);
+            } else {
+                $("#nobleName").val('');
+            }
+        });
+
+        $("#notNoble").on('change', function () {
+            ComboboxHelper.setDef("#nobleId", '0');
+            $("#nobleName").val('');
+            $("#nobleId").btComboBox('disable');
+        });
+
+        $("#isNoble").on('change', function () {
+            $("#nobleId").btComboBox('enable');
+        });
+
+        $("#gift-refresh").click(function () {
+            $("#table").bootstrapTable('refresh', {url: '/admin/headwear/getList.action?type=' + ComboboxHelper.getSelected("#condition_type")});
+        });
+
+        $("#gift-multiDel").click(function () {
+            const rows = $("#table").bootstrapTable("getSelections");
+            if (rows.length == 0) {
+                alert("请先选择要删除的记录");
+                return;
+            }
+
+            const idArr = [];
+            for (let i = 0; i < rows.length; i++) {
+                idArr.push(rows[i]['headwearId']);
+            }
+
+            if (confirm("你确认批量删除该记录吗?" +
+                "\r\n删除后再也不能找回, 请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/headwear/del.action",
+                    data: {'ids': JSON.stringify(idArr)},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#picImage').on('click', function () {
+            $('#picUploadFile').click();
+        });
+
+        $('#picUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'picUploadFile',    //需要上传的文件域的ID, 即<input type="file">的ID。
+                url: '/admin/file/upload', //后台方法的路径
+                type: 'post',   //当要提交自定义参数时, 这个参数要设置成post
+                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。
+                secureuri: false,   //是否启用安全提交, 默认为false。
+                async: false,   //是否是异步
+                success: function (json) {   //提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。
+                    if (json.path) {
+                        $('#picUrl').val(json.path);
+                        $('#picImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) {  //提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        });
+
+        $('#vggImage, #vggCanvas').on('click', function () {
+            $('#vggUploadFile').click();
+        });
+
+        $('#vggUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                url: '/admin/file/upload',//后台请求地址
+                type: 'post',//请求方式  当要提交自定义参数时, 这个参数要设置成post
+                secureuri: false,//是否启用安全提交, 默认为false。
+                async: false,   //是否是异步
+                fileElementId: 'vggUploadFile',// 需要上传的文件域的ID, 即<input type="file">的ID。
+                dataType: 'json',//服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。如果json返回的带pre,这里修改为json即可解决。
+                success: function (json, status) {//提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。
+                    console.log(json);
+                    if (json.path) {
+                        $('#vggUrl').val(json.path);
+                        // $('#vggImage').attr("src", json.path);
+                        $('#vggImage').css('display', 'none');
+                        $('#vggCanvas').css('display', 'block');
+                        showVGG(json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        // 展示VGG图片
+        function showVGG(resourceImage) {
+            const player = new SVGA.Player('#vggCanvas');
+            const parser = new SVGA.Parser('#vggCanvas');
+            parser.load(resourceImage, function (videoItem) {
+                player.setVideoItem(videoItem);
+                player.startAnimation();
+            });
+        }
+
+        $('#markPicBtn').on('click', function () {
+            $.ajaxFileUpload({
+                url: '/admin/file/upload',//后台请求地址
+                type: 'post',//请求方式  当要提交自定义参数时, 这个参数要设置成post
+                secureuri: false,//是否启用安全提交, 默认为false。
+                async: false,   //是否是异步
+                fileElementId: 'markPicFile',// 需要上传的文件域的ID, 即<input type="file">的ID。
+                dataType: 'json',//服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。如果json返回的带pre,这里修改为json即可解决。
+                success: function (json, status) {//提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。
+                    console.log(json);
+                    if (json.path) {
+                        $('#markPic').val(json.path);
+                        $('#markImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#cancel").click(function () {
+            TableHelper.unCheckAll("#table");
+        });
+
+        function parseNum(val) {
+            if (val == undefined || val == 'false' || val == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+
+        $("#table").on("click", '.opt-edit', function () {
+            const id = $(this).attr("data-id");
+            $.ajax({
+                type: "get",
+                url: "/admin/headwear/get.action",
+                data: {id: id},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#headwearId").val(json.entity.headwearId);
+                        $("#headwearName").val(json.entity.headwearName);
+                        $("#goldPrice").val(json.entity.goldPrice);
+                        $("#effectiveTime").val(json.entity.effectiveTime);
+                        $("#seqNo").val(json.entity.seqNo);
+
+                        $("#leftLevel").val(json.entity.leftLevel);
+                        $("#markPic").val(json.entity.markPic);
+                        $('#markImage').attr("src", json.entity.markPic);
+                        $("input:radio[name='allowPurse'][value=" + json.entity.allow + "]").attr("checked", true);
+
+                        ComboboxHelper.setDef("#giftType", json.entity.giftType);
+
+                        const hasVggPic = parseNum(json.entity.hasVggPic);
+                        const isTimeLimit = parseNum(json.entity.isTimeLimit);
+
+                        // 头饰状态的值跟其他不同, 1为有效 2为无效
+                        if (json.entity.headwearStatus == 1) {
+                            $("input:radio[name='headwearStatus']")[0].checked = true;
+                        } else {
+                            $("input:radio[name='headwearStatus']")[1].checked = true;
+                        }
+
+                        // 设置radio
+                        $("input:radio[name='hasVggPic']")[hasVggPic].checked = true;
+                        if (json.entity.allowPurse) {
+                            $("input:radio[name='allowPurse'][value='1']").prop("checked", "checked");
+                        } else {
+                            $("input:radio[name='allowPurse'][value='0']").prop("checked", "checked");
+                        }
+
+                        // 设置头饰图片
+                        $('#picUrl').val(json.entity.picUrl);
+                        $('#picImage').attr("src", json.entity.picUrl);
+
+                        // 设置vgg图片
+                        if (json.entity.vggUrl) {
+                            $('#vggUrl').val(json.entity.vggUrl);
+                            // $('#vggImage').attr("src", json.entity.vggUrl);
+                            $('#vggImage').css('display', 'none');
+                            $('#vggCanvas').css('display', 'block');
+                            showVGG(json.entity.vggUrl);
+                        } else {
+                            $('#vggImage').attr("src", '/static/AdminLTE/img/add.png');
+                            $('#vggImage').css('display', 'block');
+                            $('#vggCanvas').css('display', 'none').html("");
+                        }
+
+                        // 打开编辑弹窗
+                        $("#giftModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("获取菜单信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#delPicBtn").on("click", function () {
+            $("#markPic").val("");
+            $("#markImage").attr("src", "");
+        });
+
+        $("#save").click(function () {
+            if ($("#giftForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/headwear/save.action",
+                    data: $('#giftForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#giftModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败." + json.msg);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            };
+        });
+    });
+</script>

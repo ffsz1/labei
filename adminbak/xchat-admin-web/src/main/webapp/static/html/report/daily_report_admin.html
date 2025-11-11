@@ -1,0 +1,140 @@
+<style>
+    .bar1, .bar2 {
+        margin-bottom: 10px;
+    }
+
+    label.col-sm-1 {
+        padding: 0;
+        line-height: 30px;
+        text-align: right;
+        /*padding-right: 4px;*/
+    }
+
+    label.col-sm-1 {
+        padding: 0;
+        line-height: 30px;
+        text-align: right;
+        /*padding-right: 4px;*/
+    }
+
+    input, select {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    #btnSearch {
+        margin-left: 36px;
+    }
+
+    .record {
+        margin-top: 10px;
+    }
+
+    .record .title {
+        font-size: 16px;
+    }
+
+    #table {
+        width: 400%;
+        max-width: unset;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="btnSearch" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i> 查询
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'str1', title: '时间', align: 'center', valign: 'middle', width: '300'},
+                {field: 'str2', title: '新注册人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str3', title: '邀请注册人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str4', title: '新充值人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str5', title: '新充值金额', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str6', title: '老用户活跃人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str7', title: '老用户充值人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str8', title: '老用户充值金额', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str9', title: '钻石兑金币人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str10', title: '钻石兑金币金额', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str11', title: '钻石提现人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str12', title: '钻石提现金额', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str13', title: '红包提现人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str14', title: '红包提现金额', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str15', title: '新用户充值人数(8元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str16', title: '新用户充值人数(9-48元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str17', title: '新用户充值人数(49-98元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str18', title: '新用户充值人数(99-198)元', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str19', title: '新用户充值人数(199-498)元', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str20', title: '新用户充值人数(499元--)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str21', title: '新用户充值金额(8元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str22', title: '新用户充值金额(9-48元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str23', title: '新用户充值金额(49-98元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str24', title: '新用户充值金额(99-198)元', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str25', title: '新用户充值金额(199-498)元', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str26', title: '新用户充值金额(499元--)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str27', title: '老用户充值人数(8元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str28', title: '老用户充值人数(9-48元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str29', title: '老用户充值人数(49-98元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str30', title: '老用户充值人数(99-198)元', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str31', title: '老用户充值人数(199-498)元', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str32', title: '老用户充值人数(499元--)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str33', title: '老用户充值金额(8元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str34', title: '老用户充值金额(9-48元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str35', title: '老用户充值金额(49-98元)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str36', title: '老用户充值金额(99-198)元', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str37', title: '老用户充值金额(199-498)元', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str38', title: '老用户充值金额(499元--)', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str39', title: '宝箱人数', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str40', title: '总投入', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str41', title: '总抽中', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str42', title: '官方赠送金币', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str43', title: '活动奖励金币', align: 'center', valign: 'middle', width: '200'},
+                {field: 'str44', title: '公款充值金币', align: 'center', valign: 'middle', width: '200'}
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/dailyReport/list.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+    });
+
+    // 查询刷新
+    $('#btnSearch').on('click', function () {
+        TableHelper.doRefresh('#table');
+    });
+</script>

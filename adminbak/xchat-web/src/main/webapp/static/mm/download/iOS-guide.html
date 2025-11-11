@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>拉贝</title>
+    <script>
+      var layout_width = 750;
+      (function (doc, win) {
+        var docEl = doc.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+          recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            if (clientWidth >= layout_width) {
+              docEl.style.fontSize = '100px';
+            } else {
+              docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+            }
+          };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+      })(document, window);
+    </script>
+    <link rel="stylesheet" href="../lib/common.css">
+    <link rel="stylesheet" href="../lib/swiper/swiper-4.1.6.min.css">
+    <style>
+        .bgi{
+            width: 100%;
+            height: 12.08rem;
+            background: url('images/bg.png') no-repeat;
+            background-size: 100%;
+            display: block;
+            text-align: center;
+        }
+        .btn{
+          width: 5.57rem;
+          height: 1rem;
+          display: inline-block;
+          margin-top: 10.3rem;
+        }
+        .guide{
+          width: 5.62rem;
+          height: 4.2rem;
+          display: block;
+          margin: 0 auto;
+        }
+        .tips-box{
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: none;
+        }
+        .tips-box>div{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .tips{
+          width: 85%;
+          margin: 0 auto;
+          background-color: #fff;
+          position: relative;
+        }
+        .tips>p{
+          font-size: 0.35rem;
+          color: #fff;
+          display: block;
+          width: 100%;
+          height: 1rem;
+          background-color: #37363b;
+          text-align: center;
+          line-height: 2.7;
+        }
+        .tips>span {
+            color: #fff;
+            font-size: 0.35rem;
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+        }
+
+        .close {
+            width: 0.7rem;
+            height: 0.7rem;
+            text-align: center;
+        }
+        #guided{
+          width: 100%;
+          height: 13.34rem;
+          position: fixed;
+          top: 0;
+          left: 0;
+          display:none;
+          
+        }
+        #guided>img{
+          display:block;
+          width: 100%;
+          height: 13.34rem;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="guided">
+      <img src="images/guide.png" >
+    </div>
+      
+        <div class="bgi">
+          <img src="images/btn.png" class="btn">
+        </div>
+        <div class="tips-box">
+          <div>
+              <div class="tips">
+                  <p>安装指导</p>
+                  <span class="close">X</span>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <img src="images/pic1.png" class="guide">
+                            </div>
+                            <div class="swiper-slide">
+                              <img src="images/pic2.png" class="guide">
+                            </div>
+                            <div class="swiper-slide">
+                              <img src="images/pic3.png" class="guide">
+                            </div>
+                            <div class="swiper-slide">
+                              <img src="images/pic4.png" class="guide">
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+          </div>
+        </div>
+        <script src="../lib/zepto.min.js"></script>
+        <script src="../lib/swiper/swiper-4.1.6.min.js"></script>
+        <script>
+          window.onload = function () { 
+          var mySwiper = new Swiper ('.swiper-container', {
+              direction: 'horizontal',
+              loop: false,
+              observer:true,
+              observeParents:true,
+              pagination: {
+                el: '.swiper-pagination'
+              }
+            })  
+          $('.btn').click(function(){
+            var ua = navigator.userAgent.toLowerCase();  
+            if(ua.match(/MicroMessenger/i)=="micromessenger") {  
+              $('#guided').show()
+                  setTimeout(function(){
+                    $('#guided').hide();
+                  },1500)
+                  return;
+            }
+            if (ua.match(/QQ/i) == "qq") {
+              $('#guided').show()
+                  setTimeout(function(){
+                    $('#guided').hide();
+                  },1500)
+                  return;
+            } 
+            location.href = 'https://itunes.apple.com/cn/app/%E7%94%9C%E7%94%9C%E8%AF%AD%E9%9F%B3/id1361922867?l=zh&ls=1&mt=8';
+          })   
+          $('.close').click(function(){
+            $('.tips-box').hide();
+          })   
+            }
+      
+        </script>
+  </body>
+</html>

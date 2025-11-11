@@ -1,0 +1,928 @@
+<style>
+    #skipType, #status {
+        margin-right: 10px;
+    }
+
+    .btn {
+        margin: 0 4px;
+    }
+
+    #uploadBtn, #addUploadBtn {
+        margin-top: 4px;
+    }
+
+    #skipUrlSort, #guildStatus, #addSkipUrlSort, #addBannerStatus {
+        height: 34px;
+    }
+
+    .attention {
+        line-height: 30px;
+        display: inline-block;
+        margin-top: 4px;
+        color: red;
+    }
+
+    #imgMask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 450px;
+        height: 150px;
+        padding: 4px;
+        background: #fff;
+        z-index: 999;
+        display: none;
+    }
+
+    #imgMask img {
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+    }
+
+    #toolbar select {
+        margin-right: 2rem;
+    }
+
+    #toolbar label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="guildTable"></div>
+                <div id="toolbar">
+                    <form id="form" class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label">公会id: </label>
+                            <input type="text" class="form-control"  id="guildNoReq">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">公会长id: </label>
+                            <input type="text" class="form-control"  id="erbanNoReq">
+                        </div>
+                        <a href="javascript:;" id="btnSearch" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i> 查询
+                        </a>
+                        <a href="javascript:;" id="addGuild" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 增加
+                        </a>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="guildModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="modalLabel">公会</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="guildForm">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">公会封面:</label>
+                        <div class="col-sm-9">
+                            <img src="" id="imgUrl" style="width: 250px;" alt="">
+                            <input type="file" id="uploadFile" name="uploadFile"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="uploadBtn">上传</button>
+                            <span class="attention">注意:图片尺寸请注意在750*250,选择图片后请点击上传按钮</span>
+                            <input type="hidden" id="logoUrl" name="logoUrl"
+                                   class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-sm-3 control-label">公会名称:</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control validate[required]" name="name" id="name" maxlength="12" >
+                            <input type="hidden" id="id" name="id">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">公会长ID:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="erbanNo" name="erbanNo" class="form-control validate[required]">
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveGuild">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="guildHallModal" tabindex="-1" role="dialog" aria-labelledby="modalHallLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                        <input type="hidden" id="hallGuildId" name="hallGuildId">
+                <h4 class="modal-title" id="modalHallLabel">厅列表</h4>
+            </div>
+            <div class="modal-body">
+                <div id="guildHallTable"></div>
+                <div id="guildHallToolbar">
+                    <a href="javascript:;" id="addGuildHall" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 增加
+                        </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addHallModal" tabindex="-1" role="dialog" aria-labelledby="addHallModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addHallModalLabel">新增厅</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addHallForm">
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">房间ID:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="hallErbanNo" name="hallErbanNo" class="form-control validate[required]">
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveHall">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 公会列表--成员列表 -->
+<div class="modal fade" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="modalMemberLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                        <input type="hidden" id="memberGuildId" name="memberGuildId">
+                <h4 class="modal-title" id="modalMemberLabel">成员列表</h4>
+            </div>
+            <div class="modal-body">
+                <div id="memberTable"></div>
+                <div id="memberToolbar">
+                    <a href="javascript:;" id="addMember" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 添加成员
+                        </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addMemberModalLabel">新增成员</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addMemberForm">
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">用户ID:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="memberErbanNo" name="memberErbanNo" class="form-control validate[required]">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">厅：</label>
+                        <div class="col-sm-9">
+                            <select id="memberHallId" name="memberHallId" class="form-control validate[required]">
+                               <option value="">请选择厅</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveMember">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 厅列表--厅成员列表 -->
+<div class="modal fade" id="hallMemberModal" tabindex="-1" role="dialog" aria-labelledby="modalHallMemberLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                        <input type="hidden" id="hallMemberHallId" name="hallMemberHallId">
+                <h4 class="modal-title" id="modalHallMemberLabel">厅成员</h4>
+            </div>
+            <div class="modal-body">
+                <div id="hallMemberTable"></div>
+                <div id="hallMemberToolbar">
+                    <a href="javascript:;" id="addHallMember" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 添加成员
+                        </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addHallMemberModal" tabindex="-1" role="dialog" aria-labelledby="addHallMemberModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addHallMemberModalLabel">新增成员</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addHallMemberForm">
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">用户ID:</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="hallMemberErbanNo" name="hallMemberErbanNo" class="form-control validate[required]">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">厅：</label>
+                        <div class="col-sm-9">
+                            <span id="hallRoomName" class="form-control"></span>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveHallMember">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="imgMask"><img src="" alt=""></div>
+<script>
+    $(function () {
+        $('#guildTable').bootstrapTable('destroy');
+        $('#guildTable').bootstrapTable({
+            columns: [
+                {field: 'id', title: '序号', align: 'center', valign: 'middle', width: 80},
+                {field: 'guildNo', title: '公会ID', align: 'center', valign: 'middle', width: 100},
+                {
+                    field: 'logoUrl',
+                    title: '公会封面',
+                    align: 'center',
+                    width: 100,
+                    formatter: function (val) {
+                        return "<img src='" + val + "' width='75'>";
+                    }
+                },
+                {field: 'name', title: '公会名称', align: 'center', valign: 'middle', width: 300},
+                {field: 'presidentUid', title: '公会长UID', align: 'center', valign: 'middle', width: 100, visible: false},
+                {field: 'erbanNo', title: '公会长ID', align: 'center', valign: 'middle', width: 100},
+                {field: 'nick', title: '公会长昵称', align: 'center', valign: 'middle', width: 300},
+                {field: 'hallCount', title: '厅数量', align: 'center', valign: 'middle', width: 80},
+                {field: 'memberCount', title: '成员数量', align: 'center', valign: 'middle', width:80},
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    width: 450,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        const key = row.id;
+                        return "<button class='btn btn-sm btn-success opt-edit' data-id=" + key + "><i class='glyphicon glyphicon-edit'></i> 编辑</button>"+
+                        "<button class='btn btn-sm btn-danger opt-del' data-id=" + key + "><i class='glyphicon glyphicon-remove'></i> 解散公会</button>"+
+                        "<button class='btn btn-sm btn-success opt-hall' data-id=" + key + "><i class='glyphicon glyphicon-eye-open'></i> 厅列表</button>"+
+                        "<button class='btn btn-sm btn-success opt-member' data-id=" + key + "><i class='glyphicon glyphicon-eye-open'></i> 成员列表</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    guildNo: $("#guildNoReq").val(),
+                    erbanNo: $('#erbanNoReq').val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/guild/getGuildList.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        })
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#guildTable');
+        })
+        
+        //公会详情
+        $('#guildTable').on('click', '.opt-edit', function () {
+            $('#guildForm .tagCheckbox input[type="checkbox"]').each(function() {
+                $(this).prop('checked', false);
+            });
+
+            const id = $(this).data('id');
+            $('#modalLabel').text("编辑");
+            $.ajax({
+                type: 'post',
+                url: '/admin/guild/getOneGuild.action',
+                data: {'id': id},
+                dataType: 'json',
+                success: function (json) {
+                    if (json.entity) {
+                        $('#imgUrl').attr('src', json.entity.logoUrl);
+                        $('#logoUrl').val(json.entity.logoUrl);
+                        $('#name').val(json.entity.name);
+                        $('#id').val(json.entity.id);
+                        $('#erbanNo').val(json.entity.erbanNo);
+                        $('#guildModal').modal('show');
+                    } else {
+                        $("#tipMsg").text("获取信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+        
+        //解散公会
+        $("#guildTable").on("click", '.opt-del', function () {
+            var id = $(this).attr("data-id");
+            if (id == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if (confirm("你确认要解散公会吗?" +
+                "\r\n解散后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/guild/delGuild.action",
+                    data: {'guildId': id},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#tipMsg").text("操作成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#guildTable");
+                        } else {
+                            $("#tipMsg").text("操作失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+    
+        
+        //公会数据新增编辑
+        $('#saveGuild').on('click', function () {
+            console.log($('#guildForm').serialize());
+            if ($('#guildForm').validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/guild/saveGuild.action",
+                    data: $('#guildForm').serialize(),
+                    dataType: 'json',
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#guildModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#guildTable");
+                        } else {
+                            $("#tipMsg").text(json.message);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+        
+        
+        
+        $('#uploadBtn').on('click', function () {
+            const options = {
+                type: 'post',
+                url: '/admin/banner/headimg.action',
+                dataType: 'json',
+                success: function (json) {
+                    if (json.path) {
+                        $('#logoUrl').val(json.path);
+                        $('#imgUrl').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            }
+            $("#guildForm").ajaxSubmit(options);
+        });
+        
+        //清空公会表单
+        $('#addGuild').on('click', function () {
+            $('#guildForm')[0].reset();
+            $('#imgUrl').attr('src', '');
+            $('#logoUrl').val('');
+            $('#name').val('');
+            $('#id').val('');
+            $('#erbanNo').val('');
+            $('#modalLabel').text("新增");
+            $('#guildModal').modal('show');
+        });
+        
+        $('#guildTable').on('mouseenter', 'img', function (e) {
+            const src = $(this).attr('src');
+            $('#imgMask img').attr('src', src);
+            $('#imgMask').show();
+            $('#imgMask').css({
+                top: e.clientY + 20,
+                left: e.clientX + 20
+            })
+        });
+        $('#guildTable').on('mouseleave', 'img', function (e) {
+            $('#imgMask').hide();
+        });
+        
+        //厅列表
+        $('#guildTable').on('click', '.opt-hall', function () {
+             $('#guildForm .tagCheckbox input[type="checkbox"]').each(function() {
+                 $(this).prop('checked', false);
+             });
+             const guildId = $(this).data('id');
+             $('#guildHallModal').modal('show');
+             $('#hallGuildId').val(guildId);
+             $('#guildHallTable').bootstrapTable('destroy');
+             $('#guildHallTable').bootstrapTable({
+                 columns: [
+                     {field: 'id', title: '厅id', align: 'center', valign: 'middle', visible: false},
+                     {field: 'roomId', title: '房间序号', align: 'center', valign: 'middle', visible: false},
+                     {field: 'erbanNo', title: '房间ID', align: 'center', valign: 'middle', width: 100},
+                     {field: 'roomName', title: '房间名称', align: 'center', valign: 'middle', width: 300},
+                     {field: 'memberCount', title: '厅成员数', align: 'center', valign: 'middle', width:80},
+                     {
+                         field: 'tmp',
+                         title: '操作',
+                         align: 'center',
+                         width: 450,
+                         valign: 'middle',
+                         formatter: function (val, row, index) {
+                             const key = row.id;
+                             return  "<button class='btn btn-sm btn-danger opt-del' data-id=" + key + "><i class='glyphicon glyphicon-remove'></i> 删除</button>"+
+                             "<button class='btn btn-sm btn-success opt-member' data-id=" + key + " data-name=" + row.roomName + "><i class='glyphicon glyphicon-eye-open'></i> 厅成员</button>";
+                         }
+                     }
+                 ],
+                 cache: false,
+                 striped: true,
+                 showRefresh: false,
+                 pageSize: 10,
+                 pagination: true,
+                 pageList: [10, 20, 30, 50],
+                 sidePagination: "server",
+                 // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+                 // 设置为limit可以获取limit, offset, search, sort, order
+                 queryParamsType: "undefined",
+                 queryParams: function queryParams(params) {
+                     const param = {
+                         pageSize: params.pageSize,
+                         pageNumber: params.pageNumber,
+                         guildId: guildId
+                     };
+                     return param;
+                 },
+                 uniqueId: 'code',
+                 toolbar: '#guildHallToolbar',
+                 url: '/admin/guild/getGuildHallList.action',
+                 onLoadSuccess: function () {
+                     console.log("load success");
+                 },
+                 onLoadError: function () {
+                     console.log("load fail");
+                 }
+             })
+             
+         });
+         
+         
+         
+        //清空厅表单
+        $('#addGuildHall').on('click', function () {
+            $('#addHallForm')[0].reset();
+            $('#hallErbanNo').val('');
+            $('#addHallModal').modal('show');
+        });
+        //厅数据新增
+        $('#saveHall').on('click', function () {
+            console.log($('#addHallForm').serialize());
+            const guildId=$('#hallGuildId').val();
+            const erbanNo=$('#hallErbanNo').val();
+            if ($('#addHallForm').validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/guild/addHall.action",
+                    data: {'guildId': guildId,'erbanNo':erbanNo},
+                    dataType: 'json',
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#addHallModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#guildHallTable");
+                            TableHelper.doRefresh("#guildTable");
+                        } else {
+                            $("#tipMsg").text(json.message);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+        
+        $('#guildHallTable').on('click', '.opt-del', function () {
+        	var hallId = $(this).attr("data-id");
+            if (hallId == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if (confirm("你确定要删除该厅吗?" +
+                "\r\n删除后该厅及厅下成员都不属于该公会！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/guild/delHall.action",
+                    data: {'hallId': hallId},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#guildHallTable");
+                            TableHelper.doRefresh("#guildTable");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+        
+        
+        //点击公会列表页面--成员列表
+        $('#guildTable').on('click', '.opt-member', function () {
+             $('#guildForm .tagCheckbox input[type="checkbox"]').each(function() {
+                 $(this).prop('checked', false);
+             });
+             const guildId = $(this).data('id');
+             $('#memberModal').modal('show');
+             $('#memberGuildId').val(guildId);
+             memberLoad(guildId,null);
+         });
+       
+       
+        //清空  公会列表页面--成员列表--成员表单
+        $('#addMember').on('click', function () {
+            $('#addMemberForm')[0].reset();
+            $('#memberErbanNo').val('');
+            $('#memberHallId').val('');
+            $('#memberHallId').html("<option value=''>请选择厅</option>");
+            $('#addMemberModal').modal('show');
+            const memberGuildId=$('#memberGuildId').val();
+            
+            $.ajax({
+                type: "get",
+                url: "/admin/guild/getHallList.action",
+                data: {'guildId': memberGuildId},
+                dataType: 'json',
+                success: function (json) {
+                    if (json.code == 200) {
+                    	$.each(json.data, function(key, value) {
+                    		$("#memberHallId").append("<option value='"+value.hallId+"'>"+value.roomName+"</option>");
+                    	});
+                    } 
+                }
+            })
+        });
+        
+        //公会列表页面--成员列表--成员数据新增
+        $('#saveMember').on('click', function () {
+            console.log($('#addMemberForm').serialize());
+            const memberGuildId=$('#memberGuildId').val();
+            const memberHallId=$('#memberHallId').val();
+            const memberErbanNo=$('#memberErbanNo').val();
+            if ($('#addMemberForm').validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/guild/addMember.action",
+                    data: {'guildId': memberGuildId,'hallId':memberHallId,'erbanNo':memberErbanNo},
+                    dataType: 'json',
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#addMemberModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#memberTable");
+                            TableHelper.doRefresh("#guildTable");
+                        } else {
+                            $("#tipMsg").text(json.message);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        }); 
+        
+       //公会列表页面--成员列表--成员数据删除
+        $('#memberTable').on('click', '.opt-del', function () {
+        	var memberId = $(this).attr("data-id");
+            if (memberId == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if (confirm("你确定要移除该成员吗?" +
+                "\r\n移除后该用户不属于该厅及该公会！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/guild/delMember.action",
+                    data: {'memberId': memberId},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#tipMsg").text("移除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#guildHallTable");
+                            TableHelper.doRefresh("#memberTable");
+                            TableHelper.doRefresh("#guildTable");
+                        } else {
+                            $("#tipMsg").text("移除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+       
+       
+      //点击厅列表页面--厅成员
+       $('#guildHallTable').on('click', '.opt-member', function () {
+             const hallId = $(this).data('id');
+             const hallRoomName = $(this).data('name');
+             $('#hallMemberModal').modal('show');
+             const hallGuildId=$('#hallGuildId').val();
+             $('#hallMemberHallId').val(hallId);
+             $('#hallRoomName').text(hallRoomName);
+             hallMemberLoad(hallGuildId,hallId);
+       });
+       
+       //清空 厅列表页面--厅成员--成员表单
+       $('#addHallMember').on('click', function () {
+           $('#addHallMemberForm')[0].reset();
+           $('#hallMemberErbanNo').val('');
+           $('#addMemberModal').modal('hide');
+           $('#addHallMemberModal').modal('show');
+       });
+       
+       //厅列表页面--厅成员--成员数据新增
+       $('#saveHallMember').on('click', function () {
+           console.log($('#addHallMemberForm').serialize());
+           const memberGuildId=$('#hallGuildId').val();
+           const memberHallId=$('#hallMemberHallId').val();
+           const memberErbanNo=$('#hallMemberErbanNo').val();
+           if ($('#addMemberForm').validationEngine('validate')) {
+               $.ajax({
+                   type: "post",
+                   url: "/admin/guild/addMember.action",
+                   data: {'guildId': memberGuildId,'hallId':memberHallId,'erbanNo':memberErbanNo},
+                   dataType: 'json',
+                   success: function (json) {
+                       if (json.code == 200) {
+                           $("#addHallMemberModal").modal('hide');
+                           $("#tipMsg").text("保存成功");
+                           $("#tipModal").modal('show');
+                           TableHelper.doRefresh("#hallMemberTable");
+                           TableHelper.doRefresh("#guildHallTable");
+                           TableHelper.doRefresh("#guildTable");
+                       } else {
+                           $("#tipMsg").text(json.message);
+                           $("#tipModal").modal('show');
+                       }
+                   }
+               })
+           }
+       }); 
+       
+      //厅列表页面--厅成员--成员数据删除
+       $('#hallMemberTable').on('click', '.opt-del', function () {
+       	var memberId = $(this).attr("data-id");
+           if (memberId == 'undefined') {
+               $("#tipMsg").text("id参数有误");
+               $("#tipModal").modal('show');
+               return;
+           }
+           if (confirm("你确定要移除该成员吗?" +
+               "\r\n移除后该用户不属于该厅及该公会！")) {
+               $.ajax({
+                   type: 'post',
+                   url: "/admin/guild/delMember.action",
+                   data: {'memberId': memberId},
+                   dataType: "json",
+                   success: function (json) {
+                       if (json.code == 200) {
+                           $("#tipMsg").text("移除成功");
+                           $("#tipModal").modal('show');
+                           TableHelper.doRefresh("#hallMemberTable");
+                           TableHelper.doRefresh("#guildHallTable");
+                           TableHelper.doRefresh("#guildTable");
+                       } else {
+                           $("#tipMsg").text("移除失败");
+                           $("#tipModal").modal('show');
+                       }
+                   }
+               });
+           }
+       });
+       
+       
+       
+       
+        
+     });
+    
+    
+    
+    
+    
+     //公会列表页面--成员列表
+     function memberLoad(guildId,hallId){
+    	$('#memberTable').bootstrapTable('destroy');
+        $('#memberTable').bootstrapTable({
+            columns: [
+                {field: 'id', title: '成员id', align: 'center', valign: 'middle', visible: false},
+                {field: 'uid', title: '用户UID', align: 'center', valign: 'middle', width: 100, visible: false},
+                {field: 'erbanNo', title: '用户ID', align: 'center', valign: 'middle', width: 100},
+                {field: 'nick', title: '昵称', align: 'center', valign: 'middle', width: 100},
+                {
+                    field: 'gender', title: '性别', align: 'center', width: 100, formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return "男";
+                        } else if (val == 2) {
+                            return "女";
+                        } else if (val == 0) {
+                            return '其他'
+                        }
+                    }
+                },
+                {field: 'roomName', title: '所属厅名', align: 'center', valign: 'middle', width: 300},
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    width: 450,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        const key = row.id;
+                        return  "<button class='btn btn-sm btn-danger opt-del' data-id=" + key + "><i class='glyphicon glyphicon-remove'></i> 移除</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    guildId: guildId,
+                    hallId: hallId,
+                    type:"guild"
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#memberToolbar',
+            url: '/admin/guild/getMemberList.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        })
+    }
+     
+     
+     
+     
+     
+     //厅列表页面--厅成员
+     function hallMemberLoad(guildId,hallId){
+    	$('#hallMemberTable').bootstrapTable('destroy');
+        $('#hallMemberTable').bootstrapTable({
+            columns: [
+                {field: 'id', title: '成员id', align: 'center', valign: 'middle', visible: false},
+                {field: 'uid', title: '用户UID', align: 'center', valign: 'middle', width: 100, visible: false},
+                {field: 'erbanNo', title: '用户ID', align: 'center', valign: 'middle', width: 100},
+                {field: 'nick', title: '昵称', align: 'center', valign: 'middle', width: 100},
+                {
+                    field: 'gender', title: '性别', align: 'center', width: 100, formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return "男";
+                        } else if (val == 2) {
+                            return "女";
+                        } else if (val == 0) {
+                            return '其他'
+                        }
+                    }
+                },
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    width: 450,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        const key = row.id;
+                        return  "<button class='btn btn-sm btn-danger opt-del' data-id=" + key + "><i class='glyphicon glyphicon-remove'></i> 移除</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    guildId: guildId,
+                    hallId: hallId,
+                    type:"hall"
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#hallMemberToolbar',
+            url: '/admin/guild/getMemberList.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        })
+    } 
+</script>

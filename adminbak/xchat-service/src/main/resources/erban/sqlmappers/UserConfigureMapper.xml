@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erban.main.mybatismapper.UserConfigureMapper">
+  <resultMap id="BaseResultMap" type="com.erban.main.model.UserConfigure">
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="superior_bouns" jdbcType="TINYINT" property="superiorBouns" />
+    <result column="occupation_ratio" jdbcType="TINYINT" property="occupationRatio" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+    <result column="cardholder" jdbcType="VARCHAR" property="cardholder" />
+    <result column="green_recom" jdbcType="TINYINT" property="greenRecom" />
+    <result column="new_users" jdbcType="TINYINT" property="newUsers" />
+    <result column="game_room" jdbcType="TINYINT" property="gameRoom" />
+    <result column="green_sort_no" jdbcType="INTEGER" property="greenSortNo" />
+    <result column="suibao" jdbcType="INTEGER" property="suibao" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    uid, superior_bouns, occupation_ratio, bank_card, cardholder, green_recom, new_users, 
+    game_room, green_sort_no, suibao
+  </sql>
+  <select id="selectByExample" parameterType="com.erban.main.model.UserConfigureExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_configure
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_configure
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_configure
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.UserConfigureExample">
+    delete from user_configure
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.UserConfigure">
+    insert into user_configure (uid, superior_bouns, occupation_ratio, 
+      bank_card, cardholder, green_recom, 
+      new_users, game_room, green_sort_no, 
+      suibao)
+    values (#{uid,jdbcType=BIGINT}, #{superiorBouns,jdbcType=TINYINT}, #{occupationRatio,jdbcType=TINYINT}, 
+      #{bankCard,jdbcType=VARCHAR}, #{cardholder,jdbcType=VARCHAR}, #{greenRecom,jdbcType=TINYINT}, 
+      #{newUsers,jdbcType=TINYINT}, #{gameRoom,jdbcType=TINYINT}, #{greenSortNo,jdbcType=INTEGER}, 
+      #{suibao,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.UserConfigure">
+    insert into user_configure
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="superiorBouns != null">
+        superior_bouns,
+      </if>
+      <if test="occupationRatio != null">
+        occupation_ratio,
+      </if>
+      <if test="bankCard != null">
+        bank_card,
+      </if>
+      <if test="cardholder != null">
+        cardholder,
+      </if>
+      <if test="greenRecom != null">
+        green_recom,
+      </if>
+      <if test="newUsers != null">
+        new_users,
+      </if>
+      <if test="gameRoom != null">
+        game_room,
+      </if>
+      <if test="greenSortNo != null">
+        green_sort_no,
+      </if>
+      <if test="suibao != null">
+        suibao,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="superiorBouns != null">
+        #{superiorBouns,jdbcType=TINYINT},
+      </if>
+      <if test="occupationRatio != null">
+        #{occupationRatio,jdbcType=TINYINT},
+      </if>
+      <if test="bankCard != null">
+        #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="cardholder != null">
+        #{cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="greenRecom != null">
+        #{greenRecom,jdbcType=TINYINT},
+      </if>
+      <if test="newUsers != null">
+        #{newUsers,jdbcType=TINYINT},
+      </if>
+      <if test="gameRoom != null">
+        #{gameRoom,jdbcType=TINYINT},
+      </if>
+      <if test="greenSortNo != null">
+        #{greenSortNo,jdbcType=INTEGER},
+      </if>
+      <if test="suibao != null">
+        #{suibao,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.UserConfigureExample" resultType="java.lang.Integer">
+    select count(*) from user_configure
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <update id="updateByExampleSelective" parameterType="map">
+    update user_configure
+    <set>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.superiorBouns != null">
+        superior_bouns = #{record.superiorBouns,jdbcType=TINYINT},
+      </if>
+      <if test="record.occupationRatio != null">
+        occupation_ratio = #{record.occupationRatio,jdbcType=TINYINT},
+      </if>
+      <if test="record.bankCard != null">
+        bank_card = #{record.bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardholder != null">
+        cardholder = #{record.cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.greenRecom != null">
+        green_recom = #{record.greenRecom,jdbcType=TINYINT},
+      </if>
+      <if test="record.newUsers != null">
+        new_users = #{record.newUsers,jdbcType=TINYINT},
+      </if>
+      <if test="record.gameRoom != null">
+        game_room = #{record.gameRoom,jdbcType=TINYINT},
+      </if>
+      <if test="record.greenSortNo != null">
+        green_sort_no = #{record.greenSortNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.suibao != null">
+        suibao = #{record.suibao,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_configure
+    set uid = #{record.uid,jdbcType=BIGINT},
+      superior_bouns = #{record.superiorBouns,jdbcType=TINYINT},
+      occupation_ratio = #{record.occupationRatio,jdbcType=TINYINT},
+      bank_card = #{record.bankCard,jdbcType=VARCHAR},
+      cardholder = #{record.cardholder,jdbcType=VARCHAR},
+      green_recom = #{record.greenRecom,jdbcType=TINYINT},
+      new_users = #{record.newUsers,jdbcType=TINYINT},
+      game_room = #{record.gameRoom,jdbcType=TINYINT},
+      green_sort_no = #{record.greenSortNo,jdbcType=INTEGER},
+      suibao = #{record.suibao,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.UserConfigure">
+    update user_configure
+    <set>
+      <if test="superiorBouns != null">
+        superior_bouns = #{superiorBouns,jdbcType=TINYINT},
+      </if>
+      <if test="occupationRatio != null">
+        occupation_ratio = #{occupationRatio,jdbcType=TINYINT},
+      </if>
+      <if test="bankCard != null">
+        bank_card = #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="cardholder != null">
+        cardholder = #{cardholder,jdbcType=VARCHAR},
+      </if>
+      <if test="greenRecom != null">
+        green_recom = #{greenRecom,jdbcType=TINYINT},
+      </if>
+      <if test="newUsers != null">
+        new_users = #{newUsers,jdbcType=TINYINT},
+      </if>
+      <if test="gameRoom != null">
+        game_room = #{gameRoom,jdbcType=TINYINT},
+      </if>
+      <if test="greenSortNo != null">
+        green_sort_no = #{greenSortNo,jdbcType=INTEGER},
+      </if>
+      <if test="suibao != null">
+        suibao = #{suibao,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.UserConfigure">
+    update user_configure
+    set superior_bouns = #{superiorBouns,jdbcType=TINYINT},
+      occupation_ratio = #{occupationRatio,jdbcType=TINYINT},
+      bank_card = #{bankCard,jdbcType=VARCHAR},
+      cardholder = #{cardholder,jdbcType=VARCHAR},
+      green_recom = #{greenRecom,jdbcType=TINYINT},
+      new_users = #{newUsers,jdbcType=TINYINT},
+      game_room = #{gameRoom,jdbcType=TINYINT},
+      green_sort_no = #{greenSortNo,jdbcType=INTEGER},
+      suibao = #{suibao,jdbcType=INTEGER}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByUid" resultType="java.lang.Long">
+    select uid from user_configure where suibao = 1
+  </select>
+
+</mapper>

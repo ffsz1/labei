@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erban.main.mybatismapper.RoomMapper">
+  <resultMap id="BaseResultMap" type="com.erban.main.model.Room">
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="room_id" jdbcType="BIGINT" property="roomId" />
+    <result column="room_pwd" jdbcType="VARCHAR" property="roomPwd" />
+    <result column="tag_id" jdbcType="INTEGER" property="tagId" />
+    <result column="tag_pict" jdbcType="VARCHAR" property="tagPict" />
+    <result column="room_tag" jdbcType="VARCHAR" property="roomTag" />
+    <result column="badge" jdbcType="VARCHAR" property="badge" />
+    <result column="meeting_name" jdbcType="VARCHAR" property="meetingName" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="valid" jdbcType="BIT" property="valid" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="official_room" jdbcType="TINYINT" property="officialRoom" />
+    <result column="ab_channel_type" jdbcType="TINYINT" property="abChannelType" />
+    <result column="reward_id" jdbcType="BIGINT" property="rewardId" />
+    <result column="reward_money" jdbcType="BIGINT" property="rewardMoney" />
+    <result column="serv_dura" jdbcType="INTEGER" property="servDura" />
+    <result column="operator_status" jdbcType="TINYINT" property="operatorStatus" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="room_desc" jdbcType="VARCHAR" property="roomDesc" />
+    <result column="room_notice" jdbcType="VARCHAR" property="roomNotice" />
+    <result column="back_pic" jdbcType="VARCHAR" property="backPic" />
+    <result column="open_time" jdbcType="TIMESTAMP" property="openTime" />
+    <result column="is_permit_room" jdbcType="TINYINT" property="isPermitRoom" />
+    <result column="online_num" jdbcType="INTEGER" property="onlineNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_exception_close" jdbcType="BIT" property="isExceptionClose" />
+    <result column="exception_close_time" jdbcType="TIMESTAMP" property="exceptionCloseTime" />
+    <result column="recom_seq" jdbcType="BIGINT" property="recomSeq" />
+    <result column="can_show" jdbcType="TINYINT" property="canShow" />
+    <result column="def_backpic" jdbcType="VARCHAR" property="defBackpic" />
+    <result column="audio_level" jdbcType="INTEGER" property="audioLevel" />
+    <result column="charm_open" property="charmOpen" jdbcType="INTEGER" />
+    <result column="gift_card_switch" property="giftCardSwitch" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    uid, room_id, room_pwd, tag_id, tag_pict, room_tag, badge, meeting_name, title, valid, 
+    type, official_room, ab_channel_type, reward_id, reward_money, serv_dura, operator_status, 
+    avatar, room_desc, room_notice, back_pic, open_time, is_permit_room, online_num, 
+    create_time, update_time, is_exception_close, exception_close_time, recom_seq, can_show, 
+    def_backpic, audio_level, charm_open,face_type,gift_card_switch
+  </sql>
+  <select id="selectByExample" parameterType="com.erban.main.model.RoomExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from room
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.RoomExample">
+    delete from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.Room">
+    insert into room (uid, room_id, room_pwd, 
+      tag_id, tag_pict, room_tag, 
+      badge, meeting_name, title, 
+      valid, type, official_room, 
+      ab_channel_type, reward_id, reward_money, 
+      serv_dura, operator_status, avatar, 
+      room_desc, room_notice, back_pic, 
+      open_time, is_permit_room, online_num, 
+      create_time, update_time, is_exception_close, 
+      exception_close_time, recom_seq, can_show, 
+      def_backpic, audio_level, charm_open)
+    values (#{uid,jdbcType=BIGINT}, #{roomId,jdbcType=BIGINT}, #{roomPwd,jdbcType=VARCHAR}, 
+      #{tagId,jdbcType=INTEGER}, #{tagPict,jdbcType=VARCHAR}, #{roomTag,jdbcType=VARCHAR}, 
+      #{badge,jdbcType=VARCHAR}, #{meetingName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{valid,jdbcType=BIT}, #{type,jdbcType=TINYINT}, #{officialRoom,jdbcType=TINYINT}, 
+      #{abChannelType,jdbcType=TINYINT}, #{rewardId,jdbcType=BIGINT}, #{rewardMoney,jdbcType=BIGINT}, 
+      #{servDura,jdbcType=INTEGER}, #{operatorStatus,jdbcType=TINYINT}, #{avatar,jdbcType=VARCHAR}, 
+      #{roomDesc,jdbcType=VARCHAR}, #{roomNotice,jdbcType=VARCHAR}, #{backPic,jdbcType=VARCHAR}, 
+      #{openTime,jdbcType=TIMESTAMP}, #{isPermitRoom,jdbcType=TINYINT}, #{onlineNum,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isExceptionClose,jdbcType=BIT}, 
+      #{exceptionCloseTime,jdbcType=TIMESTAMP}, #{recomSeq,jdbcType=BIGINT}, #{canShow,jdbcType=TINYINT}, 
+      #{defBackpic,jdbcType=VARCHAR}, #{audioLevel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.Room">
+    insert into room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="roomId != null">
+        room_id,
+      </if>
+      <if test="roomPwd != null">
+        room_pwd,
+      </if>
+      <if test="tagId != null">
+        tag_id,
+      </if>
+      <if test="tagPict != null">
+        tag_pict,
+      </if>
+      <if test="roomTag != null">
+        room_tag,
+      </if>
+      <if test="badge != null">
+        badge,
+      </if>
+      <if test="meetingName != null">
+        meeting_name,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="valid != null">
+        valid,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="officialRoom != null">
+        official_room,
+      </if>
+      <if test="abChannelType != null">
+        ab_channel_type,
+      </if>
+      <if test="rewardId != null">
+        reward_id,
+      </if>
+      <if test="rewardMoney != null">
+        reward_money,
+      </if>
+      <if test="servDura != null">
+        serv_dura,
+      </if>
+      <if test="operatorStatus != null">
+        operator_status,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="roomDesc != null">
+        room_desc,
+      </if>
+      <if test="roomNotice != null">
+        room_notice,
+      </if>
+      <if test="backPic != null">
+        back_pic,
+      </if>
+      <if test="openTime != null">
+        open_time,
+      </if>
+      <if test="isPermitRoom != null">
+        is_permit_room,
+      </if>
+      <if test="onlineNum != null">
+        online_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isExceptionClose != null">
+        is_exception_close,
+      </if>
+      <if test="exceptionCloseTime != null">
+        exception_close_time,
+      </if>
+      <if test="recomSeq != null">
+        recom_seq,
+      </if>
+      <if test="canShow != null">
+        can_show,
+      </if>
+      <if test="defBackpic != null">
+        def_backpic,
+      </if>
+      <if test="audioLevel != null">
+        audio_level,
+      </if>
+      <if test="charmOpen != null">
+        charm_open,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="roomPwd != null">
+        #{roomPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="tagId != null">
+        #{tagId,jdbcType=INTEGER},
+      </if>
+      <if test="tagPict != null">
+        #{tagPict,jdbcType=VARCHAR},
+      </if>
+      <if test="roomTag != null">
+        #{roomTag,jdbcType=VARCHAR},
+      </if>
+      <if test="badge != null">
+        #{badge,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingName != null">
+        #{meetingName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="officialRoom != null">
+        #{officialRoom,jdbcType=TINYINT},
+      </if>
+      <if test="abChannelType != null">
+        #{abChannelType,jdbcType=TINYINT},
+      </if>
+      <if test="rewardId != null">
+        #{rewardId,jdbcType=BIGINT},
+      </if>
+      <if test="rewardMoney != null">
+        #{rewardMoney,jdbcType=BIGINT},
+      </if>
+      <if test="servDura != null">
+        #{servDura,jdbcType=INTEGER},
+      </if>
+      <if test="operatorStatus != null">
+        #{operatorStatus,jdbcType=TINYINT},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="roomDesc != null">
+        #{roomDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNotice != null">
+        #{roomNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="backPic != null">
+        #{backPic,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPermitRoom != null">
+        #{isPermitRoom,jdbcType=TINYINT},
+      </if>
+      <if test="onlineNum != null">
+        #{onlineNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isExceptionClose != null">
+        #{isExceptionClose,jdbcType=BIT},
+      </if>
+      <if test="exceptionCloseTime != null">
+        #{exceptionCloseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recomSeq != null">
+        #{recomSeq,jdbcType=BIGINT},
+      </if>
+      <if test="canShow != null">
+        #{canShow,jdbcType=TINYINT},
+      </if>
+      <if test="defBackpic != null">
+        #{defBackpic,jdbcType=VARCHAR},
+      </if>
+      <if test="audioLevel != null">
+        #{audioLevel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.RoomExample" resultType="java.lang.Integer">
+    select count(*) from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update room
+    <set>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomId != null">
+        room_id = #{record.roomId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomPwd != null">
+        room_pwd = #{record.roomPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tagId != null">
+        tag_id = #{record.tagId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tagPict != null">
+        tag_pict = #{record.tagPict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomTag != null">
+        room_tag = #{record.roomTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.badge != null">
+        badge = #{record.badge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingName != null">
+        meeting_name = #{record.meetingName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null">
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.officialRoom != null">
+        official_room = #{record.officialRoom,jdbcType=TINYINT},
+      </if>
+      <if test="record.abChannelType != null">
+        ab_channel_type = #{record.abChannelType,jdbcType=TINYINT},
+      </if>
+      <if test="record.rewardId != null">
+        reward_id = #{record.rewardId,jdbcType=BIGINT},
+      </if>
+      <if test="record.rewardMoney != null">
+        reward_money = #{record.rewardMoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.servDura != null">
+        serv_dura = #{record.servDura,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorStatus != null">
+        operator_status = #{record.operatorStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomDesc != null">
+        room_desc = #{record.roomDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomNotice != null">
+        room_notice = #{record.roomNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backPic != null">
+        back_pic = #{record.backPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openTime != null">
+        open_time = #{record.openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isPermitRoom != null">
+        is_permit_room = #{record.isPermitRoom,jdbcType=TINYINT},
+      </if>
+      <if test="record.onlineNum != null">
+        online_num = #{record.onlineNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isExceptionClose != null">
+        is_exception_close = #{record.isExceptionClose,jdbcType=BIT},
+      </if>
+      <if test="record.exceptionCloseTime != null">
+        exception_close_time = #{record.exceptionCloseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recomSeq != null">
+        recom_seq = #{record.recomSeq,jdbcType=BIGINT},
+      </if>
+      <if test="record.canShow != null">
+        can_show = #{record.canShow,jdbcType=TINYINT},
+      </if>
+      <if test="record.defBackpic != null">
+        def_backpic = #{record.defBackpic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.audioLevel != null">
+        audio_level = #{record.audioLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.charmOpen != null" >
+        charm_open = #{record.charmOpen,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update room
+    set uid = #{record.uid,jdbcType=BIGINT},
+      room_id = #{record.roomId,jdbcType=BIGINT},
+      room_pwd = #{record.roomPwd,jdbcType=VARCHAR},
+      tag_id = #{record.tagId,jdbcType=INTEGER},
+      tag_pict = #{record.tagPict,jdbcType=VARCHAR},
+      room_tag = #{record.roomTag,jdbcType=VARCHAR},
+      badge = #{record.badge,jdbcType=VARCHAR},
+      meeting_name = #{record.meetingName,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=BIT},
+      type = #{record.type,jdbcType=TINYINT},
+      official_room = #{record.officialRoom,jdbcType=TINYINT},
+      ab_channel_type = #{record.abChannelType,jdbcType=TINYINT},
+      reward_id = #{record.rewardId,jdbcType=BIGINT},
+      reward_money = #{record.rewardMoney,jdbcType=BIGINT},
+      serv_dura = #{record.servDura,jdbcType=INTEGER},
+      operator_status = #{record.operatorStatus,jdbcType=TINYINT},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      room_desc = #{record.roomDesc,jdbcType=VARCHAR},
+      room_notice = #{record.roomNotice,jdbcType=VARCHAR},
+      back_pic = #{record.backPic,jdbcType=VARCHAR},
+      open_time = #{record.openTime,jdbcType=TIMESTAMP},
+      is_permit_room = #{record.isPermitRoom,jdbcType=TINYINT},
+      online_num = #{record.onlineNum,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_exception_close = #{record.isExceptionClose,jdbcType=BIT},
+      exception_close_time = #{record.exceptionCloseTime,jdbcType=TIMESTAMP},
+      recom_seq = #{record.recomSeq,jdbcType=BIGINT},
+      can_show = #{record.canShow,jdbcType=TINYINT},
+      def_backpic = #{record.defBackpic,jdbcType=VARCHAR},
+      audio_level = #{record.audioLevel,jdbcType=INTEGER},
+      charm_open = #{record.charmOpen,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Room">
+    update room
+    <set>
+      <if test="roomId != null">
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="roomPwd != null">
+        room_pwd = #{roomPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="tagId != null">
+        tag_id = #{tagId,jdbcType=INTEGER},
+      </if>
+      <if test="tagPict != null">
+        tag_pict = #{tagPict,jdbcType=VARCHAR},
+      </if>
+      <if test="roomTag != null">
+        room_tag = #{roomTag,jdbcType=VARCHAR},
+      </if>
+      <if test="badge != null">
+        badge = #{badge,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingName != null">
+        meeting_name = #{meetingName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null">
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="officialRoom != null">
+        official_room = #{officialRoom,jdbcType=TINYINT},
+      </if>
+      <if test="abChannelType != null">
+        ab_channel_type = #{abChannelType,jdbcType=TINYINT},
+      </if>
+      <if test="rewardId != null">
+        reward_id = #{rewardId,jdbcType=BIGINT},
+      </if>
+      <if test="rewardMoney != null">
+        reward_money = #{rewardMoney,jdbcType=BIGINT},
+      </if>
+      <if test="servDura != null">
+        serv_dura = #{servDura,jdbcType=INTEGER},
+      </if>
+      <if test="operatorStatus != null">
+        operator_status = #{operatorStatus,jdbcType=TINYINT},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="roomDesc != null">
+        room_desc = #{roomDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNotice != null">
+        room_notice = #{roomNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="backPic != null">
+        back_pic = #{backPic,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        open_time = #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPermitRoom != null">
+        is_permit_room = #{isPermitRoom,jdbcType=TINYINT},
+      </if>
+      <if test="onlineNum != null">
+        online_num = #{onlineNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isExceptionClose != null">
+        is_exception_close = #{isExceptionClose,jdbcType=BIT},
+      </if>
+      <if test="exceptionCloseTime != null">
+        exception_close_time = #{exceptionCloseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recomSeq != null">
+        recom_seq = #{recomSeq,jdbcType=BIGINT},
+      </if>
+      <if test="canShow != null">
+        can_show = #{canShow,jdbcType=TINYINT},
+      </if>
+      <if test="defBackpic != null">
+        def_backpic = #{defBackpic,jdbcType=VARCHAR},
+      </if>
+      <if test="audioLevel != null">
+        audio_level = #{audioLevel,jdbcType=INTEGER},
+      </if>
+      <if test="charmOpen != null" >
+        charm_open = #{charmOpen,jdbcType=INTEGER},
+      </if>
+      <if test="faceType != null" >
+        face_type = #{faceType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Room">
+    update room
+    set room_id = #{roomId,jdbcType=BIGINT},
+      room_pwd = #{roomPwd,jdbcType=VARCHAR},
+      tag_id = #{tagId,jdbcType=INTEGER},
+      tag_pict = #{tagPict,jdbcType=VARCHAR},
+      room_tag = #{roomTag,jdbcType=VARCHAR},
+      badge = #{badge,jdbcType=VARCHAR},
+      meeting_name = #{meetingName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=BIT},
+      type = #{type,jdbcType=TINYINT},
+      official_room = #{officialRoom,jdbcType=TINYINT},
+      ab_channel_type = #{abChannelType,jdbcType=TINYINT},
+      reward_id = #{rewardId,jdbcType=BIGINT},
+      reward_money = #{rewardMoney,jdbcType=BIGINT},
+      serv_dura = #{servDura,jdbcType=INTEGER},
+      operator_status = #{operatorStatus,jdbcType=TINYINT},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      room_desc = #{roomDesc,jdbcType=VARCHAR},
+      room_notice = #{roomNotice,jdbcType=VARCHAR},
+      back_pic = #{backPic,jdbcType=VARCHAR},
+      open_time = #{openTime,jdbcType=TIMESTAMP},
+      is_permit_room = #{isPermitRoom,jdbcType=TINYINT},
+      online_num = #{onlineNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_exception_close = #{isExceptionClose,jdbcType=BIT},
+      exception_close_time = #{exceptionCloseTime,jdbcType=TIMESTAMP},
+      recom_seq = #{recomSeq,jdbcType=BIGINT},
+      can_show = #{canShow,jdbcType=TINYINT},
+      def_backpic = #{defBackpic,jdbcType=VARCHAR},
+      audio_level = #{audioLevel,jdbcType=INTEGER},
+      charm_open = #{charmOpen,jdbcType=INTEGER}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByRoomId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where room_id = #{roomId,jdbcType=BIGINT}
+  </select>
+</mapper>

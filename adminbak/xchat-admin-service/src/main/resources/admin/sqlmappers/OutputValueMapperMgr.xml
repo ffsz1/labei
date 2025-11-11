@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.OutputValueMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.OutputValueVo" >
+    <id column="sign_date" property="signDate" jdbcType="VARCHAR" />
+    <result column="sign_num" property="signNum" jdbcType="INTEGER" />
+    <result column="first_num" property="firstNum" jdbcType="DECIMAL" />
+    <result column="second_num" property="secondNum" jdbcType="DECIMAL" />
+    <result column="third_num" property="thirdNum" jdbcType="DECIMAL" />
+    <result column="fourth_num" property="fourthNum" jdbcType="DECIMAL" />
+    <result column="fifth_num" property="fifthNum" jdbcType="DECIMAL" />
+    <result column="sixth_num" property="sixthNum" jdbcType="DECIMAL" />
+    <result column="seventh_num" property="seventhNum" jdbcType="DECIMAL" />
+    <result column="eighth_num" property="eighthNum" jdbcType="DECIMAL" />
+    <result column="ninth_num" property="ninthNum" jdbcType="DECIMAL" />
+    <result column="tenth_num" property="tenthNum" jdbcType="DECIMAL" />
+    <result column="eleventh_num" property="eleventhNum" jdbcType="DECIMAL" />
+    <result column="twelfth_num" property="twelfthNum" jdbcType="DECIMAL" />
+    <result column="thirteenth_num" property="thirteenthNum" jdbcType="DECIMAL" />
+    <result column="fourteenth_num" property="fourteenthNum" jdbcType="DECIMAL" />
+    <result column="sum_num" property="sumNum" jdbcType="DECIMAL" />
+    <result column="uid_list" property="uidList" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.erban.admin.main.vo.OutputValueParam" >
+    select DATE_FORMAT(a.sign_time, '%Y-%m-%d') as signDate, COUNT(1) as signNum, GROUP_CONCAT(u.uid) as uidList, 0 as firstNum, 0 as secondNum, 0 as thirdNum, 0 as fourthNum,
+      0 as fifthNum, 0 as sixthNum, 0 as seventhNum, 0 as eighthNum, 0 as ninthNum, 0 as tenthNum, 0 as eleventhNum, 0 as twelfthNum, 0 as thirteenthNum, 0 as fourteenthNum, 0 as sumNum
+    from users u
+    INNER JOIN account a on u.uid = a.uid
+    <where>
+      u.def_user!=3
+      <if test="app!=null and app != ''">
+        AND a.app = #{app}
+      </if><if test="signBegin!=null">
+        AND a.sign_time &gt;= #{signBegin}
+      </if>
+      <if test="signEnd!=null">
+        AND a.sign_time &lt;= #{signEnd}
+      </if>
+      <if test="os!=null and os!=''">
+        AND u.os = #{os}
+      </if>
+      <if test="channel!=null">
+        <if test="channel==1">
+          AND u.channel='360m'
+        </if>
+        <if test="channel==2">
+          AND u.channel='oppo'
+        </if>
+        <if test="channel==3">
+          AND u.channel='hwsc'
+        </if>
+        <if test="channel==4">
+          AND u.channel='ybsc'
+        </if>
+        <if test="channel==5">
+          AND u.channel='vivo'
+        </if>
+        <if test="channel==6">
+          AND u.channel='alsc'
+        </if>
+        <if test="channel==7">
+          AND u.channel='bdsc'
+        </if>
+        <if test="channel==8">
+          AND u.channel='xmsc'
+        </if>
+        <if test="channel==9">
+          AND u.channel='sxsc'
+        </if>
+        <if test="channel==10">
+          AND u.channel='mzsc'
+        </if>
+        <if test="channel==11">
+          AND u.channel='azsc'
+        </if>
+        <if test="channel==12">
+          AND u.channel='sgsc'
+        </if>
+        <if test="channel==13">
+          AND u.channel='lxsc'
+        </if>
+        <if test="channel==14">
+          AND u.channel='zy01'
+        </if>
+        <if test="channel==15">
+          AND u.channel='zy02'
+        </if>
+        <if test="channel==16">
+          AND u.channel='zy03'
+        </if>
+        <if test="channel==17">
+          AND u.channel='zy04'
+        </if>
+
+        <if test="channel==18">
+          AND u.channel='pp01'
+        </if>
+        <if test="channel==19">
+          AND u.channel='pp02'
+        </if>
+        <if test="channel==20">
+          AND u.channel='pp03'
+        </if>
+        <if test="channel==21">
+          AND u.channel='pp04'
+        </if>
+
+        <if test="channel==0">
+          AND u.channel not in ('360m','oppo','hwsc','ybsc','vivo','alsc','bdsc','xmsc','sxsc','mzsc','azsc','sgsc','lxsc','zy01','zy02','zy03','zy04','pp01','pp02','pp03','pp04')
+        </if>
+      </if>
+      <if test="gender!=null">
+        AND u.gender=#{gender}
+      </if>
+    </where>
+    GROUP BY signDate
+    ORDER BY signDate DESC
+  </select>
+
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.ChannelRoomMapper">
+
+    <delete id="deleteByChannel" parameterType="integer">
+        DELETE FROM channel_room WHERE channel_id = #{id}
+    </delete>
+
+    <delete id="deleteChannelRoom">
+        DELETE FROM channel_room WHERE channel_id = #{id} AND uid = #{uid}
+    </delete>
+
+    <select id="listUidByChannel" resultType="long">
+        SELECT uid FROM channel_room WHERE channel_id = #{id}
+    </select>
+
+    <insert id="saveChannelRoom">
+        INSERT INTO channel_room
+          (channel_id, uid)
+        VALUES
+        <foreach item='value' index='index' collection='list' separator=','>
+            (#{id}, #{value})
+        </foreach>
+    </insert>
+
+    <select id="listByChannelId" resultType="com.erban.main.model.dto.RoomDTO">
+        SELECT
+          r.uid,
+          r.room_id AS roomId,
+          r.tag_id AS tagId,
+          r.room_tag AS roomTag,
+          r.avatar AS avatar,
+          r.type AS type,
+          r.title AS title,
+          u.erban_no AS erbanNo
+        FROM room r
+        LEFT JOIN users u ON u.uid = r.uid
+        LEFT JOIN channel_room cr ON cr.uid = r.uid
+        WHERE cr.channel_id = #{id}
+    </select>
+
+</mapper>

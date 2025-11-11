@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatRoomCtrbSumMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatRoomCtrbSum" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="ctrb_uid" property="ctrbUid" jdbcType="BIGINT" />
+    <result column="sum_gold" property="sumGold" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, ctrb_uid, sum_gold, create_time, update_time
+  </sql>
+
+  <select id="getStatRoomCtrbSumListByUid" resultMap="BaseResultMap" >
+    select
+    uid, ctrb_uid, sum(sum_gold) as sumGold, create_time, update_time
+    from stat_room_ctrb_sum
+    where uid = #{uid,jdbcType=BIGINT}
+    group by ctrb_uid
+    order by sumGold desc
+    limit 0, 10
+  </select>
+
+  <select id="getRoomCharismaList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select uid, send_uid as ctrbUid, SUM(sum_gold) as sumGold, create_time, update_time
+    from one_day_room_send_sum
+    where uid = #{uid,jdbcType=BIGINT}
+    and (create_time BETWEEN #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP})
+    GROUP BY send_uid
+    ORDER BY sumGold desc
+    limit 20
+  </select>
+
+  <select id="getRoomWealthList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select uid, recv_uid as ctrbUid, SUM(sum_gold) as sumGold, create_time, update_time
+    from one_day_room_recv_sum
+    where uid = #{uid,jdbcType=BIGINT}
+    and (create_time BETWEEN #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP})
+    GROUP BY recv_uid
+    ORDER BY sumGold desc
+    limit 20
+  </select>
+
+  <update id="addSumGoldByCtrbId" parameterType="java.util.Map" >
+    update stat_room_ctrb_sum
+    set sum_gold =sum_gold+ #{sumGold,jdbcType=BIGINT}
+    where ctrb_id = #{ctrbId,jdbcType=INTEGER}
+  </update>
+</mapper>

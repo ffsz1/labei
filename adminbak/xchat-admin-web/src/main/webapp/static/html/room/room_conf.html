@@ -1,0 +1,265 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="roleTable"></div>
+                <div id="toolbar">
+                    <button id="add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 添加
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">用户配置信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="roleForm">
+                    <input type="hidden" name="id" id="id"/>
+                    <div class="form-group">
+                        <label for="roomUid" class="col-sm-2 control-label">房主UID:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control  validate[required]" name="roomUid" id="roomUid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="roomType" class="col-sm-2 control-label">房间类型:</label>
+                        <div class="col-sm-10">
+                            <select name="roomType" id="roomType" data-btn-class="btn-warning">
+                                <option value="1">交 友 厅</option>
+                                <option value="0">普通房间</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="drawType" class="col-sm-2 control-label">房间概率:</label>
+                        <div class="col-sm-10">
+                            <select name="drawType" id="drawType" data-btn-class="btn-warning">
+                                <option value="2">高 概 率</option>
+                                <option value="1">低 概 率</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="charmEnable" class="col-sm-2 control-label">魅力值开关:</label>
+                        <div class="col-sm-10">
+                            <select name="charmEnable" id="charmEnable" data-btn-class="btn-warning">
+                                <option value="1">关闭</option>
+                                <option value="2">开启</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#roleTable').bootstrapTable('destroy');
+        $('#roleTable').bootstrapTable({
+            columns: [{
+                field: 'roomUid',
+                title: '房主UID',
+                align: 'center',
+                width: 200
+            }, {
+                field: 'roomId',
+                title: '房间ID',
+                align: 'center',
+                width: 200
+            }, {
+                field: 'title',
+                title: '房间标题',
+                align: 'center',
+                width: 250
+            }, {
+                field: 'roomType',
+                title: '类型',
+                align: 'center',
+                width: 200,
+                formatter: function (val, row) {
+                    if (row.roomType == 1) {
+                        return "拉贝厅";
+                    } else {
+                        return "普通房";
+                    }
+                }
+            }, {
+                field: 'drawType',
+                title: '概率',
+                align: 'center',
+                width: 200,
+                formatter: function (val, row, index) {
+                    if (row.drawType == 2) {
+                        return "高概率";
+                    } else {
+                        return "低概率";
+                    }
+                }
+            }, {
+                field: 'charmEnable',
+                title: '魅力值开关',
+                align: 'center',
+                width: 200,
+                formatter: function (val, row, index) {
+                    if (row.charmEnable == 1) {
+                        return "关闭";
+                    } else {
+                        return "开启";
+                    }
+                }
+            }, {
+                field: 'id',
+                title: '操作',
+                align: 'center',
+                width: 350,
+                formatter: function (val, row, index) {
+                    return '<button class="btn btn-sm btn-success opt-edit" data-id=' + row.roomUid + '>' +
+                        '<i class="glyphicon glyphicon-edit"></i> 编辑</button>';
+                }
+            }],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: true,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/room/conf/list.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+
+        $("#roleTable").on("click", '.opt-edit', function () {
+            var id = $(this).attr("data-id");
+            $('#roomUid').attr("readonly", true);
+            $.ajax({
+                type: "post",
+                url: "/admin/room/conf/getOne.action",
+                data: {roomUid: id},
+                dataType: "json",
+                success: function (json) {
+                    console.log(json);
+                    if (json.entity) {
+                        $("#roomUid").val(json.entity.roomUid);
+                        $("#charmEnable option").each(function () {
+                            if (json.entity.charmEnable == $(this).val()) {
+                                $(this).attr("selected", "selected");
+                            } else {
+                                $(this).removeAttr("selected");
+                            }
+                        });
+                        $("#roomType option").each(function () {
+                            if (json.entity.roomType == $(this).val()) {
+                                $(this).attr("selected", "selected");
+                            } else {
+                                $(this).removeAttr("selected");
+                            }
+                        });
+                        $("#drawType option").each(function () {
+                            if (json.entity.drawType == $(this).val()) {
+                                $(this).attr("selected", "selected");
+                            } else {
+                                $(this).removeAttr("selected");
+                            }
+                        });
+
+
+                        $("#roleModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("获取信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+
+        $('#add').click(function () {
+            $("#roleForm")[0].reset();
+            $("#id").val(0);
+            $("#roleModal").modal('show');
+        });
+
+        $('#save').click(function () {
+            if ($("#roleForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/room/conf/save.action",
+                    data: $('#roleForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#roleModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#roleTable");
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+
+</script>

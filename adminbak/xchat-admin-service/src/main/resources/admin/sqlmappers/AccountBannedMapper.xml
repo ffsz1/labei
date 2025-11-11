@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erban.admin.main.mapper.AccountBannedMapper">
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.model.AccountBanned">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="erban_no" jdbcType="BIGINT" property="erbanNo" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
+    <result column="banned_type" jdbcType="VARCHAR" property="bannedType" />
+    <result column="banned_ip" jdbcType="VARCHAR" property="bannedIp" />
+    <result column="banned_status" jdbcType="TINYINT" property="bannedStatus" />
+    <result column="banned_minute" jdbcType="INTEGER" property="bannedMinute" />
+    <result column="banned_start_time" jdbcType="TIMESTAMP" property="bannedStartTime" />
+    <result column="banned_end_time" jdbcType="TIMESTAMP" property="bannedEndTime" />
+    <result column="banned_desc" jdbcType="VARCHAR" property="bannedDesc" />
+    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uid, erban_no, phone, device_id, banned_type, banned_ip, banned_status, banned_minute, 
+    banned_start_time, banned_end_time, banned_desc, admin_id, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.erban.admin.main.model.AccountBannedExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account_banned
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account_banned
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from account_banned
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.admin.main.model.AccountBannedExample">
+    delete from account_banned
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.admin.main.model.AccountBanned">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_banned (uid, erban_no, phone, 
+      device_id, banned_type, banned_ip, 
+      banned_status, banned_minute, banned_start_time, 
+      banned_end_time, banned_desc, admin_id, 
+      create_time)
+    values (#{uid,jdbcType=BIGINT}, #{erbanNo,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, 
+      #{deviceId,jdbcType=VARCHAR}, #{bannedType,jdbcType=VARCHAR}, #{bannedIp,jdbcType=VARCHAR}, 
+      #{bannedStatus,jdbcType=TINYINT}, #{bannedMinute,jdbcType=INTEGER}, #{bannedStartTime,jdbcType=TIMESTAMP}, 
+      #{bannedEndTime,jdbcType=TIMESTAMP}, #{bannedDesc,jdbcType=VARCHAR}, #{adminId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.admin.main.model.AccountBanned">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into account_banned
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="erbanNo != null">
+        erban_no,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="bannedType != null">
+        banned_type,
+      </if>
+      <if test="bannedIp != null">
+        banned_ip,
+      </if>
+      <if test="bannedStatus != null">
+        banned_status,
+      </if>
+      <if test="bannedMinute != null">
+        banned_minute,
+      </if>
+      <if test="bannedStartTime != null">
+        banned_start_time,
+      </if>
+      <if test="bannedEndTime != null">
+        banned_end_time,
+      </if>
+      <if test="bannedDesc != null">
+        banned_desc,
+      </if>
+      <if test="adminId != null">
+        admin_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null">
+        #{erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="bannedType != null">
+        #{bannedType,jdbcType=VARCHAR},
+      </if>
+      <if test="bannedIp != null">
+        #{bannedIp,jdbcType=VARCHAR},
+      </if>
+      <if test="bannedStatus != null">
+        #{bannedStatus,jdbcType=TINYINT},
+      </if>
+      <if test="bannedMinute != null">
+        #{bannedMinute,jdbcType=INTEGER},
+      </if>
+      <if test="bannedStartTime != null">
+        #{bannedStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bannedEndTime != null">
+        #{bannedEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bannedDesc != null">
+        #{bannedDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.admin.main.model.AccountBannedExample" resultType="java.lang.Long">
+    select count(*) from account_banned
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update account_banned
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.erbanNo != null">
+        erban_no = #{record.erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceId != null">
+        device_id = #{record.deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bannedType != null">
+        banned_type = #{record.bannedType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bannedIp != null">
+        banned_ip = #{record.bannedIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bannedStatus != null">
+        banned_status = #{record.bannedStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.bannedMinute != null">
+        banned_minute = #{record.bannedMinute,jdbcType=INTEGER},
+      </if>
+      <if test="record.bannedStartTime != null">
+        banned_start_time = #{record.bannedStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bannedEndTime != null">
+        banned_end_time = #{record.bannedEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bannedDesc != null">
+        banned_desc = #{record.bannedDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminId != null">
+        admin_id = #{record.adminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update account_banned
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=BIGINT},
+      erban_no = #{record.erbanNo,jdbcType=BIGINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      device_id = #{record.deviceId,jdbcType=VARCHAR},
+      banned_type = #{record.bannedType,jdbcType=VARCHAR},
+      banned_ip = #{record.bannedIp,jdbcType=VARCHAR},
+      banned_status = #{record.bannedStatus,jdbcType=TINYINT},
+      banned_minute = #{record.bannedMinute,jdbcType=INTEGER},
+      banned_start_time = #{record.bannedStartTime,jdbcType=TIMESTAMP},
+      banned_end_time = #{record.bannedEndTime,jdbcType=TIMESTAMP},
+      banned_desc = #{record.bannedDesc,jdbcType=VARCHAR},
+      admin_id = #{record.adminId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.admin.main.model.AccountBanned">
+    update account_banned
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null">
+        erban_no = #{erbanNo,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="bannedType != null">
+        banned_type = #{bannedType,jdbcType=VARCHAR},
+      </if>
+      <if test="bannedIp != null">
+        banned_ip = #{bannedIp,jdbcType=VARCHAR},
+      </if>
+      <if test="bannedStatus != null">
+        banned_status = #{bannedStatus,jdbcType=TINYINT},
+      </if>
+      <if test="bannedMinute != null">
+        banned_minute = #{bannedMinute,jdbcType=INTEGER},
+      </if>
+      <if test="bannedStartTime != null">
+        banned_start_time = #{bannedStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bannedEndTime != null">
+        banned_end_time = #{bannedEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bannedDesc != null">
+        banned_desc = #{bannedDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.admin.main.model.AccountBanned">
+    update account_banned
+    set uid = #{uid,jdbcType=BIGINT},
+      erban_no = #{erbanNo,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      device_id = #{deviceId,jdbcType=VARCHAR},
+      banned_type = #{bannedType,jdbcType=VARCHAR},
+      banned_ip = #{bannedIp,jdbcType=VARCHAR},
+      banned_status = #{bannedStatus,jdbcType=TINYINT},
+      banned_minute = #{bannedMinute,jdbcType=INTEGER},
+      banned_start_time = #{bannedStartTime,jdbcType=TIMESTAMP},
+      banned_end_time = #{bannedEndTime,jdbcType=TIMESTAMP},
+      banned_desc = #{bannedDesc,jdbcType=VARCHAR},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

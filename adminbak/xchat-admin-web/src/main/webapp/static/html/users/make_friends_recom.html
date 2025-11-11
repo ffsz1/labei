@@ -1,0 +1,243 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1 id="itemTitle"></h1>
+</section>
+<!-- .content -->
+<section class="content">
+    <div id="userTable"></div>
+    <div id="toolbar">
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="searchText" class="sr-only">拉贝号:</label>
+                <input type="text" class="form-control" placeholder="拉贝号" id="searchText">
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <button id="btnSearch" class="btn btn-sm btn-primary">
+                        <i class="glyphicon"></i>查询
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <button id="add" class="btn btn-success">
+                        <i class="glyphicon glyphicon-plus"></i>增加
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <button id="initSource" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-refresh"></i>刷新缓存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">添加推荐用户</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="userForm">
+                    <input type="hidden" id="url">
+                    <input type="hidden" name="uid" id="uid"/>
+                    <div class="form-group">
+                        <label for="erbanNo" class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control  validate[required]" name="erbanNo" id="erbanNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="source" class="col-sm-3 control-label">魅力值:</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control  validate[required]" placeholder="数值越大,越靠前" name="source" id="source">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+    var isEdit = false;
+    $(function () {
+        $('#userTable').bootstrapTable('destroy');
+        $('#userTable').bootstrapTable({
+            columns: [
+                {field: 'uid', title: 'UID', align: 'center', width: '3%'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '8%'},
+                {field: 'nick', title: '昵称', align: 'center', width: '5%'},
+                {field: 'avatar', title: '头像', align: 'center', width: '10%',
+                    formatter :function (val) {
+                        return "<img src='" + val + "' width='70' height='60'>";
+                    }
+                },
+                {field: 'source', title: '魅力值', align: 'center', width: '5%'},
+                {field: 'initSource', title: '魅力值(初始值)', align: 'center', width: '5%'},
+                {
+                    field: 'uid',
+                    title: '操作',
+                    align: 'center',
+                    width: '25%',
+                    formatter: function (val, row, index) {
+                        var str = '<button class="btn btn-sm btn-success opt-add-source" data-id=' + val + '><i class="glyphicon glyphicon-edit"></i>添加魅力值</button>';
+                        str += '&nbsp;&nbsp;<button class="btn btn-sm btn-success opt-edit" data-id=' + val + '><i class="glyphicon glyphicon-edit"></i>修改信息</button>';
+                        str += '&nbsp;&nbsp;<button class="btn btn-sm btn-danger opt-remove" data-id=' + val + '><i class="glyphicon glyphicon-remove"></i>删除</button>';
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    erbanNo: $("#searchText").val()
+                };
+                return param;
+            },
+            uniqueId: 'uid',
+            toolbar: '#toolbar',
+            url: '/admin/makeFriendRecom/list',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+        $("#userTable").on("click", ".opt-edit", function () {
+            var uid = $(this).attr("data-id");
+            $("#uid").val(uid);
+            $("#erbanNo").val(TableHelper.getRowByUniqueId("#userTable", uid).erbanNo);
+            $("#source").val(TableHelper.getRowByUniqueId("#userTable", uid).initSource);
+            $("#modalLabel").text("修改推荐用户初始魅力值");
+            $("#url").val("/admin/makeFriendRecom/saveUser");
+            $("#userModal").modal('show');
+        })
+
+        $("#userTable").on("click", ".opt-add-source", function () {
+            var uid = $(this).attr("data-id");
+            $("#uid").val(uid);
+            $("#erbanNo").val(TableHelper.getRowByUniqueId("#userTable", uid).erbanNo);
+            $("#source").val("");
+            $("#modalLabel").text("推荐用户添加魅力值");
+            $("#url").val("/admin/makeFriendRecom/addSource")
+            $("#userModal").modal('show');
+        });
+
+        $("#initSource").on("click", function () {
+            $.get("/admin/makeFriendRecom/initSource", function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("刷新成功");
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#userTable");
+                } else {
+                    $("#tipMsg").text("刷新失败:" + data.message);
+                    $("#tipModal").modal('show');
+                }
+            });
+        })
+
+        $("#userTable").on("click", '.opt-remove', function () {
+            var uid = $(this).attr("data-id");
+            if (confirm("你确认删除【" + TableHelper.getRowByUniqueId("#userTable", uid).erbanNo + "】吗?")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/makeFriendRecom/delUser",
+                    data: {'uid': uid},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#userTable");
+                        } else {
+                            $("#tipMsg").text("删除失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#userTable');
+        })
+
+        $('#add').click(function () {
+            $("#userForm")[0].reset();
+            $("#uid").val();
+            $("#url").val("/admin/makeFriendRecom/saveUser");
+            $("#modalLabel").text("添加推荐用户");
+            $("#userModal").modal('show');
+        });
+
+        $('#save').click(function () {
+            if ($("#userForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: $("#url").val(),
+                    data: $('#userForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.code == 200) {
+                            $("#userModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#userTable");
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

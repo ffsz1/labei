@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatRoomCtrbSumTotalMapperMgr" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatRoomCtrbSumTotal" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="flow_sum_total" property="flowSumTotal" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, flow_sum_total, create_time
+  </sql>
+
+  <update id="updateSumGoldTotalByCtrbId" parameterType="java.util.Map" >
+    update stat_room_ctrb_sum_total
+    set flow_sum_total =flow_sum_total+#{flowSumTotal,jdbcType=BIGINT}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+
+</mapper>

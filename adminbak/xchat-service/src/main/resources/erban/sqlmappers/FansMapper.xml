@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.FansMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.Fans" >
+    <id column="fan_id" property="fanId" jdbcType="BIGINT" />
+    <result column="like_uid" property="likeUid" jdbcType="BIGINT" />
+    <result column="liked_uid" property="likedUid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fan_id, like_uid, liked_uid, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.FansExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fans
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from fans
+    where fan_id = #{fanId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fans
+    where fan_id = #{fanId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.Fans" >
+    insert into fans (fan_id, like_uid, liked_uid, 
+      create_time)
+    values (#{fanId,jdbcType=BIGINT}, #{likeUid,jdbcType=BIGINT}, #{likedUid,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.Fans" >
+    insert into fans
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fanId != null" >
+        fan_id,
+      </if>
+      <if test="likeUid != null" >
+        like_uid,
+      </if>
+      <if test="likedUid != null" >
+        liked_uid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fanId != null" >
+        #{fanId,jdbcType=BIGINT},
+      </if>
+      <if test="likeUid != null" >
+        #{likeUid,jdbcType=BIGINT},
+      </if>
+      <if test="likedUid != null" >
+        #{likedUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Fans" >
+    update fans
+    <set >
+      <if test="likeUid != null" >
+        like_uid = #{likeUid,jdbcType=BIGINT},
+      </if>
+      <if test="likedUid != null" >
+        liked_uid = #{likedUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where fan_id = #{fanId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Fans" >
+    update fans
+    set like_uid = #{likeUid,jdbcType=BIGINT},
+      liked_uid = #{likedUid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where fan_id = #{fanId,jdbcType=BIGINT}
+  </update>
+</mapper>

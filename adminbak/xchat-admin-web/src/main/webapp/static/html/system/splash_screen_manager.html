@@ -1,0 +1,456 @@
+<style>
+    #removeBadge {
+        margin-left: 10px;
+    }
+
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+
+    .modal-body, .modal-body .form-group {
+        overflow: hidden;
+    }
+
+    .modal-body .form-inline {
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+
+    .modal-body #addImgUrl {
+        cursor: pointer;
+    }
+
+    .modal-body #addUploadFile {
+        display: none;
+    }
+
+    .modal-body .btn {
+        display: block;
+        width: 150px;
+        margin-top: 1rem;
+    }
+
+    textarea {
+        resize: unset;
+        height: 100px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <a href="javascript:;" id="btnAdd" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">闪屏信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="form" class="form-horizontal">
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-4 control-label">闪屏名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="name" name="name" class="form-control"
+                                   aria-describedby="basic-addon1"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">状态:</label>
+                        <div class="col-sm-8">
+                            <label class="radio-inline">
+                                <input type="radio" name="status" value="1"> 无效
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="status" value="2" checked> 有效
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">闪屏图片:</label>
+                        <div class="col-sm-8">
+                            <img src="/static/AdminLTE/img/add.png" id="image" width="150" alt="badge">
+                            <input type="file" id="uploadActivityFile" name="file"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" style="display: none">
+                            <button class="btn btn-success" type="button" id="uploadActivityBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="activityImageUrl" name="activityImageUrl"
+                                   class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userMold" class="col-sm-4 control-label">用户:</label>
+                        <div class="col-sm-8">
+                            <select name="userMold" id="userMold" class="form-control">
+                                <option value="0">全部</option>
+                                <option value="1">新用户</option>
+                                <option value="2">老用户</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">跳转类型:</label>
+                        <div class="col-sm-8">
+                            <select name="skipType" id="skipType" class="form-control">
+                                <option value="0">无</option>
+                                <option value="1">App页面</option>
+                                <option value="2">聊天室</option>
+                                <option value="3">H5页面</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="skipUri" class="col-sm-4 control-label">跳转地址:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-addon">http://</div>
+                                <input type="text" class="form-control validate[required]" name="skipUri" id="skipUri">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="startTime" class="col-sm-4 control-label">有效时间:</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="startTime" type="date" name="startTime" autocomplete="off"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" id="endTime" type="date" name="endTime" autocomplete="off"
+                                   class="form-control validate[required]">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="glyphicon glyphicon-remove"></i> 关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="save">
+                    <i class="glyphicon glyphicon-save"></i> 保存
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        let modify = true;
+
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'picId', title: 'ID', align: 'center', valign: 'middle', visible: false},
+                {field: 'picName', title: '名称', align: 'center', valign: 'middle', width: 150},
+                {
+                    field: 'picStatus',
+                    title: '状态',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '无效'
+                        } else if (val == 2) {
+                            return '有效'
+                        }
+                    }
+                },
+                {
+                    field: 'picImage',
+                    title: '图片',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val) {
+                        return "<img src='" + val + "' width='75'>";
+                    }
+                },
+                {
+                    field: 'userType',
+                    title: '用户',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val) {
+                        if (val == 0) {
+                            return '全部';
+                        } else if (val == 1) {
+                            return '新用户'
+                        } else if (val == 2) {
+                            return '老用户'
+                        }
+                    }
+                },
+                {
+                    field: 'picType', title: '跳转类型', align: 'center', valign: 'middle', width: 150,
+                    formatter: function (val) {
+                        switch (val) {
+                            case 0:
+                                return '无';
+                            case 1:
+                                return 'App页面';
+                            case 2:
+                                return '聊天室';
+                            case 3:
+                                return 'H5页面';
+                        }
+                    }
+                },
+                {
+                    field: 'picUrl', title: '跳转地址', align: 'center', valign: 'middle', width: 250,
+                    formatter: function (val, row) {
+                        if (row.picType == 3) {
+                            return `<a href="http://${val}" target="_blank">${val}</a>`;
+                        } else {
+                            return val;
+                        }
+                    }
+                },
+                {
+                    field: 'startTime',
+                    title: '开始时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 200,
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'endTime',
+                    title: '结束时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 200,
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'picId',
+                    title: '操作',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val, row) {
+                        return `<button class='btn btn-success opt-edit' data-id="${val}">
+                                    <i class="glyphicon glyphicon-edit"></i> 编辑
+                                </button>`;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    type: "",
+                    status: "",
+                    userType: ""
+                };
+                return param;
+            },
+            uniqueId: 'picId',
+            toolbar: '#toolbar',
+            url: '/admin/splashScreen/getAll',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            },
+            responseHandler: function (res) {
+                if (res.total > 0) {
+                    $('#btnAdd').css('display', 'none')
+                    return {
+                        "total": res.total,
+                        "rows": res.rows
+                    };
+                } else {
+                    $("#tipMsg").text("暂时查询不到相关数据");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+        });
+
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        });
+
+        $('#btnAdd').on('click', function () {
+            cleanModal();
+            modify = false;
+            $('#modal').modal('show');
+        });
+
+        $('#table').on('click', '.opt-edit', function () {
+            const id = $(this).data().id;
+            modify = true;
+            cleanModal();
+            $.ajax({
+                type: 'get',
+                url: '/admin/splashScreen/getOne',
+                dataType: 'json',
+                data: {
+                    id: id,
+                },
+                success: function (res) {
+                    if (res.result) {
+                        const startTime = res.result.startTime ? new Date(res.result.startTime).format('yyyy-MM-dd') : '';
+                        const endTime = res.result.endTime ? new Date(res.result.endTime).format('yyyy-MM-dd') : '';
+                        $('#id').val(res.result.picId);
+                        $('#name').val(res.result.picName);
+                        $("input:radio[name='status']")[res.result.picStatus - 1].checked = true;
+                        $('#image').attr('src', res.result.picImage);
+                        $('#activityImageUrl').val(res.result.picImage);
+                        $('#userMold').val(res.result.userType);
+                        $('#skipType').val(res.result.picType);
+                        $('#skipUri').val(res.result.picUrl);
+                        $('#startTime').val(startTime);
+                        $('#endTime').val(endTime);
+                        $('#modal').modal('show');
+                    }
+                }
+            });
+        });
+
+        $('#image').click(function () {
+            $('#uploadActivityFile').click();
+        });
+
+        $('#uploadActivityBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'uploadActivityFile', // 需要上传的文件域的ID, 即<input type="file">的ID。
+                url: '/admin/file/upload', // 后台方法的路径
+                type: 'post', // 当要提交自定义参数时, 这个参数要设置成post
+                dataType: 'json', // 服务器返回的数据类型: 可以为xml, script, json, html; 如果不填写, jQuery会自动判断
+                secureuri: false, // 是否启用安全提交, 默认为false。
+                async: false, // 是否是异步
+                success: function (json) {
+                    if (json.path) {
+                        $('#activityImageUrl').val(json.path);
+                        $('#image').attr("src", json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) {
+                    console.error(e);
+                }
+            });
+        });
+
+        $('#save').on('click', function () {
+            if ($('#form').validationEngine('validate')) {
+                $.ajax({
+                    type: 'post',
+                    url: '/admin/splashScreen/addOrModify',
+                    dataType: 'json',
+                    data: {
+                        picId: $('#id').val(),
+                        picName: $('#name').val(),
+                        userType: $('#userMold').val(),
+                        picStatus: $('input:radio:checked').val(),
+                        picImage: $('#activityImageUrl').val(),
+                        picUrl: $('#skipUri').val(),
+                        picType: $('#skipType').val(),
+                        startDate: $('#startTime').val(),
+                        endDate: $('#endTime').val(),
+                        modify: modify
+                    },
+                    success: function (res) {
+                        if (res.result == true) {
+                            $("#modal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败, 错误码: " + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        // 清理模态框表单内容
+        function cleanModal() {
+            $('#id').val('');
+            $('#name').val('');
+            $('#image').attr('src', '/static/AdminLTE/img/add.png');
+            $('#skipUri').val('');
+            $('#startTime').val('');
+            $('#endTime').val('');
+            $('#form')[0].reset();
+        }
+
+        function getCurrentDate() {
+            const date = new Date();
+            return date.format("yyyy-MM-dd");
+        };
+
+        const picker1 = $('#startTime').datetimepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true,
+            minView: "hour",
+            todayHighlight: true,
+            pickerPosition: 'top-left'
+        });
+
+        const picker2 = $('#endTime').datetimepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true,
+            minView: "hour",
+            todayHighlight: true,
+            pickerPosition: 'top-left'
+        });
+    });
+</script>

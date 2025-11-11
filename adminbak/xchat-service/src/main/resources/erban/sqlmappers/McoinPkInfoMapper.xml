@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.McoinPkInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.McoinPkInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="term" property="term" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="red_answer" property="redAnswer" jdbcType="VARCHAR" />
+    <result column="blue_answer" property="blueAnswer" jdbcType="VARCHAR" />
+    <result column="red_pic" property="redPic" jdbcType="VARCHAR" />
+    <result column="blue_pic" property="bluePic" jdbcType="VARCHAR" />
+    <result column="red_polls" property="redPolls" jdbcType="INTEGER" />
+    <result column="blue_polls" property="bluePolls" jdbcType="INTEGER" />
+    <result column="lottery_time" property="lotteryTime" jdbcType="TIMESTAMP" />
+    <result column="carve_up_mcoin_num" property="carveUpMcoinNum" jdbcType="INTEGER" />
+    <result column="pk_status" property="pkStatus" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, term, title, red_answer, blue_answer, red_pic, blue_pic, red_polls, blue_polls, 
+    lottery_time, carve_up_mcoin_num, pk_status, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.McoinPkInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from mcoin_pk_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from mcoin_pk_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findByPkStatus" resultMap="BaseResultMap" parameterType="java.lang.Byte" >
+    select
+    <include refid="Base_Column_List" />
+    from mcoin_pk_info
+    where pk_status = #{pkStatus,jdbcType=BIT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from mcoin_pk_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.McoinPkInfoExample" >
+    delete from mcoin_pk_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.McoinPkInfo" >
+    insert into mcoin_pk_info (id, term, title, 
+      red_answer, blue_answer, red_pic, 
+      blue_pic, red_polls, blue_polls, 
+      lottery_time, carve_up_mcoin_num, pk_status, 
+      create_time, update_time)
+    values ((select AUTO_INCREMENT from information_schema.tables where  table_name='mcoin_pk_info'),id, #{title,jdbcType=VARCHAR},
+      #{redAnswer,jdbcType=VARCHAR}, #{blueAnswer,jdbcType=VARCHAR}, #{redPic,jdbcType=VARCHAR}, 
+      #{bluePic,jdbcType=VARCHAR}, #{redPolls,jdbcType=INTEGER}, #{bluePolls,jdbcType=INTEGER}, 
+      #{lotteryTime,jdbcType=TIMESTAMP}, #{carveUpMcoinNum,jdbcType=INTEGER}, #{pkStatus,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.McoinPkInfo" >
+    insert into mcoin_pk_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="term != null" >
+        term,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="redAnswer != null" >
+        red_answer,
+      </if>
+      <if test="blueAnswer != null" >
+        blue_answer,
+      </if>
+      <if test="redPic != null" >
+        red_pic,
+      </if>
+      <if test="bluePic != null" >
+        blue_pic,
+      </if>
+      <if test="redPolls != null" >
+        red_polls,
+      </if>
+      <if test="bluePolls != null" >
+        blue_polls,
+      </if>
+      <if test="lotteryTime != null" >
+        lottery_time,
+      </if>
+      <if test="carveUpMcoinNum != null" >
+        carve_up_mcoin_num,
+      </if>
+      <if test="pkStatus != null" >
+        pk_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="term != null" >
+        #{term,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="redAnswer != null" >
+        #{redAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="blueAnswer != null" >
+        #{blueAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="redPic != null" >
+        #{redPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bluePic != null" >
+        #{bluePic,jdbcType=VARCHAR},
+      </if>
+      <if test="redPolls != null" >
+        #{redPolls,jdbcType=INTEGER},
+      </if>
+      <if test="bluePolls != null" >
+        #{bluePolls,jdbcType=INTEGER},
+      </if>
+      <if test="lotteryTime != null" >
+        #{lotteryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carveUpMcoinNum != null" >
+        #{carveUpMcoinNum,jdbcType=INTEGER},
+      </if>
+      <if test="pkStatus != null" >
+        #{pkStatus,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.McoinPkInfoExample" resultType="java.lang.Integer" >
+    select count(*) from mcoin_pk_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update mcoin_pk_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.term != null" >
+        term = #{record.term,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.redAnswer != null" >
+        red_answer = #{record.redAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blueAnswer != null" >
+        blue_answer = #{record.blueAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.redPic != null" >
+        red_pic = #{record.redPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bluePic != null" >
+        blue_pic = #{record.bluePic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.redPolls != null" >
+        red_polls = #{record.redPolls,jdbcType=INTEGER},
+      </if>
+      <if test="record.bluePolls != null" >
+        blue_polls = #{record.bluePolls,jdbcType=INTEGER},
+      </if>
+      <if test="record.lotteryTime != null" >
+        lottery_time = #{record.lotteryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.carveUpMcoinNum != null" >
+        carve_up_mcoin_num = #{record.carveUpMcoinNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pkStatus != null" >
+        pk_status = #{record.pkStatus,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update mcoin_pk_info
+    set id = #{record.id,jdbcType=BIGINT},
+      term = #{record.term,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      red_answer = #{record.redAnswer,jdbcType=VARCHAR},
+      blue_answer = #{record.blueAnswer,jdbcType=VARCHAR},
+      red_pic = #{record.redPic,jdbcType=VARCHAR},
+      blue_pic = #{record.bluePic,jdbcType=VARCHAR},
+      red_polls = #{record.redPolls,jdbcType=INTEGER},
+      blue_polls = #{record.bluePolls,jdbcType=INTEGER},
+      lottery_time = #{record.lotteryTime,jdbcType=TIMESTAMP},
+      carve_up_mcoin_num = #{record.carveUpMcoinNum,jdbcType=INTEGER},
+      pk_status = #{record.pkStatus,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.McoinPkInfo" >
+    update mcoin_pk_info
+    <set >
+      <if test="term != null" >
+        term = #{term,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="redAnswer != null" >
+        red_answer = #{redAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="blueAnswer != null" >
+        blue_answer = #{blueAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="redPic != null" >
+        red_pic = #{redPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bluePic != null" >
+        blue_pic = #{bluePic,jdbcType=VARCHAR},
+      </if>
+      <if test="redPolls != null" >
+        red_polls = #{redPolls,jdbcType=INTEGER},
+      </if>
+      <if test="bluePolls != null" >
+        blue_polls = #{bluePolls,jdbcType=INTEGER},
+      </if>
+      <if test="lotteryTime != null" >
+        lottery_time = #{lotteryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="carveUpMcoinNum != null" >
+        carve_up_mcoin_num = #{carveUpMcoinNum,jdbcType=INTEGER},
+      </if>
+      <if test="pkStatus != null" >
+        pk_status = #{pkStatus,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.McoinPkInfo" >
+    update mcoin_pk_info
+    set term = #{term,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      red_answer = #{redAnswer,jdbcType=VARCHAR},
+      blue_answer = #{blueAnswer,jdbcType=VARCHAR},
+      red_pic = #{redPic,jdbcType=VARCHAR},
+      blue_pic = #{bluePic,jdbcType=VARCHAR},
+      red_polls = #{redPolls,jdbcType=INTEGER},
+      blue_polls = #{bluePolls,jdbcType=INTEGER},
+      lottery_time = #{lotteryTime,jdbcType=TIMESTAMP},
+      carve_up_mcoin_num = #{carveUpMcoinNum,jdbcType=INTEGER},
+      pk_status = #{pkStatus,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findMcoinPkInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mcoin_pk_info
+    <where>
+      <if test="term != 0">
+        and term = #{term}
+      </if>
+      <if test="pkStatus != 4">
+        and pk_status =  #{pkStatus}
+      </if>
+    </where>
+  </select>
+</mapper>

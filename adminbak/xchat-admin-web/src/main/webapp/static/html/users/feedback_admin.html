@@ -1,0 +1,114 @@
+<style>
+    #btnSearch {
+        margin-left: 8px;
+    }
+    #uid {
+        margin-right: 4px;
+    }
+    #toolbar input, #toolbar select {
+        margin-right: 2rem;
+    }
+    #toolbar label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <label>拉贝号: </label>
+                    <input type="text" name="erbanNo" id="erbanNo" />
+                    <label>选择时间: </label>
+                    <input type="text" name="beginDate" id="beginDate" />
+                    <span style="margin-right: 2rem">至</span>
+                    <input type="endDate" name="endDate" id="endDate" />
+                    <button id="btnSearch" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> 查询</button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'uid', title: '用户uid', align: 'center', width: 150},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: 150},
+                {field: 'feedbackDesc', title: '反馈信息', align: 'center', width: 1000},
+                {field: 'imgUrl', title: '反馈截图', align: 'center', width: 150,
+                    formatter: function (val, row, index) {
+                        return "<img src='" + val + "' width='60' />";
+                    }
+                },
+                {field: 'contact', title: '摘要', align: 'center', width: 150},
+                {
+                    field: 'createTime', title: '生成时间', align: 'center', width: 200,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            sidePagination: "server",
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber,
+                    erbanNo: $('#erbanNo').val(),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/feedback/list.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        })
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        })
+        const picker1 = $("#beginDate").datepicker({
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            autoclose: true,
+            startDate: "2016-01-01"
+        });
+        const picker2 = $("#endDate").datepicker({
+            format: 'yyyy-mm-dd',
+            todayBtn: true,
+            autoclose: true
+        });
+        picker1.on('changeDate', function () {
+            var date = $('#beginDate').datepicker('getDate');
+            picker2.datepicker('setStartDate', date);
+        });
+        picker2.on('changeDate', function () {
+            var date = $('#endDate').datepicker('getDate');
+            picker1.datepicker('setEndDate', date);
+        });
+    })
+</script>

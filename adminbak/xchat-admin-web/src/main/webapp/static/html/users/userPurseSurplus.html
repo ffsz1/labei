@@ -1,0 +1,109 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="roleTable"></div>
+                <div id="toolbar">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">时间:</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="beginDate" type="date" placeholder="开始时间" name="beginDate"
+                                   value="" class="date form-control validate[required]" autocomplete="off">
+                        </div>
+                        <div class="col-sm-3" style="margin-right: 1rem">
+                            <input type="text" id="endDate" type="date" placeholder="结束时间" name="endDate" value=""
+                                   class="date form-control validate[required]" autocomplete="off">
+                        </div>
+                        <button id="gift-refresh" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i> 查询
+                        </button>
+                        <button id="exportExcel" class="btn btn-success">
+                            <i class="glyphicon glyphicon-save-file"></i> 导出Excel
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <!-- .content -->
+        </div>
+    </div>
+</section>
+<script>
+    $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    $('#endDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    $(function () {
+        $('#roleTable').bootstrapTable('destroy');
+        $('#roleTable').bootstrapTable({
+            columns: [
+                {
+                    field: 'surplusDate', title: '统计时间', align: 'center', width: '400', valign: 'middle',
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'surplusGold', title: '剩余金币', align: 'center', width: '400'},
+                {field: 'surplusDiamonds', title: '剩余钻石', align: 'center', width: '400'},
+                {field: 'surplusFull', title: '剩余全服', align: 'center', width: '400'}
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    beginDate: $("#beginDate").val(),
+                    endDate: $("#endDate").val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/userPurse/surplus/getList.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+    });
+
+    $("#gift-refresh").click(function () {
+        $("#roleTable").bootstrapTable('refresh');
+    });
+
+    $("#exportExcel").click(function () {
+        window.location.href = "/admin/userPurse/surplus/exportExcel";
+    });
+</script>
+<script src="/static/js/admin/style.js"></script>

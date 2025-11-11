@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.FamilyGiftRecordMapper" >
+    <select id="sumByTowWeeks" resultType="com.erban.main.model.RoomFlowWeekVo">
+        SELECT
+            SUM(
+            IF (
+            YEARWEEK(g.create_time) = YEARWEEK(now()) - 2,
+            g.num,
+            0
+            )
+            ) secondWeek,
+            SUM(
+            IF (
+            YEARWEEK(g.create_time) = YEARWEEK(now()) - 1,
+            g.num,
+            0
+            )
+            ) firstWeek,
+            g.team_id as uid
+            FROM
+            family_gift_record g
+            LEFT JOIN family_team r ON r.id = g.team_id
+         GROUP BY g.team_id
+
+    </select>
+
+    <select id="statFamilyFlow" resultType="com.erban.main.vo.admin.StatFamilyFlowVo" parameterType="com.erban.main.param.admin.FamilyFlowParam">
+        select  ft.family_id as familyId,ft.family_logo as familyLogo,ft.family_name as familyName,
+                ft.uid , us.nick,sum(fgr.num) as num,COUNT(DISTINCT fgr.uid) as consumers,us.phone as phone,
+                us.alipay_account as alipayAccount,us.alipay_account_name as alipayAccountName,us.channel
+        from  family_gift_record fgr
+        inner join  family_team ft on fgr.team_id = ft.id
+        inner join users us on us.uid = ft.uid
+        where 1 = 1
+            <if test="beginDate != null and endDate != null">
+              and  fgr.create_time BETWEEN #{beginDate} and #{endDate}
+            </if>
+            <if test="familyId != null and familyId !=''">
+              and  ft.family_id  = #{familyId}
+            </if>
+        GROUP BY fgr.team_id
+    </select>
+
+    <select id="selectTeamIdByFamilyGiftRecordList" resultType="java.lang.Long">
+        select uid from family_gift_record where team_id = #{teamId}
+    </select>
+
+
+    <delete id="deleteByTeamId">
+        delete from family_gift_record where team_id = #{teamId}
+    </delete>
+
+    <select id="countByConsumers" resultType="java.lang.Integer">
+        select COUNT(DISTINCT fgr.uid) as consumers
+        from family_gift_record fgr
+        left join family_team ft on ft.id = fgr.team_id
+        where ft.family_id = #{familyId} and fgr.create_time between #{startTime} and #{endTime}
+    </select>
+    <select id="selectByList" resultType="com.erban.admin.main.dto.FamilySendGiftRecordDTO">
+        select fgr.uid,fgr.num,ft.family_name as familyName,ft.family_id as familyId,g.gift_name as giftName,us.nick,us.avatar,fgr.create_time as createTime,us.erban_no as erbanNo
+        from family_gift_record fgr
+        left join family_team ft on fgr.team_id = ft.id
+        left join gift g on g.gift_id = fgr.gift_id
+        left join users us on us.uid = fgr.uid
+        where ft.id = #{teamId} and fgr.create_time between #{startTime} and #{endTime}
+        order by  fgr.create_time desc
+    </select>
+
+
+</mapper>

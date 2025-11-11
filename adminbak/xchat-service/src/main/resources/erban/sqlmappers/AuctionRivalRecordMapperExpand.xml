@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.AuctionRivalRecordMapperExpand">
+
+    <resultMap type="com.erban.main.model.AuctSum" id="AuctSumMap">
+        <id column="AUCTID" jdbcType="VARCHAR" property="auctId"/>
+        <result column="SUMTOTAL" jdbcType="BIGINT" property="sumTotal"/>
+
+    </resultMap>
+
+    <!--统计拍卖的金额总数-->
+    <select id="getSum" resultType="java.lang.Integer">
+      SELECT SUM(deal_money)FROM auction_deal
+  </select>
+    <!--统计竞拍次数-->
+    <!--select COUNT(*) from auction_rival_record where auct_id='fc4874c441264233a38a17f9ef273f84';-->
+    <!--select COUNT(*)from auction_rival_record where auct_id ='fc4874c441264233a38a17f9ef273f84' group by auct_id having count(*)  ;-->
+    <!--SELECT COUNT(auct_id) FROM auction_rival_record where auct_id='fc4874c441264233a38a17f9ef273f84'-->
+    <select id="getNum" resultType="java.lang.Integer">
+SELECT COUNT(auct_id)from auction_deal
+    </select>
+
+
+
+
+
+
+
+</mapper>

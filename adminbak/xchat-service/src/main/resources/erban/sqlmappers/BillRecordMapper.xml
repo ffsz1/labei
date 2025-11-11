@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.BillRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.BillRecord" >
+    <id column="bill_id" property="billId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="target_uid" property="targetUid" jdbcType="BIGINT" />
+    <result column="room_uid" property="roomUid" jdbcType="BIGINT" />
+    <result column="bill_status" property="billStatus" jdbcType="TINYINT" />
+    <result column="obj_id" property="objId" jdbcType="VARCHAR" />
+    <result column="obj_type" property="objType" jdbcType="TINYINT" />
+    <result column="gift_id" property="giftId" jdbcType="INTEGER" />
+    <result column="gift_num" property="giftNum" jdbcType="INTEGER" />
+    <result column="diamond_num" property="diamondNum" jdbcType="DOUBLE" />
+    <result column="gold_num" property="goldNum" jdbcType="BIGINT" />
+    <result column="money" property="money" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bill_id, uid, target_uid, room_uid, bill_status, obj_id, obj_type, gift_id, gift_num, 
+    diamond_num, gold_num, money, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.BillRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bill_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from bill_record
+    where bill_id = #{billId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from bill_record
+    where bill_id = #{billId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.BillRecord" >
+    insert into bill_record (bill_id, uid, target_uid, 
+      room_uid, bill_status, obj_id, 
+      obj_type, gift_id, gift_num, 
+      diamond_num, gold_num, money, 
+      create_time, update_time)
+    values (#{billId,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{targetUid,jdbcType=BIGINT}, 
+      #{roomUid,jdbcType=BIGINT}, #{billStatus,jdbcType=TINYINT}, #{objId,jdbcType=VARCHAR}, 
+      #{objType,jdbcType=TINYINT}, #{giftId,jdbcType=INTEGER}, #{giftNum,jdbcType=INTEGER}, 
+      #{diamondNum,jdbcType=DOUBLE}, #{goldNum,jdbcType=BIGINT}, #{money,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.BillRecord" >
+    insert into bill_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="billId != null" >
+        bill_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="targetUid != null" >
+        target_uid,
+      </if>
+      <if test="roomUid != null" >
+        room_uid,
+      </if>
+      <if test="billStatus != null" >
+        bill_status,
+      </if>
+      <if test="objId != null" >
+        obj_id,
+      </if>
+      <if test="objType != null" >
+        obj_type,
+      </if>
+      <if test="giftId != null" >
+        gift_id,
+      </if>
+      <if test="giftNum != null" >
+        gift_num,
+      </if>
+      <if test="diamondNum != null" >
+        diamond_num,
+      </if>
+      <if test="goldNum != null" >
+        gold_num,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="billId != null" >
+        #{billId,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="targetUid != null" >
+        #{targetUid,jdbcType=BIGINT},
+      </if>
+      <if test="roomUid != null" >
+        #{roomUid,jdbcType=BIGINT},
+      </if>
+      <if test="billStatus != null" >
+        #{billStatus,jdbcType=TINYINT},
+      </if>
+      <if test="objId != null" >
+        #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null" >
+        #{objType,jdbcType=TINYINT},
+      </if>
+      <if test="giftId != null" >
+        #{giftId,jdbcType=INTEGER},
+      </if>
+      <if test="giftNum != null" >
+        #{giftNum,jdbcType=INTEGER},
+      </if>
+      <if test="diamondNum != null" >
+        #{diamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="goldNum != null" >
+        #{goldNum,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.BillRecord" >
+    update bill_record
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="targetUid != null" >
+        target_uid = #{targetUid,jdbcType=BIGINT},
+      </if>
+      <if test="roomUid != null" >
+        room_uid = #{roomUid,jdbcType=BIGINT},
+      </if>
+      <if test="billStatus != null" >
+        bill_status = #{billStatus,jdbcType=TINYINT},
+      </if>
+      <if test="objId != null" >
+        obj_id = #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="objType != null" >
+        obj_type = #{objType,jdbcType=TINYINT},
+      </if>
+      <if test="giftId != null" >
+        gift_id = #{giftId,jdbcType=INTEGER},
+      </if>
+      <if test="giftNum != null" >
+        gift_num = #{giftNum,jdbcType=INTEGER},
+      </if>
+      <if test="diamondNum != null" >
+        diamond_num = #{diamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="goldNum != null" >
+        gold_num = #{goldNum,jdbcType=BIGINT},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where bill_id = #{billId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.BillRecord" >
+    update bill_record
+    set uid = #{uid,jdbcType=BIGINT},
+      target_uid = #{targetUid,jdbcType=BIGINT},
+      room_uid = #{roomUid,jdbcType=BIGINT},
+      bill_status = #{billStatus,jdbcType=TINYINT},
+      obj_id = #{objId,jdbcType=VARCHAR},
+      obj_type = #{objType,jdbcType=TINYINT},
+      gift_id = #{giftId,jdbcType=INTEGER},
+      gift_num = #{giftNum,jdbcType=INTEGER},
+      diamond_num = #{diamondNum,jdbcType=DOUBLE},
+      gold_num = #{goldNum,jdbcType=BIGINT},
+      money = #{money,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where bill_id = #{billId,jdbcType=VARCHAR}
+  </update>
+
+
+  <sql id="Query_BillTransfer_Where">
+    <if test="erbanNo!=null">
+      AND us.erban_no=#{erbanNo}
+    </if>
+    <if test="gender!=null">
+      AND us.gender=#{gender}
+    </if>
+    <if test="beginDate!=null">
+      AND bt.create_time &gt;= #{beginDate}
+    </if>
+    <if test="endDate!=null">
+      AND bt.create_time &lt;= #{endDate}
+    </if>
+    <if test="status!=null">
+      AND bt.bill_status=#{status}
+    </if>
+    <if test="tranType!=null">
+      AND bt.tran_type=#{tranType}
+    </if>
+    <if test="realTranType!=null">
+      AND bt.real_tran_type=#{realTranType}
+    </if>
+    <if test="withdrawStatus!=null and withdrawStatus != 0">
+      AND us.withdraw_status=#{withdrawStatus}
+    </if>
+  </sql>
+
+  <resultMap id="QueryResultMap" type="com.erban.main.vo.admin.DiamondWithDrawVo" >
+    <id column="bill_id" property="billId" jdbcType="VARCHAR" />
+    <result column="bill_status" property="billStatus" jdbcType="TINYINT" />
+    <result column="diamond_num" property="diamondNum" jdbcType="DOUBLE" />
+    <result column="gold_num" property="goldNum" jdbcType="BIGINT" />
+    <result column="money" property="money" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR" />
+    <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR" />
+    <result column="weixin_openid" property="weixinOpenid" jdbcType="VARCHAR" />
+    <result column="withdraw_status" property="withdrawStatus" jdbcType="TINYINT" />
+    <result column="gift_id" property="giftId" jdbcType="BIGINT" />
+    <result column="gender" property="gender" jdbcType="BIGINT" />
+    <result column="user_num" property="userNum" jdbcType="BIGINT" />
+    <result column="apply_withdrawal_account" property="applyWithdrawalAccount" jdbcType="VARCHAR"/>
+    <result column="apply_withdrawal_name" property="applyWithdrawalName" jdbcType="VARCHAR"/>
+    <result column="real_transfer_account" property="realTransferAccount" jdbcType="VARCHAR"/>
+    <result column="real_transfer_name" property="realTransferName" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Query_Column_List" >
+    br.bill_id as bill_id, br.bill_status as bill_status,br.diamond_num as diamond_num, br.gold_num as gold_num, br.money as money, br.create_time as create_time, br.update_time as update_time,
+    u.uid as uid ,u.erban_no as erban_no,u.nick as nick,u.phone as phone ,a.alipay_account as alipay_account,a.alipay_name as alipay_account_name,u.gender as gender, u.withdraw_status,
+    br.gift_id, a.weixin_openid,br.apply_withdrawal_account,br.apply_withdrawal_name,br.real_transfer_account,br.real_transfer_name
+  </sql>
+  <sql id="Query_Where">
+    br.obj_type = '2'
+    <if test="erbanNo!=null">
+      AND u.erban_no=#{erbanNo}
+    </if>
+    <if test="gender!=null">
+      AND u.gender=#{gender}
+    </if>
+    <if test="beginDate!=null">
+      AND br.create_time &gt;= #{beginDate}
+    </if>
+    <if test="endDate!=null">
+      AND br.create_time &lt;= #{endDate}
+    </if>
+    <if test="status!=null">
+      AND br.bill_status=#{status}
+    </if>
+    <if test="withdrawStatus!=null">
+      AND u.withdraw_status=#{withdrawStatus}
+    </if>
+  </sql>
+
+  <select id="selectByQuery" resultMap="QueryResultMap" parameterType="com.erban.main.param.admin.WithDrawParam" >
+    select
+    <include refid="Query_Column_List" />
+    from bill_record br force index(key2)
+    INNER JOIN users u ON  br.uid=u.uid
+    INNER JOIN account a ON u.uid = a.uid
+    <where>
+      <include refid="Query_Where"></include>
+    </where>
+    ORDER BY br.create_time DESC
+  </select>
+
+
+  <select id="selectBillTransferByIds" resultType="com.erban.main.vo.admin.BillTransferDTO">
+    select bt.id,bt.uid,bt.tran_type as tranType,bt.real_tran_type as realTranType,bt.cost,bt.money,bt.bill_status as billStatus,bt.create_time as createTime,bt.update_time as updateTime,bt.bill_id as billId,
+    us.erban_no as erbanNo,us.nick,us.gender,us.phone,a.weixin_openid as wxOpenId,a.alipay_account as alipayAccount,a.alipay_name as alipayAccountName,us.withdraw_status as withdrawStatus,
+    ubc.bank_card as cardNumber, ubc.bank_card_name as cardName,ubc.open_bank_code as openBankCode,
+    bt.apply_withdrawal_account as applyWithdrawalAccount,bt.apply_withdrawal_name as applyWithdrawalName,bt.real_transfer_account as realTransferAccount,bt.real_transfer_name as realTransferName
+    from bill_transfer bt
+    inner join users us on bt.uid = us.uid
+    INNER JOIN account a ON us.uid = a.uid
+    left join user_bank_card ubc on bt.uid = ubc.uid and ubc.is_use = 1
+    WHERE  bt.bill_status not in (2,4) AND us.withdraw_status = 0 AND bt.bill_id IN
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+  <select id="statByBillTransferQuery" resultType="com.erban.main.vo.admin.BillTransferDTO">
+    select COUNT(DISTINCT bt.uid) as userNum ,us.gender as gender, sum(bt.money) as money
+    from bill_transfer bt
+    inner join users us on bt.uid = us.uid
+    INNER JOIN account a ON us.uid = a.uid
+    <where>
+      <include refid="Query_BillTransfer_Where"></include>
+    </where>
+    GROUP BY us.gender
+  </select>
+  <select id="selectBillTransferByBillId" resultType="com.erban.main.vo.admin.BillTransferDTO">
+         select bt.id,bt.uid,bt.tran_type as tranType,bt.real_tran_type as realTranType,bt.cost,bt.money,bt.bill_status as billStatus,bt.create_time as createTime,bt.update_time as updateTime,bt.bill_id as billId,
+           us.erban_no as erbanNo,us.nick,us.gender,us.phone,a.weixin_openid as wxOpenId,a.alipay_account as alipayAccount,a.alipay_name as alipayAccountName,us.withdraw_status as withdrawStatus,
+          bt.apply_withdrawal_account as applyWithdrawalAccount,bt.apply_withdrawal_name as applyWithdrawalName,bt.real_transfer_account as realTransferAccount,bt.real_transfer_name as realTransferName
+          from bill_transfer bt
+           inner join users us on bt.uid = us.uid
+           INNER JOIN account a ON us.uid = a.uid
+          WHERE  bt.bill_status not in (2,4) AND us.withdraw_status = 0 AND bt.bill_id  = #{billId}
+  </select>
+
+  <select id="selectBillTransferByQuery" resultType="com.erban.main.vo.admin.BillTransferDTO">
+    select bt.id,bt.uid,bt.tran_type as tranType,bt.real_tran_type as realTranType,bt.cost,bt.money,bt.bill_status as billStatus,bt.create_time as createTime,bt.update_time as updateTime,bt.bill_id as billId,
+    us.erban_no as erbanNo,us.nick,us.gender,us.phone,a.weixin_openid as wxOpenId,us.alipay_account as alipayAccount,us.alipay_account_name as alipayAccountName,us.withdraw_status as withdrawStatus,
+    bt.bank_card as cardNumber,bt.bank_card_name as cardName,bt.open_bank_code as openBankCode,bt.admin_id as adminId,bt.pingxx_id as pingxxId,
+    bt.apply_withdrawal_account as applyWithdrawalAccount,bt.apply_withdrawal_name as applyWithdrawalName,bt.real_transfer_account as realTransferAccount,bt.real_transfer_name as realTransferName
+    from bill_transfer bt
+    inner join users us on bt.uid = us.uid
+    INNER JOIN account a ON us.uid = a.uid
+    <where>
+      <include refid="Query_BillTransfer_Where"></include>
+    </where>
+    order by bt.create_time desc
+  </select>
+</mapper>

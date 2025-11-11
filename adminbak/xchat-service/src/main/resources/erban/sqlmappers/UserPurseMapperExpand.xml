@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserPurseMapperExpand">
+
+    <resultMap id="BaseResultMap" type="com.erban.main.model.UserPurse">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="gold_num" property="goldNum" jdbcType="BIGINT"/>
+        <result column="diamond_num" property="diamondNum" jdbcType="DOUBLE"/>
+        <result column="deposit_num" property="depositNum" jdbcType="BIGINT"/>
+        <result column="is_first_charge" property="isFirstCharge" jdbcType="BIT"/>
+        <result column="first_recharge_time" property="firstRechargeTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--统计用户量-->
+    <select id="getAllUserNum" resultType="long">
+      select COUNT(*) FROM user_purse
+    </select>
+
+    <!--统计已经消费过的用户数量-->
+    <select id="getConsumeUserNum" resultType="long">
+      select COUNT(is_first_charge) FROM user_purse where is_first_charge=1
+    </select>
+
+    <update id="updatePurseGold">
+        update user_purse set gold_num=gold_num + #{0},update_time=now() where uid=#{1}
+    </update>
+
+    <update id="updatePurseDiamond">
+        update user_purse set diamond_num=diamond_num + #{0},update_time=now() where uid=#{1}
+    </update>
+</mapper>

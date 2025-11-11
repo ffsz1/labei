@@ -1,0 +1,419 @@
+<style>
+    .content .form-group {
+        margin-right: 2rem;
+    }
+
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <!--查询输入框-->
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label class="control-label">靓号:</label>
+                            <input type="text" id="prettyNo" name="prettyNo" class="form-control"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                        <!--<label class="col-sm-1 control-label">类型:</label>-->
+                        <!--<div class="col-sm-1">-->
+                        <!--<div class="col-sm-1">-->
+                        <!--<select class="btn btn-default dropdown-toggle" id="type" name="type"-->
+                        <!--data-btn-class="btn-warning">-->
+                        <!--<option value="">全部</option>-->
+                        <!--<option value="1">四位靓号</option>-->
+                        <!--<option value="2">六位靓号</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="form-group">
+                            <label class="control-label">状态:</label>
+                            <select class="btn btn-default dropdown-toggle" id="status" name="status"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">未使用</option>
+                                <option value="2">抽奖使用</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">时间:</label>
+                            <input type="text" id="beginDate" type="date" placeholder="开始时间" name="beginDate" value=""
+                                   class="form-control validate[required]">
+                            <input type="text" id="endDate" type="date" placeholder="结束时间" name="endDate" value=""
+                                   class="form-control validate[required]">
+                        </div>
+                        <a href="javascript:;" id="add" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 新建靓号
+                        </a>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!--增加对话框-->
+<div class="modal fade" id="addPrettyNoModel" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">新增靓号</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addPrettyNoForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="prettyErbanNo" class="col-sm-3 control-label">请输入靓号：</label>
+                        <div class="col-sm-3">
+                            <input type="number" class="form-control validate[required]" name="prettyErbanNo"
+                                   id="prettyErbanNo"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">请输入使用人ID:</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control" name="erbanNo" id="erbanNo"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">使用顺序:</label>
+                        <div class="col-sm-4">
+                            <input type="number" class="form-control validate[required]" name="seq" id="seq"/>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">-->
+                    <!--<label class="col-sm-3 control-label">靓号使用来源：</label>-->
+                    <!--<div class="col-sm-8">-->
+                    <!--<select name="userStatus" id="userStatus" class="btn btn-default dropdown-toggle">-->
+                    <!--<option value="2">抽奖</option>-->
+                    <!--</select>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="addSave">新建</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--使用对话框-->
+<div class="modal fade" id="usePrettyNoModel" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="useModalLabel">使用靓号</h4>
+            </div>
+            <div class="modal-body">
+                <form id="usePrettyNoForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="beautyErbanNo" class="col-sm-3 control-label">靓号：</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control validate[required]" readonly="readonly"
+                                   name="beautyErbanNo" id="beautyErbanNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="usePeople" class="col-sm-3 control-label">请输入使用人ID:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="usePeople" id="usePeople"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="useSave">确认使用</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--删除-->
+<div class="modal fade" id="delcfmModel">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>您确认要删除吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="url"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="doDelete">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--解绑-->
+<div class="modal fade" id="jieBangCfmModel">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>确认解绑？
+                    解绑后，使用人会恢复原ID？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="doJieBang">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'prettyErbanNo', title: '靓号', align: 'center', width: 250},
+                {field: 'erbanNo', title: '原拉贝号', align: 'center', width: 250},
+                // {
+                //     field: 'type', title: '类型', align: 'center', width: '8%',
+                //     formatter: function (val, row, index) {
+                //         switch (val) {
+                //             case 1:
+                //                 return '四位靓号';
+                //             case 2:
+                //                 return '六位靓号';
+                //         }
+                //     }
+                // },
+                {
+                    field: 'useStatus', title: '使用类型', align: 'center', width: 200,
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '未使用';
+                            case 2:
+                                return '抽奖使用';
+                        }
+                    }
+                },
+                {field: 'seq', title: '使用顺序', align: 'center', width: 200},
+                {field: 'nick', title: '昵称', align: 'center', width: 250},
+                {
+                    field: 'createTime', title: '创建时间', align: 'center', width: 300,
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'tmp', title: '操作', align: 'center', width: 300,
+                    formatter: function (val, row, index) {
+                        const key = row.prettyErbanNo;
+                        if (row.useStatus === 1) {
+                            return "<button class='btn btn-sm btn-success opt-use' data-id=" + key + "><i class='glyphicon glyphicon-edit'></i> 绑定</button>&nbsp;&nbsp;" +
+                                "<button class='btn btn-sm btn-danger opt-del' data-id=" + key + " ><i class='glyphicon glyphicon-remove'></i> 删除</button>";
+                        } else if (row.useStatus === 2 && !row.erbanNo) {
+                            return "<button class='btn btn-sm btn-success opt-use' data-id=" + key + "><i class='glyphicon glyphicon-edit'></i> 绑定</button>&nbsp;&nbsp;"
+                        } else {
+                            return "<button class='btn btn-sm btn-danger opt-del' data-id=" + key + " ><i class='glyphicon glyphicon-remove'></i> 删除</button>";
+                        }
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                const param = {
+                    size: params.pageSize,
+                    page: params.pageNumber,
+                    // type: isNaN(parseInt($("#type").val())) ? null : parseInt($("#type").val()),
+                    status: isNaN(parseInt($("#status").val())) ? null : parseInt($("#status").val()),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $("#endDate").val(),
+                    prettyErbanNo: isNaN(parseInt($("#prettyNo").val())) ? null : parseInt($("#prettyNo").val())
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/prettyErbanNo/list.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    $("#userNum").text(res.data.list[0].userNum);
+                    $("#totalAmount").text(res.data.list[0].totalAmount / 100);
+                    return {
+                        "total": res.data.total,//总页数
+                        "rows": res.data.list  //数据
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",//总页数
+                        "rows": []  //数据
+                    };
+                }
+            }
+        });
+    });
+    $('#btnSearch').on('click', function () {
+        TableHelper.doRefresh('#table');
+    });
+    $('#add').on('click', function () {
+        $('#addPrettyNoForm')[0].reset();
+        $('#addPrettyNoModel').modal('show');
+    });
+    $('#addSave').on('click', function () {
+        if ($('#addPrettyNoForm').validationEngine('validate')) {
+            $.ajax({
+                type: "post",
+                url: "/admin/prettyErbanNo/savePrettyNo.action",
+                data: $("#addPrettyNoForm").serialize(),
+                dataType: 'json',
+                success: function (ret) {
+                    if (ret.code == 200) {
+                        $("#tipMsg").text("创建靓号成功");
+                        $("#tipModal").modal('show');
+                        $("#addPrettyNoModel").modal('hide');
+                        $('#table').bootstrapTable('refresh');
+                    } else {
+                        $("#tipMsg").text(ret.message + '[' + ret.code + ']');
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    });
+    $('#table').on('click', '.opt-use', function () {
+        const key = parseInt($(this).data('id'));
+        $("#useSave").data('id', key);
+        $('#usePrettyNoForm')[0].reset();
+        $("#beautyErbanNo").val(key);
+        $("#usePrettyNoModel").modal('show');
+    });
+    $("#useSave").click(function () {
+        if ($('#usePrettyNoForm').validationEngine('validate')) {
+            $.ajax({
+                type: 'post',
+                url: '/admin/prettyErbanNo/bind.action',
+                data: {
+                    prettyErbanNo: $('#beautyErbanNo').val(),
+                    erbanNo: $('#usePeople').val(),
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $("#tipMsg").text("绑定成功");
+                        $("#tipModal").modal('show');
+                        $('#usePrettyNoModel').modal('hide');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text(data.message + "[" + data.code + "]");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    });
+    $('#table').on('click', '.opt-unBound', function () {
+        const key = parseInt($(this).data('id'));
+        $("#doJieBang").data('id', key);
+        $("#rowId").val(key);
+        console.log(key, typeof key);
+        $('#jieBangCfmModel').modal();
+    });
+    $("#doJieBang").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '/admin/unBundlingPrettyNo.action',
+            data: {'rowId': $(this).data('id')},
+            dataType: 'json',
+            success: function (data) {
+                if (data == 1) {
+                    $("#tipMsg").text("解绑成功");
+                    $("#tipModal").modal('show');
+                    $("#jieBangCfmModel").modal('hide');
+                    TableHelper.doRefresh("#table");
+                } else if (data == 2) {
+                    $("#tipMsg").text("该账号未绑定，无需解绑！");
+                    $("#tipModal").modal('show');
+                } else {
+                    $("#tipMsg").text("解绑失败，错误码：" + data);
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    });
+    $('#table').on('click', '.opt-del', function () {
+        const key = parseInt($(this).data('id'));
+        $("#doDelete").data('id', key);
+        $("#rowId").val(key);
+        console.log(key, typeof key);
+        $('#delcfmModel').modal();
+    });
+    $("#doDelete").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '/admin/prettyErbanNo/delete.action',
+            data: {'prettyErbanNo': $(this).data('id')},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("删除成功");
+                    $("#tipModal").modal('show');
+                    $('#delcfmModel').modal('hide');
+                    TableHelper.doRefresh("#table");
+                } else {
+                    $("#tipMsg").text(data.message + "[" + data.code + "]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    });
+    const picker3 = $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        endDate: new Date(),
+        minView: "month"
+    });
+    const picker2 = $('#endDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        endDate: new Date(),
+        minView: "month"
+    });
+</script>
+<script src="/static/js/admin/style.js"></script>
+
+

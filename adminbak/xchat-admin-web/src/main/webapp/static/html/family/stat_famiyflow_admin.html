@@ -1,0 +1,234 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1 id="itemTitle"></h1>
+</section>
+<!-- .content -->
+<section class="content">
+    <!--查询输入框-->
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label  class="col-sm-1 control-label">家族ID:</label>
+            <div class="col-sm-2">
+                <input type="number" id="familyId" name="familyId" class="form-control"  aria-describedby="basic-addon1">
+            </div>
+
+            <label class="col-sm-1 control-label">时间:</label>
+            <div class="col-sm-2">
+                <input type="text" id="beginDate" name="beginDate" type="date" placeholder="开始时间"  class="form-control validate[required]">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" id="endDate" name="endDate" type="date" placeholder="结束时间" class="form-control validate[required]">
+            </div>
+            <div>
+                <button onclick="getYestaday()" type="button" class="btn btn-default" style="margin-right: 10px">
+                    <i class="glyphicon glyphicon-calendar"></i>昨天
+                </button>
+            </div>
+            <!--<div>-->
+                <!--<button onclick="getlastWeek()" type="button" class="btn btn-default" style="margin-right: 10px">-->
+                    <!--<i class="glyphicon glyphicon-calendar"></i>上周-->
+                <!--</button>-->
+            <!--</div>-->
+        </div>
+        <!--<div>-->
+            <!--<label class="col-sm-1 control-label">分组:</label>-->
+            <!--<div class="col-sm-2">-->
+                <!--<select class="btn btn-default dropdown-toggle" id="groupCondition" name="groupCondition" data-btn-class="btn-warning">-->
+                    <!--<option value="date_format(g.create_time,'%Y-%m-%d %H')">小时</option>-->
+                    <!--<option value="date_format(g.create_time,'%Y-%m-%d')" selected="selected">天</option>-->
+                    <!--<option value="date_format(g.create_time,'%Y-%u')">周</option>-->
+                    <!--<option value="date_format(g.create_time,'%Y-%m')">月</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
+    </form>
+    <!--content-->
+    <div id="roomFlow"></div>
+    <div id="toolbar" style="display: flex">
+        <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 0;">
+            <li style="margin-right: 20px;">
+                <span style="font-weight: bold;">总流水：</span>
+                <span style="color: red" id="sumtotalGold"></span>
+                <span>(金币)</span>
+            </li>
+
+        </ul>
+        <!--<button id="exportExcel" type="button"  class="btn btn-default">-->
+            <!--<i class="glyphicon glyphicon glyphicon-download-alt"></i>导出Excel-->
+        <!--</button>-->
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- .content -->
+<div class="modal fade" id="detailModel" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document" style="width: 75%">
+        <div class="modal-content">
+            <div id="detailTable"></div>
+        </div>
+    </div>
+</div>
+<script>
+
+    //设置时间初始值
+    $("#beginDate").val(getCurrentDate())
+    $("#endDate").val(getCurrentDate())
+
+    var isEdit = false;
+    $(function () {
+        $('#roomFlow').bootstrapTable('destroy');
+        $('#roomFlow').bootstrapTable({
+            columns: [
+                {field: 'familyId', title: '家族ID', align: 'center', width: '3%'},
+                {field: 'years', title: '时间', align: 'center', width: '5%'},
+                // {field: 'years', title: '时间', align: 'center', width: '5%',formatter:function (val,row,index) {
+                //         return "<a href='#'>"+val+"</a>"
+                //     }},
+                {
+                    field:'familyLogo',
+                    title:'logo',
+                    align:'center',
+                    valign:'middle',
+                    width:'5%',
+                    formatter: function (val,row,index) {
+                        return "<img src='"+val+"' width='40' height='40'>";
+                    }
+                },
+                {field: 'familyName', title: '家族名称', align: 'center', width: '3%'},
+                {field: 'nick', title: '创建人昵称', align: 'center', width: '3%'},
+                {field: 'uid', title: '创建人UID', align: 'center', width: '3%'},
+                // {field: 'roomFlowLink',title:"流水明细链接",align: 'center',width: '10%'},
+                {field: 'total', title: '流水(金币)', align: 'center', width: '3%'},
+                // {field: 'consumers', title: '消费人数(总)', align: 'center', width: '3%',formatter:function (val,row,index) {
+                //         return "<a href='#'>"+val+"</a>"
+                //     }},
+                // {field: 'proportion', title: '周流水(环比)', align: 'center', width: '3%',
+                //     formatter: function (val) {
+                //         if(val){
+                //             console.log(val);
+                //             return (val * 100) + "%";
+                //         } else {
+                //             return "";
+                //         }
+                //     }},
+                {field: 'alipayAccount', title: '支付宝账号', align: 'center', width: '3%'},
+                {field: 'alipayAccountName', title: '姓名', align: 'center', width: '3%'},
+                {field: 'occupation', title: '渠道', align: 'center', width: '3%'},
+                {field: 'bankCard', title: '银行卡', align: 'center', width: '3%'},
+                {field: 'cardholder', title: '持卡人', align: 'center', width: '3%'},
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable:true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    familyId: parseInt($('#familyId').val()),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val(),
+
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/familyFlow/list.action',
+            method: 'post',
+            responseHandler: function(res) {
+                if(res.code==200){
+                    clear();
+                    $("#sumtotalGold").text(Math.round(res.data.rows[0].totalGold));
+                    return {
+                        "total": res.data.total,//总页数
+                        "rows": res.data.rows  //数据
+                    };
+                }else {
+                    $("#tipMsg").text(res.message+"["+res.code+"]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",//总页数
+                        "rows": []  //数据
+                    };
+                }
+            },
+            onClickCell:function (field, value, row, $element) {
+                var teamId=row.teamId;
+                if(field=="years" && value!=0){
+                    getFamilySendGiftRecord(teamId);
+                }
+                if(field=="consumers" && value!=0){
+                    getFamilySendGiftRecord(teamId);
+                }
+            },
+        });
+    });
+    /*导出到Excel*/
+    $('#exportExcel').click(function () {
+        var param = $("form").serialize();
+        var url = "/admin/familyFlow/familyFlowExport?"+param;
+        window.location.href=url;
+    });
+
+    /*初始化*/
+    $('#beginDate').datetimepicker({
+        language:"zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    })
+
+    $('#endDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    })
+    function getCurrentDate() {
+        var date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+    function getYestaday() {
+        var today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#beginDate").val(today.format("yyyy-MM-dd"));
+        $("#endDate").val(today.format("yyyy-MM-dd"));
+    }
+    function clear() {
+        $("#sumtotalGold").text('');
+        $("#sumtotalBouns").text('');
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>
+<script src="/static/js/admin/familyRecordDetails.js"></script>
+

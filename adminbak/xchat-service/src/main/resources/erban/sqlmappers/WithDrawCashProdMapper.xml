@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.WithDrawCashProdMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.WithDrawCashProd" >
+    <id column="cash_prod_id" property="cashProdId" jdbcType="VARCHAR" />
+    <result column="cash_prod_name" property="cashProdName" jdbcType="VARCHAR" />
+    <result column="diamond_num" property="diamondNum" jdbcType="BIGINT" />
+    <result column="cash_num" property="cashNum" jdbcType="BIGINT" />
+    <result column="seq_no" property="seqNo" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cash_prod_id, cash_prod_name, diamond_num, cash_num, seq_no
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.WithDrawCashProdExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from withdraw_cash_prod
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from withdraw_cash_prod
+    where cash_prod_id = #{cashProdId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from withdraw_cash_prod
+    where cash_prod_id = #{cashProdId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.WithDrawCashProd" >
+    insert into withdraw_cash_prod (cash_prod_id, cash_prod_name, diamond_num, 
+      cash_num, seq_no)
+    values (#{cashProdId,jdbcType=VARCHAR}, #{cashProdName,jdbcType=VARCHAR}, #{diamondNum,jdbcType=BIGINT}, 
+      #{cashNum,jdbcType=BIGINT}, #{seqNo,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.WithDrawCashProd" >
+    insert into withdraw_cash_prod
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cashProdId != null" >
+        cash_prod_id,
+      </if>
+      <if test="cashProdName != null" >
+        cash_prod_name,
+      </if>
+      <if test="diamondNum != null" >
+        diamond_num,
+      </if>
+      <if test="cashNum != null" >
+        cash_num,
+      </if>
+      <if test="seqNo != null" >
+        seq_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cashProdId != null" >
+        #{cashProdId,jdbcType=VARCHAR},
+      </if>
+      <if test="cashProdName != null" >
+        #{cashProdName,jdbcType=VARCHAR},
+      </if>
+      <if test="diamondNum != null" >
+        #{diamondNum,jdbcType=BIGINT},
+      </if>
+      <if test="cashNum != null" >
+        #{cashNum,jdbcType=BIGINT},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.WithDrawCashProd" >
+    update withdraw_cash_prod
+    <set >
+      <if test="cashProdName != null" >
+        cash_prod_name = #{cashProdName,jdbcType=VARCHAR},
+      </if>
+      <if test="diamondNum != null" >
+        diamond_num = #{diamondNum,jdbcType=BIGINT},
+      </if>
+      <if test="cashNum != null" >
+        cash_num = #{cashNum,jdbcType=BIGINT},
+      </if>
+      <if test="seqNo != null" >
+        seq_no = #{seqNo,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cash_prod_id = #{cashProdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.WithDrawCashProd" >
+    update withdraw_cash_prod
+    set cash_prod_name = #{cashProdName,jdbcType=VARCHAR},
+      diamond_num = #{diamondNum,jdbcType=BIGINT},
+      cash_num = #{cashNum,jdbcType=BIGINT},
+      seq_no = #{seqNo,jdbcType=INTEGER}
+    where cash_prod_id = #{cashProdId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select * from withdraw_cash_prod ORDER BY seq_no 
+  </select>
+</mapper>

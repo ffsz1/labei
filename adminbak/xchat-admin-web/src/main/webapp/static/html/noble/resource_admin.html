@@ -1,0 +1,895 @@
+<style>
+    .bar1,.bar2{
+        margin-bottom: 10px;
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    input,select{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    #btnSearch{
+        margin-left: 36px;
+    }
+    .record{
+        margin-top: 10px;
+    }
+    .record .title{
+        font-size:16px;
+    }
+
+</style>
+
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                <div class="form-group">
+                    <label for="nobleId" class="col-sm-2 control-label">贵族等级：</label>
+                    <div class="col-sm-2">
+                        <select name="nobleId" id="nobleId" class="input-m">
+                            <option value="-1">全部</option>
+                            <option value="0">平民</option>
+                            <option value="1">男爵</option>
+                            <option value="2">子爵</option>
+                            <option value="3">伯爵</option>
+                            <option value="4">侯爵</option>
+                            <option value="5">公爵</option>
+                            <option value="6">国王</option>
+                            <option value="7">皇帝</option>
+                        </select>
+                    </div>
+                    <label for="type" class="col-sm-2 control-label">资源类型：</label>
+                    <div class="col-sm-2">
+                    <select name="type" id="type" class="input-m">
+                        <option value="1">房间背景</option>
+                        <option value="2">聊天气泡</option>
+                        <option value="3">上麦光晕</option>
+                        <option value="4">个人头像饰物</option>
+                    </select>
+                    </div>
+                    <div class="col-sm-4">
+                    <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+                    <button id="add" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i>增加
+                    </button>
+                    </div>
+                </div>
+                </div>
+            </section>
+    </div>
+</div>
+</section>
+
+<div class="modal fade" id="addResource" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">新增资源配置</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addResForm" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <label for="nobleLevel" class="col-sm-4 control-label">贵族等级：</label>
+                            <select name="nobleLevel" id="nobleLevel" class="col-sm-3">
+                                <option value="0">平民</option>
+                                <option value="1">男爵</option>
+                                <option value="2">子爵</option>
+                                <option value="3">伯爵</option>
+                                <option value="4">侯爵</option>
+                                <option value="5">公爵</option>
+                                <option value="6">国王</option>
+                                <option value="7">皇帝</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="name" class="col-sm-4 control-label">资源名称：</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control validate[required]" name="name" id="name">
+                            </div>
+                        </div>
+                        <div class="col-sm-8" id="nnn">
+                            <label for="res" class="col-sm-4 control-label">资源值：</label>
+                            <div class="col-sm-8">
+                                <img src="" id="imgUrl" style="width:250px;height:90px;" alt="">
+                                <input type="file" id="uploadFile" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                <button class="btn btn-success" type="button" id="uploadBtn">上传</button>
+                                <input type="hidden" id="res" name="res" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-8" id ="mmm">
+                            <label for="res3" class="col-sm-4 control-label">资源值：</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="res3" name="res3" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8" id ="kkk">
+                            <label for="addPreview1" class="col-sm-4 control-label">预览：</label>
+                            <div class="col-sm-8">
+                                <img src="" id="imgUrl5" style="width:250px;height:90px;" alt="">
+                                <input type="file" id="uploadFile5" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                <button class="btn btn-success" type="button" id="uploadBtn5">上传</button>
+                                <input type="hidden" id="addPreview1" name="addPreview1" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8" id ="ggg">
+                            <label for="addPreview2" class="col-sm-4 control-label">预览：</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="addPreview2" name="addPreview2" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label for="addSeq" class="col-sm-4 control-label">排序：</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="addSeq" name="addSeq" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label for="resType" class="col-sm-4 control-label">资源类型：</label>
+                            <select name="resType" id="resType" class="col-sm-3">
+                                <option value="1">房间背景</option>
+                                <option value="2">聊天气泡</option>
+                                <option value="3">上麦光晕</option>
+                                <option value="4">个人头像饰物</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="status" class="col-sm-4 control-label">是否有效：</label>
+                            <select name="status" id="status" class="col-sm-3">
+                                <option value="1">有效</option>
+                                <option value="0">无效</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="isDyn" class="col-sm-4 control-label">是否动态：</label>
+                            <select name="isDyn" id="isDyn" class="col-sm-3">
+                                <option value="1">动态</option>
+                                <option value="0">静态</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="isDef" class="col-sm-4 control-label">是否默认：</label>
+                            <select name="isDef" id="isDef" class="col-sm-3">
+                                <option value="1">默认</option>
+                                <option value="0">自定义</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editResourceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="editModalLabel">编辑配置资源</h4>
+            </div>
+            <div class="modal-body">
+                <form id="editResForm" class="form-horizontal">
+                    <div class="form-group">
+                        <input type="hidden" name="row" id="rowId" />
+                        <div class="col-sm-8">
+                            <label for="nobleType" class="col-sm-4 control-label">贵族等级：</label>
+                            <select name="nobleType" id="nobleType" class="col-sm-3">
+                                <option value="0">平民</option>
+                                <option value="1">男爵</option>
+                                <option value="2">子爵</option>
+                                <option value="3">伯爵</option>
+                                <option value="4">侯爵</option>
+                                <option value="5">公爵</option>
+                                <option value="6">国王</option>
+                                <option value="7">皇帝</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="name" class="col-sm-4 control-label">资源名称：</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control validate[required]" name="resName" id="resName">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8" id ="qqq">
+                            <label for="res1" class="col-sm-4 control-label">资源值：</label>
+                            <div class="col-sm-8">
+                                <img src="" id="imgUrl1" style="width:250px;height:90px;" alt="">
+                                <input type="file" id="uploadFile1" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                <button class="btn btn-success" type="button" id="uploadBtn1">上传</button>
+                                <input type="hidden" id="res1" name="res1" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8" id ="ppp">
+                            <label for="res2" class="col-sm-4 control-label">资源值：</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="res2" name="res2" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8" id ="ooo">
+                            <label for="preview" class="col-sm-4 control-label">预览：</label>
+                            <div class="col-sm-8">
+                                <img src="" id="imgUrl3" style="width:250px;height:90px;" alt="">
+                                <input type="file" id="uploadFile3" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                                <button class="btn btn-success" type="button" id="uploadBtn3">上传</button>
+                                <input type="hidden" id="preview" name="preview" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8" id ="ttt">
+                            <label for="preview1" class="col-sm-4 control-label">预览：</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="preview1" name="preview1" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label for="editSeq" class="col-sm-4 control-label">排序：</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="editSeq" name="editSeq" class="form-control validate[required]"/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <label for="resType" class="col-sm-4 control-label">资源类型：</label>
+                            <select name="resType" id="resType1" class="col-sm-3">
+                                <option value="1">房间背景</option>
+                                <option value="2">聊天气泡</option>
+                                <option value="3">上麦光晕</option>
+                                <option value="4">个人头像饰物</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="status1" class="col-sm-4 control-label">是否有效：</label>
+                            <select name="status1" id="status1" class="col-sm-3">
+                                <option value="1">有效</option>
+                                <option value="0">无效</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="isDyn" class="col-sm-4 control-label">是否动态：</label>
+                            <select name="isDyn" id="isDyn1" class="col-sm-3">
+                                <option value="1">动态</option>
+                                <option value="0">静态</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label for="isDef" class="col-sm-4 control-label">是否默认：</label>
+                            <select name="isDef" id="isDef1" class="col-sm-3">
+                                <option value="1">默认</option>
+                                <option value="0">自定义</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="edit">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delcfmModel">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>您确认要删除吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="url"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="doDelete">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'id', title: 'id', align: 'center', valign: 'middle', width: '0%'},
+                {field: 'nobleId', title: '贵族ID', align: 'center', valign: 'middle', width: '10%'},
+                {field: 'nobleName', title: '贵族名称', align: 'center', valign: 'middle', width: '10%'},
+                {field: 'name', title: '资源名称', align: 'center', valign: 'middle', width: '10%'},
+                {
+                    field:'value',
+                    title:'资源',
+                    align:'center',
+                    valign: 'middle',
+                    width:'10%',
+                    formatter: function (val,row,index) {
+                        debugger;
+                        if (val.indexOf("https")==0) {
+                            return "<img src='" + val + "' width='60' height='30'>";
+                        }else{
+                            return row.value;
+                        }
+                    }
+                },
+                {   field: 'preview',
+                    title: '预览',
+                    align: 'center',
+                    valign: 'middle',
+                    width: '10%',
+                    formatter: function (val,row,index) {
+                        if (val.indexOf("https")==0) {
+                            return "<img src='" + val + "' width='60' height='30'>";
+                        }else{
+                            return row.value;
+                        }
+                    }
+                },
+                {field: 'seq', title: '排序', align: 'center', valign: 'middle', width: '10%'},
+                {
+                    field: 'status',
+                    title: '状态',
+                    align: 'center',
+                    width: '10%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '有效';
+                                break;
+                            case 0:
+                                return '无效';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field: 'resType',
+                    title: '资源类型',
+                    align: 'center',
+                    width: '10%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '房间背景';
+                                break;
+                            case 2:
+                                return '聊天气泡';
+                                break;
+                            case 3:
+                                return '上麦光晕';
+                                break;
+                            case 4:
+                                return '个人头像饰物';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field: 'isDyn',
+                    title: '状态',
+                    align: 'center',
+                    width: '10%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '动态';
+                                break;
+                            case 0:
+                                return '静态';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field: 'isDef',
+                    title: '状态',
+                    align: 'center',
+                    width: '10%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '默认';
+                                break;
+                            case 0:
+                                return '自定义';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: 'center',
+                    width: '10%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },{
+                 field: 'tmp',
+                 title: '操作',
+                 align: 'center',
+                 width: '20%',
+                 valign: 'middle',
+                 formatter: function (val, row, index) {
+                 var key = row.id;
+                 return "<button class='btn btn-sm btn-success opt-edit'  data-id=" + key + ">编辑</button>&nbsp;&nbsp;"+
+                 "<button class='btn btn-sm btn-success opt-del'  data-id=" + key + " >删除</button>";
+                    }
+                 }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber,
+                    nobleId: $("#nobleId").val(),
+                    type: $("#type").val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/resAdmin/list.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        })
+    })
+
+    /*查询刷新*/
+    $('#btnSearch').on('click', function () {
+        TableHelper.doRefresh('#table');
+    })
+
+
+
+    /*保存*/
+    $('#addSave').on('click', function () {
+        if ($('#addResForm').validationEngine('validate')) {
+            $.ajax({
+                type: "post",
+                url: "/admin/resAdmin/saveResource.action",
+                data: {
+                    nobleId: $("#nobleLevel").val(),
+                    name: $("#name").val(),
+                    res: $("#resType").val()==1?$("#res").val():$("#res3").val(),
+                    preview:$("#resType").val()==1?$("#addPreview1").val():$("#addPreview2").val(),
+                    resType: $('#resType').val(),
+                    status: $('#status').val(),
+                    isDyn: $('#isDyn').val(),
+                    isDef: $('#isDef').val(),
+                    seq: $('#addSeq').val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 1) {
+                        $('#addResource').modal('hide');
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("保存失败，错误码：" + data);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    })
+
+    /**
+     *编辑
+     */
+    $('#table').on('click','.opt-edit',function () {
+        var key = parseInt($(this).data('id'));
+        $('#editResForm')[0].reset();
+        $("#editResourceModal").modal('show');
+        $("#rowId").val(key);
+            $.ajax({
+                type: 'post',
+                url: '/admin/resAdmin/getResList.action',
+                data: {rowId: key},
+                dataType: 'json',
+                success: function (data) {
+                    if (data) {
+                        /*$('#editResForm')[0].reset();*/
+                        var resName = data.name;
+                        var value = data.value;
+                        var nobleType = data.nobleId;
+                        $("#nobleType").val(nobleType);
+                        $("#resName").val(resName);
+                        data.resType==1?$("#res1").val(value):$("#res2").val(value);
+                        $('#imgUrl1').attr("src", data.value);
+                        data.resType==1?$("#preview").val(data.preview):$("#preview1").val(data.preview);
+                        $('#imgUrl3').attr("src", data.preview);
+                        $("#resType1").val(data.resType);
+                        $("#status1").val(data.status);
+                        $("#isDef1").val(data.isDef);
+                        $("#isDyn1").val(data.isDyn);
+                        $("#editSeq").val(data.seq);
+                        data.resType==1?show(): hide();
+                    }
+                }
+            })
+    })
+
+
+
+    function show(){
+        $("#qqq").show();
+        $("#ppp").hide();
+        $("#ooo").show();
+        $("#ttt").hide();
+    }
+    function hide(){
+        $("#ppp").show();
+        $("#qqq").hide();
+        $("#ttt").show();
+        $("#ooo").hide();
+    }
+
+
+
+
+    /*编辑弹窗保存*/
+    $("#edit").click(function() {
+        if ($('#editResForm').validationEngine('validate')) {
+            $.ajax({
+                type: 'post',
+                url: '/admin/resAdmin/updateRes.action',
+                data: {
+                    rowId: $("#rowId").val(),
+                    nobleType: $("#nobleType").val(),
+                    resType: $('#resType1').val(),
+                    isDyn: $('#isDyn1').val(),
+                    isDef: $('#isDef1').val(),
+                    status: $("#status1").val(),
+                    resName: $('#resName').val(),
+                    res: $("#resType1").val()==1?$("#res1").val():$("#res2").val(),
+                    preview:$("#resType1").val()==1?$("#preview").val():$("#preview1").val(),
+                    seq: $('#editSeq').val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 1) {
+                        $("#editResourceModal").modal('hide');
+                        $("#tipMsg").text("修改成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("修改失败，错误码：" + data);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    })
+
+    /**
+     * 删除
+     **/
+    $("#doDelete").click(function() {
+        $.ajax({
+            type: 'post',
+            url: '/admin/resAdmin/delRes.action',
+            data: {rowId: $(this).data('id')},
+            dataType: 'json',
+            success: function (data) {
+                if(data == 1){
+                    $("#tipMsg").text("删除成功");
+                    $("#tipModal").modal('show');
+                    $('#delcfmModel').modal('hide');
+                    TableHelper.doRefresh("#table");
+                } else {
+                    $("#tipMsg").text("删除失败，错误码：" + data);
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+
+    })
+
+    $('#table').on('click','.opt-del',function () {
+        var key = parseInt($(this).data('id'));
+        $("#doDelete").data('id',key);
+        $("#rowId").val(key);
+        console.log(key,typeof key);
+        $('#delcfmModel').modal();
+    })
+
+    /*增加*/
+    $('#add').on('click', function () {
+        $("#nnn").show();
+        $("#mmm").hide();
+        $("#kkk").show();
+        $("#ggg").hide();
+        $('#addResForm')[0].reset();
+        $('#addResource').modal('show');
+        clear();
+    })
+
+    function clear () {
+        $('#imgUrl').attr('src','');
+        $('#imgUrl1').attr('src','');
+
+    }
+
+    $(document).ready( function(){
+                $("#mmm").hide();
+                $("#ppp").hide();
+                $("#ggg").hide();
+                $("#ttt").hide();
+            }
+    );
+
+    $('#resType').on('change',function(e){
+                var selected = $('#resType').val();
+                if(selected==1){
+                    $("#nnn").show();
+                    $("#mmm").hide();
+                    $("#kkk").show();
+                    $("#ggg").hide();
+                }else{
+                    $("#mmm").show();
+                    $("#nnn").hide();
+                    $("#ggg").show();
+                    $("#kkk").hide();
+                    e.stopPropagation();
+                }
+            }
+    )
+
+    $('#resType1').on('change',function(e){
+                var selected = $('#resType1').val();
+                if(selected==1){
+                    $("#qqq").show();
+                    $("#ppp").hide();
+                    $("#ooo").show();
+                    $("#ttt").hide();
+                }else{
+                    $("#ppp").show();
+                    $("#qqq").hide();
+                    $("#ttt").show();
+                    $("#ooo").hide();
+                    e.stopPropagation();
+                }
+            }
+    )
+
+  /*
+    $('#uploadBtn').on('click',function () {
+        console.log('wewawa');
+        var options = {
+            type: 'post',
+            url: '/admin/resAdmin/headimg.action',
+            dataType: 'json',
+            success: function (json) {
+                if(json.path){
+                    $('#res').val(json.path);
+                    $('#imgUrl').attr("src", json.path);
+                    console.log(json.path);
+                }else{
+                    $("#tipMsg").text(json.msg);
+                    $("#tipModal").modal('show');
+                }
+            }
+        }
+        $("#addResForm").ajaxSubmit(options);
+    })*/
+
+
+    /*$('#uploadBtn1').on('click',function () {
+        console.log('wewawa');
+        var options = {
+            type: 'post',
+            url: '/admin/resAdmin/headimg.action',
+            dataType: 'json',
+            success: function (json) {
+                if(json.path){
+                    $('#res1').val(json.path);
+                    $('#imgUrl1').attr("src", json.path);
+                    console.log(json.path);
+                }else{
+                    $("#tipMsg").text(json.msg);
+                    $("#tipModal").modal('show');
+                }
+            }
+        }
+        $("#editResForm").ajaxSubmit(options);
+    })*/
+
+
+   /* $('#uploadBtn3').on('click',function () {
+        console.log('wewawa');
+        var options = {
+            type: 'post',
+            url: '/admin/resAdmin/headimg.action',
+            dataType: 'json',
+            success: function (json) {
+                if(json.path){
+                    $('#preview').val(json.path);
+                    $('#imgUrl3').attr("src", json.path);
+                    console.log(json.path);
+                }else{
+                    $("#tipMsg").text(json.msg);
+                    $("#tipModal").modal('show');
+                }
+            }
+        }
+        $("#editResForm").ajaxSubmit(options);
+    })*/
+
+/*
+    $('#uploadBtn5').on('click',function () {
+        console.log('wewawa');
+        var options = {
+            type: 'post',
+            url: '/admin/resAdmin/headimg.action',
+            dataType: 'json',
+            success: function (json) {
+                if(json.path){
+                    $('#addPreview1').val(json.path);
+                    $('#imgUrl5').attr("src", json.path);
+                    console.log(json.path);
+                }else{
+                    $("#tipMsg").text(json.msg);
+                    $("#tipModal").modal('show');
+                }
+            }
+        }
+        $("#addResForm").ajaxSubmit(options);
+    })*/
+    /*资源保存上传*/
+    $('#uploadBtn').on('click',function () {
+        $.ajaxFileUpload({
+            fileElementId: 'uploadFile',
+            url: '/admin/resAdmin/headimg',
+            type: 'post',
+            dataType: 'json',
+            secureuri: false,
+            async : true,
+            success: function(json) {
+                if(json.path){
+                    $('#res').val(json.path);
+                    $('#imgUrl').attr("src", json.path);
+                    console.log(json.path);
+                }else{
+                    $("#tipMsg").text(json.msg);
+                    $("#tipModal").modal('show');
+                }
+            },
+            error: function(data, status, e) {
+                console.error(e);
+            }
+        });
+    })
+
+    /*预览保存上传*/
+    $('#uploadBtn5').on('click',function () {
+        $.ajaxFileUpload({
+            fileElementId: 'uploadFile5',
+            url: '/admin/resAdmin/headimg',
+            type: 'post',
+            dataType: 'json',
+            secureuri: false,
+            success: function(json) {
+                if(json.path){
+                    $('#addPreview1').val(json.path);
+                    $('#imgUrl5').attr("src", json.path);
+                    console.log(json.path);
+                }else{
+                    $("#tipMsg").text(json.msg);
+                    $("#tipModal").modal('show');
+                }
+            },
+            error: function(data, status, e) {
+                console.error(e);
+            }
+        });
+    })
+
+
+    /*资源编辑上传*/
+    $('#uploadBtn1').on('click',function () {
+        $.ajaxFileUpload({
+            fileElementId: 'uploadFile1',
+            url: '/admin/resAdmin/headimg',
+            type: 'post',
+            dataType: 'json',
+            secureuri: false,
+            async : true,
+            success: function(json) {
+                if(json.path){
+                    $('#res1').val(json.path);
+                    $('#imgUrl1').attr("src", json.path);
+                    console.log(json.path);
+                }else{
+                    $("#tipMsg").text(json.msg);
+                    $("#tipModal").modal('show');
+                }
+            },
+            error: function(data, status, e) {
+            }
+        });
+    })
+
+    /*预览编辑上传*/
+    $('#uploadBtn3').on('click',function () {
+        $.ajaxFileUpload({
+            fileElementId: 'uploadFile3',
+            url: '/admin/resAdmin/headimg',
+            type: 'post',
+            dataType: 'json',
+            secureuri: false,
+            async : true,
+            success: function(json) {
+                if(json.path){
+                    $('#preview').val(json.path);
+                    $('#imgUrl3').attr("src", json.path);
+                    console.log(json.path);
+                }else{
+                    $("#tipMsg").text(json.msg);
+                    $("#tipModal").modal('show');
+                }
+            },
+            error: function(data, status, e) {
+                console.error(e);
+            }
+        });
+    })
+
+
+
+</script>
+
+

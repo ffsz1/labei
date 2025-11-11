@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false"/>
+		<setting name="useGeneratedKeys" value="true"/>
+		<setting name="defaultStatementTimeout" value="2000" />
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<!-- 打印查询语句 -->
+		<setting name="logImpl" value="LOG4J" />
+	</settings>
+	<!--<plugins>-->
+		<!--&lt;!&ndash; 配置分页助手 &ndash;&gt;-->
+		<!--<plugin interceptor="com.github.pagehelper.PageHelper">-->
+			<!--<property name="dialect" value="mysql" />-->
+			<!--&lt;!&ndash; 设置为true时，使用RowBounds分页会进行count查询 &ndash;&gt;-->
+			<!--<property name="rowBoundsWithCount" value="true" />-->
+		<!--</plugin>-->
+	<!--</plugins>-->
+
+	<!--<typeAliases>-->
+		<!--<typeAlias alias="User" type="com.xchat.oauth2.service.domain.user.User"/>-->
+		<!--<typeAlias alias="OAuthClientDetails" type="com.xchat.oauth2.service.domain.oauth.OAuthClientDetails"/>-->
+	<!--</typeAliases>-->
+
+	<!--<mappers >-->
+		<!--<mapper resource="erban.sqlmappers/VideoOrgListMapper.xml"/>-->
+		<!--<mapper resource="erban.sqlmappers/VideoMapper.xml"/>-->
+		<!--<mapper resource="erban.sqlmappers/VideoTagMapper.xml"/>-->
+	<!--</mappers>-->
+</configuration>

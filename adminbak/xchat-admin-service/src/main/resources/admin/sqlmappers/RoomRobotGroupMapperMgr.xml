@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.RoomRobotGroupMapperMgr">
+    <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.RoomRobotGroupVo">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="is_permit_room" property="isPermitRoom" jdbcType="INTEGER"/>
+        <result column="can_show" property="canShow" jdbcType="INTEGER"/>
+        <result column="robot_num" property="robotNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.erban.admin.main.vo.RoomRobotGroupParam">
+        SELECT u.uid, u.erban_no, r.title, r.is_permit_room, r.can_show, COUNT(rrg.robot_uid) AS robotNum
+        FROM room r
+        INNER JOIN users u ON r.uid = u.uid
+        LEFT JOIN room_robot_group rrg ON u.erban_no = rrg.group_no
+        <where>
+            1=1
+            <if test="erbanNo!=null">
+                AND u.erban_no=#{erbanNo}
+            </if>
+            <if test="type!=null">
+                <if test="type==1">
+                    AND rrg.robot_uid IS NOT NULL
+                </if>
+                <if test="type==2">
+                    AND rrg.robot_uid IS NULL
+                </if>
+            </if>
+        </where>
+        GROUP BY r.uid
+    </select>
+    <select id="selectRoomOnlineNumByParam" resultMap="BaseResultMap"
+            parameterType="com.erban.admin.main.vo.RoomRobotGroupParam">
+        SELECT u.uid, u.erban_no, r.title, r.is_permit_room, r.can_show, ron.factor AS robotNum
+        FROM room r
+        INNER JOIN users u ON r.uid = u.uid
+        INNER JOIN room_online_num ron ON r.uid = ron.uid
+        <where>
+            1 = 1
+            <if test="erbanNo!=null">
+                AND u.erban_no=#{erbanNo}
+            </if>
+        </where>
+    </select>
+    <select id="queryRoomMasterAccountByParams" resultType="com.erban.admin.main.dto.RoomMasterDto">
+        SELECT a.uid, a.erban_no AS erbanNo, u.nick, u.avatar, u.gender, a.phone, a.sign_time AS createTime
+        FROM account a
+        INNER JOIN users u ON a.uid = u.uid
+        WHERE is_shuijun = 2
+        <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+            AND a.sign_time BETWEEN #{startDate} AND #{endDate}
+        </if>
+        ORDER BY a.sign_time desc
+    </select>
+</mapper>

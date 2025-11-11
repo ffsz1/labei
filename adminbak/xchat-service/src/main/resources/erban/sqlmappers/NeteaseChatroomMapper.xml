@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.NeteaseChatroomMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.NeteaseChatroom" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="attach" property="attach" jdbcType="VARCHAR" />
+    <result column="ext" property="ext" jdbcType="VARCHAR" />
+    <result column="from_account" property="fromAccount" jdbcType="VARCHAR" />
+    <result column="from_avator" property="fromAvator" jdbcType="VARCHAR" />
+    <result column="from_client_type" property="fromClientType" jdbcType="VARCHAR" />
+    <result column="from_ext" property="fromExt" jdbcType="VARCHAR" />
+    <result column="from_nick" property="fromNick" jdbcType="VARCHAR" />
+    <result column="msg_timestamp" property="msgTimestamp" jdbcType="VARCHAR" />
+    <result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+    <result column="msgid_client" property="msgidClient" jdbcType="VARCHAR" />
+    <result column="resend_flag" property="resendFlag" jdbcType="VARCHAR" />
+    <result column="role_info_timetag" property="roleInfoTimetag" jdbcType="VARCHAR" />
+    <result column="room_id" property="roomId" jdbcType="VARCHAR" />
+    <result column="antispam" property="antispam" jdbcType="VARCHAR" />
+    <result column="yidun_res" property="yidunRes" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, attach, ext, from_account, from_avator, from_client_type, from_ext, from_nick, 
+    msg_timestamp, msg_type, msgid_client, resend_flag, role_info_timetag, room_id, antispam, 
+    yidun_res
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.NeteaseChatroomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from netease_chatroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from netease_chatroom
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from netease_chatroom
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.NeteaseChatroomExample" >
+    delete from netease_chatroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.NeteaseChatroom" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into netease_chatroom (attach, ext, from_account, 
+      from_avator, from_client_type, from_ext, 
+      from_nick, msg_timestamp, msg_type, 
+      msgid_client, resend_flag, role_info_timetag, 
+      room_id, antispam, yidun_res
+      )
+    values (#{attach,jdbcType=VARCHAR}, #{ext,jdbcType=VARCHAR}, #{fromAccount,jdbcType=VARCHAR}, 
+      #{fromAvator,jdbcType=VARCHAR}, #{fromClientType,jdbcType=VARCHAR}, #{fromExt,jdbcType=VARCHAR}, 
+      #{fromNick,jdbcType=VARCHAR}, #{msgTimestamp,jdbcType=VARCHAR}, #{msgType,jdbcType=VARCHAR}, 
+      #{msgidClient,jdbcType=VARCHAR}, #{resendFlag,jdbcType=VARCHAR}, #{roleInfoTimetag,jdbcType=VARCHAR}, 
+      #{roomId,jdbcType=VARCHAR}, #{antispam,jdbcType=VARCHAR}, #{yidunRes,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.NeteaseChatroom" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into netease_chatroom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attach != null" >
+        attach,
+      </if>
+      <if test="ext != null" >
+        ext,
+      </if>
+      <if test="fromAccount != null" >
+        from_account,
+      </if>
+      <if test="fromAvator != null" >
+        from_avator,
+      </if>
+      <if test="fromClientType != null" >
+        from_client_type,
+      </if>
+      <if test="fromExt != null" >
+        from_ext,
+      </if>
+      <if test="fromNick != null" >
+        from_nick,
+      </if>
+      <if test="msgTimestamp != null" >
+        msg_timestamp,
+      </if>
+      <if test="msgType != null" >
+        msg_type,
+      </if>
+      <if test="msgidClient != null" >
+        msgid_client,
+      </if>
+      <if test="resendFlag != null" >
+        resend_flag,
+      </if>
+      <if test="roleInfoTimetag != null" >
+        role_info_timetag,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="antispam != null" >
+        antispam,
+      </if>
+      <if test="yidunRes != null" >
+        yidun_res,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attach != null" >
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="ext != null" >
+        #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAccount != null" >
+        #{fromAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAvator != null" >
+        #{fromAvator,jdbcType=VARCHAR},
+      </if>
+      <if test="fromClientType != null" >
+        #{fromClientType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromExt != null" >
+        #{fromExt,jdbcType=VARCHAR},
+      </if>
+      <if test="fromNick != null" >
+        #{fromNick,jdbcType=VARCHAR},
+      </if>
+      <if test="msgTimestamp != null" >
+        #{msgTimestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="msgidClient != null" >
+        #{msgidClient,jdbcType=VARCHAR},
+      </if>
+      <if test="resendFlag != null" >
+        #{resendFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="roleInfoTimetag != null" >
+        #{roleInfoTimetag,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="antispam != null" >
+        #{antispam,jdbcType=VARCHAR},
+      </if>
+      <if test="yidunRes != null" >
+        #{yidunRes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.NeteaseChatroomExample" resultType="java.lang.Integer" >
+    select count(*) from netease_chatroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update netease_chatroom
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.attach != null" >
+        attach = #{record.attach,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext != null" >
+        ext = #{record.ext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromAccount != null" >
+        from_account = #{record.fromAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromAvator != null" >
+        from_avator = #{record.fromAvator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromClientType != null" >
+        from_client_type = #{record.fromClientType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromExt != null" >
+        from_ext = #{record.fromExt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromNick != null" >
+        from_nick = #{record.fromNick,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgTimestamp != null" >
+        msg_timestamp = #{record.msgTimestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgType != null" >
+        msg_type = #{record.msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgidClient != null" >
+        msgid_client = #{record.msgidClient,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resendFlag != null" >
+        resend_flag = #{record.resendFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleInfoTimetag != null" >
+        role_info_timetag = #{record.roleInfoTimetag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.antispam != null" >
+        antispam = #{record.antispam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yidunRes != null" >
+        yidun_res = #{record.yidunRes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update netease_chatroom
+    set id = #{record.id,jdbcType=INTEGER},
+      attach = #{record.attach,jdbcType=VARCHAR},
+      ext = #{record.ext,jdbcType=VARCHAR},
+      from_account = #{record.fromAccount,jdbcType=VARCHAR},
+      from_avator = #{record.fromAvator,jdbcType=VARCHAR},
+      from_client_type = #{record.fromClientType,jdbcType=VARCHAR},
+      from_ext = #{record.fromExt,jdbcType=VARCHAR},
+      from_nick = #{record.fromNick,jdbcType=VARCHAR},
+      msg_timestamp = #{record.msgTimestamp,jdbcType=VARCHAR},
+      msg_type = #{record.msgType,jdbcType=VARCHAR},
+      msgid_client = #{record.msgidClient,jdbcType=VARCHAR},
+      resend_flag = #{record.resendFlag,jdbcType=VARCHAR},
+      role_info_timetag = #{record.roleInfoTimetag,jdbcType=VARCHAR},
+      room_id = #{record.roomId,jdbcType=VARCHAR},
+      antispam = #{record.antispam,jdbcType=VARCHAR},
+      yidun_res = #{record.yidunRes,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.NeteaseChatroom" >
+    update netease_chatroom
+    <set >
+      <if test="attach != null" >
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="ext != null" >
+        ext = #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAccount != null" >
+        from_account = #{fromAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAvator != null" >
+        from_avator = #{fromAvator,jdbcType=VARCHAR},
+      </if>
+      <if test="fromClientType != null" >
+        from_client_type = #{fromClientType,jdbcType=VARCHAR},
+      </if>
+      <if test="fromExt != null" >
+        from_ext = #{fromExt,jdbcType=VARCHAR},
+      </if>
+      <if test="fromNick != null" >
+        from_nick = #{fromNick,jdbcType=VARCHAR},
+      </if>
+      <if test="msgTimestamp != null" >
+        msg_timestamp = #{msgTimestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="msgidClient != null" >
+        msgid_client = #{msgidClient,jdbcType=VARCHAR},
+      </if>
+      <if test="resendFlag != null" >
+        resend_flag = #{resendFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="roleInfoTimetag != null" >
+        role_info_timetag = #{roleInfoTimetag,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=VARCHAR},
+      </if>
+      <if test="antispam != null" >
+        antispam = #{antispam,jdbcType=VARCHAR},
+      </if>
+      <if test="yidunRes != null" >
+        yidun_res = #{yidunRes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.NeteaseChatroom" >
+    update netease_chatroom
+    set attach = #{attach,jdbcType=VARCHAR},
+      ext = #{ext,jdbcType=VARCHAR},
+      from_account = #{fromAccount,jdbcType=VARCHAR},
+      from_avator = #{fromAvator,jdbcType=VARCHAR},
+      from_client_type = #{fromClientType,jdbcType=VARCHAR},
+      from_ext = #{fromExt,jdbcType=VARCHAR},
+      from_nick = #{fromNick,jdbcType=VARCHAR},
+      msg_timestamp = #{msgTimestamp,jdbcType=VARCHAR},
+      msg_type = #{msgType,jdbcType=VARCHAR},
+      msgid_client = #{msgidClient,jdbcType=VARCHAR},
+      resend_flag = #{resendFlag,jdbcType=VARCHAR},
+      role_info_timetag = #{roleInfoTimetag,jdbcType=VARCHAR},
+      room_id = #{roomId,jdbcType=VARCHAR},
+      antispam = #{antispam,jdbcType=VARCHAR},
+      yidun_res = #{yidunRes,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

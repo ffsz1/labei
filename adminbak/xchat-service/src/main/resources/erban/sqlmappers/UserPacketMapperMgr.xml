@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserPacketMapperMgr">
+    <resultMap id="User_packet_BaseResultMap" type="com.erban.main.model.UserPacket" >
+        <id column="uid" property="uid" jdbcType="BIGINT" />
+        <result column="packet_num" property="packetNum" jdbcType="DOUBLE" />
+        <result column="hist_packet_num" property="histPacketNum" jdbcType="DOUBLE" />
+        <result column="first_get_time" property="firstGetTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="StatPacketInviteRegisterMap_Map" type="com.erban.main.vo.StatPacketInviteRegisterListVo" >
+        <id column="uid" property="uid" jdbcType="BIGINT" />
+        <result column="packet_num" property="packetNum" jdbcType="DOUBLE" />
+        <result column="nick" property="nick" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="StatPacketInviteBonusMap_Map" type="com.erban.main.vo.StatPacketBounsListVo" >
+        <id column="bouns_id" property="bounsId" jdbcType="VARCHAR" />
+        <result column="packet_num" property="packetNum" jdbcType="DOUBLE" />
+        <result column="lower_nick" property="lowerNick" jdbcType="VARCHAR" />
+        <result column="nick" property="nick" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="User_packet_Base_Column_List" >
+        uid, packet_num, hist_packet_num, first_get_time, create_time, update_time
+    </sql>
+    <update id="addUserPacketNumTransactional" parameterType="com.erban.main.model.UserPacket">
+        update user_packet set packet_num=packet_num+#{packetNum,jdbcType=DOUBLE},
+               hist_packet_num=hist_packet_num + #{packetNum,jdbcType=DOUBLE},
+              update_time =NOW()
+        where uid = #{uid,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="getStatPacketRankSeqNoByPacketNum"  resultType="java.lang.Integer" parameterType="java.lang.Double">
+
+        select COUNT(1) from user_packet where hist_packet_num>= #{packetNum,jdbcType=BIGINT}
+
+    </select>
+
+    <select id="queryUserPacketListBy" resultMap="User_packet_BaseResultMap" >
+        select
+        up.*
+        from user_packet up,stat_packet_activity act where up.uid=act.uid
+        order by up.hist_packet_num desc limit 0,50
+    </select>
+
+    <select id="queryStatPacketInviteRegisterMapList"  parameterType="java.lang.Long" resultMap="StatPacketInviteRegisterMap_Map" >
+        SELECT
+          u.uid,
+          u.nick,
+          record.packet_num,
+          record.create_time
+        FROM
+          user_packet_record record,
+          users u
+        WHERE record.uid = #{uid,jdbcType=BIGINT}
+          AND record.src_uid = u.uid
+          AND record.type = 3
+        ORDER BY record.create_time DESC
+
+    </select>
+
+    <select id="queryInviteBonusList"  parameterType="java.lang.Long" resultMap="StatPacketInviteBonusMap_Map" >
+        SELECT
+        u.uid,
+        if(record.type=4,u.nick,(select su.nick from stat_packet_register ss INNER JOIN users su on ss.uid = su.uid where ss.register_uid = u.uid)) as nick,
+        if(record.type=4,'',u.nick) as lowerNick,
+        record.packet_num,
+        record.create_time
+        FROM
+        user_packet_record record,
+        users u
+        WHERE record.uid=  #{uid,jdbcType=BIGINT}
+        AND  u.uid=record.src_uid
+        AND record.type in (4,6)
+        ORDER BY record.create_time DESC
+    </select>
+
+
+
+
+    <!--<update id="updateStatActivityPacketByShare" parameterType="com.erban.main.model.StatPacketActivity">-->
+        <!--update user_packet set packet_num=packet_num+#{packetNum,jdbcType=DOUBLE},-->
+        <!--hist_packet_num=hist_packet_num + #{packetNum,jdbcType=DOUBLE},-->
+        <!--update_time =NOW()-->
+        <!--where uid = #{uid,jdbcType=BIGINT}-->
+    <!--</update>-->
+
+    <!--<update id="updateStatActivityPacketByRegister" parameterType="com.erban.main.model.StatPacketActivity">-->
+        <!--update user_packet set packet_num=packet_num+#{packetNum,jdbcType=DOUBLE},-->
+        <!--hist_packet_num=hist_packet_num + #{packetNum,jdbcType=DOUBLE},-->
+        <!--update_time =NOW()-->
+        <!--where uid = #{uid,jdbcType=BIGINT}-->
+    <!--</update>-->
+
+    <!--<update id="updateStatActivityPacketByBonus" parameterType="com.erban.main.model.StatPacketActivity">-->
+        <!--update user_packet set packet_num=packet_num+#{packetNum,jdbcType=DOUBLE},-->
+        <!--hist_packet_num=hist_packet_num + #{packetNum,jdbcType=DOUBLE},-->
+        <!--update_time =NOW()-->
+        <!--where uid = #{uid,jdbcType=BIGINT}-->
+    <!--</update>-->
+
+</mapper>

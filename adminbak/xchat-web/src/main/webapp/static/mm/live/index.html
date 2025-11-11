@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <title>拉贝语音 妙不可言！</title>
+  <script>
+    var layout_width = 750;
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          if (clientWidth >= layout_width) {
+            docEl.style.fontSize = '100px';
+          } else {
+            docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+          }
+        };
+
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+  <link rel="stylesheet" href="../lib/reset.css">
+  <link rel="stylesheet" href="../lib/swiper/swiper.min.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+  <div class="container">
+    <img src="images/bg1.png" class="bg1" onclick="return false">
+    <img src="images/bg2.png" class="bg2" onclick="return false">
+    <div class="ad">
+      <div>
+        <img src="images/logo.png">
+        <a class="linkedme-url">打开APP收听</a>
+      </div>
+    </div>
+    <div class="room-title">
+      <span id="roomID">ID:0</span>
+      <span>
+        <i></i>
+        <p id="onlineMemberNum">0人</p>
+      </span>
+    </div>
+    <div class="room-header">
+      <img id="room-heade-avatar">
+      <p class=" room-header-name"></p>
+      <span class="room-header-type">
+        <img id="tagPict">
+        <p id="roomDesc"></p>
+      </span>
+      <img class="gender room-header-gender">
+    </div>
+    <div class="mic-area">
+      <div class="mic-area1">
+        <span>
+          <p>上麦</p>
+        </span>
+        <span>
+          <p>上麦</p>
+        </span>
+        <span>
+          <p>上麦</p>
+        </span>
+        <span>
+          <p>上麦</p>
+        </span>
+      </div>
+      <div class="mic-area2">
+        <span>
+          <p>上麦</p>
+        </span>
+        <span>
+          <p>上麦</p>
+        </span>
+        <span>
+          <p>上麦</p>
+        </span>
+        <span>
+          <p>上麦</p>
+        </span>
+      </div>
+    </div>
+    <div class="gift-tips">
+    </div>
+    <div class="chart-tips">
+      <p>封面、背景及内容含低俗、引导、暴露等都会被屏蔽处理，泄露用户隐私、导流第三方平台、欺诈用户等将被封号处理。请珍惜自己的直播间哦！</p>
+    </div>
+    <ul class="chart-area">
+    </ul>
+    <form action="#">
+      <input type="text" id="msg-area">
+    </form>
+    <div class="user-area">
+      <div>
+        <span class="input-btn" onclick="sendMsg()">说点什么...</span>
+        <img src="images/gift.png" class="gift-btn">
+        <img src="images/sound-on.png" class="sound-btn sound-on" onclick="soundOff()">
+        <img src="images/sound-off.png" class="sound-btn sound-off" onclick="soundOn()">
+        <img src="images/prize-btn.png" class="prize-btn">
+      </div>
+    </div>
+    <div class="gift-area">
+      <div>
+        <span class="gift-area-header">
+          <img src="images/coin.png">
+          <p id="goldNum"></p>
+          <p onclick="charge()">充值></p>
+          <p class="gift-area-member">资料</p>
+        </span>
+        <span class="swiper-area">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide swiper-slide1">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="swiper-slide swiper-slide2">
+                <div></div>
+                <div></div>
+              </div>
+              <div class="swiper-slide swiper-slide3">
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </span>
+        <span class="gift-area-btn">
+          <span onclick="showGiftTarget()">
+            <p class="fff">送给</p>
+            <p class="text-hide gift-target-name" data-uid="all" data-hide="true">所有麦上嘉宾</p>
+            <p class="fff">></p>
+            <span class="gift-target">
+              <div>
+                <span data-uid="all" onclick="changeTarget('all','所有麦上嘉宾')">
+                  <img src="images/header.png">
+                  <p class="text-hide">所有麦上嘉宾</p>
+                </span>
+              </div>
+            </span>
+          </span>
+          <span>
+            <span onclick="giftOption()">
+              <p class="gift-area-num">1</p>
+              <p class="fff">></p>
+              <span class="gift-area-num-option" data-hide="true">
+                <ul class="gift-area-num-options">
+                  <li data-num="1">
+                    <p>1</p>
+                    <p>一心一意</p>
+                  </li>
+                  <li data-num="10">
+                    <p>10</p>
+                    <p>十全十美</p>
+                  </li>
+                  <li data-num="66">
+                    <p>66</p>
+                    <p>一切顺利</p>
+                  </li>
+                  <li data-num="99">
+                    <p>99</p>
+                    <p>长长久久</p>
+                  </li>
+                  <li data-num="188">
+                    <p>188</p>
+                    <p>要抱抱</p>
+                  </li>
+                  <li data-num="520">
+                    <p>520</p>
+                    <p>我爱你</p>
+                  </li>
+                  <li data-num="1314">
+                    <p>1314</p>
+                    <p>一生一世</p>
+                  </li>
+                </ul>
+              </span>
+            </span>
+            <span onclick="giftSend()">赠送</span>
+          </span>
+        </span>
+      </div>
+    </div>
+    <div id="video">
+      <div id="agora_local"></div>
+    </div>
+    <div class="roomNotice">
+      <div>
+        <span class="roomNotice-title" onclick="closeRoomNotice()">
+          <p id="roomNotice-content"></p>
+          <img src="images/close.png" class="close">
+        </span>
+        <span class="roomNotice-text">
+          <p></p>
+        </span>
+      </div>
+    </div>
+    <div class="member-content"></div>
+    <div class="guide-box">
+      <div>
+        <div class="guide">
+          <span>
+            <p>提示</p>
+            <img src="images/close.png" class="close" onclick="closeGuide()">
+          </span>
+          <p class="guide-nick"></p>
+          <p>送了你一个大礼物哦！~</p>
+          <a class="linkedme-url">立即查看</a>
+        </div>
+      </div>
+    </div>
+    <div class="charge-box">
+      <div>
+        <div class="charge">
+          <span>
+            <p>提示</p>
+            <img src="images/close.png" class="close" onclick="closecharge()">
+          </span>
+          <p class="charge-nick"></p>
+          <p>金币不足，请充值</p>
+          <a onclick="charge()">去充值</a>
+        </div>
+      </div>
+    </div>
+    <div class="prize-box">
+      <div>
+        <span class="prize-img">
+          <img src="images/prize/act1.png" class="prize-img-item" onclick="return false">
+          <img src="images/prize/prize-bg.png" class="prize-bg" onclick="return false">
+          <img class="prize-gift">
+          <img src="images/prize/rule.png" class="prize-rule" onclick="showPrizeRule()">
+        </span>
+        <p>20金币一次，最高可得余生有你</p>
+        <span class="prize-btn-area">
+          <img src="images/prize/btn1.png" onclick="giftPurse(1)" class="gift-purse-btn">
+          <img src="images/prize/btn10.png" onclick="giftPurse(2)" class="gift-purse-btn">
+        </span>
+        <span class="prize-gold">
+          <img src="images/prize/coin.png" onclick="return false">
+          <p id="prize-gold-num">8888888</p>
+          <p onclick="charge()">充值>></p>
+        </span>
+        <img src="images/prize/close.png" class="prize-close" onclick="closePrize()">
+        <div class="prize-rule-box">
+          <div>
+            <p>活动规则</p>
+            <p>1.砸金蛋“1次”消耗20金币，“10次”消耗200金币</p>
+            <p>2.最高可以砸中“余生有你”</p>
+            <p>3.砸中的礼物可以免费送给主播</p>
+            <p>4.连续拉贝中奖概率更高哦~</p>
+            <span>关闭</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gift-prize">
+      <div>
+        <p>恭喜您获得</p>
+        <div class="gift-prize-item">
+        </div>
+        <span onclick="hideGiftPrize()">确认</span>
+      </div>
+    </div>
+    <span class="res-tips">
+      <span>
+        <p class="res-tips-text"></p>
+      </span>
+    </span>
+  </div>
+  <div style="display:none">
+    <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+</div>
+  <script src="../lib/jquery-3.2.1.min.js"></script>
+  <script src="../lib/AgoraRTCSDK-2.3.1.js"></script>
+  <script src="../lib/NIM_Web_SDK_v5.2.1.js"></script>
+  <script src="../lib/NIM_Web_NIM_v5.2.1.js"></script>
+  <script src="../lib/NIM_Web_Chatroom_v5.2.1.js"></script>
+  <script src="../lib/swiper/swiper-4.1.6.min.js"></script>
+  <script src="../lib/linkedme.min.js"></script>
+  <script src="../lib/common.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>我的等级</title>
+    <script>
+        var layout_width = 750;
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= layout_width) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+                    }
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="../lib/swiper/swiper.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="tabbar">
+            <span class="active">财富等级</span>
+            <span>魅力等级</span>
+            <span id="tabbar-bottom"></span>
+        </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="banner banner1"></div>
+                    <img src="images/content-title.png" class="content-title">
+                    <div class="content">
+                        <span>
+                            <img src="images/content1.png" class="lv-content1">
+                            <img src="images/content1-off.png" class="lv-content1-off">
+                        </span>
+                        <span>
+                            <img src="images/content2.png" class="lv-content2">
+                            <img src="images/contetn2-off.png" class="lv-content2-off">
+                        </span>
+                        <span>
+                            <img src="images/content3.png">
+                        </span>
+                    </div>
+                    <img src="images/lv-tips.png" class="lv-tips">
+                </div>
+                <div class="swiper-slide">
+                    <div class="banner banner2"></div>
+                    <img src="images/content-title.png" class="content-title">
+                    <div class="content">
+                        <img src="images/content3.png">
+                    </div>
+                    <img src="images/lv-tips.png" class="cl-tips">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none">
+        <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+    </div>
+    <script src="../lib/zepto.min.js"></script>
+    <script src="../lib/swiper/idangerous.swiper.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

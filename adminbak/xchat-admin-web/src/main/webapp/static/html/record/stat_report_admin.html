@@ -1,0 +1,432 @@
+<style>
+    table.table-fixed-head .table-fixed-head-thead {
+        border-bottom: 1px solid #dddddd;
+        border-top: 1px solid #dddddd;
+        background: #fff;
+    }
+
+    #userTable {
+        width: 150%;
+        max-width: unset;
+    }
+
+    .modal-content .fixed-table-body {
+        height: unset !important;
+    }
+
+    .dropdown-toggle {
+        width: 100%;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--查询输入框-->
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">拉贝号:</label>
+                        <div class="col-sm-2">
+                            <!-- <input type="text" id="erbanNo" name="erbanNo" class="form-control"
+                                   aria-describedby="basic-addon1"> -->
+                            <textarea class="form-control" name="erbanNos" id="erbanNos" style="height: 120px; resize: none"
+                                      placeholder='拉贝号（多个拉贝号回车分隔）'></textarea>
+                        </div>
+                        <!--<label class="col-sm-1 control-label">昵称:</label>-->
+                        <!--<div class="col-sm-2">-->
+                        <!--<input type="text" id="nick" name="nick" class="form-control" aria-describedby="basic-addon1">-->
+                        <!--</div>-->
+                        <label class="col-sm-1 control-label">平台:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-2">
+                                <select class="btn btn-default dropdown-toggle" name="os" id="os"
+                                        data-btn-class="btn-warning">
+                                    <option value="">全部</option>
+                                    <option value="android">Android</option>
+                                    <option value="iOS">iOS</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">注册类型:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-2">
+                                <select class="btn btn-default dropdown-toggle" name="registerType" id="registerType"
+                                        data-btn-class="btn-warning">
+                                    <option value="">全部</option>
+                                    <option value="1">手机注册</option>
+                                    <option value="2">微信注册</option>
+                                    <option value="3">QQ注册</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">性别:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-2">
+                                <select class="btn btn-default dropdown-toggle" name="gender" id="gender"
+                                        data-btn-class="btn-warning">
+                                    <option value="">全部</option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                    <option value="0">其他</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <!-- <label class="col-sm-1 control-label">注册时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="signBegin" type="date" name="signBegin"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="signEnd" type="date" name="signEnd"
+                                   class="form-control validate[required]">
+                        </div> -->
+                        <label class="col-sm-1 control-label">统计时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="beginDate" type="date" name="beginDate"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="endDate" type="date" name="endDate"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <button onclick="getYesterday()" type="button" class="btn btn-danger"
+                                    style="margin-right: 10px">
+                                <i class="glyphicon glyphicon-calendar"></i> 昨天
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">排序:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-2">
+                                <select class="btn btn-default dropdown-toggle" name="orderBy" id="orderBy"
+                                        data-btn-class="btn-warning">
+                                    <option value="1">充值金额</option>
+                                    <option value="2">兑换金币</option>
+                                    <!-- <option value="3">钻石提现</option> -->
+                                    <option value="4">财富变化</option>
+                                    <option value="5">魅力变化</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-1 control-label">渠道:</label>
+                        <div class="dropdown">
+                            <div class="col-sm-2">
+                                <select class="btn btn-default dropdown-toggle" name="channel" id="channel"
+                                        data-btn-class="btn-warning">
+                                    <option value="">全部</option>
+                                    <option value="1">360(360m)</option>
+                                    <option value="2">OPPO(oppo)</option>
+                                    <option value="3">华为(hwsc)</option>
+                                    <option value="4">应用宝(ybsc)</option>
+                                    <option value="5">VIVO(vivo)</option>
+                                    <option value="6">阿里(alsc)</option>
+                                    <option value="7">百度(bdsc)</option>
+                                    <option value="8">小米(xmsc)</option>
+                                    <option value="9">三星(sxsc)</option>
+                                    <option value="10">魅族(mzsc)</option>
+                                    <option value="11">安智(azsc)</option>
+                                    <option value="12">搜狗(sgsc)</option>
+                                    <option value="13">联想(lxsc)</option>
+                                    <option value="0">其他</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-primary search"
+                                    style="margin-right: 10px">
+                                <i class="glyphicon glyphicon-search"></i> 查询
+                            </button>
+                            <button onclick="exportTable()" type="button" class="btn btn-success"
+                                    style="margin-right: 10px">
+                                <i class="glyphicon glyphicon-save-file"></i> 导出
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!--content-->
+                <ul style="list-style: none; display: flex; flex-direction: row; margin-bottom: 5px; padding-left: 0;">
+                    <li style="margin-right: 20px;">
+                        <span style="color: red;font-weight: bold;">统计：</span>
+                        <span id="totalNum">0</span>
+                        <span>人</span>
+                    </li>
+                </ul>
+                <div id="userTable"></div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<!-- .content -->
+<div class="modal fade" id="detailModel" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document" style="width: 75%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button onclick="exportDetails()" type="button" class="btn btn-success">
+                    <i class="glyphicon glyphicon-save-file"></i> 导出
+                </button>
+            </div>
+            <div id="detailTable"></div>
+        </div>
+    </div>
+</div>
+<script>
+    let page = 0;
+    let size = 0;
+    let show = false;
+    //设置时间初始值
+    $("#beginDate").val(getCurrentDate())
+    $("#endDate").val(getCurrentDate())
+    // $("#signBegin").val(getCurrentDate())
+    // $("#signEnd").val(getCurrentDate())
+    // $(function () {
+    $(".search").click(function () {
+        $('#userTable').bootstrapTable('destroy');
+        $('#userTable').bootstrapTable({
+            columns: [
+                {field: 'checkbox', checkbox: true},
+                {field: 'uid', title: 'UID', align: 'center', width: '3%', visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: 150},
+                {field: 'nick', title: '用户昵称', align: 'center', width: 200},
+                {field: 'phone', title: '手机号码', align: 'center', width: 150},
+                {
+                    field: 'gender', title: '性别', align: 'center', width: 120, formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return "男";
+                        } else {
+                            return "女";
+                        }
+                    }
+                },
+                {field: 'os', title: '平台', align: 'center', width: 150},
+                {
+                    field: 'signTime', title: '注册时间', align: 'center', width: 200,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'chargeAmount',
+                    title: '充值金额',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        return "<a href='#'>" + val + "</a>"
+                    }
+                },
+                {
+                    field: 'exechangeDiamond',
+                    title: '兑换金币',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        return "<a href='#'>" + val + "</a>"
+                    }
+                },
+                // {field: 'diamondWithDraw', title: '钻石提现', align: 'center',width: '5%',formatter:function (val,row,index) {
+                //     return "<a href='#'>"+val+"</a>"
+                // }},
+                // {field: 'redPackerWithDraw', title: '红包提现', align: 'center',width: '5%',formatter:function (val,row,index) {
+                //     return "<a href='#'>"+val+"</a>"
+                // }},
+                {
+                    field: 'experChange',
+                    title: '财富变化',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        return "<a href='#'>" + val + "</a>"
+                    }
+                },
+                {
+                    field: 'charmChange',
+                    title: '魅力变化',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        return "<a href='#'>" + val + "</a>"
+                    }
+                },
+                {field: 'experNum', title: '总财富值', align: 'center', width: 150},
+                {field: 'charmNum', title: '总魅力值', align: 'center', width: 150},
+                {field: 'normalGiftNum', title: '送出普通礼物总值', align: 'center', width: 150},
+                {field: 'doCallNum', title: '打Call总值', align: 'center', width: 150},
+                {field: 'drawNum', title: '送海螺礼物总值', align: 'center', width: 150},
+                {field: 'weixinOpenid', title: '微信注册', align: 'center', width: 150},
+                {field: 'qqOpenid', title: 'QQ注册', align: 'center', width: 150},
+                {
+                    field: 'lastLoginTime', title: '最近登录时间', align: 'center', width: 200,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            sortStable: true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    // erbanNo: $("#erbanNo").val(),
+                    erbanNos: $("#erbanNos").val(),
+                    // nick:$("#nick").val(),
+                    os: $("#os").val(),
+                    registerType: parseInt($("#registerType").val()),
+                    gender: parseInt($("#gender").val()),
+                    beginDate: $("#beginDate").val(),
+                    endDate: $("#endDate").val(),
+                    orderBy: $("#orderBy").val(),
+                    // signBegin: $("#signBegin").val(),
+                    // signEnd: $("#signEnd").val(),
+                    channel: $("#channel").val(),
+                };
+                page = params.pageNumber;
+                size = params.pageSize;
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/stat/report.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    $("#totalNum").text(res.data.total);
+                    $("#maleNum").text(res.data.list[0].maleNum);
+                    $("#femaleNum").text(res.data.list[0].femaleNum);
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list,
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+            onClickCell: function (field, value, row, $element) {
+                const uid = row.uid;
+                const erbanNo = row.erbanNo;
+                const beginDate = $("#beginDate").val();
+                const endDate = $("#endDate").val();
+                if (field == "chargeAmount" && value != 0) {
+                    getChargeAmountDetail(uid, erbanNo, beginDate, endDate)
+                } else if (field == "exechangeDiamond" && value != 0) {
+                    getExechangeGoldDetail(uid, erbanNo, beginDate, endDate)
+                } else if (field == "experChange" && value != 0) {
+                    getExperChange(uid, erbanNo, beginDate, endDate)
+                } else if (field == "charmChange" && value != 0) {
+                    getCharmChange(uid, erbanNo, beginDate, endDate)
+                }
+            }
+        });
+    });
+    // 初始化
+    $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+    $('#endDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+    $('#signBegin').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+    $('#signEnd').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    // 按格式获取当前日期
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+
+    // 按格式获取昨天日期
+    function getYesterday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#beginDate").val(today.format("yyyy-MM-dd"));
+        $("#endDate").val(today.format("yyyy-MM-dd"));
+    }
+
+    // 导出整体报表
+    function exportTable() {
+        const selected = $('#userTable').bootstrapTable('getSelections');
+        let ids = '';
+        for (let i = 0; i < selected.length; i++) {
+            ids += selected[i].uid + ",";
+        }
+        if (ids) {
+            ids = ids.substr(0, ids.length - 1);
+        }
+        const param = $(".form-horizontal").serialize();
+        const url = `/admin/stat/exportExcel?${param}&userIds=${ids}&page=${page}&size=${size}`;
+        window.location.href = url;
+    };
+</script>
+<script src="/static/js/admin/style.js"></script>
+<script src="/static/js/admin/statDetail.js"></script>

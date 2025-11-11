@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.RoomMapperExpand">
+    <resultMap id="BaseResultMap" type="com.erban.main.vo.SearchVo">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="room_id" property="roomId" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="BIT"/>
+        <result column="valid" property="valid" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="BIT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="fans_num" property="fansNum" jdbcType="INTEGER"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="has_pretty_erban_no" property="hasPrettyErbanNo" jdbcType="BIT"/>
+    </resultMap>
+
+    <resultMap id="RoomResultMap" type="com.erban.main.model.Room">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="room_id" property="roomId" jdbcType="BIGINT"/>
+        <result column="room_pwd" property="roomPwd" jdbcType="VARCHAR"/>
+        <result column="tag_id" property="tagId" jdbcType="INTEGER"/>
+        <result column="tag_pict" property="tagPict" jdbcType="VARCHAR"/>
+        <result column="room_tag" property="roomTag" jdbcType="VARCHAR"/>
+        <result column="badge" property="badge" jdbcType="VARCHAR"/>
+        <result column="meeting_name" property="meetingName" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="BIT"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="official_room" property="officialRoom" jdbcType="TINYINT"/>
+        <result column="ab_channel_type" property="abChannelType" jdbcType="TINYINT"/>
+        <result column="reward_id" property="rewardId" jdbcType="BIGINT"/>
+        <result column="reward_money" property="rewardMoney" jdbcType="BIGINT"/>
+        <result column="serv_dura" property="servDura" jdbcType="INTEGER"/>
+        <result column="operator_status" property="operatorStatus" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="room_desc" property="roomDesc" jdbcType="VARCHAR"/>
+        <result column="back_pic" property="backPic" jdbcType="VARCHAR"/>
+        <result column="open_time" property="openTime" jdbcType="TIMESTAMP"/>
+        <result column="is_permit_room" property="isPermitRoom" jdbcType="TINYINT"/>
+        <result column="online_num" property="onlineNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="is_exception_close" property="isExceptionClose" jdbcType="BIT"/>
+        <result column="exception_close_time" property="exceptionCloseTime" jdbcType="TIMESTAMP"/>
+        <result column="recom_seq" property="recomSeq" jdbcType="BIGINT"/>
+        <result column="can_show" property="canShow" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <select id="searchRoomByKey" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        u.uid,r.room_id,r.title,r.type,r.valid,u.avatar,u.gender,u.nick,u.fans_num,u.erban_no as
+        erbanNo,u.has_pretty_erban_no
+        FROM room r
+        RIGHT JOIN users u
+        ON r.uid=u.uid
+        WHERE
+        1=1
+        <if test="uids != null and uids.size> 0">
+            AND u.uid IN
+            <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="key != null">
+            AND u.erban_no LIKE "${key}%"
+        </if>
+        union
+        SELECT
+        u.uid,r.room_id,r.title,r.type,r.valid,u.avatar,u.gender,u.nick,u.fans_num,u.erban_no as
+        erbanNo,u.has_pretty_erban_no
+        FROM room r
+        RIGHT JOIN users u
+        ON r.uid=u.uid
+        WHERE
+        1=1
+        <if test="uids != null and uids.size> 0">
+            AND u.uid IN
+            <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="key != null">
+            AND u.nick LIKE "${key}%"
+        </if>
+        union
+        SELECT
+        u.uid,r.room_id,r.title,r.type,r.valid,u.avatar,u.gender,u.nick,u.fans_num,u.erban_no as
+        erbanNo,u.has_pretty_erban_no
+        FROM room r
+        RIGHT JOIN users u
+        ON r.uid=u.uid
+        WHERE
+        1=1
+        <if test="uids != null and uids.size> 0">
+            AND u.uid IN
+            <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="key != null">
+            AND r.title LIKE "${key}%"
+        </if>
+        ORDER BY erbanNo ASC
+        limit 0,50
+    </select>
+
+    <select id="selectNewRooms" resultMap="RoomResultMap">
+        select uid, room_id,room_pwd,tag_id,tag_pict,
+        room_tag,badge,meeting_name,title,valid,type,official_room,ab_channel_type,operator_status,room_desc,back_pic,open_time,is_permit_room,online_num,create_time,recom_seq,(select
+        t1.avatar from users t1 where t1.uid=r1.uid) as avatar from room r1 where DATE_SUB(CURDATE(),INTERVAL #{day}
+        day) &lt;= DATE(create_time) AND online_num>0 AND valid=1 AND is_permit_room>0 AND r1.can_show=1
+        <if test="hideUids != null and hideUids.size> 0">
+            AND uid NOT IN
+            <foreach item="item" index="index" collection="hideUids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by create_time desc limit #{skip},#{size}
+    </select>
+
+    <select id="selectRadioRooms" resultMap="RoomResultMap">
+        select uid, room_id,room_pwd,tag_id,tag_pict,
+        room_tag,badge,meeting_name,title,valid,type,official_room,ab_channel_type,operator_status,room_desc,back_pic,open_time,is_permit_room,online_num,create_time,recom_seq,(select
+        t1.avatar from users t1 where t1.uid=r1.uid) as avatar from room r1 where type=2 AND online_num>0 AND valid=1
+        AND is_permit_room>0 AND r1.can_show=1
+        <if test="hideUids != null and hideUids.size> 0">
+            AND uid NOT IN
+            <foreach item="item" index="index" collection="hideUids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by create_time desc limit #{skip},#{size}
+    </select>
+
+    <select id="selectPoolRooms" resultMap="RoomResultMap">
+    select * from room where uid in (select uid from room_recom_pool)
+  </select>
+</mapper>

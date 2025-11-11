@@ -1,0 +1,299 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="userTable"></div>
+                <div id="toolbar">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <label for="searchType" class="sr-only">类型:</label>
+                            <select class="form-control validate[required]" id="searchType">
+                                <option value="">请选择</option>
+                                <option value="1">房间名</option>
+                                <option value="2">聊天</option>
+                                <option value="3">房间玩法</option>
+                                <option value="4">昵称</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="searchText" class="sr-only">敏感词:</label>
+                            <input type="text" class="form-control validate[required]" placeholder="敏感词"
+                                   id="searchText">
+                        </div>
+                        <div class="form-group">
+                            <button id="btnSearch" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-search"></i>查询
+                            </button>
+                        </div>
+                        <button id="add" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-plus"></i> 增加
+                        </button>
+                        <button id="download" class="btn btn-success">
+                            <i class="glyphicon glyphicon-save-file"></i> 下载模版
+                        </button>
+                        <button id="importExcel" class="btn btn-danger">
+                            <i class="glyphicon glyphicon-floppy-save"></i> 导入Excel
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalLabel">敏感词信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="userForm">
+                    <input type="hidden" name="id" id="id"/>
+                    <input type="hidden" name="optUid" id="optUid"/>
+                    <div class="form-group">
+                        <label for="sensitiveWords" class="col-sm-3 control-label">敏感词:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="sensitiveWords"
+                                   id="sensitiveWords">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="type" class="col-sm-3 control-label">敏感词:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control validate[required]" name="type" id="type">
+                                <option value="1">房间名</option>
+                                <option value="2">聊天</option>
+                                <option value="3">房间玩法</option>
+                                <option value="4">昵称</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="excelModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalsLabel">导入excel</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="excelForm">
+                    <div class="form-group">
+                        <label for="file" class="col-sm-3 control-label">文件:</label>
+                        <div class="col-sm-8">
+                            <input type="file" id="file" class="form-control  validate[required]" name="file">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveExcel">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const isEdit = false;
+    $(function () {
+        $('#userTable').bootstrapTable('destroy');
+        $('#userTable').bootstrapTable({
+            columns: [
+                {field: 'id', title: 'ID', align: 'center', width: 300},
+                {field: 'sensitiveWords', title: '敏感词', align: 'center', width: 300},
+                {field: 'adminName', title: '操作人', align: 'center', width: 300},
+                {
+                    field: 'type', title: '类型', align: 'center', width: 300,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return "房间名";
+                        } else if (val == 2) {
+                            return "聊天";
+                        } else if (val == 3) {
+                            return "房间玩法";
+                        } else if (val == 4) {
+                            return "昵称";
+                        } else {
+                            return "-";
+                        }
+                    }
+                }, {
+                    field: 'createTime', title: '创建时间', align: 'center', width: 300,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'id',
+                    title: '操作',
+                    align: 'center',
+                    width: 300,
+                    formatter: function (val, row, index) {
+                        return '<button class="btn btn-sm btn-danger opt-remove" data-id=' + val + '><i class="glyphicon glyphicon-remove"></i> 删除</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: $("#searchText").val(),
+                    type: $("#searchType").val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/room/sensitive/getlist.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+        $("#userTable").on("click", '.opt-remove', function () {
+            const id = $(this).attr("data-id");
+            if (confirm("你确认删除【" + TableHelper.getRowByUniqueId("#userTable", id).sensitiveWords + "】吗?" +
+                "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/room/sensitive/del.action",
+                    data: {'id': id},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#userTable");
+                        } else {
+                            $("#tipMsg").text("删除失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#userTable');
+        });
+        $('#add').click(function () {
+            $("#userForm")[0].reset();
+            $("#id").val(0);
+            $("#optUid").val(0);
+            $("#userModal").modal('show');
+        });
+        $('#save').click(function () {
+            if ($("#userForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/room/sensitive/save.action",
+                    data: $('#userForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.result == 1) {
+                            $("#userModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#userTable");
+                        } else {
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+        $("#download").click(function () {
+            window.location.href = "/admin/room/sensitive/download";
+        });
+        $("#importExcel").click(function () {
+            $("#excelForm")[0].reset();
+            $("#excelModal").modal('show');
+        });
+        $("#saveExcel").click(function () {
+            const formData = new FormData();
+            formData.append("file", document.getElementById("file").files[0]);
+            $.ajax({
+                type: "post",
+                url: "/admin/room/sensitive/importExcel.action",
+                dataType: "json",
+                data: formData,
+                /**
+                 *必须false才会自动加上正确的Content-Type
+                 */
+                contentType: false,
+                /**
+                 * 必须false才会避开jQuery对 formdata 的默认处理
+                 * XMLHttpRequest会对 formdata 进行正确的处理
+                 */
+                processData: false,
+                success: function (json) {
+                    if (json.result == 1) {
+                        $("#excelModal").modal('hide');
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh('#userTable');
+                    } else {
+                        $("#tipMsg").text("保存失败: " + "该数据已存在");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+    });
+</script>

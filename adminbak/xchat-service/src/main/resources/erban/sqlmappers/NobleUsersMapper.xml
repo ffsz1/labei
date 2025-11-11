@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.NobleUsersMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.NobleUsers" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="noble_id" property="nobleId" jdbcType="INTEGER" />
+    <result column="noble_name" property="nobleName" jdbcType="VARCHAR" />
+    <result column="expire" property="expire" jdbcType="TIMESTAMP" />
+    <result column="badge_id" property="badgeId" jdbcType="INTEGER" />
+    <result column="badge" property="badge" jdbcType="VARCHAR" />
+    <result column="cardbg_id" property="cardbgId" jdbcType="INTEGER" />
+    <result column="cardbg" property="cardbg" jdbcType="VARCHAR" />
+    <result column="zonebg_id" property="zonebgId" jdbcType="INTEGER" />
+    <result column="zonebg" property="zonebg" jdbcType="VARCHAR" />
+    <result column="room_background_id" property="roomBackgroundId" jdbcType="INTEGER" />
+    <result column="room_background" property="roomBackground" jdbcType="VARCHAR" />
+    <result column="mic_decorate_id" property="micDecorateId" jdbcType="INTEGER" />
+    <result column="mic_decorate" property="micDecorate" jdbcType="VARCHAR" />
+    <result column="chat_bubble_id" property="chatBubbleId" jdbcType="INTEGER" />
+    <result column="chat_bubble" property="chatBubble" jdbcType="VARCHAR" />
+    <result column="mic_halo_id" property="micHaloId" jdbcType="INTEGER" />
+    <result column="mic_halo" property="micHalo" jdbcType="VARCHAR" />
+    <result column="enter_hide" property="enterHide" jdbcType="TINYINT" />
+    <result column="rank_hide" property="rankHide" jdbcType="TINYINT" />
+    <result column="good_num" property="goodNum" jdbcType="BIGINT" />
+    <result column="recom_count" property="recomCount" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="open_time" property="openTime" jdbcType="TIMESTAMP" />
+    <result column="renew_time" property="renewTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, noble_id, noble_name, expire, badge_id, badge, cardbg_id, cardbg, zonebg_id, 
+    zonebg, room_background_id, room_background, mic_decorate_id, mic_decorate, chat_bubble_id, 
+    chat_bubble, mic_halo_id, mic_halo, enter_hide, rank_hide, good_num, recom_count, 
+    status, open_time, renew_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.NobleUsersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from noble_users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from noble_users
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from noble_users
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.NobleUsersExample" >
+    delete from noble_users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.NobleUsers" >
+    insert into noble_users (uid, noble_id, noble_name, 
+      expire, badge_id, badge, 
+      cardbg_id, cardbg, zonebg_id, 
+      zonebg, room_background_id, room_background, 
+      mic_decorate_id, mic_decorate, chat_bubble_id, 
+      chat_bubble, mic_halo_id, mic_halo, 
+      enter_hide, rank_hide, good_num, 
+      recom_count, status, open_time, 
+      renew_time)
+    values (#{uid,jdbcType=BIGINT}, #{nobleId,jdbcType=INTEGER}, #{nobleName,jdbcType=VARCHAR}, 
+      #{expire,jdbcType=TIMESTAMP}, #{badgeId,jdbcType=INTEGER}, #{badge,jdbcType=VARCHAR}, 
+      #{cardbgId,jdbcType=INTEGER}, #{cardbg,jdbcType=VARCHAR}, #{zonebgId,jdbcType=INTEGER}, 
+      #{zonebg,jdbcType=VARCHAR}, #{roomBackgroundId,jdbcType=INTEGER}, #{roomBackground,jdbcType=VARCHAR}, 
+      #{micDecorateId,jdbcType=INTEGER}, #{micDecorate,jdbcType=VARCHAR}, #{chatBubbleId,jdbcType=INTEGER}, 
+      #{chatBubble,jdbcType=VARCHAR}, #{micHaloId,jdbcType=INTEGER}, #{micHalo,jdbcType=VARCHAR}, 
+      #{enterHide,jdbcType=TINYINT}, #{rankHide,jdbcType=TINYINT}, #{goodNum,jdbcType=BIGINT}, 
+      #{recomCount,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{openTime,jdbcType=TIMESTAMP}, 
+      #{renewTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.NobleUsers" >
+    insert into noble_users
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="nobleId != null" >
+        noble_id,
+      </if>
+      <if test="nobleName != null" >
+        noble_name,
+      </if>
+      <if test="expire != null" >
+        expire,
+      </if>
+      <if test="badgeId != null" >
+        badge_id,
+      </if>
+      <if test="badge != null" >
+        badge,
+      </if>
+      <if test="cardbgId != null" >
+        cardbg_id,
+      </if>
+      <if test="cardbg != null" >
+        cardbg,
+      </if>
+      <if test="zonebgId != null" >
+        zonebg_id,
+      </if>
+      <if test="zonebg != null" >
+        zonebg,
+      </if>
+      <if test="roomBackgroundId != null" >
+        room_background_id,
+      </if>
+      <if test="roomBackground != null" >
+        room_background,
+      </if>
+      <if test="micDecorateId != null" >
+        mic_decorate_id,
+      </if>
+      <if test="micDecorate != null" >
+        mic_decorate,
+      </if>
+      <if test="chatBubbleId != null" >
+        chat_bubble_id,
+      </if>
+      <if test="chatBubble != null" >
+        chat_bubble,
+      </if>
+      <if test="micHaloId != null" >
+        mic_halo_id,
+      </if>
+      <if test="micHalo != null" >
+        mic_halo,
+      </if>
+      <if test="enterHide != null" >
+        enter_hide,
+      </if>
+      <if test="rankHide != null" >
+        rank_hide,
+      </if>
+      <if test="goodNum != null" >
+        good_num,
+      </if>
+      <if test="recomCount != null" >
+        recom_count,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="openTime != null" >
+        open_time,
+      </if>
+      <if test="renewTime != null" >
+        renew_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="nobleId != null" >
+        #{nobleId,jdbcType=INTEGER},
+      </if>
+      <if test="nobleName != null" >
+        #{nobleName,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null" >
+        #{expire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="badgeId != null" >
+        #{badgeId,jdbcType=INTEGER},
+      </if>
+      <if test="badge != null" >
+        #{badge,jdbcType=VARCHAR},
+      </if>
+      <if test="cardbgId != null" >
+        #{cardbgId,jdbcType=INTEGER},
+      </if>
+      <if test="cardbg != null" >
+        #{cardbg,jdbcType=VARCHAR},
+      </if>
+      <if test="zonebgId != null" >
+        #{zonebgId,jdbcType=INTEGER},
+      </if>
+      <if test="zonebg != null" >
+        #{zonebg,jdbcType=VARCHAR},
+      </if>
+      <if test="roomBackgroundId != null" >
+        #{roomBackgroundId,jdbcType=INTEGER},
+      </if>
+      <if test="roomBackground != null" >
+        #{roomBackground,jdbcType=VARCHAR},
+      </if>
+      <if test="micDecorateId != null" >
+        #{micDecorateId,jdbcType=INTEGER},
+      </if>
+      <if test="micDecorate != null" >
+        #{micDecorate,jdbcType=VARCHAR},
+      </if>
+      <if test="chatBubbleId != null" >
+        #{chatBubbleId,jdbcType=INTEGER},
+      </if>
+      <if test="chatBubble != null" >
+        #{chatBubble,jdbcType=VARCHAR},
+      </if>
+      <if test="micHaloId != null" >
+        #{micHaloId,jdbcType=INTEGER},
+      </if>
+      <if test="micHalo != null" >
+        #{micHalo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterHide != null" >
+        #{enterHide,jdbcType=TINYINT},
+      </if>
+      <if test="rankHide != null" >
+        #{rankHide,jdbcType=TINYINT},
+      </if>
+      <if test="goodNum != null" >
+        #{goodNum,jdbcType=BIGINT},
+      </if>
+      <if test="recomCount != null" >
+        #{recomCount,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="openTime != null" >
+        #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="renewTime != null" >
+        #{renewTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.NobleUsersExample" resultType="java.lang.Integer" >
+    select count(*) from noble_users
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update noble_users
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.nobleId != null" >
+        noble_id = #{record.nobleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nobleName != null" >
+        noble_name = #{record.nobleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expire != null" >
+        expire = #{record.expire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.badgeId != null" >
+        badge_id = #{record.badgeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.badge != null" >
+        badge = #{record.badge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardbgId != null" >
+        cardbg_id = #{record.cardbgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardbg != null" >
+        cardbg = #{record.cardbg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zonebgId != null" >
+        zonebg_id = #{record.zonebgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.zonebg != null" >
+        zonebg = #{record.zonebg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomBackgroundId != null" >
+        room_background_id = #{record.roomBackgroundId,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomBackground != null" >
+        room_background = #{record.roomBackground,jdbcType=VARCHAR},
+      </if>
+      <if test="record.micDecorateId != null" >
+        mic_decorate_id = #{record.micDecorateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.micDecorate != null" >
+        mic_decorate = #{record.micDecorate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chatBubbleId != null" >
+        chat_bubble_id = #{record.chatBubbleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.chatBubble != null" >
+        chat_bubble = #{record.chatBubble,jdbcType=VARCHAR},
+      </if>
+      <if test="record.micHaloId != null" >
+        mic_halo_id = #{record.micHaloId,jdbcType=INTEGER},
+      </if>
+      <if test="record.micHalo != null" >
+        mic_halo = #{record.micHalo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enterHide != null" >
+        enter_hide = #{record.enterHide,jdbcType=TINYINT},
+      </if>
+      <if test="record.rankHide != null" >
+        rank_hide = #{record.rankHide,jdbcType=TINYINT},
+      </if>
+      <if test="record.goodNum != null" >
+        good_num = #{record.goodNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.recomCount != null" >
+        recom_count = #{record.recomCount,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.openTime != null" >
+        open_time = #{record.openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.renewTime != null" >
+        renew_time = #{record.renewTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update noble_users
+    set uid = #{record.uid,jdbcType=BIGINT},
+      noble_id = #{record.nobleId,jdbcType=INTEGER},
+      noble_name = #{record.nobleName,jdbcType=VARCHAR},
+      expire = #{record.expire,jdbcType=TIMESTAMP},
+      badge_id = #{record.badgeId,jdbcType=INTEGER},
+      badge = #{record.badge,jdbcType=VARCHAR},
+      cardbg_id = #{record.cardbgId,jdbcType=INTEGER},
+      cardbg = #{record.cardbg,jdbcType=VARCHAR},
+      zonebg_id = #{record.zonebgId,jdbcType=INTEGER},
+      zonebg = #{record.zonebg,jdbcType=VARCHAR},
+      room_background_id = #{record.roomBackgroundId,jdbcType=INTEGER},
+      room_background = #{record.roomBackground,jdbcType=VARCHAR},
+      mic_decorate_id = #{record.micDecorateId,jdbcType=INTEGER},
+      mic_decorate = #{record.micDecorate,jdbcType=VARCHAR},
+      chat_bubble_id = #{record.chatBubbleId,jdbcType=INTEGER},
+      chat_bubble = #{record.chatBubble,jdbcType=VARCHAR},
+      mic_halo_id = #{record.micHaloId,jdbcType=INTEGER},
+      mic_halo = #{record.micHalo,jdbcType=VARCHAR},
+      enter_hide = #{record.enterHide,jdbcType=TINYINT},
+      rank_hide = #{record.rankHide,jdbcType=TINYINT},
+      good_num = #{record.goodNum,jdbcType=BIGINT},
+      recom_count = #{record.recomCount,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      open_time = #{record.openTime,jdbcType=TIMESTAMP},
+      renew_time = #{record.renewTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.NobleUsers" >
+    update noble_users
+    <set >
+      <if test="nobleId != null" >
+        noble_id = #{nobleId,jdbcType=INTEGER},
+      </if>
+      <if test="nobleName != null" >
+        noble_name = #{nobleName,jdbcType=VARCHAR},
+      </if>
+      <if test="expire != null" >
+        expire = #{expire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="badgeId != null" >
+        badge_id = #{badgeId,jdbcType=INTEGER},
+      </if>
+      <if test="badge != null" >
+        badge = #{badge,jdbcType=VARCHAR},
+      </if>
+      <if test="cardbgId != null" >
+        cardbg_id = #{cardbgId,jdbcType=INTEGER},
+      </if>
+      <if test="cardbg != null" >
+        cardbg = #{cardbg,jdbcType=VARCHAR},
+      </if>
+      <if test="zonebgId != null" >
+        zonebg_id = #{zonebgId,jdbcType=INTEGER},
+      </if>
+      <if test="zonebg != null" >
+        zonebg = #{zonebg,jdbcType=VARCHAR},
+      </if>
+      <if test="roomBackgroundId != null" >
+        room_background_id = #{roomBackgroundId,jdbcType=INTEGER},
+      </if>
+      <if test="roomBackground != null" >
+        room_background = #{roomBackground,jdbcType=VARCHAR},
+      </if>
+      <if test="micDecorateId != null" >
+        mic_decorate_id = #{micDecorateId,jdbcType=INTEGER},
+      </if>
+      <if test="micDecorate != null" >
+        mic_decorate = #{micDecorate,jdbcType=VARCHAR},
+      </if>
+      <if test="chatBubbleId != null" >
+        chat_bubble_id = #{chatBubbleId,jdbcType=INTEGER},
+      </if>
+      <if test="chatBubble != null" >
+        chat_bubble = #{chatBubble,jdbcType=VARCHAR},
+      </if>
+      <if test="micHaloId != null" >
+        mic_halo_id = #{micHaloId,jdbcType=INTEGER},
+      </if>
+      <if test="micHalo != null" >
+        mic_halo = #{micHalo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterHide != null" >
+        enter_hide = #{enterHide,jdbcType=TINYINT},
+      </if>
+      <if test="rankHide != null" >
+        rank_hide = #{rankHide,jdbcType=TINYINT},
+      </if>
+      <if test="goodNum != null" >
+        good_num = #{goodNum,jdbcType=BIGINT},
+      </if>
+      <if test="recomCount != null" >
+        recom_count = #{recomCount,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="openTime != null" >
+        open_time = #{openTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="renewTime != null" >
+        renew_time = #{renewTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.NobleUsers" >
+    update noble_users
+    set noble_id = #{nobleId,jdbcType=INTEGER},
+      noble_name = #{nobleName,jdbcType=VARCHAR},
+      expire = #{expire,jdbcType=TIMESTAMP},
+      badge_id = #{badgeId,jdbcType=INTEGER},
+      badge = #{badge,jdbcType=VARCHAR},
+      cardbg_id = #{cardbgId,jdbcType=INTEGER},
+      cardbg = #{cardbg,jdbcType=VARCHAR},
+      zonebg_id = #{zonebgId,jdbcType=INTEGER},
+      zonebg = #{zonebg,jdbcType=VARCHAR},
+      room_background_id = #{roomBackgroundId,jdbcType=INTEGER},
+      room_background = #{roomBackground,jdbcType=VARCHAR},
+      mic_decorate_id = #{micDecorateId,jdbcType=INTEGER},
+      mic_decorate = #{micDecorate,jdbcType=VARCHAR},
+      chat_bubble_id = #{chatBubbleId,jdbcType=INTEGER},
+      chat_bubble = #{chatBubble,jdbcType=VARCHAR},
+      mic_halo_id = #{micHaloId,jdbcType=INTEGER},
+      mic_halo = #{micHalo,jdbcType=VARCHAR},
+      enter_hide = #{enterHide,jdbcType=TINYINT},
+      rank_hide = #{rankHide,jdbcType=TINYINT},
+      good_num = #{goodNum,jdbcType=BIGINT},
+      recom_count = #{recomCount,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      open_time = #{openTime,jdbcType=TIMESTAMP},
+      renew_time = #{renewTime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,442 @@
+<!-- Content Header (Page header) -->
+
+<section class="content-header">
+    <h1 id="itemTitle"></h1>
+</section>
+<!-- .content -->
+<section class="content">
+    <!--查询输入框-->
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label  class="col-sm-1 control-label">拉贝号:</label>
+            <div class="col-sm-1">
+                <input type="text" id="erbanNo" name="erbanNo" class="form-control"  aria-describedby="basic-addon1">
+            </div>
+            <label  class="col-sm-1 control-label">提现状态:</label>
+            <div class="dropdown">
+                <div class="col-sm-1">
+                    <select class="btn btn-default dropdown-toggle" name="status" id="status" data-btn-class="btn-warning">
+                        <option value="">全部</option>
+                        <option value="1">提现中</option>
+                        <option value="2">已提现</option>
+                    </select>
+                </div>
+            </div><label  class="col-sm-1 control-label">账号提现状态:</label>
+            <div class="dropdown">
+                <div class="col-sm-1">
+                    <select class="btn btn-default dropdown-toggle" name="withdrawStatus" id="withdrawStatus" data-btn-class="btn-warning">
+                        <option value="0">正常</option>
+                        <option value="1">冻结</option>
+                        <option value="">全部</option>
+                    </select>
+                </div>
+            </div>
+            <label  class="col-sm-1 control-label">性别:</label>
+            <div class="col-sm-1">
+                <div class="col-sm-1">
+                    <select class="btn btn-default dropdown-toggle" id="gender" name="gender" data-btn-class="btn-warning">
+                        <option value="">全部</option>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                        <option value="0">其他</option>
+                    </select>
+                </div>
+            </div>
+            <label class="col-sm-1 control-label">时间:</label>
+            <div class="col-sm-1">
+                <input type="text" id="beginDate" name="beginDate" type="date" placeholder="开始时间"  class="form-control validate[required]">
+            </div>
+            <div class="col-sm-1">
+                <input type="text" id="endDate" name="endDate" type="date" placeholder="结束时间" class="form-control validate[required]">
+            </div>
+            <div>
+                <button onclick="getYestaday()" class="btn btn-default" type="button" style="margin-right: 10px">
+                    <i class="glyphicon glyphicon-calendar"></i>昨天
+                </button>
+            </div>
+        </div>
+    </form>
+    <!--content-->
+    <div id="withDrawTable"></div>
+    <div id="toolbar" style="display: flex">
+        <ul style="list-style: none;display: flex;flex-direction: row;padding-left: 0;">
+            <li style="margin-right: 20px;">
+                <span style="font-weight: bold;">提现人数：</span>
+                <span style="color: red" id="userNum"></span>
+                <span>人</span>
+            </li>
+            <li style="margin-right: 20px;">
+                <span style="font-weight: bold;">男 ：</span>
+                <span style="color: red" id="male"></span>
+                <span>人</span>
+            </li>
+            <li style="margin-right: 20px;">
+                <span style="font-weight: bold;">女：</span>
+                <span style="color: red" id="female"></span>
+                <span>人</span>
+            </li>
+            <li style="margin-right: 20px;">
+                <span style="font-weight: bold;">其他：</span>
+                <span style="color: red" id="other"></span>
+                <span>人</span>
+            </li>
+            <li style="margin-right: 20px;">
+                <span style="font-weight: bold;">金额（RMB）：</span>
+                <span style="color: red" id="totalAmount"></span>
+                <span>元</span>
+            </li>
+        </ul>
+        <div>
+        <button id="diamon-multiTransfer" class="btn btn-warning" >
+            <i class="glyphicon glyphicon glyphicon-wrench"></i>批量转账
+        </button>
+        <button id="exportExcel" class="btn btn-info" >
+            <i class="glyphicon glyphicon glyphicon-download-alt"></i>导出Excel
+        </button>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+
+    //设置时间初始值
+    $("#beginDate").val(getCurrentDate())
+    $("#endDate").val(getCurrentDate())
+    
+    $(function () {
+        $('#withDrawTable').bootstrapTable('destroy');
+        $('#withDrawTable').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {field: 'billId', title: 'ID', align: 'center', width: '3%'},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', width: '3%'},
+                {field: 'nick', title: '昵称', align: 'center', width: '3%'},
+                {field: 'gender', title: '性别', align: 'center', width: '3%',
+                    formatter: function (val,row,index) {
+                        if(val==1){
+                            return '男';
+                        }else if(val==2){
+                            return '女';
+                        }else if(val==0){
+                            return '其他';
+                        }
+                    }
+                },
+                {field: 'phone', title: '电话', align: 'center', width: '3%'},
+                {field: 'alipayAccount', title: '支付宝', align: 'center', width: '3%'},
+                {field: 'alipayAccountName', title: '真实姓名', align: 'center', width: '3%'},
+                {field: 'diamondNum', title: '钻石数量', align: 'center',width: '5%'},
+                {field: 'money', title: '提现金额', align: 'center', width: '8%'},
+                {field: 'billStatus', title: '提现状态', align: 'center', width: '8%',
+                    formatter: function (val,row,index) {
+                        if(val==1){
+                           return '提现中';
+                        }else if(val==2){
+                            return '提现完成';
+                        }else if(val==3){
+                            return '提现异常';
+                        }else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'withdrawStatus', title: '账号提现状态', align: 'center', width: '8%',
+                    formatter: function (val,row,index) {
+                        if(val==0){
+                            return '正常';
+                        }else if(val==1){
+                            return '冻结';
+                        }else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'createTime',title: '创建时间',align: 'center',width: '10%',
+                    formatter: function (val,row,index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'billId',title: '操作',align: 'center',width: '10%',
+                    formatter: function (val,row,index) {
+                        var key = val;
+                        var str = "";
+                        if(row.withdrawStatus==0){
+                            str += "<button class='btn btn-sm btn-warning opt-frozen' data-id="+ row.uid +">冻结</button>";
+                        }else {
+                            str += "<button class='btn btn-sm btn-warning opt-unfrozen' data-id="+ row.uid +">解冻</button>";
+                        }
+                        return str;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable:true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    erbanNo: parseInt($('#erbanNo').val()),
+                    gender: parseInt($('#gender').val()),
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val(),
+                    status: parseInt($('#status').val()),
+                    withdrawStatus: parseInt($('#withdrawStatus').val())
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/withdraw/diamondWithDrawlist.action',
+            method: 'post',
+            responseHandler: function(res) {
+                if(res.code==200){
+                    clear();
+                    $("#userNum").text(res.data.list[0].userNum);
+                    $("#male").text(res.data.list[0].male);
+                    $("#female").text(res.data.list[0].female);
+                    $("#other").text(res.data.list[0].other);
+                    $("#totalAmount").text(res.data.list[0].sumMoney);
+                    return {
+                        "total": res.data.total,//总页数
+                        "rows": res.data.list  //数据
+                    };
+                }else {
+                    $("#tipMsg").text(res.message+"["+res.code+"]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",//总页数
+                        "rows": []  //数据
+                    };
+                }
+            }
+        });
+    });
+    /*导出到Excel*/
+    $('#exportExcel').click(function () {
+        console.log()
+        var param = $("form").serialize()+'&type=1';
+        var url = "/admin/withdraw/withDrawExport?"+param;
+        window.location.href=url;
+    });
+
+    /*批量转账*/
+    $("#diamon-multiTransfer").click(function(){
+        var rows = $("#withDrawTable").bootstrapTable("getSelections");
+        if(rows.length == 0)
+        {
+            alert("请先选择要转账的用户");
+            return;
+        }
+        var idArr = [];
+        for(var i=0;i<rows.length;i++)
+        {
+            idArr.push(rows[i]['billId']);
+        }
+
+        if (confirm("你确认批量转账吗?" +
+                "\r\n转账后账户金额会划拨到用户支付宝，请谨慎操作！")) {
+            $.ajax({
+                type: 'post',
+                url: "/admin/withdraw/transferByAlipay.action",
+                data: {'ids':  JSON.stringify(idArr)},
+                dataType: "json",
+                success: function (json) {
+                    debugger
+                    if(json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message+"["+json.code+"]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 2.5* 1000)
+                }
+            });
+        }
+    });
+
+    /*单笔转账*/
+    $('#withDrawTable').on('click','.opt-transfer,.opt-transferByManual',function () {
+        var id = $(this).data('id');
+        if(id == 'undefined' || !id){
+            return;
+        }
+        var idArr = [];
+        idArr.push(id);
+
+        if(confirm("你确认给此用户转账吗?" +
+                "\r\n转账后账户金额会划拨到用户支付宝，请谨慎操作！")){
+            $.ajax({
+                type: 'post',
+                url:  "/admin/withdraw/transferByAlipay.action",
+                data: {'ids':  JSON.stringify(idArr)},
+                dataType: 'json',
+                success: function (json) {
+                    if(json.code == 200) {
+                        $("#tipMsg").text("转账成功");
+                        $("#tipModal").modal('show');
+                    } else {
+                        $("#tipMsg").text(json.message+"["+json.code+"]");
+                        $("#tipModal").modal('show');
+                    }
+                    window.setTimeout(function () {
+                        $('#withDrawTable').bootstrapTable('refresh');
+                    }, 1 * 1000);
+                }
+            })
+        }
+    })
+
+    /*冻结*/
+    $('#withDrawTable').on('click','.opt-frozen',function () {
+        var id = $(this).data('id');
+        if(id == 'undefined' || !id){
+            return;
+        }
+        $.ajax({
+            type: 'get',
+            url:  "/admin/withdraw/frozen.action",
+            data: {'uid':  id},
+            dataType: 'json',
+            success: function (json) {
+                if(json.code == 200) {
+                    $("#tipMsg").text("成功");
+                    $("#tipModal").modal('show');
+                } else {
+                    $("#tipMsg").text(json.message+"["+json.code+"]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    })
+
+    /*解冻*/
+    $('#withDrawTable').on('click','.opt-unfrozen',function () {
+        var id = $(this).data('id');
+        if(id == 'undefined' || !id){
+            return;
+        }
+        $.ajax({
+            type: 'get',
+            url:  "/admin/withdraw/unfrozen.action",
+            data: {'uid':  id},
+            dataType: 'json',
+            success: function (json) {
+                if(json.code == 200) {
+                    $("#tipMsg").text("成功");
+                    $("#tipModal").modal('show');
+                } else {
+                    $("#tipMsg").text(json.message+"["+json.code+"]");
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    })
+
+    /*手动转账*/
+//    $('#withDrawTable').on('click','.opt-transferByManual',function () {
+//        var id = $(this).data('id');
+//        if(id == 'undefined' || !id){
+//            return;
+//        }
+//        var idArr = [];
+//        idArr.push(id);
+//
+//        if(confirm("你确认给此用户转账吗?" +
+//                "\r\n转账后账户金额会划拨到用户支付宝，请谨慎操作！")){
+//            $.ajax({
+//                type: 'post',
+//                url:  "/admin/withdraw/transferByAlipay.action",
+//                data: {'ids':  JSON.stringify(idArr)},
+//                dataType: 'json',
+//                success: function (json) {
+//                    if(json.code == 200) {
+//                        $("#tipMsg").text("转账成功");
+//                        $("#tipModal").modal('show');
+//                        window.setTimeout(function () {
+//                            $('#withDrawTable').bootstrapTable('refresh');
+//                        }, 1 * 1000);
+//                    } else {
+//                        $("#tipMsg").text(json.message+"["+json.code+"]");
+//                        $("#tipModal").modal('show');
+//                    }
+//                }
+//            })
+//        }
+//    })
+
+    /*初始化*/
+    var picker3 = $('#beginDate').datetimepicker({
+        language:"zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    })
+
+    var picker2 = $('#endDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    })
+
+    function getCurrentDate() {
+        var date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+
+
+    function getYestaday() {
+        var today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#beginDate").val(today.format("yyyy-MM-dd"));
+        $("#endDate").val(today.format("yyyy-MM-dd"));
+        $('#withDrawTable').bootstrapTable('refresh');
+    }
+
+    function clear() {
+        $("#userNum").text('');
+        $("#male").text('');
+        $("#female").text('');
+        $("#totalAmount").text('');
+        $("#other").text('')
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

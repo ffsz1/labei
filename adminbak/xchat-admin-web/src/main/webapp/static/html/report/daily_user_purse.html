@@ -1,0 +1,140 @@
+<script src="/static/js/admin/echarts.common.min.js"></script>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <!--查询输入框-->
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="beginDate" name="beginDate" type="date" placeholder="开始时间"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="endDate" name="endDate" type="date" placeholder="结束时间"
+                                   class="form-control validate[required]">
+                        </div>
+                        <button onclick="getYesterday()" type="button" class="btn btn-danger"
+                                style="margin-right: 10px">
+                            <i class="glyphicon glyphicon-calendar"></i> 昨天
+                        </button>
+                    </div>
+                </form>
+                <!--content-->
+                <div id="dailyUserPurse"></div>
+            </section>
+        </div>
+    </div>
+</section>
+<!-- .content -->
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+    //设置时间初始值
+    $("#beginDate").val(getCurrentDate());
+    $("#endDate").val(getCurrentDate());
+
+    $(function () {
+        $('#dailyUserPurse').bootstrapTable('destroy');
+        $('#dailyUserPurse').bootstrapTable({
+            columns: [
+                {
+                    field: 'createDate', title: '日期', align: 'center', width: '400',
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'goldSum', title: '金币总额', align: 'center', width: '300'},
+                {field: 'diamondSum', title: '钻石总额', align: 'center', width: '300'},
+                {field: "giftNormalDiamondSum", title: "普通礼物钻石", align: "center", width: "300"},
+                {field: 'giftDrawDiamondSum', title: "拉贝礼物钻石", align: 'center', width: '300'}
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 20,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    page: params.pageNumber,
+                    size: params.pageSize,
+                    beginDate: $('#beginDate').val(),
+                    endDate: $('#endDate').val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/dailyUserPurse/list.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.rows
+                    };
+                } else {
+                    $("#tipMsg").text(res.message + "[" + res.code + "]");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            }
+        });
+    });
+
+    // 初始化
+    $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    $('#endDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+
+    function getYesterday() {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        $("#beginDate").val(today.format("yyyy-MM-dd"));
+        $("#endDate").val(today.format("yyyy-MM-dd"));
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

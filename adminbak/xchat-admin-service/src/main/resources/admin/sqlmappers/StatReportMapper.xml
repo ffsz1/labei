@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.StatReportMapper">
+    <resultMap id="QueryResultMap" type="com.xchat.oauth2.service.vo.admin.AccountVo">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="weixin_openid" property="weixinOpenid" jdbcType="VARCHAR"/>
+        <result column="qq_openid" property="qqOpenid" jdbcType="VARCHAR"/>
+        <result column="os" property="os" jdbcType="VARCHAR"/>
+        <result column="osVersion" property="osversion" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="sign_time" property="signTime" jdbcType="TIMESTAMP"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="register_ip" property="registerIp" jdbcType="VARCHAR"/>
+        <result column="has_pretty_erban_no" property="hasPrettyErbanNo" jdbcType="BIT"/>
+        <result column="birth" property="birth" jdbcType="DATE"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR"/>
+        <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR"/>
+        <result column="charge_amount" property="chargeAmount" jdbcType="BIGINT"/>
+        <result column="exechange_diamond" property="exechangeDiamond" jdbcType="DOUBLE"/>
+        <result column="diamond_withDraw" property="diamondWithDraw" jdbcType="BIGINT"/>
+        <result column="charm_change" property="charmChange" jdbcType="VARCHAR"/>
+        <result column="exper_change" property="experChange" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Query_Column_List">
+        a.uid as uid, a.phone as phone, a.erban_no as erban_no, a.state as state, a.last_login_time as last_login_time,
+        a.register_ip as register_ip, a.weixin_openid as weixin_openid, a.qq_openid as qq_openid, a.os as os, a.osVersion as osVersion,
+        a.channel as channel, a.model as model, a.device_id as device_id, a.app_version as app_version, u.create_time as sign_time,
+        u.has_pretty_erban_no as has_pretty_erban_no, u.birth as birth, u.gender as gender, u.nick as nick, u.avatar as avatar,u.alipay_account as alipay_account, u.alipay_account_name as alipay_account_name
+    </sql>
+    <sql id="Query_Wherte">
+        1 = 1
+        <if test="signBegin != null">
+            AND u.create_time &gt;= #{signBegin}
+        </if>
+        <if test="signEnd != null">
+            AND u.create_time &lt;= #{signEnd}
+        </if>
+        <if test="erbanNosList != null and erbanNosList.size > 0">
+            AND u.erban_no IN
+            <foreach item="item" index="index" collection="erbanNosList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="uids != null and uids.size > 0">
+            AND u.uid IN
+            <foreach item="item" index="index" collection="uids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="erbanNo != null">
+            AND u.erban_no = #{erbanNo}
+        </if>
+        <if test="os != null">
+            AND a.os = #{os}
+        </if>
+        <if test="phone != null">
+            AND a.phone like concat('%', #{phone},'%')
+        </if>
+        <if test="channel != null">
+            <if test="channel == 1">
+                AND u.channel = '360m'
+            </if>
+            <if test="channel == 2">
+                AND u.channel = 'oppo'
+            </if>
+            <if test="channel == 3">
+                AND u.channel ='hwsc'
+            </if>
+            <if test="channel == 4">
+                AND u.channel = 'ybsc'
+            </if>
+            <if test="channel == 5">
+                AND u.channel = 'vivo'
+            </if>
+            <if test="channel == 6">
+                AND u.channel = 'alsc'
+            </if>
+            <if test="channel == 7">
+                AND u.channel = 'bdsc'
+            </if>
+            <if test="channel == 8">
+                AND u.channel = 'xmsc'
+            </if>
+            <if test="channel == 9">
+                AND u.channel = 'sxsc'
+            </if>
+            <if test="channel == 10">
+                AND u.channel = 'mzsc'
+            </if>
+            <if test="channel == 11">
+                AND u.channel = 'azsc'
+            </if>
+            <if test="channel == 12">
+                AND u.channel = 'sgsc'
+            </if>
+            <if test="channel == 13">
+                AND u.channel = 'lxsc'
+            </if>
+            <if test="channel == 0">
+                AND u.channel not in
+                ('360m', 'oppo', 'hwsc', 'ybsc', 'vivo', 'alsc', 'bdsc', 'xmsc', 'sxsc', 'mzsc', 'azsc', 'sgsc', 'lxsc')
+            </if>
+        </if>
+        <if test="gender != null">
+            AND u.gender = #{gender}
+        </if>
+        <if test="nick != null">
+            AND u.nick like concat('%', #{nick}, '%')
+        </if>
+        <choose>
+            <when test="registerType == 1">
+                AND a.weixin_openid is null AND a.qq_openid is null
+            </when>
+            <when test="registerType == 2">
+                AND a.weixin_openid is not null
+            </when>
+            <when test="registerType == 3">
+                AND a.qq_openid is not null
+            </when>
+        </choose>
+    </sql>
+    <select id="selectByChargeAmount" resultMap="QueryResultMap"
+            parameterType="com.xchat.oauth2.service.param.AccountParam">
+        select
+        <include refid="Query_Column_List"/>
+        , ifnull((SELECT sum(c.amount) FROM charge_record c force index(uid) WHERE c.uid = u.uid and c.charge_status = '2'
+        AND c.pingxx_charge_id IS NOT NULL AND c.create_time BETWEEN #{beginDate} and #{endDate}), 0) / 100 as chargeAmount,
+        0 as exechangeDiamond, 0 as normalGiftNum, 0 as doCallNum, 0 as drawNum, 0 as diamondWithDraw, 0 as charmChange, 0 as experChange
+        from account a JOIN users u ON a.uid = u.uid
+        <where>
+            <include refid="Query_Wherte"></include>
+        </where>
+        ORDER BY chargeAmount DESC
+    </select>
+    <select id="selectByExechangeDiamond" resultMap="QueryResultMap"
+            parameterType="com.xchat.oauth2.service.param.AccountParam">
+        select
+        <include refid="Query_Column_List"/>
+        ,ifnull((SELECT sum(c.ex_diamond_num) FROM exchange_diamond_gold_record c force index(uid) WHERE c.uid = u.uid
+        AND c.create_time BETWEEN #{beginDate} and #{endDate}),0) as exechangeDiamond,0 as normalGiftNum,0 as
+        doCallNum,0 as drawNum
+        ,0 as chargeAmount,0 as diamondWithDraw,0 as charmChange,0 as experChange
+        from account a JOIN users u ON a.uid=u.uid
+        <where>
+            <include refid="Query_Wherte"></include>
+        </where>
+        ORDER BY exechangeDiamond DESC
+    </select>
+    <select id="selectByDiamond" resultMap="QueryResultMap" parameterType="com.xchat.oauth2.service.param.AccountParam">
+        select
+        <include refid="Query_Column_List"/>
+        ,ifnull((SELECT sum(c.money) FROM bill_record c force index(key1) WHERE c.uid = u.uid AND c.obj_type='2' AND
+        c.create_time BETWEEN #{beginDate} and #{endDate}),0) as diamondWithDraw
+        ,0 as chargeAmount,0 as exechangeDiamond,0 as normalGiftNum,0 as doCallNum,0 as drawNum,0 as charmChange,0 as
+        experChange
+        from account a JOIN users u ON a.uid=u.uid
+        <where>
+            <include refid="Query_Wherte"></include>
+        </where>
+        ORDER BY diamondWithDraw DESC
+    </select>
+    <select id="selectByExper" resultMap="QueryResultMap" parameterType="com.xchat.oauth2.service.param.AccountParam">
+        select
+        <include refid="Query_Column_List"/>
+        ,ifnull((SELECT sum(c.sum_gold) FROM one_day_room_send_sum c force index(key3) WHERE c.send_uid = u.uid AND
+        c.create_time BETWEEN #{beginDate} and #{endDate}),0) as experChange,0 as normalGiftNum,0 as doCallNum,0 as
+        drawNum
+        ,0 as chargeAmount,0 as exechangeDiamond,0 as diamondWithDraw,0 as charmChange
+        from account a JOIN users u ON a.uid=u.uid
+        <where>
+            <include refid="Query_Wherte"></include>
+        </where>
+        ORDER BY experChange DESC
+    </select>
+    <select id="selectByCharm" resultMap="QueryResultMap" parameterType="com.xchat.oauth2.service.param.AccountParam">
+        select
+        <include refid="Query_Column_List"/>
+        ,ifnull((SELECT sum(c.sum_gold) FROM one_day_room_recv_sum c force index(key3) WHERE c.recv_uid = u.uid AND
+        c.create_time BETWEEN #{beginDate} and #{endDate}),0) as charmChange,0 as normalGiftNum,0 as doCallNum,0 as
+        drawNum
+        ,0 as chargeAmount,0 as exechangeDiamond,0 as experChange,0 as diamondWithDraw
+        from account a JOIN users u ON a.uid=u.uid
+        <where>
+            <include refid="Query_Wherte"></include>
+        </where>
+        ORDER BY charmChange DESC
+    </select>
+    <resultMap id="giftMap" type="com.erban.admin.main.vo.GiftVo">
+        <result column="send_no" property="sendNo" jdbcType="BIGINT"/>
+        <result column="send_nick" property="sendNick" jdbcType="VARCHAR"/>
+        <result column="recive_no" property="reciveNo" jdbcType="BIGINT"/>
+        <result column="recive_nick" property="reciveNick" jdbcType="VARCHAR"/>
+        <result column="room_no" property="roomNo" jdbcType="BIGINT"/>
+        <result column="room_nick" property="roomNick" jdbcType="VARCHAR"/>
+        <result column="gift_name" property="giftName" jdbcType="VARCHAR"/>
+        <result column="gift_num" property="giftNum" jdbcType="BIGINT"/>
+        <result column="total_gold_num" property="totalGoldNum" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="gift_type" property="giftType" jdbcType="TINYINT"/>
+    </resultMap>
+    <select id="getGiftSend" resultMap="giftMap" parameterType="Map">
+        select se.erban_no as sendNo, se.nick as sendNick, re.erban_no as reciveNo, re.nick as reciveNick, ro.erban_no
+        as roomNo, ro.nick as roomNick, gi.gift_name, g.gift_num, g.total_gold_num, g.create_time, gi.gift_type
+        from gift_send_record g
+        INNER JOIN users se on g.uid = se.uid
+        INNER JOIN users re on g.recive_uid = re.uid
+        LEFT JOIN users ro on g.room_uid = ro.uid
+        INNER JOIN gift gi on g.gift_id = gi.gift_id
+        where 1 = 1
+        <if test="sendUid!=null">
+            and g.uid = #{sendUid}
+        </if>
+        <if test="reciveUid!=null">
+            and g.recive_uid = #{reciveUid}
+        </if>
+        <if test="beginDate!=null">
+            and g.create_time &gt;= #{beginDate}
+        </if>
+        <if test="endDate!=null">
+            and g.create_time &lt;= #{endDate}
+        </if>
+        order by g.create_time desc
+    </select>
+</mapper>

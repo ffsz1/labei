@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.SysConfMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.SysConf" >
+    <id column="config_id" property="configId" jdbcType="VARCHAR" />
+    <result column="config_name" property="configName" jdbcType="VARCHAR" />
+    <result column="config_value" property="configValue" jdbcType="VARCHAR" />
+    <result column="name_space" property="nameSpace" jdbcType="VARCHAR" />
+    <result column="config_status" property="configStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    config_id, config_name, config_value, name_space, config_status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.SysConfExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from sys_conf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_conf
+    where config_id = #{configId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_conf
+    where config_id = #{configId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.SysConfExample" >
+    delete from sys_conf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.SysConf" >
+    insert into sys_conf (config_id, config_name, config_value, 
+      name_space, config_status)
+    values (#{configId,jdbcType=VARCHAR}, #{configName,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR}, 
+      #{nameSpace,jdbcType=VARCHAR}, #{configStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.SysConf" >
+    insert into sys_conf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="configId != null" >
+        config_id,
+      </if>
+      <if test="configName != null" >
+        config_name,
+      </if>
+      <if test="configValue != null" >
+        config_value,
+      </if>
+      <if test="nameSpace != null" >
+        name_space,
+      </if>
+      <if test="configStatus != null" >
+        config_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="configId != null" >
+        #{configId,jdbcType=VARCHAR},
+      </if>
+      <if test="configName != null" >
+        #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null" >
+        #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="nameSpace != null" >
+        #{nameSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="configStatus != null" >
+        #{configStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.SysConf" resultType="java.lang.Integer" >
+    select count(config_id) from sys_conf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_conf
+    <set >
+      <if test="record.configId != null" >
+        config_id = #{record.configId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configName != null" >
+        config_name = #{record.configName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configValue != null" >
+        config_value = #{record.configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameSpace != null" >
+        name_space = #{record.nameSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configStatus != null" >
+        config_status = #{record.configStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_conf
+    set config_id = #{record.configId,jdbcType=VARCHAR},
+      config_name = #{record.configName,jdbcType=VARCHAR},
+      config_value = #{record.configValue,jdbcType=VARCHAR},
+      name_space = #{record.nameSpace,jdbcType=VARCHAR},
+      config_status = #{record.configStatus,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.SysConf" >
+    update sys_conf
+    <set >
+      <if test="configName != null" >
+        config_name = #{configName,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null" >
+        config_value = #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="nameSpace != null" >
+        name_space = #{nameSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="configStatus != null" >
+        config_status = #{configStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where config_id = #{configId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.SysConf" >
+    update sys_conf
+    set config_name = #{configName,jdbcType=VARCHAR},
+      config_value = #{configValue,jdbcType=VARCHAR},
+      name_space = #{nameSpace,jdbcType=VARCHAR},
+      config_status = #{configStatus,jdbcType=TINYINT}
+    where config_id = #{configId,jdbcType=VARCHAR}
+  </update>
+</mapper>

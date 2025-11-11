@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatWeekListMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatWeekList" >
+    <id column="room_uid" property="roomUid" jdbcType="BIGINT" />
+    <result column="jsonStr" property="jsonstr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    room_uid, jsonStr
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatWeekListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_week_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_week_list
+    where room_uid = #{roomUid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stat_week_list
+    where room_uid = #{roomUid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.StatWeekList" >
+    insert into stat_week_list (room_uid, jsonStr)
+    values (#{roomUid,jdbcType=BIGINT}, #{jsonstr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatWeekList" >
+    insert into stat_week_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomUid != null" >
+        room_uid,
+      </if>
+      <if test="jsonstr != null" >
+        jsonStr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomUid != null" >
+        #{roomUid,jdbcType=BIGINT},
+      </if>
+      <if test="jsonstr != null" >
+        #{jsonstr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.StatWeekList" >
+    update stat_week_list
+    <set >
+      <if test="jsonstr != null" >
+        jsonStr = #{jsonstr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_uid = #{roomUid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.StatWeekList" >
+    update stat_week_list
+    set jsonStr = #{jsonstr,jdbcType=VARCHAR}
+    where room_uid = #{roomUid,jdbcType=BIGINT}
+  </update>
+</mapper>

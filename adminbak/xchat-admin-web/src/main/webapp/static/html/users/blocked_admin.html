@@ -1,0 +1,521 @@
+<style>
+    .bar1,.bar2{
+        margin-bottom: 10px;
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    input,select{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    #btnSearch{
+        margin-left: 36px;
+    }
+    .record{
+        margin-top: 10px;
+    }
+    .record .title{
+        font-size:16px;
+    }
+
+</style>
+
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <form class="form-inline" id="form">
+                        <div class="form-group">
+                            <label for="erbanNum" class="control-label">拉贝号:</label>
+                            <input type="text" class="form-control validate[required]" name="erbanNo" id="erbanNum" />
+                        </div>
+                        <div class="form-group">
+                            <label for="deviceId" class="control-label">设备号:</label>
+                            <input type="text" class="form-control validate[required]" name="deviceId" id="deviceId" />
+                        </div>
+                        <div class="form-group">
+                            <label for="userIp" class="control-label">封禁ip:</label>
+                            <input type="text" class="form-control validate[required]" name="blockIp" id="userIp" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">封禁类型: </label>
+                            <select name="type" id="type" class="form-control">
+                                <option value="0">--全部--</option>
+                                <option value="1">封禁账号</option>
+                                <option value="2">封禁设备</option>
+                                <option value="3">封禁IP</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button id="btnSearch" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-search"></i> 查询
+                            </button>
+                            <button id="add" class="btn btn-warning">
+                                <i class="glyphicon glyphicon-plus"></i> 增加
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="addAccountBlocked" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">新增封禁账户</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addBlockForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="erbanNo" class="col-sm-3 control-label">拉贝号：</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control validate[required]" name="erbanNo" id="erbanNo">
+                            <input style="display: none;" type="text" class="form-control" name="blockIp" id="blockIp">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="blockDesc" class="col-sm-3 control-label">封禁原因：</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="blockDesc" id="blockDesc">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="blockType" class="col-sm-3 control-label">封禁类型：</label>
+                        <div class="col-sm-8">
+                            <select name="blockTypeList" id="blockType" class="col-sm-4 validate[required]">
+                                <option value="">请选择</option>
+                                <option value="1">封禁账号</option>
+                                <option value="2">封禁设备</option>
+                                <option value="3">封禁IP</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal" id="dateTime">
+                    <div class="form-group">
+                        <label for="addStartDate" class="col-sm-3 control-label">起始时间：</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="addStartDate" type="date" name="startTime" disabled="disabled" class="form-control validate[required]">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addEndDate" class="col-sm-3 control-label">结束时间：</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="addEndDate" type="date" name="endTime" class="form-control validate[required]">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="addSave">封禁</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="modalLabel"> 修改封禁信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="updateBlock">
+                    <input type="hidden" name="row" id="rowId" />
+                    <div class="form-group">
+                        <label for="updateReason" class="col-sm-3 control-label">封禁原因:</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="updateReason" name="updateReason"  class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="blockStatus1" class="col-sm-3 control-label">封禁状态:</label>
+                        <div class="col-sm-8">
+                            <select name="blockStatus1" id="blockStatus1" class="col-sm-4">
+                                <option value="1">封禁中</option>
+                                <option value="2">封禁结束</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <form class="form-horizontal" id="updateFormTime">
+                        <div class="form-group">
+                            <label for="startDate" class="col-sm-3 control-label">起始时间:</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="startDate" name="startValidTime" disabled="disabled" class="form-control validate[required]">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate" class="col-sm-3 control-label">结束时间:</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="endDate" name="endValidTime" class="form-control validate[required]">
+                            </div>
+                        </div>
+                    </form>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="saveUpdate">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /*初始化*/
+    var picker3 = $('#addEndDate').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        startDate: new Date()
+    })
+    /* picker3.on('changeDate', function () {
+         var date = $('#addEndDate').datetimepicker('getDate');
+         picker3.datetimepicker('setEndDate',date);
+     });*/
+
+    var picker2 = $('#endDate').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        autoclose: true,
+        startDate: new Date()
+    })
+    /*picker2.on('changeDate', function () {
+        var date = $('#endDate').datetimepicker('getDate');
+        picker2.datetimepicker('setEndDate',date);
+    });*/
+    $(function(){//默认时间
+
+
+        // 封禁IP
+        $("#blockType").on("change", function (){
+            // 切换显示
+            var val = $(this).val();
+            if(val == 3) {
+                $("[for=erbanNo]").text("封禁IP：");
+                $("#erbanNo").hide();
+                $("#blockIp").show();
+                $("#erbanNo").removeClass("validate[required]");
+                $("#blockIp").addClass("validate[required]");
+            }else {
+                $("[for=erbanNo]").text("拉贝号：");
+                $("#blockIp").hide();
+                $("#erbanNo").show();
+                $("#blockIp").addClass("validate[required]");
+                $("#erbanNo").removeClass("validate[required]");
+            }
+        });
+        var todayDate = new Date();
+        var minute=todayDate.getMinutes()<10?"0"+todayDate.getMinutes():todayDate.getMinutes();
+        var month=(todayDate.getMonth()+1)<10?"0"+(todayDate.getMonth()+1):(todayDate.getMonth()+1);
+        var todayDateStr=todayDate.getFullYear() + "-" + month +"-"+todayDate.getDate()+" "+todayDate.getHours()+":"+minute;
+        $("#addStartDate").val(todayDateStr);
+        $("#startDate").val(todayDateStr);
+    })
+
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'blockId', title: 'id', align: 'center', valign: 'middle', width: '0%', visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 150},
+                {field: 'phone', title: '手机号', align: 'center', valign: 'middle', width: 150},
+                {field: 'deviceId', title: '设备号', align: 'center', valign: 'middle', width: 250},
+                {field: "blockIp", title: "封禁IP", align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'blockType',
+                    title: '封禁类型',
+                    align: 'center',
+                    width: 150,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '封禁账号';
+                            case 2:
+                                return '封禁设备';
+                            case 3:
+                                return '封禁IP';
+                            case 4:
+                                return '封禁设备/账号';
+                            case 0:
+                                return "一键封禁";
+                        }
+                    }
+                },
+                {
+                    field: 'blockStartTime',
+                    title: '封禁开始时间',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'blockEndTime',
+                    title: '封禁结束时间',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'blockMinute',
+                    title: '封禁时长（分钟）',
+                    align: 'center',
+                    width: 150,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'blockStatus',
+                    title: '封禁状态',
+                    align: 'center',
+                    width: 150,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '封禁中';
+                            case 2:
+                                return '已解封';
+                        }
+                    }
+                },
+                {field: 'blockDesc', title: '封禁原因', align: 'center', width: 200, valign: 'middle'},
+                {field: 'adminId', title: '管理员', align: 'center', width: 150, valign: 'middle'},
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: 'center',
+                    width: 200,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    width: 350,
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        const key = row.blockId;
+                        return "<button class='btn btn-sm btn-success opt-release'  data-id=" + key + "><i class='glyphicon glyphicon-ok-sign'></i> 解封</button>&nbsp;&nbsp;"+
+                            "<button class='btn btn-sm btn-success opt-edit'  data-id=" + key + " ><i class='glyphicon glyphicon-edit'></i> 编辑</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber,
+                    type: $('#type').val(),
+                    erbanNo: $('#erbanNum').val(),
+                    deviceId: $('#deviceId').val(),
+                    userIp: $('#userIp').val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/accountBlock/list.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        })
+    })
+
+    /*查询刷新*/
+    $('#btnSearch').on('click', function () {
+        TableHelper.doRefresh('#table');
+    })
+
+
+
+    /*保存*/
+    $('#addSave').on('click', function () {
+        if ($('#addBlockForm').validationEngine('validate') && $('#dateTime').validationEngine('validate')) {
+            $.ajax({
+                type: "post",
+                url: "/admin/accountBlock/saveAccountBlocked.action",
+                data: {
+                    blockIp: $("#blockIp").val(),
+                    erbanNo: $("#erbanNo").val(),
+                    blockDesc: $("#blockDesc").val(),
+                    blockType: $("#blockType").val(),
+                    startBlockTime: $('#addStartDate').val(),
+                    endBlockTime: $('#addEndDate').val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if(data == 2){
+                        // IP 已经被封禁.
+                        $("#tipMsg").text("保存失败，该IP被封禁,可编辑修改！");
+                        $("#tipModal").modal('show');
+                    }else if (data == 1) {
+                        $('#addAccountBlocked').modal('hide');
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else if(data == 0){
+                        $("#tipMsg").text("保存失败，无此拉贝号");
+                        $("#tipModal").modal('show');
+                    } else if(data == -1){
+                        $("#tipMsg").text("保存失败，该拉贝号已经被封禁,可编辑修改！");
+                        $("#tipModal").modal('show');
+                    }else {
+                        $("#tipMsg").text("保存失败，错误码：" + data);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    })
+
+    //增加
+    $('#add').on('click', function () {
+        $('#addBlockForm')[0].reset();
+        $('#addAccountBlocked').modal('show');
+
+    })
+
+    //解封
+    $('#table').on('click','.opt-release',function () {
+        var key = parseInt($(this).data('id'));
+        console.log(key,typeof key);
+        $.ajax({
+            type: 'post',
+            url: '/admin/accountBlock/unBlockAccountBlocked.action',
+            data: {'rowId':key},
+            dataType: 'json',
+            success: function(data){
+                if(data == 1){
+                    $("#tipMsg").text("解封成功");
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#table");
+                }else if(data == 2) {
+                    $("#tipMsg").text("状态正常，无需解封！");
+                    $("#tipModal").modal('show');
+                } else {
+                    $("#tipMsg").text("解封失败，错误码：" + data);
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    })
+
+    //编辑
+    $('#table').on('click','.opt-edit',function () {
+        var key = parseInt($(this).data('id'));
+        // 打开编辑弹窗
+        $('#addBlockForm')[0].reset();
+        $("#editModel").modal('show');
+        $("#rowId").val(key);
+        $.ajax({
+            type: 'post',
+            url: '/admin/accountBlock/getUpdateAccountBlocked.action',
+            data: {rowId:key},
+            dataType: 'json',
+            success: function (res) {
+                if(res.code == 200){
+                    var accountBlock =res.data.blockDesc;
+                    var time=res.data.endBlockTime;
+                    $("#updateReason").val(accountBlock);
+                    $("#endDate").val(time);
+                    $("#blockStatus1").val(res.data.blockStatus);
+                }
+            }
+        })
+    })
+
+
+    //编辑弹窗保存
+    $("#saveUpdate").click(function() {
+        if($("#updateBlock").validationEngine('validate')) {
+            $.ajax({
+                type: 'post',
+                url: '/admin/accountBlock/updateAccountBlocked.action',
+                data: {
+                    rowId: $("#rowId").val(),
+                    blockType: $("#blockStatus1").val(),
+                    startBlockTime: $('#startDate').val(),
+                    endBlockTime: $('#endDate').val(),
+                    blockDesc: $('#updateReason').val()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 1) {
+                        $("#editModel").modal('hide');
+                        $("#tipMsg").text("修改成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    } else {
+                        $("#tipMsg").text("修改失败，错误码：" + data);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        }
+    })
+
+</script>
+
+

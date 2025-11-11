@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.FamilyTeamMapper" >
+    <select id="selectByList" resultType="com.erban.admin.main.dto.FamilyTeamDTO">
+    select  ft.id,ft.family_id as familyId,ft.uid,ft.family_logo as familyLogo,
+            ft.family_name as familyName,ft.family_notice as familyNotice,
+            ft.hall,ft.status,ft.verification,ft.create_time as createTime,
+            ft.update_time as updateTime,ft.display,us.erban_no as erbanNo,
+            us.nick,us.avatar,ft.mute_type as muteType,ft.beinvitemode,
+            ft.invitemode,ft.uptinfomode
+    from family_team ft
+    inner join users us on ft.uid = us.uid
+    where 1 = 1
+        <if test="searchText != null and searchText !=''">
+            and ft.family_id = #{searchText}
+        </if>
+
+        <if test="startDateStr != null and startDateStr !='' and endDateStr != null and endDateStr != ''">
+          and ft.create_time BETWEEN  #{startDateStr} and #{endDateStr}
+        </if>
+        <if test="type != null">
+              and ft.status = #{type}
+        </if>
+    order by ft.create_time desc
+  </select>
+
+    <select id="selectById" resultType="com.erban.admin.main.model.FamilyTeam">
+      select id,family_id as familyId,uid,family_logo as familyLogo,family_name as familyName,family_notice as familyNotice,
+        hall,status,verification,create_time as createTime,display,room_id as roomId
+      from family_team
+      where id = #{teamId}
+    </select>
+
+    <update id="updateByDisplay">
+        UPDATE family_team set display = #{status} where id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE family_team set status = #{status} where id = #{id}
+    </update>
+
+    <update id="update" parameterType="com.erban.admin.main.model.FamilyTeam">
+        UPDATE family_team set family_logo = #{familyLogo} , family_id = #{familyId} , family_name = #{familyName} where id = #{id}
+    </update>
+
+    <select id="getFamilyId" resultType="com.erban.admin.main.model.FamilyTeam">
+        select id,family_id as familyId,uid,family_logo as familyLogo,family_name as familyName,family_notice as familyNotice,
+        hall,status,verification,create_time as createTime,display
+      from family_team
+      where family_id = #{familyId
+      }
+    </select>
+
+    <update id="updateStatusAndRoomId">
+        UPDATE family_team set status = #{status} ,room_id = #{roomId}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByTeamId" parameterType="java.lang.Long">
+        DELETE FROM family_team WHERE id = #{teamId}
+    </delete>
+</mapper>

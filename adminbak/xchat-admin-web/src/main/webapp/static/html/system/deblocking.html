@@ -1,0 +1,72 @@
+<style>
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    label.col-sm-1{
+        padding:0;
+        line-height: 30px;
+        text-align:right;
+        /*padding-right: 4px;*/
+    }
+    input,select{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    .record .title{
+        font-size:16px;
+    }
+    table{
+        width:50%;
+        display:none;
+        margin-top: 10px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="toolbar">
+                    <div class="bar1 col-sm-12">
+                        <label for="erbanNo" class="col-sm-1">解封账号: </label><input type="number" class="input-sm col-sm-2" id="erbanNo">
+                        <button id="deblocking" class="btn btn-sm btn-primary">解封</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $('#deblocking').on('click',function () {
+            var dataObj = {
+                erbanNo: $('#erbanNo').val()
+            }
+            $.ajax({
+                type: 'post',
+                url: '/admin/deblocking/deblocking',
+                data: dataObj,
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                    if(res.code == 200){
+                        $("#tipMsg").text("解封成功");
+                        $("#tipModal").modal('show');
+                    }else if (res.code == 1901){
+                        $("#tipMsg").text("该用户未被限制登录");
+                        $("#tipModal").modal('show');
+                    }
+                    else{
+                        $("#tipMsg").text("参数错误");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+    })
+</script>

@@ -1,0 +1,423 @@
+<style>
+
+    .btn{
+        margin: 0 4px;
+    }
+    #uploadBtn,#addUploadBtn{
+        margin-top: 4px;
+    }
+
+</style>
+<section class="content">
+<div class="box box-primary">
+    <div class="box-body">
+        <section class="content-header">
+            <h1 id="itemTitle"></h1>
+        </section>
+        <section class="content">
+            <div id="table"></div>
+            <div id="toolbar">
+                奖品类型: <select name="freebiesType" id="freebiesType" class="">
+                            <option value="-1">--全部--</option>
+                            <option value="1">头饰</option>
+                            <option value="2">座驾</option>
+                        </select>
+                状态: <select name="missionType" id="missionType" class="">
+                        <option value="-1">--全部--</option>
+                        <option value="0">已删除</option>
+                        <option value="1">新手任务</option>
+                        <option value="2">每日任务</option>
+                        <option value="3">签到任务</option>
+                     </select>
+                <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+                <button id="add" class="btn btn-default">
+                    <i class="glyphicon glyphicon-plus"></i>增加
+                </button>
+            </div>
+        </section>
+    </div>
+</div>
+</section>
+
+<div class="modal fade" id="bannerModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="modalLabel">编辑拉贝币任务</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="bannerForm">
+
+                    <div class="form-group">
+                        <label for="missionNameEdit" class="col-sm-3 control-label">任务名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="missionName" id="missionNameEdit" readonly="readonly">
+                            <input type="hidden" id="itemId" name="id">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mcoinAmountEdit" class="col-sm-3 control-label">拉贝币收益:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="mcoinAmount" id="mcoinAmountEdit">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">背景图片:</label>
+                        <div class="col-sm-8">
+                            <img src="" id="picUrlEdit" style="width:250px;height:90px;" alt="">
+                            <input type="file" id="uploadFile" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="uploadBtn">上传</button>
+                            <input type="hidden" id="issueUrl" name="picUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">赠品类型:</label>
+                        <select name="freebiesType" id="freebiesTypeEdit" class="col-sm-2">
+                            <option value="1">头饰</option>
+                            <option value="2">座驾</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="freebiesIdEdit" class="col-sm-3 control-label">赠品Id:</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="freebiesIdEdit" name="freebiesId" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="seqEdit" class="col-sm-3 control-label">排序:</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="seqEdit" name="seq" class="form-control validate[required]">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addBannerModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">新增拉贝币任务</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addBannerForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="addMissionName" class="col-sm-3 control-label">任务名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="missionName" id="addMissionName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addMcoinAmount" class="col-sm-3 control-label">拉贝币收益:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="mcoinAmount" id="addMcoinAmount">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">背景图片:</label>
+                        <div class="col-sm-8">
+                            <img src="" id="addPicUrl" style="width:250px;height:90px;" alt="">
+                            <input type="file" id="addUploadFile" name="uploadFile" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="addUploadBtn">上传</button>
+                            <input type="hidden" id="addIssueUrl" name="picUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">赠品类型:</label>
+                        <select name="freebiesType" id="addFreebiesType" class="col-sm-2">
+                            <option value="1">头饰</option>
+                            <option value="2">座驾</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="addSeq" class="col-sm-3 control-label">排序设置:</label>
+                        <div class="col-sm-3">
+                            <input type="number" id="addSeq" name="seq" class="form-control validate[required]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="addFreebiesId" class="col-sm-3 control-label">赠品Id:</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="addFreebiesId" name="freebiesId" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="addMissionType" class="col-sm-3 control-label">任务类型:</label>
+                        <select name="missionType" id="addMissionType" class="col-sm-3">
+                            <option value="1">新手任务</option>
+                            <option value="2">每日任务</option>
+                            <option value="3">签到任务</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var isEdit = false;
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns:[
+                {field:'id',title:'id',align:'center',valign:'middle',width:'10%'},
+                {field:'missionName',title:'任务名称',align:'center',valign:'middle',width:'10%'},
+                {field:'mcoinAmount',title:'拉贝币收益',align:'center',valign:'middle',width:'10%'},
+                {field:'freebiesId',title:'赠品id',align:'center',valign:'middle',width:'10%'},
+                {field:'freebiesType',title:'赠品类型',align:'center',valign:'middle',width:'10%',
+                    formatter: function (val,row,index) {
+                        switch (val){
+                            case 1:
+                                return '头饰';
+                                break;
+                            case 2:
+                                return '座驾';
+                                break;
+                    }
+                }
+            }, {field:'missionType', title:'任务类型', align:'center', width:'10%', valign:'middle',
+                    formatter: function (val,row,index) {
+                        switch(val){
+                            case 0:
+                                return '已删除';
+                                break;
+                            case 1:
+                                return '新手任务';
+                                break;
+                            case 2:
+                                return '每日任务';
+                                break;
+                            case 3:
+                                return '签到任务';
+                                break;
+                        }
+                    }
+                }, {
+                    field:'completePicUrl', title:'通关图片', align:'center', width:'10%',
+                    formatter: function (val,row,index) {
+                        return "<img src='"+val+"' width='60' height='30'>";
+                    }
+                },{
+                    field:'incompletePicUrl', title:'未通关图片', align:'center', width:'10%',
+                    formatter: function (val,row,index) {
+                        return "<img src='"+val+"' width='60' height='30'>";
+                    }
+                },
+                {field:'seq',title:'排列顺序',align:'center',valign:'middle',width:'20%'},
+                {
+                    field:'tmp',
+                    title:'操作',
+                    align:'center',
+                    width:'10%',
+                    valign:'middle',
+                    formatter:function (val,row,index) {
+                        var key = row.id;
+                        return "<button class='btn btn-sm btn-success opt-edit' data-id="+ key +">编辑</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    freebiesType: parseInt($('#freebiesType').val()),
+                    missionType: parseInt($("#missionType").val())
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/mcoin/mission/getList.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        })
+        $('#btnSearch').on('click',function () {
+            TableHelper.doRefresh('#table');
+        })
+        $('#table').on('click','.opt-edit',function () {
+            var id = parseInt($(this).data('id'));
+            isEdit = true;
+            $.ajax({
+                type: 'post',
+                url: '/admin/mcoin/mission/getOne.action',
+                data: {'itemId':id},
+                dataType: 'json',
+                success: function (json) {
+                    if(json.entity){
+                        $('#missionNameEdit').val(json.entity.missionName);
+                        $('#mcoinAmountEdit').val(json.entity.mcoinAmount);
+                        $('#picUrlEdit').attr('src',json.entity.picUrl);
+                        $('#issueUrl').val(json.entity.picUrl);
+                        $('#freebiesTypeEdit').val(json.entity.freebiesType);
+                        $("#freebiesIdEdit").val(json.entity.freebiesId);
+                        $("#itemId").val(json.entity.id);
+                        $('#seqEdit').val(json.entity.seq);
+                        $('#bannerModal').modal('show');
+                    }else{
+                        $("#tipMsg").text("获取信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+        $('#save').on('click',function () {
+            if($('#bannerForm').validationEngine('validate')){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/mcoin/mission/update.action",
+                    data: $('#bannerForm').serialize(),
+                    dataType: 'json',
+                    success: function (json) {
+                        if(json.result == 1){
+                            $("#bannerModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        }else{
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        })
+        $('#addSave').on('click',function () {
+            if($('#addBannerForm').validationEngine('validate')){
+                $.ajax({
+                    type: "post",
+                    url: "/admin/mcoin/mission/save.action",
+                    data: $('#addBannerForm').serialize(),
+                    dataType: 'json',
+                    success: function (json) {
+                        console.log(json);
+                        if(json.result == 1){
+                            $('#addBannerModal').modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        }else{
+                            $("#tipMsg").text("保存失败，错误码：" + json.result);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        })
+        $('#uploadBtn').on('click',function () {
+            var options = {
+                type: 'post',
+                url: '/admin/banner/headimg.action',
+                dataType: 'json',
+                success: function (json) {
+                    if(json.path){
+                        $('#issueUrl').val(json.path);
+                        $('#picUrlEdit').attr("src", json.path);
+                        console.log(json.path);
+                    }else{
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            }
+            $("#bannerForm").ajaxSubmit(options);
+        })
+        $('#addUploadBtn').on('click',function () {
+            var options = {
+                type: 'post',
+                url: '/admin/banner/headimg.action',
+                dataType: 'json',
+                success: function (json) {
+                    if(json.path){
+                        $('#addIssueUrl').val(json.path);
+                        $('#addPicUrl').attr('src',json.path);
+                        console.log(json.path);
+                    }else{
+                        $('#tipMsg').text(json.msg);
+                        $('#tipModal').modal('show');
+                    }
+                }
+            }
+            $('#addBannerForm').ajaxSubmit(options);
+        })
+        $('#add').on('click',function () {
+            isEdit = false;
+            $('#addBannerForm')[0].reset();
+            $('#addPicUrl').attr('src','');
+            $('#addBannerPic').val('');
+            $('#addBannerModal').modal('show');
+        })
+        $('#table').on('mouseenter','img',function (e) {
+            console.log($(this),e.clientX);
+            var src = $(this).attr('src');
+            $('#imgMask img').attr('src',src);
+            $('#imgMask').show();
+            $('#imgMask').css({
+                top: e.clientY + 20,
+                left: e.clientX + 20
+            })
+        })
+        $('#table').on('mouseleave','img',function (e) {
+            console.log('移出');
+            $('#imgMask').hide();
+        })
+
+
+//        $('#table').on('click','.opt-del',function () {
+//            var key = parseInt($(this).attr('data-id'));
+//            console.log(key,typeof key);
+//            $.ajax({
+//                type: 'post',
+//                url: '/admin/banner/delBannerList.action',
+//                data: {'bannerId':key},
+//                dataType: 'json',
+//                success: function(json){
+//                    if(json.result == 1){
+//                        $("#tipMsg").text("删除成功");
+//                        $("#tipModal").modal('show');
+//                        TableHelper.doRefresh("#table");
+//                    }else{
+//                        $("#tipMsg").text("删除失败，错误码：" + json.result);
+//                        $("#tipModal").modal('show');
+//                    }
+//                }
+//
+//            })
+//
+//        })
+    })
+</script>

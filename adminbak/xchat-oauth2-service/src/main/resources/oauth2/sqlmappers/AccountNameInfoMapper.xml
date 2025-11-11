@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xchat.oauth2.service.infrastructure.mybatis.AccountNameInfoRepositoryMyBatis">
+
+    <resultMap type="com.xchat.oauth2.service.domain.user.AccountNameInfo" id="accountNameInfoMap">
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="saveAccountNameInfo" parameterType="com.xchat.oauth2.service.domain.user.AccountNameInfo" flushCache="true">
+        insert into all_account_name (account_name) values (#{accountName,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateAccountNameInfo" flushCache="true">
+        update all_account_name set
+        account_name = #{newAccountName, jdbcType=VARCHAR}
+        where account_name = #{oldAccountName,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="removeAccountNameInfo" parameterType="java.lang.String" flushCache="true">
+        DELETE FROM all_account_name
+        WHERE  account_name = #{accountName}
+    </delete>
+
+    <select id="loadByAccountName" parameterType="java.lang.String" resultMap="accountNameInfoMap">
+         select * from all_account_name where account_name = #{accountName}
+	</select>
+
+</mapper>

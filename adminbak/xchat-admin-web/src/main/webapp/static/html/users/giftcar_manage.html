@@ -1,0 +1,1316 @@
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+<style>
+    #condition_type-tog {
+        height: 34px;
+    }
+
+    .canvas {
+        display: none;
+        width: 150px;
+        height: 150px;
+        background: #f4f4f4;
+        margin-bottom: 1rem;
+    }
+
+    #vggUploadBtn, #picUploadBtn {
+        display: block;
+        width: 150px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="gift-add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                    <button id="gift-multiDel" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign"></i> 批量删除
+                    </button>
+                    <button id="gift-version-reset" class="btn btn-success">
+                        <i class="glyphicon glyphicon-edit"></i> 设置座驾版本
+                    </button>
+                    <select name="condition_type" id="condition_type" data-btn-class="btn-warning">
+                        <option value="0" selected="selected">全部</option>
+                        <option value="1">有效</option>
+                        <option value="2">无效</option>
+                    </select>
+                    <button id="gift-refresh" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i> 查询
+                    </button>
+                </div>
+            </section><!-- .content -->
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="giftVersionModal" tabindex="-1" role="dialog" aria-labelledby="gift-modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="gift-modalLabel">版本信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="giftVersionForm">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">当前座驾版本</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="giftVersion" id="giftVersion" readonly="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">新版本</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="configValue"
+                                   id="newGiftVersion">
+                        </div>
+                    </div>
+                    <input type="hidden" name="configId" id="gift-configId"/>
+                    <input type="hidden" name="configName" id="gift-configName"/>
+                    <input type="hidden" name="nameSpace" id="gift-nameSpace"/>
+                    <input type="hidden" name="configStatus" id="gift-configStatus"/>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="gift-version-save">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">座驾信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="giftForm">
+                    <input type="hidden" name="carId" id="carId"/>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">座驾类型</label>
+                        <div class="col-sm-5">
+                            <label class="radio-inline"><input type="radio" name="allowPurse" value="1"
+                                                               checked>商城座驾</label>
+                            <label class="radio-inline"><input type="radio" name="allowPurse" value="0">活动座驾</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="leftLevel" class="col-sm-2 control-label">等级要求</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control validate[required]" name="leftLevel" id="leftLevel"
+                                   placeholder="*设置达到该等级的用户有效">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="carName" class="col-sm-2 control-label">座驾名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="carName" id="carName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="goldPrice" class="col-sm-2 control-label">座驾金币</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control validate[required]" name="goldPrice"
+                                   id="goldPrice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">座驾状态</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="carStatus" value="1"
+                                                               checked>有效</label>
+                            <label class="radio-inline"><input type="radio" name="carStatus" value="2">无效</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">vgg特效</label>
+                            <div class="col-sm-3">
+                                <label class="radio-inline"><input type="radio" name="hasVggPic" value="0"
+                                                                   checked>否</label>
+                                <label class="radio-inline"><input type="radio" name="hasVggPic" value="1">是</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">座驾图片:</label>
+                        <div class="col-sm-10">
+                            <img src="/static/AdminLTE/img/add.png" id="picImage" style="width: 150px; margin-bottom: 1rem; background-color: #f4f4f4" alt="giftImage">
+                            <input type="file" id="picUploadFile" name="file" style="display: none"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga,image/*">
+                            <button class="btn btn-success" type="button" id="picUploadBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="picUrl" name="picUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">VGG图片:</label>
+                        <div class="col-sm-10">
+                            <div class="canvas" id="vggCanvas"></div>
+                            <img src="/static/AdminLTE/img/add.png" id="vggImage" style="width: 150px; margin-bottom: 1rem;" alt="vggImage">
+                            <input type="file" id="vggUploadFile" name="file" style="display: none"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga,image/*">
+                            <button class="btn btn-success" type="button" id="vggUploadBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="vggUrl" name="vggUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">角标图片:</label>
+                        <div class="col-sm-10">
+                            <img src="/static/AdminLTE/img/add.png" id="markImage" style="width: 50px;" alt="">
+                            <input type="file" id="markPicFile" name="file"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga">
+                            <button class="btn btn-success" type="button" id="markPicBtn">上传</button>
+                            <button class="btn btn-danger" type="button" id="delPicBtn">删除</button>
+                            <input type="hidden" id="markPic" name="markPic" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-2 control-label">排序</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control validate[required]" name="seqNo" id="seqNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="effectiveTime" class="col-sm-2 control-label">有效期(天)</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" name="effectiveTime" id="effectiveTime">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    ComboboxHelper.build(null, '#giftType');
+    ComboboxHelper.build(null, '#condition_type');
+    ComboboxHelper.build(null, '#nobleId');
+    
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {field: 'carId', title: '座驾Id', align: 'center', width: '10%', visible: false},
+                {field: 'carName', title: '座驾名称', align: 'center', width: 200},
+                {
+                    field: 'allowPurse', title: '座驾类型', align: 'center', width: 150,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return "商城座驾"
+                        } else {
+                            return "活动座驾"
+                        }
+                    }
+                },
+                {field: 'leftLevel', title: '等级限制', align: 'center', width: 150},
+                {
+                    field: 'carStatus',
+                    title: '座驾状态',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '有效';
+                        } else {
+                            return '无效';
+                        }
+                    }
+                },
+                {field: 'goldPrice', title: '座驾金币', align: 'center', width: 150},
+                {
+                    field: 'hasVggPic',
+                    title: 'vgg特效',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        if (val == true) {
+                            return '有';
+                        } else {
+                            return '无'
+                        }
+                    }
+                },
+                {
+                    field: 'isTimeLimit',
+                    title: '限时座驾',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        if (val == true) {
+                            return '是';
+                        } else {
+                            return '否'
+                        }
+                    }
+                },
+                {field: 'effectiveTime', title: '时长(天)', align: 'center', width: 200},
+                {field: 'seqNo', title: '排序', align: 'center', width: 150},
+                {
+                    field: 'createTime', title: '创建时间', align: 'center', width: 200,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const newDate = new Date();
+                            newDate.setTime(val);
+                            return newDate.toLocaleString();
+                            // const date = new Date(val);
+                            // return date.format("yyyy-MM-dd hh:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'carId', title: '操作', align: 'center', width: 300, formatter: function (val, row, index) {
+                        return '<button class="btn btn-sm btn-success opt-edit" data-id=' + val + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i> 编辑</button>' +
+                            '&nbsp;&nbsp;<button class="btn btn-sm btn-danger opt-remove" data-id=' + val +
+                            '><i class="glyphicon glyphicon-remove"></i> 删除</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [1, 10, 20, 30, 50],
+            search: true,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    giftCarName: $("#giftCarName").val(),
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: '/admin/giftcar/getList.action?type=' + ComboboxHelper.getSelected("#condition_type"),
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+
+        $("#table").on("click", '.opt-remove', function () {
+            const id = $(this).attr("data-id");
+            if (id == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+            if (confirm("你确认删除该记录吗?" +
+                "\r\n删除后再也不能找回, 请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/giftcar/del.action",
+                    data: {'ids': JSON.stringify([id])},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#gift-add").click(function () {
+            // 打开编辑弹窗
+            $("#giftModal").modal('show');
+            $("#giftForm")[0].reset();
+
+            $('#picUrl').val('');
+            $('#picImage').attr("src", '/static/AdminLTE/img/add.png');
+            $('#vggUrl').val('');
+            $('#vggImage').attr("src", '/static/AdminLTE/img/add.png');
+            $('#vggImage').css('display', 'block');
+            $('#vggCanvas').css('display', 'none').html("");
+            $("#seqNo").val('');
+            $("#leftLevel").val('');
+            $("#markPic").val('');
+            $('#markImage').attr("src", '/static/AdminLTE/img/add.png');
+
+            $("#carId").val('');
+            $("#carName").attr('readonly', false);
+            $("#goldPrice").attr('readonly', false);
+
+            $("#nobleId").btComboBox('disable');
+            ComboboxHelper.setDef("#nobleId", '0');
+
+            ComboboxHelper.setDef("#giftType", '2');
+        });
+
+        $("#gift-version-save").click(function () {
+            if ($("#giftVersionForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/sysConf/save.action",
+                    data: $('#giftVersionForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#giftVersionModal").modal('hide');
+                            $("#tipMsg").text("设置成功");
+                            $("#tipModal").modal('show');
+                        } else {
+                            $("#tipMsg").text("设置失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            };
+        });
+
+        $("#nobleId").on('change', function () {
+            if (ComboboxHelper.getSelected("#nobleId") != 0) {
+                const nobleName = $("#nobleId").btComboBox('selectedOption')[1];
+                $("#nobleName").val(nobleName);
+            } else {
+                $("#nobleName").val('');
+            }
+        });
+
+        $("#notNoble").on('change', function () {
+            ComboboxHelper.setDef("#nobleId", '0');
+            $("#nobleName").val('');
+            $("#nobleId").btComboBox('disable');
+        });
+
+        $("#isNoble").on('change', function () {
+            $("#nobleId").btComboBox('enable');
+        });
+
+        $("#gift-version-reset").click(function () {
+            $("#giftVersion").val('');
+            $("#gift-configName").val('');
+            $("#gift-configId").val('');
+            $("#gift-nameSpace").val('');
+            $("#gift-configStatus").val('');
+            $("#newGiftVersion").val('');
+
+            $.ajax({
+                type: "get",
+                url: "/admin/giftcar/getCurGiftVersion.action",
+                data: {},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#giftVersion").val(json.entity.configValue);
+                        $("#gift-configName").val(json.entity.configName);
+                        $("#gift-configId").val(json.entity.configId);
+                        $("#gift-nameSpace").val(json.entity.nameSpace);
+                        $("#gift-configStatus").val(json.entity.configStatus);
+                        $("#giftVersionModal").modal("show");
+                    } else {
+                        $("#tipMsg").text("获取当前座驾版本失败");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#gift-refresh").click(function () {
+            $("#table").bootstrapTable('refresh', {url: '/admin/giftcar/getList.action?type=' + ComboboxHelper.getSelected("#condition_type")});
+        });
+
+        $("#gift-multiDel").click(function () {
+            const rows = $("#table").bootstrapTable("getSelections");
+            if (rows.length == 0) {
+                alert("请先选择要删除的记录");
+                return;
+            }
+
+            const idArr = [];
+            for (let i = 0; i < rows.length; i++) {
+                idArr.push(rows[i]['carId']);
+            }
+
+            if (confirm("你确认批量删除该记录吗?" +
+                "\r\n删除后再也不能找回, 请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/giftcar/del.action",
+                    data: {'ids': JSON.stringify(idArr)},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#picImage').on('click', function () {
+            $('#picUploadFile').click();
+        });
+
+        $('#picUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'picUploadFile',    //需要上传的文件域的ID, 即<input type="file">的ID。
+                url: '/admin/file/upload', //后台方法的路径
+                type: 'post',   //当要提交自定义参数时, 这个参数要设置成post
+                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。
+                secureuri: false,   //是否启用安全提交, 默认为false。
+                async: false,   //是否是异步
+                success: function (json) {   //提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。
+                    if (json.path) {
+                        $('#picUrl').val(json.path);
+                        $('#picImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) {  //提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        });
+
+        $('#vggImage, #vggCanvas').on('click', function () {
+            $('#vggUploadFile').click();
+        });
+
+        $('#vggUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                url: '/admin/file/upload',//后台请求地址
+                type: 'post',//请求方式  当要提交自定义参数时, 这个参数要设置成post
+                secureuri: false,//是否启用安全提交, 默认为false。
+                async: false,   //是否是异步
+                fileElementId: 'vggUploadFile',// 需要上传的文件域的ID, 即<input type="file">的ID。
+                dataType: 'json',//服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。如果json返回的带pre,这里修改为json即可解决。
+                success: function (json, status) {//提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。
+                    console.log(json);
+                    if (json.path) {
+                        $('#vggUrl').val(json.path);
+                        // $('#vggImage').attr("src", json.path);
+                        $('#vggImage').css('display', 'none');
+                        $('#vggCanvas').css('display', 'block');
+                        showVGG(json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        // 展示VGG图片
+        function showVGG(resourceImage) {
+            const player = new SVGA.Player('#vggCanvas');
+            const parser = new SVGA.Parser('#vggCanvas');
+            parser.load(resourceImage, function (videoItem) {
+                player.setVideoItem(videoItem);
+                player.startAnimation();
+            });
+        }
+
+        $('#markPicBtn').on('click', function () {
+            $.ajaxFileUpload({
+                url: '/admin/file/upload',//后台请求地址
+                type: 'post',//请求方式  当要提交自定义参数时, 这个参数要设置成post
+                secureuri: false,//是否启用安全提交, 默认为false。
+                async: false,   //是否是异步
+                fileElementId: 'markPicFile',// 需要上传的文件域的ID, 即<input type="file">的ID。
+                dataType: 'json',//服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。如果json返回的带pre,这里修改为json即可解决。
+                success: function (json, status) {//提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。
+                    console.log(json);
+                    if (json.path) {
+                        $('#markPic').val(json.path);
+                        $('#markImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#cancel").click(function () {
+            TableHelper.unCheckAll("#table");
+        });
+
+        function parseNum(val) {
+            if (val == undefined || val == 'false' || val == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+
+        $("#table").on("click", '.opt-edit', function () {
+            const id = $(this).attr("data-id");
+            $.ajax({
+                type: "get",
+                url: "/admin/giftcar/get.action",
+                data: {id: id},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#carId").val(json.entity.carId);
+                        $("#carName").val(json.entity.carName);
+                        $("#goldPrice").val(json.entity.goldPrice);
+                        $("#effectiveTime").val(json.entity.effectiveTime);
+                        $("#seqNo").val(json.entity.seqNo);
+
+                        ComboboxHelper.setDef("#giftType", json.entity.giftType);
+
+                        const hasVggPic = parseNum(json.entity.hasVggPic);
+                        const isTimeLimit = parseNum(json.entity.isTimeLimit);
+                        // 座驾状态的值跟其他不同, 1为有效 2为无效
+                        if (json.entity.carStatus == 1) {
+                            $("input:radio[name='carStatus']")[0].checked = true;
+                        } else {
+                            $("input:radio[name='carStatus']")[1].checked = true;
+                        }
+
+                        // 设置radio
+                        $("input:radio[name='hasVggPic']")[hasVggPic].checked = true;
+
+                        // 设置座驾图片
+                        $('#picUrl').val(json.entity.picUrl);
+                        $('#picImage').attr("src", json.entity.picUrl);
+
+                        // 设置vgg图片
+                        if (json.entity.vggUrl) {
+                            $('#vggUrl').val(json.entity.vggUrl);
+                            // $('#vggImage').attr("src", json.entity.vggUrl);
+                            $('#vggImage').css('display', 'none');
+                            $('#vggCanvas').css('display', 'block');
+                            showVGG(json.entity.vggUrl);
+                        } else {
+                            $('#vggImage').attr("src", '/static/AdminLTE/img/add.png');
+                            $('#vggImage').css('display', 'block');
+                            $('#vggCanvas').css('display', 'none').html("");
+                        }
+
+                        $("#leftLevel").val(json.entity.leftLevel);
+                        $('#markPic').attr("src", json.entity.markPic);
+                        $('#markImage').attr("src", json.entity.markPic);
+                        if (json.entity.allowPurse) {
+                            $("input:radio[name='allowPurse'][value='1']").prop("checked", "checked");
+                        } else {
+                            $("input:radio[name='allowPurse'][value='0']").prop("checked", "checked");
+                        }
+
+                        // 打开编辑弹窗
+                        $("#giftModal").modal('show');
+
+                    } else {
+                        $("#tipMsg").text("获取菜单信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#delPicBtn").on("click", function () {
+            $("#markPic").val("");
+            $("#markImage").attr("src", "");
+        });
+
+        $("#save").click(function () {
+            if ($("#giftForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/giftcar/save.action",
+                    data: $('#giftForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#giftModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败." + json.msg);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            };
+        });
+    });
+</script>
+
+<!--<meta http-equiv="Expires" content="0">-->
+<!--<meta http-equiv="Pragma" content="no-cache">-->
+<!--<meta http-equiv="Cache-control" content="no-cache">-->
+<!--<meta http-equiv="Cache" content="no-cache">-->
+<!--<section class="content">-->
+<!--    <div class="box box-primary">-->
+<!--        <div class="box-body">-->
+<!--            &lt;!&ndash; Content Header (Page header) &ndash;&gt;-->
+<!--            <section class="content-header">-->
+<!--                <h1 id="itemTitle"></h1>-->
+<!--            </section>-->
+<!--            &lt;!&ndash; .content &ndash;&gt;-->
+<!--            <section class="content">-->
+<!--                <div id="table"></div>-->
+<!--                <div id="toolbar">-->
+<!--                    <button id="gift-add" class="btn btn-warning">-->
+<!--                        <i class="glyphicon glyphicon-plus"></i> 增加-->
+<!--                    </button>-->
+<!--                    <button id="gift-multiDel" class="btn btn-danger">-->
+<!--                        <i class="glyphicon glyphicon-remove-sign"></i> 批量删除-->
+<!--                    </button>-->
+<!--                    <button id="gift-version-reset" class="btn btn-info">-->
+<!--                        <i class="glyphicon glyphicon-wrench"></i> 设置座驾版本-->
+<!--                    </button>-->
+<!--                    <select name="condition_type" id="condition_type" data-btn-class="btn-warning" style="height: 34px">-->
+<!--                        <option value="0" selected="selected">全部</option>-->
+<!--                        <option value="1">有效</option>-->
+<!--                        <option value="2">无效</option>-->
+<!--                    </select>-->
+<!--                    <button id="gift-refresh" class="btn btn-primary">-->
+<!--                        <i class="glyphicon glyphicon-search"></i> 查询-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </section>&lt;!&ndash; .content &ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+<!--<div class="modal fade" id="giftVersionModal" tabindex="-1" role="dialog" aria-labelledby="gift-modalLabel">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>-->
+<!--                </button>-->
+<!--                <h4 class="modal-title" id="gift-modalLabel">版本信息</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <form class="form-horizontal" id="giftVersionForm">-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-4 control-label">当前座驾版本</label>-->
+<!--                        <div class="col-sm-8">-->
+<!--                            <input type="text" class="form-control" name="giftVersion" id="giftVersion" readonly="true">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-4 control-label">新版本</label>-->
+<!--                        <div class="col-sm-8">-->
+<!--                            <input type="text" class="form-control validate[required]" name="configValue"-->
+<!--                                   id="newGiftVersion">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <input type="hidden" name="configId" id="gift-configId"/>-->
+<!--                    <input type="hidden" name="configName" id="gift-configName"/>-->
+<!--                    <input type="hidden" name="nameSpace" id="gift-nameSpace"/>-->
+<!--                    <input type="hidden" name="configStatus" id="gift-configStatus"/>-->
+
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-primary" id="gift-version-save">保存</button>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="modal fade" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>-->
+<!--                </button>-->
+<!--                <h4 class="modal-title" id="modalLabel">座驾信息</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <form class="form-horizontal" id="giftForm">-->
+<!--                    <input type="hidden" name="carId" id="carId"/>-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-2 control-label">座驾类型</label>-->
+<!--                        <div class="col-sm-5">-->
+<!--                            <label class="radio-inline"><input type="radio" name="allowPurse" value="1"-->
+<!--                                                               checked>商城座驾</label>-->
+<!--                            <label class="radio-inline"><input type="radio" name="allowPurse" value="0">活动座驾</label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="leftLevel" class="col-sm-2 control-label">等级要求</label>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="number" class="form-control validate[required]" name="leftLevel" id="leftLevel"-->
+<!--                                   placeholder="*设置达到该等级的用户有效">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="carName" class="col-sm-2 control-label">座驾名称</label>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="text" class="form-control validate[required]" name="carName" id="carName">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="goldPrice" class="col-sm-2 control-label">座驾金币</label>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="number" class="form-control validate[required]" name="goldPrice"-->
+<!--                                   id="goldPrice">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-2 control-label">座驾状态</label>-->
+<!--                        <div class="col-sm-3">-->
+<!--                            <label class="radio-inline"><input type="radio" name="carStatus" value="1"-->
+<!--                                                               checked>有效</label>-->
+<!--                            <label class="radio-inline"><input type="radio" name="carStatus" value="2">无效</label>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-sm-2 control-label">vgg特效</label>-->
+<!--                            <div class="col-sm-3">-->
+<!--                                <label class="radio-inline"><input type="radio" name="hasVggPic" value="0"-->
+<!--                                                                   checked>否</label>-->
+<!--                                <label class="radio-inline"><input type="radio" name="hasVggPic" value="1">是</label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-2 control-label">座驾图片:</label>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <img src="" id="picImage" style="width:250px;height:90px;" alt="">-->
+<!--                            <input type="file" id="picUploadFile" name="file"-->
+<!--                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga">-->
+<!--                            <button class="btn btn-success" type="button" id="picUploadBtn">上传</button>-->
+<!--                            <input type="hidden" id="picUrl" name="picUrl" class="form-control validate[required]"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-2 control-label">vgg图片:</label>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <img src="" id="vggImage" style="width:250px;height:90px;" alt="">-->
+<!--                            <input type="file" id="vggUploadFile" name="file"-->
+<!--                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga">-->
+<!--                            <button class="btn btn-success" type="button" id="vggUploadBtn">上传</button>-->
+<!--                            <input type="hidden" id="vggUrl" name="vggUrl" class="form-control validate[required]"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-sm-2 control-label">角标图片:</label>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <img src="" id="markImage" style="width:250px;height:90px;" alt="">-->
+<!--                            <input type="file" id="markPicFile" name="file"-->
+<!--                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga">-->
+<!--                            <button class="btn btn-success" type="button" id="markPicBtn">上传</button>-->
+<!--                            <button class="btn btn-danger" type="button" id="delPicBtn">删除</button>-->
+<!--                            <input type="hidden" id="markPic" name="markPic" class="form-control"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="seqNo" class="col-sm-2 control-label">排序</label>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="number" class="form-control validate[required]" name="seqNo" id="seqNo">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="effectiveTime" class="col-sm-2 control-label">有效期(天)</label>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="number" class="form-control" name="effectiveTime" id="effectiveTime">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+<!--                <button type="button" class="btn btn-primary" id="save">保存</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h4 class="modal-title">提示信息</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-body" id="tipMsg"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script src="../../static/js/ajaxfileupload.js"></script>-->
+<!--<script>-->
+<!--    ComboboxHelper.build(null, '#giftType');-->
+<!--    ComboboxHelper.build(null, '#condition_type');-->
+<!--    ComboboxHelper.build(null, '#nobleId');-->
+<!--    $(function () {-->
+<!--        $('#table').bootstrapTable('destroy');-->
+<!--        $('#table').bootstrapTable({-->
+<!--            columns: [-->
+<!--                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},-->
+<!--                {field: 'carId', title: '座驾Id', align: 'center', width: '10%', visible: false},-->
+<!--                {field: 'carName', title: '座驾名称', align: 'center', width: 200},-->
+<!--                {-->
+<!--                    field: 'allowPurse', title: '座驾类型', align: 'center', width: 150,-->
+<!--                    formatter: function (val) {-->
+<!--                        if (val == 1) {-->
+<!--                            return "商城座驾"-->
+<!--                        } else {-->
+<!--                            return "活动座驾"-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                {field: 'leftLevel', title: '等级限制', align: 'center', width: 150},-->
+<!--                {-->
+<!--                    field: 'carStatus',-->
+<!--                    title: '座驾状态',-->
+<!--                    align: 'center',-->
+<!--                    width: 150,-->
+<!--                    formatter: function (val, row, index) {-->
+<!--                        if (val == 1) {-->
+<!--                            return '有效';-->
+<!--                        } else {-->
+<!--                            return '无效';-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                {field: 'goldPrice', title: '座驾金币', align: 'center', width: 150},-->
+<!--                {-->
+<!--                    field: 'hasVggPic',-->
+<!--                    title: 'vgg特效',-->
+<!--                    align: 'center',-->
+<!--                    width: 150,-->
+<!--                    formatter: function (val, row, index) {-->
+<!--                        if (val == true) {-->
+<!--                            return '有';-->
+<!--                        } else {-->
+<!--                            return '无'-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                {-->
+<!--                    field: 'isTimeLimit',-->
+<!--                    title: '限时座驾',-->
+<!--                    align: 'center',-->
+<!--                    width: 150,-->
+<!--                    formatter: function (val, row, index) {-->
+<!--                        if (val == true) {-->
+<!--                            return '是';-->
+<!--                        } else {-->
+<!--                            return '否'-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                {field: 'effectiveTime', title: '时长(天)', align: 'center', width: 200},-->
+<!--                {field: 'seqNo', title: '排序', align: 'center', width: 150},-->
+<!--                {-->
+<!--                    field: 'createTime', title: '创建时间', align: 'center', width: 200,-->
+<!--                    formatter: function (val, row, index) {-->
+<!--                        if (val) {-->
+<!--                            const date = new Date(val);-->
+<!--                            return date.format("yyyy-MM-dd HH:mm:ss");-->
+<!--                        } else {-->
+<!--                            return '-';-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                {-->
+<!--                    field: 'carId', title: '操作', align: 'center', width: 300, formatter: function (val, row, index) {-->
+<!--                        return '<button class="btn btn-sm btn-success opt-edit" data-id=' + val + '>' +-->
+<!--                            '<i class="glyphicon glyphicon-edit"></i> 编辑</button>' +-->
+<!--                            '&nbsp;&nbsp;<button class="btn btn-sm btn-danger opt-remove" data-id=' + val +-->
+<!--                            '><i class="glyphicon glyphicon-remove"></i> 删除</button>';-->
+<!--                    }-->
+<!--                }-->
+<!--            ],-->
+<!--            cache: false,-->
+<!--            striped: true,-->
+<!--            showRefresh: true,-->
+<!--            pageSize: 10,-->
+<!--            pagination: true,-->
+<!--            pageList: [1, 10, 20, 30, 50],-->
+<!--            search: true,-->
+<!--            sidePagination: "server", //表示服务端请求-->
+<!--            //设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder-->
+<!--            //设置为limit可以获取limit, offset, search, sort, order-->
+<!--            queryParamsType: "undefined",-->
+<!--            queryParams: function queryParams(params) {   //设置查询参数-->
+<!--                var param = {-->
+<!--                    giftCarName: $("#giftCarName").val(),-->
+<!--                    pageNumber: params.pageNumber,-->
+<!--                    pageSize: params.pageSize,-->
+<!--                    searchText: params.searchText-->
+<!--                };-->
+<!--                return param;-->
+<!--            },-->
+<!--            toolbar: '#toolbar',-->
+<!--            url: '/admin/giftcar/getList.action?type=' + ComboboxHelper.getSelected("#condition_type"),-->
+<!--            onLoadSuccess: function () {  //加载成功时执行-->
+<!--                console.log("load success");-->
+<!--            },-->
+<!--            onLoadError: function () {  //加载失败时执行-->
+<!--                console.log("load fail");-->
+<!--            }-->
+<!--        });-->
+
+<!--        $("#table").on("click", '.opt-remove', function () {-->
+<!--            const id = $(this).attr("data-id");-->
+<!--            if (id == 'undefined') {-->
+<!--                $("#tipMsg").text("id参数有误");-->
+<!--                $("#tipModal").modal('show');-->
+<!--                return;-->
+<!--            }-->
+<!--            if (confirm("你确认删除该记录吗?" +-->
+<!--                "\r\n删除后再也不能找回, 请谨慎操作！")) {-->
+<!--                $.ajax({-->
+<!--                    type: 'post',-->
+<!--                    url: "/admin/giftcar/del.action",-->
+<!--                    data: {'ids': JSON.stringify([id])},-->
+<!--                    dataType: "json",-->
+<!--                    success: function (json) {-->
+<!--                        if (json.success == 'true') {-->
+<!--                            $("#tipMsg").text("删除成功");-->
+<!--                            $("#tipModal").modal('show');-->
+<!--                            TableHelper.doRefresh("#table");-->
+<!--                        } else {-->
+<!--                            $("#tipMsg").text("删除失败");-->
+<!--                            $("#tipModal").modal('show');-->
+<!--                        }-->
+<!--                    }-->
+<!--                });-->
+<!--            }-->
+<!--        });-->
+
+<!--        $("#gift-add").click(function () {-->
+<!--            // 打开编辑弹窗-->
+<!--            $("#giftModal").modal('show');-->
+<!--            $("#giftForm")[0].reset();-->
+
+<!--            $('#picUrl').val('');-->
+<!--            $('#picImage').attr("src", '');-->
+<!--            $('#vggUrl').val('');-->
+<!--            $('#vggImage').attr("src", '');-->
+<!--            $("#seqNo").val('');-->
+<!--            $("#leftLevel").val('');-->
+<!--            $("#markPic").val('');-->
+<!--            $('#markImage').attr("src", '');-->
+
+<!--            $("#carId").val('');-->
+<!--            $("#carName").attr('readonly', false);-->
+<!--            $("#goldPrice").attr('readonly', false);-->
+
+<!--            $("#nobleId").btComboBox('disable');-->
+<!--            ComboboxHelper.setDef("#nobleId", '0');-->
+
+<!--            ComboboxHelper.setDef("#giftType", '2');-->
+<!--        });-->
+
+<!--        $("#gift-version-save").click(function () {-->
+<!--            if ($("#giftVersionForm").validationEngine('validate')) {-->
+<!--                $.ajax({-->
+<!--                    type: "post",-->
+<!--                    url: "/sysConf/save.action",-->
+<!--                    data: $('#giftVersionForm').serialize(),-->
+<!--                    dataType: "json",-->
+<!--                    success: function (json) {-->
+<!--                        if (json.success == 'true') {-->
+<!--                            $("#giftVersionModal").modal('hide');-->
+<!--                            $("#tipMsg").text("设置成功");-->
+<!--                            $("#tipModal").modal('show');-->
+<!--                        } else {-->
+<!--                            $("#tipMsg").text("设置失败");-->
+<!--                            $("#tipModal").modal('show');-->
+<!--                        }-->
+<!--                    }-->
+<!--                });-->
+<!--            };-->
+<!--        });-->
+
+<!--        $("#nobleId").on('change', function () {-->
+<!--            if (ComboboxHelper.getSelected("#nobleId") != 0) {-->
+<!--                var nobleName = $("#nobleId").btComboBox('selectedOption')[1];-->
+<!--                $("#nobleName").val(nobleName);-->
+<!--            } else {-->
+<!--                $("#nobleName").val('');-->
+<!--            }-->
+<!--        });-->
+
+<!--        $("#notNoble").on('change', function () {-->
+<!--            ComboboxHelper.setDef("#nobleId", '0');-->
+<!--            $("#nobleName").val('');-->
+<!--            $("#nobleId").btComboBox('disable');-->
+<!--        });-->
+
+<!--        $("#isNoble").on('change', function () {-->
+<!--            $("#nobleId").btComboBox('enable');-->
+<!--        });-->
+
+<!--        $("#gift-version-reset").click(function () {-->
+<!--            $("#giftVersion").val('');-->
+<!--            $("#gift-configName").val('');-->
+<!--            $("#gift-configId").val('');-->
+<!--            $("#gift-nameSpace").val('');-->
+<!--            $("#gift-configStatus").val('');-->
+<!--            $("#newGiftVersion").val('');-->
+
+<!--            $.ajax({-->
+<!--                type: "get",-->
+<!--                url: "/admin/giftcar/getCurGiftVersion.action",-->
+<!--                data: {},-->
+<!--                dataType: "json",-->
+<!--                success: function (json) {-->
+<!--                    if (json.entity) {-->
+<!--                        $("#giftVersion").val(json.entity.configValue);-->
+<!--                        $("#gift-configName").val(json.entity.configName);-->
+<!--                        $("#gift-configId").val(json.entity.configId);-->
+<!--                        $("#gift-nameSpace").val(json.entity.nameSpace);-->
+<!--                        $("#gift-configStatus").val(json.entity.configStatus);-->
+<!--                        $("#giftVersionModal").modal("show");-->
+<!--                    } else {-->
+<!--                        $("#tipMsg").text("获取当前座驾版本失败");-->
+<!--                        $("#tipModal").modal('show');-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+
+<!--        $("#gift-refresh").click(function () {-->
+<!--            $("#table").bootstrapTable('refresh', {url: '/admin/giftcar/getList.action?type=' + ComboboxHelper.getSelected("#condition_type")});-->
+<!--        });-->
+
+<!--        $("#gift-multiDel").click(function () {-->
+<!--            const rows = $("#table").bootstrapTable("getSelections");-->
+<!--            if (rows.length == 0) {-->
+<!--                alert("请先选择要删除的记录");-->
+<!--                return;-->
+<!--            }-->
+<!--            console.log("rows: " + rows.length);-->
+<!--            const idArr = [];-->
+<!--            for (var i = 0; i < rows.length; i++) {-->
+<!--                idArr.push(rows[i]['carId']);-->
+<!--            }-->
+<!--            console.log(idArr);-->
+
+<!--            if (confirm("你确认批量删除该记录吗?" +-->
+<!--                "\r\n删除后再也不能找回, 请谨慎操作！")) {-->
+<!--                $.ajax({-->
+<!--                    type: 'post',-->
+<!--                    url: "/admin/giftcar/del.action",-->
+<!--                    data: {'ids': JSON.stringify(idArr)},-->
+<!--                    dataType: "json",-->
+<!--                    success: function (json) {-->
+<!--                        if (json.success == 'true') {-->
+<!--                            $("#tipMsg").text("删除成功");-->
+<!--                            $("#tipModal").modal('show');-->
+<!--                            TableHelper.doRefresh("#table");-->
+<!--                        } else {-->
+<!--                            $("#tipMsg").text("删除失败");-->
+<!--                            $("#tipModal").modal('show');-->
+<!--                        }-->
+<!--                    }-->
+<!--                });-->
+<!--            }-->
+<!--        });-->
+
+<!--        $('#picUploadBtn').on('click', function () {-->
+<!--            $.ajaxFileUpload({-->
+<!--                fileElementId: 'picUploadFile',    //需要上传的文件域的ID, 即<input type="file">的ID。-->
+<!--                url: '/admin/file/upload', //后台方法的路径-->
+<!--                type: 'post',   //当要提交自定义参数时, 这个参数要设置成post-->
+<!--                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。-->
+<!--                secureuri: false,   //是否启用安全提交, 默认为false。-->
+<!--                async: false,   //是否是异步-->
+<!--                success: function (json) {   //提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。-->
+<!--                    if (json.path) {-->
+<!--                        $('#picUrl').val(json.path);-->
+<!--                        $('#picImage').attr("src", json.path);-->
+<!--                        console.log(json.path);-->
+<!--                    } else {-->
+<!--                        $("#tipMsg").text(json.msg);-->
+<!--                        $("#tipModal").modal('show');-->
+<!--                    }-->
+<!--                },-->
+<!--                error: function (data, status, e) {  //提交失败自动执行的处理函数。-->
+<!--                    console.error(e);-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+
+<!--        $('#vggUploadBtn').on('click', function () {-->
+<!--            $.ajaxFileUpload({-->
+<!--                url: '/admin/file/upload',//后台请求地址-->
+<!--                type: 'post',//请求方式  当要提交自定义参数时, 这个参数要设置成post-->
+<!--                secureuri: false,//是否启用安全提交, 默认为false。-->
+<!--                async: false,   //是否是异步-->
+<!--                fileElementId: 'vggUploadFile',// 需要上传的文件域的ID, 即<input type="file">的ID。-->
+<!--                dataType: 'json',//服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。如果json返回的带pre,这里修改为json即可解决。-->
+<!--                success: function (json, status) {//提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。-->
+<!--                    console.log(json);-->
+<!--                    if (json.path) {-->
+<!--                        $('#vggUrl').val(json.path);-->
+<!--                        $('#vggImage').attr("src", json.path);-->
+<!--                        console.log(json.path);-->
+<!--                    } else {-->
+<!--                        $("#tipMsg").text(json.msg);-->
+<!--                        $("#tipModal").modal('show');-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+
+<!--        $('#markPicBtn').on('click', function () {-->
+<!--            $.ajaxFileUpload({-->
+<!--                url: '/admin/file/upload',//后台请求地址-->
+<!--                type: 'post',//请求方式  当要提交自定义参数时, 这个参数要设置成post-->
+<!--                secureuri: false,//是否启用安全提交, 默认为false。-->
+<!--                async: false,   //是否是异步-->
+<!--                fileElementId: 'markPicFile',// 需要上传的文件域的ID, 即<input type="file">的ID。-->
+<!--                dataType: 'json',//服务器返回的数据类型。可以为xml,script,json,html。如果不填写, jQuery会自动判断。如果json返回的带pre,这里修改为json即可解决。-->
+<!--                success: function (json, status) {//提交成功后自动执行的处理函数, 参数data就是服务器返回的数据。-->
+<!--                    console.log(json);-->
+<!--                    if (json.path) {-->
+<!--                        $('#markPic').val(json.path);-->
+<!--                        $('#markImage').attr("src", json.path);-->
+<!--                        console.log(json.path);-->
+<!--                    } else {-->
+<!--                        $("#tipMsg").text(json.msg);-->
+<!--                        $("#tipModal").modal('show');-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+
+<!--        $("#cancel").click(function () {-->
+<!--            TableHelper.unCheckAll("#table");-->
+<!--        });-->
+
+<!--        function parseNum(val) {-->
+<!--            if (val == undefined || val == 'false' || val == 0) {-->
+<!--                return 0;-->
+<!--            } else {-->
+<!--                return 1;-->
+<!--            }-->
+<!--        }-->
+
+<!--        $("#table").on("click", '.opt-edit', function () {-->
+<!--            var id = $(this).attr("data-id");-->
+<!--            $.ajax({-->
+<!--                type: "get",-->
+<!--                url: "/admin/giftcar/get.action",-->
+<!--                data: {id: id},-->
+<!--                dataType: "json",-->
+<!--                success: function (json) {-->
+<!--                    if (json.entity) {-->
+<!--                        $("#carId").val(json.entity.carId);-->
+<!--                        $("#carName").val(json.entity.carName);-->
+<!--                        $("#goldPrice").val(json.entity.goldPrice);-->
+<!--                        $("#effectiveTime").val(json.entity.effectiveTime);-->
+<!--                        $("#seqNo").val(json.entity.seqNo);-->
+
+<!--                        ComboboxHelper.setDef("#giftType", json.entity.giftType);-->
+
+<!--                        var hasVggPic = parseNum(json.entity.hasVggPic);-->
+<!--                        var isTimeLimit = parseNum(json.entity.isTimeLimit);-->
+<!--                        // 座驾状态的值跟其他不同, 1为有效 2为无效-->
+<!--                        if (json.entity.carStatus == 1) {-->
+<!--                            $("input:radio[name='carStatus']")[0].checked = true;-->
+<!--                        } else {-->
+<!--                            $("input:radio[name='carStatus']")[1].checked = true;-->
+<!--                        }-->
+<!--                        // 设置radio-->
+<!--                        $("input:radio[name='hasVggPic']")[hasVggPic].checked = true;-->
+
+<!--                        // 设置座驾图片-->
+<!--                        $('#picUrl').val(json.entity.picUrl);-->
+<!--                        $('#picImage').attr("src", json.entity.picUrl);-->
+<!--                        // 设置vgg图片-->
+<!--                        $('#vggUrl').val(json.entity.vggUrl);-->
+<!--                        $('#vggImage').attr("src", json.entity.vggUrl);-->
+<!--                        //-->
+<!--                        $("#leftLevel").val(json.entity.leftLevel);-->
+<!--                        $('#markPic').attr("src", json.entity.markPic);-->
+<!--                        $('#markImage').attr("src", json.entity.markPic);-->
+<!--                        if (json.entity.allowPurse) {-->
+<!--                            $("input:radio[name='allowPurse'][value='1']").prop("checked", "checked");-->
+<!--                        } else {-->
+<!--                            $("input:radio[name='allowPurse'][value='0']").prop("checked", "checked");-->
+<!--                        }-->
+
+<!--                        // 打开编辑弹窗-->
+<!--                        $("#giftModal").modal('show');-->
+
+<!--                    } else {-->
+<!--                        $("#tipMsg").text("获取菜单信息出错");-->
+<!--                        $("#tipModal").modal('show');-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+
+<!--        $("#delPicBtn").on("click", function () {-->
+<!--            $("#markPic").val("");-->
+<!--            $("#markImage").attr("src", "");-->
+<!--        })-->
+
+<!--        $("#save").click(function () {-->
+<!--            if ($("#giftForm").validationEngine('validate')) {-->
+<!--                $.ajax({-->
+<!--                    type: "post",-->
+<!--                    url: "/admin/giftcar/save.action",-->
+<!--                    data: $('#giftForm').serialize(),-->
+<!--                    dataType: "json",-->
+<!--                    success: function (json) {-->
+<!--                        if (json.success == 'true') {-->
+<!--                            $("#giftModal").modal('hide');-->
+<!--                            $("#tipMsg").text("保存成功");-->
+<!--                            $("#tipModal").modal('show');-->
+<!--                            TableHelper.doRefresh("#table");-->
+<!--                        } else {-->
+<!--                            $("#tipMsg").text("保存失败." + json.msg);-->
+<!--                            $("#tipModal").modal('show');-->
+<!--                        }-->
+<!--                    }-->
+<!--                });-->
+<!--            };-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->

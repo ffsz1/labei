@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.GiveHeadwearMapperMgr">
+    <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.GiveHeadwearVo">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="headwear_id" property="headwearId" jdbcType="VARCHAR"/>
+        <result column="headwear_name" property="headwearName" jdbcType="VARCHAR"/>
+        <result column="gold_price" property="goldPrice" jdbcType="INTEGER"/>
+        <result column="headwear_date" property="headwearDate" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="selectByParam" resultMap="BaseResultMap" parameterType="com.erban.admin.main.vo.RoomRobotGroupParam">
+        select u.uid, u.erban_no as erbanNo, CONCAT(u.uid,',',h.headwear_id) as headwearId, h.headwear_name as
+        headwearName, h.gold_price as goldPrice, ifnull(hpr.headwear_date,0) as headwearDate
+        from users u
+        LEFT JOIN headwear h on 1 = 1
+        LEFT JOIN headwear_purse_record hpr on u.uid = hpr.uid and h.headwear_id = hpr.headwear_id
+        where (u.def_user = 1 or u.def_user = 3)
+        <if test="erbanNo!=null">
+            AND u.erban_no = #{erbanNo}
+        </if>
+        ORDER BY u.uid, h.headwear_id
+    </select>
+    <select id="selectRecord" resultType="com.erban.admin.main.dto.HeadwearRecordDTO">
+        select record_id recordId, hgr.uid, erban_no erbanNo, hgr.headwear_id headwearId, headwear_name headwearName, headwear_date headwearDate, `type`, hgr.create_time createTime
+        from headwear_get_record hgr
+        left join users u on hgr.uid = u.uid
+        left join headwear h on h.headwear_id = hgr.headwear_id
+        <where>
+            <if test="uids.size() > 0">
+                and hgr.uid in
+                <foreach collection="uids" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="startDate != null and startDate != '' and endDate != null and endDate != ''">
+                and hgr.create_time between #{startDate} and #{endDate}
+            </if>
+            and `type` = 2
+        </where>
+        order by hgr.create_time desc
+    </select>
+</mapper>

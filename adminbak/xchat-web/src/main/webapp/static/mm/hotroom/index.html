@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>推荐位</title>
+    <script>
+        var layout_width = 750;
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= layout_width) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <style>
+        img {
+            width: 100%;
+            max-width: 7.5rem;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="images/bgi.png">
+    <div style="display:none">
+        <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+    </div>
+</body>
+<script>
+    var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+    } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ?
+            "symbol" : typeof obj;
+    };
+    var share = {
+        title: '会上瘾的拉贝语音！', // 分享标题
+        link: window.location.href, // 分享链接
+        imgUrl: allUrl() + '/home/images/logo.png',
+        desc: '拉贝语音交友速配处CP，你想要的我们都有。' // 分享描述
+    };
+
+    function shareInfo() {
+        var _url = allUrl() + '/mm/download/download.html';
+        var info = {
+            title: '会上瘾的拉贝语音！', // 分享标题
+            showUrl: _url,
+            imgUrl: allUrl() + '/home/images/logo.png',
+            desc: '拉贝语音交友速配处CP，你想要的我们都有。' // 分享描述
+        };
+        return JSON.stringify(info);
+    }
+    if (browser.app) {
+        if (browser.ios) {
+            var getMessage = function getMessage(key, value) {
+                info[key] = value;
+            };
+            window.webkit.messageHandlers.getUid.postMessage(null);
+        } else if (browser.android) {
+            if (androidJsObj && (typeof androidJsObj === 'undefined' ? 'undefined' : _typeof(androidJsObj)) ===
+                'object') {
+                    showShareButton(true)
+            }
+        }
+    }
+</script>
+
+</html>

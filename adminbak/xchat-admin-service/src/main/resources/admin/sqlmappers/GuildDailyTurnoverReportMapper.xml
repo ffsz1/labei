@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.GuildDailyTurnoverReportMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.admin.main.model.GuildDailyTurnoverReport" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="guild_id" property="guildId" jdbcType="BIGINT" />
+    <result column="hall_id" property="hallId" jdbcType="BIGINT" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="BIGINT" />
+    <result column="gold" property="gold" jdbcType="BIGINT" />
+    <result column="report_date" property="reportDate" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, guild_id, hall_id, room_id, member_id, gold, report_date, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.admin.main.model.GuildDailyTurnoverReportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from guild_daily_turnover_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from guild_daily_turnover_report
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from guild_daily_turnover_report
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.admin.main.model.GuildDailyTurnoverReportExample" >
+    delete from guild_daily_turnover_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.admin.main.model.GuildDailyTurnoverReport" >
+    insert into guild_daily_turnover_report (id, guild_id, hall_id, 
+      room_id, member_id, gold, report_date, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{guildId,jdbcType=BIGINT}, #{hallId,jdbcType=BIGINT}, 
+      #{roomId,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{gold,jdbcType=BIGINT}, #{reportDate,jdbcType=DATE}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.admin.main.model.GuildDailyTurnoverReport" >
+    insert into guild_daily_turnover_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="guildId != null" >
+        guild_id,
+      </if>
+      <if test="hallId != null" >
+        hall_id,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="gold != null" >
+        gold,
+      </if>
+      <if test="reportDate != null" >
+        report_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="guildId != null" >
+        #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="hallId != null" >
+        #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="gold != null" >
+        #{gold,jdbcType=BIGINT},
+      </if>
+      <if test="reportDate != null" >
+        #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.admin.main.model.GuildDailyTurnoverReportExample" resultType="java.lang.Integer" >
+    select count(*) from guild_daily_turnover_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update guild_daily_turnover_report
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.guildId != null" >
+        guild_id = #{record.guildId,jdbcType=BIGINT},
+      </if>
+      <if test="record.hallId != null" >
+        hall_id = #{record.hallId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberId != null" >
+        member_id = #{record.memberId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gold != null" >
+        gold = #{record.gold,jdbcType=BIGINT},
+      </if>
+      <if test="record.reportDate != null" >
+        report_date = #{record.reportDate,jdbcType=DATE},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update guild_daily_turnover_report
+    set id = #{record.id,jdbcType=BIGINT},
+      guild_id = #{record.guildId,jdbcType=BIGINT},
+      hall_id = #{record.hallId,jdbcType=BIGINT},
+      room_id = #{record.roomId,jdbcType=BIGINT},
+      member_id = #{record.memberId,jdbcType=BIGINT},
+      gold = #{record.gold,jdbcType=BIGINT},
+      report_date = #{record.reportDate,jdbcType=DATE},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.admin.main.model.GuildDailyTurnoverReport" >
+    update guild_daily_turnover_report
+    <set >
+      <if test="guildId != null" >
+        guild_id = #{guildId,jdbcType=BIGINT},
+      </if>
+      <if test="hallId != null" >
+        hall_id = #{hallId,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="gold != null" >
+        gold = #{gold,jdbcType=BIGINT},
+      </if>
+      <if test="reportDate != null" >
+        report_date = #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.admin.main.model.GuildDailyTurnoverReport" >
+    update guild_daily_turnover_report
+    set guild_id = #{guildId,jdbcType=BIGINT},
+      hall_id = #{hallId,jdbcType=BIGINT},
+      room_id = #{roomId,jdbcType=BIGINT},
+      member_id = #{memberId,jdbcType=BIGINT},
+      gold = #{gold,jdbcType=BIGINT},
+      report_date = #{reportDate,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

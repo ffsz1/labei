@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.UserRealNameDAO">
+    <select id="listRealInfo" resultType="com.erban.admin.main.dto.UserRealInfoDTO">
+        SELECT
+            urn.uid AS uid,
+            urn.real_name AS realName,
+            urn.id_card_no AS idCardNo,
+            urn.id_card_front AS idCardFront,
+            urn.id_card_opposite AS idCardOpposite,
+            urn.id_card_handheld AS idCardHandheld,
+            urn.audit_status AS auditStatus,
+            urn.create_date AS createDate,
+            urn.update_date AS updateDate,
+            urn.phone,
+            u.erban_no AS erbanNo,
+            urn.admin_id as adminId,
+            urn.is_first isFirst,
+            urn.remark
+        FROM user_real_name urn
+        LEFT JOIN users u ON urn.uid = u.uid
+        <where>
+            1 = 1
+            <if test="erbanNo != null">
+                AND u.erban_no = #{erbanNo}
+            </if>
+            <if test="auditStatus != null">
+                AND urn.audit_status = #{auditStatus}
+            </if>
+            <if test="idCardNo != null and idCardNo != ''">
+                AND urn.id_card_no = #{idCardNo}
+            </if>
+            <if test="startDate != null and startDate != ''  and endDate != null and endDate != ''">
+                AND urn.create_date between #{startDate} and #{endDate}
+            </if>
+        </where>
+        ORDER BY updateDate ASC
+    </select>
+    <select id="getByUid" resultType="com.erban.admin.main.dto.UserRealInfoDTO">
+        SELECT
+            urn.uid AS uid,
+            urn.real_name AS realName,
+            urn.id_card_no AS idCardNo,
+            urn.id_card_front AS idCardFront,
+            urn.id_card_opposite AS idCardOpposite,
+            urn.id_card_handheld AS idCardHandheld,
+            urn.audit_status AS auditStatus,
+            urn.create_date AS createDate,
+            urn.update_date AS updateDate,
+            u.phone,
+            u.erban_no AS erbanNo,
+            urn.is_first isFirst,urn.remark 
+        FROM user_real_name urn
+        LEFT JOIN users u ON urn.uid = u.uid
+        WHERE urn.uid = #{uid}
+    </select>
+    <update id="updateAuditStatus">
+        UPDATE user_real_name
+        SET audit_status = #{auditStatus}
+        WHERE uid = #{uid}
+    </update>
+</mapper>

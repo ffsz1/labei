@@ -1,0 +1,397 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="editModalLabel">修改房间背景信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="roomBg" class="form-horizontal">
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">主题名称:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" id="name" name="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">类型:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="type" id="type">
+                                <option value="1">所有人可用</option>
+                                <option value="2">指定标签</option>
+                                <option value="3">指定用户</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="tagId_div" style="display: none;">
+                        <label class="col-sm-3 control-label">房间标签:</label>
+                        <div class="col-sm-8">
+                            <div class="checkbox"></div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="uids_div" style="display: none;">
+                        <label class="col-sm-3 control-label">个人UID:</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" id="uids" name="uids" placeholder="多个uid用逗号隔开"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">有效时间:</label>
+                        <div class="col-sm-8">
+                            <div class="radio">
+                                <label><input type="radio" value="1" name="status" checked>长期有效</label>
+                                <label><input type="radio" value="2" name="status">指定时间有效</label>
+                            </div>
+                            <div id="date_div" style="display: none;">
+                                开始时间:
+                                <input id="beginDate" name="beginDate" type="text" placeholder="开始时间" autocomplete="off"
+                                       class="form-control">
+                                -
+                                结束时间:
+                                <input id="endDate" name="endDate" type="text" placeholder="结束时间" autocomplete="off"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">排序:</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control validate[required]" id="sortNo" name="sortNo">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">背景图:</label>
+                        <div class="col-sm-8">
+                            <img src="" id="picImage" style="width:200px;" alt="">
+                            <input type="file" id="picUploadFile" name="file"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                            <button class="btn btn-success" type="button" id="picUploadBtn">上传</button>
+                            <input type="hidden" id="picUrl" name="picUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber
+                };
+                return param;
+            },
+            uniqueId: 'room.uid',
+            toolbar: '#toolbar',
+            url: '/admin/roomBg/list',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            },
+            columns: [
+                {
+                    field: 'picUrl', title: '背景图', align: 'center', valign: 'middle', width: 150,
+                    formatter: function (val) {
+                        return "<img src='" + val + "' width='40' height='40' />";
+                    }
+                },
+                {field: 'name', title: '名称', align: 'center', valign: 'middle', width: 200},
+                {field: 'sortNo', title: '排序', align: 'center', valign: 'middle', width: 100},
+                {
+                    field: 'type', title: '类型', align: 'center', valign: 'middle', width: 120,
+                    formatter: function (val) {
+                        switch (val) {
+                            case 1:
+                                return '所有人';
+                            case 2:
+                                return '标签分类';
+                            case 3:
+                                return '指定用户';
+                            default:
+                                return "-";
+                        }
+                    }
+                },
+                {field: 'tagNames', title: '房间标签', align: 'center', valign: 'middle', width: 120},
+                {field: 'uids', title: '指定用户(UID)', align: 'center', valign: 'middle', width: 120},
+                {
+                    field: 'status', title: '状态', align: 'center', valign: 'middle', width: 120,
+                    formatter: function (val) {
+                        if (val == '1') {
+                            return '长期有效';
+                        } else if (val == '2') {
+                            return '指定时间有效';
+                        } else {
+                            return "无效";
+                        }
+                    }
+                },
+                {
+                    field: 'beginDate', title: '开始时间', align: 'center', valign: 'middle', width: 150,
+                    formatter: function (val, row) {
+                        if (row.status == '2' && val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'endDate', title: '结束时间', align: 'center', valign: 'middle', width: 150,
+                    formatter: function (val, row) {
+                        if (row.status == '2' && val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'createDate', title: '创建时间', align: 'center', valign: 'middle', width: 150,
+                    formatter: function (val) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'id', title: '操作', align: 'center', width: 250, valign: 'middle',
+                    formatter: function (val) {
+                        let str = "<button class='btn btn-sm btn-success opt-edit' data-id='" + val + "'>" +
+                            "<span hidden='hidden' id='opt-edit-value'></span><i class=\"glyphicon glyphicon-edit\"></i> 编辑</button>&nbsp;";
+                        str += "<button class='btn btn-sm btn-danger opt-delete' data-id='" + val + "'>" +
+                            "<span hidden='hidden' id='opt-edit-value'></span><i class=\"glyphicon glyphicon-remove\"></i> 删除</button>";
+                        return str;
+                    }
+                }
+            ]
+        });
+        $.get("/admin/roomtag/getlist", function (data) {
+            if (data.code == 200) {
+                let str = "";
+                let tag;
+                for (let i = 0; i < data.data.length; i++) {
+                    tag = data.data[i];
+                    str += '<label>&nbsp;<input type="checkbox" value="' + tag.id + '" name="tagId">' + tag.name + '</label>&nbsp;&nbsp;';
+                }
+                $("#tagId_div .checkbox").html(str);
+            }
+        });
+        $("#add").on("click", function () {
+            $("#editModal").modal("show");
+            $("#date_div").hide();
+            $("#id").val("");
+            $("#picImage").attr("src", "");
+            $("#roomBg")[0].reset();
+        });
+
+        $('#table').on('click', '.opt-edit', function () {
+            var id = $(this).data('id');
+            if (id) {
+                $("#editModal").modal('show');
+                $.get("/admin/roomBg/get/" + id, function (data) {
+                    if (data.code == 200) {
+                        $("#id").val(data.data.id);
+                        $("#name").val(data.data.name);
+                        $("#picImage").attr("src", data.data.picUrl);
+                        $("#picUrl").val(data.data.picUrl);
+                        $("#type").val(data.data.type);
+                        $("#sortNo").val(data.data.sortNo);
+                        if (data.data.type == 2) {
+                            $("#tagId_div").show();
+                            $("#uids_div").hide();
+                        } else if (data.data.type == 3) {
+                            $("#uids_div").show();
+                            $("#tagId_div").hide();
+                        } else {
+                            $("#uids_div").hide();
+                            $("#tagId_div").hide();
+                        }
+                        $("input[name='status'][value=" + data.data.status + "]").prop("checked", "checked");
+                        if (data.data.status == 2) {
+                            $("#date_div").show();
+                            var date = new Date(data.data.beginDate);
+                            $("#beginDate").val(date.format("yyyy-MM-dd HH:mm:ss"));
+                            date = new Date(data.data.endDate);
+                            $("#endDate").val(date.format("yyyy-MM-dd HH:mm:ss"));
+                        }
+                        $("#uids").val(data.data.uids);
+                        if (data.data.tagIds) {
+                            var arr = data.data.tagIds.split(",");
+                            for (var i = 0; i < arr.length; i++) {
+                                $("input:checkbox[value=" + arr[i] + "]").attr('checked', 'true');
+                            }
+                        }
+                    }
+                })
+            }
+        });
+        $("#table").on("click", ".opt-delete", function () {
+            const id = $(this).data('id');
+            if (id) {
+                if (!confirm("删除后将无法找回, 确定要删除吗?")) {
+                    return;
+                }
+                $.get("/admin/roomBg/delete/" + id, function (data) {
+                    if (data.code == 200) {
+                        $("#tipMsg").text("删除成功");
+                    } else {
+                        $("#tipMsg").text(data.message);
+                    }
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#table");
+                })
+            }
+        });
+        $("#save").on("click", function () {
+            $("#save").attr("disabled", true);
+            if (!$("#roomBg").validationEngine('validate')) {
+                return;
+            }
+            const tagArr = new Array();
+            $("[name=tagId]:checked").each(function () {
+                tagArr.push($(this).val());
+            })
+            const tagIds = tagArr.join(",");
+            const param = {
+                id: $("#id").val(),
+                tagIds: tagIds,
+                name: $("#name").val(),
+                status: $("input[name='status']:checked").val(),
+                type: $("#type").val(),
+                uids: $("#uids").val(),
+                beginDateStr: $("#beginDate").val(),
+                endDateStr: $("#endDate").val(),
+                picUrl: $("#picUrl").val(),
+                sortNo: $("#sortNo").val()
+            };
+            $.post("/admin/roomBg/save", param, function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("保存成功");
+                    $("#editModal").modal('hide');
+                    TableHelper.doRefresh("#table");
+                    $("#save").removeAttr("disabled");
+                } else {
+                    $("#tipMsg").text(data.message);
+                }
+                $("#tipModal").modal('show');
+            })
+        });
+        $("#type").on("click", function () {
+            const val = $(this).val();
+            if (val == 1) {
+                $("#tagId_div").hide();
+                $("#uids_div").hide();
+                $("#uids").val("");
+                $("[name=tagId]").prop("checked", false);
+            } else if (val == 2) {
+                $("#uids_div").hide();
+                $("#tagId_div").show();
+                $("#uids").val("");
+            } else {
+                $("#uids_div").show();
+                $("#tagId_div").hide();
+                $("[name=tagId]").prop("checked", false);
+            }
+        });
+        $("input[name=status]").on("change", function () {
+            const val = $(this).val();
+            if (val == 2) {
+                $("#date_div").show();
+            } else {
+                $("#date_div").hide();
+                $("#beginDate").val('');
+                $("#endDate").val('');
+            }
+        });
+        $('#picUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'picUploadFile',    //需要上传的文件域的ID，即<input type="file">的ID。
+                url: '/admin/file/upload', //后台方法的路径
+                type: 'post',   //当要提交自定义参数时，这个参数要设置成post
+                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。
+                secureuri: false,   //是否启用安全提交，默认为false。
+                async: false,   //是否是异步
+                success: function (json) {   //提交成功后自动执行的处理函数，参数data就是服务器返回的数据。
+                    if (json.path) {
+                        $('#picUrl').val(json.path);
+                        $('#picImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) {  //提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        });
+    })
+    var picker3 = $('#beginDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        minView: "0",
+        startDate: new Date()
+    }).on('changeDate', function () {
+        const date = $('#beginDate').datetimepicker('getDate');
+        picker2.datetimepicker('setStartDate', date);
+    });
+
+    var picker2 = $('#endDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd hh:ii:ss',
+        autoclose: true,
+        minView: "0"
+    }).on('changeDate', function () {
+        var date = $('#endDate').datetimepicker('getDate');
+        picker3.datetimepicker('setEndDate', date);
+    });
+</script>

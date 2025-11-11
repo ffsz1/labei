@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+	default-lazy-init="true">
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!--
+				<ref bean="expiredTokenCleanJobTrigger" />
+				<ref bean="expiredTicketCleanJobTrigger" />
+				-->
+				<ref bean="vulgarWordsAndUidsUpdateTrigger"/>
+			</list>
+		</property>
+		<property name="taskExecutor" ref="executor" />
+        <property name="schedulerContextAsMap">
+            <map>
+                <entry key="timeout" value="30" />
+                <entry key="startupDelay" value="30" />
+            </map>
+        </property>
+	</bean>
+
+	<bean id="executor"	class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="10" />
+		<property name="maxPoolSize" value="100" />
+		<property name="queueCapacity" value="500" />
+	</bean>
+	<!-- 定期清理过期的token -->
+	<bean name="expiredTokenCleanJob"	class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="tokenCleaner" />
+		<property name="targetMethod" value="clean" />
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<bean id="expiredTokenCleanJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="expiredTokenCleanJob"></property>
+        <!--6个可配置的域依次是：秒 分 小时 日期 月份 星期-->
+        <property name="cronExpression" value="* 0/2 * * * ?"></property>
+	</bean>
+	<!-- end 定期清理过期的token -->
+	<!-- 定期清理过期的ticket -->
+	<bean name="expiredTicketCleanJob"	class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="ticketCleaner" />
+		<property name="targetMethod" value="clean" />
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<bean id="expiredTicketCleanJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="expiredTicketCleanJob"></property>
+		<!--6个可配置的域依次是：秒 分 小时 日期 月份 星期-->
+		<property name="cronExpression" value="* 0/2 * * * ?"></property>
+	</bean>
+	<!-- end 定期清理过期的ticket -->
+
+	<!-- 评论过滤关键字定时任务 -->
+	<bean name="vulgarWordsAndUidsUpdateJob"
+		  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="vulgarCensor" />
+		<property name="targetMethod" value="updateVulgarWordsAndUids" />
+		<property name="concurrent" value="true" />
+	</bean>
+
+	<bean id="vulgarWordsAndUidsUpdateTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="vulgarWordsAndUidsUpdateJob"></property>
+		<!--6个可配置的域依次是：秒 分 小时 日期 月份 星期-->
+		<property name="cronExpression" value="* 0/15 * * * ?"></property>
+	</bean>
+</beans>

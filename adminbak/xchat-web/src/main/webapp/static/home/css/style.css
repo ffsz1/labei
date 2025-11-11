@@ -1,0 +1,119 @@
+@charset "utf-8";
+body, span, a, ul, li, dl, dt, dd, h1, h2, h3, h4, div, img, p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+}
+.share_wx {
+	display: block;
+	width: 0;
+	height: 0;
+}
+.app_banner {
+	width: 100%;
+	overflow: hidden;	
+}
+
+.btn_ios, .btn_android {
+	position: absolute;
+	border: none;
+	cursor: pointer;
+	z-index: 9999;
+	outline: none;
+}
+.linkedme {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+@media only screen and (min-width: 480px) {
+	.app_banner {
+		height: 2476px;
+		background: url(../images/bg.png) center no-repeat;
+	}
+	.grid {
+		position: relative;
+		margin: 0 auto;
+	  width: 1100px;
+	  height: 780px;
+	}
+	.btn_ios, .btn_android {
+		right: 180px;
+		width: 300px;
+		height: 72px;	
+	}
+	.btn_ios {
+		top: 380px;
+		background: url(../images/download_ios.png) left no-repeat;
+	}
+	.btn_android {
+		top: 480px;
+		background: url(../images/download_android.png) left no-repeat;
+	}
+}
+
+/*移动端*/
+@media only screen and (max-width: 480px) {
+	.app_banner {
+		height: 1350px;
+		background: url(../images/bg_mobile.png) center no-repeat;
+		background-size: 100% 100%;
+	}
+	.btn_group {
+		position: relative;
+		width: 300px;
+		height: 35px;
+		margin: 0 auto;
+	}
+	.btn_android {
+		width: 140px;
+		height: 35px;
+		top: 100px;
+		background: url(../images/download_android.png) left no-repeat;
+		background-size: 100% 100%;
+	}
+	.btn_ios {
+		width: 140px;
+		height: 35px;
+		top: 100px;
+		right: 0;
+		background: url(../images/download_ios.png) left no-repeat;
+		background-size: 100% 100%;
+	}
+}
+
+.index {
+	width: 100%;
+	max-width: 1920px;
+	min-width: 1000px;
+	height: 2571px;
+	position: relative;
+	overflow: hidden;
+}
+.index img {
+	position: absolute;
+	left: 50%;
+	margin-left: -960px;
+	display: inline-block;
+}
+#qrcode {
+	display: none;
+  position: absolute;
+  width: 154px;
+  height: 154px;
+  right: 0px;
+  top: 390px;
+  padding: 2px;
+  text-align: center;
+  font-size: 12px;
+  color: #3d3d3d;
+  border: 1px solid #efefef ;
+  background: #fff;
+  z-index: 2;
+  border-radius: 5px;
+}
+h1{
+	position: fixed;
+	left: -2000px;
+}

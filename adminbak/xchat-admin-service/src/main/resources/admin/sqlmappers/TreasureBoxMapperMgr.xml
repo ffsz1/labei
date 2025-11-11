@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.TreasureBoxMapperMgr">
+    <!--  <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.TreasureBoxVo" >-->
+    <!--    <id column="erban_no" property="erbanNo" jdbcType="BIGINT" />-->
+    <!--    <result column="nick" property="nick" jdbcType="VARCHAR" />-->
+    <!--    <result column="input_num" property="inputNum" jdbcType="INTEGER" />-->
+    <!--    <result column="output_num" property="outputNum" jdbcType="INTEGER" />-->
+    <!--  </resultMap>-->
+
+    <!--  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Map" >-->
+    <!--    select u.erban_no, u.nick, COUNT(1)*20 as inputNum, SUM(b.gold_price) as outputNum-->
+    <!--    from bill_record a force index(key3)-->
+    <!--    INNER JOIN users u on a.uid = u.uid-->
+    <!--    INNER JOIN gift b on a.gift_id = b.gift_id-->
+    <!--    where a.obj_type = 10-->
+    <!--    <if test="startDate != null">-->
+    <!--      AND a.create_time &gt;= #{startDate}-->
+    <!--    </if>-->
+    <!--    <if test="endDate != null">-->
+    <!--      AND a.create_time &lt;= #{endDate}-->
+    <!--    </if>-->
+    <!--    <if test="os != null">-->
+    <!--      AND u.os = #{os}-->
+    <!--    </if>-->
+    <!--    <if test="gender != null">-->
+    <!--      AND u.gender = #{gender}-->
+    <!--    </if>-->
+    <!--    <if test="erbanNo != null">-->
+    <!--      AND u.erban_no = #{erbanNo}-->
+    <!--    </if>-->
+    <!--    GROUP BY a.uid-->
+    <!--    ORDER BY inputNum desc, outputNum desc-->
+    <!--  </select>-->
+    <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.TreasureBoxVo">
+        <id column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="input_num" property="inputNum" jdbcType="INTEGER"/>
+        <result column="output_num" property="outputNum" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+    </resultMap>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="Map">
+        select u.erban_no, u.nick, SUM(b.gold_cost) as inputNum, SUM(b.gift_num * g.gold_price) as outputNum,
+        DATE_FORMAT(b.create_time,'%Y-%m-%d') as createTime, CAST(SUM(b.gift_num * g.gold_price) / SUM(b.gold_cost) * 100 as decimal(38, 2)) as rate, b.uid
+        from bill_gift_draw b
+        inner join users u on b.uid = u.uid
+        inner join gift g on g.gift_id = b.gift_id
+        <if test="startDate != null and endDate != null">
+            AND b.create_time between #{startDate} AND #{endDate}
+        </if>
+        <if test="os != null">
+            AND u.os = #{os}
+        </if>
+        <!-- <if test="erbanNo != null">
+            AND u.erban_no = #{erbanNo}
+        </if> -->
+        <if test="erbanNos != null and erbanNos.size > 0">
+            AND u.erban_no IN
+            <foreach item="item" index="index" collection="erbanNos" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="gender != null">
+            AND u.gender = #{gender}
+        </if>
+        <if test="giftType != null">
+            AND g.gift_type = #{giftType}
+        </if>
+        GROUP BY createTime, b.uid
+        ORDER BY inputNum desc, b.create_time desc, outputNum desc
+    </select>
+    <select id="selectByCount" resultType="com.erban.admin.main.vo.TreasureBoxVo" parameterType="Map">
+        SELECT COUNT(DISTINCT b.uid) as userNum, SUM(b.gold_cost) as totalInputNum, SUM(b.gift_num * g.gold_price) as totalOutputNum
+        from bill_gift_draw b
+        inner join users u on b.uid = u.uid
+        inner join gift g on g.gift_id = b.gift_id
+        <if test="startDate != null and endDate != null">
+            AND b.create_time between #{startDate} AND #{endDate}
+        </if>
+        <if test="os != null">
+            AND u.os = #{os}
+        </if>
+        <!-- <if test="erbanNo != null">
+            AND u.erban_no = #{erbanNo}
+        </if> -->
+        <if test="erbanNos != null and erbanNos.size > 0">
+            AND u.erban_no IN
+            <foreach item="item" index="index" collection="erbanNos" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="gender != null">
+            AND u.gender = #{gender}
+        </if>
+        <if test="giftType != null">
+            AND g.gift_type = #{giftType}
+        </if>
+    </select>
+    <!--<select id="selectByExample" resultMap="BaseResultMap" parameterType="Map" >-->
+    <!--select u.erban_no, u.nick, b.input_num as inputNum,b.out_num as outputNum,DATE_FORMAT(b.create_date,'%Y-%m-%d') as createTime,b.uid-->
+    <!--from  user_draw_gift_day b-->
+    <!--inner join users u on b.uid = u.uid-->
+    <!--<if test="startDate != null and endDate != null">-->
+    <!--AND b.create_date between #{startDate} AND #{endDate}-->
+    <!--</if>-->
+
+    <!--<if test="os != null">-->
+    <!--AND u.os = #{os}-->
+    <!--</if>-->
+
+    <!--<if test="erbanNo != null">-->
+    <!--AND u.erban_no = #{erbanNo}-->
+    <!--</if>-->
+
+    <!--<if test="gender != null">-->
+    <!--AND u.gender = #{gender}-->
+    <!--</if>-->
+    <!--GROUP BY createTime,b.uid-->
+    <!--ORDER BY inputNum desc,b.create_date desc, outputNum desc-->
+    <!--</select>-->
+
+    <!--<select id="selectByCount" resultType="com.erban.admin.main.vo.TreasureBoxVo" parameterType="Map">-->
+    <!--SELECT  COUNT(DISTINCT b.uid) as userNum,sum(b.input_num) as totalInputNum ,sum(b.out_num) as totalOutputNum-->
+    <!--from user_draw_gift_day b-->
+    <!--inner join users u on b.uid = u.uid-->
+    <!--<if test="startDate != null and endDate != null">-->
+    <!--AND b.create_date between #{startDate} AND #{endDate}-->
+    <!--</if>-->
+    <!--<if test="os != null">-->
+    <!--AND u.os = #{os}-->
+    <!--</if>-->
+
+    <!--<if test="erbanNo != null">-->
+    <!--AND u.erban_no = #{erbanNo}-->
+    <!--</if>-->
+
+    <!--<if test="gender != null">-->
+    <!--AND u.gender = #{gender}-->
+    <!--</if>-->
+    <!--</select>-->
+    <select id="selectByExportExample" resultType="com.erban.admin.main.vo.TreasureBoxVo">
+        select u.erban_no, u.nick, DATE_FORMAT(b.create_time,'%Y-%m-%d') as createTime, SUM(b.gold_cost) as inputNum, SUM(b.gift_num * g.gold_price) as outputNum,
+        CAST(SUM(b.gift_num * g.gold_price) / SUM(b.gold_cost) * 100 as decimal(38, 2)) as rate, b.uid
+        from bill_gift_draw b
+        inner join users u on b.uid = u.uid
+        inner join gift g on g.gift_id = b.gift_id
+        <if test="startDate != null and endDate != null">
+            AND b.create_time between #{startDate} AND #{endDate}
+        </if>
+        <if test="os != null">
+            AND u.os = #{os}
+        </if>
+        <!-- <if test="erbanNo != null">
+            AND u.erban_no = #{erbanNo}
+        </if> -->
+        <if test="erbanNos != null and erbanNos.size > 0">
+            AND u.erban_no IN
+            <foreach item="item" index="index" collection="erbanNos" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="gender != null">
+            AND u.gender = #{gender}
+        </if>
+        <if test="giftType != null">
+            AND g.gift_type = #{giftType}
+        </if>
+        GROUP BY createTime,b.uid
+        ORDER BY inputNum desc,b.create_time desc, outputNum desc
+    </select>
+    <select id="selectByUsersWhitelisExample" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select SUM(b.gold_cost) as inputNum, SUM(b.gift_num * g.gold_price) as outputNum, DATE_FORMAT(b.create_time,'%Y-%m-%d') as createTime, b.uid
+        from bill_gift_draw b
+        inner join gift g on g.gift_id = b.gift_id
+        where b.uid in
+        <foreach collection="uids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="startDate != null and endDate != null">
+            AND b.create_time between #{startDate} AND #{endDate}
+        </if>
+        GROUP BY createTime,b.uid
+        ORDER BY inputNum desc,b.create_time desc, outputNum desc
+    </select>
+    <select id="selectByExportWhitelistExample" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select u.erban_no, u.nick, SUM(b.gold_cost) as inputNum,SUM(b.gift_num * g.gold_price) as outputNum, DATE_FORMAT(b.create_time,'%Y-%m-%d') as createTime,b.uid
+        from bill_gift_draw b
+        inner join users u on b.uid = u.uid
+        inner join gift g on g.gift_id = b.gift_id
+        where b.uid in
+        <foreach collection="uids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="startDate != null and endDate != null">
+            AND b.create_time between #{startDate} AND #{endDate}
+        </if>
+        GROUP BY createTime,b.uid
+        ORDER BY inputNum desc,b.create_time desc, outputNum desc
+    </select>
+    <!--<select id="selectByExportExample" resultMap="BaseResultMap" parameterType="Map" >-->
+    <!--select u.erban_no, u.nick, b.input_num as inputNum,b.out_num as outputNum,DATE_FORMAT(b.create_date,'%Y-%m-%d') as createTime,b.uid-->
+    <!--from  user_draw_gift_day b-->
+    <!--inner join users u on b.uid = u.uid-->
+    <!--<if test="startDate != null and endDate != null">-->
+    <!--AND b.create_date between #{startDate} AND #{endDate}-->
+    <!--</if>-->
+    <!--<if test="erbanNo != null">-->
+    <!--AND u.erban_no = #{erbanNo}-->
+    <!--</if>-->
+    <!--GROUP BY createTime,b.uid-->
+    <!--ORDER BY inputNum desc,b.create_date desc, outputNum desc-->
+    <!--</select>-->
+    <!--<select id="selectByUsersWhitelisExample" resultMap="BaseResultMap" parameterType="java.util.Map" >-->
+    <!--select b.input_num as inputNum,b.out_num as outputNum,DATE_FORMAT(b.create_date,'%Y-%m-%d') as createTime,b.uid-->
+    <!--from  user_draw_gift_day b-->
+    <!--where-->
+    <!--b.uid in-->
+    <!--<foreach collection="uids" index="index" item="item" open="(" separator="," close=")">-->
+    <!--#{item}-->
+    <!--</foreach>-->
+    <!--<if test="startDate != null and endDate != null">-->
+    <!--AND b.create_date between #{startDate} AND #{endDate}-->
+    <!--</if>-->
+    <!--GROUP BY createTime,b.uid-->
+    <!--ORDER BY inputNum desc,b.create_date desc, outputNum desc-->
+    <!--</select>-->
+    <!--<select id="selectByExportWhitelistExample" resultMap="BaseResultMap" parameterType="Map">-->
+    <!--select u.erban_no, u.nick, b.input_num as inputNum,b.out_num as outputNum,DATE_FORMAT(b.create_date,'%Y-%m-%d') as createTime,b.uid-->
+    <!--from  user_draw_gift_day b-->
+    <!--inner join users u on b.uid = u.uid-->
+    <!--where-->
+    <!--b.uid in-->
+    <!--<foreach collection="uids" index="index" item="item" open="(" separator="," close=")">-->
+    <!--#{item}-->
+    <!--</foreach>-->
+    <!--<if test="startDate != null and endDate != null">-->
+    <!--AND b.create_date between #{startDate} AND #{endDate}-->
+    <!--</if>-->
+    <!--GROUP BY createTime,b.uid-->
+    <!--ORDER BY inputNum desc,b.create_date desc, outputNum desc-->
+    <!--</select>-->
+    <select id="selectByWhitelistCount" resultType="com.erban.admin.main.vo.TreasureBoxVo"
+            parameterType="java.util.Map">
+        SELECT COUNT(DISTINCT b.uid) as userNum, SUM(b.gold_cost) as totalInputNum, SUM(b.gift_num * g.gold_price) as
+        totalOutputNum
+        from bill_gift_draw b
+        inner join users u on b.uid = u.uid
+        inner join gift g on g.gift_id = b.gift_id
+        where
+        b.uid in
+        <foreach collection="uids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="startDate != null and endDate != null">
+            AND b.create_time between #{startDate} AND #{endDate}
+        </if>
+        <if test="os != null">
+            AND u.os = #{os}
+        </if>
+
+        <if test="erbanNo != null">
+            AND u.erban_no = #{erbanNo}
+        </if>
+
+        <if test="gender != null">
+            AND u.gender = #{gender}
+        </if>
+        <!--SELECT  COUNT(DISTINCT b.uid) as userNum,sum(b.input_num) as totalInputNum ,sum(b.out_num) as totalOutputNum-->
+        <!--from user_draw_gift_day b-->
+        <!--inner join users u on b.uid = u.uid-->
+        <!--<if test="startDate != null and endDate != null">-->
+        <!--AND b.create_date between #{startDate} AND #{endDate}-->
+        <!--</if>-->
+        <!--<if test="os != null">-->
+        <!--AND u.os = #{os}-->
+        <!--</if>-->
+
+        <!--<if test="erbanNo != null">-->
+        <!--AND u.erban_no = #{erbanNo}-->
+        <!--</if>-->
+
+        <!--<if test="gender != null">-->
+        <!--AND u.gender = #{gender}-->
+        <!--</if>-->
+    </select>
+</mapper>

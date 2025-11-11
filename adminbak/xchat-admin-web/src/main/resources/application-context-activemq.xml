@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:jms="http://www.springframework.org/schema/jms"
+	   xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<!-- ############ 配置消息中间件连接工厂 ################ -->
+	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- 设置消息中间件服务地址brokerURL -->
+		<property name="brokerURL" value="tcp://${activemq.brokerURL}:${activemq.port}" />
+		<property name="trustAllPackages" value="true"/>
+		<property name="trustedPackages">
+			<list>
+				<value>java.lang</value>
+				<value>javax.security</value>
+				<value>java.util</value>
+				<value>org.apache.activemq</value>
+				<value>com.erban.main.message</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置整合Spring的JMS产生单例的连接工厂 -->
+	<bean id="connectionFactory"
+		  class="org.springframework.jms.connection.SingleConnectionFactory">
+		<!-- 设置ActiveMQ连接工厂给单例的连接工厂 -->
+		<property name="targetConnectionFactory" ref="activeMQConnectionFactory" />
+	</bean>
+
+
+	<!-- ############## 配置消息生产者 ################# -->
+	<!-- 配置消息模版JmsTemplate -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 设置连接工厂 -->
+		<property name="connectionFactory" ref="connectionFactory" />
+		<!-- 设置默认的目标(采用点对点) -->
+		<property name="defaultDestination" ref="myQueue" />
+		<!-- 设置开启消息事务 -->
+		<property name="sessionTransacted" value="true" />
+	</bean>
+	<!-- 配置目标(点对点) -->
+	<bean id="myQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<!-- 设置队列名称 -->
+		<constructor-arg>
+			<value>spring-queue</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ############## 配置消息消费者 ################# -->
+	<!-- 配置JMS消息监听容器 connection-factory: 连接工厂 destination-type="queue|topic"
+		目标类型 acknowledge="transacted" 应答方式(事务) -->
+	<!-- 配置消息监听器 -->
+	<!--<bean id="myMessageListener" class="com.erban.main.service.mq.MyMessageListener" />-->
+	<!--<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+		<!--<property name="connectionFactory" ref="connectionFactory" />-->
+		<!--<property name="destination" ref="myQueue" />-->
+		<!--<property name="messageListener" ref="myMessageListener" />-->
+		<!--<property name="sessionTransacted" value="true"/>-->
+		<!--&lt;!&ndash; 应答模式&ndash;&gt;-->
+		<!--<property name="sessionAcknowledgeMode" value="4" ></property>-->
+		<!--&lt;!&ndash; 设置固定的线程数 &ndash;&gt;-->
+		<!--<property name="concurrentConsumers" value="2"></property>-->
+	<!--</bean>-->
+
+
+	<!-- 配置目标(点对点) -->
+	<bean id="nobleQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<!-- 设置队列名称 -->
+		<constructor-arg>
+			<value>noble-queue</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- ############## 配置消息消费者 ################# -->
+	<!-- 配置JMS消息监听容器 connection-factory: 连接工厂 destination-type="queue|topic"
+		目标类型 acknowledge="transacted" 应答方式(事务) -->
+	<!-- 配置消息监听器 -->
+	<!--<bean id="nobleMessageListener" class="com.erban.main.service.mq.NobleMessageListener" />-->
+	<!--<bean id="jmsContainer2" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+		<!--<property name="connectionFactory" ref="connectionFactory" />-->
+		<!--<property name="destination" ref="nobleQueue" />-->
+		<!--<property name="messageListener" ref="nobleMessageListener" />-->
+		<!--<property name="sessionTransacted" value="true"/>-->
+		<!--&lt;!&ndash; 应答模式&ndash;&gt;-->
+		<!--<property name="sessionAcknowledgeMode" value="4" ></property>-->
+		<!--&lt;!&ndash; 设置固定的线程数 &ndash;&gt;-->
+		<!--<property name="concurrentConsumers" value="2"></property>-->
+	<!--</bean>-->
+
+
+	<!-- ############## 礼物队列 #################### -->
+	<!-- 配置整合Spring的JMS产生单例的连接工厂 -->
+	<bean id="connectionFactory2"
+		  class="org.springframework.jms.connection.SingleConnectionFactory">
+		<!-- 设置ActiveMQ连接工厂给单例的连接工厂 -->
+		<property name="targetConnectionFactory" ref="activeMQConnectionFactory" />
+	</bean>
+	<!-- ############## 配置消息生产者 ################# -->
+	<!-- 配置消息模版JmsTemplate -->
+	<bean id="giftJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 设置连接工厂 -->
+		<property name="connectionFactory" ref="connectionFactory2" />
+		<!-- 设置默认的目标(采用点对点) -->
+		<property name="defaultDestination" ref="giftQueue" />
+		<!-- 设置开启消息事务 -->
+		<property name="sessionTransacted" value="true" />
+	</bean>
+	<!-- 配置目标(点对点) -->
+	<bean id="giftQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<!-- 设置队列名称 -->
+		<constructor-arg value="gift-queue" />
+	</bean>
+
+	<!-- ############## 配置消息消费者 ################# -->
+	<!-- 配置JMS消息监听容器 connection-factory: 连接工厂 destination-type="queue|topic"
+		目标类型 acknowledge="transacted" 应答方式(事务) -->
+	<!--<jms:listener-container connection-factory="connectionFactory2"-->
+	<!--destination-type="queue" acknowledge="transacted" >-->
+	<!--<jms:listener destination="gift-queue" ref="giftMessageListener" />-->
+	<!--</jms:listener-container>-->
+	<!--<bean id="giftMessageListener" class="com.erban.main.service.mq.GiftMessageListener" />-->
+	<!--<bean id="jmsContainer3" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+		<!--<property name="connectionFactory" ref="connectionFactory" />-->
+		<!--<property name="destination" ref="giftQueue" />-->
+		<!--<property name="messageListener" ref="giftMessageListener" />-->
+		<!--<property name="sessionTransacted" value="true"/>-->
+		<!--&lt;!&ndash; 应答模式&ndash;&gt;-->
+		<!--<property name="sessionAcknowledgeMode" value="4" ></property>-->
+		<!--&lt;!&ndash; 设置固定的线程数 &ndash;&gt;-->
+		<!--<property name="concurrentConsumers" value="4"></property>-->
+	<!--</bean>-->
+</beans>

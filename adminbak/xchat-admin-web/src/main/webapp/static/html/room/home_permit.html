@@ -1,0 +1,54 @@
+<section>
+<div class="box box-primary">
+    <div class="box-header">牌照房管理</div>
+    <div class="box-body">
+        <table class="table table-bordered">
+            <thead><tr>
+                <th style="width: 50px">头像</th>
+                <th style="width:200px;">拉贝号</th>
+                <th>昵称</th>
+            </tr></thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+</div>
+</section>
+<!-- .content -->
+<script>
+    var isEdit = false;
+    $(function () {
+        $("#goldForm").validationEngine();
+
+        $('#btnScan').click(function(){
+            console.log("star===>>" + $("#ernos").text() +", " + $("#ernos").val());
+            if(!$('#ernos').val()){
+                $("#tipMsg").text("请输入拉贝号");
+                $("#tipModal").modal('show');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/admin/goldcoin/userinfo.action",
+                data: {"ernos":$("#ernos").val()},
+                dataType: "json",
+                success: function (json) {
+                    if(json.code == 200) {
+                        var str = '';
+                        for(var i=0; i < json.data.length; i++) {
+                            var bean = json.data[i];
+                            str += "<tr>\n" +
+                                "                <th style=\"width: 100px\"><img src='"+bean.avatar+"' width='50'/></th>\n" +
+                                "                <th style='width:200px;'>" + bean.erbanNo + "</th>\n" +
+                                "                <th>" + bean.nick + "</th>\n" +
+                                "            </tr>";
+                        }
+                        $('#tbody').html(str);
+                    }
+                }
+            })
+        });
+
+    });
+
+</script>

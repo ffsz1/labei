@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatGiftSendMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatGiftSend" >
+    <id column="gift_send_id" property="giftSendId" jdbcType="BIGINT" />
+    <result column="gift_id" property="giftId" jdbcType="INTEGER" />
+    <result column="send_count" property="sendCount" jdbcType="INTEGER" />
+    <result column="stat_date" property="statDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gift_send_id, gift_id, send_count, stat_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatGiftSendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_gift_send
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_gift_send
+    where gift_send_id = #{giftSendId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stat_gift_send
+    where gift_send_id = #{giftSendId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.StatGiftSend" >
+    insert into stat_gift_send (gift_send_id, gift_id, send_count, 
+      stat_date)
+    values (#{giftSendId,jdbcType=BIGINT}, #{giftId,jdbcType=INTEGER}, #{sendCount,jdbcType=INTEGER}, 
+      #{statDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatGiftSend" >
+    insert into stat_gift_send
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="giftSendId != null" >
+        gift_send_id,
+      </if>
+      <if test="giftId != null" >
+        gift_id,
+      </if>
+      <if test="sendCount != null" >
+        send_count,
+      </if>
+      <if test="statDate != null" >
+        stat_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="giftSendId != null" >
+        #{giftSendId,jdbcType=BIGINT},
+      </if>
+      <if test="giftId != null" >
+        #{giftId,jdbcType=INTEGER},
+      </if>
+      <if test="sendCount != null" >
+        #{sendCount,jdbcType=INTEGER},
+      </if>
+      <if test="statDate != null" >
+        #{statDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.StatGiftSend" >
+    update stat_gift_send
+    <set >
+      <if test="giftId != null" >
+        gift_id = #{giftId,jdbcType=INTEGER},
+      </if>
+      <if test="sendCount != null" >
+        send_count = #{sendCount,jdbcType=INTEGER},
+      </if>
+      <if test="statDate != null" >
+        stat_date = #{statDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where gift_send_id = #{giftSendId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.StatGiftSend" >
+    update stat_gift_send
+    set gift_id = #{giftId,jdbcType=INTEGER},
+      send_count = #{sendCount,jdbcType=INTEGER},
+      stat_date = #{statDate,jdbcType=TIMESTAMP}
+    where gift_send_id = #{giftSendId,jdbcType=BIGINT}
+  </update>
+</mapper>

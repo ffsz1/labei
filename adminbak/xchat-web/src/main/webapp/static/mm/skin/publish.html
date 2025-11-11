@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/upload.js"></script>
+    <title>我来陪你游网上交友触屏版自适应手机wap网站模板源码下载【http://www.lanrenmb.com/yulexiuxian/jiaoyou/】</title>
+</head>
+<body style="background-color: #EAEDF1">
+<!--头部-->
+<header style="text-align: center;font-size: 16px">
+    <i class="iconfont fl" onclick="javascript:history.go(-1);">&#xe607;</i> 我来陪你游
+</header>
+
+<div class="join">
+    <form action="" method="post">
+        <label>昵称</label>
+        <div>
+            <input type="text" placeholder="请输入您的昵称"/>
+        </div>
+        <label>性别</label>
+        <div>
+            <select name="sex" id="sex">
+                <option value="0">男</option>
+                <option value="1">女</option>
+            </select>
+        </div>
+        <label>时薪</label>
+        <div>
+            <input type="text" placeholder="请输入您需求的时薪"/>
+        </div>
+        <label>出租范围</label>
+        <div>
+            <input type="text" placeholder="请输入您的出租范围"/>
+        </div>
+        <!-- 上传头像-->
+        <div class="person fl">
+            <div id="preview">
+                <img id="imghead" src="img/head_180.jpg" />
+            </div>
+            <input type="file" onchange="previewImage(this)" class="upload" id="file">
+            <label for="file"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg> <span>上传个人照片…</span></label>
+        </div>
+        <!-- 上传二维码-->
+        <div class="qrcode fr">
+            <div id="preview1">
+                <img id="imghead1" src="img/head_180.jpg" />
+            </div>
+            <input type="file" onchange="previewImage1(this)" id="file1" class="upload" >
+            <label for="file1"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg> <span>上传微信二维码…</span></label>
+        </div>
+        <input type="submit" value="提交审核">
+    </form>
+</div>
+
+</body>
+</html>

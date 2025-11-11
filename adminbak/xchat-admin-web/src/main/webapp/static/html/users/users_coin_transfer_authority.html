@@ -1,0 +1,159 @@
+<style>
+    .content .form-group {
+        margin-right: 2rem;
+    }
+    .content .form-group label {
+        margin-right: 1rem;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="authorityTable"></div>
+                <div id="toolbar">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label>拉贝号:</label>
+                            <input type="text" class="form-control" name="erbanNo" id="erbanNo" placeholder="拉贝号">
+                        </div>
+                        <a href="javascript:void(0);" class="btn btn-primary" id="btnSearch"><i class="glyphicon glyphicon-search"></i> 查询</a>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认信息</h4>
+            </div>
+            <div class="modal-body" id="confirmMsg"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        // 生成表格
+        $('#authorityTable').bootstrapTable('destroy');
+        $('#authorityTable').bootstrapTable({
+            columns: [
+                {field: 'uid', title: 'UID', align: 'center', valign: 'middle', width: '10%', visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 400},
+                {field: 'nick', title: '昵称', align: 'center', valign: 'middle', width: 400},
+                {
+                    field: 'authority',
+                    title: '金币转账权限',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 400,
+                    formatter: function (val, row) {
+                        let content = '';
+                        if (val == true) {
+                            content += '已开通';
+                        } else if (val == false) {
+                            content += '未开通';
+                        }
+                        return content;
+                    }
+                },
+                {
+                    field: 'authority',
+                    title: '操作',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 400,
+                    formatter: function (val, row) {
+                        let content = '';
+                        if (val == true) {
+                            content += '<button class="btn btn-sm btn-danger opt-authority" data-uid=' + row.uid + ' data-authority=' + val +
+                                '><i class="glyphicon glyphicon-remove"></i> 关闭</button>';
+                        } else if (val == false) {
+                            content += '<button class="btn btn-sm btn-primary opt-authority" data-uid=' + row.uid + ' data-authority=' + val +
+                                '><i class="glyphicon glyphicon-open"></i> 开通</button>';
+                        }
+                        return content;
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, type, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    erbanNo: $('#erbanNo').val(),
+                };
+                return param;
+            },
+            uniqueId: 'uid',
+            toolbar: '#toolbar',
+            url: '/admin/user/coinsAuthority/getAllUser',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+        // 切换开通按钮
+        $("#authorityTable").on("click", '.opt-authority', function () {
+            const uid = $(this).attr('data-uid');
+            const authority = $(this).attr('data-authority') == 'false' ? true : false;
+            const word = $(this).html();
+            if (uid == 'undefined' || !uid) {
+                return;
+            }
+
+            if (confirm(`确认要${word}金币转账权限吗?`)) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/user/coinsAuthority/setAuthority.action",
+                    data: {'uid': uid, 'authority': authority},
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.code == 200) {
+                            $("#tipMsg").text(`已经成功${response.data}金币转账权限`);
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#authorityTable");
+                        } else {
+                            $("#tipMsg").text("开通金币转账权限失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        // 查询
+        $('#btnSearch').on('click', function () {
+            $('#authorityTable').bootstrapTable('refresh', {url: '/admin/user/coinsAuthority/searchUser.action'});
+        })
+    });
+</script>

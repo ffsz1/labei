@@ -1,0 +1,121 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>养鸡</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script>
+        var layout_width = 750;
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= layout_width) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <style>
+        .mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .mask .warm_img {
+            width: 6rem;
+            border-radius: 0.5rem;
+            display: block;
+            margin: auto;
+        }
+        .cont{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="theme_img">
+            <img src="images/BG.png" alt="">
+        </div>
+        <div class="activityTime">
+            <div class="line"></div>
+            <div class="text">
+                活动时间：8月22日-8月25日
+            </div>
+            <div class="line"></div>
+        </div>
+        <ul>
+            <li>任务列表</li>
+            <li>关注一位小伙伴</li>
+            <li>逛3个房间</li>
+            <li>分享拉贝语音到朋友圈</li>
+            <li>给一位小伙伴送出一个Q版养鸡</li>
+        </ul>
+        <ul>
+            <li>抽奖渠道</li>
+            <li class="no_list">
+                <span id="nums">你拥有次抽奖机会（每日机会在24点清空）
+                </span>
+                <img src="images/box.png" alt="" class="box">
+                <img src="images/open.png" alt="" class="open">
+            </li>
+        </ul>
+        <ul>
+            <li>活动规则</li>
+            <li>每完成一个任务即可获得一次抽奖机会，每日共4次，且机会在每日24点清空。另外，给一位小伙伴送出一个Q版养鸡任务中的“Q版养鸡”为这周的10金币周星礼物young-g。</li>
+            <li>本次抽奖活动除了获得有机会养鸡的签名照，还会出现各种金币礼物以及头饰座驾的奖励哦。</li>
+            <li>开启宝箱可能获得：
+                <br>
+                <span class="dust">礼物奖励包含玫瑰花、棒棒糖、么么哒、小熊</span>
+                <br> 头饰奖励包含：
+                <br>
+                <span class="dust">Young-G专属头饰x3天、爱你哦x3天、霓虹灯x3天</span>
+                <br> 座驾奖励包含：
+                <br>
+                <span class="dust">可乐小埋x3天、猫耳小女仆x3天、S级赛车x3天、养鸡专属座驾x3天</span>
+                <br> 实物奖励：
+                <br>
+                <span class="dust">养鸡的签名照 ( 总共15份 )</span>
+            </li>
+            <li>关于实物奖励，请获奖的小可爱于8月27日微信联系
+                <span class="bold">密码yuyin5</span>
+                ，填写具体地址后，将于8月28日统一以邮寄方式寄出该奖励。</li>
+        </ul>
+        <div class="footer">本次活动最终解释权归拉贝所有</div>
+    </div>
+    <div class="mask">
+        <div class="cont">
+            <img class="warm_img">
+            <button class="close"></button>
+        </div>
+    </div>
+    <script src="../lib/zepto.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

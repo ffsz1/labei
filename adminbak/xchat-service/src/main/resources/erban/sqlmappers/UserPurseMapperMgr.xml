@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserPurseMapperMgr" >
+  <update id="updateAddChargeGold" parameterType="com.erban.main.model.UserPurse" >
+      update user_purse set is_first_charge = 0, gold_num=gold_num + #{1},charge_gold_num=charge_gold_num + #{1},update_time=now()
+      where uid=#{0}
+  </update>
+
+  <update id="updateAddNobleGold" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse set gold_num=gold_num + #{1},noble_gold_num=noble_gold_num + #{1},update_time=now()
+    where uid=#{0}
+  </update>
+
+  <update id="updateMinusChargeGold" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse set gold_num=gold_num - #{1},charge_gold_num=charge_gold_num - #{1},update_time=now()
+    where uid=#{0} and gold_num - #{1}>=0
+  </update>
+
+  <update id="updateMinusNobleGold" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse set gold_num=gold_num - #{1},noble_gold_num=noble_gold_num - #{1},update_time=now()
+    where uid=#{0} and gold_num - #{1}>=0
+  </update>
+
+  <update id="updateMinusGold" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse set update_time=now(),gold_num=gold_num - #{1},charge_gold_num=charge_gold_num-#{2}
+    ,noble_gold_num=noble_gold_num-#{3}
+    where uid=#{0} and gold_num - #{1}>=0
+  </update>
+
+  <update id="updateAddDiamond" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse set diamond_num=diamond_num + #{1},update_time=now() where uid=#{0}
+  </update>
+
+  <update id="updateMinusDiamond" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse set diamond_num=diamond_num - #{1},update_time=now() where uid=#{0}
+    and diamond_num=diamond_num - #{1}>=0
+  </update>
+
+  <update id="exchageDiamondToChargeGold" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse set diamond_num=diamond_num - #{1},gold_num=gold_num + #{2},charge_gold_num=charge_gold_num + #{2}
+    , update_time=now() where uid=#{0} and diamond_num=diamond_num - #{1}>=0
+  </update>
+</mapper>

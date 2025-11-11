@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatShareChargeMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatShareCharge" >
+    <id column="share_charge_id" property="shareChargeId" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="erban_no" property="erbanNo" jdbcType="INTEGER" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="share_channel" property="shareChannel" jdbcType="TINYINT" />
+    <result column="register_count" property="registerCount" jdbcType="INTEGER" />
+    <result column="morethan_charge_count" property="morethanChargeCount" jdbcType="INTEGER" />
+    <result column="charge_count" property="chargeCount" jdbcType="INTEGER" />
+    <result column="stat_date" property="statDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    share_charge_id, uid, erban_no, nick, share_channel, register_count, morethan_charge_count, 
+    charge_count, stat_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatShareChargeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_share_charge
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_share_charge
+    where share_charge_id = #{shareChargeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stat_share_charge
+    where share_charge_id = #{shareChargeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.StatShareCharge" >
+    insert into stat_share_charge (share_charge_id, uid, erban_no, 
+      nick, share_channel, register_count, 
+      morethan_charge_count, charge_count, stat_date
+      )
+    values (#{shareChargeId,jdbcType=INTEGER}, #{uid,jdbcType=BIGINT}, #{erbanNo,jdbcType=INTEGER}, 
+      #{nick,jdbcType=VARCHAR}, #{shareChannel,jdbcType=TINYINT}, #{registerCount,jdbcType=INTEGER}, 
+      #{morethanChargeCount,jdbcType=INTEGER}, #{chargeCount,jdbcType=INTEGER}, #{statDate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatShareCharge" >
+    insert into stat_share_charge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shareChargeId != null" >
+        share_charge_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="erbanNo != null" >
+        erban_no,
+      </if>
+      <if test="nick != null" >
+        nick,
+      </if>
+      <if test="shareChannel != null" >
+        share_channel,
+      </if>
+      <if test="registerCount != null" >
+        register_count,
+      </if>
+      <if test="morethanChargeCount != null" >
+        morethan_charge_count,
+      </if>
+      <if test="chargeCount != null" >
+        charge_count,
+      </if>
+      <if test="statDate != null" >
+        stat_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shareChargeId != null" >
+        #{shareChargeId,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null" >
+        #{erbanNo,jdbcType=INTEGER},
+      </if>
+      <if test="nick != null" >
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="shareChannel != null" >
+        #{shareChannel,jdbcType=TINYINT},
+      </if>
+      <if test="registerCount != null" >
+        #{registerCount,jdbcType=INTEGER},
+      </if>
+      <if test="morethanChargeCount != null" >
+        #{morethanChargeCount,jdbcType=INTEGER},
+      </if>
+      <if test="chargeCount != null" >
+        #{chargeCount,jdbcType=INTEGER},
+      </if>
+      <if test="statDate != null" >
+        #{statDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.StatShareCharge" >
+    update stat_share_charge
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="erbanNo != null" >
+        erban_no = #{erbanNo,jdbcType=INTEGER},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="shareChannel != null" >
+        share_channel = #{shareChannel,jdbcType=TINYINT},
+      </if>
+      <if test="registerCount != null" >
+        register_count = #{registerCount,jdbcType=INTEGER},
+      </if>
+      <if test="morethanChargeCount != null" >
+        morethan_charge_count = #{morethanChargeCount,jdbcType=INTEGER},
+      </if>
+      <if test="chargeCount != null" >
+        charge_count = #{chargeCount,jdbcType=INTEGER},
+      </if>
+      <if test="statDate != null" >
+        stat_date = #{statDate,jdbcType=DATE},
+      </if>
+    </set>
+    where share_charge_id = #{shareChargeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.StatShareCharge" >
+    update stat_share_charge
+    set uid = #{uid,jdbcType=BIGINT},
+      erban_no = #{erbanNo,jdbcType=INTEGER},
+      nick = #{nick,jdbcType=VARCHAR},
+      share_channel = #{shareChannel,jdbcType=TINYINT},
+      register_count = #{registerCount,jdbcType=INTEGER},
+      morethan_charge_count = #{morethanChargeCount,jdbcType=INTEGER},
+      charge_count = #{chargeCount,jdbcType=INTEGER},
+      stat_date = #{statDate,jdbcType=DATE}
+    where share_charge_id = #{shareChargeId,jdbcType=INTEGER}
+  </update>
+</mapper>

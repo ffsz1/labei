@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.erban.main.mybatismapper.GiftMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.Gift">
+        <id column="gift_id" jdbcType="INTEGER" property="giftId"/>
+        <result column="gift_name" jdbcType="VARCHAR" property="giftName"/>
+        <result column="gold_price" jdbcType="BIGINT" property="goldPrice"/>
+        <result column="seq_no" jdbcType="INTEGER" property="seqNo"/>
+        <result column="noble_id" jdbcType="INTEGER" property="nobleId"/>
+        <result column="noble_name" jdbcType="VARCHAR" property="nobleName"/>
+        <result column="is_noble_gift" jdbcType="BIT" property="isNobleGift"/>
+        <result column="gift_type" jdbcType="TINYINT" property="giftType"/>
+        <result column="gift_status" jdbcType="TINYINT" property="giftStatus"/>
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
+        <result column="has_gif_pic" jdbcType="BIT" property="hasGifPic"/>
+        <result column="gif_url" jdbcType="VARCHAR" property="gifUrl"/>
+        <result column="has_vgg_pic" jdbcType="BIT" property="hasVggPic"/>
+        <result column="vgg_url" jdbcType="VARCHAR" property="vggUrl"/>
+        <result column="is_latest" jdbcType="BIT" property="isLatest"/>
+        <result column="is_time_limit" jdbcType="BIT" property="isTimeLimit"/>
+        <result column="has_effect" jdbcType="BIT" property="hasEffect"/>
+        <result column="start_valid_time" jdbcType="TIMESTAMP" property="startValidTime"/>
+        <result column="end_valid_time" jdbcType="TIMESTAMP" property="endValidTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="is_express_gift" jdbcType="BIT" property="isExpressGift"/>
+        <result column="is_can_give" jdbcType="BIT" property="isCanGive"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+            <if test="likeName != null and likeName != ''">
+                AND gift_name LIKE CONCAT('%', #{likeName}, "%")
+            </if>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        gift_id, gift_name, gold_price, seq_no, noble_id, noble_name, is_noble_gift, gift_type,
+        gift_status, pic_url, has_gif_pic, gif_url, has_vgg_pic, vgg_url, is_latest, is_time_limit,
+        has_effect, start_valid_time, end_valid_time, create_time, is_express_gift, is_can_give
+    </sql>
+    <select id="selectByExample" parameterType="com.erban.main.model.GiftExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from gift
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="queryHighPriceGifts" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gift
+        where gold_price >= 520 and gift_type = #{giftType,jdbcType=TINYINT} and gift_status = 1
+        order by gold_price asc
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gift
+        where gift_id = #{giftId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from gift
+        where gift_id = #{giftId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.GiftExample">
+        delete from gift
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.Gift">
+        insert into gift (gift_id, gift_name, gold_price,
+                    seq_no, noble_id, noble_name,
+                    is_noble_gift, gift_type, gift_status,
+                    pic_url, has_gif_pic, gif_url,
+                    has_vgg_pic, vgg_url, is_latest,
+                    is_time_limit, has_effect, start_valid_time,
+                    end_valid_time, create_time, is_express_gift,
+                    is_can_give)
+        values (#{giftId,jdbcType=INTEGER}, #{giftName,jdbcType=VARCHAR}, #{goldPrice,jdbcType=BIGINT},
+                #{seqNo,jdbcType=INTEGER}, #{nobleId,jdbcType=INTEGER}, #{nobleName,jdbcType=VARCHAR},
+                #{isNobleGift,jdbcType=BIT}, #{giftType,jdbcType=TINYINT}, #{giftStatus,jdbcType=TINYINT},
+                #{picUrl,jdbcType=VARCHAR}, #{hasGifPic,jdbcType=BIT}, #{gifUrl,jdbcType=VARCHAR},
+                #{hasVggPic,jdbcType=BIT}, #{vggUrl,jdbcType=VARCHAR}, #{isLatest,jdbcType=BIT},
+                #{isTimeLimit,jdbcType=BIT}, #{hasEffect,jdbcType=BIT}, #{startValidTime,jdbcType=TIMESTAMP},
+                #{endValidTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{isExpressGift,jdbcType=BIT},
+                #{isCanGive,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.Gift">
+        insert into gift
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="giftId != null">
+                gift_id,
+            </if>
+            <if test="giftName != null">
+                gift_name,
+            </if>
+            <if test="goldPrice != null">
+                gold_price,
+            </if>
+            <if test="seqNo != null">
+                seq_no,
+            </if>
+            <if test="nobleId != null">
+                noble_id,
+            </if>
+            <if test="nobleName != null">
+                noble_name,
+            </if>
+            <if test="isNobleGift != null">
+                is_noble_gift,
+            </if>
+            <if test="giftType != null">
+                gift_type,
+            </if>
+            <if test="giftStatus != null">
+                gift_status,
+            </if>
+            <if test="picUrl != null">
+                pic_url,
+            </if>
+            <if test="hasGifPic != null">
+                has_gif_pic,
+            </if>
+            <if test="gifUrl != null">
+                gif_url,
+            </if>
+            <if test="hasVggPic != null">
+                has_vgg_pic,
+            </if>
+            <if test="vggUrl != null">
+                vgg_url,
+            </if>
+            <if test="isLatest != null">
+                is_latest,
+            </if>
+            <if test="isTimeLimit != null">
+                is_time_limit,
+            </if>
+            <if test="hasEffect != null">
+                has_effect,
+            </if>
+            <if test="startValidTime != null">
+                start_valid_time,
+            </if>
+            <if test="endValidTime != null">
+                end_valid_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="isExpressGift != null">
+                is_express_gift,
+            </if>
+            <if test="isCanGive != null">
+                is_can_give,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="giftId != null">
+                #{giftId,jdbcType=INTEGER},
+            </if>
+            <if test="giftName != null">
+                #{giftName,jdbcType=VARCHAR},
+            </if>
+            <if test="goldPrice != null">
+                #{goldPrice,jdbcType=BIGINT},
+            </if>
+            <if test="seqNo != null">
+                #{seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="nobleId != null">
+                #{nobleId,jdbcType=INTEGER},
+            </if>
+            <if test="nobleName != null">
+                #{nobleName,jdbcType=VARCHAR},
+            </if>
+            <if test="isNobleGift != null">
+                #{isNobleGift,jdbcType=BIT},
+            </if>
+            <if test="giftType != null">
+                #{giftType,jdbcType=TINYINT},
+            </if>
+            <if test="giftStatus != null">
+                #{giftStatus,jdbcType=TINYINT},
+            </if>
+            <if test="picUrl != null">
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="hasGifPic != null">
+                #{hasGifPic,jdbcType=BIT},
+            </if>
+            <if test="gifUrl != null">
+                #{gifUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="hasVggPic != null">
+                #{hasVggPic,jdbcType=BIT},
+            </if>
+            <if test="vggUrl != null">
+                #{vggUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isLatest != null">
+                #{isLatest,jdbcType=BIT},
+            </if>
+            <if test="isTimeLimit != null">
+                #{isTimeLimit,jdbcType=BIT},
+            </if>
+            <if test="hasEffect != null">
+                #{hasEffect,jdbcType=BIT},
+            </if>
+            <if test="startValidTime != null">
+                #{startValidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endValidTime != null">
+                #{endValidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isExpressGift != null">
+                #{isExpressGift,jdbcType=BIT},
+            </if>
+            <if test="isCanGive != null">
+                #{isCanGive,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.GiftExample" resultType="java.lang.Integer">
+        select count(*) from gift
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update gift
+        <set>
+            <if test="record.giftId != null">
+                gift_id = #{record.giftId,jdbcType=INTEGER},
+            </if>
+            <if test="record.giftName != null">
+                gift_name = #{record.giftName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.goldPrice != null">
+                gold_price = #{record.goldPrice,jdbcType=BIGINT},
+            </if>
+            <if test="record.seqNo != null">
+                seq_no = #{record.seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="record.nobleId != null">
+                noble_id = #{record.nobleId,jdbcType=INTEGER},
+            </if>
+            <if test="record.nobleName != null">
+                noble_name = #{record.nobleName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.isNobleGift != null">
+                is_noble_gift = #{record.isNobleGift,jdbcType=BIT},
+            </if>
+            <if test="record.giftType != null">
+                gift_type = #{record.giftType,jdbcType=TINYINT},
+            </if>
+            <if test="record.giftStatus != null">
+                gift_status = #{record.giftStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.picUrl != null">
+                pic_url = #{record.picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.hasGifPic != null">
+                has_gif_pic = #{record.hasGifPic,jdbcType=BIT},
+            </if>
+            <if test="record.gifUrl != null">
+                gif_url = #{record.gifUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.hasVggPic != null">
+                has_vgg_pic = #{record.hasVggPic,jdbcType=BIT},
+            </if>
+            <if test="record.vggUrl != null">
+                vgg_url = #{record.vggUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.isLatest != null">
+                is_latest = #{record.isLatest,jdbcType=BIT},
+            </if>
+            <if test="record.isTimeLimit != null">
+                is_time_limit = #{record.isTimeLimit,jdbcType=BIT},
+            </if>
+            <if test="record.hasEffect != null">
+                has_effect = #{record.hasEffect,jdbcType=BIT},
+            </if>
+            <if test="record.startValidTime != null">
+                start_valid_time = #{record.startValidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.endValidTime != null">
+                end_valid_time = #{record.endValidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.isExpressGift != null">
+                is_express_gift = #{record.isExpressGift,jdbcType=BIT},
+            </if>
+            <if test="record.isCanGive != null">
+                is_can_give = #{record.isCanGive,jdbcType=BIT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update gift
+        set gift_id = #{record.giftId,jdbcType=INTEGER},
+            gift_name = #{record.giftName,jdbcType=VARCHAR},
+            gold_price = #{record.goldPrice,jdbcType=BIGINT},
+            seq_no = #{record.seqNo,jdbcType=INTEGER},
+            noble_id = #{record.nobleId,jdbcType=INTEGER},
+            noble_name = #{record.nobleName,jdbcType=VARCHAR},
+            is_noble_gift = #{record.isNobleGift,jdbcType=BIT},
+            gift_type = #{record.giftType,jdbcType=TINYINT},
+            gift_status = #{record.giftStatus,jdbcType=TINYINT},
+            pic_url = #{record.picUrl,jdbcType=VARCHAR},
+            has_gif_pic = #{record.hasGifPic,jdbcType=BIT},
+            gif_url = #{record.gifUrl,jdbcType=VARCHAR},
+            has_vgg_pic = #{record.hasVggPic,jdbcType=BIT},
+            vgg_url = #{record.vggUrl,jdbcType=VARCHAR},
+            is_latest = #{record.isLatest,jdbcType=BIT},
+            is_time_limit = #{record.isTimeLimit,jdbcType=BIT},
+            has_effect = #{record.hasEffect,jdbcType=BIT},
+            start_valid_time = #{record.startValidTime,jdbcType=TIMESTAMP},
+            end_valid_time = #{record.endValidTime,jdbcType=TIMESTAMP},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            is_express_gift = #{record.isExpressGift,jdbcType=BIT},
+            is_can_give = #{record.isCanGive,jdbcType=BIT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Gift">
+        update gift
+        <set>
+            <if test="giftName != null">
+                gift_name = #{giftName,jdbcType=VARCHAR},
+            </if>
+            <if test="goldPrice != null">
+                gold_price = #{goldPrice,jdbcType=BIGINT},
+            </if>
+            <if test="seqNo != null">
+                seq_no = #{seqNo,jdbcType=INTEGER},
+            </if>
+            <if test="nobleId != null">
+                noble_id = #{nobleId,jdbcType=INTEGER},
+            </if>
+            <if test="nobleName != null">
+                noble_name = #{nobleName,jdbcType=VARCHAR},
+            </if>
+            <if test="isNobleGift != null">
+                is_noble_gift = #{isNobleGift,jdbcType=BIT},
+            </if>
+            <if test="giftType != null">
+                gift_type = #{giftType,jdbcType=TINYINT},
+            </if>
+            <if test="giftStatus != null">
+                gift_status = #{giftStatus,jdbcType=TINYINT},
+            </if>
+            <if test="picUrl != null">
+                pic_url = #{picUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="hasGifPic != null">
+                has_gif_pic = #{hasGifPic,jdbcType=BIT},
+            </if>
+            <if test="gifUrl != null">
+                gif_url = #{gifUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="hasVggPic != null">
+                has_vgg_pic = #{hasVggPic,jdbcType=BIT},
+            </if>
+            <if test="vggUrl != null">
+                vgg_url = #{vggUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="isLatest != null">
+                is_latest = #{isLatest,jdbcType=BIT},
+            </if>
+            <if test="isTimeLimit != null">
+                is_time_limit = #{isTimeLimit,jdbcType=BIT},
+            </if>
+            <if test="hasEffect != null">
+                has_effect = #{hasEffect,jdbcType=BIT},
+            </if>
+            <if test="startValidTime != null">
+                start_valid_time = #{startValidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endValidTime != null">
+                end_valid_time = #{endValidTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isExpressGift != null">
+                is_express_gift = #{isExpressGift,jdbcType=BIT},
+            </if>
+            <if test="isCanGive != null">
+                is_can_give = #{isCanGive,jdbcType=BIT},
+            </if>
+        </set>
+        where gift_id = #{giftId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Gift">
+        update gift
+        set gift_name = #{giftName,jdbcType=VARCHAR},
+            gold_price = #{goldPrice,jdbcType=BIGINT},
+            seq_no = #{seqNo,jdbcType=INTEGER},
+            noble_id = #{nobleId,jdbcType=INTEGER},
+            noble_name = #{nobleName,jdbcType=VARCHAR},
+            is_noble_gift = #{isNobleGift,jdbcType=BIT},
+            gift_type = #{giftType,jdbcType=TINYINT},
+            gift_status = #{giftStatus,jdbcType=TINYINT},
+            pic_url = #{picUrl,jdbcType=VARCHAR},
+            has_gif_pic = #{hasGifPic,jdbcType=BIT},
+            gif_url = #{gifUrl,jdbcType=VARCHAR},
+            has_vgg_pic = #{hasVggPic,jdbcType=BIT},
+            vgg_url = #{vggUrl,jdbcType=VARCHAR},
+            is_latest = #{isLatest,jdbcType=BIT},
+            is_time_limit = #{isTimeLimit,jdbcType=BIT},
+            has_effect = #{hasEffect,jdbcType=BIT},
+            start_valid_time = #{startValidTime,jdbcType=TIMESTAMP},
+            end_valid_time = #{endValidTime,jdbcType=TIMESTAMP},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            is_express_gift = #{isExpressGift,jdbcType=BIT},
+            is_can_give = #{isCanGive,jdbcType=BIT}
+        where gift_id = #{giftId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>推荐位</title>
+    <script>
+      var layout_width = 750;
+      (function (doc, win) {
+        var docEl = doc.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+          recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            if (clientWidth >= layout_width) {
+              docEl.style.fontSize = '100px';
+            } else {
+              docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+            }
+          };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+      })(document, window);
+    </script>
+    <link rel="stylesheet" href="../lib/reset.css">
+    <link rel="stylesheet" href="css/list.css">
+  </head>
+  <body>
+    <div class="container">
+        <div class="content">
+        </div>
+    </div>
+    <div style="display:none">
+      <script src="https://s19.cnzz.com/z_stat.php?id=1272979589&web_id=1272979589" language="JavaScript"></script>
+    </div>
+    <script src="../lib/zepto.min.js"></script>
+    <script src="../lib/common.js"></script>
+    <script src="js/list.js"></script>
+  </body>
+</html>

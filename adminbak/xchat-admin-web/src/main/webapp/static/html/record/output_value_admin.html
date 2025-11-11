@@ -1,0 +1,203 @@
+<style>
+    table.table-fixed-head .table-fixed-head-thead {
+        border-bottom: 1px solid #dddddd;
+        border-top: 1px solid #dddddd;
+        background: #fff;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">平台:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" name="os" id="os"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="android">android</option>
+                                <option value="iOS">iOS</option>
+                                <option value="wxapp">小程序</option>
+                                <option value="web">H5</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">性别:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" name="gender" id="gender"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                                <option value="0">其他</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">渠道:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" name="channel" id="channel"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="1">360(360m)</option>
+                                <option value="2">oppo(oppo)</option>
+                                <option value="3">华为(hwsc)</option>
+                                <option value="4">应用宝(ybsc)</option>
+                                <option value="5">vivo(vivo)</option>
+                                <option value="6">阿里(alsc)</option>
+                                <option value="7">百度(bdsc)</option>
+                                <option value="8">小米(xmsc)</option>
+                                <option value="9">三星(sxsc)</option>
+                                <option value="10">魅族(mzsc)</option>
+                                <option value="11">安智(azsc)</option>
+                                <option value="12">搜狗(sgsc)</option>
+                                <option value="13">联想(lxsc)</option>
+                                <option value="14">zy01</option>
+                                <option value="15">zy02</option>
+                                <option value="16">zy03</option>
+                                <option value="17">zy04</option>
+                                <option value="18">pp01</option>
+                                <option value="19">pp02</option>
+                                <option value="20">pp03</option>
+                                <option value="21">pp04</option>
+                                <option value="0">其他</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-1 control-label">显示数据:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" name="showType" id="showType"
+                                    data-btn-class="btn-warning">
+                                <option value="1">充值人数</option>
+                                <option value="2">充值金额</option>
+                                <option value="3">注册产值</option>
+                                <option value="4">付费产值</option>
+                                <option value="5">登陆比率</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">注册时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="signBegin" type="date" name="signBegin"
+                                   class="form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="signEnd" type="date" name="signEnd"
+                                   class="form-control validate[required]">
+                        </div>
+                        <label class="col-sm-1 control-label">类型:</label>
+                        <div class="col-sm-2">
+                            <select class="btn btn-default btn-block dropdown-toggle" name="app" id="app"
+                                    data-btn-class="btn-warning">
+                                <option value="">全部</option>
+                                <option value="xchat">拉贝语音</option>
+                                <option value="mmxq">拉贝星球</option>
+                                <option value="mmjy">拉贝交友</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <div id="table"></div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    // 设置时间初始值
+    $("#signBegin").val(getLastDate());
+    $("#signEnd").val(getCurrentDate());
+
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'signDate', title: '时间', align: 'center', valign: 'middle', width: '250'},
+                {field: 'signNum', title: '注册人数', align: 'center', valign: 'middle', width: '100'},
+                {field: 'firstNum', title: '第一天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'secondNum', title: '第二天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'thirdNum', title: '第三天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'fourthNum', title: '第四天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'fifthNum', title: '第五天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'sixthNum', title: '第六天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'seventhNum', title: '第七天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'eighthNum', title: '第八天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'ninthNum', title: '第九天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'tenthNum', title: '第十天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'eleventhNum', title: '第十一天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'twelfthNum', title: '第十二天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'thirteenthNum', title: '第十三天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'fourteenthNum', title: '第十四天', align: 'center', valign: 'middle', width: '100'},
+                {field: 'sumNum', title: '总计', align: 'center', valign: 'middle', width: '100'}
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            sortStable: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            search: false,
+            sidePagination: "server",
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNum: params.pageNumber,
+                    os: $("#os").val(),
+                    gender: $("#gender").val(),
+                    channel: $("#channel").val(),
+                    showType: $("#showType").val(),
+                    signBegin: $("#signBegin").val(),
+                    signEnd: $("#signEnd").val(),
+                    app: $("#app").val()
+                };
+                return param;
+            },
+            uniqueId: 'id',
+            toolbar: '#toolbar',
+            url: '/admin/outputValue/list.action',
+            method: 'post',
+            responseHandler: function (res) {
+                if (res.code == 200) {
+                    return {
+                        "total": res.data.total,
+                        "rows": res.data.list,
+                    };
+                } else {
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+        });
+    });
+
+    $('#signBegin').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    $('#signEnd').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        minView: "month"
+    });
+
+    function getLastDate() {
+        const date = new Date();
+        date.setDate(date.getDate() - 6);
+        return date.format("yyyy-MM-dd");
+    }
+
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    }
+</script>
+<script src="/static/js/admin/style.js"></script>

@@ -1,0 +1,341 @@
+<style>
+    .btn{
+        margin: 0 4px;
+    }
+</style>
+<section class="content">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            拉贝号:
+            <input type="text" class="" name="erbanNo" id="erbanNo" placeholder="拉贝号">
+            周期:
+            <select class="" name="weekDay" id="weekDay">
+                <option value="">请选择</option>
+                <option value="0">周日</option>
+                <option value="1">周一</option>
+                <option value="2">周二</option>
+                <option value="3">周三</option>
+                <option value="4">周四</option>
+                <option value="5">周五</option>
+                <option value="6">周六</option>
+            </select>
+            显示位置:
+            <select class="" id="searchViewType">
+                <option value="">请选择</option>
+                <option value="1">首页推荐</option>
+                <option value="2">活位推荐</option>
+            </select>
+        </div>
+    </form>
+    <div id="toolbar">
+        <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+        <button id="add" class="btn btn-default">
+            <i class="glyphicon glyphicon-plus"></i>增加
+        </button>
+    </div>
+    <div id="table"></div>
+</section>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">添加热门推荐</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addRuleForm">
+                    <div class="form-group">
+                        <label for="addErbanNo" class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="id" id="id" class="hidden">
+                            <input type="text" name="erbanNo" id="addErbanNo" placeholder="拉贝号" class="validate[required] form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate" class="col-sm-3 control-label">开始时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="startDate" id="startDate" autocomplete="off" class="date validate[required] form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate" class="col-sm-3 control-label">结束时间:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="endDate" id="endDate" autocomplete="off" class="date validate[required] form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-3 control-label">排列序号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="seqNo" id="seqNo" autocomplete="off" class="date validate[required] form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="viewType" class="col-sm-3 control-label">显示位置:</label>
+                        <div class="col-sm-8">
+                            <select name="viewType" id="viewType" class="form-control">
+                                <option value="1">首页推荐</option>
+                                <option value="2">活位推荐</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">循环:</label>
+                        <div class="col-sm-8">
+                            周日 <input name="weekDays" type="checkbox" value="0"/>
+                            周一 <input name="weekDays" type="checkbox" value="1"/>
+                            周二 <input name="weekDays" type="checkbox" value="2"/>
+                            周三 <input name="weekDays" type="checkbox" value="3"/>
+                            周四 <input name="weekDays" type="checkbox" value="4"/>
+                            周五 <input name="weekDays" type="checkbox" value="5"/>
+                            周六 <input name="weekDays" type="checkbox" value="6"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate" class="col-sm-3 control-label">状态:</label>
+                        <div class="col-sm-8">
+                            可用 <input name="statusNo" type="radio" checked="checked" value="1"/>
+                            停用 <input name="statusNo" type="radio" value="2"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="addBtn" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns:[
+                {field:'id',title:'ID',align:'center',valign:'middle',width:'5%'},
+                {field:'erbanNo',title:'拉贝号',align:'center',valign:'middle',width:'5%'},
+                {field:'title',title:'房间标题',align:'center',valign:'middle',width:'10%'},
+                {field:'isPermitRoom',title:'是否牌照',align:'center',valign:'middle',width:'5%',
+                    formatter:function(val,row, index){
+                        if(val == 1){
+                            return '是';
+                        }else if (val == 3){
+                            return '审核';
+                        }else {
+                            return '不是';
+                        }
+                    }},
+                {field:'startDate',title:'开始时间',align:'center',valign:'middle',width:'10%'},
+                {field:'endDate',title:'结束时间',align:'center',valign:'middle',width:'10%'},
+                {field:'seqNo',title:'排列序号',align:'center',valign:'middle',width:'10%'},
+                {field:'viewType',title:'显示位置',align:'center',valign:'middle',width:'5%',
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return "首页推荐";
+                        } else if (val == 2) {
+                            return "活位推荐";
+                        } else {
+                            return "-";
+                        }
+                    }
+                },
+                {field:'weekDays',title:'循环周期',align:'center',valign:'middle',width:'10%',
+                    formatter : function (val, row, index) {
+                        console.log(val);
+                        var ar = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六")
+                        var arr = row.weekDays.split(",");
+                        var txt = "";
+                        for(var i = 0; i < arr.length; i ++) {
+                            var n = arr[i];
+                            txt += ar[n] + ", ";
+                        }
+                        return txt;
+                    }
+                },
+                {field:'status',title:'状态',align:'center',valign:'middle',width:'10%',
+                    formatter: function (val, row, index) {
+                        if (row.status == 1) {
+                            return "正常";
+                        } else {
+                            return "停用";
+                        }
+                    }},
+                {field:'createDate',title:'创建时间',align:'center',valign:'middle',width:'10%',
+                    formatter: function (val, row, index) {
+                        if(val){
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        }else{
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field:'tmp',
+                    title:'操作',
+                    align:'center',
+                    valign:'middle',
+                    width:'15%',
+                    formatter: function (val,row,index) {
+                        var key = row.id;
+                        return  "<button class='btn btn-sm btn-success opt-edit' data-id="+ key +">编辑</button>" +
+                            "<button class='btn btn-sm btn-danger opt-del' data-id="+ key +">删除</button>";
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    erbanNo: $('#erbanNo').val(),
+                    weekDay: $('#weekDay').val(),
+                    viewType: $("#searchViewType").val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/hotManual/rule/list.action',
+            responseHandler: function(res) {
+                if (res.total > 0) {
+                    return {
+                        "total": res.total,//总页数
+                        "rows": res.rows.list  //数据
+                    };
+                } else {
+                    $("#tipMsg").text("查询不到相应数据");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",//总页数
+                        "rows": []  //数据
+                    };
+                }
+            },
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        })
+
+        $('#add').on('click',function () {
+            $("#addRuleForm")[0].reset();
+            $('#addModal').modal('show');
+        })
+
+        $("#table").on("click", ".opt-del", function () {
+            var id = $(this).data("id");
+            $.get("/admin/hotManual/rule/delete/" + id, function (data) {
+                if (data.code == 200) {
+                    $("#tipMsg").text("删除成功");
+                    TableHelper.doRefresh('#table');
+                } else {
+                    $("#tipMsg").text("删除失败，错误码：" + data.code);
+                }
+            })
+        })
+        
+        $("#table").on("click", ".opt-edit", function () {
+            var id = $(this).data("id");
+            console.log(id)
+            $.get("/admin/hotManual/rule/get/" + id, function (data) {
+                if (data.code == 200) {
+                    $("#addRuleForm")[0]    .reset();
+                    $('#addModal').modal('show');
+                    $("#id").val(id);
+                    $("#addErbanNo").val(data.data.erbanNo);
+                    $("#startDate").val(data.data.startDate);
+                    $("#endDate").val(data.data.endDate);
+                    $("#seqNo").val(data.data.seqNo);
+                    $("#viewType").val(data.data.viewType);
+                    $("input[name=status]").val(data.data.status);
+                    var arr = data.data.weekDays.split(",");
+                    for(var i = 0; i < arr.length; i ++) {
+                        $("input:checkbox[value="+ arr[i] +"]").attr('checked','true');
+                    }
+                    // checkBoxValue
+                } else {
+                    $("#tipMsg").text("请求失败，错误码：" + res.code);
+                    $("#tipModal").modal('show');
+                }
+            })
+        })
+        
+        $("#save").on("click", function () {
+            if (!$('#addRuleForm').validationEngine('validate')) {
+                return false;
+            }
+            var weekDays = $("input[name='weekDays']:checked");
+            var checkBoxValue = "";
+            weekDays.each(function(){
+                checkBoxValue += $(this).val() + ",";
+            })
+            checkBoxValue = checkBoxValue.substring(0, checkBoxValue.length-1);
+            var param = {
+                id : $("#id").val(),
+                status: $("input[name='statusNo']:checked").val(),
+                erbanNo: $("#addErbanNo").val(),
+                startDate: $("#startDate").val(),
+                endDate: $("#endDate").val(),
+                weekDays: checkBoxValue,
+                seqNo: $("#seqNo").val(),
+                viewType: $("#viewType").val()
+            }
+            console.log(param);
+            $.ajax({
+                type: 'post',
+                url: '/admin/hotManual/rule/save.action',
+                data: param,
+                dataType: 'json',
+                success: function (res) {
+                    if(res.code == 200){
+                        $('#addModal').modal('hide');
+                        $("#tipMsg").text("保存成功");
+                        $("#tipModal").modal('show');
+                        TableHelper.doRefresh("#table");
+                    }else{
+                        $("#tipMsg").text("保存失败，错误码：" + res.code);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+
+        //
+        var picker1 = $('#startDate').datetimepicker({
+            startView: 1,
+            format: 'hh:ii',
+            autoclose: true
+        })
+        picker1.on('changeDate', function () {
+            var date = $('#startDate').datetimepicker('getDate');
+            picker2.datetimepicker('setStartDate',date);
+        });
+        //
+        var picker2 = $('#endDate').datetimepicker({
+            startView: 1,
+            minView: 0,
+            format: 'hh:ii',
+            autoclose: true
+        })
+        picker2.on('changeDate', function () {
+            var date = $('#endDate').datetimepicker('getDate');
+            picker1.datetimepicker('setEndDate',date);
+        });
+        //
+        $('#btnSearch').on('click',function () {
+            TableHelper.doRefresh('#table');
+        })
+
+    })
+</script>

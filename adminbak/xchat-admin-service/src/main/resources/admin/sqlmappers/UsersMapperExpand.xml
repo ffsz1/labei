@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.admin.main.mapper.UserMapperExpand">
+    <resultMap id="BaseResultMap" type="com.erban.admin.main.vo.UsersVo">
+        <id column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="erban_no" property="erbanNo" jdbcType="BIGINT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="birth" property="birth" jdbcType="DATE"/>
+        <result column="star" property="star" jdbcType="TINYINT"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="signture" property="signture" jdbcType="VARCHAR"/>
+        <result column="user_voice" property="userVoice" jdbcType="VARCHAR"/>
+        <result column="voice_dura" property="voiceDura" jdbcType="INTEGER"/>
+        <result column="follow_num" property="followNum" jdbcType="INTEGER"/>
+        <result column="fans_num" property="fansNum" jdbcType="INTEGER"/>
+        <result column="def_user" property="defUser" jdbcType="TINYINT"/>
+        <result column="fortune" property="fortune" jdbcType="BIGINT"/>
+        <result column="channel_type" property="channelType" jdbcType="TINYINT"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="TINYINT"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="region" property="region" jdbcType="VARCHAR"/>
+        <result column="user_desc" property="userDesc" jdbcType="VARCHAR"/>
+        <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR"/>
+        <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="wx_pub_fans_openid" property="wxPubFansOpenid" jdbcType="VARCHAR"/>
+        <result column="wx_pub_fans_gender" property="wxPubFansGender" jdbcType="TINYINT"/>
+        <result column="room_uid" property="roomUid" jdbcType="BIGINT"/>
+        <result column="share_uid" property="shareUid" jdbcType="BIGINT"/>
+        <result column="share_channel" property="shareChannel" jdbcType="TINYINT"/>
+        <result column="wx_openId" property="wxOpenid" jdbcType="VARCHAR"/>
+        <result column="os" property="os" jdbcType="VARCHAR"/>
+        <result column="osVersion" property="osversion" jdbcType="VARCHAR"/>
+        <result column="app" property="app" jdbcType="VARCHAR"/>
+        <result column="imei" property="imei" jdbcType="VARCHAR"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="linkedme_channel" property="linkedmeChannel" jdbcType="VARCHAR"/>
+        <result column="isp_type" property="ispType" jdbcType="VARCHAR"/>
+        <result column="net_type" property="netType" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="device_id" property="deviceId" jdbcType="VARCHAR"/>
+        <result column="app_version" property="appVersion" jdbcType="VARCHAR"/>
+        <result column="gold_num" property="goldNum" jdbcType="BIGINT"/>
+        <result column="diamond_num" property="diamondNum" jdbcType="DOUBLE"/>
+    </resultMap>
+    <select id="selectUserWithGold" resultMap="BaseResultMap">
+        select *, (select t2.gold_num from user_purse t2 where t2.uid = t1.uid) as gold_num
+        from users t1 where erban_no in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectUserWithDiamond" resultType="com.erban.admin.main.vo.UsersVo">
+        select *, (select t2.diamond_num from user_purse t2 where t2.uid = t1.uid) as diamond_num
+        from users t1 where erban_no in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectUidByErbanNo" resultType="com.erban.admin.main.vo.UsersVo">
+        select uid, erban_no as erbanNo,nick,gender from users where erban_no = #{erbanNo}
+    </select>
+    <select id="selectUidByUsers" resultType="com.erban.admin.main.vo.UsersVo">
+        select uid, erban_no as erbanNo,nick,gender from users where uid = #{uid}
+    </select>
+    <select id="findUserBankCard" resultType="com.erban.admin.main.dto.UserBankCardDTO">
+        SELECT bc.id, bc.uid, bc.bank_card as bankCard, bc.bank_card_name as bankCardName, bc.open_bank_code as
+        openBankCode, bc.is_use as isUse, u.erban_no as erbanNo, u.nick
+        from user_bank_card bc
+        INNER JOIN users u on bc.uid = u.uid
+        <where>
+            <if test="erbanNoList != null">
+                u.erban_no in
+                <foreach collection="erbanNoList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY uid
+    </select>
+    <select id="findUsersAvatar" resultType="com.erban.admin.main.dto.UsersAvatarDTO">
+        SELECT u.uid, u.erban_no as erbanNo, u.nick, u.avatar, ua.avatar as newAvatar, ua.avatar_status as avatarStatus,
+        ua.create_time as createTime, ua.update_time as updateTime,ua.admin_id as adminId
+        from users u
+        INNER JOIN users_avatar ua on u.uid = ua.uid
+        <where>
+            <if test="erbanNo != null">
+                AND u.erban_no = #{erbanNo}
+            </if>
+            <if test="status != null">
+                AND ua.avatar_status = #{status}
+            </if>
+            <if test="startDate != null and startDate != ''  and endDate != null and endDate != ''">
+                AND ua.update_time between #{startDate} and #{endDate}
+            </if>
+        </where>
+        ORDER BY ua.update_time ASC
+    </select>
+    <select id="findUsersPhoto" resultType="com.erban.admin.main.dto.UsersPhotoDTO">
+        SELECT u.uid, u.erban_no as erbanNo, u.nick, ua.photo_url as photoUrl, ua.photo_status as photoStatus,
+        ua.create_time as createTime, ua.pid,ua.admin_id as adminId
+        from users u
+        INNER JOIN private_photo ua on u.uid = ua.uid
+        <where>
+            <if test="erbanNo != null">
+                AND u.erban_no = #{erbanNo}
+            </if>
+            <if test="status != null">
+                AND ua.photo_status = #{status}
+            </if>
+            <if test="startDate != null and startDate != ''  and endDate != null and endDate != ''">
+                AND ua.create_time between #{startDate} and #{endDate}
+            </if>
+        </where>
+        ORDER BY ua.create_time ASC
+    </select>
+</mapper>

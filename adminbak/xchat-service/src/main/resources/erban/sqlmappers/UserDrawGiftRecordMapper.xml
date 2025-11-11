@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserDrawGiftRecordMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.UserDrawGiftRecord">
+        <id column="record_id" property="recordId" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="room_id" property="roomId" jdbcType="BIGINT"/>
+        <result column="gift_id" property="giftId" jdbcType="INTEGER"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        record_id, uid, room_id, gift_id, num, type, create_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.erban.main.model.UserDrawGiftRecordExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from user_draw_gift_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_draw_gift_record
+        where record_id = #{recordId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from user_draw_gift_record where record_id = #{recordId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.UserDrawGiftRecordExample">
+        delete from user_draw_gift_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.UserDrawGiftRecord">
+        <selectKey resultType="java.lang.Integer" keyProperty="recordId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user_draw_gift_record (uid, room_id, gift_id, num, type, create_time)
+        values (#{uid,jdbcType=BIGINT}, #{roomId,jdbcType=BIGINT}, #{giftId,jdbcType=INTEGER},
+        #{num,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.UserDrawGiftRecord">
+        <selectKey resultType="java.lang.Integer" keyProperty="recordId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user_draw_gift_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="roomId != null">
+                room_id,
+            </if>
+            <if test="giftId != null">
+                gift_id,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="roomId != null">
+                #{roomId,jdbcType=BIGINT},
+            </if>
+            <if test="giftId != null">
+                #{giftId,jdbcType=INTEGER},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.UserDrawGiftRecordExample"
+            resultType="java.lang.Integer">
+        select count(*) from user_draw_gift_record
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user_draw_gift_record
+        <set>
+            <if test="record.recordId != null">
+                record_id = #{record.recordId,jdbcType=INTEGER},
+            </if>
+            <if test="record.uid != null">
+                uid = #{record.uid,jdbcType=BIGINT},
+            </if>
+            <if test="record.roomId != null">
+                room_id = #{record.roomId,jdbcType=BIGINT},
+            </if>
+            <if test="record.giftId != null">
+                gift_id = #{record.giftId,jdbcType=INTEGER},
+            </if>
+            <if test="record.num != null">
+                num = #{record.num,jdbcType=INTEGER},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type,jdbcType=TINYINT},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user_draw_gift_record
+        set record_id = #{record.recordId,jdbcType=INTEGER},
+            uid = #{record.uid,jdbcType=BIGINT},
+            room_id = #{record.roomId,jdbcType=BIGINT},
+            gift_id = #{record.giftId,jdbcType=INTEGER},
+            num = #{record.num,jdbcType=INTEGER},
+            type = #{record.type,jdbcType=TINYINT},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.UserDrawGiftRecord">
+        update user_draw_gift_record
+        <set>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="roomId != null">
+                room_id = #{roomId,jdbcType=BIGINT},
+            </if>
+            <if test="giftId != null">
+                gift_id = #{giftId,jdbcType=INTEGER},
+            </if>
+            <if test="num != null">
+                num = #{num,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where record_id = #{recordId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.UserDrawGiftRecord">
+        update user_draw_gift_record
+        set uid = #{uid,jdbcType=BIGINT},
+            room_id = #{roomId,jdbcType=BIGINT},
+            gift_id = #{giftId,jdbcType=INTEGER},
+            num = #{num,jdbcType=INTEGER},
+            type = #{type,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where record_id = #{recordId,jdbcType=INTEGER}
+    </update>
+    <select id="selectUserDrawGiftRecord" resultType="java.lang.Integer" parameterType="Map">
+        select COALESCE(sum(num), 0) as num from user_draw_gift_record
+        inner join gift on gift.gift_id = user_draw_gift_record.gift_id
+        where gold_price >= 10000
+        <if test="startDate != null and endDate != null">
+            AND user_draw_gift_record.create_time between #{startDate} AND #{endDate}
+        </if>
+        <if test="giftType != null">
+            AND gift.gift_type = #{giftType}
+        </if>
+    </select>
+    <select id="selectUserDrawWhitelistGiftRecord" resultType="java.lang.Integer" parameterType="Map">
+        select COALESCE(sum(num),0) as num from user_draw_gift_record
+        where gift_id = 197
+        and uid in
+        <foreach collection="uids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="startDate != null and endDate != null">
+            AND create_time between #{startDate} AND #{endDate}
+        </if>
+    </select>
+</mapper>

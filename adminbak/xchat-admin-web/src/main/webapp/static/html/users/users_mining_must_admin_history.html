@@ -1,0 +1,201 @@
+<style>
+    .btn {
+        margin: 0 4px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <div class="row">
+                        <label class="col-sm-2 control-label">时间:</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="beginDate" type="date" placeholder="开始时间" name="beginDate"
+                                   value="" autocomplete="off" class="date form-control validate[required]">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="endDate" type="date" placeholder="结束时间" name="endDate" value=""
+                                   autocomplete="off" class="date form-control validate[required]">
+                        </div>
+                        <label class="col-sm-2 control-label">拉贝号:</label>
+                        <div class="col-sm-2">
+                            <input type="text" name="erbanNo" id="erbanNo" class="form-control" placeholder="拉贝号">
+                        </div>
+                        <label class="col-sm-2 control-label">
+                            <button id="btnSearch" class="btn btn-sm btn-primary">
+                                <i class="glyphicon glyphicon-search"></i> 查询
+                            </button>
+                        </label>
+                        <!-- <button id="add" class="btn btn-default">
+                            <i class="glyphicon glyphicon-plus"></i> 增加
+                        </button> -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
+                <h4 class="modal-title" id="addModalLabel">添加必中全服</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="addRecomForm">
+                    <div class="form-group">
+                        <label for="addUid" class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="addUid" id="addUid" class="validate[required] form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="addBtn" class="btn btn-primary" id="addSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#beginDate').datetimepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            minView: "month"
+        });
+
+        $('#endDate').datetimepicker({
+            language: "zh-CN",
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            minView: "month"
+        });
+
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'id', title: 'ID', align: 'center', valign: 'middle', width: '5%', visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 200},
+                {field: 'uid', title: '用户UID', align: 'center', valign: 'middle', width: 200},
+                {field: 'nick', title: '昵称', align: 'center', valign: 'middle', width: 200},
+                {
+                    field: 'status',
+                    title: '状态',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 150,
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '有效';
+                        } else {
+                            return '无效';
+                        }
+                    }
+                },
+                {field: 'giftId', title: '礼物Id', align: 'center', valign: 'middle', width: 150},
+                {field: 'giftName', title: '礼物名称', align: 'center', valign: 'middle', width: 150},
+                {field: 'inputGold', title: '投入(金币)', align: 'center', valign: 'middle', width: 150},
+                {field: 'outputGold', title: '产出(金币)', align: 'center', valign: 'middle', width: 150},
+                {field: 'rate', title: '投入产出比', align: 'center', valign: 'middle', width: 150},
+                {
+                    field: 'createTime', title: '创建时间', align: 'center', valign: 'middle', width: 250,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd hh:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'adminName', title: '操作人', align: 'center', valign: 'middle', width: 200}
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    erbanNo: $('#erbanNo').val(),
+                    startTime: $("#beginDate").val(),
+                    endTime: $("#endDate").val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/miningmust/getList.action',
+            responseHandler: function (res) {
+                if (res.total > 0) {
+                    return {
+                        "total": res.total,//总页数
+                        "rows": res.rows.list  //数据
+                    };
+                } else {
+                    $("#tipMsg").text("查询不到相应数据");
+                    $("#tipModal").modal('show');
+                    return {
+                        "total": "",
+                        "rows": []
+                    };
+                }
+            },
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+
+        $('#addSave').on('click', function () {
+            if ($('#addRecomForm').validationEngine('validate')) {
+                $.ajax({
+                    type: 'post',
+                    url: '/admin/miningmust/add',
+                    data: {
+                        erbanNo: $('#addUid').val()
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 200) {
+                            $('#addModal').modal('hide');
+                            $("#tipMsg").text("增加成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("增加失败，错误码：" + res.code);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                })
+            }
+        });
+
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        });
+
+        $('#add').on('click', function () {
+            $('#addModal').modal('show');
+        });
+    })
+</script>

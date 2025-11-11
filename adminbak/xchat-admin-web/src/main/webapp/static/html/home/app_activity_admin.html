@@ -1,0 +1,331 @@
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                </div>
+            </section><!-- .content -->
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="appActivityModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">活动信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="appActivityForm">
+                    <input type="hidden" name="actId" id="actId"/>
+                    <div class="form-group">
+                        <label for="actName" class="col-sm-2 control-label">活动名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="actName" id="actName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">状态</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline">
+                                <input type="radio" name="actStatus" value="1" checked>有效
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="actStatus" value="2">无效
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="alertWin" class="col-sm-2 control-label">是否弹窗</label>
+                        <div class="col-sm-10">
+                            <select name="alertWin" id="alertWin" class="form-control" data-btn-class="btn-warning">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">弹窗图标:</label>
+                        <div class="col-sm-10">
+                            <img src="" id="alertWinPicImage" style="width:250px;height:90px;" alt="">
+                            <input type="file" id="iconUploadFile" name="file" accept="application/x-ico">
+                            <button class="btn btn-success" type="button" id="iconUploadBtn">上传</button>
+                            <input type="hidden" id="alertWinPic" name="alertWinPic"
+                                   class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="alertWinLoc" class="col-sm-2 control-label">弹出位置</label>
+                        <div class="col-sm-10">
+                            <select name="alertWinLoc" id="alertWinLoc" class="form-control" data-btn-class="btn-warning">
+                                <option value="1">活动首页</option>
+                                <option value="2">直播间</option>
+                                <option value="3">首页</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="skipType" class="col-sm-2 control-label">跳转类型</label>
+                        <div class="col-sm-10">
+                            <select name="skipType" id="skipType" class="form-control" data-btn-class="btn-warning">
+                                <option value="1">App页面</option>
+                                <option value="2">聊天室</option>
+                                <option value="3">H5页面</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="skipUrl" class="col-sm-2 control-label">跳转地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="skipUrl" id="skipUrl">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'actId', title: 'id', align: 'center', width: '5%', visible: false},
+                {field: 'actName', title: '活动名称', align: 'center', width: '150'},
+                {
+                    field: 'actStatus',
+                    title: '状态',
+                    align: 'center',
+                    width: '150',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '有效';
+                        } else if (val == 2) {
+                            return '无效';
+                        }
+                    }
+                },
+                {field: 'actAlertVersion', title: '版本', align: 'center', width: '150'},
+                {
+                    field: 'alertWin',
+                    title: '是否弹窗',
+                    align: 'center',
+                    width: '150',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '是';
+                        } else if (val == 0) {
+                            return '否';
+                        }
+                    }
+                },
+                {
+                    field: 'alertWinPic',
+                    title: '弹窗图片',
+                    align: 'center',
+                    width: '150',
+                    formatter: function (val, row, index) {
+                        return "<img src='" + val + "' width='60'>";
+                    }
+                },
+                {
+                    field: 'alertWinLoc',
+                    title: '弹窗位置',
+                    align: 'center',
+                    width: '150',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '活动首页';
+                        } else if (val == 2) {
+                            return '直播间';
+                        } else if (val == 3) {
+                            return '首页';
+                        }
+                    }
+                },
+                {
+                    field: 'skipType',
+                    title: '跳转类型',
+                    align: 'center',
+                    width: '150',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return 'App页面';
+                        } else if (val == 2) {
+                            return '聊天室';
+                        } else if (val == 3) {
+                            return 'H5页面';
+                        }
+                    }
+                },
+                {field: 'skipUrl', title: '跳转地址', align: 'center', width: '250'},
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: 'center',
+                    width: '200',
+                    formatter: function (val, row, index) {
+                        const newDate = new Date();
+                        newDate.setTime(val);
+                        return newDate.toLocaleString();
+                    }
+                },
+                {
+                    field: 'actId', title: '操作', align: 'center', width: '200', formatter: function (val, row, index) {
+                        return '<button class="btn btn-sm btn-success opt-edit" data-id=' + val + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i> 编辑</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [1, 10, 20, 30, 50],
+            search: false,
+            sidePagination: "server", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: '/admin/appActivity/getList.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            }
+        });
+
+        $("#add").click(function () {
+            // 打开编辑弹窗
+            $("#appActivityModal").modal('show');
+            $("#appActivityForm")[0].reset();
+            $("#actId").val('');
+
+            $('#alertWinPicImage').attr("src", '');
+            $("#alertWinPic").val('');
+
+        });
+
+        $("#cancel").click(function () {
+            TableHelper.unCheckAll("#table");
+        });
+
+        $("#table").on("click", '.opt-edit', function () {
+            console.log("btnEdit");
+            var actId = $(this).attr("data-id");
+            $.ajax({
+                type: "get",
+                url: "/admin/appActivity/get.action",
+                data: {actId: actId},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#actId").val(json.entity.actId);
+                        $("#actName").val(json.entity.actName);
+                        $("#alertWin").val(json.entity.alertWin);
+                        $("#alertWinLoc").val(json.entity.alertWinLoc);
+                        $("#alertWinPic").val(json.entity.alertWinPic);
+                        $("#alertWinPicImage").attr('src', json.entity.alertWinPic);
+                        $("#skipType").val(json.entity.skipType);
+                        $("#skipUrl").val(json.entity.skipUrl);
+                        if (json.entity.actStatus == 1) {
+                            $("input:radio[name='actStatus']")[0].checked = true;
+                        } else {
+                            $("input:radio[name='actStatus']")[1].checked = true;
+                        }
+
+                        // 打开编辑弹窗
+                        $("#appActivityModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("获取出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $('#iconUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'iconUploadFile',    //需要上传的文件域的ID，即<input type="file">的ID。
+                url: '/admin/file/upload', //后台方法的路径
+                type: 'post',   //当要提交自定义参数时，这个参数要设置成post
+                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。
+                secureuri: false,   //是否启用安全提交，默认为false。
+                async: true,   //是否是异步
+                success: function (json) {   //提交成功后自动执行的处理函数，参数data就是服务器返回的数据。
+                    if (json.path) {
+                        $('#alertWinPic').val(json.path);
+                        $('#alertWinPicImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) {  //提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        })
+
+        $("#save").click(function () {
+            if ($("#appActivityForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/appActivity/save.action",
+                    data: $('#appActivityForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#appActivityModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+            ;
+        });
+    });
+
+</script>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.RoomRcmdMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.RoomRcmd" >
+    <id column="rcmd_id" property="rcmdId" jdbcType="INTEGER" />
+    <result column="min_online" property="minOnline" jdbcType="INTEGER" />
+    <result column="rcmd_type" property="rcmdType" jdbcType="BIT" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rcmd_id, min_online, rcmd_type, start_date, end_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.RoomRcmdExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from room_rcmd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from room_rcmd
+    where rcmd_id = #{rcmdId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from room_rcmd
+    where rcmd_id = #{rcmdId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.RoomRcmdExample" >
+    delete from room_rcmd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.RoomRcmd" >
+    <selectKey resultType="java.lang.Integer" keyProperty="rcmdId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into room_rcmd (min_online, rcmd_type, start_date, 
+      end_date)
+    values (#{minOnline,jdbcType=INTEGER}, #{rcmdType,jdbcType=BIT}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.RoomRcmd" >
+    <selectKey resultType="java.lang.Long" keyProperty="rcmdId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into room_rcmd
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="minOnline != null" >
+        min_online,
+      </if>
+      <if test="rcmdType != null" >
+        rcmd_type,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="minOnline != null" >
+        #{minOnline,jdbcType=INTEGER},
+      </if>
+      <if test="rcmdType != null" >
+        #{rcmdType,jdbcType=BIT},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.RoomRcmdExample" resultType="java.lang.Integer" >
+    select count(*) from room_rcmd
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update room_rcmd
+    <set >
+      <if test="record.rcmdId != null" >
+        rcmd_id = #{record.rcmdId,jdbcType=BIGINT},
+      </if>
+      <if test="record.minOnline != null" >
+        min_online = #{record.minOnline,jdbcType=INTEGER},
+      </if>
+      <if test="record.rcmdType != null" >
+        rcmd_type = #{record.rcmdType,jdbcType=BIT},
+      </if>
+      <if test="record.startDate != null" >
+        start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null" >
+        end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update room_rcmd
+    set rcmd_id = #{record.rcmdId,jdbcType=BIGINT},
+      min_online = #{record.minOnline,jdbcType=INTEGER},
+      rcmd_type = #{record.rcmdType,jdbcType=BIT},
+      start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      end_date = #{record.endDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.RoomRcmd" >
+    update room_rcmd
+    <set >
+      <if test="minOnline != null" >
+        min_online = #{minOnline,jdbcType=INTEGER},
+      </if>
+      <if test="rcmdType != null" >
+        rcmd_type = #{rcmdType,jdbcType=BIT},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rcmd_id = #{rcmdId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.RoomRcmd" >
+    update room_rcmd
+    set min_online = #{minOnline,jdbcType=INTEGER},
+      rcmd_type = #{rcmdType,jdbcType=BIT},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP}
+    where rcmd_id = #{rcmdId,jdbcType=BIGINT}
+  </update>
+  <select id="countConflictRcmd" resultType="int">
+    <![CDATA[
+    SELECT
+      COUNT(*)
+    FROM
+      room_rcmd
+    WHERE
+    (
+      (start_date <= #{startDate} AND end_date >= #{startDate})
+    OR
+      (start_date <= #{endDate} AND end_date >= #{endDate})
+    )
+    ]]>
+    <if test="rcmdId != null"><![CDATA[ AND rcmd_id <> #{rcmdId} ]]></if>
+  </select>
+</mapper>

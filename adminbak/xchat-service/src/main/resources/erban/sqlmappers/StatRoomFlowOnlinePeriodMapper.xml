@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatRoomFlowOnlinePeriodMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatRoomFlowOnlinePeriod" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="room_id" property="roomId" jdbcType="BIGINT" />
+    <result column="room_pwd" property="roomPwd" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="tag_id" property="tagId" jdbcType="INTEGER" />
+    <result column="tag_pict" property="tagPict" jdbcType="VARCHAR" />
+    <result column="room_tag" property="roomTag" jdbcType="VARCHAR" />
+    <result column="badge" property="badge" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="room_desc" property="roomDesc" jdbcType="VARCHAR" />
+    <result column="back_pic" property="backPic" jdbcType="VARCHAR" />
+    <result column="operator_status" property="operatorStatus" jdbcType="TINYINT" />
+    <result column="official_room" property="officialRoom" jdbcType="TINYINT" />
+    <result column="is_permit_room" property="isPermitRoom" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="recom_seq" property="recomSeq" jdbcType="BIGINT" />
+    <result column="online_num" property="onlineNum" jdbcType="INTEGER" />
+    <result column="flow_sum_total" property="flowSumTotal" jdbcType="BIGINT" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, room_id, room_pwd, valid, title, tag_id, tag_pict, room_tag, badge, gender, 
+    nick, avatar, room_desc, back_pic, operator_status, official_room, is_permit_room, 
+    type, recom_seq, online_num, flow_sum_total, score
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatRoomFlowOnlinePeriodExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_room_flow_online_period
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_room_flow_online_period
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stat_room_flow_online_period
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.StatRoomFlowOnlinePeriodExample" >
+    delete from stat_room_flow_online_period
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.StatRoomFlowOnlinePeriod" >
+    insert into stat_room_flow_online_period (uid, room_id, room_pwd, 
+      valid, title, tag_id, tag_pict, 
+      room_tag, badge, gender, 
+      nick, avatar, room_desc, 
+      back_pic, operator_status, official_room, 
+      is_permit_room, type, recom_seq, 
+      online_num, flow_sum_total, score
+      )
+    values (#{uid,jdbcType=BIGINT}, #{roomId,jdbcType=BIGINT}, #{roomPwd,jdbcType=VARCHAR}, 
+      #{valid,jdbcType=BIT}, #{title,jdbcType=VARCHAR}, #{tagId,jdbcType=INTEGER}, #{tagPict,jdbcType=VARCHAR}, 
+      #{roomTag,jdbcType=VARCHAR}, #{badge,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
+      #{nick,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{roomDesc,jdbcType=VARCHAR}, 
+      #{backPic,jdbcType=VARCHAR}, #{operatorStatus,jdbcType=TINYINT}, #{officialRoom,jdbcType=TINYINT}, 
+      #{isPermitRoom,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{recomSeq,jdbcType=BIGINT}, 
+      #{onlineNum,jdbcType=INTEGER}, #{flowSumTotal,jdbcType=BIGINT}, #{score,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatRoomFlowOnlinePeriod" >
+    insert into stat_room_flow_online_period
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="roomPwd != null" >
+        room_pwd,
+      </if>
+      <if test="valid != null" >
+        valid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="tagId != null" >
+        tag_id,
+      </if>
+      <if test="tagPict != null" >
+        tag_pict,
+      </if>
+      <if test="roomTag != null" >
+        room_tag,
+      </if>
+      <if test="badge != null" >
+        badge,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="nick != null" >
+        nick,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+      <if test="roomDesc != null" >
+        room_desc,
+      </if>
+      <if test="backPic != null" >
+        back_pic,
+      </if>
+      <if test="operatorStatus != null" >
+        operator_status,
+      </if>
+      <if test="officialRoom != null" >
+        official_room,
+      </if>
+      <if test="isPermitRoom != null" >
+        is_permit_room,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="recomSeq != null" >
+        recom_seq,
+      </if>
+      <if test="onlineNum != null" >
+        online_num,
+      </if>
+      <if test="flowSumTotal != null" >
+        flow_sum_total,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="roomPwd != null" >
+        #{roomPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=BIT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tagId != null" >
+        #{tagId,jdbcType=INTEGER},
+      </if>
+      <if test="tagPict != null" >
+        #{tagPict,jdbcType=VARCHAR},
+      </if>
+      <if test="roomTag != null" >
+        #{roomTag,jdbcType=VARCHAR},
+      </if>
+      <if test="badge != null" >
+        #{badge,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="nick != null" >
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="roomDesc != null" >
+        #{roomDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="backPic != null" >
+        #{backPic,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorStatus != null" >
+        #{operatorStatus,jdbcType=TINYINT},
+      </if>
+      <if test="officialRoom != null" >
+        #{officialRoom,jdbcType=TINYINT},
+      </if>
+      <if test="isPermitRoom != null" >
+        #{isPermitRoom,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="recomSeq != null" >
+        #{recomSeq,jdbcType=BIGINT},
+      </if>
+      <if test="onlineNum != null" >
+        #{onlineNum,jdbcType=INTEGER},
+      </if>
+      <if test="flowSumTotal != null" >
+        #{flowSumTotal,jdbcType=BIGINT},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.StatRoomFlowOnlinePeriodExample" resultType="java.lang.Integer" >
+    select count(*) from stat_room_flow_online_period
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update stat_room_flow_online_period
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomId != null" >
+        room_id = #{record.roomId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomPwd != null" >
+        room_pwd = #{record.roomPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valid != null" >
+        valid = #{record.valid,jdbcType=BIT},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tagId != null" >
+        tag_id = #{record.tagId,jdbcType=INTEGER},
+      </if>
+      <if test="record.tagPict != null" >
+        tag_pict = #{record.tagPict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomTag != null" >
+        room_tag = #{record.roomTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.badge != null" >
+        badge = #{record.badge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.nick != null" >
+        nick = #{record.nick,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null" >
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomDesc != null" >
+        room_desc = #{record.roomDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.backPic != null" >
+        back_pic = #{record.backPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorStatus != null" >
+        operator_status = #{record.operatorStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.officialRoom != null" >
+        official_room = #{record.officialRoom,jdbcType=TINYINT},
+      </if>
+      <if test="record.isPermitRoom != null" >
+        is_permit_room = #{record.isPermitRoom,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.recomSeq != null" >
+        recom_seq = #{record.recomSeq,jdbcType=BIGINT},
+      </if>
+      <if test="record.onlineNum != null" >
+        online_num = #{record.onlineNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.flowSumTotal != null" >
+        flow_sum_total = #{record.flowSumTotal,jdbcType=BIGINT},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update stat_room_flow_online_period
+    set uid = #{record.uid,jdbcType=BIGINT},
+      room_id = #{record.roomId,jdbcType=BIGINT},
+      room_pwd = #{record.roomPwd,jdbcType=VARCHAR},
+      valid = #{record.valid,jdbcType=BIT},
+      title = #{record.title,jdbcType=VARCHAR},
+      tag_id = #{record.tagId,jdbcType=INTEGER},
+      tag_pict = #{record.tagPict,jdbcType=VARCHAR},
+      room_tag = #{record.roomTag,jdbcType=VARCHAR},
+      badge = #{record.badge,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=TINYINT},
+      nick = #{record.nick,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      room_desc = #{record.roomDesc,jdbcType=VARCHAR},
+      back_pic = #{record.backPic,jdbcType=VARCHAR},
+      operator_status = #{record.operatorStatus,jdbcType=TINYINT},
+      official_room = #{record.officialRoom,jdbcType=TINYINT},
+      is_permit_room = #{record.isPermitRoom,jdbcType=TINYINT},
+      type = #{record.type,jdbcType=TINYINT},
+      recom_seq = #{record.recomSeq,jdbcType=BIGINT},
+      online_num = #{record.onlineNum,jdbcType=INTEGER},
+      flow_sum_total = #{record.flowSumTotal,jdbcType=BIGINT},
+      score = #{record.score,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.StatRoomFlowOnlinePeriod" >
+    update stat_room_flow_online_period
+    <set >
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=BIGINT},
+      </if>
+      <if test="roomPwd != null" >
+        room_pwd = #{roomPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=BIT},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tagId != null" >
+        tag_id = #{tagId,jdbcType=INTEGER},
+      </if>
+      <if test="tagPict != null" >
+        tag_pict = #{tagPict,jdbcType=VARCHAR},
+      </if>
+      <if test="roomTag != null" >
+        room_tag = #{roomTag,jdbcType=VARCHAR},
+      </if>
+      <if test="badge != null" >
+        badge = #{badge,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="roomDesc != null" >
+        room_desc = #{roomDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="backPic != null" >
+        back_pic = #{backPic,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorStatus != null" >
+        operator_status = #{operatorStatus,jdbcType=TINYINT},
+      </if>
+      <if test="officialRoom != null" >
+        official_room = #{officialRoom,jdbcType=TINYINT},
+      </if>
+      <if test="isPermitRoom != null" >
+        is_permit_room = #{isPermitRoom,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="recomSeq != null" >
+        recom_seq = #{recomSeq,jdbcType=BIGINT},
+      </if>
+      <if test="onlineNum != null" >
+        online_num = #{onlineNum,jdbcType=INTEGER},
+      </if>
+      <if test="flowSumTotal != null" >
+        flow_sum_total = #{flowSumTotal,jdbcType=BIGINT},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.StatRoomFlowOnlinePeriod" >
+    update stat_room_flow_online_period
+    set room_id = #{roomId,jdbcType=BIGINT},
+      room_pwd = #{roomPwd,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=BIT},
+      title = #{title,jdbcType=VARCHAR},
+      tag_id = #{tagId,jdbcType=INTEGER},
+      tag_pict = #{tagPict,jdbcType=VARCHAR},
+      room_tag = #{roomTag,jdbcType=VARCHAR},
+      badge = #{badge,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      nick = #{nick,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      room_desc = #{roomDesc,jdbcType=VARCHAR},
+      back_pic = #{backPic,jdbcType=VARCHAR},
+      operator_status = #{operatorStatus,jdbcType=TINYINT},
+      official_room = #{officialRoom,jdbcType=TINYINT},
+      is_permit_room = #{isPermitRoom,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      recom_seq = #{recomSeq,jdbcType=BIGINT},
+      online_num = #{onlineNum,jdbcType=INTEGER},
+      flow_sum_total = #{flowSumTotal,jdbcType=BIGINT},
+      score = #{score,jdbcType=DOUBLE}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

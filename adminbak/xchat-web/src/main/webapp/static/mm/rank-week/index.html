@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, user-scalable=no" />
+  <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+  <script type="text/javascript">
+    var FS = {};
+    (function (win, FS) {
+      var doc = win.document;
+      var docEl = doc.documentElement;
+      var metaEl = doc.querySelector('meta[name="viewport"]');
+      var dpr = 1;
+      var scale = 1;
+      var fontBase = 16;
+
+      if (window.devicePixelRatio >= 2) {
+        scale *= 0.5;
+        dpr *= 2;
+      }
+
+      docEl.setAttribute('data-dpr', dpr);
+      metaEl.setAttribute('content', 'initial-scale=' + scale + ', width=device-width, maximum-scale=' +
+        scale +
+        ', user-scalable=no');
+
+      function refreshRem() {
+        var width = docEl.getBoundingClientRect().width;
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        FS.rem = rem;
+      }
+
+      var tid = null;
+      win.addEventListener('resize', function () {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+      }, false);
+
+      if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = fontBase * dpr + 'px';
+      } else {
+        doc.addEventListener('DOMContentLoaded', function (e) {
+          doc.body.style.fontSize = fontBase * dpr + 'px';
+        }, false);
+      }
+
+      refreshRem();
+
+      FS.dpr = dpr;
+      FS.rem2px = function (d) {
+        var val = parseFloat(d) * FS.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+          val += 'px';
+        }
+        return val;
+      }
+      FS.px2rem = function (d) {
+        var val = parseFloat(d) / FS.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+          val += 'rem';
+        }
+        return val;
+      }
+    })(window, FS);
+  </script>
+  <title>周星礼物榜</title>
+  <style type="text/css">
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background-color: #1e0b56;
+    }
+    .wrap {
+      margin: 0 auto;
+    }
+    .pg-main {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .content-slide {
+      background-color: #1e0b56;
+      padding-bottom: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .acolor {
+      color: #fd5ea4 !important
+    }
+
+    .rank-title {
+      width: 9.2rem;
+      height: 4.67rem;
+      background-color: #fff;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .rank-title>div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 33%;
+      font-size: 0.3rem;
+      position: relative;
+      padding-top: 0.2rem;
+    }
+
+    .rank-title>div:nth-child(odd) {
+      margin-top: 0.6rem;
+    }
+
+    .head-two {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 0.1rem;
+      margin: 0 auto;
+      margin-top: 0.6rem;
+      box-sizing: border-box;
+      border-radius: 50%;
+    }
+
+    .head-three {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 0.1rem;
+      margin: 0 auto;
+      margin-top: 0.6rem;
+      box-sizing: border-box;
+      border-radius: 50%;
+    }
+
+    .head-one {
+      width: 1.86rem;
+      height: 1.86rem;
+      border-radius: 0.1rem;
+      margin: 0 auto;
+      margin-top: 0.7rem;
+      box-sizing: border-box;
+      border-radius: 50%;
+    }
+
+    .rank-name {
+      font-size: 0.29333rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 1.9rem;
+      text-align: center;
+    }
+
+    .rank-name1 {
+      font-size: 0.32rem !important;
+    }
+
+    .rank-star {
+      color: #FF9239;
+    }
+
+    .rank-num,
+    .rank-list-star1>p:nth-child(2) {
+      color: #808080;
+    }
+
+    .crown {
+      width: 0.6rem;
+      height: 0.6rem;
+      position: absolute;
+      top: 0.3rem;
+      left: 1.95rem;
+    }
+
+    .crown-one {
+      width: 0.8rem;
+      height: 0.8rem;
+      position: absolute;
+      top: 0.25rem;
+      left: 1.95rem;
+    }
+
+    .no1 {
+      width: 2.3rem;
+      height: 0.48rem;
+      position: absolute;
+      top: 2.15rem;
+      left: 0.34rem;
+    }
+
+    .no2 {
+      width: 2.01rem;
+      height: 0.435rem;
+      position: absolute;
+      top: 1.9rem;
+      left: 0.48rem;
+    }
+
+    .rank-list {
+      width: 9.2rem;
+      background-color: #fff;
+      border-radius: 0.1rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      border-radius: 0 0 0.1rem 0.1rem;
+    }
+
+    .rank-list>span {
+      width: 100%;
+      height: 1.6rem;
+      display: flex;
+      flex-direction: row;
+      padding: 0.3rem 0 0.3rem 0;
+      text-align: center;
+    }
+
+    .rank-list>span img {
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 0.15rem;
+    }
+
+    .rank-list>span>span:nth-child(1) {
+      width: 1.6rem;
+      line-height: 4;
+      font-size: 0.32rem;
+    }
+
+    .rank-list>span>span:nth-child(2) {
+      position: relative;
+      width: 7.4rem;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .rank-list-content {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      line-height: 2;
+      margin-left: 0.5rem;
+    }
+
+    .rank-list-content>span:nth-child(1) {
+      font-size: 0.36rem;
+    }
+
+    .rank-list-content>span:nth-child(1)>img {
+      margin: 0;
+      margin-right: 0.2rem;
+    }
+
+    .rank-list-content>span:nth-child(1)>p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 2.1rem;
+    }
+
+    .rank-list-content>span:nth-child(2) {
+      font-size: 0.32rem;
+      color: #808080;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .rank-star1 {
+      color: #FFA845;
+      margin: 0.3rem 0 0.1rem 0;
+    }
+
+    .rank-list-star1 {
+      position: absolute;
+      top: 0;
+      right: 0.3rem;
+      color: #FFA845;
+      font-size: 0.36rem;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      line-height: 4;
+
+    }
+
+    .level {
+      width: 0.747rem !important;
+      height: 0.28rem !important;
+      margin-right: 0.1rem;
+      border-radius: 0 !important;
+    }
+
+    .rank-num {
+      margin-top: 0.1rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .header-img {
+      width: 100%;
+      max-width: 10rem;
+      margin: 0 auto;
+    }
+
+    .rule {
+      width: 8.5rem;
+      color: #fff;
+      font-size: 0.32rem;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .rule>li:nth-child(1) {
+      font-size: 0.36rem;
+    }
+
+    .title-img {
+      width: 100%;
+      max-width: 10rem;
+    }
+
+    .rule-tips {
+      text-align: center;
+    }
+
+    .list-type {
+      width: 9.2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 0.1rem 0.1rem 0 0;
+    }
+
+    .list-type>img {
+      width: 3.01rem;
+      margin: 0.2rem 0;
+    }
+
+    .rule-btn {
+      width: 1.053rem;
+      position: absolute;
+      right: 0;
+    }
+
+    #rule-btn1 {
+      top: 2.1rem;
+    }
+
+    #rule-btn2 {
+      top: 4rem;
+    }
+
+    .rule-box {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .rule-box>div {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      overflow: auto;
+    }
+
+    .rule-box>div>img {
+      display: block;
+      width: 7.37rem;
+      height: 20.947rem;
+      margin-top: 3.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .close {
+      position: absolute;
+      top: -1.2rem;
+      right: 1.4rem;
+      width: 0.88rem !important;
+      height: 0.88rem !important;
+    }
+
+    .rank-no1 {
+      width: 2.51rem;
+      height: 2.51rem;
+      position: absolute;
+      top: 0.35rem;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+
+    .rank-no {
+      width: 1.97333rem;
+      height: 2.027rem;
+      position: absolute;
+      top: 0.35rem;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+
+    .last-week {
+      width: 100%;
+      max-width: 10rem;
+      height: 6.133rem;
+    }
+  </style>
+  <link rel="stylesheet" href="../lib/reset.css">
+</head>
+
+<body>
+  <div class="pg-main">
+    <img src="images/header.png" class="header-img">
+    <img src="images/gift1.png" class="title-img">
+    <img src="images/last-week.png" class="last-week">
+    <img src="images/gift2.png" class="title-img">
+    <img src="images/title.png" class="title-img">
+    <div class="list-type">
+      <img src="images/type1-on.png" class="type-img" data-type="1" data-url="images/type1-on.png" data-urlon="images/type1.png">
+      <img src="images/type2.png" class="type-img" data-type="2" data-url="images/type2-on.png" data-urlon="images/type2.png">
+      <img src="images/type3.png" class="type-img" data-type="3" data-url="images/type3-on.png" data-urlon="images/type3.png">
+    </div>
+    <div class="content-slide">
+      <div class="rank-title" id="rank-title1">
+      </div>
+      <div class="rank-list" id="rank-list1">
+      </div>
+      <img src="images/prize.png" class="title-img">
+      <img src="images/rule.png" class="title-img">
+    </div>
+  </div>
+  <div style="display:none">
+    <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+  </div>
+  <script src="../lib/jquery-3.2.1.min.js"></script>
+  <script src="../lib/common.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

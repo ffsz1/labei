@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatPacketRegisterMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatPacketRegister" >
+    <id column="register_id" property="registerId" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="register_uid" property="registerUid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    register_id, uid, register_uid, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatPacketRegisterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_packet_register
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_packet_register
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from stat_packet_register
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.StatPacketRegister" >
+    insert into stat_packet_register (register_id, uid, register_uid, 
+      create_time)
+    values (#{registerId,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{registerUid,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatPacketRegister" >
+    insert into stat_packet_register
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="registerId != null" >
+        register_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="registerUid != null" >
+        register_uid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="registerId != null" >
+        #{registerId,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="registerUid != null" >
+        #{registerUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.StatPacketRegister" >
+    update stat_packet_register
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="registerUid != null" >
+        register_uid = #{registerUid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.StatPacketRegister" >
+    update stat_packet_register
+    set uid = #{uid,jdbcType=BIGINT},
+      register_uid = #{registerUid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where register_id = #{registerId,jdbcType=VARCHAR}
+  </update>
+
+  <sql id="Stat_Query">
+    <if test="erbanNo!=null">
+      u.erban_no=#{erbanNo}
+    </if>
+    <if test="beginDate!=null">
+      AND s.create_time &gt;= #{beginDate}
+    </if>
+    <if test="endDate!=null">
+      AND s.create_time &lt;= #{endDate}
+    </if>
+  </sql>
+  <resultMap id="QueryResultMap" type="com.erban.main.vo.admin.StatShareRegisterVo" >
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="regisgerNum" property="registerNum" jdbcType="VARCHAR" />
+    <result column="totalBouns" property="totalBouns" jdbcType="VARCHAR" />
+
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="alipay_account" property="alipayAccount" jdbcType="VARCHAR" />
+    <result column="alipay_account_name" property="alipayAccountName" jdbcType="VARCHAR" />
+
+    <result column="sum_sharer" property="sumSharer" jdbcType="BIGINT" />
+    <result column="sum_regisger" property="sumRegister" jdbcType="BIGINT" />
+  </resultMap>
+
+  <select id="statByQuery" resultMap="QueryResultMap" parameterType="com.erban.main.param.admin.UserAssociateParam" >
+    SELECT s.uid as uid ,count(s.uid) as regisgerNum,u.erban_no as erban_no,u.phone as phone,u.nick as nick,u.alipay_account as alipay_account,u.alipay_account_name as alipay_account_name,
+    ( SELECT sum(packet_num) FROM user_packet_record p INNER JOIN users u on p.uid = u.uid
+    WHERE s.uid=p.uid AND p.type='4'
+    <if test="beginDate!=null">
+      AND p.create_time &gt;= #{beginDate}
+    </if>
+    <if test="endDate!=null">
+      AND p.create_time &lt;= #{endDate}
+    </if> ) as totalBouns
+
+    FROM stat_packet_register s INNER JOIN users u on s.uid=u.uid
+    <where>
+      <include refid="Stat_Query"></include>
+    </where>
+    GROUP BY s.uid
+    ORDER BY regisgerNum DESC
+  </select>
+  <select id="countByquery" resultMap="QueryResultMap" parameterType="com.erban.main.param.admin.UserAssociateParam">
+    SELECT count(DISTINCT s.uid) sum_sharer,count(s.register_uid) sum_regisger
+    FROM stat_packet_register s INNER JOIN users u on s.uid=u.uid
+    <where>
+      <include refid="Stat_Query"></include>
+    </where>
+  </select>
+
+
+  <resultMap id="RegisterListMap" type="com.erban.main.vo.admin.ShareRegisterVo" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="erban_no" property="erbanNo" jdbcType="BIGINT" />
+    <result column="weixin_openid" property="weixinOpenid" jdbcType="VARCHAR" />
+    <result column="qq_openid" property="qqOpenid" jdbcType="VARCHAR" />
+    <result column="os" property="os" jdbcType="VARCHAR" />
+    <result column="osVersion" property="osversion" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+    <result column="app_version" property="appVersion" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="getRegisterList" resultMap="RegisterListMap" parameterType="java.util.List"  >
+   SELECT a.erban_no as erban_no, a.phone as phone,a.register_ip as register_ip , a.weixin_openid as weixin_openid,a.qq_openid as qq_openid,
+   a.os as os,a.osVersion as osVersion,a.channel as channel ,a.model as model,a.device_id  as device_id,a.app_version as app_version,
+   u.nick as nick,
+   u.create_time as create_time
+   FROM users u INNER JOIN account a ON u.uid=a.uid
+    WHERE u.uid IN
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+   ORDER BY u.create_time DESC
+  </select>
+</mapper>

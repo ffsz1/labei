@@ -1,0 +1,437 @@
+<style>
+    .bar1, .bar2 {
+        margin-bottom: 10px;
+    }
+
+    label.col-sm-1 {
+        padding: 0;
+        line-height: 30px;
+        text-align: right;
+        /*padding-right: 4px;*/
+    }
+
+    label.col-sm-1 {
+        padding: 0;
+        line-height: 30px;
+        text-align: right;
+        /*padding-right: 4px;*/
+    }
+
+    input, select {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    #btnSearch {
+        margin-right: 2rem;
+    }
+
+    .record {
+        margin-top: 10px;
+    }
+
+    .record .title {
+        font-size: 16px;
+    }
+
+    .pull-left {
+        width: 100%;
+    }
+
+    .form-inline > .form-group {
+        margin-right: 2rem;
+        width: 20%;
+    }
+
+    .form-inline > .form-group > .control-label {
+        margin-right: 1rem;
+    }
+
+    .form-inline > .form-group textarea {
+        width: 200px;
+        height: 100px;
+        resize: none;
+    }
+
+    .process {
+        border: 1px solid #f4f4f4;
+        border-radius: 10px;
+        padding: 0 3rem;
+    }
+
+    .process > p {
+        text-align: right;
+    }
+
+    .process > p > span {
+        color: #0adc77;
+        font-size: 28px;
+        font-weight: 600;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <!-- <div class="form-group">
+                        <label class="col-sm-3 control-label">拉贝号:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="erbanNo" id="erbanNo" placeholder="拉贝号">
+                        </div>
+                        <label class="col-sm-1 control-label">
+                            <button id="btnSearch" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-search"></i> 查询
+                            </button>
+                        </label>
+                    </div> -->
+                    <form id="form" class="form-inline">
+                        <div class="form-group">
+                            <label for="erbanNos" class="control-label">拉贝号: </label>
+                            <textarea class="form-control" name="erbanNos" id="erbanNos"
+                                      placeholder='拉贝号（多个拉贝号回车分隔）'></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDate" class="control-label">起始时间：</label>
+                            <input type="text" id="startDate" type="date" name="startDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate" class="control-label">结束时间：</label>
+                            <input type="text" id="endDate" type="date" name="endDate" class="form-control">
+                        </div>
+                        <label class="control-label">
+                            <a href="javascript:;" id="btnSearch" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-search"></i> 查询
+                            </a>
+                        </label>
+                    </form>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="carId" class="control-label">赠送座驾: </label>
+                            <select name="carId" class="form-control" id="carId"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="control-label">赠送天数: </label>
+                            <select name="date" class="form-control" id="date">
+                                <option value="1">一天</option>
+                                <option value="3">三天</option>
+                                <option value="7">七天</option>
+                                <option value="15">十五天</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">
+                                <a href="javascript:;" id="btnGive" class="btn btn-success">
+                                    <i class="glyphicon glyphicon-ok-sign"></i> 批量赠送
+                                </a>
+                            </label>
+                        </div>
+                        <a href="javascript:;" id="exportExcel" class="btn btn-success">
+                            <i class="glyphicon glyphicon glyphicon-download-alt"></i> 导出Excel
+                        </a>
+                    </form>
+                    <div class="process">
+                        <p>已成功 <span>0</span> 个</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    const picker3 = $('#startDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+    });
+    const picker2 = $('#endDate').datetimepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+    });
+    $(function () {
+        $("#startDate").val("2020-08-01")
+        $("#endDate").val(getCurrentDate())
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                // {field: 'uid', title: 'uid', align: 'center', valign: 'middle', width: '10%', visible: false},
+                // {field: 'carId', title: 'carId', align: 'center', valign: 'middle', width: 250},
+                // {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 250},
+                // {field: 'carName', title: '座驾', align: 'center', valign: 'middle', width: 250},
+                // {field: 'goldPrice', title: '价格', align: 'center', valign: 'middle', width: 250},
+                // {field: 'carDate', title: '剩余时间', align: 'center', valign: 'middle', width: 250},
+                // {
+                //     field: 'carId',
+                //     title: '操作',
+                //     align: 'center',
+                //     width: 400,
+                //     valign: 'middle',
+                //     formatter: function (val, row, index) {
+                //         let str = "<button class='btn btn-sm btn-info opt-add1' data-id=" + val + ">赠送1天</button>";
+                //         str += "<button class='btn btn-sm btn-success opt-add3' data-id=" + val + ">赠送3天</button>";
+                //         str += "<button class='btn btn-sm btn-warning opt-add7' data-id=" + val + ">赠送7天</button>";
+                //         str += "<button class='btn btn-sm btn-danger opt-add15' data-id=" + val + ">赠送15天</button>";
+                //         return str;
+                //     }
+                // }
+                {field: 'recordId', title: '记录ID', align: 'center', valign: 'middle', width: 200, visible: false},
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle', width: 300},
+                {field: 'carName', title: '座驾名称', align: 'center', valign: 'middle', width: 300},
+                {
+                    field: 'createTime',
+                    title: '发放时间',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 350,
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            const date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'carDate', title: '有效天数', align: 'center', valign: 'middle', width: 300,
+                    formatter: function (val) {
+                        return val + "天";
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '剩余天数',
+                    align: 'center',
+                    valign: 'middle',
+                    width: 350,
+                    formatter: function (val, row) {
+                        const now = new Date();
+                        const time = new Date(val);
+                        const day = row.carDate - parseInt((now - time) / (1000 * 60 * 60 * 24)) < 0 ? 0 : row.carDate - parseInt((now - time) / (1000 * 60 * 60 * 24));
+                        return day + '天';
+                    }
+                },
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "server",
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    erbanNo: $('#erbanNos').val(),
+                    startDate: $("#startDate").val(),
+                    endDate: $("#endDate").val().replace(/\d$/ig, parseInt($("#endDate").val().substr($("#endDate").val().length - 1)) + 1)
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/giftcar/getGiftCarRecord.action',
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+
+        $.get('/admin/giftcar/getAllGiftCar.action', function (response) {
+            let options = "";
+            for (const item of response.data) {
+                options += `<option value="${item.carId}">${item.carName}</option>`
+            }
+            $('#carId').append(options);
+        });
+    });
+    // 初始化
+    $('#startDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        endDate: new Date(),
+        minView: "month"
+    });
+    $('#endDate').datetimepicker({
+        language: "zh-CN",
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        endDate: new Date(),
+        minView: "month"
+    });
+    // 导出到Excel
+    $('#exportExcel').click(function () {
+        const param = $("#form").serialize();
+        const url = "/admin/giftcar/export?" + param;
+        window.location.href = url;
+    });
+    // 获取当天时间
+    function getCurrentDate() {
+        const date = new Date();
+        return date.format("yyyy-MM-dd");
+    };
+    // 查询刷新
+    $('#btnSearch').on('click', function () {
+        TableHelper.doRefresh('#table');
+    });
+    // 批量赠送
+    $('#btnGive').on('click', function (e) {
+        const carId = $('#carId').val();
+        if (carId == 'undefined' || !carId) {
+            return;
+        }
+
+        const uids = $('#erbanNos').val();
+        if (uids == 'undefined' || !uids) {
+            return;
+        }
+
+        const date = $('#date').val();
+
+        let uidArray = uids.split(/[\s\n]/);
+
+        for (let i = 0; i < uidArray.length; i++) {
+            const timeOut = setTimeout(function () {
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/giftcar/giveList',
+                    data: {
+                        carId: carId,
+                        uids: uidArray[i],
+                        date: date
+                    },
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.code == 200) {
+                            console.log(`赠送成功, UID: ${uidArray[i]}`);
+                            $('.process p span').text(i + 1);
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text(`赠送失败, 错误: ${res.message}, 错误UID: ${res.data}`);
+                            $("#tipModal").modal('show');
+                            clearTimeout(timeOut);
+                        }
+                    }
+                });
+            }, 500 * (i + 1));
+        }
+    });
+    // 赠送一天
+    $('#table').on('click', '.opt-add1', function () {
+        const carId = $(this).data('id');
+        if (carId == 'undefined' || !carId) {
+            return;
+        }
+
+        $.ajax({
+            type: 'get',
+            url: '/admin/giftcar/give',
+            data: {
+                carUid: carId,
+                date: 1
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.code == 200) {
+                    $("#tipMsg").text("赠送成功");
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#table");
+                } else {
+                    $("#tipMsg").text("赠送失败，错误：" + res.message);
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    });
+    // 赠送三天
+    $('#table').on('click', '.opt-add3', function () {
+        const carId = $(this).data('id');
+        if (carId == 'undefined' || !carId) {
+            return;
+        }
+
+        $.ajax({
+            type: 'get',
+            url: '/admin/giftcar/give',
+            data: {
+                carUid: carId,
+                date: 3
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.code == 200) {
+                    $("#tipMsg").text("赠送成功");
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#table");
+                } else {
+                    $("#tipMsg").text("赠送失败，错误：" + res.message);
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    });
+    // 赠送七天
+    $('#table').on('click', '.opt-add7', function () {
+        const carId = $(this).data('id');
+        if (carId == 'undefined' || !carId) {
+            return;
+        }
+
+        $.ajax({
+            type: 'get',
+            url: '/admin/giftcar/give',
+            data: {
+                carUid: carId,
+                date: 7
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.code == 200) {
+                    $("#tipMsg").text("赠送成功");
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#table");
+                } else {
+                    $("#tipMsg").text("赠送失败，错误：" + res.message);
+                    $("#tipModal").modal('show');
+                }
+            }
+        })
+    });
+    // 赠送十五天
+    $('#table').on('click', '.opt-add15', function () {
+        const carId = $(this).data('id');
+        if (carId == 'undefined' || !carId) {
+            return;
+        }
+
+        $.ajax({
+            type: 'get',
+            url: '/admin/giftcar/give',
+            data: {
+                carUid: carId,
+                date: 15
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.code == 200) {
+                    $("#tipMsg").text("赠送成功");
+                    $("#tipModal").modal('show');
+                    TableHelper.doRefresh("#table");
+                } else {
+                    $("#tipMsg").text("赠送失败，错误：" + res.message);
+                    $("#tipModal").modal('show');
+                }
+            }
+        });
+    });
+</script>
+
+

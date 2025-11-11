@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.UserPurseMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.UserPurse" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="charge_gold_num" property="chargeGoldNum" jdbcType="BIGINT" />
+    <result column="noble_gold_num" property="nobleGoldNum" jdbcType="BIGINT" />
+    <result column="gold_num" property="goldNum" jdbcType="BIGINT" />
+    <result column="conch_num" property="conchNum" jdbcType="BIGINT" />
+    <result column="diamond_num" property="diamondNum" jdbcType="DOUBLE" />
+    <result column="deposit_num" property="depositNum" jdbcType="BIGINT" />
+    <result column="is_first_charge" property="isFirstCharge" jdbcType="BIT" />
+    <result column="first_recharge_time" property="firstRechargeTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, charge_gold_num, noble_gold_num, gold_num, conch_num, diamond_num, deposit_num, is_first_charge,
+    first_recharge_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.UserPurseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_purse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_purse
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_purse
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.UserPurseExample" >
+    delete from user_purse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.UserPurse" >
+    insert into user_purse (uid, charge_gold_num, noble_gold_num,
+      gold_num, conch_num, diamond_num, deposit_num,
+      is_first_charge, first_recharge_time, update_time
+      )
+    values (#{uid,jdbcType=BIGINT}, #{chargeGoldNum,jdbcType=BIGINT}, #{nobleGoldNum,jdbcType=BIGINT}, 
+      #{goldNum,jdbcType=BIGINT}, #{conchNum,jdbcType=BIGINT}, #{diamondNum,jdbcType=DOUBLE}, #{depositNum,jdbcType=BIGINT},
+      #{isFirstCharge,jdbcType=BIT}, #{firstRechargeTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.UserPurse" >
+    insert into user_purse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="chargeGoldNum != null" >
+        charge_gold_num,
+      </if>
+      <if test="nobleGoldNum != null" >
+        noble_gold_num,
+      </if>
+      <if test="goldNum != null" >
+        gold_num,
+      </if>
+      <if test="conchNum != null" >
+        conch_num,
+      </if>
+      <if test="diamondNum != null" >
+        diamond_num,
+      </if>
+      <if test="depositNum != null" >
+        deposit_num,
+      </if>
+      <if test="isFirstCharge != null" >
+        is_first_charge,
+      </if>
+      <if test="firstRechargeTime != null" >
+        first_recharge_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="chargeGoldNum != null" >
+        #{chargeGoldNum,jdbcType=BIGINT},
+      </if>
+      <if test="nobleGoldNum != null" >
+        #{nobleGoldNum,jdbcType=BIGINT},
+      </if>
+      <if test="goldNum != null" >
+        #{goldNum,jdbcType=BIGINT},
+      </if>
+      <if test="conchNum != null" >
+        #{conchNum,jdbcType=BIGINT},
+      </if>
+      <if test="diamondNum != null" >
+        #{diamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="depositNum != null" >
+        #{depositNum,jdbcType=BIGINT},
+      </if>
+      <if test="isFirstCharge != null" >
+        #{isFirstCharge,jdbcType=BIT},
+      </if>
+      <if test="firstRechargeTime != null" >
+        #{firstRechargeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.UserPurseExample" resultType="java.lang.Integer" >
+    select count(*) from user_purse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_purse
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.chargeGoldNum != null" >
+        charge_gold_num = #{record.chargeGoldNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.nobleGoldNum != null" >
+        noble_gold_num = #{record.nobleGoldNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.goldNum != null" >
+        gold_num = #{record.goldNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.diamondNum != null" >
+        diamond_num = #{record.diamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="record.depositNum != null" >
+        deposit_num = #{record.depositNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.isFirstCharge != null" >
+        is_first_charge = #{record.isFirstCharge,jdbcType=BIT},
+      </if>
+      <if test="record.firstRechargeTime != null" >
+        first_recharge_time = #{record.firstRechargeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_purse
+    set uid = #{record.uid,jdbcType=BIGINT},
+      charge_gold_num = #{record.chargeGoldNum,jdbcType=BIGINT},
+      noble_gold_num = #{record.nobleGoldNum,jdbcType=BIGINT},
+      gold_num = #{record.goldNum,jdbcType=BIGINT},
+      diamond_num = #{record.diamondNum,jdbcType=DOUBLE},
+      deposit_num = #{record.depositNum,jdbcType=BIGINT},
+      is_first_charge = #{record.isFirstCharge,jdbcType=BIT},
+      first_recharge_time = #{record.firstRechargeTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse
+    <set >
+      <if test="chargeGoldNum != null" >
+        charge_gold_num = #{chargeGoldNum,jdbcType=BIGINT},
+      </if>
+      <if test="nobleGoldNum != null" >
+        noble_gold_num = #{nobleGoldNum,jdbcType=BIGINT},
+      </if>
+      <if test="goldNum != null" >
+        gold_num = #{goldNum,jdbcType=BIGINT},
+      </if>
+      <if test="conchNum != null" >
+        conch_num = #{conchNum,jdbcType=BIGINT},
+      </if>
+      <if test="diamondNum != null" >
+        diamond_num = #{diamondNum,jdbcType=DOUBLE},
+      </if>
+      <if test="depositNum != null" >
+        deposit_num = #{depositNum,jdbcType=BIGINT},
+      </if>
+      <if test="isFirstCharge != null" >
+        is_first_charge = #{isFirstCharge,jdbcType=BIT},
+      </if>
+      <if test="firstRechargeTime != null" >
+        first_recharge_time = #{firstRechargeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.UserPurse" >
+    update user_purse
+    set charge_gold_num = #{chargeGoldNum,jdbcType=BIGINT},
+      noble_gold_num = #{nobleGoldNum,jdbcType=BIGINT},
+      gold_num = #{goldNum,jdbcType=BIGINT},
+      conch_num = #{conchNum,jdbcType=BIGINT},
+      diamond_num = #{diamondNum,jdbcType=DOUBLE},
+      deposit_num = #{depositNum,jdbcType=BIGINT},
+      is_first_charge = #{isFirstCharge,jdbcType=BIT},
+      first_recharge_time = #{firstRechargeTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

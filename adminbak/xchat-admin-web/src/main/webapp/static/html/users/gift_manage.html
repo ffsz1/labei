@@ -1,0 +1,762 @@
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+<style>
+    #condition_type-tog, #gift_type-tog {
+        height: 34px;
+    }
+
+    #gift_type-tog {
+        width: 105px;
+    }
+
+    .canvas {
+        display: none;
+        width: 150px;
+        height: 150px;
+        background: #f4f4f4;
+        margin-bottom: 1rem;
+    }
+
+    #vggUploadBtn, #picUploadBtn {
+        display: block;
+        width: 150px;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <!-- .content -->
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <button id="gift-add" class="btn btn-warning">
+                        <i class="glyphicon glyphicon-plus"></i> 增加
+                    </button>
+                    <button id="gift-multiDel" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove"></i> 批量删除
+                    </button>
+                    <button id="gift-version-reset" class="btn btn-success">
+                        <i class="glyphicon glyphicon-edit"></i> 设置礼物版本
+                    </button>
+                    <select name="condition_type" id="condition_type" data-btn-class="btn-warning">
+                        <option value="0" selected="selected">全部</option>
+                        <option value="1">有效</option>
+                        <option value="2">无效</option>
+                    </select>
+                    <select name="gift_type" id="gift_type" data-btn-class="btn-info">
+                        <option value="0" selected="selected">全部</option>
+                        <option value="2">普通礼物</option>
+                        <option value="3">捡海螺礼物</option>
+                        <option value="1">打Call礼物</option>
+                        <option value="4">活动礼物</option>
+                        <option value="5">相亲礼物</option>
+                    </select>
+                    <button id="gift-refresh" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i> 查询
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="giftVersionModal" tabindex="-1" role="dialog" aria-labelledby="gift-modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="gift-modalLabel">版本信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="giftVersionForm">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">当前礼物版本</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="giftVersion" id="giftVersion"
+                                   readonly="true"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">新版本</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control validate[required]" name="configValue"
+                                   id="newGiftVersion">
+                        </div>
+                    </div>
+                    <input type="hidden" name="configId" id="gift-configId"/>
+                    <input type="hidden" name="configName" id="gift-configName"/>
+                    <input type="hidden" name="nameSpace" id="gift-nameSpace"/>
+                    <input type="hidden" name="configStatus" id="gift-configStatus"/>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="gift-version-save"> 保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="giftModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">礼物信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="giftForm">
+                    <input type="hidden" name="giftId" id="giftId"/>
+                    <div class="form-group">
+                        <label for="giftName" class="col-sm-2 control-label">礼物名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="giftName" id="giftName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="goldPrice" class="col-sm-2 control-label">礼物金币</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="goldPrice" id="goldPrice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="giftType" class="col-sm-2 control-label">礼物类型</label>
+                        <div class="col-sm-10">
+                            <select name="giftType" id="giftType" data-btn-class="btn-warning">
+                                <option value="2">普通礼物</option>
+                                <option value="3">捡海螺礼物</option>
+                                <option value="1">打Call礼物</option>
+                                <option value="4">活动礼物</option>
+                                <option value="5">相亲礼物</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">礼物状态</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="giftStatus" value="1"
+                                                               checked>有效</label>
+                            <label class="radio-inline"><input type="radio" name="giftStatus" value="2">无效</label>
+                        </div>
+                        <label class="col-sm-2 control-label">特效</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="hasEffect" value="0" checked>否</label>
+                            <label class="radio-inline"><input type="radio" name="hasEffect" value="1">是</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">vgg特效</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="hasVggPic" value="0" checked>否</label>
+                            <label class="radio-inline"><input type="radio" name="hasVggPic" value="1">是</label>
+                        </div>
+                        <label class="col-sm-2 control-label">最新礼物</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="isLatest" value="0" checked>否</label>
+                            <label class="radio-inline"><input type="radio" name="isLatest" value="1">是</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">贵族礼物</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="isNobleGift" id="notNoble" value="0"
+                                                               checked>否</label>
+                            <label class="radio-inline"><input type="radio" name="isNobleGift" id="isNoble" value="1">是</label>
+                        </div>
+
+                        <label class="col-sm-2 control-label">限时礼物</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="isTimeLimit" value="0"
+                                                               checked>否</label>
+                            <label class="radio-inline"><input type="radio" name="isTimeLimit" value="1">是</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">是否允许赠送</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="isCanGive" value="0">否</label>
+                            <label class="radio-inline"><input type="radio" name="isCanGive" value="1" checked>是</label>
+                        </div>
+
+                        <label class="col-sm-2 control-label">表白礼物</label>
+                        <div class="col-sm-3">
+                            <label class="radio-inline"><input type="radio" name="isExpressGift" value="0"
+                                                               checked>否</label>
+                            <label class="radio-inline"><input type="radio" name="isExpressGift" id="isExpressGift"
+                                                               value="1">是</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">礼物图片:</label>
+                        <div class="col-sm-10">
+                            <img src="/static/AdminLTE/img/add.png" id="picImage" style="width: 150px; margin-bottom: 1rem; background-color: #f4f4f4" alt="giftImage">
+                            <input type="file" id="picUploadFile" name="file" style="display: none"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga">
+                            <button class="btn btn-success" type="button" id="picUploadBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="picUrl" name="picUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">VGG图片:</label>
+                        <div class="col-sm-10">
+                            <div class="canvas" id="vggCanvas"></div>
+                            <img src="/static/AdminLTE/img/add.png" id="vggImage" style="width: 150px; margin-bottom: 1rem;" alt="vggImage">
+                            <input type="file" id="vggUploadFile" name="file" style="display: none"
+                                   accept="image/gif,image/jpeg,image/jpg,image/png,image/svga,image/*">
+                            <button class="btn btn-success" type="button" id="vggUploadBtn">
+                                <i class="glyphicon glyphicon-circle-arrow-up"></i> 上传
+                            </button>
+                            <input type="hidden" id="vggUrl" name="vggUrl" class="form-control validate[required]"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nobleId" class="col-sm-2 control-label">贵族等级</label>
+                        <div class="col-sm-10">
+                            <select name="nobleId" id="nobleId" data-btn-class="btn-warning">
+                                <option value="0">&nbsp;&nbsp;</option>
+                                <option value="1">男爵</option>
+                                <option value="2">子爵</option>
+                                <option value="3">伯爵</option>
+                                <option value="4">侯爵</option>
+                                <option value="5">公爵</option>
+                                <option value="6">国王</option>
+                                <option value="7">皇帝</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="nobleName" name="nobleName"/>
+                    <div class="form-group">
+                        <label for="seqNo" class="col-sm-2 control-label">排序</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control validate[required]" name="seqNo" id="seqNo">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body" id="tipMsg"></div>
+        </div>
+    </div>
+</div>
+<script src="../../static/js/ajaxfileupload.js"></script>
+<script>
+    ComboboxHelper.build(null, '#giftType');
+    ComboboxHelper.build(null, '#condition_type');
+    ComboboxHelper.build(null, "#gift_type")
+    ComboboxHelper.build(null, '#nobleId');
+
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            columns: [
+                {field: 'tmp', title: 'ID', align: 'center', checkbox: true},
+                {field: 'giftId', title: '礼物ID', align: 'center', width: 100},
+                {field: 'giftName', title: '礼物名称', align: 'center', width: 130},
+                {
+                    field: 'giftStatus',
+                    title: '礼物状态',
+                    align: 'center',
+                    width: 100,
+                    formatter: function (val) {
+                        if (val == 1) {
+                            return '有效';
+                        } else {
+                            return '无效';
+                        }
+                    }
+                },
+                {field: 'goldPrice', title: '礼物金币', align: 'center', width: 150},
+                {
+                    field: 'hasEffect',
+                    title: '特效',
+                    align: 'center',
+                    width: 100,
+                    formatter: function (val) {
+                        if (val == true) {
+                            return '有';
+                        } else {
+                            return '无'
+                        }
+                    }
+                },
+                {
+                    field: 'giftType',
+                    title: '类型',
+                    align: 'center',
+                    width: 150,
+                    formatter: function (val) {
+                        if (val == 2) {
+                            return '普通礼物';
+                        } else if (val == 3) {
+                            return '捡海螺礼物'
+                        } else if (val == 1) {
+                            return '打Call礼物';
+                        } else if (val == 4) {
+                            return '活动礼物';
+                        } else if (val == 5) {
+                            return '相亲礼物'
+                        }
+                    }
+                },
+                {
+                    field: 'hasVggPic',
+                    title: 'vgg特效',
+                    align: 'center',
+                    width: 100,
+                    formatter: function (val) {
+                        if (val == true) {
+                            return '有';
+                        } else {
+                            return '无'
+                        }
+                    }
+                },
+                {
+                    field: 'isLatest',
+                    title: '最新礼物',
+                    align: 'center',
+                    width: 100,
+                    formatter: function (val) {
+                        if (val == true) {
+                            return '是';
+                        } else {
+                            return '否'
+                        }
+                    }
+                },
+                {
+                    field: 'isNobleGift',
+                    title: '贵族礼物',
+                    align: 'center',
+                    width: 100,
+                    formatter: function (val, row, index) {
+                        if (val == true) {
+                            return '是';
+                        } else {
+                            return '否'
+                        }
+                    }
+                },
+                {
+                    field: 'isTimeLimit',
+                    title: '限时礼物',
+                    align: 'center',
+                    width: 100,
+                    formatter: function (val) {
+                        if (val == true) {
+                            return '是';
+                        } else {
+                            return '否'
+                        }
+                    }
+                },
+                {
+                    field: 'isExpressGift', title: '表白礼物', align: 'center', width: 100,
+                    formatter: function (val) {
+                        if (val == true) {
+                            return '<span style="color: red;">是</span>';
+                        } else {
+                            return '否'
+                        }
+                    }
+                },
+                {field: 'seqNo', title: '排序', align: 'center', width: 100},
+                {
+                    field: 'giftId', title: '操作', align: 'center', width: 250, formatter: function (val, row, index) {
+                        return '<button class="btn btn-success opt-edit" data-id=' + val + '>' +
+                            '<i class="glyphicon glyphicon-edit"></i> 编辑</button>' +
+                            '&nbsp;&nbsp;<button class="btn btn-danger opt-remove" data-id=' + val +
+                            '><i class="glyphicon glyphicon-remove"></i> 删除</button>';
+                    }
+                }
+            ],
+            cache: false,
+            striped: true,
+            showRefresh: true,
+            pageSize: 10,
+            pagination: true,
+            pageList: [1, 10, 20, 30, 50],
+            search: true,
+            sidePagination: "server",
+            // 设置为undefined可以获取pageNumber, pageSize, searchText, sortName, sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {
+                const param = {
+                    pageNumber: params.pageNumber,
+                    pageSize: params.pageSize,
+                    searchText: params.searchText
+                };
+                return param;
+            },
+            toolbar: '#toolbar',
+            url: `/admin/gift/getList.action?type=${ComboboxHelper.getSelected("#condition_type")}&gift=${ComboboxHelper.getSelected("#gift_type")}`,
+            onLoadSuccess: function () {
+                console.log("load success");
+            },
+            onLoadError: function () {
+                console.log("load fail");
+            }
+        });
+
+        $("#table").on("click", '.opt-remove', function () {
+            const id = $(this).attr("data-id");
+            if (id == 'undefined') {
+                $("#tipMsg").text("id参数有误");
+                $("#tipModal").modal('show');
+                return;
+            }
+
+            if (confirm("你确认删除该记录吗?" +
+                "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/gift/del.action",
+                    data: {'ids': JSON.stringify([id])},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#gift-add").click(function () {
+            // 打开编辑弹窗
+            $("#giftModal").modal('show');
+            $("#giftForm")[0].reset();
+
+            $('#picUrl').val('');
+            $('#picImage').attr("src", '/static/AdminLTE/img/add.png');
+            $('#vggUrl').val('');
+            $('#vggImage').attr("src", '/static/AdminLTE/img/add.png');
+            $('#vggImage').css('display', 'block');
+            $('#vggCanvas').css('display', 'none').html("");
+            $("#seqNo").val('');
+
+            $("#giftId").val('');
+            $("#giftName").attr('readonly', false);
+            $("#goldPrice").attr('readonly', false);
+
+            $("#nobleId").btComboBox('disable');
+
+            ComboboxHelper.setDef("#nobleId", '0');
+            ComboboxHelper.setDef("#giftType", '2');
+        });
+
+        $("#gift-version-save").click(function () {
+            if ($("#giftVersionForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/sysConf/save.action",
+                    data: $('#giftVersionForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#giftVersionModal").modal('hide');
+                            $("#tipMsg").text("设置成功");
+                            $("#tipModal").modal('show');
+                        } else {
+                            $("#tipMsg").text("设置失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+            ;
+        });
+
+        $("#nobleId").on('change', function () {
+            if (ComboboxHelper.getSelected("#nobleId") != 0) {
+                const nobleName = $("#nobleId").btComboBox('selectedOption')[1];
+                $("#nobleName").val(nobleName);
+            } else {
+                $("#nobleName").val('');
+            }
+        });
+
+        $("#notNoble").on('change', function () {
+            ComboboxHelper.setDef("#nobleId", '0');
+            $("#nobleName").val('');
+            $("#nobleId").btComboBox('disable');
+        });
+
+        $("#isNoble").on('change', function () {
+            $("#nobleId").btComboBox('enable');
+        });
+
+        $("#gift-version-reset").click(function () {
+            $("#giftVersion").val('');
+            $("#gift-configName").val('');
+            $("#gift-configId").val('');
+            $("#gift-nameSpace").val('');
+            $("#gift-configStatus").val('');
+            $("#newGiftVersion").val('');
+
+            $.ajax({
+                type: "get",
+                url: "/admin/gift/getCurGiftVersion.action",
+                data: {},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#giftVersion").val(json.entity.configValue);
+                        $("#gift-configName").val(json.entity.configName);
+                        $("#gift-configId").val(json.entity.configId);
+                        $("#gift-nameSpace").val(json.entity.nameSpace);
+                        $("#gift-configStatus").val(json.entity.configStatus);
+                        $("#giftVersionModal").modal("show");
+                    } else {
+                        $("#tipMsg").text("获取当前礼物版本失败");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#gift-refresh").click(function () {
+            $("#table").bootstrapTable('refresh', {url: `/admin/gift/getList.action?type=${ComboboxHelper.getSelected("#condition_type")}&gift=${ComboboxHelper.getSelected("#gift_type")}`});
+        });
+
+        $("#gift-multiDel").click(function () {
+            const rows = $("#table").bootstrapTable("getSelections");
+            if (rows.length == 0) {
+                alert("请先选择要删除的记录");
+                return;
+            }
+
+            const idArr = [];
+            for (let i = 0; i < rows.length; i++) {
+                idArr.push(rows[i]['giftId']);
+            }
+
+            if (confirm("你确认批量删除该记录吗?" +
+                "\r\n删除后再也不能找回，请谨慎操作！")) {
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/gift/del.action",
+                    data: {'ids': JSON.stringify(idArr)},
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#tipMsg").text("删除成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("删除失败");
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            }
+        });
+
+        $('#picImage').on('click', function () {
+            $('#picUploadFile').click();
+        });
+
+        $('#picUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                fileElementId: 'picUploadFile', // 需要上传的文件域的ID, 即<input type="file">的ID
+                url: '/admin/file/upload', // 后台方法的路径
+                type: 'post', // 当要提交自定义参数时, 这个参数要设置成post
+                dataType: 'json', // 服务器返回的数据类型。可以为xml, script, json, html; 如果不填写，jQuery会自动判断
+                secureuri: false, // 是否启用安全提交, 默认为false
+                async: false, // 是否是异步
+                success: function (json) {
+                    if (json.path) {
+                        $('#picUrl').val(json.path);
+                        $('#picImage').attr("src", json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                },
+                error: function (data, status, e) {  //提交失败自动执行的处理函数。
+                    console.error(e);
+                }
+            });
+        });
+
+        $('#vggImage, #vggCanvas').on('click', function () {
+            $('#vggUploadFile').click();
+        });
+
+        $('#vggUploadBtn').on('click', function () {
+            $.ajaxFileUpload({
+                url: '/admin/file/upload',//后台请求地址
+                type: 'post',//请求方式  当要提交自定义参数时，这个参数要设置成post
+                secureuri: false,//是否启用安全提交，默认为false。
+                async: false,   //是否是异步
+                fileElementId: 'vggUploadFile',// 需要上传的文件域的ID，即<input type="file">的ID。
+                dataType: 'json',//服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。如果json返回的带pre,这里修改为json即可解决。
+                success: function (json, status) {
+                    if (json.path) {
+                        $('#vggUrl').val(json.path);
+                        // $('#vggImage').attr("src", json.path);
+                        $('#vggImage').css('display', 'none');
+                        $('#vggCanvas').css('display', 'block');
+                        showVGG(json.path);
+                        console.log(json.path);
+                    } else {
+                        $("#tipMsg").text(json.msg);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        // 展示VGG图片
+        function showVGG(resourceImage) {
+            const player = new SVGA.Player('#vggCanvas');
+            const parser = new SVGA.Parser('#vggCanvas');
+            parser.load(resourceImage, function (videoItem) {
+                player.setVideoItem(videoItem);
+                player.startAnimation();
+            });
+        }
+
+        $("#cancel").click(function () {
+            TableHelper.unCheckAll("#table");
+        });
+
+        function parseNum(val) {
+            if (val == undefined || val == 'false' || val == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        };
+
+        $("#table").on("click", '.opt-edit', function () {
+            const id = $(this).attr("data-id");
+            $.ajax({
+                type: "get",
+                url: "/admin/gift/get.action",
+                data: {id: id},
+                dataType: "json",
+                success: function (json) {
+                    if (json.entity) {
+                        $("#giftId").val(json.entity.giftId);
+                        // $("#giftName").attr('readonly', true);
+                        $("#goldPrice").attr('readonly', true);
+
+                        $("#giftName").val(json.entity.giftName);
+                        $("#goldPrice").val(json.entity.goldPrice);
+
+
+                        $("#seqNo").val(json.entity.seqNo);
+
+                        ComboboxHelper.setDef("#giftType", json.entity.giftType);
+
+                        if (json.entity.isNobleGift != '0') {
+                            ComboboxHelper.setDef("#nobleId", json.entity.nobleId);
+                            $("#nobleName").val(json.entity.nobleName);
+                            $("#nobleId").btComboBox('enable');
+                        } else {
+                            ComboboxHelper.setDef("#nobleId", '0');
+                            $("#nobleId").btComboBox('disable');
+                            $("#nobleName").val('');
+                        }
+
+                        const isNobleGift = parseNum(json.entity.isNobleGift);
+                        const hasEffect = parseNum(json.entity.hasEffect);
+                        const hasVggPic = parseNum(json.entity.hasVggPic);
+                        const isLatest = parseNum(json.entity.isLatest);
+                        const isTimeLimit = parseNum(json.entity.isTimeLimit);
+                        const isExpressGift = parseNum(json.entity.isExpressGift);
+                        const isCanGive = parseNum((json.entity.isCanGive));
+                        // 礼物状态的值跟其他不同, 1为有效 2为无效
+                        if (json.entity.giftStatus == 1) {
+                            $("input:radio[name='giftStatus']")[0].checked = true;
+                        } else {
+                            $("input:radio[name='giftStatus']")[1].checked = true;
+                        }
+
+                        // 设置radio
+                        $("input:radio[name='hasEffect']")[hasEffect].checked = true;
+                        $("input:radio[name='hasVggPic']")[hasVggPic].checked = true;
+                        $("input:radio[name='isLatest']")[isLatest].checked = true;
+                        $("input:radio[name='isTimeLimit']")[isTimeLimit].checked = true;
+                        $("input:radio[name='isNobleGift']")[isNobleGift].checked = true;
+                        $("input:radio[name='isExpressGift']")[isExpressGift].checked = true;
+                        $("input:radio[name='isCanGive']")[isCanGive].checked = true;
+
+                        // 设置礼物图片
+                        $('#picUrl').val(json.entity.picUrl);
+                        $('#picImage').attr("src", json.entity.picUrl);
+
+                        // 设置vgg图片
+                        if (json.entity.vggUrl) {
+                            $('#vggUrl').val(json.entity.vggUrl);
+                            // $('#vggImage').attr("src", json.entity.vggUrl);
+                            $('#vggImage').css('display', 'none');
+                            $('#vggCanvas').css('display', 'block');
+                            showVGG(json.entity.vggUrl);
+                        } else {
+                            $('#vggImage').attr("src", '/static/AdminLTE/img/add.png');
+                            $('#vggImage').css('display', 'block');
+                            $('#vggCanvas').css('display', 'none').html("");
+                        }
+
+                        // 打开编辑弹窗
+                        $("#giftModal").modal('show');
+                    } else {
+                        $("#tipMsg").text("获取菜单信息出错");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+
+        $("#save").click(function () {
+            if ($("#giftForm").validationEngine('validate')) {
+                $.ajax({
+                    type: "post",
+                    url: "/admin/gift/save.action",
+                    data: $('#giftForm').serialize(),
+                    dataType: "json",
+                    success: function (json) {
+                        if (json.success == 'true') {
+                            $("#giftModal").modal('hide');
+                            $("#tipMsg").text("保存成功");
+                            $("#tipModal").modal('show');
+                            TableHelper.doRefresh("#table");
+                        } else {
+                            $("#tipMsg").text("保存失败." + json.msg);
+                            $("#tipModal").modal('show');
+                        }
+                    }
+                });
+            };
+        });
+    });
+</script>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"
+       default-lazy-init="true">
+    <!-- 写数据源 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://${write.erban.main.jdbc.host}:${write.erban.main.jdbc.port}/${erban.main.jdbc.dbname}?zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8"></property>
+        <property name="username" value="${write.erban.main.jdbc.username}"></property>
+        <property name="password" value="${write.erban.main.jdbc.password}"></property>
+        <property name="maxActive" value="100"></property>
+        <property name="maxIdle" value="100"></property>
+        <property name="maxWait" value="5000"></property>
+        <property name="defaultAutoCommit" value="true"></property>
+        <property name="validationQuery" value="select 1"></property>
+        <property name="testOnBorrow" value="true"></property>
+        <property name="testWhileIdle" value="true"></property>
+        <property name="connectionInitSqls" value="set names utf8mb4;"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven proxy-target-class="false" transaction-manager="transactionManager" />
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+        <constructor-arg index="1" value="BATCH"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/mybatis-config.xml"/>
+        <property name="mapperLocations">
+        <list>
+            <value>classpath:oauth2/sqlmappers/*.xml</value>
+            <value>classpath:myoauth2/sqlmappers/*.xml</value>
+        </list>
+        </property>
+        <!-- <property name="mapperLocations" value="classpath*:erban.sqlmappers/**/*Mapper.xml"/>
+         <property name="typeAliasesPackage" value="com.yy.ent.whistle.security.persist.model"/>
+         -->
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.xchat.oauth2.service.infrastructure.mybatis,
+        com.xchat.oauth2.service.infrastructure.myaccountmybatis"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+
+    <!-- end 写数据源 -->
+
+    <!-- DB数据源 -->
+    <!--<bean id="whistleBssDataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>-->
+        <!--<property name="url" value="jdbc:mysql://${whistle.bss.jdbc.host}:${whistle.bss.jdbc.port}/${whistle.bss.jdbc.dbname}?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull&amp;autoReconnect=true"></property>-->
+        <!--<property name="username" value="${whistle.bss.jdbc.username}"></property>-->
+        <!--<property name="password" value="${whistle.bss.jdbc.password}"></property>-->
+        <!--<property name="maxActive" value="100"></property>-->
+        <!--<property name="maxIdle" value="100"></property>-->
+        <!--<property name="maxWait" value="5000"></property>-->
+        <!--<property name="defaultAutoCommit" value="true"></property>-->
+        <!--<property name="validationQuery" value="select 1"></property>-->
+        <!--<property name="testOnBorrow" value="true"></property>-->
+        <!--<property name="testWhileIdle" value="true"></property>-->
+    <!--</bean>-->
+
+    <!--<bean id="whistleBssDataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="whistleBssDataSource"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="whistleBssJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">-->
+        <!--<property name="dataSource" ref="whistleBssDataSource"/>-->
+    <!--</bean>-->
+    <!--db数据源End-->
+
+</beans>

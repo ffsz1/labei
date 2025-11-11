@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <title>排行榜</title>
+  <script>
+    (function (_D) {
+      var _self = {};
+      _self.resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+      _self.Html = _D.getElementsByTagName("html")[0];
+      _self.widthProportion = function () {
+        var p = Number((_D.body && _D.body.clientWidth || _self.Html.offsetWidth) / 750).toFixed(3);
+        return p > 1.067 ? 1.067 : p < 0.444 ? 0.444 : p;
+      };
+      _self.changePage = function () {
+        _self.Html.setAttribute("style", "font-size:" + _self.widthProportion() * 100 + "px");
+        _self.correctPx();
+      };
+      _self.correctPx = function () {
+        var docEl = document.documentElement;
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth || clientWidth > 768) return;
+        var div = document.createElement('div');
+        div.style.width = '1.4rem';
+        div.style.height = '0';
+        document.body.appendChild(div);
+        var ideal = 140 * clientWidth / 750;
+        var rmd = (div.clientWidth / ideal);
+        console.log(rmd);
+        if (rmd > 1.2 || rmd < 0.8) {
+          docEl.style.fontSize = 100 * (clientWidth / 750) / rmd + 'px';
+          document.body.removeChild(div);
+        }
+
+      };
+      _self.changePage();
+      if (!document.addEventListener) return;
+      window.addEventListener(_self.resizeEvt, _self.changePage, false);
+      document.addEventListener('DOMContentLoaded', _self.changePage, false);
+    })(document);
+  </script>
+  <link rel="stylesheet" href="../lib/reset.css">
+  <link rel="stylesheet" href="../lib/swiper/swiper.min.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="tabbar-fixed">
+      <div class="tabbar">
+        <span>魅力榜</span>
+        <span>土豪榜</span>
+        <span>房间榜</span>
+        <span id="bottom-line"></span>
+      </div>
+    </div>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="container-item">
+            <span class="switch-bar" id="switch-bar0">
+              <span class="switch-bar-option B94BFF">日榜</span>
+              <span class="switch-bar-option">周榜</span>
+              <span class="switch-bar-option">总榜</span>
+              <span id="switch-bar-item"></span>
+            </span>
+            <div class="list" id="list1">
+              <ul class="list-top"></ul>
+              <ul class="list-item"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="container-item">
+            <span class="switch-bar" id="switch-bar1">
+              <span class="switch-bar-option FFA026">日榜</span>
+              <span class="switch-bar-option">周榜</span>
+              <span class="switch-bar-option">总榜</span>
+              <span id="switch-bar-item1"></span>
+            </span>
+            <div class="list" id="list2">
+              <ul class="list-top"></ul>
+              <ul class="list-item"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="container-item">
+            <span class="switch-bar" id="switch-bar2">
+              <span class="switch-bar-option a229EFF">日榜</span>
+              <span class="switch-bar-option">周榜</span>
+              <span class="switch-bar-option">总榜</span>
+              <span id="switch-bar-item2"></span>
+            </span>
+            <div class="list" id="list3">
+              <ul class="list-top"></ul>
+              <ul class="list-item"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:none">
+    <script src="https://s13.cnzz.com/z_stat.php?id=1274392224&web_id=1274392224" language="JavaScript"></script>
+</div>
+  <script src="../lib/zepto.min.js"></script>
+  <script src="../lib/swiper/idangerous.swiper.min.js"></script>
+  <script src="../lib/common.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

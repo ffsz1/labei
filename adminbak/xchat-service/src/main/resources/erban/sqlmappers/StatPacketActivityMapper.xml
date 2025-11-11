@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.StatPacketActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.StatPacketActivity" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="share_count" property="shareCount" jdbcType="INTEGER" />
+    <result column="share_packet_count" property="sharePacketCount" jdbcType="INTEGER" />
+    <result column="latest_share_date" property="latestShareDate" jdbcType="DATE" />
+    <result column="packet_count" property="packetCount" jdbcType="INTEGER" />
+    <result column="register_cout" property="registerCout" jdbcType="INTEGER" />
+    <result column="today_register_count" property="todayRegisterCount" jdbcType="INTEGER" />
+    <result column="latest_register_date" property="latestRegisterDate" jdbcType="DATE" />
+    <result column="charge_bonus" property="chargeBonus" jdbcType="DOUBLE" />
+    <result column="today_charge_bonus" property="todayChargeBonus" jdbcType="DOUBLE" />
+    <result column="latest_charge_bonus_date" property="latestChargeBonusDate" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, share_count, share_packet_count, latest_share_date, packet_count, register_cout, 
+    today_register_count, latest_register_date, charge_bonus, today_charge_bonus, latest_charge_bonus_date, 
+    create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.StatPacketActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stat_packet_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from stat_packet_activity
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stat_packet_activity
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.StatPacketActivity" >
+    insert into stat_packet_activity (uid, share_count, share_packet_count, 
+      latest_share_date, packet_count, register_cout, 
+      today_register_count, latest_register_date, charge_bonus, 
+      today_charge_bonus, latest_charge_bonus_date, create_time, 
+      update_time)
+    values (#{uid,jdbcType=BIGINT}, #{shareCount,jdbcType=INTEGER}, #{sharePacketCount,jdbcType=INTEGER}, 
+      #{latestShareDate,jdbcType=DATE}, #{packetCount,jdbcType=INTEGER}, #{registerCout,jdbcType=INTEGER}, 
+      #{todayRegisterCount,jdbcType=INTEGER}, #{latestRegisterDate,jdbcType=DATE}, #{chargeBonus,jdbcType=DOUBLE}, 
+      #{todayChargeBonus,jdbcType=DOUBLE}, #{latestChargeBonusDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.StatPacketActivity" >
+    insert into stat_packet_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="shareCount != null" >
+        share_count,
+      </if>
+      <if test="sharePacketCount != null" >
+        share_packet_count,
+      </if>
+      <if test="latestShareDate != null" >
+        latest_share_date,
+      </if>
+      <if test="packetCount != null" >
+        packet_count,
+      </if>
+      <if test="registerCout != null" >
+        register_cout,
+      </if>
+      <if test="todayRegisterCount != null" >
+        today_register_count,
+      </if>
+      <if test="latestRegisterDate != null" >
+        latest_register_date,
+      </if>
+      <if test="chargeBonus != null" >
+        charge_bonus,
+      </if>
+      <if test="todayChargeBonus != null" >
+        today_charge_bonus,
+      </if>
+      <if test="latestChargeBonusDate != null" >
+        latest_charge_bonus_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="shareCount != null" >
+        #{shareCount,jdbcType=INTEGER},
+      </if>
+      <if test="sharePacketCount != null" >
+        #{sharePacketCount,jdbcType=INTEGER},
+      </if>
+      <if test="latestShareDate != null" >
+        #{latestShareDate,jdbcType=DATE},
+      </if>
+      <if test="packetCount != null" >
+        #{packetCount,jdbcType=INTEGER},
+      </if>
+      <if test="registerCout != null" >
+        #{registerCout,jdbcType=INTEGER},
+      </if>
+      <if test="todayRegisterCount != null" >
+        #{todayRegisterCount,jdbcType=INTEGER},
+      </if>
+      <if test="latestRegisterDate != null" >
+        #{latestRegisterDate,jdbcType=DATE},
+      </if>
+      <if test="chargeBonus != null" >
+        #{chargeBonus,jdbcType=DOUBLE},
+      </if>
+      <if test="todayChargeBonus != null" >
+        #{todayChargeBonus,jdbcType=DOUBLE},
+      </if>
+      <if test="latestChargeBonusDate != null" >
+        #{latestChargeBonusDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.StatPacketActivity" >
+    update stat_packet_activity
+    <set >
+      <if test="shareCount != null" >
+        share_count = #{shareCount,jdbcType=INTEGER},
+      </if>
+      <if test="sharePacketCount != null" >
+        share_packet_count = #{sharePacketCount,jdbcType=INTEGER},
+      </if>
+      <if test="latestShareDate != null" >
+        latest_share_date = #{latestShareDate,jdbcType=DATE},
+      </if>
+      <if test="packetCount != null" >
+        packet_count = #{packetCount,jdbcType=INTEGER},
+      </if>
+      <if test="registerCout != null" >
+        register_cout = #{registerCout,jdbcType=INTEGER},
+      </if>
+      <if test="todayRegisterCount != null" >
+        today_register_count = #{todayRegisterCount,jdbcType=INTEGER},
+      </if>
+      <if test="latestRegisterDate != null" >
+        latest_register_date = #{latestRegisterDate,jdbcType=DATE},
+      </if>
+      <if test="chargeBonus != null" >
+        charge_bonus = #{chargeBonus,jdbcType=DOUBLE},
+      </if>
+      <if test="todayChargeBonus != null" >
+        today_charge_bonus = #{todayChargeBonus,jdbcType=DOUBLE},
+      </if>
+      <if test="latestChargeBonusDate != null" >
+        latest_charge_bonus_date = #{latestChargeBonusDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.StatPacketActivity" >
+    update stat_packet_activity
+    set share_count = #{shareCount,jdbcType=INTEGER},
+      share_packet_count = #{sharePacketCount,jdbcType=INTEGER},
+      latest_share_date = #{latestShareDate,jdbcType=DATE},
+      packet_count = #{packetCount,jdbcType=INTEGER},
+      register_cout = #{registerCout,jdbcType=INTEGER},
+      today_register_count = #{todayRegisterCount,jdbcType=INTEGER},
+      latest_register_date = #{latestRegisterDate,jdbcType=DATE},
+      charge_bonus = #{chargeBonus,jdbcType=DOUBLE},
+      today_charge_bonus = #{todayChargeBonus,jdbcType=DOUBLE},
+      latest_charge_bonus_date = #{latestChargeBonusDate,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

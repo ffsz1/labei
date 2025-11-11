@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.IconMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.Icon" >
+    <id column="icon_id" property="iconId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="os" property="os" jdbcType="TINYINT" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="activity" property="activity" jdbcType="VARCHAR" />
+    <result column="ios_activity" property="iosActivity" jdbcType="VARCHAR" />
+    <result column="icon_url" property="iconUrl" jdbcType="VARCHAR" />
+    <result column="key1" property="key1" jdbcType="VARCHAR" />
+    <result column="value1" property="value1" jdbcType="VARCHAR" />
+    <result column="key2" property="key2" jdbcType="VARCHAR" />
+    <result column="value2" property="value2" jdbcType="VARCHAR" />
+    <result column="key3" property="key3" jdbcType="VARCHAR" />
+    <result column="value3" property="value3" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    icon_id, type, os, seq, name, subtitle, pic, activity, ios_activity, icon_url, key1, 
+    value1, key2, value2, key3, value3, status, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.IconExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from icon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from icon
+    where icon_id = #{iconId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from icon
+    where icon_id = #{iconId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.IconExample" >
+    delete from icon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.Icon" >
+    <selectKey resultType="java.lang.Integer" keyProperty="iconId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into icon (type, os, seq, 
+      name, subtitle, pic, 
+      activity, ios_activity, icon_url, 
+      key1, value1, key2, 
+      value2, key3, value3, 
+      status, create_time)
+    values (#{type,jdbcType=TINYINT}, #{os,jdbcType=TINYINT}, #{seq,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
+      #{activity,jdbcType=VARCHAR}, #{iosActivity,jdbcType=VARCHAR}, #{iconUrl,jdbcType=VARCHAR}, 
+      #{key1,jdbcType=VARCHAR}, #{value1,jdbcType=VARCHAR}, #{key2,jdbcType=VARCHAR}, 
+      #{value2,jdbcType=VARCHAR}, #{key3,jdbcType=VARCHAR}, #{value3,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.Icon" >
+    <selectKey resultType="java.lang.Integer" keyProperty="iconId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into icon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="os != null" >
+        os,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="subtitle != null" >
+        subtitle,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="activity != null" >
+        activity,
+      </if>
+      <if test="iosActivity != null" >
+        ios_activity,
+      </if>
+      <if test="iconUrl != null" >
+        icon_url,
+      </if>
+      <if test="key1 != null" >
+        key1,
+      </if>
+      <if test="value1 != null" >
+        value1,
+      </if>
+      <if test="key2 != null" >
+        key2,
+      </if>
+      <if test="value2 != null" >
+        value2,
+      </if>
+      <if test="key3 != null" >
+        key3,
+      </if>
+      <if test="value3 != null" >
+        value3,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="os != null" >
+        #{os,jdbcType=TINYINT},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="activity != null" >
+        #{activity,jdbcType=VARCHAR},
+      </if>
+      <if test="iosActivity != null" >
+        #{iosActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null" >
+        #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="key1 != null" >
+        #{key1,jdbcType=VARCHAR},
+      </if>
+      <if test="value1 != null" >
+        #{value1,jdbcType=VARCHAR},
+      </if>
+      <if test="key2 != null" >
+        #{key2,jdbcType=VARCHAR},
+      </if>
+      <if test="value2 != null" >
+        #{value2,jdbcType=VARCHAR},
+      </if>
+      <if test="key3 != null" >
+        #{key3,jdbcType=VARCHAR},
+      </if>
+      <if test="value3 != null" >
+        #{value3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.erban.main.model.IconExample" resultType="java.lang.Integer" >
+    select count(*) from icon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update icon
+    <set >
+      <if test="record.iconId != null" >
+        icon_id = #{record.iconId,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.os != null" >
+        os = #{record.os,jdbcType=TINYINT},
+      </if>
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subtitle != null" >
+        subtitle = #{record.subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic != null" >
+        pic = #{record.pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activity != null" >
+        activity = #{record.activity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iosActivity != null" >
+        ios_activity = #{record.iosActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconUrl != null" >
+        icon_url = #{record.iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.key1 != null" >
+        key1 = #{record.key1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value1 != null" >
+        value1 = #{record.value1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.key2 != null" >
+        key2 = #{record.key2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value2 != null" >
+        value2 = #{record.value2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.key3 != null" >
+        key3 = #{record.key3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value3 != null" >
+        value3 = #{record.value3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update icon
+    set icon_id = #{record.iconId,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=TINYINT},
+      os = #{record.os,jdbcType=TINYINT},
+      seq = #{record.seq,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      subtitle = #{record.subtitle,jdbcType=VARCHAR},
+      pic = #{record.pic,jdbcType=VARCHAR},
+      activity = #{record.activity,jdbcType=VARCHAR},
+      ios_activity = #{record.iosActivity,jdbcType=VARCHAR},
+      icon_url = #{record.iconUrl,jdbcType=VARCHAR},
+      key1 = #{record.key1,jdbcType=VARCHAR},
+      value1 = #{record.value1,jdbcType=VARCHAR},
+      key2 = #{record.key2,jdbcType=VARCHAR},
+      value2 = #{record.value2,jdbcType=VARCHAR},
+      key3 = #{record.key3,jdbcType=VARCHAR},
+      value3 = #{record.value3,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Icon" >
+    update icon
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="os != null" >
+        os = #{os,jdbcType=TINYINT},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        subtitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="activity != null" >
+        activity = #{activity,jdbcType=VARCHAR},
+      </if>
+      <if test="iosActivity != null" >
+        ios_activity = #{iosActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null" >
+        icon_url = #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="key1 != null" >
+        key1 = #{key1,jdbcType=VARCHAR},
+      </if>
+      <if test="value1 != null" >
+        value1 = #{value1,jdbcType=VARCHAR},
+      </if>
+      <if test="key2 != null" >
+        key2 = #{key2,jdbcType=VARCHAR},
+      </if>
+      <if test="value2 != null" >
+        value2 = #{value2,jdbcType=VARCHAR},
+      </if>
+      <if test="key3 != null" >
+        key3 = #{key3,jdbcType=VARCHAR},
+      </if>
+      <if test="value3 != null" >
+        value3 = #{value3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where icon_id = #{iconId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Icon" >
+    update icon
+    set type = #{type,jdbcType=TINYINT},
+      os = #{os,jdbcType=TINYINT},
+      seq = #{seq,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      activity = #{activity,jdbcType=VARCHAR},
+      ios_activity = #{iosActivity,jdbcType=VARCHAR},
+      icon_url = #{iconUrl,jdbcType=VARCHAR},
+      key1 = #{key1,jdbcType=VARCHAR},
+      value1 = #{value1,jdbcType=VARCHAR},
+      key2 = #{key2,jdbcType=VARCHAR},
+      value2 = #{value2,jdbcType=VARCHAR},
+      key3 = #{key3,jdbcType=VARCHAR},
+      value3 = #{value3,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where icon_id = #{iconId,jdbcType=INTEGER}
+  </update>
+</mapper>

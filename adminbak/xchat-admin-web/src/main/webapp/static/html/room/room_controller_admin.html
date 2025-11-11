@@ -1,0 +1,224 @@
+<style>
+    .pull-left {
+        width: 100%;
+    }
+
+    #toolbar textarea {
+        overflow: hidden;
+        resize: none;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 4px;
+        height: 100px;
+        line-height: 20px;
+    }
+
+    #detailModal .part {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #removePhone, #editPhone {
+        display: block;
+        text-align: left;
+    }
+</style>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-body">
+            <section class="content-header">
+                <h1 id="itemTitle"></h1>
+            </section>
+            <section class="content">
+                <div id="table"></div>
+                <div id="toolbar">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">拉贝号:</label>
+                        <div class="col-sm-2">
+                            <input type="text" name="erbanNo" id="erbanNo" placeholder="拉贝号">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button id="btnSearch" class="btn btn-sm btn-primary">查询</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+        $('#table').bootstrapTable({
+            cache: false,
+            striped: true,
+            showRefresh: false,
+            pageSize: 10,
+            pagination: true,
+            pageList: [10, 20, 30, 50],
+            sidePagination: "client", //表示服务端请求
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            //设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: "undefined",
+            queryParams: function queryParams(params) {   //设置查询参数
+                var param = {
+                    pageSize: params.pageSize,
+                    pageNumber: params.pageNumber,
+                    erbanNo: $('#erbanNo').val()
+                };
+                return param;
+            },
+            uniqueId: 'code',
+            toolbar: '#toolbar',
+            url: '/admin/roomAdmin/getRoomMicList.action',
+            onLoadSuccess: function () {  //加载成功时执行
+                console.log("load success");
+            },
+            onLoadError: function () {  //加载失败时执行
+                console.log("load fail");
+            },
+            columns: [
+                {field: 'erbanNo', title: '拉贝号', align: 'center', valign: 'middle'},
+                {
+                    field: 'avatar',
+                    title: '头像',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        return "<img src='" + val + "' width='40' height='40'>";
+                    }
+                },
+                {field: 'uid', title: 'Uid', align: 'center', valign: 'middle'},
+                {field: 'nick', title: '用户昵称', align: 'center', valign: 'middle'},
+                {field: 'phone', title: '手机电话', align: 'center', valign: 'middle'},
+                {
+                    field: 'birth',
+                    title: '用户出生日期',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {
+                    field: 'gender',
+                    title: '性别',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val == 1) {
+                            return '男';
+                        } else {
+                            return '女';
+                        }
+                    }
+                },
+                {
+                    field: 'defUser',
+                    title: '账号类型',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        switch (val) {
+                            case 1:
+                                return '普通账号';
+                                break;
+                            case 2:
+                                return '官方账号';
+                                break;
+                            case 3:
+                                return '机器账号';
+                                break;
+                        }
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        if (val) {
+                            var date = new Date(val);
+                            return date.format("yyyy-MM-dd HH:mm:ss");
+                        } else {
+                            return '-';
+                        }
+                    }
+                },
+                {field: 'appVersion', title: '版本号', align: 'center', valign: 'middle'},
+                {
+                    field: 'tmp',
+                    title: '操作',
+                    align: 'center',
+                    width: '10%',
+                    valign: 'middle',
+                    formatter: function (val, row, index) {
+                        console.log(val);
+                        var key = row.uid;
+                        return "<button class='btn btn-sm btn-success opt-out' data-id=" + key + ">封禁用户</button><button class='btn btn-sm btn-warning opt-out-room' data-id=" + key + ">关闭房间</button>";
+                    }
+                }
+            ]
+        })
+        $('#btnSearch').on('click', function () {
+            TableHelper.doRefresh('#table');
+        })
+        $('#table').on('click','.opt-out',function () {
+            var uid = $(this).data('id');
+            if(uid == 'undefined' || !uid){
+                return;
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '/admin/blockAll',
+                data:{
+                    uid: uid
+                },
+                dataType: 'json',
+                success:function (res) {
+                    if(res == 1){
+                        // 成功
+                        $("#tipMsg").text("一键封禁成功！");
+                        $("#tipModal").modal('show');
+                    }else if(data == 2){
+                        $("#tipMsg").text("账号信息错误");
+                        $("#tipModal").modal('show');
+                    }else if(data == 3){
+                        $("#tipMsg").text("该账号已经被封禁");
+                        $("#tipModal").modal('show');
+                    }else{
+                        $("#tipMsg").text("一键封禁失败！");
+                        $("#tipModal").modal('show');
+                    }
+                }
+            })
+        })
+        $("#table").on('click', '.opt-out-room', function (){
+            var uid = $(this).data('id');
+            $.ajax({
+                url: '/admin/userCheckAdmin/outRoom',
+                type: 'get',
+                data: {uid: uid},
+                dataType: 'json',
+                success:function (data) {
+                    if(data.code == 200){
+                        // 成功
+                        $("#tipMsg").text("成功！");
+                        $("#tipModal").modal('show');
+                    }else{
+                        $("#tipMsg").text("失败！"+data.message);
+                        $("#tipModal").modal('show');
+                    }
+                }
+            });
+        });
+    })
+</script>

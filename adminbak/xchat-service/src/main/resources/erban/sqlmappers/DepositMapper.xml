@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.DepositMapper" >
+  <resultMap id="BaseResultMap" type="com.erban.main.model.Deposit" >
+    <id column="did" property="did" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="obj_id" property="objId" jdbcType="VARCHAR" />
+    <result column="gold_num" property="goldNum" jdbcType="BIGINT" />
+    <result column="use_type" property="useType" jdbcType="TINYINT" />
+    <result column="cur_status" property="curStatus" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    did, uid, obj_id, gold_num, use_type, cur_status, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.DepositExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from deposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from deposit
+    where did = #{did,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from deposit
+    where did = #{did,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.erban.main.model.DepositExample" >
+    delete from deposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.erban.main.model.Deposit" >
+    insert into deposit (did, uid, obj_id, 
+      gold_num, use_type, cur_status, 
+      create_time)
+    values (#{did,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{objId,jdbcType=VARCHAR}, 
+      #{goldNum,jdbcType=BIGINT}, #{useType,jdbcType=TINYINT}, #{curStatus,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.erban.main.model.Deposit" >
+    insert into deposit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="did != null" >
+        did,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="objId != null" >
+        obj_id,
+      </if>
+      <if test="goldNum != null" >
+        gold_num,
+      </if>
+      <if test="useType != null" >
+        use_type,
+      </if>
+      <if test="curStatus != null" >
+        cur_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="did != null" >
+        #{did,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="objId != null" >
+        #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="goldNum != null" >
+        #{goldNum,jdbcType=BIGINT},
+      </if>
+      <if test="useType != null" >
+        #{useType,jdbcType=TINYINT},
+      </if>
+      <if test="curStatus != null" >
+        #{curStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.Deposit" >
+    update deposit
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="objId != null" >
+        obj_id = #{objId,jdbcType=VARCHAR},
+      </if>
+      <if test="goldNum != null" >
+        gold_num = #{goldNum,jdbcType=BIGINT},
+      </if>
+      <if test="useType != null" >
+        use_type = #{useType,jdbcType=TINYINT},
+      </if>
+      <if test="curStatus != null" >
+        cur_status = #{curStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where did = #{did,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.erban.main.model.Deposit" >
+    update deposit
+    set uid = #{uid,jdbcType=BIGINT},
+      obj_id = #{objId,jdbcType=VARCHAR},
+      gold_num = #{goldNum,jdbcType=BIGINT},
+      use_type = #{useType,jdbcType=TINYINT},
+      cur_status = #{curStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where did = #{did,jdbcType=VARCHAR}
+  </update>
+</mapper>

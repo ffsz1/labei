@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>拉贝</title>
+    <script>
+        var layout_width = 750;
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= layout_width) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / layout_width) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <link rel="icon" href="images/bitbug_favicon.ico">
+    <link rel="stylesheet" href="../lib/reset.css">
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            align-items: center;
+        }
+        header{
+            width: 100%;
+            height: 0.5rem;
+            font-size: 0.2rem;
+            line-height: 0.5rem;
+            padding-left: 2rem;
+            border-bottom: 0.02rem solid #03bfff;
+        }
+        article{
+            width: 8rem;
+            font-size: 0.18rem;
+            line-height: 2;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>关于我们>></header>
+    <div class="line"></div>
+    <article>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;深圳互乐网络科技有限公司办公室地址位于中国个经济特区，鹏城深圳。深圳市前海深港合作区前湾一路1号A栋201室（入驻深圳市前海商务秘书有限公司），于2017年06月19日在深圳市市场监督管理局注册成立，注册资本为500万元，在公司发展壮大的1年里，我们始终为客户提供好的产品和技术支持、健全的售后服务，我公司主要经营从事网络科技、电子科技、数码科技领域内的技术服务、技术咨询、技术开发、技术转让，企业管理咨询，市场营销策划，企业形象策划；从事广告业务（法律法规、国务院规定需另行办理广告经营审批的，需取得许可后方可经营）；会务服务，展览展示服务。我们有好的产品和专业的销售和技术团队，我公司属于深圳计算机网络设备厂黄页行业。公司以建成一流的产品开发和技术支持为目标，我们坚持"团结互助、敬业负责、恪守信誉、积极进取、勇于创新"的企业理念，成功来自 团队，超越客户满意，互乐人正在全力打造互联网网络科技领域的尖端品牌。如果您对我公司的产品有兴趣，期待您来电咨询联系方式020-89635712。</article>
+</body>
+<script>
+</script>
+</html>

@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.erban.main.mybatismapper.DailyReportMapper">
+    <resultMap id="BaseResultMap" type="com.erban.main.model.DailyReport">
+        <id column="report_id" property="reportId" jdbcType="INTEGER"/>
+        <result column="str1" property="str1" jdbcType="VARCHAR"/>
+        <result column="str2" property="str2" jdbcType="VARCHAR"/>
+        <result column="str3" property="str3" jdbcType="VARCHAR"/>
+        <result column="str4" property="str4" jdbcType="VARCHAR"/>
+        <result column="str5" property="str5" jdbcType="VARCHAR"/>
+        <result column="str6" property="str6" jdbcType="VARCHAR"/>
+        <result column="str7" property="str7" jdbcType="VARCHAR"/>
+        <result column="str8" property="str8" jdbcType="VARCHAR"/>
+        <result column="str9" property="str9" jdbcType="VARCHAR"/>
+        <result column="str10" property="str10" jdbcType="VARCHAR"/>
+        <result column="str11" property="str11" jdbcType="VARCHAR"/>
+        <result column="str12" property="str12" jdbcType="VARCHAR"/>
+        <result column="str13" property="str13" jdbcType="VARCHAR"/>
+        <result column="str14" property="str14" jdbcType="VARCHAR"/>
+        <result column="str15" property="str15" jdbcType="VARCHAR"/>
+        <result column="str16" property="str16" jdbcType="VARCHAR"/>
+        <result column="str17" property="str17" jdbcType="VARCHAR"/>
+        <result column="str18" property="str18" jdbcType="VARCHAR"/>
+        <result column="str19" property="str19" jdbcType="VARCHAR"/>
+        <result column="str20" property="str20" jdbcType="VARCHAR"/>
+        <result column="str21" property="str21" jdbcType="VARCHAR"/>
+        <result column="str22" property="str22" jdbcType="VARCHAR"/>
+        <result column="str23" property="str23" jdbcType="VARCHAR"/>
+        <result column="str24" property="str24" jdbcType="VARCHAR"/>
+        <result column="str25" property="str25" jdbcType="VARCHAR"/>
+        <result column="str26" property="str26" jdbcType="VARCHAR"/>
+        <result column="str27" property="str27" jdbcType="VARCHAR"/>
+        <result column="str28" property="str28" jdbcType="VARCHAR"/>
+        <result column="str29" property="str29" jdbcType="VARCHAR"/>
+        <result column="str30" property="str30" jdbcType="VARCHAR"/>
+        <result column="str31" property="str31" jdbcType="VARCHAR"/>
+        <result column="str32" property="str32" jdbcType="VARCHAR"/>
+        <result column="str33" property="str33" jdbcType="VARCHAR"/>
+        <result column="str34" property="str34" jdbcType="VARCHAR"/>
+        <result column="str35" property="str35" jdbcType="VARCHAR"/>
+        <result column="str36" property="str36" jdbcType="VARCHAR"/>
+        <result column="str37" property="str37" jdbcType="VARCHAR"/>
+        <result column="str38" property="str38" jdbcType="VARCHAR"/>
+        <result column="str39" property="str39" jdbcType="VARCHAR"/>
+        <result column="str40" property="str40" jdbcType="VARCHAR"/>
+        <result column="str41" property="str41" jdbcType="VARCHAR"/>
+        <result column="str42" property="str42" jdbcType="VARCHAR"/>
+        <result column="str43" property="str43" jdbcType="VARCHAR"/>
+        <result column="str44" property="str44" jdbcType="VARCHAR"/>
+        <result column="str45" property="str45" jdbcType="VARCHAR"/>
+        <result column="str46" property="str46" jdbcType="VARCHAR"/>
+        <result column="str47" property="str47" jdbcType="VARCHAR"/>
+        <result column="str48" property="str48" jdbcType="VARCHAR"/>
+        <result column="str49" property="str49" jdbcType="VARCHAR"/>
+        <result column="str50" property="str50" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        report_id, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12,
+        str13, str14, str15, str16, str17, str18, str19, str20, str21, str22, str23, str24,
+        str25, str26, str27, str28, str29, str30, str31, str32, str33, str34, str35, str36,
+        str37, str38, str39, str40, str41, str42, str43, str44, str45, str46, str47, str48,
+        str49, str50
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.erban.main.model.DailyReportExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from daily_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from daily_report
+        where report_id = #{reportId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from daily_report where report_id = #{reportId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.erban.main.model.DailyReportExample">
+        delete from daily_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.erban.main.model.DailyReport">
+        <selectKey resultType="java.lang.Integer" keyProperty="reportId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into daily_report (str1, str2, str3,
+                                str4, str5, str6, str7,
+                                str8, str9, str10,
+                                str11, str12, str13,
+                                str14, str15, str16,
+                                str17, str18, str19,
+                                str20, str21, str22,
+                                str23, str24, str25,
+                                str26, str27, str28,
+                                str29, str30, str31,
+                                str32, str33, str34,
+                                str35, str36, str37,
+                                str38, str39, str40,
+                                str41, str42, str43,
+                                str44, str45, str46,
+                                str47, str48, str49,
+                                str50)
+        values (#{str1,jdbcType=VARCHAR}, #{str2,jdbcType=VARCHAR}, #{str3,jdbcType=VARCHAR},
+                #{str4,jdbcType=VARCHAR}, #{str5,jdbcType=VARCHAR}, #{str6,jdbcType=VARCHAR}, #{str7,jdbcType=VARCHAR},
+                #{str8,jdbcType=VARCHAR}, #{str9,jdbcType=VARCHAR}, #{str10,jdbcType=VARCHAR},
+                #{str11,jdbcType=VARCHAR}, #{str12,jdbcType=VARCHAR}, #{str13,jdbcType=VARCHAR},
+                #{str14,jdbcType=VARCHAR}, #{str15,jdbcType=VARCHAR}, #{str16,jdbcType=VARCHAR},
+                #{str17,jdbcType=VARCHAR}, #{str18,jdbcType=VARCHAR}, #{str19,jdbcType=VARCHAR},
+                #{str20,jdbcType=VARCHAR}, #{str21,jdbcType=VARCHAR}, #{str22,jdbcType=VARCHAR},
+                #{str23,jdbcType=VARCHAR}, #{str24,jdbcType=VARCHAR}, #{str25,jdbcType=VARCHAR},
+                #{str26,jdbcType=VARCHAR}, #{str27,jdbcType=VARCHAR}, #{str28,jdbcType=VARCHAR},
+                #{str29,jdbcType=VARCHAR}, #{str30,jdbcType=VARCHAR}, #{str31,jdbcType=VARCHAR},
+                #{str32,jdbcType=VARCHAR}, #{str33,jdbcType=VARCHAR}, #{str34,jdbcType=VARCHAR},
+                #{str35,jdbcType=VARCHAR}, #{str36,jdbcType=VARCHAR}, #{str37,jdbcType=VARCHAR},
+                #{str38,jdbcType=VARCHAR}, #{str39,jdbcType=VARCHAR}, #{str40,jdbcType=VARCHAR},
+                #{str41,jdbcType=VARCHAR}, #{str42,jdbcType=VARCHAR}, #{str43,jdbcType=VARCHAR},
+                #{str44,jdbcType=VARCHAR}, #{str45,jdbcType=VARCHAR}, #{str46,jdbcType=VARCHAR},
+                #{str47,jdbcType=VARCHAR}, #{str48,jdbcType=VARCHAR}, #{str49,jdbcType=VARCHAR},
+                #{str50,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.erban.main.model.DailyReport">
+        <selectKey resultType="java.lang.Integer" keyProperty="reportId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into daily_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="str1 != null">
+                str1,
+            </if>
+            <if test="str2 != null">
+                str2,
+            </if>
+            <if test="str3 != null">
+                str3,
+            </if>
+            <if test="str4 != null">
+                str4,
+            </if>
+            <if test="str5 != null">
+                str5,
+            </if>
+            <if test="str6 != null">
+                str6,
+            </if>
+            <if test="str7 != null">
+                str7,
+            </if>
+            <if test="str8 != null">
+                str8,
+            </if>
+            <if test="str9 != null">
+                str9,
+            </if>
+            <if test="str10 != null">
+                str10,
+            </if>
+            <if test="str11 != null">
+                str11,
+            </if>
+            <if test="str12 != null">
+                str12,
+            </if>
+            <if test="str13 != null">
+                str13,
+            </if>
+            <if test="str14 != null">
+                str14,
+            </if>
+            <if test="str15 != null">
+                str15,
+            </if>
+            <if test="str16 != null">
+                str16,
+            </if>
+            <if test="str17 != null">
+                str17,
+            </if>
+            <if test="str18 != null">
+                str18,
+            </if>
+            <if test="str19 != null">
+                str19,
+            </if>
+            <if test="str20 != null">
+                str20,
+            </if>
+            <if test="str21 != null">
+                str21,
+            </if>
+            <if test="str22 != null">
+                str22,
+            </if>
+            <if test="str23 != null">
+                str23,
+            </if>
+            <if test="str24 != null">
+                str24,
+            </if>
+            <if test="str25 != null">
+                str25,
+            </if>
+            <if test="str26 != null">
+                str26,
+            </if>
+            <if test="str27 != null">
+                str27,
+            </if>
+            <if test="str28 != null">
+                str28,
+            </if>
+            <if test="str29 != null">
+                str29,
+            </if>
+            <if test="str30 != null">
+                str30,
+            </if>
+            <if test="str31 != null">
+                str31,
+            </if>
+            <if test="str32 != null">
+                str32,
+            </if>
+            <if test="str33 != null">
+                str33,
+            </if>
+            <if test="str34 != null">
+                str34,
+            </if>
+            <if test="str35 != null">
+                str35,
+            </if>
+            <if test="str36 != null">
+                str36,
+            </if>
+            <if test="str37 != null">
+                str37,
+            </if>
+            <if test="str38 != null">
+                str38,
+            </if>
+            <if test="str39 != null">
+                str39,
+            </if>
+            <if test="str40 != null">
+                str40,
+            </if>
+            <if test="str41 != null">
+                str41,
+            </if>
+            <if test="str42 != null">
+                str42,
+            </if>
+            <if test="str43 != null">
+                str43,
+            </if>
+            <if test="str44 != null">
+                str44,
+            </if>
+            <if test="str45 != null">
+                str45,
+            </if>
+            <if test="str46 != null">
+                str46,
+            </if>
+            <if test="str47 != null">
+                str47,
+            </if>
+            <if test="str48 != null">
+                str48,
+            </if>
+            <if test="str49 != null">
+                str49,
+            </if>
+            <if test="str50 != null">
+                str50,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="str1 != null">
+                #{str1,jdbcType=VARCHAR},
+            </if>
+            <if test="str2 != null">
+                #{str2,jdbcType=VARCHAR},
+            </if>
+            <if test="str3 != null">
+                #{str3,jdbcType=VARCHAR},
+            </if>
+            <if test="str4 != null">
+                #{str4,jdbcType=VARCHAR},
+            </if>
+            <if test="str5 != null">
+                #{str5,jdbcType=VARCHAR},
+            </if>
+            <if test="str6 != null">
+                #{str6,jdbcType=VARCHAR},
+            </if>
+            <if test="str7 != null">
+                #{str7,jdbcType=VARCHAR},
+            </if>
+            <if test="str8 != null">
+                #{str8,jdbcType=VARCHAR},
+            </if>
+            <if test="str9 != null">
+                #{str9,jdbcType=VARCHAR},
+            </if>
+            <if test="str10 != null">
+                #{str10,jdbcType=VARCHAR},
+            </if>
+            <if test="str11 != null">
+                #{str11,jdbcType=VARCHAR},
+            </if>
+            <if test="str12 != null">
+                #{str12,jdbcType=VARCHAR},
+            </if>
+            <if test="str13 != null">
+                #{str13,jdbcType=VARCHAR},
+            </if>
+            <if test="str14 != null">
+                #{str14,jdbcType=VARCHAR},
+            </if>
+            <if test="str15 != null">
+                #{str15,jdbcType=VARCHAR},
+            </if>
+            <if test="str16 != null">
+                #{str16,jdbcType=VARCHAR},
+            </if>
+            <if test="str17 != null">
+                #{str17,jdbcType=VARCHAR},
+            </if>
+            <if test="str18 != null">
+                #{str18,jdbcType=VARCHAR},
+            </if>
+            <if test="str19 != null">
+                #{str19,jdbcType=VARCHAR},
+            </if>
+            <if test="str20 != null">
+                #{str20,jdbcType=VARCHAR},
+            </if>
+            <if test="str21 != null">
+                #{str21,jdbcType=VARCHAR},
+            </if>
+            <if test="str22 != null">
+                #{str22,jdbcType=VARCHAR},
+            </if>
+            <if test="str23 != null">
+                #{str23,jdbcType=VARCHAR},
+            </if>
+            <if test="str24 != null">
+                #{str24,jdbcType=VARCHAR},
+            </if>
+            <if test="str25 != null">
+                #{str25,jdbcType=VARCHAR},
+            </if>
+            <if test="str26 != null">
+                #{str26,jdbcType=VARCHAR},
+            </if>
+            <if test="str27 != null">
+                #{str27,jdbcType=VARCHAR},
+            </if>
+            <if test="str28 != null">
+                #{str28,jdbcType=VARCHAR},
+            </if>
+            <if test="str29 != null">
+                #{str29,jdbcType=VARCHAR},
+            </if>
+            <if test="str30 != null">
+                #{str30,jdbcType=VARCHAR},
+            </if>
+            <if test="str31 != null">
+                #{str31,jdbcType=VARCHAR},
+            </if>
+            <if test="str32 != null">
+                #{str32,jdbcType=VARCHAR},
+            </if>
+            <if test="str33 != null">
+                #{str33,jdbcType=VARCHAR},
+            </if>
+            <if test="str34 != null">
+                #{str34,jdbcType=VARCHAR},
+            </if>
+            <if test="str35 != null">
+                #{str35,jdbcType=VARCHAR},
+            </if>
+            <if test="str36 != null">
+                #{str36,jdbcType=VARCHAR},
+            </if>
+            <if test="str37 != null">
+                #{str37,jdbcType=VARCHAR},
+            </if>
+            <if test="str38 != null">
+                #{str38,jdbcType=VARCHAR},
+            </if>
+            <if test="str39 != null">
+                #{str39,jdbcType=VARCHAR},
+            </if>
+            <if test="str40 != null">
+                #{str40,jdbcType=VARCHAR},
+            </if>
+            <if test="str41 != null">
+                #{str41,jdbcType=VARCHAR},
+            </if>
+            <if test="str42 != null">
+                #{str42,jdbcType=VARCHAR},
+            </if>
+            <if test="str43 != null">
+                #{str43,jdbcType=VARCHAR},
+            </if>
+            <if test="str44 != null">
+                #{str44,jdbcType=VARCHAR},
+            </if>
+            <if test="str45 != null">
+                #{str45,jdbcType=VARCHAR},
+            </if>
+            <if test="str46 != null">
+                #{str46,jdbcType=VARCHAR},
+            </if>
+            <if test="str47 != null">
+                #{str47,jdbcType=VARCHAR},
+            </if>
+            <if test="str48 != null">
+                #{str48,jdbcType=VARCHAR},
+            </if>
+            <if test="str49 != null">
+                #{str49,jdbcType=VARCHAR},
+            </if>
+            <if test="str50 != null">
+                #{str50,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.erban.main.model.DailyReportExample" resultType="java.lang.Integer">
+        select count(1) from daily_report
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update daily_report
+        <set>
+            <if test="record.reportId != null">
+                report_id = #{record.reportId,jdbcType=INTEGER},
+            </if>
+            <if test="record.str1 != null">
+                str1 = #{record.str1,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str2 != null">
+                str2 = #{record.str2,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str3 != null">
+                str3 = #{record.str3,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str4 != null">
+                str4 = #{record.str4,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str5 != null">
+                str5 = #{record.str5,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str6 != null">
+                str6 = #{record.str6,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str7 != null">
+                str7 = #{record.str7,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str8 != null">
+                str8 = #{record.str8,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str9 != null">
+                str9 = #{record.str9,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str10 != null">
+                str10 = #{record.str10,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str11 != null">
+                str11 = #{record.str11,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str12 != null">
+                str12 = #{record.str12,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str13 != null">
+                str13 = #{record.str13,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str14 != null">
+                str14 = #{record.str14,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str15 != null">
+                str15 = #{record.str15,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str16 != null">
+                str16 = #{record.str16,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str17 != null">
+                str17 = #{record.str17,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str18 != null">
+                str18 = #{record.str18,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str19 != null">
+                str19 = #{record.str19,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str20 != null">
+                str20 = #{record.str20,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str21 != null">
+                str21 = #{record.str21,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str22 != null">
+                str22 = #{record.str22,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str23 != null">
+                str23 = #{record.str23,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str24 != null">
+                str24 = #{record.str24,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str25 != null">
+                str25 = #{record.str25,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str26 != null">
+                str26 = #{record.str26,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str27 != null">
+                str27 = #{record.str27,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str28 != null">
+                str28 = #{record.str28,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str29 != null">
+                str29 = #{record.str29,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str30 != null">
+                str30 = #{record.str30,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str31 != null">
+                str31 = #{record.str31,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str32 != null">
+                str32 = #{record.str32,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str33 != null">
+                str33 = #{record.str33,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str34 != null">
+                str34 = #{record.str34,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str35 != null">
+                str35 = #{record.str35,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str36 != null">
+                str36 = #{record.str36,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str37 != null">
+                str37 = #{record.str37,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str38 != null">
+                str38 = #{record.str38,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str39 != null">
+                str39 = #{record.str39,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str40 != null">
+                str40 = #{record.str40,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str41 != null">
+                str41 = #{record.str41,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str42 != null">
+                str42 = #{record.str42,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str43 != null">
+                str43 = #{record.str43,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str44 != null">
+                str44 = #{record.str44,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str45 != null">
+                str45 = #{record.str45,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str46 != null">
+                str46 = #{record.str46,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str47 != null">
+                str47 = #{record.str47,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str48 != null">
+                str48 = #{record.str48,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str49 != null">
+                str49 = #{record.str49,jdbcType=VARCHAR},
+            </if>
+            <if test="record.str50 != null">
+                str50 = #{record.str50,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update daily_report
+        set report_id = #{record.reportId,jdbcType=INTEGER},
+            str1 = #{record.str1,jdbcType=VARCHAR},
+            str2 = #{record.str2,jdbcType=VARCHAR},
+            str3 = #{record.str3,jdbcType=VARCHAR},
+            str4 = #{record.str4,jdbcType=VARCHAR},
+            str5 = #{record.str5,jdbcType=VARCHAR},
+            str6 = #{record.str6,jdbcType=VARCHAR},
+            str7 = #{record.str7,jdbcType=VARCHAR},
+            str8 = #{record.str8,jdbcType=VARCHAR},
+            str9 = #{record.str9,jdbcType=VARCHAR},
+            str10 = #{record.str10,jdbcType=VARCHAR},
+            str11 = #{record.str11,jdbcType=VARCHAR},
+            str12 = #{record.str12,jdbcType=VARCHAR},
+            str13 = #{record.str13,jdbcType=VARCHAR},
+            str14 = #{record.str14,jdbcType=VARCHAR},
+            str15 = #{record.str15,jdbcType=VARCHAR},
+            str16 = #{record.str16,jdbcType=VARCHAR},
+            str17 = #{record.str17,jdbcType=VARCHAR},
+            str18 = #{record.str18,jdbcType=VARCHAR},
+            str19 = #{record.str19,jdbcType=VARCHAR},
+            str20 = #{record.str20,jdbcType=VARCHAR},
+            str21 = #{record.str21,jdbcType=VARCHAR},
+            str22 = #{record.str22,jdbcType=VARCHAR},
+            str23 = #{record.str23,jdbcType=VARCHAR},
+            str24 = #{record.str24,jdbcType=VARCHAR},
+            str25 = #{record.str25,jdbcType=VARCHAR},
+            str26 = #{record.str26,jdbcType=VARCHAR},
+            str27 = #{record.str27,jdbcType=VARCHAR},
+            str28 = #{record.str28,jdbcType=VARCHAR},
+            str29 = #{record.str29,jdbcType=VARCHAR},
+            str30 = #{record.str30,jdbcType=VARCHAR},
+            str31 = #{record.str31,jdbcType=VARCHAR},
+            str32 = #{record.str32,jdbcType=VARCHAR},
+            str33 = #{record.str33,jdbcType=VARCHAR},
+            str34 = #{record.str34,jdbcType=VARCHAR},
+            str35 = #{record.str35,jdbcType=VARCHAR},
+            str36 = #{record.str36,jdbcType=VARCHAR},
+            str37 = #{record.str37,jdbcType=VARCHAR},
+            str38 = #{record.str38,jdbcType=VARCHAR},
+            str39 = #{record.str39,jdbcType=VARCHAR},
+            str40 = #{record.str40,jdbcType=VARCHAR},
+            str41 = #{record.str41,jdbcType=VARCHAR},
+            str42 = #{record.str42,jdbcType=VARCHAR},
+            str43 = #{record.str43,jdbcType=VARCHAR},
+            str44 = #{record.str44,jdbcType=VARCHAR},
+            str45 = #{record.str45,jdbcType=VARCHAR},
+            str46 = #{record.str46,jdbcType=VARCHAR},
+            str47 = #{record.str47,jdbcType=VARCHAR},
+            str48 = #{record.str48,jdbcType=VARCHAR},
+            str49 = #{record.str49,jdbcType=VARCHAR},
+            str50 = #{record.str50,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.erban.main.model.DailyReport">
+        update daily_report
+        <set>
+            <if test="str1 != null">
+                str1 = #{str1,jdbcType=VARCHAR},
+            </if>
+            <if test="str2 != null">
+                str2 = #{str2,jdbcType=VARCHAR},
+            </if>
+            <if test="str3 != null">
+                str3 = #{str3,jdbcType=VARCHAR},
+            </if>
+            <if test="str4 != null">
+                str4 = #{str4,jdbcType=VARCHAR},
+            </if>
+            <if test="str5 != null">
+                str5 = #{str5,jdbcType=VARCHAR},
+            </if>
+            <if test="str6 != null">
+                str6 = #{str6,jdbcType=VARCHAR},
+            </if>
+            <if test="str7 != null">
+                str7 = #{str7,jdbcType=VARCHAR},
+            </if>
+            <if test="str8 != null">
+                str8 = #{str8,jdbcType=VARCHAR},
+            </if>
+            <if test="str9 != null">
+                str9 = #{str9,jdbcType=VARCHAR},
+            </if>
+            <if test="str10 != null">
+                str10 = #{str10,jdbcType=VARCHAR},
+            </if>
+            <if test="str11 != null">
+                str11 = #{str11,jdbcType=VARCHAR},
+            </if>
+            <if test="str12 != null">
+                str12 = #{str12,jdbcType=VARCHAR},
+            </if>
+            <if test="str13 != null">
+                str13 = #{str13,jdbcType=VARCHAR},
+            </if>
+            <if test="str14 != null">
+                str14 = #{str14,jdbcType=VARCHAR},
+            </if>
+            <if test="str15 != null">
+                str15 = #{str15,jdbcType=VARCHAR},
+            </if>
+            <if test="str16 != null">
+                str16 = #{str16,jdbcType=VARCHAR},
+            </if>
+            <if test="str17 != null">
+                str17 = #{str17,jdbcType=VARCHAR},
+            </if>
+            <if test="str18 != null">
+                str18 = #{str18,jdbcType=VARCHAR},
+            </if>
+            <if test="str19 != null">
+                str19 = #{str19,jdbcType=VARCHAR},
+            </if>
+            <if test="str20 != null">
+                str20 = #{str20,jdbcType=VARCHAR},
+            </if>
+            <if test="str21 != null">
+                str21 = #{str21,jdbcType=VARCHAR},
+            </if>
+            <if test="str22 != null">
+                str22 = #{str22,jdbcType=VARCHAR},
+            </if>
+            <if test="str23 != null">
+                str23 = #{str23,jdbcType=VARCHAR},
+            </if>
+            <if test="str24 != null">
+                str24 = #{str24,jdbcType=VARCHAR},
+            </if>
+            <if test="str25 != null">
+                str25 = #{str25,jdbcType=VARCHAR},
+            </if>
+            <if test="str26 != null">
+                str26 = #{str26,jdbcType=VARCHAR},
+            </if>
+            <if test="str27 != null">
+                str27 = #{str27,jdbcType=VARCHAR},
+            </if>
+            <if test="str28 != null">
+                str28 = #{str28,jdbcType=VARCHAR},
+            </if>
+            <if test="str29 != null">
+                str29 = #{str29,jdbcType=VARCHAR},
+            </if>
+            <if test="str30 != null">
+                str30 = #{str30,jdbcType=VARCHAR},
+            </if>
+            <if test="str31 != null">
+                str31 = #{str31,jdbcType=VARCHAR},
+            </if>
+            <if test="str32 != null">
+                str32 = #{str32,jdbcType=VARCHAR},
+            </if>
+            <if test="str33 != null">
+                str33 = #{str33,jdbcType=VARCHAR},
+            </if>
+            <if test="str34 != null">
+                str34 = #{str34,jdbcType=VARCHAR},
+            </if>
+            <if test="str35 != null">
+                str35 = #{str35,jdbcType=VARCHAR},
+            </if>
+            <if test="str36 != null">
+                str36 = #{str36,jdbcType=VARCHAR},
+            </if>
+            <if test="str37 != null">
+                str37 = #{str37,jdbcType=VARCHAR},
+            </if>
+            <if test="str38 != null">
+                str38 = #{str38,jdbcType=VARCHAR},
+            </if>
+            <if test="str39 != null">
+                str39 = #{str39,jdbcType=VARCHAR},
+            </if>
+            <if test="str40 != null">
+                str40 = #{str40,jdbcType=VARCHAR},
+            </if>
+            <if test="str41 != null">
+                str41 = #{str41,jdbcType=VARCHAR},
+            </if>
+            <if test="str42 != null">
+                str42 = #{str42,jdbcType=VARCHAR},
+            </if>
+            <if test="str43 != null">
+                str43 = #{str43,jdbcType=VARCHAR},
+            </if>
+            <if test="str44 != null">
+                str44 = #{str44,jdbcType=VARCHAR},
+            </if>
+            <if test="str45 != null">
+                str45 = #{str45,jdbcType=VARCHAR},
+            </if>
+            <if test="str46 != null">
+                str46 = #{str46,jdbcType=VARCHAR},
+            </if>
+            <if test="str47 != null">
+                str47 = #{str47,jdbcType=VARCHAR},
+            </if>
+            <if test="str48 != null">
+                str48 = #{str48,jdbcType=VARCHAR},
+            </if>
+            <if test="str49 != null">
+                str49 = #{str49,jdbcType=VARCHAR},
+            </if>
+            <if test="str50 != null">
+                str50 = #{str50,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where report_id = #{reportId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.erban.main.model.DailyReport">
+        update daily_report
+        set str1 = #{str1,jdbcType=VARCHAR},
+            str2 = #{str2,jdbcType=VARCHAR},
+            str3 = #{str3,jdbcType=VARCHAR},
+            str4 = #{str4,jdbcType=VARCHAR},
+            str5 = #{str5,jdbcType=VARCHAR},
+            str6 = #{str6,jdbcType=VARCHAR},
+            str7 = #{str7,jdbcType=VARCHAR},
+            str8 = #{str8,jdbcType=VARCHAR},
+            str9 = #{str9,jdbcType=VARCHAR},
+            str10 = #{str10,jdbcType=VARCHAR},
+            str11 = #{str11,jdbcType=VARCHAR},
+            str12 = #{str12,jdbcType=VARCHAR},
+            str13 = #{str13,jdbcType=VARCHAR},
+            str14 = #{str14,jdbcType=VARCHAR},
+            str15 = #{str15,jdbcType=VARCHAR},
+            str16 = #{str16,jdbcType=VARCHAR},
+            str17 = #{str17,jdbcType=VARCHAR},
+            str18 = #{str18,jdbcType=VARCHAR},
+            str19 = #{str19,jdbcType=VARCHAR},
+            str20 = #{str20,jdbcType=VARCHAR},
+            str21 = #{str21,jdbcType=VARCHAR},
+            str22 = #{str22,jdbcType=VARCHAR},
+            str23 = #{str23,jdbcType=VARCHAR},
+            str24 = #{str24,jdbcType=VARCHAR},
+            str25 = #{str25,jdbcType=VARCHAR},
+            str26 = #{str26,jdbcType=VARCHAR},
+            str27 = #{str27,jdbcType=VARCHAR},
+            str28 = #{str28,jdbcType=VARCHAR},
+            str29 = #{str29,jdbcType=VARCHAR},
+            str30 = #{str30,jdbcType=VARCHAR},
+            str31 = #{str31,jdbcType=VARCHAR},
+            str32 = #{str32,jdbcType=VARCHAR},
+            str33 = #{str33,jdbcType=VARCHAR},
+            str34 = #{str34,jdbcType=VARCHAR},
+            str35 = #{str35,jdbcType=VARCHAR},
+            str36 = #{str36,jdbcType=VARCHAR},
+            str37 = #{str37,jdbcType=VARCHAR},
+            str38 = #{str38,jdbcType=VARCHAR},
+            str39 = #{str39,jdbcType=VARCHAR},
+            str40 = #{str40,jdbcType=VARCHAR},
+            str41 = #{str41,jdbcType=VARCHAR},
+            str42 = #{str42,jdbcType=VARCHAR},
+            str43 = #{str43,jdbcType=VARCHAR},
+            str44 = #{str44,jdbcType=VARCHAR},
+            str45 = #{str45,jdbcType=VARCHAR},
+            str46 = #{str46,jdbcType=VARCHAR},
+            str47 = #{str47,jdbcType=VARCHAR},
+            str48 = #{str48,jdbcType=VARCHAR},
+            str49 = #{str49,jdbcType=VARCHAR},
+            str50 = #{str50,jdbcType=VARCHAR}
+        where report_id = #{reportId,jdbcType=INTEGER}
+    </update>
+    <resultMap id="DailyUserPurseResultMap" type="com.erban.main.model.DailyUserPurse">
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="gold_sum" property="goldSum" jdbcType="BIGINT"/>
+        <result column="diamond_sum" property="diamondSum" jdbcType="BIGINT"/>
+        <result column="gift_nomal_diamond_sum" property="giftNormalDiamondSum" jdbcType="BIGINT"/>
+        <result column="gift_draw_diamond_sum" property="giftDrawDiamondSum" jdbcType="BIGINT"/>
+    </resultMap>
+    <select id="selectDailyUserPurse" resultMap="DailyUserPurseResultMap">
+        SELECT create_date, gold_sum, diamond_sum, gift_nomal_diamond_sum, gift_draw_diamond_sum
+        FROM stat_daily_user_purse
+        <if test="beginDate != null">
+            <if test="endDate != null">
+                WHERE create_date BETWEEN #{beginDate,jdbcType=DATE} AND #{endDate,jdbcType=DATE}
+            </if>
+        </if>
+        ORDER BY create_date DESC
+    </select>
+</mapper>
