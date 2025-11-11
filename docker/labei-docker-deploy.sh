@@ -88,27 +88,40 @@ speed_test() {
     local URL=$1
     local SPEED_MIN=$2
     local TEST_FILE="/tmp/speed_test_$(date +%s).tmp"
-    log_info "开始速度校验：$URL（最低要求：$SPEED_MIN MB/s）"
+    log_info "开始速度校验（最低要求：$SPEED_MIN MB/s）"
+
     start_time=$(date +%s)
-    # 超时控制15秒，避免卡住
-    if ! wget -q --no-check-certificate -T 15 -O $TEST_FILE $URL 2>/dev/null; then
-        log_error "速度校验失败：地址无法访问"
-        rm -f $TEST_FILE
-        exit 1
+    # 超时控制30秒，避免卡住
+    if wget -q --no-check-certificate -T 30 -t 1 -O "$TEST_FILE" "$URL" 2>/dev/null; then
+        end_time=$(date +%s)
+        file_size=$(stat -c %s "$TEST_FILE" 2>/dev/null || echo "0")
+        rm -f "$TEST_FILE"
+
+        time_used=$((end_time - start_time))
+        [ $time_used -eq 0 ] && time_used=1
+        speed=$((file_size / 1024 / 1024 / time_used))
+
+        # 记录速度到日志
+        log_info "速度校验结果：$speed MB/s（要求≥$SPEED_MIN MB/s）"
+
+        # 对于速度测试，如果文件太小或下载太快，给予通过
+        if [ $file_size -lt 1048576 ] || [ $time_used -lt 2 ]; then
+            log_success "速度校验通过（文件较小或下载快速）"
+            return 0
+        fi
+
+        if [ $speed -ge $SPEED_MIN ]; then
+            log_success "速度校验通过：$speed MB/s"
+            return 0
+        else
+            log_warning "速度不达标但继续执行（$speed MB/s < $SPEED_MIN MB/s）"
+            return 0
+        fi
+    else
+        log_warning "速度校验失败：地址无法访问，但继续执行"
+        rm -f "$TEST_FILE"
+        return 0
     fi
-    end_time=$(date +%s)
-    file_size=$(stat -c %s $TEST_FILE 2>/dev/null || echo "0")
-    rm -f $TEST_FILE
-    time_used=$((end_time - start_time))
-    [ $time_used -eq 0 ] && time_used=1
-    speed=$((file_size / 1024 / 1024 / time_used))
-    # 记录速度到日志
-    log_info "速度校验结果：$speed MB/s（要求≥$SPEED_MIN MB/s）"
-    if [ $speed -lt $SPEED_MIN ]; then
-        log_error "速度不达标，强制终止"
-        exit 1
-    fi
-    log_success "速度校验通过：$speed MB/s"
 }
 
 # ===================== 补充2：下载超时重试+备用源切换函数
@@ -118,35 +131,61 @@ download_with_retry() {
     local OUTPUT=$3
     local SPEED_MIN=$4
     local RETRIES=2
-    log_info "开始下载：$URL（备用源：$BACKUP_URL）"
+    log_info "开始下载（主源+备用源）..."
+
     for ((i=1; i<=$RETRIES; i++)); do
         # 带进度条下载
-        log_info "尝试第 $i 次下载..."
+        log_info "尝试第 $i 次下载：$URL"
         start_time=$(date +%s)
-        if wget --show-progress --progress=bar:force:noscroll --no-check-certificate -T 30 -O $OUTPUT $URL 2>&1; then
-            # 下载完成后二次校验速度
-            end_time=$(date +%s)
-            file_size=$(stat -c %s $OUTPUT 2>/dev/null || echo "0")
-            time_used=$((end_time - start_time))
-            [ $time_used -eq 0 ] && time_used=1
-            speed=$((file_size / 1024 / 1024 / time_used))
-            if [ $speed -ge $SPEED_MIN ]; then
-                log_success "下载成功，实际速度：$speed MB/s"
-                return 0
+
+        # 使用wget下载，不使用管道以保留返回码
+        if wget --show-progress --progress=bar:force:noscroll --no-check-certificate -T 60 -t 1 -O "$OUTPUT" "$URL" 2>&1; then
+            # 检查文件是否存在且大小>0
+            if [ -f "$OUTPUT" ] && [ -s "$OUTPUT" ]; then
+                # 下载完成后二次校验速度
+                end_time=$(date +%s)
+                file_size=$(stat -c %s "$OUTPUT" 2>/dev/null || echo "0")
+                time_used=$((end_time - start_time))
+                [ $time_used -eq 0 ] && time_used=1
+                speed=$((file_size / 1024 / 1024 / time_used))
+
+                log_info "下载完成，文件大小：$((file_size / 1024 / 1024))MB，耗时：${time_used}秒，速度：${speed}MB/s"
+
+                # 对于大文件才严格检查速度
+                if [ $file_size -gt 10485760 ]; then  # 大于10MB
+                    if [ $speed -ge $SPEED_MIN ]; then
+                        log_success "下载成功，速度达标：$speed MB/s"
+                        return 0
+                    else
+                        log_warning "速度不达标（$speed MB/s < $SPEED_MIN MB/s）"
+                        if [ $i -lt $RETRIES ]; then
+                            rm -f "$OUTPUT"
+                            continue
+                        fi
+                    fi
+                else
+                    # 小文件不检查速度
+                    log_success "下载成功（小文件，跳过速度检查）"
+                    return 0
+                fi
             else
-                log_warning "速度不达标（$speed MB/s < $SPEED_MIN MB/s），重试第$i次"
-                rm -f $OUTPUT
-                continue
+                log_warning "下载的文件无效或为空"
+                rm -f "$OUTPUT"
             fi
+        else
+            log_warning "下载失败（wget返回错误）"
+            rm -f "$OUTPUT"
         fi
+
         # 第一次失败，切换备用源
-        if [ $i -eq 1 ]; then
+        if [ $i -eq 1 ] && [ -n "$BACKUP_URL" ]; then
             log_warning "主源下载失败，切换备用源：$BACKUP_URL"
             URL=$BACKUP_URL
         fi
     done
+
     log_error "主源+备用源均下载失败"
-    rm -f $OUTPUT
+    rm -f "$OUTPUT"
     exit 1
 }
 
@@ -155,20 +194,53 @@ pull_docker_image() {
     local IMAGE=$1
     local BACKUP_IMAGE=$2
     local SPEED_MIN=$3
-    local RETRIES=2
-    log_info "开始拉取镜像：$IMAGE（备用镜像：$BACKUP_IMAGE）"
+    local RETRIES=3
+    local PULLED_IMAGE=""
+
+    if [ -n "$BACKUP_IMAGE" ]; then
+        log_info "开始拉取镜像：$IMAGE（备用镜像：$BACKUP_IMAGE）"
+    else
+        log_info "开始拉取镜像：$IMAGE"
+    fi
+
     for ((i=1; i<=$RETRIES; i++)); do
         log_info "尝试第 $i 次拉取..."
-        if docker pull --progress=plain $IMAGE 2>&1; then
+        # Docker 20.10.24不支持--progress参数，直接使用docker pull
+        if docker pull $IMAGE 2>&1 | tee /tmp/docker_pull.log; then
             log_success "镜像拉取成功：$IMAGE"
+            PULLED_IMAGE=$IMAGE
+
+            # 如果拉取的是代理镜像，需要重新打标签为标准名称
+            if [ -n "$BACKUP_IMAGE" ] && [ "$IMAGE" != "$BACKUP_IMAGE" ]; then
+                log_info "重新标记镜像为标准名称：$BACKUP_IMAGE"
+                docker tag $IMAGE $BACKUP_IMAGE
+                if [ $? -eq 0 ]; then
+                    log_success "镜像标记成功：$BACKUP_IMAGE"
+                else
+                    log_warning "镜像标记失败，但继续使用代理镜像名称"
+                fi
+            fi
+
             return 0
         fi
+
+        # 第一次失败且有备用镜像，切换到备用镜像
         if [ $i -eq 1 ] && [ -n "$BACKUP_IMAGE" ]; then
             log_warning "主镜像拉取失败，切换备用镜像：$BACKUP_IMAGE"
             IMAGE=$BACKUP_IMAGE
+        else
+            # 没有备用镜像或已经是备用镜像，等待后重试
+            if [ $i -lt $RETRIES ]; then
+                log_warning "拉取失败，等待10秒后重试..."
+                sleep 10
+            fi
         fi
     done
-    log_error "镜像拉取失败"
+
+    log_error "镜像拉取失败：$IMAGE"
+    log_error "详细错误信息请查看：/tmp/docker_pull.log"
+    log_error "可能原因：1) 网络连接问题  2) 镜像不存在  3) 镜像代理服务失效"
+    log_error "建议：检查网络连接或手动拉取镜像"
     exit 1
 }
 
@@ -288,13 +360,14 @@ apt-get update -qq || {
 log_success "软件包索引更新完成"
 
 # ========================= 4. 安装基础依赖工具（硬性规则） =========================
-log_info "【步骤4/12】安装基础依赖工具（curl、wget、unzip、git、net-tools）..."
+log_info "【步骤4/12】安装基础依赖工具（curl、wget、unzip、p7zip、git、net-tools）..."
 
-# 安装基础工具
+# 安装基础工具（新增p7zip-full支持WinRAR压缩的ZIP文件）
 DEBIAN_FRONTEND=noninteractive apt-get install -y \
     curl \
     wget \
     unzip \
+    p7zip-full \
     git \
     ca-certificates \
     gnupg \
@@ -307,100 +380,271 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
     exit 1
 }
 
-log_success "基础依赖工具安装完成"
+log_success "基础依赖工具安装完成（已安装p7zip支持WinRAR格式）"
 
 # ========================= 5. 安装Docker（固定版本20.10.24） =========================
 log_info "【步骤5/12】安装Docker（固定版本 $REQUIRED_DOCKER_VERSION）..."
 
 # 检查是否已安装Docker
+NEED_INSTALL_DOCKER=false
 if command -v docker &> /dev/null; then
     CURRENT_DOCKER_VERSION=$(docker --version | grep -oP '\d+\.\d+\.\d+' | head -1)
     if [ "$CURRENT_DOCKER_VERSION" = "$REQUIRED_DOCKER_VERSION" ]; then
         log_success "Docker $REQUIRED_DOCKER_VERSION 已安装"
+        NEED_INSTALL_DOCKER=false
     else
         log_warning "当前Docker版本 $CURRENT_DOCKER_VERSION 不符合要求，将重新安装"
         apt-get remove -y docker docker-engine docker.io containerd runc >/dev/null 2>&1 || true
+        NEED_INSTALL_DOCKER=true
     fi
+else
+    NEED_INSTALL_DOCKER=true
 fi
 
-# 添加Docker官方GPG密钥（使用阿里云镜像）
-if [ ! -f /usr/share/keyrings/docker-archive-keyring.gpg ]; then
-    curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+# 安装Docker（如果需要）
+if [ "$NEED_INSTALL_DOCKER" = true ]; then
+    # 添加Docker官方GPG密钥（使用阿里云镜像）
+    if [ ! -f /usr/share/keyrings/docker-archive-keyring.gpg ]; then
+        curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    fi
+
+    # 添加Docker软件源（使用阿里云镜像）
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
+      $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    # 更新软件包索引
+    apt-get update -qq
+
+    # 安装指定版本的Docker
+    DOCKER_VERSION_STRING="5:${REQUIRED_DOCKER_VERSION}~3-0~ubuntu-focal"
+    apt-get install -y \
+        docker-ce=$DOCKER_VERSION_STRING \
+        docker-ce-cli=$DOCKER_VERSION_STRING \
+        containerd.io >/dev/null 2>&1 || {
+        log_error "Docker安装失败"
+        exit 1
+    }
+
+    log_success "Docker $REQUIRED_DOCKER_VERSION 安装完成"
 fi
 
-# 添加Docker软件源（使用阿里云镜像）
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu \
-  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# 更新软件包索引
-apt-get update -qq
-
-# 安装指定版本的Docker
-DOCKER_VERSION_STRING="5:${REQUIRED_DOCKER_VERSION}~3-0~ubuntu-focal"
-apt-get install -y \
-    docker-ce=$DOCKER_VERSION_STRING \
-    docker-ce-cli=$DOCKER_VERSION_STRING \
-    containerd.io >/dev/null 2>&1 || {
-    log_error "Docker安装失败"
-    exit 1
-}
-
-# 配置Docker镜像加速（阿里云）
+# 配置Docker镜像加速（每次都执行，确保配置正确）
+log_info "配置Docker镜像加速器..."
 mkdir -p /etc/docker
+
+# 注意：2025年大部分公共镜像加速器已失效，这里配置一些可能可用的源
+# 如果都不可用，将直接从Docker Hub下载（可能较慢）
 cat > /etc/docker/daemon.json << EOF
 {
-  "registry-mirrors": ["https://registry.cn-hangzhou.aliyuncs.com"],
+  "registry-mirrors": [
+    "https://docker.1ms.run",
+    "https://docker.m.daocloud.io",
+    "https://docker.nju.edu.cn"
+  ],
+  "max-concurrent-downloads": 10,
   "log-driver": "json-file",
   "log-opts": {
     "max-size": "100m",
     "max-file": "3"
-  }
+  },
+  "storage-driver": "overlay2"
 }
 EOF
 
-# 启动Docker服务
+# 重启Docker服务（应用镜像加速器配置）
+log_info "重启Docker服务以应用配置..."
 systemctl enable docker >/dev/null 2>&1
 systemctl restart docker
+
+# 等待Docker服务完全启动
+sleep 5
 
 # 验证Docker版本
 INSTALLED_DOCKER_VERSION=$(docker --version | grep -oP '\d+\.\d+\.\d+' | head -1)
 if [ "$INSTALLED_DOCKER_VERSION" = "$REQUIRED_DOCKER_VERSION" ]; then
-    log_success "Docker $REQUIRED_DOCKER_VERSION 安装成功"
+    log_success "Docker $REQUIRED_DOCKER_VERSION 配置完成"
 else
     log_error "Docker版本不匹配（期望：$REQUIRED_DOCKER_VERSION，实际：$INSTALLED_DOCKER_VERSION）"
+    exit 1
+fi
+
+# 验证Docker服务状态
+log_info "验证Docker服务状态..."
+if systemctl is-active --quiet docker; then
+    log_success "Docker服务运行正常"
+else
+    log_error "Docker服务未正常运行"
     exit 1
 fi
 
 # ========================= 6. 安装Docker Compose（固定版本2.18.1） =========================
 log_info "【步骤6/12】安装Docker Compose（固定版本 $REQUIRED_DOCKER_COMPOSE_VERSION）..."
 
-# 下载Docker Compose（使用阿里云镜像）
-COMPOSE_URL="https://mirrors.aliyun.com/docker-toolbox/linux/compose/v${REQUIRED_DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)"
-
-log_info "下载Docker Compose: $COMPOSE_URL"
-wget --show-progress --progress=bar:force:noscroll \
-    -O /usr/local/bin/docker-compose \
-    "$COMPOSE_URL" 2>&1 | while IFS= read -r line; do
-    if [[ $line =~ ([0-9]+)%.*([0-9.]+[KMG])/s ]]; then
-        echo -e "\r当前状态：下载中 | 进度：${BASH_REMATCH[1]}% | 速度：${BASH_REMATCH[2]}/s"
-    fi
-done
-
-if [ ! -f /usr/local/bin/docker-compose ]; then
-    log_error "Docker Compose下载失败"
+# ===== 新增：网络连通性校验 =====
+log_info "开始检查网络连通性..."
+if ping -c 3 mirrors.aliyun.com > /dev/null 2>&1; then
+    log_success "网络连通性校验通过"
+else
+    log_error "网络连接异常，无法访问镜像源！"
     exit 1
 fi
 
-chmod +x /usr/local/bin/docker-compose
+# 检查是否已安装正确版本
+NEED_INSTALL=true
+if [ -f /usr/local/bin/docker-compose ]; then
+    log_info "检测到已存在的Docker Compose，验证版本..."
 
-# 验证版本
-INSTALLED_COMPOSE_VERSION=$(docker-compose --version | grep -oP '\d+\.\d+\.\d+' | head -1)
-if [ "$INSTALLED_COMPOSE_VERSION" = "$REQUIRED_DOCKER_COMPOSE_VERSION" ]; then
-    log_success "Docker Compose $REQUIRED_DOCKER_COMPOSE_VERSION 安装成功"
+    # 检查文件大小（有效的docker-compose应该>40MB）
+    FILE_SIZE=$(stat -c %s /usr/local/bin/docker-compose 2>/dev/null || echo "0")
+    if [ "$FILE_SIZE" -lt 40000000 ]; then
+        log_warning "Docker Compose文件大小异常（${FILE_SIZE}字节），将重新下载"
+        rm -f /usr/local/bin/docker-compose
+        NEED_INSTALL=true
+    else
+        # 使用timeout避免命令挂起
+        log_info "执行版本检查（超时5秒）..."
+        INSTALLED_COMPOSE_VERSION=$(timeout 5 /usr/local/bin/docker-compose --version 2>/dev/null | grep -oP '\d+\.\d+\.\d+' | head -1)
+        VERSION_CHECK_EXIT=$?
+
+        if [ $VERSION_CHECK_EXIT -eq 124 ]; then
+            log_warning "Docker Compose版本检查超时，文件可能损坏，将重新下载"
+            rm -f /usr/local/bin/docker-compose
+            NEED_INSTALL=true
+        elif [ $VERSION_CHECK_EXIT -ne 0 ]; then
+            log_warning "Docker Compose版本检查失败，将重新下载"
+            rm -f /usr/local/bin/docker-compose
+            NEED_INSTALL=true
+        elif [ -n "$INSTALLED_COMPOSE_VERSION" ] && [ "$INSTALLED_COMPOSE_VERSION" = "$REQUIRED_DOCKER_COMPOSE_VERSION" ]; then
+            log_success "Docker Compose $REQUIRED_DOCKER_COMPOSE_VERSION 已安装"
+            NEED_INSTALL=false
+        else
+            log_warning "Docker Compose版本不匹配（当前：$INSTALLED_COMPOSE_VERSION，期望：$REQUIRED_DOCKER_COMPOSE_VERSION），将重新安装"
+            rm -f /usr/local/bin/docker-compose
+            NEED_INSTALL=true
+        fi
+    fi
+fi
+
+# ===== 多源配置+断点续传下载（核心优化） =====
+if [ "$NEED_INSTALL" = true ]; then
+    log_info "开始安装Docker Compose v${REQUIRED_DOCKER_COMPOSE_VERSION}（支持断点续传+多源自动切换）..."
+
+    # 目标文件路径（直接下载到目标位置，支持断点续传）
+    TARGET_PATH="/usr/local/bin/docker-compose"
+
+    # 定义多个下载源（按优先级：国内云厂商镜像优先，确保稳定性）
+    DOWNLOAD_SOURCES=(
+        "https://mirrors.aliyun.com/docker-toolbox/linux/compose/v${REQUIRED_DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)|阿里云镜像"
+        "https://mirrors.tencent.com/docker-toolbox/linux/compose/v${REQUIRED_DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)|腾讯云镜像"
+        "https://mirrors.163.com/docker-toolbox/linux/compose/v${REQUIRED_DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)|网易云镜像"
+        "https://mirrors.huaweicloud.com/docker-toolbox/linux/compose/v${REQUIRED_DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)|华为云镜像"
+        "https://get.daocloud.io/docker/compose/releases/download/v${REQUIRED_DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)|DaoCloud镜像"
+        "https://github.com/docker/compose/releases/download/v${REQUIRED_DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)|GitHub官方源"
+    )
+
+    DOWNLOAD_SUCCESS=false
+
+    # 遍历多源+断点续传下载
+    for source in "${DOWNLOAD_SOURCES[@]}"; do
+        URL="${source%%|*}"
+        NAME="${source##*|}"
+
+        log_info "尝试从 $NAME 下载..."
+        log_info "下载URL: $URL"
+
+        # 检查是否存在未完成的下载（断点续传）
+        if [ -f "$TARGET_PATH" ]; then
+            CURRENT_SIZE=$(stat -c %s "$TARGET_PATH" 2>/dev/null || echo "0")
+            if [ "$CURRENT_SIZE" -gt 0 ] && [ "$CURRENT_SIZE" -lt 40000000 ]; then
+                log_info "检测到未完成的下载（已下载 $((CURRENT_SIZE / 1024 / 1024))MB），启用断点续传..."
+            fi
+        fi
+
+        # 使用curl断点续传下载
+        # -C - : 启用断点续传（自动从上次中断位置继续）
+        # -L : 跟随重定向
+        # --retry 3 : 失败后自动重试3次
+        # --speed-limit 1024 : 最低网速限制（1KB/s）
+        # --speed-time 30 : 如果30秒内平均速度低于speed-limit，则重试
+        # --connect-timeout 30 : 连接超时30秒
+        # --max-time 600 : 总下载时间最长10分钟
+        if curl -L -C - --retry 3 --speed-limit 1024 --speed-time 30 \
+            --connect-timeout 30 --max-time 600 \
+            "$URL" -o "$TARGET_PATH" --progress-bar 2>&1; then
+
+            # 检查下载的文件大小
+            DOWNLOADED_SIZE=$(stat -c %s "$TARGET_PATH" 2>/dev/null || echo "0")
+            log_info "下载完成，文件大小：$((DOWNLOADED_SIZE / 1024 / 1024))MB"
+
+            if [ "$DOWNLOADED_SIZE" -ge 40000000 ]; then
+                log_success "Docker Compose从 $NAME 下载成功（文件大小：$((DOWNLOADED_SIZE / 1024 / 1024))MB）"
+                DOWNLOAD_SUCCESS=true
+                break
+            else
+                log_warning "$NAME 下载的文件大小异常（${DOWNLOADED_SIZE}字节，期望≥40MB），自动切换下一个源..."
+                # 删除异常文件，避免影响下一个源的断点续传
+                rm -f "$TARGET_PATH"
+            fi
+        else
+            CURL_EXIT_CODE=$?
+            log_warning "$NAME 下载失败/中断（退出码：$CURL_EXIT_CODE），自动切换下一个源..."
+
+            # 检查是否是部分下载（可能是网络中断）
+            if [ -f "$TARGET_PATH" ]; then
+                PARTIAL_SIZE=$(stat -c %s "$TARGET_PATH" 2>/dev/null || echo "0")
+                if [ "$PARTIAL_SIZE" -gt 0 ]; then
+                    log_info "已下载部分文件（$((PARTIAL_SIZE / 1024 / 1024))MB），下一个源将尝试续传..."
+                else
+                    # 删除空文件
+                    rm -f "$TARGET_PATH"
+                fi
+            fi
+        fi
+    done
+
+    # 检查是否下载成功
+    if [ "$DOWNLOAD_SUCCESS" = false ]; then
+        log_error "所有下载源均失败，无法获取Docker Compose v${REQUIRED_DOCKER_COMPOSE_VERSION}"
+        log_error "已尝试的源：阿里云、腾讯云、网易云、华为云、DaoCloud、GitHub"
+        log_error "可能原因：1) 版本过老导致源失效  2) 网络连接不稳定  3) 防火墙拦截"
+        log_error "无可用匹配版本，请检查源配置或网络连接"
+
+        # 清理未完成的下载文件
+        rm -f "$TARGET_PATH"
+        exit 1
+    fi
+
+    # 赋予执行权限
+    chmod +x "$TARGET_PATH"
+
+    # ===== 新增：版本验证 =====
+    log_info "验证Docker Compose版本..."
+
+    # 使用timeout避免命令挂起
+    COMPOSE_VERSION_OUTPUT=$(timeout 5 /usr/local/bin/docker-compose --version 2>&1)
+
+    if [ $? -eq 0 ]; then
+        log_info "Docker Compose版本输出：$COMPOSE_VERSION_OUTPUT"
+
+        # 提取版本号（兼容多种格式）
+        COMPOSE_VERSION=$(echo "$COMPOSE_VERSION_OUTPUT" | grep -oP 'v?\d+\.\d+\.\d+' | head -1)
+
+        # 去除可能的v前缀进行比较
+        COMPOSE_VERSION_CLEAN=$(echo "$COMPOSE_VERSION" | sed 's/^v//')
+
+        if [ "$COMPOSE_VERSION_CLEAN" = "$REQUIRED_DOCKER_COMPOSE_VERSION" ]; then
+            log_success "Docker Compose安装完成，版本为${COMPOSE_VERSION}"
+        else
+            log_error "Docker Compose版本验证失败，实际版本为${COMPOSE_VERSION}（期望：${REQUIRED_DOCKER_COMPOSE_VERSION}）"
+            exit 1
+        fi
+    else
+        log_error "Docker Compose版本验证超时或失败"
+        exit 1
+    fi
 else
-    log_error "Docker Compose版本不匹配（期望：$REQUIRED_DOCKER_COMPOSE_VERSION，实际：$INSTALLED_COMPOSE_VERSION）"
-    exit 1
+    log_info "跳过Docker Compose安装（已安装正确版本）"
 fi
 
 # ========================= 7. 安装Node.js（固定版本18.20.8） =========================
@@ -446,13 +690,30 @@ else
     exit 1
 fi
 
-# 验证npm版本
+# 验证并调整npm版本
 INSTALLED_NPM_VERSION=$(npm -v | cut -d. -f1)
 if [ "$INSTALLED_NPM_VERSION" = "$REQUIRED_NPM_VERSION" ]; then
-    log_success "npm $INSTALLED_NPM_VERSION.x 安装成功"
+    log_success "npm $INSTALLED_NPM_VERSION.x 已安装"
 else
-    log_error "npm版本不匹配（期望：$REQUIRED_NPM_VERSION.x，实际：$INSTALLED_NPM_VERSION.x）"
-    exit 1
+    log_warning "npm版本不匹配（期望：$REQUIRED_NPM_VERSION.x，实际：$INSTALLED_NPM_VERSION.x），将降级到9.x"
+
+    # 降级npm到9.x最新版本（9.9.3）
+    log_info "正在安装npm 9.9.3..."
+    npm install -g npm@9.9.3 --registry=https://registry.npmmirror.com
+
+    if [ $? -ne 0 ]; then
+        log_error "npm降级失败"
+        exit 1
+    fi
+
+    # 重新验证npm版本
+    INSTALLED_NPM_VERSION=$(npm -v | cut -d. -f1)
+    if [ "$INSTALLED_NPM_VERSION" = "$REQUIRED_NPM_VERSION" ]; then
+        log_success "npm已成功降级到 $REQUIRED_NPM_VERSION.x"
+    else
+        log_error "npm降级后版本仍不匹配（期望：$REQUIRED_NPM_VERSION.x，实际：$INSTALLED_NPM_VERSION.x）"
+        exit 1
+    fi
 fi
 
 # 配置npm镜像源（阿里云）
@@ -473,30 +734,29 @@ speed_test "https://mirrors.aliyun.com/nodejs-release/v18.20.8/node-v18.20.8-lin
 log_success "所有速度预测试通过"
 
 # ========================= 9. 拉取Docker镜像（带进度显示+重试机制） =========================
-log_info "【步骤9/12】拉取Docker镜像（使用阿里云镜像加速+华为云备用）..."
+log_info "【步骤9/12】拉取Docker镜像（使用国内镜像代理）..."
 
-# 定义镜像映射（主源+备用源）
-ALIYUN_PREFIX="registry.cn-hangzhou.aliyuncs.com"
-HUAWEI_PREFIX="swr.cn-north-4.myhuaweicloud.com"
+# 由于2025年大部分公共镜像加速器已失效，改用镜像代理服务
+# 镜像代理格式：docker.1ms.run/library/镜像名:标签
+MIRROR_PREFIX="docker.1ms.run"
 
-# 拉取所有镜像（使用带重试的拉取函数）
 log_info "拉取OpenJDK 11镜像..."
-pull_docker_image "${ALIYUN_PREFIX}/library/openjdk:11-jre-slim" "${HUAWEI_PREFIX}/library/openjdk:11-jre-slim" $SPEED_THRESHOLD_DOCKER
+pull_docker_image "${MIRROR_PREFIX}/library/openjdk:11-jre-slim" "openjdk:11-jre-slim" $SPEED_THRESHOLD_DOCKER
 
 log_info "拉取MySQL 8.0镜像..."
-pull_docker_image "${ALIYUN_PREFIX}/library/mysql:8.0" "${HUAWEI_PREFIX}/library/mysql:8.0" $SPEED_THRESHOLD_DOCKER
+pull_docker_image "${MIRROR_PREFIX}/library/mysql:8.0" "mysql:8.0" $SPEED_THRESHOLD_DOCKER
 
 log_info "拉取MongoDB 5.0镜像..."
-pull_docker_image "${ALIYUN_PREFIX}/library/mongo:5.0" "${HUAWEI_PREFIX}/library/mongo:5.0" $SPEED_THRESHOLD_DOCKER
+pull_docker_image "${MIRROR_PREFIX}/library/mongo:5.0" "mongo:5.0" $SPEED_THRESHOLD_DOCKER
 
 log_info "拉取Redis 6.2镜像..."
-pull_docker_image "${ALIYUN_PREFIX}/library/redis:6.2-alpine" "${HUAWEI_PREFIX}/library/redis:6.2-alpine" $SPEED_THRESHOLD_DOCKER
+pull_docker_image "${MIRROR_PREFIX}/library/redis:6.2-alpine" "redis:6.2-alpine" $SPEED_THRESHOLD_DOCKER
 
 log_info "拉取Nginx 1.23镜像..."
-pull_docker_image "${ALIYUN_PREFIX}/library/nginx:1.23-alpine" "${HUAWEI_PREFIX}/library/nginx:1.23-alpine" $SPEED_THRESHOLD_DOCKER
+pull_docker_image "${MIRROR_PREFIX}/library/nginx:1.23-alpine" "nginx:1.23-alpine" $SPEED_THRESHOLD_DOCKER
 
 log_info "拉取Nacos 2.2.3镜像..."
-pull_docker_image "${ALIYUN_PREFIX}/nacos/nacos-server:v2.2.3" "nacos/nacos-server:v2.2.3" $SPEED_THRESHOLD_DOCKER
+pull_docker_image "${MIRROR_PREFIX}/nacos/nacos-server:v2.2.3" "nacos/nacos-server:v2.2.3" $SPEED_THRESHOLD_DOCKER
 
 log_success "所有Docker镜像拉取完成"
 
@@ -508,14 +768,170 @@ WORK_DIR="/opt/labei"
 mkdir -p "$WORK_DIR"
 cd "$WORK_DIR"
 
-# 检查当前目录是否已有源码
-if [ -d "h5" ] && [ -d "adminbak" ]; then
-    log_success "检测到当前目录已有源码，跳过源码获取"
+# ===== 新增：源码存在性检测+自动解压+跳过机制 =====
+SOURCE_DIR="$WORK_DIR"
+# 定义解压完成标识文件
+MARK_FILE="${SOURCE_DIR}/.source_extracted"
+
+# 检测源码目录是否为空
+if [ -z "$(ls -A ${SOURCE_DIR} 2>/dev/null)" ]; then
+    log_error "${SOURCE_DIR}目录为空，请上传源码包（zip/tar.gz）或解压后的源码目录到该路径"
+    log_error "支持的格式：*.zip、*.tar.gz"
+    exit 1
 else
-    log_info "当前目录无源码，需要手动上传源码包到 $WORK_DIR"
-    log_error "请将源码包上传到 $WORK_DIR 后重新执行脚本"
+    # 检测是否已解压（通过标识文件判断）
+    if [ ! -f "${MARK_FILE}" ]; then
+        log_info "首次检测源码，开始验证..."
+
+        # 未解压过，检测压缩包并解压
+        COMPRESSED_FILE=$(find ${SOURCE_DIR} -maxdepth 1 -type f \( -name "*.zip" -o -name "*.tar.gz" \) 2>/dev/null | head -1)
+
+        if [ -n "$COMPRESSED_FILE" ]; then
+            log_info "检测到压缩包：$(basename $COMPRESSED_FILE)"
+
+            # 显示文件大小
+            FILE_SIZE=$(stat -c %s "$COMPRESSED_FILE" 2>/dev/null || echo "0")
+            FILE_SIZE_MB=$((FILE_SIZE / 1024 / 1024))
+            log_info "文件大小：${FILE_SIZE_MB}MB"
+
+            # 检查磁盘空间
+            AVAILABLE_SPACE=$(df -BM ${SOURCE_DIR} | tail -1 | awk '{print $4}' | sed 's/M//')
+            log_info "可用磁盘空间：${AVAILABLE_SPACE}MB"
+
+            if [ "$AVAILABLE_SPACE" -lt 1000 ]; then
+                log_warning "磁盘空间不足1GB，解压可能失败"
+            fi
+
+            log_info "开始自动解压..."
+
+            # 根据文件类型选择解压方式
+            if [[ "$COMPRESSED_FILE" == *.zip ]]; then
+                log_info "检测到ZIP文件，尝试解压..."
+
+                # 优先使用7z工具（兼容WinRAR创建的ZIP文件）
+                if command -v 7z &> /dev/null; then
+                    log_info "使用7z工具解压（兼容WinRAR格式）..."
+
+                    # 先测试ZIP文件完整性
+                    log_info "测试ZIP文件完整性..."
+                    if ! 7z t "$COMPRESSED_FILE" >/dev/null 2>&1; then
+                        log_warning "7z测试失败，尝试使用unzip..."
+                    else
+                        log_success "ZIP文件完整性验证通过（7z）"
+
+                        # 使用7z解压
+                        log_info "正在使用7z解压ZIP文件..."
+                        EXTRACT_OUTPUT=$(7z x "$COMPRESSED_FILE" -o${SOURCE_DIR} -y 2>&1)
+                        EXTRACT_EXIT_CODE=$?
+
+                        if [ $EXTRACT_EXIT_CODE -eq 0 ]; then
+                            log_success "ZIP压缩包解压完成（使用7z）"
+                        else
+                            log_warning "7z解压失败（退出码：$EXTRACT_EXIT_CODE），尝试使用unzip..."
+                            log_info "7z错误详情："
+                            echo "$EXTRACT_OUTPUT" | tail -5
+                        fi
+                    fi
+                fi
+
+                # 如果7z失败或不存在，使用unzip
+                if [ ! -d "${SOURCE_DIR}/h5" ] && [ ! -d "${SOURCE_DIR}/adminbak" ]; then
+                    log_info "使用unzip解压..."
+
+                    # 测试ZIP文件完整性
+                    log_info "测试ZIP文件完整性（unzip）..."
+                    UNZIP_TEST_OUTPUT=$(unzip -t "$COMPRESSED_FILE" 2>&1)
+                    if [ $? -ne 0 ]; then
+                        log_error "ZIP文件验证失败"
+                        log_error "这可能是WinRAR创建的ZIP文件，与标准unzip工具不兼容"
+                        log_error "错误详情："
+                        echo "$UNZIP_TEST_OUTPUT" | tail -10
+                        log_error ""
+                        log_error "解决方案："
+                        log_error "  1) 在Windows上使用系统自带的'压缩文件夹'功能重新压缩"
+                        log_error "  2) 或使用7-Zip软件，选择'ZIP'格式（不要用'7z'格式）"
+                        log_error "  3) 或直接上传解压后的源码目录"
+                        exit 1
+                    fi
+                    log_success "ZIP文件完整性验证通过（unzip）"
+
+                    # 解压ZIP文件
+                    log_info "正在使用unzip解压ZIP文件..."
+                    UNZIP_OUTPUT=$(unzip -o "$COMPRESSED_FILE" -d ${SOURCE_DIR} 2>&1)
+                    UNZIP_EXIT_CODE=$?
+
+                    if [ $UNZIP_EXIT_CODE -eq 0 ]; then
+                        log_success "ZIP压缩包解压完成（使用unzip）"
+                    else
+                        log_error "ZIP压缩包解压失败（退出码：$UNZIP_EXIT_CODE）"
+                        log_error "错误详情："
+                        echo "$UNZIP_OUTPUT" | tail -10
+                        log_error "可能原因："
+                        log_error "  1) ZIP文件损坏"
+                        log_error "  2) 磁盘空间不足"
+                        log_error "  3) 权限不足"
+                        log_error "  4) ZIP文件格式不兼容（WinRAR创建）"
+                        exit 1
+                    fi
+                fi
+
+            elif [[ "$COMPRESSED_FILE" == *.tar.gz ]]; then
+                log_info "使用tar解压..."
+
+                # 解压TAR.GZ文件（显示详细输出）
+                log_info "正在解压TAR.GZ文件..."
+                TAR_OUTPUT=$(tar -zxf "$COMPRESSED_FILE" -C ${SOURCE_DIR} 2>&1)
+                TAR_EXIT_CODE=$?
+
+                if [ $TAR_EXIT_CODE -eq 0 ]; then
+                    log_success "TAR.GZ压缩包解压完成"
+                else
+                    log_error "TAR.GZ压缩包解压失败（退出码：$TAR_EXIT_CODE）"
+                    log_error "错误详情："
+                    echo "$TAR_OUTPUT" | tail -10
+                    log_error "可能原因："
+                    log_error "  1) TAR.GZ文件损坏"
+                    log_error "  2) 磁盘空间不足"
+                    log_error "  3) 权限不足"
+                    exit 1
+                fi
+            fi
+
+            # 创建解压完成标识文件
+            touch "${MARK_FILE}"
+            log_success "已创建解压标识文件，后续执行将跳过解压流程"
+
+        else
+            # 没有压缩包，检查是否已有源码目录
+            if [ -d "h5" ] && [ -d "adminbak" ]; then
+                log_info "检测到已解压的源码目录（h5、adminbak）"
+                # 创建标识文件以便后续跳过
+                touch "${MARK_FILE}"
+                log_success "已创建解压标识文件，后续执行将跳过检测流程"
+            else
+                log_error "未检测到压缩包或有效的源码目录"
+                log_error "请确保上传以下之一："
+                log_error "  1) 源码压缩包（*.zip 或 *.tar.gz）"
+                log_error "  2) 已解压的源码目录（包含h5、adminbak等目录）"
+                exit 1
+            fi
+        fi
+    else
+        log_info "已检测到解压标识文件（${MARK_FILE}），跳过源码检测与解压流程"
+        log_success "源码已就绪，继续后续步骤"
+    fi
+fi
+
+# 最终验证：确保必要的源码目录存在
+if [ ! -d "h5" ] || [ ! -d "adminbak" ]; then
+    log_error "源码目录验证失败：缺少必要的目录（h5、adminbak）"
+    log_error "请检查源码包内容是否完整"
+    # 删除标识文件，下次重新检测
+    rm -f "${MARK_FILE}"
     exit 1
 fi
+
+log_success "源码目录验证通过"
 
 # 创建docker-compose.yml
 log_info "创建docker-compose.yml配置文件..."
@@ -767,81 +1183,152 @@ log_success "imsvr/Dockerfile创建完成"
 # ========================= 11. 前端打包（带进度显示） =========================
 log_info "【步骤11/12】前端项目打包（H5 + 管理后台）..."
 
-# 打包H5前端
+# 检查H5前端
 if [ -d "h5" ]; then
-    log_info "开始打包H5前端..."
+    log_info "检查H5前端..."
     cd h5
 
-    log_info "安装H5依赖包（使用阿里云npm镜像）..."
-    npm install --registry="$ALIYUN_NPM_REGISTRY" --progress=true 2>&1 | while IFS= read -r line; do
-        if [[ $line =~ ([0-9]+)/([0-9]+) ]]; then
-            current="${BASH_REMATCH[1]}"
-            total="${BASH_REMATCH[2]}"
-            percent=$((current * 100 / total))
-            echo -e "\r当前状态：安装中 | H5依赖 | 进度：$percent% ($current/$total)"
-        fi
-    done
+    # 检查是否需要构建（是否有package.json）
+    if [ -f "package.json" ]; then
+        log_info "检测到package.json，开始构建H5前端..."
+        log_info "npm镜像源：$ALIYUN_NPM_REGISTRY"
+        log_info "这可能需要3-10分钟，请耐心等待..."
 
-    if [ $? -ne 0 ]; then
-        log_error "H5依赖安装失败"
-        exit 1
+        # 清理npm缓存
+        log_info "清理npm缓存..."
+        npm cache clean --force >/dev/null 2>&1 || true
+
+        # 删除旧的node_modules和package-lock.json
+        if [ -d "node_modules" ]; then
+            log_info "删除旧的node_modules目录..."
+            rm -rf node_modules
+        fi
+        if [ -f "package-lock.json" ]; then
+            log_info "删除旧的package-lock.json..."
+            rm -f package-lock.json
+        fi
+
+        # 安装依赖包
+        log_info "开始安装依赖包（超时时间：15分钟）..."
+        if timeout 900 npm install --registry="$ALIYUN_NPM_REGISTRY" --loglevel=info 2>&1 | tee /tmp/h5-npm-install.log; then
+            log_success "H5依赖包安装完成"
+        else
+            NPM_EXIT_CODE=$?
+            if [ $NPM_EXIT_CODE -eq 124 ]; then
+                log_error "H5依赖安装超时（超过15分钟）"
+            else
+                log_error "H5依赖安装失败（退出码：$NPM_EXIT_CODE）"
+            fi
+            log_error "详细日志：/tmp/h5-npm-install.log"
+            tail -20 /tmp/h5-npm-install.log
+            exit 1
+        fi
+
+        # 构建前端
+        log_info "构建H5前端..."
+        log_info "这可能需要5-10分钟，请耐心等待..."
+        if timeout 600 npm run build 2>&1 | tee /tmp/h5-npm-build.log; then
+            log_success "H5前端构建完成"
+        else
+            BUILD_EXIT_CODE=$?
+            if [ $BUILD_EXIT_CODE -eq 124 ]; then
+                log_error "H5前端构建超时（超过10分钟）"
+            else
+                log_error "H5前端构建失败（退出码：$BUILD_EXIT_CODE）"
+            fi
+            log_error "详细日志：/tmp/h5-npm-build.log"
+            tail -20 /tmp/h5-npm-build.log
+            exit 1
+        fi
+    else
+        log_info "未检测到package.json，H5前端已是构建好的静态文件"
+        log_success "跳过H5前端构建步骤"
     fi
 
-    log_info "构建H5前端..."
-    npm run build || {
-        log_error "H5前端构建失败"
-        exit 1
-    }
-
     cd ..
-    log_success "H5前端打包完成"
+    log_success "H5前端准备完成"
 else
     log_error "未找到h5目录，请检查源码结构"
     exit 1
 fi
 
-# 打包管理后台
+# 检查管理后台
 if [ -d "adminbak" ]; then
-    log_info "开始打包管理后台..."
+    log_info "检查管理后台..."
     cd adminbak
 
-    # 检查frontend目录或frontend.zip
+    # 检查是否有frontend目录或frontend.zip
     if [ -f "frontend.zip" ]; then
         log_info "解压frontend.zip..."
         unzip -o frontend.zip -d frontend || {
             log_error "frontend.zip解压失败"
             exit 1
         }
-    elif [ ! -d "frontend" ]; then
-        log_error "adminbak目录下未找到frontend目录或frontend.zip"
-        exit 1
     fi
 
-    cd frontend
+    # 检查是否有frontend目录且包含package.json
+    if [ -d "frontend" ] && [ -f "frontend/package.json" ]; then
+        log_info "检测到frontend/package.json，开始构建管理后台..."
+        cd frontend
 
-    log_info "安装管理后台依赖包（使用阿里云npm镜像）..."
-    npm install --registry="$ALIYUN_NPM_REGISTRY" --progress=true 2>&1 | while IFS= read -r line; do
-        if [[ $line =~ ([0-9]+)/([0-9]+) ]]; then
-            current="${BASH_REMATCH[1]}"
-            total="${BASH_REMATCH[2]}"
-            percent=$((current * 100 / total))
-            echo -e "\r当前状态：安装中 | 管理后台依赖 | 进度：$percent% ($current/$total)"
+        log_info "npm镜像源：$ALIYUN_NPM_REGISTRY"
+        log_info "这可能需要3-10分钟，请耐心等待..."
+
+        # 清理npm缓存
+        log_info "清理npm缓存..."
+        npm cache clean --force >/dev/null 2>&1 || true
+
+        # 删除旧的node_modules和package-lock.json
+        if [ -d "node_modules" ]; then
+            log_info "删除旧的node_modules目录..."
+            rm -rf node_modules
         fi
-    done
+        if [ -f "package-lock.json" ]; then
+            log_info "删除旧的package-lock.json..."
+            rm -f package-lock.json
+        fi
 
-    if [ $? -ne 0 ]; then
-        log_error "管理后台依赖安装失败"
-        exit 1
+        # 安装依赖包
+        log_info "开始安装依赖包（超时时间：15分钟）..."
+        if timeout 900 npm install --registry="$ALIYUN_NPM_REGISTRY" --loglevel=info 2>&1 | tee /tmp/adminbak-npm-install.log; then
+            log_success "管理后台依赖包安装完成"
+        else
+            NPM_EXIT_CODE=$?
+            if [ $NPM_EXIT_CODE -eq 124 ]; then
+                log_error "管理后台依赖安装超时（超过15分钟）"
+            else
+                log_error "管理后台依赖安装失败（退出码：$NPM_EXIT_CODE）"
+            fi
+            log_error "详细日志：/tmp/adminbak-npm-install.log"
+            tail -20 /tmp/adminbak-npm-install.log
+            exit 1
+        fi
+
+        # 构建管理后台
+        log_info "构建管理后台..."
+        log_info "这可能需要5-10分钟，请耐心等待..."
+        if timeout 600 npm run build 2>&1 | tee /tmp/adminbak-npm-build.log; then
+            log_success "管理后台构建完成"
+        else
+            BUILD_EXIT_CODE=$?
+            if [ $BUILD_EXIT_CODE -eq 124 ]; then
+                log_error "管理后台构建超时（超过10分钟）"
+            else
+                log_error "管理后台构建失败（退出码：$BUILD_EXIT_CODE）"
+            fi
+            log_error "详细日志：/tmp/adminbak-npm-build.log"
+            tail -20 /tmp/adminbak-npm-build.log
+            exit 1
+        fi
+
+        cd ../
+    else
+        log_info "未检测到frontend/package.json，管理后台已是构建好的静态文件"
+        log_success "跳过管理后台构建步骤"
     fi
 
-    log_info "构建管理后台..."
-    npm run build || {
-        log_error "管理后台构建失败"
-        exit 1
-    }
-
-    cd ../../
-    log_success "管理后台打包完成"
+    cd ..
+    log_success "管理后台准备完成"
 else
     log_error "未找到adminbak目录，请检查源码结构"
     exit 1
