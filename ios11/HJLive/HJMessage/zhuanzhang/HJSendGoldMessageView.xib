@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view userInteractionEnabled="NO" contentMode="scaleToFill" id="bqL-wk-lcp" customClass="HJSendGoldMessageView">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="64"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4mN-dB-AjP">
+                    <rect key="frame" x="12" y="12" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="RAd-TX-SAE"/>
+                        <constraint firstAttribute="height" constant="40" id="rG6-ls-FP0"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="玫瑰花" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7P-oM-hHV">
+                    <rect key="frame" x="60" y="22" width="120" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Sxc-Mf-aRf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="红包" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHc-dM-Mvc">
+                    <rect key="frame" x="60" y="46" width="120" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="R7S-6c-NZ1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="cxt-sv-moZ"/>
+            <color key="backgroundColor" red="0.98039215686274506" green="0.63529411764705879" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="zHc-dM-Mvc" firstAttribute="leading" secondItem="v7P-oM-hHV" secondAttribute="leading" id="8w7-Bk-VoM"/>
+                <constraint firstAttribute="trailing" secondItem="v7P-oM-hHV" secondAttribute="trailing" constant="20" id="9AV-MS-r60"/>
+                <constraint firstItem="zHc-dM-Mvc" firstAttribute="top" secondItem="v7P-oM-hHV" secondAttribute="bottom" constant="4" id="LPo-Gz-qDX"/>
+                <constraint firstItem="v7P-oM-hHV" firstAttribute="centerY" secondItem="4mN-dB-AjP" secondAttribute="centerY" id="OP3-95-zfh"/>
+                <constraint firstItem="v7P-oM-hHV" firstAttribute="leading" secondItem="4mN-dB-AjP" secondAttribute="trailing" constant="8" id="Pud-Bb-LUO"/>
+                <constraint firstItem="cxt-sv-moZ" firstAttribute="trailing" secondItem="zHc-dM-Mvc" secondAttribute="trailing" constant="20" id="S4x-W4-HJs"/>
+                <constraint firstItem="4mN-dB-AjP" firstAttribute="leading" secondItem="cxt-sv-moZ" secondAttribute="leading" constant="12" id="pGq-6E-D1W"/>
+                <constraint firstItem="4mN-dB-AjP" firstAttribute="top" secondItem="bqL-wk-lcp" secondAttribute="top" constant="12" id="yPQ-Qm-4U5"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="desLabel" destination="zHc-dM-Mvc" id="zK5-Dx-2Mb"/>
+                <outlet property="goldLabel" destination="v7P-oM-hHV" id="M5y-Hc-Vhs"/>
+                <outlet property="sendGoldImageView" destination="4mN-dB-AjP" id="RSB-bv-eP0"/>
+            </connections>
+            <point key="canvasLocation" x="-102.17391304347827" y="185.49107142857142"/>
+        </view>
+    </objects>
+</document>

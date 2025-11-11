@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view alpha="0.80000000000000004" contentMode="scaleToFill" id="8jr-dU-qzp" customClass="HJNotMusicView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSW-hq-tRF">
+                    <rect key="frame" x="10" y="0.0" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="1oO-QA-4A3"/>
+                        <constraint firstAttribute="height" constant="60" id="p8m-xb-Bi4"/>
+                    </constraints>
+                    <state key="normal" image="xc_room_music_icon_zofangqizanting"/>
+                    <state key="selected" image="xc_room_music_icon_zanting"/>
+                    <connections>
+                        <action selector="startClick:" destination="8jr-dU-qzp" eventType="touchUpInside" id="me8-jJ-Jut"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPu-QY-ahO">
+                    <rect key="frame" x="315" y="0.0" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="PMs-lI-5aa"/>
+                        <constraint firstAttribute="width" constant="60" id="cZT-oR-Bfh"/>
+                    </constraints>
+                    <state key="normal" image="xc_room_music_icon_tianjie"/>
+                    <connections>
+                        <action selector="configClick:" destination="8jr-dU-qzp" eventType="touchUpInside" id="GRd-mg-y3y"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无歌曲播放" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mVO-AF-jlc">
+                    <rect key="frame" x="75" y="20" width="230" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.75686274509803919" green="0.73725490196078436" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="my5-Ya-UHa">
+                    <rect key="frame" x="70" y="0.0" width="245" height="60"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uk2-lR-f78">
+                            <rect key="frame" x="5" y="12" width="22" height="16"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="16" id="0pu-M9-OzO"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.75686274509803919" green="0.73725490196078436" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="U4v-do-D2c">
+                            <rect key="frame" x="-2" y="36" width="239" height="31"/>
+                            <color key="minimumTrackTintColor" red="0.70980392160000005" green="0.51372549020000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="sliderAction:" destination="8jr-dU-qzp" eventType="valueChanged" id="R5r-Z4-cAV"/>
+                            </connections>
+                        </slider>
+                    </subviews>
+                    <color key="backgroundColor" red="0.14901960784313725" green="0.14117647058823529" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="U4v-do-D2c" firstAttribute="top" secondItem="uk2-lR-f78" secondAttribute="bottom" constant="8" id="5Q7-vL-mIc"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uk2-lR-f78" secondAttribute="trailing" constant="20" symbolic="YES" id="BkP-c6-XN4"/>
+                        <constraint firstAttribute="trailing" secondItem="U4v-do-D2c" secondAttribute="trailing" constant="10" id="Nlc-wg-HzD"/>
+                        <constraint firstItem="uk2-lR-f78" firstAttribute="leading" secondItem="my5-Ya-UHa" secondAttribute="leading" constant="5" id="Nmo-QE-0Qd"/>
+                        <constraint firstItem="uk2-lR-f78" firstAttribute="top" secondItem="my5-Ya-UHa" secondAttribute="top" constant="12" id="V4W-wL-iAw"/>
+                        <constraint firstItem="U4v-do-D2c" firstAttribute="leading" secondItem="my5-Ya-UHa" secondAttribute="leading" id="aB9-zu-pUF"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.14901960784313725" green="0.14117647058823529" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="mVO-AF-jlc" firstAttribute="centerY" secondItem="8jr-dU-qzp" secondAttribute="centerY" id="NNp-eO-8MP"/>
+                <constraint firstItem="my5-Ya-UHa" firstAttribute="leading" secondItem="OSW-hq-tRF" secondAttribute="trailing" id="WvE-Ve-8BK"/>
+                <constraint firstAttribute="bottom" secondItem="my5-Ya-UHa" secondAttribute="bottom" id="Z7g-2s-R8S"/>
+                <constraint firstItem="FPu-QY-ahO" firstAttribute="centerY" secondItem="8jr-dU-qzp" secondAttribute="centerY" id="cOd-mQ-1nx"/>
+                <constraint firstItem="FPu-QY-ahO" firstAttribute="leading" secondItem="my5-Ya-UHa" secondAttribute="trailing" id="h4d-9O-kKZ"/>
+                <constraint firstItem="OSW-hq-tRF" firstAttribute="leading" secondItem="Nir-4w-253" secondAttribute="leading" constant="10" id="iem-HX-cds"/>
+                <constraint firstItem="FPu-QY-ahO" firstAttribute="leading" secondItem="mVO-AF-jlc" secondAttribute="trailing" constant="10" id="jVW-qD-a7A"/>
+                <constraint firstItem="FPu-QY-ahO" firstAttribute="trailing" secondItem="Nir-4w-253" secondAttribute="trailing" id="ldk-CI-UNX"/>
+                <constraint firstItem="mVO-AF-jlc" firstAttribute="leading" secondItem="Nir-4w-253" secondAttribute="leading" constant="75" id="lgZ-Wh-SfA"/>
+                <constraint firstItem="my5-Ya-UHa" firstAttribute="top" secondItem="8jr-dU-qzp" secondAttribute="top" id="pQG-Ak-ipH"/>
+                <constraint firstItem="OSW-hq-tRF" firstAttribute="centerY" secondItem="8jr-dU-qzp" secondAttribute="centerY" id="wnU-IZ-Mdn"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="Nir-4w-253"/>
+            <connections>
+                <outlet property="currentSong" destination="mVO-AF-jlc" id="u3f-28-ccL"/>
+                <outlet property="slider" destination="U4v-do-D2c" id="pQ2-gZ-MpZ"/>
+                <outlet property="sliderContentView" destination="my5-Ya-UHa" id="VSj-7y-9ef"/>
+                <outlet property="songName" destination="uk2-lR-f78" id="14o-Vp-YJQ"/>
+                <outlet property="startBtn" destination="OSW-hq-tRF" id="k9V-ml-bJu"/>
+                <outlet property="tipSongLabel" destination="mVO-AF-jlc" id="58h-uv-rx7"/>
+            </connections>
+            <point key="canvasLocation" x="157.59999999999999" y="-443.47826086956525"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="xc_room_music_icon_tianjie" width="24" height="24"/>
+        <image name="xc_room_music_icon_zanting" width="44" height="44"/>
+        <image name="xc_room_music_icon_zofangqizanting" width="44" height="44"/>
+    </resources>
+</document>

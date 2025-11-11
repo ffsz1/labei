@@ -1,0 +1,17 @@
+//
+//  HJMICMatchUserVC.h
+//  HJLive
+//
+//  Created by feiyin on 2020/7/7.
+//  Copyright © 2020 com.wdqj.gz. All rights reserved.
+//
+
+#import "YYViewController.h"
+
+@class HJMICUserInfo;
+
+@interface HJMICMatchUserVC : YYViewController
+
+@property (nonatomic, strong) NSMutableArray<HJMICUserInfo *> *users;
+
+@end

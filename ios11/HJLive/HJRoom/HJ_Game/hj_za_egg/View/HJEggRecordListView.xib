@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="HJEggRecordListView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hje-CF-0oY">
+                    <rect key="frame" x="0.0" y="421" width="375" height="487"/>
+                    <subviews>
+                        <visualEffectView opaque="NO" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m7x-eq-WOO">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="487"/>
+                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Y3q-IB-QmB">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="487"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="hj_dacall_recordBg" translatesAutoresizingMaskIntoConstraints="NO" id="jan-aD-vbh">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="487"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="jan-aD-vbh" firstAttribute="leading" secondItem="Y3q-IB-QmB" secondAttribute="leading" id="4PT-8q-PLE"/>
+                                    <constraint firstAttribute="bottom" secondItem="jan-aD-vbh" secondAttribute="bottom" id="6U1-bG-Zqs"/>
+                                    <constraint firstItem="jan-aD-vbh" firstAttribute="top" secondItem="Y3q-IB-QmB" secondAttribute="top" id="Hvv-5G-21D"/>
+                                    <constraint firstAttribute="trailing" secondItem="jan-aD-vbh" secondAttribute="trailing" id="PWP-dX-DVn"/>
+                                </constraints>
+                            </view>
+                            <blurEffect style="dark"/>
+                        </visualEffectView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Giq-T5-gcW">
+                            <rect key="frame" x="0.0" y="66" width="375" height="409"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_dacall_record" translatesAutoresizingMaskIntoConstraints="NO" id="zLS-v9-RDK">
+                            <rect key="frame" x="111" y="10" width="153.5" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="Ebq-IM-6hN"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.59713358274647887" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Giq-T5-gcW" secondAttribute="trailing" id="01g-ix-UkB"/>
+                        <constraint firstItem="Giq-T5-gcW" firstAttribute="leading" secondItem="Hje-CF-0oY" secondAttribute="leading" id="A0a-K8-8SZ"/>
+                        <constraint firstItem="Giq-T5-gcW" firstAttribute="top" secondItem="zLS-v9-RDK" secondAttribute="bottom" constant="6" id="HSZ-rC-fVJ"/>
+                        <constraint firstItem="zLS-v9-RDK" firstAttribute="centerX" secondItem="Hje-CF-0oY" secondAttribute="centerX" id="Ocu-3U-UVA"/>
+                        <constraint firstAttribute="trailing" secondItem="m7x-eq-WOO" secondAttribute="trailing" id="dVa-tc-xVX"/>
+                        <constraint firstItem="m7x-eq-WOO" firstAttribute="leading" secondItem="Hje-CF-0oY" secondAttribute="leading" id="eoB-gc-Ph8"/>
+                        <constraint firstAttribute="bottom" secondItem="m7x-eq-WOO" secondAttribute="bottom" id="jHH-ke-NSb"/>
+                        <constraint firstItem="m7x-eq-WOO" firstAttribute="top" secondItem="Hje-CF-0oY" secondAttribute="top" id="jUS-Mg-b6Z"/>
+                        <constraint firstAttribute="bottom" secondItem="Giq-T5-gcW" secondAttribute="bottom" constant="12" id="tSx-UQ-kS7"/>
+                        <constraint firstItem="zLS-v9-RDK" firstAttribute="top" secondItem="Hje-CF-0oY" secondAttribute="top" constant="10" id="wgN-0a-Nhm"/>
+                        <constraint firstAttribute="height" constant="487" id="xlD-MQ-41p"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="24"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G5H-HL-4Bg">
+                    <rect key="frame" x="329" y="375" width="36" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="QFm-Id-KcV"/>
+                        <constraint firstAttribute="width" constant="36" id="yfE-8s-axJ"/>
+                    </constraints>
+                    <state key="normal" image="hj_dacall_call_gift_close"/>
+                    <connections>
+                        <action selector="closeBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="riD-h7-Neb"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Hje-CF-0oY" firstAttribute="top" secondItem="G5H-HL-4Bg" secondAttribute="bottom" constant="10" id="1Sd-0C-7TL"/>
+                <constraint firstAttribute="trailing" secondItem="G5H-HL-4Bg" secondAttribute="trailing" constant="10" id="FUm-8E-D6y"/>
+                <constraint firstItem="Hje-CF-0oY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JVr-PL-quG"/>
+                <constraint firstAttribute="bottom" secondItem="Hje-CF-0oY" secondAttribute="bottom" constant="-12" id="PFg-33-hUB"/>
+                <constraint firstAttribute="trailing" secondItem="Hje-CF-0oY" secondAttribute="trailing" id="xsF-ni-k4y"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bottom_bgView" destination="PFg-33-hUB" id="TXJ-al-fA2"/>
+                <outlet property="tableView" destination="Giq-T5-gcW" id="Qg7-af-JbG"/>
+            </connections>
+            <point key="canvasLocation" x="132.60869565217394" y="145.98214285714286"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="hj_dacall_call_gift_close" width="33.5" height="33.5"/>
+        <image name="hj_dacall_record" width="153.5" height="73.5"/>
+        <image name="hj_dacall_recordBg" width="375" height="271.5"/>
+    </resources>
+</document>

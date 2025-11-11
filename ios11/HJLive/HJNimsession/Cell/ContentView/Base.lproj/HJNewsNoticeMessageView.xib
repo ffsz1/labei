@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view userInteractionEnabled="NO" contentMode="scaleToFill" id="iN0-l3-epB" customClass="HJNewsNoticeMessageView">
+            <rect key="frame" x="0.0" y="0.0" width="380" height="205"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-----------" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ke-rs-ncd">
+                    <rect key="frame" x="10" y="10" width="360" height="19.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q3M-Em-wbv">
+                    <rect key="frame" x="10" y="39.5" width="360" height="70"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="7Cl-pH-wgS"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXm-tV-5V8">
+                    <rect key="frame" x="10" y="119.5" width="360" height="31.5"/>
+                    <string key="text">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HW3-Id-g6S">
+                    <rect key="frame" x="0.0" y="161" width="380" height="1"/>
+                    <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="B7K-GH-wet"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击查看" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OXp-by-ISf">
+                    <rect key="frame" x="10" y="173" width="61.5" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.0039215686274509803" green="0.49803921568627452" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_arrow_little_right" translatesAutoresizingMaskIntoConstraints="NO" id="BUW-NZ-eHe">
+                    <rect key="frame" x="363" y="176" width="7" height="12.5"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12.5" id="Z5Q-Il-CgD"/>
+                        <constraint firstAttribute="width" constant="7" id="lLI-0k-UDp"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="OXp-by-ISf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="1me-B3-HWC"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VXm-tV-5V8" secondAttribute="trailing" constant="10" id="Af3-ot-21N"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HW3-Id-g6S" secondAttribute="trailing" id="DG7-AJ-6Oz"/>
+                <constraint firstItem="VXm-tV-5V8" firstAttribute="top" secondItem="Q3M-Em-wbv" secondAttribute="bottom" constant="10" id="Ghg-jn-yRM"/>
+                <constraint firstItem="VXm-tV-5V8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="Iwc-Wm-lXZ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="1Ke-rs-ncd" secondAttribute="trailing" constant="10" id="KSb-DH-6qI"/>
+                <constraint firstItem="1Ke-rs-ncd" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="VbS-V8-5w9"/>
+                <constraint firstItem="HW3-Id-g6S" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cy5-vb-Grw"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="BUW-NZ-eHe" secondAttribute="trailing" constant="10" id="etV-dO-pIf"/>
+                <constraint firstItem="OXp-by-ISf" firstAttribute="top" secondItem="HW3-Id-g6S" secondAttribute="bottom" constant="11" id="hjq-ht-6D7"/>
+                <constraint firstItem="Q3M-Em-wbv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="lHg-Zw-BFd"/>
+                <constraint firstItem="HW3-Id-g6S" firstAttribute="top" secondItem="VXm-tV-5V8" secondAttribute="bottom" constant="10" id="nWc-jO-1dn"/>
+                <constraint firstItem="Q3M-Em-wbv" firstAttribute="top" secondItem="1Ke-rs-ncd" secondAttribute="bottom" constant="10" id="pdI-qx-hnW"/>
+                <constraint firstItem="1Ke-rs-ncd" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="slb-3r-SEx"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Q3M-Em-wbv" secondAttribute="trailing" constant="10" id="snh-xc-pGO"/>
+                <constraint firstItem="BUW-NZ-eHe" firstAttribute="centerY" secondItem="OXp-by-ISf" secondAttribute="centerY" id="whG-7M-bsp"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="contentLabel" destination="VXm-tV-5V8" id="S1z-Zz-4jt"/>
+                <outlet property="picImageView" destination="Q3M-Em-wbv" id="UTI-8R-Yz6"/>
+                <outlet property="title" destination="1Ke-rs-ncd" id="sdt-ZV-W1N"/>
+            </connections>
+            <point key="canvasLocation" x="50" y="212.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="hj_arrow_little_right" width="7" height="12.5"/>
+    </resources>
+</document>

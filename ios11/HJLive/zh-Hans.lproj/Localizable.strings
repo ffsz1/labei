@@ -1,0 +1,470 @@
+/*
+ Localizable.strings
+ XBD
+ 
+ Created by Liuyuxiang on 2018/7/31.
+ Copyright © 2018年 XC. All rights reserved.
+ */
+
+/******************************* UI ********************************************/
+
+// tabBar
+"TabBarControllerHome" = "首页";        //首页
+"TabBarControllerDiscover" = "发现";    //发现
+"TabBarControllerMessage" = "消息";     //消息
+"TabBarControllerMe" = "我的";          //我的
+
+// NIMKit
+"NIMKitChoosePerson" = "选择联系人"; //选择联系人
+"NIMKitDidChoosed" = "已选";        //已选
+"NIMKitRoboite" = "机器人";          //机器人
+"NIMKitChooseOutline" = "选择超限";    //选择超限
+"NIMKitChooseGroup" = "选择群组";      //选择群组
+"NIMKitChooseRoboite" = "选择机器人";    //选择机器人
+"NIMKitYestday" = "昨天";              //昨天
+"NIMKitBeforeYestdat" = "前天";        //前天
+"NIMKitMidnight" = "凌晨";             //凌晨
+"NIMKitMorning" = "上午";              //上午
+"NIMKitNoon" = "下午";                 //下午
+"NIMKitNight" = "晚上";                 //晚上
+"NIMKitMonday" = "星期一";              //星期一
+"NIMKitTuesday" = "星期二";             //星期二
+"NIMKitWedsday" = "星期三";             //星期三
+"NIMKitThirsday" = "星期四";            //星期四
+"NIMKitFriday" = "星期五";              //星期五
+"NIMKitSaturday" = "星期六";            //星期六
+"NIMKitSunday" = "星期日";              //星期日
+"NIMKitInvite" = "邀请";                //邀请
+"NIMKitSoOn" = "等";                    //等（等等、等5人的等）
+"NIMKitPerson" = "人";                  //人
+"NIMKitEntered" = "进入了";              //进入了
+"NIMKitDismiss" = "解散了";              //解散了
+"NIMKitBring" = "将";                   //将
+"NIMKitBringOut" = "移出了";             //移出了
+"NIMKitUpdate" = "更新了";               //更新了
+"NIMKitImforemation" = "信息";           //信息
+"NIMKitName" = "名称";                    //名称
+"NIMKitIntroduction" = "介绍";            //介绍
+"NIMKitAd" = "公告";                      //公告
+"NIMKitVerifyWay" = "验证方式";            //验证方式
+"NIMKitHeadImage" = "头像";                //头像
+"NIMKitUpdatateOthersInvition" = "更新了邀请他人权限"; //更新了邀请他人权限
+"NIMKitUpdateOthersID" = "更新了被邀请人身份验证权限";   //更新了被邀请人身份验证权限
+"NIMKitUpdateOthersInfoChange" = "更新了群资料修改权限"; //更新了群资料修改权限
+"NIMKitSetQuiet" = "设置了群全体禁言";                   //设置了群全体禁言
+"NIMKitSetUnQuiet" = "取消了全体禁言";                   //取消了全体禁言
+"NIMKitDidLeft" = "离开了";                             //离开了
+"NIMKitDidPass" = "通过了";                             //通过了
+"NIMKitInterview" = "的申请";                           //的申请
+"NIMKitRemoverGroupOwnerFor" = "转移了群主身份给";        //转移了群主身份给
+"NIMKitHadBennAddedBeManager" = "被添加为群管理员";       //被添加为群管理员
+"NIMKitHadBennRemovedBeManager" = "被撤销了群管理员身份";  //被撤销了群管理员身份
+"NIMKitDidAccept" = "接受";                            //接受
+"NIMKitEnterGroupOfInvition" = "的邀请进群";             //的邀请进群
+"NIMKitQueit" = "禁言";                                //禁言
+"NIMKitRemoveQueit" = "解除禁言";                        //解除禁言
+"NIMKitHadBeen" = "被";                                 //被
+"NIMKitUnknowMessage" = "未知系统消息";                  //未知系统消息
+
+//房间
+"XCRoomCloseRoom" = "关闭直播"; //关闭直播
+"XCRoomDidSureCloseRoom" = "确认关闭直播？"; //确认关闭直播？
+"XCRoomCantOpenPaiRoom" = "您暂无权限开竞拍房"; //您暂无权限开竞拍房
+"XCRoomNoRoomTip" = "暂无房间"; // 暂无房间
+"XCRoomMyVideoPlayer" = "我的播放器";  //我的播放器
+"XCRoomMyVideoPlayerNoMusic" = "暂无音乐播放"; //暂无音乐播放
+"XCRoomMyVideoPlayerTranslateMusic" = "传输歌曲"; //传输歌曲
+"XCRoomSendGift" = "送礼物"; //送礼物
+"XCRoomCheckInfo" = "查看资料"; //查看资料
+"XCRoomKickHimDownMic" = "抱Ta下麦"; //抱Ta下麦
+"XCRoomLockThatSeat" = "封锁此座位"; //封锁此座位
+"XCRoomBringHimUpMic" = "抱Ta上麦"; //抱Ta上麦
+"XCRoomKickOutTheRoom" = "踢出房间"; //踢出房间
+"XCRoomSetToBeManager" = "设置管理员"; //设置管理员
+"XCRoomOutMicAndListen" = "下麦旁听"; //下麦旁听
+"XCRoomSetThatMicBeUnQuie" = "解除此座位禁麦"; //解除此座位禁麦
+"XCRoomSetThatMicBeQuiet" = "禁麦此座位"; //禁麦此座位
+"XCRoomUnLockThatSeat" = "解封此座位"; //解封此座位
+"XCRoomMoveToThatSeat" = "移动到此座位"; //移动到此座位
+"XCRoomMoveOutManager" = "移除管理员"; //移除管理员
+"XCRoomMoveToBlackTitle" = "你正在拉黑"; //你正在拉黑
+"XCRoomMoveToBlackMsg" = "拉黑后他将无法加入此房间"; //拉黑后他将无法加入此房间
+"XCRoomJubaoRoom" = "举报房间"; //举报房间
+"XCRoomSmallest" = "最小化"; //最小化
+"XCRoomExitRoom" = "退出房间"; //退出房间
+"XCRoomAlreadyOpen" = "你有直播已开启"; //你有直播已开启
+"XCRoomAlreadyInNow" = "当前正在"; //当前正在
+"XCRoomIfCloseRoom" = "是否关闭房间"; //是否关闭房间
+"XCRoomClose" = "关闭"; //关闭
+"XCRoomOwnerInviteYouUp" = "房主邀请你上麦"; //房主邀请你上麦
+"XCRoomOwner" = "房主"; //房主
+"XCRoomOwnerInviteYouUpTip" = "邀请你上麦，同意请按确定"; //邀请你上麦，同意请按确定
+"XCRoomYouAlreadyInBlackList" = "您已被房主加入黑名单"; //您已被房主加入黑名单
+"XCRoomYouAlreadyInBlackListByManager" = "您已被管理员加入黑名单"; //您已被管理员加入黑名单
+"XCRoomYouAlreadyBeManager" = "你已经被房主设置为管理员"; //你已经被房主设置为管理员
+"XCRoomYouAlreadyOutBeManager" = "你已经被房主移除管理员"; //你已经被房主移除管理员
+"XCRoomManager" = "管理员"; // 管理员
+"XCRoomStartJingPaiSuccess" = "发起竞拍成功"; //发起竞拍成功
+"XCRoomNoUserUp" = "暂无可抱用户"; //暂无可抱用户
+"XCRoomNoUser" = "暂无用户"; //暂无用户
+"XCRoomOnlineListener" = "在线听众"; //在线听众
+"XCRoomStartJingPai" = "发起竞拍"; //发起竞拍
+"XCRoomTopicBackgroud" = "主题背景"; //主题背景
+"XCRoomNoPriceNow" = "当前暂无人出价"; //当前暂无人出价
+"XCRoomGiveAOffer" = "出价"; //出价
+"XCRoomTheLowestOffer" = "最低起拍价"; //最低起拍价
+"XCRoomYouAlreadyGiveAOffer" = "您已出价"; //您已出价
+"XCRoomYouHaveToAdd" = "您还需加价"; //您还需加价
+"XCRoomOverTheHighestOffer" = "开心以上才能超过最高竞拍价"; //开心以上才能超过最高竞拍价
+"XCRoomMe" = "我"; //我
+"XCRoomAllMic" = "全麦"; //全麦
+"XCRoomIn" = "在"; //在
+"XCRoomInRoomSend" = "房间送给"; //房间送给
+"XCRoomNoAdJustNow" = "暂无公告"; //暂无公告
+"XCRoomQingLiaoRoom" = "轻聊房"; //轻聊房
+"XCRoomJingPaiRoom" = "竞拍房"; //竞拍房
+"XCRoomGameRoome" = "游戏房"; //游戏房
+"XCRoomVideoChannel" = "进入语音频道"; //进入语音频道
+"XCRoomFillInRoomAd" = "请输入房间公告"; //请输入房间公告
+"XCRoomIfEnterRoomAgain" = "是否重新进入房间？"; //是否重新进入房间？
+"XCRoomYouAlreadyBeKickedByManager" = "被管理员踢出直播间"; //被管理员踢出直播间
+"XCRoomIfOutOfTheRomm" = "是否需要退出直播间"; //是否需要退出直播间
+"XCRoomPriaseSuccess" = "关注成功"; // 关注成功
+"XCRoomIfKickHimOutOfTheRoom" = "是否将TA踢出房间~"; //是否将TA踢出房间~
+"XCRoomEnterRoom" = "进入"; //进入
+"XCRoomUpMic" = "上麦"; //上麦
+"XCRoomLockTheMicSort" = "封锁麦序"; //封锁麦序
+"XCRoomSetupFace" = "表情准备中"; //表情准备中
+"XCRoomAllMicPerson" = "全麦"; //全麦
+"XCRoomChooseReceivePerson" = "选择赠送的人"; //选择赠送的人
+"XCRoomChooseAtLeastOnePerson" = "请选择至少一个人"; //请选择至少一个人
+"XCRoomNoReceivePersonNow" = "当前没有可以接收礼物的人"; //当前没有可以接收礼物的人
+"XCRoomOwnerSeat" = "房主位"; //房主位
+"XCRoomMicSort" = "麦序"; //麦序
+"XCRoomSendTo" = "赠送给"; //赠送给
+"XCRoomSendAllTheMicPeople" = "全麦送出"; //全麦送出
+"XCRoomCancelSort" = "取消排麦"; //取消排麦
+"XCRoomSort" = "排麦"; //排麦
+"XCRoomSetRoom" = "房间设置"; //房间设置
+"XCRoomSave" = "保存"; //保存
+"XCRoomTheNameCantLeaf15" = "房间名字不能超过15字"; //房间名字不能超过15字
+"XCRoomNameCantBeEmpty" = "房间名字不能为空"; //房间名字不能为空
+"XCRoomChooseLabel" = "没有选择标签"; //没有选择标签
+"XCRoomPswCantOut8" = "房间密码不能超过8字"; //房间密码不能超过8字
+"XCRoomNotChange" = "没有修改"; //没有修改
+"XCRoomSetTopic" = "设置房间话题"; //设置房间话题
+"XCRoomFillTopic" = "请输入主题"; //请输入主题
+"XCRoomFillContent" = "请输入内容"; //请输入内容
+"XCRoomMustOnMicCanSendFace" = "需要上麦才可以发送表情噢"; //需要上麦才可以发送表情噢
+"XCRoomGoToSetRoomTopic" = "点击前往设置房间话题"; //点击前往设置房间话题
+"XCRoomNoTopicJustNow" = "暂无房间话题"; //暂无房间话题
+"XCRoomYouAlreadyBeDownByOwnerOrManager" = "你已被房主或者管理员抱下麦"; //你已被房主或者管理员抱下麦
+"XCRoomNoContenJustNow" = "暂无房间内容"; //暂无房间内容
+"XCRoomInfo" = "房间信息"; //房间信息
+"XCRoomIfSecrectTalk" = "是否需要发起密聊"; //是否需要发起密聊
+"XCRoomStartSecrectTalk" = "发起密聊需要退出直播间！如需要请按确定"; //发起密聊需要退出直播间！如需要请按确定
+"XCRoomOwnerOrManagerBringYouUp" = "房主或管理员拉你上麦"; //房主或管理员拉你上麦
+"XCRoomOwnerOrManagerBringYouUpMesseage" = "你已被房主或管理员拉上麦，但并未开启麦克风，需要说话，请打开麦克风"; //你已被房主或管理员拉上麦，但并未开启麦克风，需要说话，请打开麦克风
+"XCRoomCallFailed" = "呼叫失败"; //呼叫失败
+"XCRoomEndPaimai" = "结束拍卖"; //结束拍卖
+"XCRoomIfEndPaiMai" = "是否结束本轮拍卖？"; //是否结束本轮拍卖？
+"XCRoomHongpa" = "轰趴房"; //轰趴房
+"XCRoomYouAlreadyBeKicked" = "您已被踢，请稍后在试"; //您已被踢，请稍后在试
+"XCRoomTheRoomNotExit" = "该房间不存在"; //该房间不存在
+"XCRoomHaveToAgreeMic" = "应用需要麦克风权限"; //应用需要麦克风权限
+"XCRoomSetting" = "设置"; //设置
+"XCRoomNoEmptySeat" = "空余位置"; //空余位置
+
+"XCRoomYiXinYiYi" = "一心一意"; //一心一意
+"XCRoomShiQuanShiMei" = "十全十美"; //十全十美
+"XCRoomYiQieShunLi" = "一切顺利"; //一切顺利
+"XCRoomChangChangJiuJiu" = "长长久久"; //长长久久
+"XCRoomYaoBaoBaoBao" = "要抱抱 "; //要抱抱抱
+"XCRoomWoAiNiNi" = "我爱你 "; //我爱你你
+"XCRoomYiShengYiShi" = "一生一世"; //一生一世
+
+
+//alert
+"XCAlertUpdateTip" = "升级提示"; // 升级提示
+"XCAlertNiceTip" = "温馨提示"; // 温馨提示
+"XCAlertCheckNetTip" = "请检查网络配置或确定设备是否联网"; //请检查网络配置或确定设备是否联网
+"XCAlertTip" = "提示"; // 提示
+"XCAlertDone" = "完成"; // 完成
+"XCAlertConfirm" = "确认"; // 确认
+
+//ad
+"XCADPass" = "跳过"; // 跳过
+
+//photo
+"XCPhotoCamaralCantUse" = "相机不可用"; // 相机不可用
+"XCPhotoCamaralCantUseTip1" = "隐私设置中需要允许小熊语音访问相机"; // 隐私设置中需要允许小熊语音访问相机
+"XCPhotoCamaralCantUseTip2" = "访问限制设置中需要取消限制相机"; // 访问限制设置中需要取消限制相机
+"XCPhotoCantUseTip1" = "隐私设置中需要允许小熊语音访问手机相册"; // 隐私设置中需要允许小熊语音访问手机相册
+"XCPhotoCantUseTip2" = "访问限制设置中需要取消限制手机相册"; // 访问限制设置中需要取消限制手机相册
+"XCPhotoCantUse" = "手机相册不可用"; //手机相册不可用
+"XCPhotoUnderstand" = "我知道了"; //我知道了
+"XCPhotoChoosePhoto" = "选择手机相册"; //选择手机相册
+"XCPhotoTakePhoto" = "拍照"; // 拍照
+
+//hud
+"XCHudLoadingTip1" = "请稍后"; //请稍后
+"XCHudPswError" = "密码错误,请重试"; //密码错误,请重试
+"XCHudNetError" = "网络错误"; // 网络错误
+
+//home
+"XCHomeOther" = "其他"; // 其他
+"XCHomeOnline" = "在线"; // 在线
+"XCHomeHot" = "热门"; // 热门
+"XCHomeTalk" = "闲聊"; // 闲聊
+"XCHomeMoreRecomand" = "更多推荐"; // 更多推荐
+
+//搜索
+"XCSearchHistoryTitle" = "历史搜索"; // 历史搜索
+"XCSearchNoResult" = "暂无搜索结果"; // 暂无搜索结果
+
+//关注
+"XCPraiseTitle" = "关注"; // 关注
+"XCPraiseNoDataTip" = "你还没有关注任何小熊语音好友喔"; // 你还没有关注任何小熊语音好友喔
+
+//粉丝
+"XCFansTitle" = "粉丝"; // 粉丝
+"XCFansPraiseSuccessTip" = "关注成功，相互关注可成为好友哦！"; // 关注成功，相互关注可成为好友哦！
+"XCFansNoDataTip" = "你还没有关注任何小熊语音粉丝喔"; // 你还没有关注任何小熊语音粉丝喔
+
+//黑名单
+"XCBlackTitle" = "黑名单"; // 黑名单
+"XCBlackNodataTip" = "您的黑名单为空喔～"; // 您的黑名单为空喔～
+"XCBlackDelete" = "删除"; // 删除
+
+
+
+//消息
+"XCMesseageWechatInvite" = "微信邀请"; //微信邀请
+"XCMesseageFriendSqInvite" = "朋友圈"; //朋友圈
+"XCMesseagQQInvite" = "QQ邀请"; //QQ邀请
+"XCMesseageQQSpaceInvite" = "QQ空间"; //QQ空间
+"XCMesseageTitle" = "消息"; //消息
+"XCMesseageFriendTitle" = "好友"; //好友
+"XCMesseageFriendNoFriendTip" = "你还没有好友噢"; //你还没有好友噢
+"XCMesseageAllFriend" = "所有好友"; //所有好友
+"XCMesseageNoMesseage" = "暂无最近会话"; //暂无最近会话
+"XCMesseageImageLookingTitle" = "图片预览"; //图片预览
+
+//发现
+"XCDiscoverNoData" = "暂无活动"; //暂无活动
+"XCDiscoverRadioMakeFriendsTitle" = "广播交友"; //广播交友
+"XCDiscoverSendMsmFailedTip" = "发广播需要在房间哦～"; //发广播需要在房间哦～
+"XCDiscoverEnterRoomFailedTip" = "进入房间失败，点击重新加载"; //进入房间失败，点击重新加载
+"XCDiscoverQuestionTitle" = "问题"; //问题
+
+"XCDiscoverHall" = "大厅"; //大厅
+"XCDiscoverActivity" = "活动"; // 活动
+"XCDiscoverFamily" = "家族";
+"XCDiscoverMeet" = "遇见";//遇见
+"XCDiscoverSquare" = "广场";//广场
+
+//座驾商城
+"XCCarSysDay" = "天"; //天
+"XCCarSysTryToDrive" = "点击试驾"; //点击试驾
+"XCCarSysBuy" = "购买"; //购买
+"XCCarSysBuyAgain" = "继续购买"; //继续购买
+"XCCarSysUse" = "点击使用"; //点击使用
+"XCCarSysDriving" = "正在驾驶"; //正在驾驶
+"XCCarSysUsing" = "正在使用"; //正在使用
+"XCCarSysTitle" = "商城"; //商城
+"XCCarSysHant" = "头饰"; //头饰
+"XCCarSysCar" = "座驾"; //座驾
+"XCCarSysSureBuyHant" = "确认购买头饰"; //确认购买头饰
+"XCCarSysSureBuyHantAgain" = "确认续期头饰"; //确认续期头饰
+"XCCarSysSureBuyCar" = "确认购买座驾"; //确认购买座驾
+"XCCarSysSureBuyCarAgain" = "确认续期座驾"; //确认续期座驾
+"XCCarSysBuyForMyself" = "为自己购买"; //为自己购买
+"XCCarSysBuyForHimself" = "赠送给Ta人"; //赠送给Ta人
+"XCCarSysBuySuccess" = "购买成功"; //购买成功
+"XCCarSysBuyAgainSuccess" = "续期成功"; //续期成功
+"XCCarSysSendNoFriend" = "你还没有关注任何好友喔"; //你还没有关注任何好友喔
+"XCCarSysSendNoPraiseFriend" = "你还没有好友噢"; //你还没有好友噢
+"XCCarSysSendToSomeone" = "并赠送给"; //并赠送给
+"XCCarSysSendSuccess" = "赠送成功"; //赠送成功
+"XCCarSysSendTitle" = "赠送"; //赠送
+
+
+//钱包
+"XCPurseNoMoneyTitle" = "余额不足"; //余额不足
+"XCPurseNoMoneyMesseage" = "是否前往充值"; //是否前往充值
+"XCPurseVerifySendAgain" = "重新发送"; //重新发送
+"XCPurseExchangeNoPhone" = "您还未绑定手机哦～"; //您还未绑定手机哦～
+"XCPurseExchangeLessThanNumTip" = "请输入大于10的数量"; //请输入大于10的数量
+"XCPurseMoney" = "账户余额"; // 账户余额
+"XCPurseCorn" = "开心"; // 开心
+"XCPurseBillGift" = "支出礼物"; //支出礼物
+"XCPurseBillIncome" = "收入账单"; //收入账单
+"XCPurseBillGiftIn" = "收礼记录"; //收礼记录
+"XCPurseBillGiftOut" = "送礼记录"; //送礼记录
+"XCPurseBillInCharge" = "充值账单"; //充值账单
+"XCPurseBillInviete" = "邀请记录"; //邀请记录
+"XCPurseBillJingPai" = "竞拍记录"; //竞拍记录
+"XCPurseBillAlreadyNoData" = "已经没有数据了噢！"; //已经没有数据了噢！
+"XCPurseBillNoData" = "没有查找到数据噢"; //没有查找到数据噢！
+"XCPurseRecharge" = "充值"; //充值
+"XCPurseBillSendingSide" = "送礼人"; //送礼人
+"XCPurseBillRecieveSide" = "收礼人"; //收礼人
+
+"XCPurseMoneyUnit" = "元"; //钱的单位
+"XCPurseBillTitle" = "账单"; //账单
+"XCPurseGoldBillTitle" = "开心账单"; //开心账单
+"XCPurseBillIncomeGift" = "收入礼物"; //收入礼物
+"XCPurseBillReChargeList" = "充值记录"; //充值记录
+
+"XCPurseMyPurseTitle" = "小熊语音钱包"; //我的钱包
+"XCPurseBindingChangeNow" = "立即修改"; //立即修改
+"XCPurseBindingBinding" = "绑定中"; //绑定中
+"XCPurseBindingGetCode" = "验证码"; //验证码
+"XCPurseBindingSendCodeSuccess" = "发送验证码成功"; //发送验证码成功
+"XCPurseBindingBidingSucceess" = "绑定成功"; //绑定成功
+"XCPurseBindingBindingFailed" = "绑定失败"; //绑定失败
+"XCPurseBindingChangBindingPhone" = "更改绑定手机号"; //更改绑定手机号
+"XCPurseBindingBindedFillPhoneTip" = "请输入已绑定的手机号"; //请输入已绑定的手机号
+"XCPurseBindingSureChange" = "确定替换"; //确定替换
+"XCPurseBindingBingdingPhone" = "绑定手机号"; //绑定手机号
+"XCPurseBindingFillPhoneTip" = "请输入手机号"; //请输入手机号
+"XCPurseBindingSureBind" = "确认绑定"; //确认绑定
+"XCPurseBindingBindingPhoneNow" = "立即绑定"; //立即绑定
+"XCPurseBindingBindingPhoneCorectTip" = "请输入正确的手机号"; //请输入正确的手机号
+"XCPurseConectingAppStore" = "正在连接AppStore"; //正在连接AppStore
+"XCPurseStartBuying" = "正在发起购买，请耐心等待"; //正在发起购买，请耐心等待
+"XCPurseBuyingFailed" = "网络异常，发起付款失败"; //网络异常，发起付款失败
+"XCPurseVerifying" = "正在验证"; //正在验证
+"XCPurseBuying" = "购买中"; //购买中
+"XCPurseBuyedFailed" = "购买失败"; //购买失败
+"XCPurseBuyedNoKownError" = "出现未止错误，请重新尝试"; //出现未止错误，请重新尝试
+"XCPurseBuyedSuccess" = "购买成功"; //购买成功
+"XCPurseVerifyedFailed" = "验证失败，请稍后再试"; //验证失败，请稍后再试
+"XCPurseMyShouyi" = "我的收益"; //我的收益
+"XCPurseNoMoneyTip1" = "当前账户余额不足，是否充值？"; //当前账户余额不足，是否充值？
+"XCPurseGoToRecharge1" = "去充值"; //去充值
+
+//我的
+"XCMeLevelTitle" = "我的等级"; //我的等级
+"XCMeRoomTitle" = "我的房间"; //我的房间
+"XCMeSettingTitle" = "设置"; //设置
+"XCMeAboutMiaomiao" = "关于小熊语音"; //关于小熊语音
+"XCMeVersion" = "版本号"; //版本号
+"XCMeFeedBackTitle" = "反馈"; //意见反馈
+"XCMeFeedBackPlaceHolder" = "请详细描述您所遇到的问题与情况，感谢您提出宝贵的意见。"; //请详细描述您所遇到的问题与情况，感谢您提出宝贵的意见。
+"XCMeFeedBackConfirm" = "提交"; //提交
+"XCMeFeedBackNoDataTip" = "内容不能为空"; //内容不能为空
+"XCMePhoneTitle" = "手机";
+"XCMePasswordTitle" = "密码";
+"XCMeYuMengTitle" = "小熊语音";
+"XCMeDelegateTitle" = "协议";
+"XCMeLogou" = "退出";
+
+//登录
+"XCLogin" = "登录"; //登录
+"XCLogining" = "正在登录中"; //正在登录中
+"XCLoginAndAgree" = "登录即表示同意"; //登录即表示同意
+"XCLoginRule" = "《小熊语音用户协议》"; //《小熊语音用户协议》
+"XCLoginFailedTip" = "登录失败，请重试"; //登录失败，请重试
+"XCLoginCancel" = "用户取消操作"; //用户取消操作
+"XCResistTitle" = "注册"; //注册
+"XCResetPswTitle" = "重置密码"; //重置密码
+"XCFillBaseInfo" = "填写基本资料"; //填写基本资料
+"XCBeKickedTip" = "您已被踢下线，若非正常行为，请及时修改密码"; //您已被踢下线，若非正常行为，请及时修改密码
+
+//我的相册
+"XCPhotosTitle" = "我的相册"; //我的相册
+"XCPhotosEditTitle" = "编辑"; //编辑
+"XCPhotosAddPhotos" = "添加图片"; //添加图片
+"XCPhotosUploadPhotosSuccess" = "上传成功"; //上传成功
+"XCPhotosDeleteTitle" = "删除是不可逆操作"; //删除是不可逆操作
+"XCPhotosDeleteMesseage" = "是否需要删除？"; //是否需要删除？
+
+//编辑页面
+"XCEditChangeNick" = "修改昵称"; //修改昵称
+"XCEditChangeBoy" = "男"; //男
+"XCEditChangeGirl" = "女"; //女
+"XCEditChangeIntroduction" = "修改个人介绍"; //修改个人介绍
+"XCEditChangeSign" = "您暂无个人签名"; //您暂无个人签名
+"XCEditChangeSuccess" = "修改成功"; //修改成功
+"XCEditNickNoData" = "昵称不能为空"; //昵称不能为空
+"XCEditSetHeadImage" = "请设置头像"; //请设置头像
+"XCEditSetNick" = "请输入昵称"; //请输入昵称
+"XCEditNickOutLength" = "昵称不能超过15个字"; //昵称不能超过15个字
+"XCEditSetBirthday" = "请输入生日"; //请输入生日
+"XCEditSetGender" = "请输入性别"; //请输入性别
+
+
+//个人主页
+"XCPersonalInfoNoRoom" = "房间无效"; //房间无效
+"XCPersonalInfoJubao" = "举报"; //举报
+"XCPersonalInfoOutBlackList" = "移出黑名单"; //移出黑名单
+"XCPersonalInfoInBlackList" = "加入黑名单"; //加入黑名单
+"XCPersonalInfoPolity" = "政治敏感"; //政治敏感
+"XCPersonalInfoSex" = "色情低俗"; //色情低俗
+"XCPersonalInfoAd" = "广告骚扰"; //广告骚扰
+"XCPersonalInfoBady" = "人身攻击"; //人身攻击
+"XCPersonalInfoJubaoSuccess" = "举报成功，我们将尽快为你处理"; //举报成功，我们将尽快为你处理
+"XCPersonalInfoOutBlackListTitle" = "是否确定移出黑名单？"; //是否确定移出黑名单？
+"XCPersonalInfoOutBlackListMesseage" = "移出黑名单后你能收到用户发送的消息"; //移出黑名单后你能收到用户发送的消息
+"XCPersonalInfoInBlackListTitle" = "是否确定加入黑名单？"; //是否确定加入黑名单？
+"XCPersonalInfoInBlackListMesseage" = "加入黑名单后你将收不到用户发送的消息"; //加入黑名单后你将收不到用户发送的消息
+"XCPersonalInfoOutBlackListSusccess" = "移出黑名单成功"; //移出黑名单成功
+"XCPersonalInfoOutBlackListFailed" = "移出黑名单失败"; //移出黑名单失败
+"XCPersonalInfoInBlackListSusccess" = "加入黑名单成功"; //加入黑名单成功
+"XCPersonalInfoInBlackListFailed" = "加入黑名单失败"; //加入黑名单失败
+"XCPersonalInfoCancelPraiseTitle" = "是否确定取消关注？"; //是否确定取消关注？
+"XCPersonalInfoCancelPraiseMesseage" = "取消关注后将会收不到主播开播通知"; //取消关注后将会收不到主播开播通知
+"XCPersonalInfoCancelPraise" = "取消关注"; //取消关注
+"XCPersonalInfoRequestGitfFailed" = "请求礼物墙失败"; //请求礼物墙失败
+"XCPersonalInfoReceiveGitf" = "收到的礼物"; //请求礼物墙失败
+"XCPersonalInfoNotInRoom" = "对方不在房间内"; //对方不在房间内
+"XCPersonalInfoNoIntroducion" = "ta还没有个人介绍哦～"; //ta还没有个人介绍哦～
+"XCPersonalInfoAlreadyReceiveGift" = "收到的礼物"; //收到的礼物
+"XCPersonalInfoAlreadyPriase" = "已关注"; //已关注
+
+
+/******************************* Core ********************************************/
+
+// httpRequst
+"HttpRequstPswWrong" = "密码错误";                           //密码错误
+"HttpRequstUserNotExit" = "用户不存在";                      //用户不存在
+"HttpRequstUserLocked" = "用户已被冻结";                      //用户已被冻结
+"HttpRequstPswWrongOrNotExit" = "用户不存在或密码错误";       //用户不存在或密码错误
+"HttpRequstVelifyWrong" = "验证码错误";                      //验证码错误
+"HttpRequstPhoneUnUsed" = "手机号不可用";                     //手机号不可用
+"HttpRequstReSetPswFailed" = "重置密码无效";                  //重置密码无效
+"HttpRequstNickNameUnUsed" = "昵称不合法";                    //昵称不合法
+"HttpRequstServeiceFailed" = "服务器正在维护";                 //服务器正在维护
+"HttpRequstServeiceFailedAndTry" = "网络异常，请检查网络后重试"; //网络异常，请检查网络后重试
+"HttpRequstServeiceWrong" = "服务器异常";                      //服务器异常
+"HttpRequstOutLine" = "服务器异常";                            //失效
+"HttpRequstEmpty" = "为空";                                   //为空
+"HttpRequstDataDecodeFailed" = "数据解析失败";                  //数据解析失败
+"HttpRequstUserError" = "用户异常";                             //用户异常
+
+// cores
+// 分享文案
+"ShareCoreDes" = "一辈子很长，要跟有趣的人一起过";      //带你走进Ta的直播间，小熊语音，这里有最性感的声线
+"ShareCoreTitle" = "邀请你连麦互动!";                  //小熊语音，与喜欢的声音不期而遇!
+
+"ShareCoreDes2" = "小熊语音语音交友速配处CP，你想要的我们都有。"; // 小熊语音语音交友速配处CP，你想要的我们都有。
+"ShareCoreTitle2" = "小熊语音，语音交友神器！";  // 小熊语音，语音交友神器！
+
+//TurntableAttachment
+"TurntableAttachmentDes" = "恭喜你，获取抽奖机会，点击我抽奖>>";    //恭喜你，获取抽奖机会，点击我抽奖>>
+
+/******************************* Framework ********************************************/
+
+// alertView
+"MMPopViewOk" = "好";        //好
+"MMPopViewCancel" = "取消";   //取消
+"MMPopViewConfirm" = "确定";  //确定
+
+
+/******************************* v1.0.5新增 ********************************************/
+"XCMeMyTaskTitleEveryDay" = "每日任务"; //每日任务
+"XCMeMyTaskTitle" = "我的任务"; //我的任务
+"XCMeMyTaskAlreadyGotten" = "已领取"; //已领取
+
+"XCMesseagesensitiveWordRegexTip" = "发送失败，小萌妹提醒您文明用语~"; //发送失败，小萌妹提醒您文明用语~

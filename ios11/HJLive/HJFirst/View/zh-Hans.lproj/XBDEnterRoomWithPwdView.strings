@@ -1,0 +1,12 @@
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "1It-qS-8yR"; */
+"1It-qS-8yR.normalTitle" = "取消";
+
+/* Class = "UIButton"; normalTitle = "解锁"; ObjectID = "ORi-Lb-CVd"; */
+"ORi-Lb-CVd.normalTitle" = "解锁";
+
+/* Class = "UITextField"; placeholder = "请输入房间密码"; ObjectID = "ght-Co-7ga"; */
+"ght-Co-7ga.placeholder" = "请输入房间密码";
+
+/* Class = "UILabel"; text = "TA们在干甜蜜蜜的事"; ObjectID = "seB-p3-2iG"; */
+"seB-p3-2iG.text" = "TA们在干甜蜜蜜的事";

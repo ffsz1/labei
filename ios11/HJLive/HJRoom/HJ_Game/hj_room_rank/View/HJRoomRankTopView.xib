@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HJRoomRankTopView">
+            <rect key="frame" x="0.0" y="0.0" width="413" height="180"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_wealthseat" translatesAutoresizingMaskIntoConstraints="NO" id="gRo-OX-onW">
+                    <rect key="frame" x="43" y="109" width="327" height="66"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="66" id="am3-Tx-3uq"/>
+                        <constraint firstAttribute="width" constant="327" id="vPR-cs-9Be"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cYE-GU-auF" customClass="UIControl">
+                    <rect key="frame" x="67" y="26" width="50" height="105"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_silvier" translatesAutoresizingMaskIntoConstraints="NO" id="9Mn-VJ-SOv">
+                            <rect key="frame" x="-6" y="0.0" width="23" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="Rrb-eY-Dm3"/>
+                                <constraint firstAttribute="width" constant="23" id="wTn-97-9RA"/>
+                            </constraints>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ofc-yn-HQn" customClass="GGImageView">
+                            <rect key="frame" x="0.0" y="6" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="L5j-uR-kgG"/>
+                                <constraint firstAttribute="width" constant="50" id="hT9-v4-yom"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="connerRadius">
+                                    <integer key="value" value="25"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <integer key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="余生都是你" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpe-U8-4pH">
+                            <rect key="frame" x="-5" y="64" width="60" height="15.5"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15.5" id="P2d-aW-UAb"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_maleicon" translatesAutoresizingMaskIntoConstraints="NO" id="2Tm-YS-QDf">
+                            <rect key="frame" x="-21" y="65.5" width="13" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="4Gl-v4-xg4"/>
+                                <constraint firstAttribute="width" constant="13" id="sYB-sE-PMu"/>
+                            </constraints>
+                        </imageView>
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_coin" translatesAutoresizingMaskIntoConstraints="NO" id="huW-ro-AA7">
+                            <rect key="frame" x="12" y="84.5" width="14" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="14" id="04d-AU-rBa"/>
+                                <constraint firstAttribute="height" constant="14" id="pY5-Sq-JmG"/>
+                            </constraints>
+                        </imageView>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSY-GF-bTg">
+                            <rect key="frame" x="31" y="82" width="8" height="19"/>
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="13"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="6cC-kV-zqc"/>
+                        <constraint firstItem="Gpe-U8-4pH" firstAttribute="leading" secondItem="2Tm-YS-QDf" secondAttribute="trailing" constant="3" id="BxE-zq-uZM"/>
+                        <constraint firstItem="huW-ro-AA7" firstAttribute="centerY" secondItem="NSY-GF-bTg" secondAttribute="centerY" id="LdD-lr-xRz"/>
+                        <constraint firstItem="NSY-GF-bTg" firstAttribute="leading" secondItem="huW-ro-AA7" secondAttribute="trailing" constant="5" id="Ntl-aa-UBY"/>
+                        <constraint firstItem="ofc-yn-HQn" firstAttribute="top" secondItem="cYE-GU-auF" secondAttribute="top" constant="6" id="O9N-ZU-4eh"/>
+                        <constraint firstAttribute="height" constant="105" id="Xsz-vy-2ni"/>
+                        <constraint firstItem="Gpe-U8-4pH" firstAttribute="centerX" secondItem="cYE-GU-auF" secondAttribute="centerX" id="YC5-tP-Ls9"/>
+                        <constraint firstItem="Gpe-U8-4pH" firstAttribute="top" secondItem="ofc-yn-HQn" secondAttribute="bottom" constant="8" id="YG5-Fd-fK2"/>
+                        <constraint firstAttribute="trailing" secondItem="ofc-yn-HQn" secondAttribute="trailing" id="dCc-5f-Sd3"/>
+                        <constraint firstItem="NSY-GF-bTg" firstAttribute="centerX" secondItem="cYE-GU-auF" secondAttribute="centerX" constant="10" id="fmU-JC-36y"/>
+                        <constraint firstItem="9Mn-VJ-SOv" firstAttribute="top" secondItem="cYE-GU-auF" secondAttribute="top" id="gBc-1a-O0E"/>
+                        <constraint firstItem="2Tm-YS-QDf" firstAttribute="centerY" secondItem="Gpe-U8-4pH" secondAttribute="centerY" id="hgC-Nc-VSk"/>
+                        <constraint firstItem="NSY-GF-bTg" firstAttribute="top" secondItem="Gpe-U8-4pH" secondAttribute="bottom" constant="2.5" id="mvL-nd-8j4"/>
+                        <constraint firstItem="9Mn-VJ-SOv" firstAttribute="leading" secondItem="cYE-GU-auF" secondAttribute="leading" constant="-6" id="nln-1Q-yaI"/>
+                        <constraint firstItem="ofc-yn-HQn" firstAttribute="leading" secondItem="cYE-GU-auF" secondAttribute="leading" id="oQl-xq-ndW"/>
+                    </constraints>
+                    <connections>
+                        <action selector="secondAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="uyU-wl-7Ie"/>
+                    </connections>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G7j-tg-gHN" customClass="UIControl">
+                    <rect key="frame" x="296" y="32" width="50" height="105"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_orange" translatesAutoresizingMaskIntoConstraints="NO" id="Vut-ju-MaM">
+                            <rect key="frame" x="-5.5" y="1.5" width="23" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="HYj-eG-nkE"/>
+                                <constraint firstAttribute="width" constant="23" id="z8z-Ka-O8m"/>
+                            </constraints>
+                        </imageView>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6b-Id-bYb">
+                            <rect key="frame" x="31" y="82" width="8" height="19"/>
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="13"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_coin" translatesAutoresizingMaskIntoConstraints="NO" id="EXr-48-BEt">
+                            <rect key="frame" x="12" y="84.5" width="14" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="14" id="WYV-rc-2tK"/>
+                                <constraint firstAttribute="height" constant="14" id="Xov-tA-uC3"/>
+                            </constraints>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TNP-l7-2tj" customClass="GGImageView">
+                            <rect key="frame" x="0.0" y="7" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="Kdr-Vc-naT"/>
+                                <constraint firstAttribute="width" constant="50" id="MWe-Q9-xMW"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="connerRadius">
+                                    <integer key="value" value="25"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <integer key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY.恩赐" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXm-YC-er9">
+                            <rect key="frame" x="2" y="65" width="46.5" height="15.5"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15.5" id="Vau-m0-esF"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_maleicon" translatesAutoresizingMaskIntoConstraints="NO" id="ZA5-jI-aVw">
+                            <rect key="frame" x="-14" y="66.5" width="13" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="1Q6-rM-jtT"/>
+                                <constraint firstAttribute="width" constant="13" id="meA-eJ-dVF"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="EXr-48-BEt" firstAttribute="centerY" secondItem="Y6b-Id-bYb" secondAttribute="centerY" id="2O7-CD-ldf"/>
+                        <constraint firstItem="ZA5-jI-aVw" firstAttribute="centerY" secondItem="tXm-YC-er9" secondAttribute="centerY" id="2ol-dC-bct"/>
+                        <constraint firstAttribute="trailing" secondItem="TNP-l7-2tj" secondAttribute="trailing" id="95c-Cm-AV9"/>
+                        <constraint firstItem="tXm-YC-er9" firstAttribute="leading" secondItem="ZA5-jI-aVw" secondAttribute="trailing" constant="3" id="Nt5-0Z-MMU"/>
+                        <constraint firstAttribute="height" constant="105" id="Sjp-cd-nLl"/>
+                        <constraint firstItem="TNP-l7-2tj" firstAttribute="leading" secondItem="G7j-tg-gHN" secondAttribute="leading" id="T8S-cj-s6F"/>
+                        <constraint firstItem="Y6b-Id-bYb" firstAttribute="leading" secondItem="EXr-48-BEt" secondAttribute="trailing" constant="5" id="UBA-Gu-9Tv"/>
+                        <constraint firstItem="Vut-ju-MaM" firstAttribute="leading" secondItem="G7j-tg-gHN" secondAttribute="leading" constant="-5.5" id="dB3-yp-3JA"/>
+                        <constraint firstItem="TNP-l7-2tj" firstAttribute="top" secondItem="G7j-tg-gHN" secondAttribute="top" constant="7" id="f73-Oq-cZV"/>
+                        <constraint firstItem="Vut-ju-MaM" firstAttribute="top" secondItem="G7j-tg-gHN" secondAttribute="top" constant="1.5" id="gj0-5k-H83"/>
+                        <constraint firstItem="Y6b-Id-bYb" firstAttribute="top" secondItem="tXm-YC-er9" secondAttribute="bottom" constant="1.5" id="hlh-R2-QEX"/>
+                        <constraint firstItem="Y6b-Id-bYb" firstAttribute="centerX" secondItem="G7j-tg-gHN" secondAttribute="centerX" constant="10" id="rSZ-3b-Icy"/>
+                        <constraint firstAttribute="width" constant="50" id="zNx-HW-caF"/>
+                        <constraint firstItem="tXm-YC-er9" firstAttribute="top" secondItem="TNP-l7-2tj" secondAttribute="bottom" constant="8" id="zSc-qH-qUS"/>
+                        <constraint firstItem="tXm-YC-er9" firstAttribute="centerX" secondItem="G7j-tg-gHN" secondAttribute="centerX" id="zja-cL-rhZ"/>
+                    </constraints>
+                    <connections>
+                        <action selector="thirdAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="mZ4-GP-w7S"/>
+                    </connections>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5f-ym-UVo" customClass="UIControl">
+                    <rect key="frame" x="176.5" y="-2" width="60" height="105"/>
+                    <subviews>
+                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_coin" translatesAutoresizingMaskIntoConstraints="NO" id="I6m-tC-NYs">
+                            <rect key="frame" x="17" y="95.5" width="14" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="14" id="Mki-gZ-V6O"/>
+                                <constraint firstAttribute="width" constant="14" id="lg1-bJ-bre"/>
+                            </constraints>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lU4-ge-qnP" customClass="GGImageView">
+                            <rect key="frame" x="0.0" y="8" width="60" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="9dN-aj-eoI"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="connerRadius">
+                                    <integer key="value" value="30"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <integer key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_richest" translatesAutoresizingMaskIntoConstraints="NO" id="eRz-h8-k15">
+                            <rect key="frame" x="-22.5" y="-17" width="105" height="95"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="105" id="XWo-HB-Q4t"/>
+                                <constraint firstAttribute="height" constant="95" id="d8G-9c-kLg"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MY.恩赐" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trr-nv-Ilr">
+                            <rect key="frame" x="7" y="76" width="46.5" height="15.5"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15.5" id="f3n-ru-KpH"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIE-3B-P43">
+                            <rect key="frame" x="36" y="93" width="8" height="19"/>
+                            <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="13"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_room_rank_maleicon" translatesAutoresizingMaskIntoConstraints="NO" id="3PA-VF-AxP">
+                            <rect key="frame" x="-9" y="77.5" width="13" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="SDA-6E-plF"/>
+                                <constraint firstAttribute="width" constant="13" id="zNc-8H-mzO"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="lU4-ge-qnP" firstAttribute="top" secondItem="w5f-ym-UVo" secondAttribute="top" constant="8" id="1vS-cv-MRZ"/>
+                        <constraint firstItem="3PA-VF-AxP" firstAttribute="centerY" secondItem="trr-nv-Ilr" secondAttribute="centerY" id="4uF-zB-V3S"/>
+                        <constraint firstItem="dIE-3B-P43" firstAttribute="leading" secondItem="I6m-tC-NYs" secondAttribute="trailing" constant="5" id="6Lv-LW-LKw"/>
+                        <constraint firstItem="trr-nv-Ilr" firstAttribute="leading" secondItem="3PA-VF-AxP" secondAttribute="trailing" constant="3" id="9SJ-Gf-M9A"/>
+                        <constraint firstItem="trr-nv-Ilr" firstAttribute="top" secondItem="lU4-ge-qnP" secondAttribute="bottom" constant="8" id="A6m-8n-PGl"/>
+                        <constraint firstItem="eRz-h8-k15" firstAttribute="centerX" secondItem="lU4-ge-qnP" secondAttribute="centerX" id="AbX-vS-QCC"/>
+                        <constraint firstItem="dIE-3B-P43" firstAttribute="centerX" secondItem="w5f-ym-UVo" secondAttribute="centerX" constant="10" id="Bjt-jo-M0G"/>
+                        <constraint firstAttribute="width" constant="60" id="Egp-0I-vZo"/>
+                        <constraint firstAttribute="height" constant="105" id="LFn-cn-O1j"/>
+                        <constraint firstItem="I6m-tC-NYs" firstAttribute="centerY" secondItem="dIE-3B-P43" secondAttribute="centerY" id="Lpu-S6-jqL"/>
+                        <constraint firstItem="trr-nv-Ilr" firstAttribute="centerX" secondItem="w5f-ym-UVo" secondAttribute="centerX" id="P7B-BQ-Tn5"/>
+                        <constraint firstItem="dIE-3B-P43" firstAttribute="top" secondItem="trr-nv-Ilr" secondAttribute="bottom" constant="1.5" id="cq9-zS-1zq"/>
+                        <constraint firstAttribute="trailing" secondItem="lU4-ge-qnP" secondAttribute="trailing" id="g57-Nw-OW3"/>
+                        <constraint firstItem="eRz-h8-k15" firstAttribute="bottom" secondItem="lU4-ge-qnP" secondAttribute="bottom" constant="10" id="o40-HC-bdo"/>
+                        <constraint firstItem="lU4-ge-qnP" firstAttribute="leading" secondItem="w5f-ym-UVo" secondAttribute="leading" id="xek-a3-hnP"/>
+                    </constraints>
+                    <connections>
+                        <action selector="firstAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Gon-z5-JgR"/>
+                    </connections>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="w5f-ym-UVo" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6Hp-rt-RY8"/>
+                <constraint firstItem="w5f-ym-UVo" firstAttribute="bottom" secondItem="gRo-OX-onW" secondAttribute="bottom" constant="-72" id="ANL-ea-GLE"/>
+                <constraint firstItem="cYE-GU-auF" firstAttribute="leading" secondItem="gRo-OX-onW" secondAttribute="leading" constant="24" id="Ixr-kc-ce0"/>
+                <constraint firstItem="G7j-tg-gHN" firstAttribute="trailing" secondItem="gRo-OX-onW" secondAttribute="trailing" constant="-24" id="aPn-9h-CB2"/>
+                <constraint firstItem="cYE-GU-auF" firstAttribute="bottom" secondItem="gRo-OX-onW" secondAttribute="bottom" constant="-44" id="hIV-OX-NG6"/>
+                <constraint firstItem="G7j-tg-gHN" firstAttribute="bottom" secondItem="gRo-OX-onW" secondAttribute="bottom" constant="-38" id="oNG-k8-xp9"/>
+                <constraint firstItem="gRo-OX-onW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sxh-7r-OMB"/>
+                <constraint firstAttribute="bottom" secondItem="gRo-OX-onW" secondAttribute="bottom" constant="5" id="w6V-Eb-IiB"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="coin3ImageView" destination="EXr-48-BEt" id="2fB-7B-WaM"/>
+                <outlet property="coinImageView" destination="I6m-tC-NYs" id="Mcq-Iy-xd4"/>
+                <outlet property="coinImageView2" destination="huW-ro-AA7" id="rQS-Hy-Tha"/>
+                <outlet property="crownImg" destination="9Mn-VJ-SOv" id="ONr-ZF-rF3"/>
+                <outlet property="crownImg1" destination="eRz-h8-k15" id="k1K-HP-uys"/>
+                <outlet property="crownImg2" destination="Vut-ju-MaM" id="5hq-5Y-Sfr"/>
+                <outlet property="firstAvatar" destination="lU4-ge-qnP" id="yew-48-TW5"/>
+                <outlet property="firstCoinLabel" destination="dIE-3B-P43" id="kk3-qW-fJm"/>
+                <outlet property="firstGender" destination="3PA-VF-AxP" id="CZ2-C3-ex6"/>
+                <outlet property="firstNameLabel" destination="trr-nv-Ilr" id="8tC-n8-ziq"/>
+                <outlet property="seatImageView" destination="gRo-OX-onW" id="c04-aL-VxU"/>
+                <outlet property="secondAvatar" destination="ofc-yn-HQn" id="Pt5-Bn-nAr"/>
+                <outlet property="secondBGView" destination="cYE-GU-auF" id="DIU-Gf-g4b"/>
+                <outlet property="secondCoinLabel" destination="NSY-GF-bTg" id="rkI-l2-jdd"/>
+                <outlet property="secondGender" destination="2Tm-YS-QDf" id="vmz-rh-hqP"/>
+                <outlet property="secondNameLabel" destination="Gpe-U8-4pH" id="1W3-yo-laf"/>
+                <outlet property="thirdAvatar" destination="TNP-l7-2tj" id="bSu-eR-KNd"/>
+                <outlet property="thirdBGView" destination="G7j-tg-gHN" id="Vrx-V2-rw3"/>
+                <outlet property="thirdCoinLabel" destination="Y6b-Id-bYb" id="lzl-SA-Gfs"/>
+                <outlet property="thirdGender" destination="ZA5-jI-aVw" id="OfP-UL-oVq"/>
+                <outlet property="thirdNameLabel" destination="tXm-YC-er9" id="AHg-oo-3br"/>
+            </connections>
+            <point key="canvasLocation" x="86.231884057971016" y="62.276785714285708"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="hj_room_rank_coin" width="14" height="14"/>
+        <image name="hj_room_rank_maleicon" width="12" height="12"/>
+        <image name="hj_room_rank_orange" width="22" height="21"/>
+        <image name="hj_room_rank_richest" width="138.5" height="114.5"/>
+        <image name="hj_room_rank_silvier" width="23" height="22"/>
+        <image name="hj_room_rank_wealthseat" width="327" height="66"/>
+    </resources>
+</document>

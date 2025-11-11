@@ -1,0 +1,18 @@
+//
+//  HJGiftListView.h
+//  HJLive
+//
+//  Created by feiyin on 2020/7/1.
+//  Copyright © 2020 com.wdqj.gz. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface HJGiftListView : UIView
+
+@property (nonatomic, copy) void(^didClickCloseBtnBlock)();
+@property (copy, nonatomic) void (^alertUserInformation)(long long uid);
+
+- (void)removeCore;
+
+@end

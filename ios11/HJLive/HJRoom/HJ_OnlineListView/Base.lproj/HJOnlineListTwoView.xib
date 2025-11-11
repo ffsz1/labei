@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view alpha="0.90000000000000002" contentMode="scaleToFill" id="iN0-l3-epB" customClass="HJOnlineListTwoView">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="470"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8D-Vh-XJb">
+                    <rect key="frame" x="0.0" y="0.0" width="323" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="在线人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spQ-Vu-pCf">
+                            <rect key="frame" x="125" y="14.5" width="73.5" height="21.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Xp-no-SHz">
+                            <rect key="frame" x="0.0" y="49.5" width="323" height="0.5"/>
+                            <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="77q-4S-hHJ"/>
+                            </constraints>
+                        </view>
+                        <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ss-oU-wuW">
+                            <rect key="frame" x="273" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="lfc-s6-HS9"/>
+                            </constraints>
+                            <state key="normal" image="close_card_logo"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="9Xp-no-SHz" secondAttribute="trailing" id="5Gj-XZ-7HG"/>
+                        <constraint firstAttribute="bottom" secondItem="9Xp-no-SHz" secondAttribute="bottom" id="72Q-79-dcl"/>
+                        <constraint firstAttribute="height" constant="50" id="Fr3-Hz-XtF"/>
+                        <constraint firstItem="9Xp-no-SHz" firstAttribute="leading" secondItem="W8D-Vh-XJb" secondAttribute="leading" id="Qck-pw-lbs"/>
+                        <constraint firstItem="spQ-Vu-pCf" firstAttribute="centerX" secondItem="W8D-Vh-XJb" secondAttribute="centerX" id="Qjb-jf-qSx"/>
+                        <constraint firstAttribute="trailing" secondItem="6Ss-oU-wuW" secondAttribute="trailing" id="RYF-nw-y8M"/>
+                        <constraint firstItem="spQ-Vu-pCf" firstAttribute="centerY" secondItem="W8D-Vh-XJb" secondAttribute="centerY" id="Uql-4k-AoG"/>
+                        <constraint firstAttribute="bottom" secondItem="6Ss-oU-wuW" secondAttribute="bottom" id="iiK-3w-GU9"/>
+                        <constraint firstItem="6Ss-oU-wuW" firstAttribute="top" secondItem="W8D-Vh-XJb" secondAttribute="top" id="rJs-Cq-UkH"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6jd-pP-aST">
+                    <rect key="frame" x="0.0" y="50" width="323" height="420"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="7J8-Ak-eJv"/>
+                        <outlet property="delegate" destination="-1" id="6vV-qe-gZp"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="6jd-pP-aST" firstAttribute="top" secondItem="W8D-Vh-XJb" secondAttribute="bottom" id="eab-TT-bTN"/>
+                <constraint firstItem="W8D-Vh-XJb" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="etC-2H-SUp"/>
+                <constraint firstItem="6jd-pP-aST" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gYq-1K-ZZ6"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="6jd-pP-aST" secondAttribute="bottom" id="imh-kC-rsz"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="6jd-pP-aST" secondAttribute="trailing" id="qlP-VD-dpN"/>
+                <constraint firstItem="W8D-Vh-XJb" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="vlu-1L-dXs"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="W8D-Vh-XJb" secondAttribute="trailing" id="zfM-ZU-E8Y"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="closeButton" destination="6Ss-oU-wuW" id="oM9-R5-lIM"/>
+                <outlet property="online" destination="W8D-Vh-XJb" id="uDj-yQ-AjA"/>
+                <outlet property="tableView" destination="6jd-pP-aST" id="Xoy-4I-pfn"/>
+            </connections>
+            <point key="canvasLocation" x="-585" y="-49"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close_card_logo" width="15" height="15"/>
+    </resources>
+</document>

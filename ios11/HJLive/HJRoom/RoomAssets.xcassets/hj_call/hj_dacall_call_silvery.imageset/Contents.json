@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "银色皇冠(1).png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "银色皇冠@2x(1).png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "银色皇冠@3x(1).png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

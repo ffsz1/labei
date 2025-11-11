@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="XCSceretGiftView" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="HJSceretGiftView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="556"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mVb-zD-xpF">
+                    <rect key="frame" x="43.5" y="65" width="288.5" height="426"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="room_sceretGift_bg" translatesAutoresizingMaskIntoConstraints="NO" id="8C2-xg-MBw">
+                            <rect key="frame" x="0.0" y="0.0" width="288.5" height="368"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="288.5" id="2SA-zC-xzX"/>
+                                <constraint firstAttribute="height" constant="368" id="yah-Ev-xtN"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntG-R7-DnZ">
+                            <rect key="frame" x="129.5" y="397" width="29" height="29"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="29" id="Nw3-Hi-Zm5"/>
+                                <constraint firstAttribute="width" constant="29" id="W2l-iJ-KQh"/>
+                            </constraints>
+                            <state key="normal" image="room_sceretGift_close"/>
+                            <connections>
+                                <action selector="closeBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="ey1-f8-hqS"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_image" translatesAutoresizingMaskIntoConstraints="NO" id="nXX-4W-fIu">
+                            <rect key="frame" x="147.5" y="254" width="0.0" height="0.0"/>
+                            <constraints>
+                                <constraint firstAttribute="width" id="ewW-hj-mfQ"/>
+                                <constraint firstAttribute="height" id="u3v-SD-WG4"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWK-Ow-KQw">
+                            <rect key="frame" x="30" y="132" width="228.5" height="26"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                            <color key="textColor" red="1" green="0.91764705882352937" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小萌妹提醒：礼物已加入你的包裹" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yik-Be-VhI">
+                            <rect key="frame" x="59.5" y="342.5" width="169" height="13.5"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                            <color key="textColor" red="0.99215686274509807" green="0.95294117647058818" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="ntG-R7-DnZ" secondAttribute="bottom" id="2ic-Du-Vvo"/>
+                        <constraint firstItem="yik-Be-VhI" firstAttribute="centerX" secondItem="mVb-zD-xpF" secondAttribute="centerX" id="39I-05-Q6K"/>
+                        <constraint firstItem="nXX-4W-fIu" firstAttribute="centerY" secondItem="8C2-xg-MBw" secondAttribute="centerY" constant="70" id="74G-Bb-AZu"/>
+                        <constraint firstItem="bWK-Ow-KQw" firstAttribute="leading" secondItem="mVb-zD-xpF" secondAttribute="leading" constant="30" id="8TW-bI-6Xa"/>
+                        <constraint firstAttribute="trailing" secondItem="8C2-xg-MBw" secondAttribute="trailing" id="PUW-Nb-bFJ"/>
+                        <constraint firstItem="nXX-4W-fIu" firstAttribute="centerX" secondItem="8C2-xg-MBw" secondAttribute="centerX" constant="3.25" id="cjd-8l-duX"/>
+                        <constraint firstItem="ntG-R7-DnZ" firstAttribute="centerX" secondItem="mVb-zD-xpF" secondAttribute="centerX" id="ie0-r9-RlN"/>
+                        <constraint firstItem="yik-Be-VhI" firstAttribute="bottom" secondItem="8C2-xg-MBw" secondAttribute="bottom" constant="-12" id="ieI-Wt-OvV"/>
+                        <constraint firstItem="8C2-xg-MBw" firstAttribute="top" secondItem="mVb-zD-xpF" secondAttribute="top" id="muL-hL-Wgz"/>
+                        <constraint firstItem="bWK-Ow-KQw" firstAttribute="top" secondItem="mVb-zD-xpF" secondAttribute="top" constant="132" id="nSc-87-Xa5"/>
+                        <constraint firstItem="8C2-xg-MBw" firstAttribute="leading" secondItem="mVb-zD-xpF" secondAttribute="leading" id="rh7-u9-jQd"/>
+                        <constraint firstItem="ntG-R7-DnZ" firstAttribute="top" secondItem="8C2-xg-MBw" secondAttribute="bottom" constant="29" id="uLL-UU-hUZ"/>
+                        <constraint firstAttribute="trailing" secondItem="bWK-Ow-KQw" secondAttribute="trailing" constant="30" id="vJZ-qO-J6s"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="mVb-zD-xpF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Eqw-7G-oxg"/>
+                <constraint firstItem="mVb-zD-xpF" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="HGt-xg-8VC"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="giftImageView" destination="nXX-4W-fIu" id="L0g-41-lBm"/>
+                <outlet property="giftImageViewH" destination="u3v-SD-WG4" id="eBI-dd-pKT"/>
+                <outlet property="giftImageViewW" destination="ewW-hj-mfQ" id="a01-um-wtV"/>
+                <outlet property="giftNameLabel" destination="bWK-Ow-KQw" id="1F9-go-LaC"/>
+            </connections>
+            <point key="canvasLocation" x="42.5" y="151"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="placeholder_image" width="100" height="100"/>
+        <image name="room_sceretGift_bg" width="288.5" height="368"/>
+        <image name="room_sceretGift_close" width="29" height="29"/>
+    </resources>
+</document>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="HJGameRoomPeiDuiRuleView" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="HJGameRoomPeiDuiRuleView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZb-ro-VA4">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <view clipsSubviews="YES" alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zwx-fj-THD">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZKr-3d-N3D">
+                            <rect key="frame" x="49.5" y="183.5" width="276" height="300"/>
+                            <subviews>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yGS-TD-JK3">
+                                    <rect key="frame" x="63" y="244" width="150" height="36"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="36" id="FHi-Wt-Fwy"/>
+                                        <constraint firstAttribute="width" constant="150" id="H3S-on-6te"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <state key="normal" title="关闭">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="18"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                            <real key="value" value="0.5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="closeBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Fea-SN-7bC"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="活动规则" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nD4-kU-hf2">
+                                    <rect key="frame" x="101.5" y="11" width="73.5" height="21.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Glf-kg-KKq">
+                                    <rect key="frame" x="19.5" y="52" width="236" height="172"/>
+                                    <string key="text">1、随机3个数字便可匹配您心仪的Ta，同时出现520和520仅有0.00214%的机会哦。
+
+2、我pick你，你出131，我选4，组合便是一生一世。
+
+3、目前本玩法处于测试阶段，仅限时开放，详情联系客服。</string>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="Glf-kg-KKq" firstAttribute="top" secondItem="nD4-kU-hf2" secondAttribute="bottom" constant="19.5" id="0RD-lF-RF7"/>
+                                <constraint firstItem="yGS-TD-JK3" firstAttribute="top" secondItem="Glf-kg-KKq" secondAttribute="bottom" constant="20" id="9Yy-pJ-ACp"/>
+                                <constraint firstItem="nD4-kU-hf2" firstAttribute="top" secondItem="ZKr-3d-N3D" secondAttribute="top" constant="11" id="ACU-hV-S0J"/>
+                                <constraint firstAttribute="bottom" secondItem="yGS-TD-JK3" secondAttribute="bottom" constant="20" id="O0o-wa-0K8"/>
+                                <constraint firstAttribute="width" constant="276" id="aq7-J2-N6r"/>
+                                <constraint firstItem="yGS-TD-JK3" firstAttribute="centerX" secondItem="ZKr-3d-N3D" secondAttribute="centerX" id="c5P-HM-NXD"/>
+                                <constraint firstItem="nD4-kU-hf2" firstAttribute="centerX" secondItem="ZKr-3d-N3D" secondAttribute="centerX" id="jUM-Kw-hZC"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" id="m0S-7w-4YS"/>
+                                <constraint firstItem="Glf-kg-KKq" firstAttribute="leading" secondItem="ZKr-3d-N3D" secondAttribute="leading" constant="19.5" id="qYx-0h-6ZQ"/>
+                                <constraint firstAttribute="trailing" secondItem="Glf-kg-KKq" secondAttribute="trailing" constant="20.5" id="xel-fr-pbJ"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Zwx-fj-THD" firstAttribute="top" secondItem="mZb-ro-VA4" secondAttribute="top" id="BKA-Ic-suZ"/>
+                        <constraint firstAttribute="bottom" secondItem="Zwx-fj-THD" secondAttribute="bottom" id="ByM-Cx-1EU"/>
+                        <constraint firstItem="ZKr-3d-N3D" firstAttribute="centerY" secondItem="mZb-ro-VA4" secondAttribute="centerY" id="CFk-HJ-4N0"/>
+                        <constraint firstItem="ZKr-3d-N3D" firstAttribute="centerX" secondItem="mZb-ro-VA4" secondAttribute="centerX" id="HcO-ZI-7Eu"/>
+                        <constraint firstItem="Zwx-fj-THD" firstAttribute="leading" secondItem="mZb-ro-VA4" secondAttribute="leading" id="kvg-d6-5aP"/>
+                        <constraint firstAttribute="trailing" secondItem="Zwx-fj-THD" secondAttribute="trailing" id="uBD-iU-b0B"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="mZb-ro-VA4" secondAttribute="trailing" id="EZm-uH-kXp"/>
+                <constraint firstItem="mZb-ro-VA4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Nix-WA-GmM"/>
+                <constraint firstAttribute="bottom" secondItem="mZb-ro-VA4" secondAttribute="bottom" id="Pkh-fT-P5d"/>
+                <constraint firstItem="mZb-ro-VA4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="fni-b3-JEy"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="closeBtn" destination="yGS-TD-JK3" id="CNX-6D-eup"/>
+            </connections>
+            <point key="canvasLocation" x="135" y="154"/>
+        </view>
+    </objects>
+</document>

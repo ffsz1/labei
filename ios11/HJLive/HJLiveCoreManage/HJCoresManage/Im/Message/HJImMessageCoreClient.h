@@ -1,0 +1,21 @@
+//
+//  HJImMessageCoreClient.h
+//  HJLive
+//
+//  Created by feiyin on 2020/7/1.
+//  Copyright © 2020 com.wdqj.gz. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <NIMSDK/NIMSDK.h>
+#import "HJIMMessage.h"
+
+@protocol HJImMessageCoreClient <NSObject>
+@optional
+- (void)onRecvChatRoomTextMsg:(HJIMMessage *)msg;
+- (void)onRecvChatRoomNotiMsg:(NIMMessage *)msg;
+- (void)onRecvChatRoomCustomMsg:(HJIMMessage *)msg;
+- (void)onRecvP2PCustomMsg:(NIMMessage *)msg;
+- (void)onRecvAnMsg:(NIMMessage *)msg;
+
+@end

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="XCTurntableAlertView">
+            <rect key="frame" x="0.0" y="0.0" width="312" height="444"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hj_Turntable_Alert_Bg_view" translatesAutoresizingMaskIntoConstraints="NO" id="PsD-ev-Twl">
+                    <rect key="frame" x="0.0" y="0.0" width="312" height="355"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="355" id="zbT-Zk-Hfl"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hk7-T9-hfy">
+                    <rect key="frame" x="46" y="285" width="220" height="41"/>
+                    <state key="normal" image="hj_Turntable_Alert_Go_btn"/>
+                    <connections>
+                        <action selector="goBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="qOC-uB-7L8"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IB5-e5-Lia">
+                    <rect key="frame" x="138.5" y="383" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="6xx-mw-NJT"/>
+                        <constraint firstAttribute="height" constant="35" id="qzp-Om-Ia1"/>
+                    </constraints>
+                    <state key="normal" image="hj_close"/>
+                    <connections>
+                        <action selector="closeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="anP-KN-O8I"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="PsD-ev-Twl" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="AhF-dW-fqy"/>
+                <constraint firstItem="IB5-e5-Lia" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="aMi-d3-Md3"/>
+                <constraint firstItem="hk7-T9-hfy" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hFX-yl-ZAX"/>
+                <constraint firstItem="hk7-T9-hfy" firstAttribute="bottom" secondItem="PsD-ev-Twl" secondAttribute="bottom" constant="-29" id="nSa-o4-ngU"/>
+                <constraint firstItem="IB5-e5-Lia" firstAttribute="top" secondItem="PsD-ev-Twl" secondAttribute="bottom" constant="28" id="qjd-8F-Bll"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="PsD-ev-Twl" secondAttribute="trailing" id="uCR-DQ-3jG"/>
+                <constraint firstItem="PsD-ev-Twl" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="w4L-al-KHK"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="34" y="147.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="hj_Turntable_Alert_Bg_view" width="312" height="355"/>
+        <image name="hj_Turntable_Alert_Go_btn" width="220.5" height="41"/>
+        <image name="hj_close" width="35" height="35"/>
+    </resources>
+</document>

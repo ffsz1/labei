@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FYRealNameAuthView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S7d-Ps-8r0">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="m74-Bn-FE3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9NS-aI-KtO">
+                    <rect key="frame" x="49.5" y="363" width="315" height="170"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未实名认证-无法兑换收益" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nGZ-a2-phF">
+                            <rect key="frame" x="0.0" y="40" width="315" height="24"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" red="0.32156862745098036" green="0.32156862745098036" blue="0.32156862745098036" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4rO-lG-U6H">
+                            <rect key="frame" x="30" y="94" width="120" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="IVu-mb-FEy"/>
+                                <constraint firstAttribute="width" constant="120" id="Orx-Uk-dYh"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="fy_realname_cancel"/>
+                            <connections>
+                                <action selector="cancelBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="RGO-fm-QRF"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sK-Dq-urf">
+                            <rect key="frame" x="165" y="94" width="120" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="LwY-qm-rtp"/>
+                                <constraint firstAttribute="height" constant="40" id="unK-gY-j4Z"/>
+                            </constraints>
+                            <state key="normal" title="Button" image="fy_realname_auth_yes"/>
+                            <connections>
+                                <action selector="confirmAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ksj-GV-fKn"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="170" id="AIw-xa-QnW"/>
+                        <constraint firstItem="nGZ-a2-phF" firstAttribute="top" secondItem="9NS-aI-KtO" secondAttribute="top" constant="40" id="Q4t-3d-SZU"/>
+                        <constraint firstAttribute="trailing" secondItem="6sK-Dq-urf" secondAttribute="trailing" constant="30" id="RbD-gp-9b9"/>
+                        <constraint firstItem="nGZ-a2-phF" firstAttribute="leading" secondItem="9NS-aI-KtO" secondAttribute="leading" id="lWy-IE-DDe"/>
+                        <constraint firstItem="6sK-Dq-urf" firstAttribute="top" secondItem="nGZ-a2-phF" secondAttribute="bottom" constant="30" id="szO-ob-Pcy"/>
+                        <constraint firstItem="4rO-lG-U6H" firstAttribute="leading" secondItem="9NS-aI-KtO" secondAttribute="leading" constant="30" id="xb8-yg-vta"/>
+                        <constraint firstAttribute="width" constant="315" id="xwu-Zb-4OA"/>
+                        <constraint firstItem="4rO-lG-U6H" firstAttribute="top" secondItem="nGZ-a2-phF" secondAttribute="bottom" constant="30" id="yg4-Gb-VSM"/>
+                        <constraint firstAttribute="trailing" secondItem="nGZ-a2-phF" secondAttribute="trailing" id="zog-TX-4P1"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="S7d-Ps-8r0" secondAttribute="bottom" id="3UC-HI-EpT"/>
+                <constraint firstItem="9NS-aI-KtO" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6cx-Po-NFy"/>
+                <constraint firstItem="S7d-Ps-8r0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TzZ-Ht-Fym"/>
+                <constraint firstItem="9NS-aI-KtO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ooH-tK-juA"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="S7d-Ps-8r0" secondAttribute="trailing" id="pgB-RK-IOp"/>
+                <constraint firstItem="S7d-Ps-8r0" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="tJq-os-WgV"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="bgview" destination="9NS-aI-KtO" id="9Ch-fV-Pei"/>
+                <outlet property="desLabel" destination="nGZ-a2-phF" id="U1r-MU-Tnz"/>
+                <outlet property="effectView" destination="m74-Bn-FE3" id="kcp-ew-IRy"/>
+                <outlet property="mobileCenterYLayout" destination="6cx-Po-NFy" id="V2e-qS-dWr"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="fy_realname_auth_yes" width="240" height="80"/>
+        <image name="fy_realname_cancel" width="240" height="80"/>
+    </resources>
+</document>

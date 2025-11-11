@@ -1,0 +1,19 @@
+//
+//  HJGiftCollectionViewCell.m
+//  HJLive
+//
+//  Created by feiyin on 2020/7/14.
+//  Copyright © 2020 com.wdqj.gz. All rights reserved.
+//
+
+#import "HJGiftCollectionViewCell.h"
+
+@implementation HJGiftCollectionViewCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+    
+}
+
+@end

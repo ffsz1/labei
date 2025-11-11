@@ -1,0 +1,193 @@
+
+<!--
+ Copyright (c) 2012-2015, Pierre-Olivier Latour
+ All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ * The name of Pierre-Olivier Latour may not be used to endorse
+ or promote products derived from this software without specific
+ prior written permission.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL PIERRE-OLIVIER LATOUR BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <title>%title%</title>
+                    <link rel="stylesheet" href="css/bootstrap.css">
+                        <link rel="stylesheet" href="css/bootstrap-theme.css">
+                            <link rel="stylesheet" href="css/jquery.fileupload.css">
+                                <link rel="stylesheet" href="css/index.css">
+                                    <!--[if lt IE 9]>
+                                     <script type="text/javascript" src="js/html5shiv.min.js"></script>
+                                     <script type="text/javascript" src="js/respond.min.js"></script>
+                                     <![endif]-->
+                                    <script type="text/javascript" src="js/jquery.min.js"></script>
+                                    <script type="text/javascript" src="js/jquery.ui.widget.js"></script>
+                                    <script type="text/javascript" src="js/jquery.jeditable.js"></script>
+                                    <script type="text/javascript" src="js/jquery.fileupload.js"></script>
+                                    <script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
+                                    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+                                    <script type="text/javascript" src="js/tmpl.min.js"></script>
+                                    <script type="text/javascript">
+                                        var _device = "%device%";
+                                        </script>
+                                    <script type="text/javascript" src="js/index.js"></script>
+                                    </head>
+    <body>
+        
+        <div class="container">
+            
+            <div class="page-header">
+                <img src="data:image/png;base64,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">
+                    </div>
+            <div id="alerts"></div>
+            
+            <div class="btn-toolbar">
+                <button type="button" class="btn btn-primary fileinput-button" id="upload-file" style="width: 430px;height: 56px; border: 0; background-size: 100%; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAa4AAAA4CAYAAAClvRxwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4BpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQyIDc5LjE2MDkyNCwgMjAxNy8wNy8xMy0wMTowNjozOSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpGOTU4NDc3NEQ3MkExMUU3ODRDN0U4RTBDQzkxNjA5MyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBODMxNzQ4OTA4MjExMUU5QjcyOThDNURERDg3Q0VFQSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBODMxNzQ4ODA4MjExMUU5QjcyOThDNURERDg3Q0VFQSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOCAoV2luZG93cykiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3NWFhYWY0OC01YjhhLTc3NDYtOGE0NS01YjA5NmM2MmNiMjUiIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDoxZGFiNmEzMC0xMWYwLTQ4NDItOWVkMi0zOTc4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') no-repeat;margin: 0 auto;">
+                    <input id="fileupload" type="file" name="files[]" multiple accept="audio/mpeg">
+                        </button>
+                <button type="button" class="btn btn-success" id="create-folder" style="display:none">
+                    <span class="glyphicon glyphicon-folder-close"></span> Create Folder&hellip;
+                </button>
+                <button type="button" class="btn btn-default" id="reload" style="display: none">
+                    <span class="glyphicon glyphicon-refresh"></span> Refresh
+                </button>
+            </div>
+            
+            <div class="panel panel-default uploading">
+                <div class="panel-heading">File Uploads in Progress</div>
+                <table class="table table-striped"><tbody id="uploads"></tbody></table>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ol class="breadcrumb" id="path"></ol>
+                </div>
+                <table class="table table-striped"><tbody id="listing"></tbody></table>
+            </div>
+            
+<!--            %epilogue%-->
+<!--            -->
+<!--            <p class="footer">%footer%</p>-->
+            
+        </div>
+        
+        <div class="modal fade" id="create-modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create Folder</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please enter the name of the folder to be created:</p>
+                        <form onsubmit="return false">
+                            <input type="text" autocomplete="off" id="create-input">
+                                </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="create-confirm">Create Folder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="move-modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Move Item</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please enter the new location for this item:</p>
+                        <form onsubmit="return false">
+                            <input type="text" autocomplete="off" id="move-input">
+                                </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="move-confirm">Move Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/x-tmpl" id="template-listing">
+            <tr class="row-file">
+            <td class="column-icon">
+            {% if (o.size != null) { %}
+                <button type="button" class="btn btn-default btn-xs button-download">
+                <span class="glyphicon glyphicon-download-alt"></span>
+                </button>
+                {% } else { %}
+                <button type="button" class="btn btn-default btn-xs button-open">
+                <span class="glyphicon glyphicon-folder-open"></span>
+                </button>
+            {% } %}
+        </td>
+        <td class="column-name"><p class="edit">{%=o.name%}</p></td>
+        <td class="column-size">
+        {% if (o.size != null) { %}
+            <p>{%=formatFileSize(o.size)%}</p>
+        {% } %}
+        </td>
+        <td class="column-move">
+        <button type="button" class="btn btn-default btn-xs button-move">
+        <span class="glyphicon glyphicon glyphicon-share-alt"></span>
+        </button>
+        </td>
+        <td class="column-delete">
+        <button type="button" class="btn btn-danger btn-xs button-delete">
+        <span class="glyphicon glyphicon-trash"></span>
+        </button>
+        </td>
+        </tr>
+            </script>
+        
+        <script type="text/x-tmpl" id="template-uploads">
+            <tr class="row-file">
+            <td class="column-icon">
+            <button type="button" class="btn btn-warning btn-xs button-cancel">
+            <span class="glyphicon glyphicon-ban-circle"></span>
+            </button>
+            </td>
+            <td class="column-path"><p>{%=o.path%}</p></td>
+            <td class="column-progress">
+            <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            </ts>
+            </tr>
+            </script>
+        
+        <script type="text/x-tmpl" id="template-alert">
+            <div class="alert alert-{%=o.level%} alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>{%=o.title%}</strong>{%=o.description%}
+            </div>
+            </script>
+        
+    </body>
+</html>
